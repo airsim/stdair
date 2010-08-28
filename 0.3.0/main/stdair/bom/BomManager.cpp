@@ -1,0 +1,14 @@
+// //////////////////////////////////////////////////////////////////////
+// Import section
+// //////////////////////////////////////////////////////////////////////
+// STL
+#include <cassert>
+#include <ostream>
+// StdAir
+#include <stdair/STDAIR_Types.hpp>
+#include <stdair/basic/BasConst_BomManager.hpp>
+#include <stdair/bom/BomManager.hpp>
+
+namespace stdair {
+  
+}
