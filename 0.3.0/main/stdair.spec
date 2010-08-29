@@ -3,7 +3,7 @@
 #
 Name:           stdair
 Version:        0.3.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        C++ Standard Airline IT Object Library
 
