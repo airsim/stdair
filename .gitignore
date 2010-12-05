@@ -1,2 +1,13 @@
 tmp
+INSTALL
+Makefile.in
+aclocal.m4
+autom4te.cache
+batches
+config
+configure
+doc
+man
+stdair
+test
 
