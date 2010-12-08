@@ -219,8 +219,8 @@ AC_CONFIG_FILES(
 	doc/tutorial/src/Makefile
 	doc/local/Makefile
 	doc/doxygen_html.cfg
+	samples/Makefile
 	test/Makefile
-	test/samples/Makefile
 	test/inheritance/Makefile
 	test/architecture/Makefile
 	test/archi_intru/Makefile
