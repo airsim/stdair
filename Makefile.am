@@ -14,7 +14,7 @@ if HTML_DOC
 endif
 
 if RUN_TESTS
-  TEST_DIR = samples test
+  TEST_DIR = test
 endif
 
 # Maintainance files
