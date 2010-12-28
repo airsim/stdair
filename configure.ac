@@ -219,8 +219,8 @@ AC_CONFIG_FILES(
 	doc/tutorial/src/Makefile
 	doc/local/Makefile
 	doc/doxygen_html.cfg
+	samples/Makefile
 	test/Makefile
-	test/samples/Makefile
 	test/inheritance/Makefile
 	test/architecture/Makefile
 	test/archi_intru/Makefile
@@ -241,6 +241,10 @@ Directories:
   - exec_prefix ....... : ${exec_prefix}
   - includedir ........ : ${includedir}
   - libdir ............ : ${libdir}
+  - datarootdir ....... : ${datarootdir}
+  - datadir ........... : ${datadir}
+  - pkgdatadir ........ : ${pkgdatadir}
+  - sampledir ......... : ${sampledir}
   - docdir ............ : ${docdir}
   - mandir ............ : ${mandir}
   - infodir ........... : ${infodir}

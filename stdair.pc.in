@@ -2,10 +2,16 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
+datadir=@datadir@
+pkgdatadir=@pkgdatadir@
+sampledir=@sampledir@
+docdir=@docdir@
+mandir=@mandir@
+infodir=@infodir@
 
 Name: @PACKAGE_NAME@
-Description: Library of Revenue Management and Optimisation functions and algorithms.
+Description: C++ Standard Airline IT Object Library
 Version: @PACKAGE_VERSION@
-URL: http://www.sourceforge.net/projects/rmol
+URL: http://sourceforge.net/projects/@PACKAGE@/
 Libs: -L${libdir} -l@PACKAGE@ @LDFLAGS@ @LIBS@
 Cflags: -I${includedir}

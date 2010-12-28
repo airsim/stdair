@@ -1,10 +1,10 @@
-## test sub-directory
+## test sub-directory of the StdAir project
 include $(top_srcdir)/Makefile.common
 
 MAINTAINERCLEANFILES = Makefile.in
 
 ##
-SUBDIRS = samples inheritance mpl architecture archi_intru archi_static_cast stdair
+SUBDIRS = inheritance mpl architecture archi_intru archi_static_cast stdair
 
 EXTRA_DIST =
 ##

@@ -4,6 +4,12 @@ prefix=@prefix@
 exec_prefix=${prefix}
 libdir=@libdir@
 includedir=@includedir@
+datadir=@datadir@
+pkgdatadir=@pkgdatadir@
+sampledir=@sampledir@
+docdir=@docdir@
+mandir=@mandir@
+infodir=@infodir@
 
 usage()
 {
@@ -13,6 +19,7 @@ Usage: @PACKAGE@-config [OPTION]
 Known values for OPTION are:
 
   --prefix        print @PACKAGE_NAME@ installation prefix
+  --sampledir     print where the (CSV) sample files are located
   --libs          print library linking information
   --cflags        print pre-processor and compiler flags
   --help          display this help and exit
@@ -41,6 +48,10 @@ while test $# -gt 0; do
 
     --prefix)
       echo $prefix
+      ;;
+
+    --sampledir)
+      echo $sampledir
       ;;
 
     --version)
