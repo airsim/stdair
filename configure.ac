@@ -223,6 +223,7 @@ AC_CONFIG_FILES(
 	stdair/service/Makefile
 	batches/Makefile
 	man/Makefile
+	man/doxygen_man.cfg
 	doc/Makefile
 	doc/images/Makefile
 	doc/tutorial/Makefile
