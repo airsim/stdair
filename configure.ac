@@ -62,14 +62,20 @@ AC_ARG_ENABLE(exceptions,
                               [enable exceptions handling mechanism])],
               [AC_DEFINE([STDAIR_EXCEPTIONS], [1],
                          [Define if you want exceptions handling])])
-test "x$enable_exceptions" != xno && enable_exceptions=yes
+test "x$enable_exceptions" != "xno" && enable_exceptions=yes
+
+# Set the data directory for StdAir
+pkgdatadir="${datadir}/stdair"
+AC_SUBST(pkgdatadir)
+# Set the directory for data samples exported by StdAir
+sampledir="${pkgdatadir}/samples"
+AC_SUBST(sampledir)
 
 # Check for info pages
 AC_ARG_ENABLE(info-doc, 
               [AS_HELP_STRING([--disable-info-doc],
                               [do not generate Info documentation])])
 test "x$enable_info_doc" != xno && enable_info_doc=yes
-
 
 # Check for html-doc switch
 AC_ARG_ENABLE(html-doc, 

@@ -5,13 +5,14 @@ include $(srcdir)/sources.mk
 ##
 SUBDIRS =
 
-##
-datadir = @datadir@
-pkgdatadir = $(datadir)/@PACKAGE@
-sampledir = $(pkgdatadir)/samples
-
 MAINTAINERCLEANFILES = Makefile.in Makefile
 
+##
+datadir = @datadir@
+pkgdatadir = @pkgdatadir@
+sampledir = @sampledir@
+
+#
 noinst_DATA = $(sample_csv_sources) 
 
 EXTRA_DIST = $(noinst_DATA)
