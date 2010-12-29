@@ -19,7 +19,7 @@ Usage: @PACKAGE@-config [OPTION]
 
 Known values for OPTION are:
 
-  --prefix        print @PACKAGE_NAME@ installation prefix
+  --prefix        print @PACKAGE_PRETTY_NAME@ installation prefix
   --sampledir     print where the (CSV) sample files are located
   --libs          print library linking information
   --cflags        print pre-processor and compiler flags

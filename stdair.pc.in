@@ -10,7 +10,7 @@ docdir=@docdir@
 mandir=@mandir@
 infodir=@infodir@
 
-Name: @PACKAGE_NAME@
+Name: @PACKAGE_PRETTY_NAME@
 Description: C++ Standard Airline IT Object Library
 Version: @PACKAGE_VERSION@
 URL: http://sourceforge.net/projects/@PACKAGE@/
