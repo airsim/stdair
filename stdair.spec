@@ -93,6 +93,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/%{name}
 %{_libdir}/lib*.so.*
 %{_mandir}/man1/%{name}.1.*
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/samples/*.csv
 
 %files devel
 %defattr(-,root,root,-)
