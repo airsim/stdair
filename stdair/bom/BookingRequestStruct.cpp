@@ -12,6 +12,31 @@
 namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
+  BookingRequestStruct::BookingRequestStruct ()
+    :  _partySize (0), _stayDuration (0), _wtp (0.0), _valueOfTime (0.0) {
+    assert (false);
+  }
+    
+  // //////////////////////////////////////////////////////////////////////
+  BookingRequestStruct::
+  BookingRequestStruct (const BookingRequestStruct& iBookingRequest)
+    : _origin (iBookingRequest._origin),
+      _destination (iBookingRequest._destination),
+      _pos (iBookingRequest._pos),
+      _preferredDepartureDate (iBookingRequest._preferredDepartureDate), 
+      _requestDateTime (iBookingRequest._requestDateTime),
+      _preferredCabin (iBookingRequest._preferredCabin),
+      _partySize (iBookingRequest._partySize),
+      _channel (iBookingRequest._channel),
+      _tripType (iBookingRequest._tripType),
+      _stayDuration (iBookingRequest._stayDuration),
+      _frequentFlyerType (iBookingRequest._frequentFlyerType),
+      _preferredDepartureTime (iBookingRequest._preferredDepartureTime),
+      _wtp (iBookingRequest._wtp),
+      _valueOfTime (iBookingRequest._valueOfTime) {
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
   BookingRequestStruct::
   BookingRequestStruct (const AirportCode_T& iOrigin,
                         const AirportCode_T& iDestination,
