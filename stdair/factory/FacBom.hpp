@@ -87,8 +87,7 @@ namespace stdair {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  template <typename BOM> BOM& FacBom<BOM>::
-  create (const Key_T& iKey) {
+  template <typename BOM> BOM& FacBom<BOM>::create (const Key_T& iKey) {
     BOM* oBom_ptr = new BOM (iKey);
     assert (oBom_ptr != NULL);
     _pool.push_back (oBom_ptr);

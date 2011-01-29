@@ -33,10 +33,6 @@ namespace stdair {
        <br>For instance, "H" and "K" allow to differentiate among two
        marketing classes for the same segment-date. */
     const std::string toString() const;
-    
-    /** Display of the key. */
-    const std::string describe() const;
-    
   };
 
 }

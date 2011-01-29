@@ -7,8 +7,8 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-// Local
-#include <test/architecture/MPBomRoot.hpp>
+// StdAir Test
+#include <test/stdair/MPBomRoot.hpp>
 
 namespace myprovider {
   
