@@ -35,8 +35,7 @@ XFAIL_TESTS = $(fail_PRG)
 #
 StandardAirlineITTestSuite_SOURCES = \
 	$(stdair_test_bin_h_sources) $(stdair_test_bin_cc_sources)
-StandardAirlineITTestSuite_CXXFLAGS = $(BOOST_CFLAGS) \
-	-DBOOST_TEST_MAIN -DBOOST_TEST_DYN_LINK
+StandardAirlineITTestSuite_CXXFLAGS = $(BOOST_CFLAGS)
 StandardAirlineITTestSuite_LDADD = 
 StandardAirlineITTestSuite_LDFLAGS = $(BOOST_LIBS) \
 	$(BOOST_UNIT_TEST_FRAMEWORK_LIB) \

@@ -15,6 +15,8 @@
 #include <boost/mpl/assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 // Boost Unit Test Framework (UTF)
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MAIN
 #define BOOST_TEST_MODULE StdAirTest
 #include <boost/test/unit_test.hpp>
 // StdAir
@@ -36,10 +38,13 @@ namespace boost_utf = boost::unit_test;
  */
 struct UnitTestConfig {
   /** Constructor. */
-  UnitTestConfig() : _test_log ("StandardAirlineITTestSuite_results.xml")  {
+  UnitTestConfig() : _test_log ("StandardAirlineITTestSuite_utfresults.xml")  {
     boost_utf::unit_test_log.set_stream (_test_log);
     boost_utf::unit_test_log.set_format (boost_utf::XML);
+    boost_utf::unit_test_log.set_threshold_level (boost_utf::log_test_units);
+    //boost_utf::unit_test_log.set_threshold_level (boost_utf::log_successful_tests);
   }
+
   /** Destructor. */
   ~UnitTestConfig() {
     boost_utf::unit_test_log.set_stream (std::cout);
@@ -61,11 +66,15 @@ BOOST_AUTO_TEST_SUITE (master_test_suite)
  * Test MPL-based type handling, just as a proof-of-concept. It does
  * not use StdAir BOM.
  */
-BOOST_AUTO_TEST_CASE (test_mpl_structure) {
-  const stdair_test::BookingClass lA ("A");
+BOOST_AUTO_TEST_CASE (mpl_structure_test) {
+  const stdair::ClassCode_T lBookingClassCodeA ("A");
+  const stdair_test::BookingClass lA (lBookingClassCodeA);
   const stdair_test::Cabin lCabin (lA);
 
-  BOOST_CHECK_EQUAL (lCabin.toString(), "A");
+  BOOST_CHECK_EQUAL (lCabin.toString(), lBookingClassCodeA);
+  BOOST_CHECK_MESSAGE (lCabin.toString() == lBookingClassCodeA,
+                       "The cabin key, '" << lCabin.toString()
+                       << "' is not equal to '" << lBookingClassCodeA << "'");
 
   // MPL
   typedef boost::mpl::vector<stdair_test::BookingClass> MPL_BookingClass;
@@ -86,7 +95,7 @@ BOOST_AUTO_TEST_CASE (test_mpl_structure) {
 /**
  * Test the initialisation of the Standard Airline IT base library.
  */
-BOOST_AUTO_TEST_CASE (test_stdair_service_initialisation) {
+BOOST_AUTO_TEST_CASE (stdair_service_initialisation_test) {
   // Output log File
   const std::string lLogFilename ("testServiceInitialisation.log");
     
@@ -105,8 +114,12 @@ BOOST_AUTO_TEST_CASE (test_stdair_service_initialisation) {
   const stdair::BomRoot& lBomRoot = stdairService.getBomRoot();
   const std::string& lBomRootKeyStr = lBomRoot.describeKey();
 
-  BOOST_CHECK_MESSAGE (lBomRootKeyStr == " -- ROOT -- ",
-                       "The BOM root key has got a wrong value");
+  const std::string lBomRootString (" -- ROOT -- ");
+  BOOST_CHECK_EQUAL (lBomRootKeyStr, lBomRootString);
+  BOOST_CHECK_MESSAGE (lBomRootKeyStr == lBomRootString,
+                       "The BOM root key, '" << lBomRootKeyStr
+                       << "', should be equal to '" << lBomRootString
+                       << "', but is not.");
 
   // Close the Log outputFile
   logOutputFile.close();
@@ -115,7 +128,7 @@ BOOST_AUTO_TEST_CASE (test_stdair_service_initialisation) {
 /**
  * Test the initialisation of Standard Airline IT BOM objects.
  */
-BOOST_AUTO_TEST_CASE (test_bom_structure_instantiation) {
+BOOST_AUTO_TEST_CASE (bom_structure_instantiation_test) {
   // Step 0.0: initialisation
   // Create the root of the Bom tree (i.e., a BomRoot object)
   stdair::BomRoot& lBomRoot =
@@ -129,8 +142,10 @@ BOOST_AUTO_TEST_CASE (test_bom_structure_instantiation) {
     stdair::FacBom<myprovider::Inventory>::instance().create (lBAKey);
   stdair::FacBomManager::instance().addToList (lBomRoot, lBAInv);
 
+  BOOST_CHECK_EQUAL (lBAInv.describeKey(), lBAAirlineCode);
   BOOST_CHECK_MESSAGE (lBAInv.describeKey() == lBAAirlineCode,
-                       "They inventory key should be '" << lBAAirlineCode
+                       "The inventory key, '" << lBAInv.describeKey()
+                       << "', should be equal to '" << lBAAirlineCode
                        << "', but is not");
 
   // Create an Inventory for AF
@@ -140,8 +155,10 @@ BOOST_AUTO_TEST_CASE (test_bom_structure_instantiation) {
     stdair::FacBom<myprovider::Inventory>::instance().create (lAFKey);
   stdair::FacBomManager::instance().addToList (lBomRoot, lAFInv);
 
+  BOOST_CHECK_EQUAL (lAFInv.describeKey(), lAFAirlineCode);
   BOOST_CHECK_MESSAGE (lAFInv.describeKey() == lAFAirlineCode,
-                       "They inventory key should be '" << lAFAirlineCode
+                       "The inventory key, '" << lAFInv.describeKey()
+                       << "', should be equal to '" << lAFAirlineCode
                        << "', but is not");
   
   // Browse the inventories
@@ -153,14 +170,16 @@ BOOST_AUTO_TEST_CASE (test_bom_structure_instantiation) {
          lInventoryList.begin(); itInv != lInventoryList.end();
        ++itInv, ++idx) {
     const myprovider::Inventory* lInv_ptr = *itInv;
-    assert (lInv_ptr != NULL);
+    BOOST_REQUIRE (lInv_ptr != NULL);
     
+    BOOST_CHECK_EQUAL (lInventoryKeyArray[idx], lInv_ptr->describeKey());
     BOOST_CHECK_MESSAGE (lInventoryKeyArray[idx] == lInv_ptr->describeKey(),
-                         "They inventory key '" << lInventoryKeyArray[idx]
-                         << "' does not match that of the Inventory object");
+                         "They inventory key, '" << lInventoryKeyArray[idx]
+                         << "', does not match that of the Inventory object: '"
+                         << lInv_ptr->describeKey() << "'");
   }
 }
- 
+
 // End the test suite
 BOOST_AUTO_TEST_SUITE_END()
 
