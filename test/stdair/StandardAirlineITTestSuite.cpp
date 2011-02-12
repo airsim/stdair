@@ -6,8 +6,9 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
-#include <string>
+#include <sstream>
 #include <fstream>
+#include <string>
 // Boost MPL
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/vector.hpp>
@@ -33,14 +34,16 @@
 
 namespace boost_utf = boost::unit_test;
 
+// (Boost) Unit Test XML Report
+std::ofstream utfReportStream ("StandardAirlineITTestSuite_utfresults.xml");
+
 /**
  * Configuration for the Boost Unit Test Framework (UTF)
  */
 struct UnitTestConfig {
   /** Constructor. */
   UnitTestConfig() {
-    static std::ofstream _test_log("StandardAirlineITTestSuite_utfresults.xml");
-    boost_utf::unit_test_log.set_stream (_test_log);
+    boost_utf::unit_test_log.set_stream (utfReportStream);
     boost_utf::unit_test_log.set_format (boost_utf::XML);
     boost_utf::unit_test_log.set_threshold_level (boost_utf::log_test_units);
     //boost_utf::unit_test_log.set_threshold_level (boost_utf::log_successful_tests);
@@ -113,6 +116,11 @@ BOOST_AUTO_TEST_CASE (stdair_service_initialisation_test) {
   const std::string& lBomRootKeyStr = lBomRoot.describeKey();
 
   const std::string lBomRootString (" -- ROOT -- ");
+
+  // DEBUG
+  STDAIR_LOG_DEBUG ("The BOM root key is '" << lBomRootKeyStr
+                    << "'. It should be equal to '" << lBomRootString << "'");
+  
   BOOST_CHECK_EQUAL (lBomRootKeyStr, lBomRootString);
   BOOST_CHECK_MESSAGE (lBomRootKeyStr == lBomRootString,
                        "The BOM root key, '" << lBomRootKeyStr

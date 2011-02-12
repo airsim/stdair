@@ -2,13 +2,10 @@
 include $(top_srcdir)/Makefile.common
 include $(srcdir)/sources.mk
 
-MAINTAINERCLEANFILES = Makefile.in
-
 ##
 SUBDIRS =
 
 EXTRA_DIST =
-##
 
 ##
 # Test library
@@ -26,6 +23,11 @@ libstdairtest_la_LDFLAGS = \
 #
 nofail_PRG = StandardAirlineITTestSuite
 fail_PRG =
+
+#
+MAINTAINERCLEANFILES = Makefile.in
+CLEANFILES = ${nofail_PRG:%=%_utfresults.xml} ${nofail_PRG:%=%.log} \
+	testServiceInitialisation.log
 
 #
 check_PROGRAMS = $(nofail_PRG) $(fail_PRG)
