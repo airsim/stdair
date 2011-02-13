@@ -1,19 +1,33 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STL
+#include <cassert>
+// Boost
+#include <boost/make_shared.hpp>
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/EventStruct.hpp>
 
 namespace stdair {
+
+  // //////////////////////////////////////////////////////////////////////
+  EventStruct::EventStruct()
+    : _eventType (EventType::BKG_REQ), _eventTimeStamp (0),
+      _demandStreamKeyStr ("") {
+    assert (false);
+  }
   
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
                             const DemandStreamKeyStr_T& iDemandStreamKey,
                             BookingRequestPtr_T ioRequestPtr)
-    : _eventType (iEventType), _demandStreamKeyStr (iDemandStreamKey),
-      _request (ioRequestPtr) {
+    : _eventType (iEventType), _demandStreamKeyStr (iDemandStreamKey) {
+
+    //
+    assert (ioRequestPtr != NULL);
+    _request = boost::make_shared<BookingRequestStruct> (*ioRequestPtr);
     assert (_request != NULL);
     
     // Compute and store the number of seconds between iDateTime and
@@ -27,8 +41,13 @@ namespace stdair {
   EventStruct::EventStruct (const EventStruct& iEventStruct)
     : _eventType (iEventStruct._eventType),
       _eventTimeStamp (iEventStruct._eventTimeStamp),
-      _demandStreamKeyStr (iEventStruct._demandStreamKeyStr),
-      _request (iEventStruct._request) {
+      _demandStreamKeyStr (iEventStruct._demandStreamKeyStr) {
+
+    //
+    if (iEventStruct._request != NULL) {
+      _request =
+        boost::make_shared<BookingRequestStruct> (*iEventStruct._request);
+    }
   }
   
   // //////////////////////////////////////////////////////////////////////
