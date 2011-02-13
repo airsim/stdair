@@ -105,6 +105,10 @@ namespace stdair {
      *   <li>and update accordingly the corresponding progress
      *     statuses.</li>
      * </ul>
+     * @param stdair::EventStruct& The reference on EventStruct is not
+     *   constant, because the EventStruct object can be altered: its
+     *   date-time stamp can be changed accordingly to the location
+     *   where it has been inserted in the event queue.
      */
     bool addEvent (EventStruct&);
 
@@ -128,7 +132,8 @@ namespace stdair {
      *       for each demand stream.</li>
      * </ul>
      */
-    void initStatuses();
+    void addStatus (const DemandStreamKeyStr_T&,
+                    const NbOfRequests_T& iExpectedTotalNbOfEvents);
 
     /**
      * Initialise the (Boost) progress display objects, passed as parameter.

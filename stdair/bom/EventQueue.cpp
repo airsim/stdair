@@ -78,7 +78,9 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void EventQueue::initStatuses() {
+  void EventQueue::
+  addStatus (const DemandStreamKeyStr_T& iDemandStreamKeyStr,
+             const NbOfRequests_T& iExpectedTotalNbOfEvents) {
 
     /**
      * \note After the initialisation of the event queue (e.g., by a
@@ -88,41 +90,23 @@ namespace stdair {
      * structure for every demand stream.
      */
     
-    // Browse the event structures
-    for (EventList_T::const_iterator itEvent = _eventList.begin();
-         itEvent != _eventList.end(); ++itEvent) {
-      // Retrieve the Event structure
-      const EventStruct& lEventStruct = itEvent->second;
+    // Initialise the progress status object for the current demand stream
+    const NbOfEventsPair_T lNbOfEventsPair (0, iExpectedTotalNbOfEvents);
       
-      // Retrieve the corresponding demand stream
-      const stdair::DemandStreamKeyStr_T& lDemandStreamKeyStr =
-        lEventStruct.getDemandStreamKey();
-      
-      // Expected total number of events for the current demand stream
-      /*
-      const NbOfRequests_T& lExpectedTotalNbOfEvents = trademgenService.
-        getTotalNumberOfRequestsToBeGenerated (lDemandStreamKey);
-      */
-      const NbOfRequests_T lExpectedTotalNbOfEvents = 0.0;
+    // Insert the (Boost) progress display object into the dedicated map
+    const bool hasInsertBeenSuccessful =
+      _nbOfEvents.insert (NbOfEventsByDemandStreamMap_T::
+                          value_type (iDemandStreamKeyStr,
+                                      lNbOfEventsPair)).second;
 
-      // Initialise the progress status object for the current demand stream
-      const NbOfEventsPair_T lNbOfEventsPair (0, lExpectedTotalNbOfEvents);
-      
-      // Insert the (Boost) progress display object into the dedicated map
-      const bool hasInsertBeenSuccessful =
-        _nbOfEvents.insert (NbOfEventsByDemandStreamMap_T::
-                            value_type (lDemandStreamKeyStr,
-                                        lNbOfEventsPair)).second;
-
-      if (hasInsertBeenSuccessful == false) {
-        STDAIR_LOG_ERROR ("No progress_status can be inserted "
-                          << "for the following DemandStream: "
-                          << lDemandStreamKeyStr
-                          << ". EventQueue: " << toString());
-        throw EventException ("No progress_status can be inserted for the "
-                              "following DemandStream: " + lDemandStreamKeyStr
-                              + ". EventQueue: " + describeKey());
-      }
+    if (hasInsertBeenSuccessful == false) {
+      STDAIR_LOG_ERROR ("No progress_status can be inserted "
+                        << "for the following DemandStream: "
+                        << iDemandStreamKeyStr
+                        << ". EventQueue: " << toString());
+      throw EventException ("No progress_status can be inserted for the "
+                            "following DemandStream: " + iDemandStreamKeyStr
+                            + ". EventQueue: " + describeKey());
     }
   }
 
