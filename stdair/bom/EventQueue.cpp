@@ -91,7 +91,7 @@ namespace stdair {
      */
     
     // Initialise the progress status object for the current demand stream
-    const NbOfEventsPair_T lNbOfEventsPair (0, iExpectedTotalNbOfEvents);
+    const NbOfEventsPair_T lNbOfEventsPair (1, iExpectedTotalNbOfEvents);
       
     // Insert the (Boost) progress display object into the dedicated map
     const bool hasInsertBeenSuccessful =
