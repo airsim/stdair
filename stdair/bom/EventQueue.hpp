@@ -10,6 +10,7 @@
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/EventQueueKey.hpp>
+#include <stdair/bom/EventQueueTypes.hpp>
 #include <stdair/bom/EventTypes.hpp>
 
 namespace stdair {

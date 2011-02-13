@@ -33,6 +33,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/AirlineFeatureTypes.hpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionTypes.hpp \
 		$(top_srcdir)/stdair/bom/BookingRequestTypes.hpp \
+		$(top_srcdir)/stdair/bom/EventQueueTypes.hpp \
 		$(top_srcdir)/stdair/bom/EventTypes.hpp \
 		$(top_srcdir)/stdair/bom/YieldStoreTypes.hpp \
 		$(top_srcdir)/stdair/bom/BomHolder.hpp \
