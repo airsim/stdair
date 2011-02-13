@@ -9,30 +9,51 @@
 namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
-  EventStruct::
-  EventStruct (const EventType_T& iEventType,
-               const DemandStreamKeyStr_T& iDemandStreamKey,
-               BookingRequestPtr_T ioRequestPtr)
-    : _eventType (iEventType), _demandStreamKey (iDemandStreamKey) {
-    _request = ioRequestPtr;
-
-    // Compute the number of seconds between iDateTime and DEFAULT_DATETIME.
-    assert (ioRequestPtr != NULL);
-    Duration_T lDuration = ioRequestPtr->getRequestDateTime() - DEFAULT_DATETIME;
-    _eventTimestamp = lDuration.total_milliseconds();
+  EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
+                            const DemandStreamKeyStr_T& iDemandStreamKey,
+                            BookingRequestPtr_T ioRequestPtr)
+    : _eventType (iEventType), _demandStreamKeyStr (iDemandStreamKey),
+      _request (ioRequestPtr) {
+    assert (_request != NULL);
+    
+    // Compute and store the number of seconds between iDateTime and
+    // DEFAULT_DATETIME.
+    const Duration_T lDuration =
+      _request->getRequestDateTime() - DEFAULT_DATETIME;
+    _eventTimeStamp = lDuration.total_milliseconds();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  EventStruct::
-  EventStruct (const EventStruct& iEventStruct)
+  EventStruct::EventStruct (const EventStruct& iEventStruct)
     : _eventType (iEventStruct._eventType),
-      _eventTimestamp (iEventStruct._eventTimestamp),
-      _demandStreamKey (iEventStruct._demandStreamKey) {
-    _request = iEventStruct._request;
+      _eventTimeStamp (iEventStruct._eventTimeStamp),
+      _demandStreamKeyStr (iEventStruct._demandStreamKeyStr),
+      _request (iEventStruct._request) {
   }
   
   // //////////////////////////////////////////////////////////////////////
   EventStruct::~EventStruct () {
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void EventStruct::fromStream (std::istream& ioIn) {
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  const std::string EventStruct::describe() const {
+    std::ostringstream oStr;
+    oStr << "[" << _eventType << "] "<< _eventTimeStamp;
+    
+    switch (_eventType) {
+    case EventType::BKG_REQ: {
+      assert (_request != NULL);
+      oStr << ", " << _demandStreamKeyStr << ", " << _request->describe();
+    }
+    default: {
+    }
+    }
+    
+    return oStr.str();
   }
 
 }

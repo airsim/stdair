@@ -12,54 +12,133 @@
 #include <stdair/bom/EventTypes.hpp>
 
 namespace stdair {
-  
+
   /** Event queue. */
   struct EventQueue : public StructAbstract {
-  public:
-    // ////////// Display methods //////////
-   /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
-    void fromStream (std::istream& ioIn) {}
-
-    /** Display of the structure. */
-    const std::string describe() const { return ""; }
-    
-  public:
     // ////////// Business methods /////////
-    /** Pop event. */
-    EventStruct& popEvent ();
-    
-    /** Add event.
-     <br>If there already is an event with the same datetime, move the given
-    event one nanosecond forward and retry the insertion until succeed. */
-    void addEvent (EventStruct&);
+  public:
+    /**
+       Pop the next coming (in time) event.
+       <br>In fact, the next coming (in time) event corresponds to the
+       event having the earliest date-time stamp. In other words, it
+       is the first/front element of the event queue.
+       <br>See also the eraseLastUsedEvent() method.
+       <br>The status is updated for the corresponding demand stream.
+    */
+    EventStruct& popEvent();
 
-    /** Erase the last used event. */
-    void eraseLastUsedEvent ();
+    /** Pop the next coming (in time) event, and update the (Boost)
+        progress display objects.
+        <br>That method first calls the popEvent() method, retrieves
+        the corresponding demand stream, and update accordingly the
+        progress display objects. */
+    EventStruct& popEvent (ProgressDisplayMap_T&);
     
-    /** Is queue done */
-    const bool isQueueDone () const;
-        
+    /**
+       Add event.
+       <br>If there already is an event with the same date-time, move
+       the given event one nanosecond forward, and retry the insertion
+       until it succeeds.
+       <br>That method:
+       <ul>
+         <li>first adds the event structure in the dedicated list,</li>
+         <li>then retrieves the corresponding demand stream,</li>
+         <li>and update accordingly the corresponding statuses.</li>
+       </ul>
+    */
+    bool addEvent (EventStruct&);
+
+    /**
+       Erase the last used event.
+       <br>In fact, the last used event is meant to be the first to
+       come in time. It corresponds to the event having the earliest
+       date-time stamp. In other words, it is the first/front element
+       of the event queue.
+       <br>Note that the erased event corresponds to the one returned
+       by the popEvent() method.
+    */
+    void eraseLastUsedEvent();
+    
+    /**
+       States whether the event queue has reached the end.
+       <br>For now, that method states whether the event queue is empty.
+    */
+    bool isQueueDone() const;
+
+    /** Initialise the (Boost) progress display objects, passed as parameter.
+        <br>The maximum, for each progress display object, is set to
+        be the expected total number of events. */
+    void initProgressDisplays (ProgressDisplayMap_T&);
+    
+    /**
+       Retrieve the status for a given demand stream.
+       <br>The status is composed of, for the given demand stream:
+       <ul>
+       <li>the current number of events (already generated),</li>
+       <li>the total number of events (to be generated).</li>
+       </ul>
+    */
+    NbOfEventsPair_T getStatus (const DemandStreamKeyStr_T&) const;
+
+    /**
+       Calculate the expected total number of events to be generated.
+       <br>The total number is the sum, for all the demand streams,
+       of the expected number of events.
+    */
+    Count_T calculateTotalNbOfEvents() const;
+
+    /**
+       Calculate the progress status.
+       <br>The progress is status is the ratio of:
+       <ul>
+       <li>the current number of events, summed over all the demand
+           streams,</li>
+       <li>over the total number of events, also summed over all the demand
+           streams.</li>
+       </ul>
+    */
+    ProgressPercentage_T calculateProgress() const;
+    
+    
     // ////////// Debug methods /////////
+  public:
     /** Queue size */
-    const Count_T getQueueSize () const;
+    Count_T getQueueSize() const;
     
     /** Is queue empty */
-    const bool isQueueEmpty () const;
+    bool isQueueEmpty() const;
+
     
+    // ////////// Display methods //////////
   public:
+    /** Read a Business Object from an input stream.
+        @param istream& the input stream. */
+    void fromStream (std::istream& ioIn);
+
+    /** Display of the structure. */
+    const std::string describe() const;
+
+    
     // ////////// Constructors and destructors /////////
-    /** Default constructors. */
+  public:
+    /** Default constructor. */
     EventQueue ();
-    /** Copy constructor. */
-    EventQueue (const EventQueue&);
     /** Destructor. */
-     ~EventQueue ();
+    ~EventQueue ();
 
   private:
+    /** Copy constructor. */
+    EventQueue (const EventQueue&);
+
+    
     // ////////// Attributes //////////
-    /** Event list */
+  private:
+    /** List of events. */
     EventList_T _eventList;
+
+    /** Status (current number of events, total number of events) for
+        each demand stream. */
+    NbOfEventsByDemandStreamMap_T _nbOfEvents;
   };
 
 }
