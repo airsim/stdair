@@ -250,16 +250,6 @@ namespace stdair {
       NbOfEventsPair_T& lNbOfEventsPair = itNbOfEventsMap->second;
       stdair::Count_T& lCurrentNbOfEvents = lNbOfEventsPair.first;
       ++lCurrentNbOfEvents;
-      
-    } else {
-      STDAIR_LOG_ERROR ("No Boost progress_display can be retrieved "
-                        << "for the following DemandStream: "
-                        << lDemandStreamKeyStr
-                        << ". EventQueue: " << toString());
-      throw EventException ("No Boost progress_display can be retrieved for "
-                            "the following DemandStream: "
-                            + lDemandStreamKeyStr + ". EventQueue: "
-                            + toString());
     }
 
     // Update the overall progress status
