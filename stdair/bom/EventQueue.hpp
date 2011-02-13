@@ -79,14 +79,19 @@ namespace stdair {
     void reset();
     
     /**
-     * Pop the next coming (in time) event.
-     * <br>In fact, the next coming (in time) event corresponds to the
-     * event having the earliest date-time stamp. In other words, it
-     * is the first/front element of the event queue.
-     * <br>See also the eraseLastUsedEvent() method.
-     * <br>The status is updated for the corresponding demand stream.
+     * Pop the next coming (in time) event, and remove it from the
+     * event queue.
+     * <ul>
+     *   <li>The next coming (in time) event corresponds to the event
+     *     having the earliest date-time stamp. In other words, it is
+     *     the first/front element of the event queue.</li>
+     *   <li>That (first) event/element is then removed from the event
+     *     queue</li>
+     *   <li>The progress status is updated for the corresponding
+     *     demand stream.</li>
+     * </ul>
      */
-    EventStruct& popEvent();
+    EventStruct popEvent();
 
     /**
      * Add event.
@@ -97,21 +102,11 @@ namespace stdair {
      * <ul>
      *   <li>first adds the event structure in the dedicated list,</li>
      *   <li>then retrieves the corresponding demand stream,</li>
-     *   <li>and update accordingly the corresponding statuses.</li>
+     *   <li>and update accordingly the corresponding progress
+     *     statuses.</li>
      * </ul>
      */
     bool addEvent (EventStruct&);
-
-    /**
-     * Erase the last used event.
-     * <br>In fact, the last used event is meant to be the first to
-     * come in time. It corresponds to the event having the earliest
-     * date-time stamp. In other words, it is the first/front element
-     * of the event queue.
-     * <br>Note that the erased event corresponds to the one returned
-     * by the popEvent() method.
-     */
-    void eraseLastUsedEvent();
 
     /**
      * States whether the event queue has reached the end.

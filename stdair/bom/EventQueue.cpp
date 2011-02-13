@@ -221,15 +221,18 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  EventStruct& EventQueue::popEvent() {
+  EventStruct EventQueue::popEvent() {
     assert (_eventList.empty() == false);
 
     // Get an iterator on the first event (sorted by date-time stamps)
     EventList_T::iterator itEvent = _eventList.begin();
 
     // Extract the corresponding Event structure
-    EventStruct& lEventStruct = itEvent->second;
+    EventStruct lEventStruct = itEvent->second;
 
+    // Remove the event, which has just been retrieved
+    _eventList.erase (itEvent);
+    
     //
     return lEventStruct;
   }
@@ -271,12 +274,6 @@ namespace stdair {
     }
     
     return insertionSucceeded;
-  }
-  
-  // ////////////////////////////////////////////////////////////////////
-  void EventQueue::eraseLastUsedEvent() {
-    assert (isQueueDone () == false);
-    _eventList.erase (_eventList.begin());
   }
   
 }
