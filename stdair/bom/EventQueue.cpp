@@ -214,13 +214,23 @@ namespace stdair {
     // Extract the corresponding Event structure
     EventStruct lEventStruct = itEvent->second;
 
+    // Extract the key of the demand stream
+    const DemandStreamKeyStr_T& lDemandStreamKeyStr =
+      lEventStruct.getDemandStreamKey();
+
+    // Retrieve the progress status for that demand stream
+    const NbOfEventsPair_T& lNbOfEventsPair = getStatus (lDemandStreamKeyStr);
+
+    // Update the progress status of the event structure
+    lEventStruct.setStatus (lNbOfEventsPair);
+
     // Remove the event, which has just been retrieved
     _eventList.erase (itEvent);
-    
+
     //
     return lEventStruct;
   }
-    
+
   // //////////////////////////////////////////////////////////////////////
   bool EventQueue::addEvent (EventStruct& ioEventStruct) {
     bool insertionSucceeded =
@@ -237,7 +247,7 @@ namespace stdair {
     while (insertionSucceeded == false && idx != 1e3) {
       // Retrieve the date-time stamp (expressed in milliseconds)
       LongDuration_T& lEventTimeStamp (ioEventStruct._eventTimeStamp);
-      ++(lEventTimeStamp);
+      ++lEventTimeStamp;
 
       // Retry to insert into the event queue
       insertionSucceeded =
@@ -256,8 +266,8 @@ namespace stdair {
       stdair::Count_T& lCurrentNbOfEvents = lNbOfEventsPair.first;
       ++lCurrentNbOfEvents;
     }
-    
+
     return insertionSucceeded;
   }
-  
+
 }

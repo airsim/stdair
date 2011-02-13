@@ -6,12 +6,14 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <iosfwd>
+#include <string>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
 #include <stdair/stdair_demand_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
 #include <stdair/basic/EventType.hpp>
+#include <stdair/bom/EventTypes.hpp>
 #include <stdair/bom/BookingRequestTypes.hpp>
 
 namespace stdair {
@@ -39,7 +41,41 @@ namespace stdair {
       return _demandStreamKeyStr;
     }
 
+    /**
+     * Get the progress status.
+     * <br>Note that that progress status may not be up-to-date. That
+     * attribute is up-to-date only after the call to the
+     * EventQueue::popEvent() method.
+     */
+    const NbOfEventsPair_T& getStatus() const {
+      return _progressStatus;
+    }
+    /** Get the current number of events. See the getStatus() method
+        for details. */
+    const Count_T& getCurrentNbOfEvents() const {
+      return _progressStatus.first;
+    }
+    /** Get the expected total number of events. See the getStatus() method
+        for details. */
+    const Count_T& getExpectedTotalNbOfEvents() const {
+      return _progressStatus.second;
+    }
+
     
+    // ///////////// Setters ///////////
+  public:
+    /** Set/update the progress status. */
+    void setStatus (const NbOfEventsPair_T& iNbOfEventsPair) {
+      _progressStatus = iNbOfEventsPair;
+    }
+    /** Set/update the progress status. */
+    void setStatus (const Count_T& iCurrentNbOfEvents,
+                    const Count_T& iExpectedTotalNbOfEvents) {
+      _progressStatus.first = iCurrentNbOfEvents;
+      _progressStatus.second = iExpectedTotalNbOfEvents;
+    }
+
+
     // ////////// Display methods //////////
   public:
     /** Read a Business Object from an input stream.
@@ -82,6 +118,19 @@ namespace stdair {
     
     /** Pointer to the booking request event */
     BookingRequestPtr_T _request;
+
+    /**
+     * Pair of counters holding the progress status.
+     * <br>That attribute is altered only for the EventStruct instance
+     * returned by the popEvent() method. For all the EventStruct
+     * instances held by the EventQueue object, that attribute is not
+     * set (and not up-to-date).
+     * <br>Indeed, the progress statuses are kept up-to-date in
+     * parallel (i.e., independently) of the EventStruct
+     * instances. They are kept in a dedicated map, stored within the
+     * EventQueue object.
+     */
+    NbOfEventsPair_T _progressStatus;
   };
 
 }

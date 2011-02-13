@@ -15,7 +15,7 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct()
     : _eventType (EventType::BKG_REQ), _eventTimeStamp (0),
-      _demandStreamKeyStr ("") {
+      _demandStreamKeyStr (""), _progressStatus (0, 0) {
     assert (false);
   }
   
@@ -23,7 +23,8 @@ namespace stdair {
   EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
                             const DemandStreamKeyStr_T& iDemandStreamKey,
                             BookingRequestPtr_T ioRequestPtr)
-    : _eventType (iEventType), _demandStreamKeyStr (iDemandStreamKey) {
+    : _eventType (iEventType), _demandStreamKeyStr (iDemandStreamKey),
+      _progressStatus (0, 0) {
 
     //
     assert (ioRequestPtr != NULL);
@@ -41,7 +42,9 @@ namespace stdair {
   EventStruct::EventStruct (const EventStruct& iEventStruct)
     : _eventType (iEventStruct._eventType),
       _eventTimeStamp (iEventStruct._eventTimeStamp),
-      _demandStreamKeyStr (iEventStruct._demandStreamKeyStr) {
+      _demandStreamKeyStr (iEventStruct._demandStreamKeyStr),
+      _progressStatus (iEventStruct._progressStatus.first,
+                       iEventStruct._progressStatus.second) {
 
     //
     if (iEventStruct._request != NULL) {
@@ -61,7 +64,8 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string EventStruct::describe() const {
     std::ostringstream oStr;
-    oStr << "[" << _eventType << "] "<< _eventTimeStamp;
+    oStr << "[" << _eventType << "][" << _progressStatus.first
+         << "/" << _progressStatus.second << "] "<< _eventTimeStamp;
     
     switch (_eventType) {
     case EventType::BKG_REQ: {
