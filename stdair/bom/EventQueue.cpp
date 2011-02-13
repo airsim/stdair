@@ -90,6 +90,8 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void EventQueue::reset() {
+    _progressStatus.first = 0.0;
+    _progressStatus.second = 0.0;
     _holderMap.clear();
     _eventList.clear();
     _nbOfEvents.clear();
