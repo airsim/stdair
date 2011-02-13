@@ -73,6 +73,12 @@ namespace stdair {
   public:
     // ////////// Business methods /////////
     /**
+     * Reset the event queue.
+     * <br>The event queue is fully emptied.
+     */
+    void reset();
+    
+    /**
      * Pop the next coming (in time) event.
      * <br>In fact, the next coming (in time) event corresponds to the
      * event having the earliest date-time stamp. In other words, it

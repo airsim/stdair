@@ -71,6 +71,13 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  void EventQueue::reset() {
+    _holderMap.clear();
+    _eventList.clear();
+    _nbOfEvents.clear();
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
   void EventQueue::initStatuses() {
 
     /**
