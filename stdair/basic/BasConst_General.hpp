@@ -12,9 +12,6 @@ namespace stdair {
   /** Default epsilon value. */
   extern const double DEFAULT_EPSILON_VALUE;
 
-  /** Default flight speed (number of kilometers per hour). */
-  extern const unsigned int DEFAULT_FLIGHT_SPEED;
-
   /** Default cabin capacity for Leg cabins. */
   extern const CabinCapacity_T DEFAULT_CABIN_CAPACITY;
 
@@ -27,8 +24,14 @@ namespace stdair {
   /** Default distance value (kilometers). */
   extern const Distance_T DEFAULT_DISTANCE_VALUE;
 
+  /** Default flight speed (number of kilometers per hour). */
+  extern const unsigned int DEFAULT_FLIGHT_SPEED;
+
   /** Default value of Fare. */
   extern const Fare_T DEFAULT_FARE_VALUE;
+
+  /** Default currency (euro). */
+  extern const PriceCurrency_T DEFAULT_CURRENCY;
 
   /** Default revenue value. */
   extern const Revenue_T DEFAULT_REVENUE_VALUE;
@@ -78,5 +81,8 @@ namespace stdair {
   /** Default number of days in a year. */
   extern const unsigned int DEFAULT_NB_OF_DAYS_IN_A_YEAR;
   
+  /** Default number of bookings. */
+  extern const NbOfBookings_T DEFAULT_CLASS_NB_OF_BOOKINGS;
+
 }
 #endif // __STDAIR_BAS_BASCONST_GENERAL_HPP

@@ -78,12 +78,6 @@ namespace stdair {
   /** Define a indicator of demand to class matching. */
   typedef double MatchingIndicator_T;
 
-  /** Define the name of an event. */
-  typedef std::string EventName_T;
-
-  /** Define a number of events. */
-  typedef double NbOfEvents_T;
-
   /** Type definition for the hashed key of the DemandStreamKey object. */
   typedef std::string DemandStreamKeyStr_T;
 

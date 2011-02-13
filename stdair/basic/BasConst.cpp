@@ -5,6 +5,7 @@
 #include <string>
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
+#include <stdair/basic/BasConst_Event.hpp>
 #include <stdair/basic/BasConst_Request.hpp>
 #include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/basic/BasConst_BookingClass.hpp>
@@ -220,9 +221,16 @@ namespace stdair {
   /** Default over-booking rate for YieldRangeStruct_T. */
   const OverbookingRate_T DEFAULT_YIELD_OVERBOOKING_RATE = 0.0;
   
+
   // //////// OnD-related BOM ///////
   /** Default value of Fare. */
   const Fare_T DEFAULT_OND_FARE_VALUE = 0.0;
+
+
+  // //////// Event Generation /////////
+  /** Default ID for the event queue. */
+  const EventQueueID_T DEFAULT_EVENT_QUEUE_ID = "EQ01";
+
 
   // //////// Booking Request /////////
   /** Default party size in a request. */

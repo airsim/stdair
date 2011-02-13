@@ -6,6 +6,8 @@
 // Boost
 #include <boost/make_shared.hpp>
 // StdAir
+#include <stdair/stdair_exceptions.hpp>
+#include <stdair/basic/BasConst_Event.hpp>
 #include <stdair/bom/EventStruct.hpp>
 #include <stdair/bom/EventQueue.hpp>
 #include <stdair/service/Logger.hpp>
@@ -13,11 +15,16 @@
 namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
-  EventQueue::EventQueue () {
+  EventQueue::EventQueue () : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL) {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  EventQueue::EventQueue (const EventQueue& iEventQueue) {
+  EventQueue::EventQueue (const Key_T& iKey) : _key (iKey), _parent (NULL) {
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  EventQueue::EventQueue (const EventQueue& iEventQueue)
+    : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL) {
     assert (false);
   }
   
@@ -28,11 +35,7 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void EventQueue::fromStream (std::istream& ioIn) {
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  const std::string EventQueue::describe() const {
+  std::string EventQueue::toString() const {
     std::ostringstream oStr;
     oStr << _eventList.size() << std::endl;
 
@@ -68,6 +71,55 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  void EventQueue::initStatuses() {
+
+    /**
+     * \note After the initialisation of the event queue (e.g., by a
+     * call to the TRADEMGEN_Service::generateFirstRequests() method),
+     * there are, by construction, exactly as many events as distinct
+     * demand streams. Indeed, the event queue contains a single event
+     * structure for every demand stream.
+     */
+    
+    // Browse the event structures
+    for (EventList_T::const_iterator itEvent = _eventList.begin();
+         itEvent != _eventList.end(); ++itEvent) {
+      // Retrieve the Event structure
+      const EventStruct& lEventStruct = itEvent->second;
+      
+      // Retrieve the corresponding demand stream
+      const stdair::DemandStreamKeyStr_T& lDemandStreamKeyStr =
+        lEventStruct.getDemandStreamKey();
+      
+      // Expected total number of events for the current demand stream
+      /*
+      const NbOfRequests_T& lExpectedTotalNbOfEvents = trademgenService.
+        getTotalNumberOfRequestsToBeGenerated (lDemandStreamKey);
+      */
+      const NbOfRequests_T lExpectedTotalNbOfEvents = 0.0;
+
+      // Initialise the progress status object for the current demand stream
+      const NbOfEventsPair_T lNbOfEventsPair (0, lExpectedTotalNbOfEvents);
+      
+      // Insert the (Boost) progress display object into the dedicated map
+      const bool hasInsertBeenSuccessful =
+        _nbOfEvents.insert (NbOfEventsByDemandStreamMap_T::
+                            value_type (lDemandStreamKeyStr,
+                                        lNbOfEventsPair)).second;
+
+      if (hasInsertBeenSuccessful == false) {
+        STDAIR_LOG_ERROR ("No progress_status can be inserted "
+                          << "for the following DemandStream: "
+                          << lDemandStreamKeyStr
+                          << ". EventQueue: " << toString());
+        throw EventException ("No progress_status can be inserted for the "
+                              "following DemandStream: " + lDemandStreamKeyStr
+                              + ". EventQueue: " + describeKey());
+      }
+    }
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   void EventQueue::
   initProgressDisplays (ProgressDisplayMap_T& ioProgressDisplayMap) {
 
@@ -77,7 +129,7 @@ namespace stdair {
            _nbOfEvents.begin();  itNbOfEventsMap != _nbOfEvents.end();
           ++itProgressDisplayMap, ++itNbOfEventsMap) {
       // Demand stream
-      const DemandStreamKeyStr_T& lDemandStreyKeyStr = itNbOfEventsMap->first;
+      const DemandStreamKeyStr_T& lDemandStreamKeyStr = itNbOfEventsMap->first;
       
       // Expected total number of events for the current demand stream
       const NbOfEventsPair_T& lNbOfEventsPair = itNbOfEventsMap->second;
@@ -91,15 +143,18 @@ namespace stdair {
       // Insert the (Boost) progress display object into the dedicated map
       const bool hasInsertBeenSuccessful =
         ioProgressDisplayMap.insert (ProgressDisplayMap_T::
-                                     value_type (lDemandStreyKeyStr,
+                                     value_type (lDemandStreamKeyStr,
                                                  lProgressDisplayPtr)).second;
 
       if (hasInsertBeenSuccessful == false) {
         STDAIR_LOG_ERROR ("No Boost progress_display can be inserted "
                           << "for the following DemandStream: "
-                          << lDemandStreyKeyStr
-                          << ". EventQueue: " << describe());
-        // TODO: throw an exception?
+                          << lDemandStreamKeyStr
+                          << ". EventQueue: " << toString());
+        throw EventException ("No Boost progress_display can be inserted for "
+                              "the following DemandStream: "
+                              + lDemandStreamKeyStr + ". EventQueue: "
+                              + describeKey());
       }
     }
   }

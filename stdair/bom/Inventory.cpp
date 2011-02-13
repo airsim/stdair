@@ -4,9 +4,14 @@
 // STL
 #include <cassert>
 // StdAir
+#include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/Inventory.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  Inventory::Inventory () : _key (DEFAULT_AIRLINE_CODE), _parent (NULL) {
+  }
 
   // ////////////////////////////////////////////////////////////////////
   Inventory::Inventory (const Key_T& iKey) : _key (iKey), _parent (NULL) {

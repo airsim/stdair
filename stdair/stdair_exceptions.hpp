@@ -97,18 +97,18 @@ namespace stdair {
   };
   
   // ////////////////////////////////////////////////////////////////////
-  class ParserException : public RootException { 
-  public:
-    /** Constructor. */
-    ParserException (const std::string& iWhat) : RootException (iWhat) {}
-  };
-  
-  // ////////////////////////////////////////////////////////////////////
   class DocumentNotFoundException : public RootException {
   public:
     /** Constructor. */
     DocumentNotFoundException (const std::string& iWhat) 
       : RootException (iWhat) {}
+  };
+  
+  // ////////////////////////////////////////////////////////////////////
+  class ParserException : public RootException { 
+  public:
+    /** Constructor. */
+    ParserException (const std::string& iWhat) : RootException (iWhat) {}
   };
   
   // ////////////////////////////////////////////////////////////////////
@@ -139,7 +139,8 @@ namespace stdair {
   class ObjectNotFoundException : public RootException {
   public:
     /** Constructor. */
-    ObjectNotFoundException (const std::string& iWhat) : RootException (iWhat) {}
+    ObjectNotFoundException (const std::string& iWhat)
+      : RootException (iWhat) {}
   };
   
   // ////////////////////////////////////////////////////////////////////
@@ -156,9 +157,19 @@ namespace stdair {
     SQLDatabaseConnectionImpossibleException (const std::string& iWhat)
       : SQLDatabaseException (iWhat) {}
   };
-  
-} // end of stdair namespace
 
+  // ////////////////////////////////////////////////////////////////////
+  class EventException : public RootException { 
+  public:
+    /** Constructor. */
+    EventException (const std::string& iWhat) : RootException (iWhat) {}
+  };
+
+
+} // end of the stdair namespace
+
+
+// TODO (anguyen): remove the following macro
 // ////////////////////////////////////////////////////////////////////
 #define CATCH_ALL_EXCEPTIONS                                            \
   catch (const stdair::FileNotFoundException& ex) {                     \

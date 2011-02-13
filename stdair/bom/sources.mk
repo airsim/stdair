@@ -18,6 +18,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/FlightPeriodKey.hpp \
 		$(top_srcdir)/stdair/bom/SegmentPeriodKey.hpp \
 		$(top_srcdir)/stdair/bom/AirlineFeatureKey.hpp \
+		$(top_srcdir)/stdair/bom/EventQueueKey.hpp \
 		$(top_srcdir)/stdair/bom/InventoryTypes.hpp \
 		$(top_srcdir)/stdair/bom/FlightDateTypes.hpp \
 		$(top_srcdir)/stdair/bom/SegmentDateTypes.hpp \
@@ -74,6 +75,7 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/FlightPeriodKey.cpp \
 		$(top_srcdir)/stdair/bom/SegmentPeriodKey.cpp \
 		$(top_srcdir)/stdair/bom/AirlineFeatureKey.cpp \
+		$(top_srcdir)/stdair/bom/EventQueueKey.cpp \
 		$(top_srcdir)/stdair/bom/BomRoot.cpp \
 		$(top_srcdir)/stdair/bom/Inventory.cpp \
 		$(top_srcdir)/stdair/bom/FlightDate.cpp \
