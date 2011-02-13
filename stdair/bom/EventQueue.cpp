@@ -15,16 +15,18 @@
 namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
-  EventQueue::EventQueue () : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL) {
+  EventQueue::EventQueue ()
+    : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL), _progressStatus (0, 0) {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  EventQueue::EventQueue (const Key_T& iKey) : _key (iKey), _parent (NULL) {
+  EventQueue::EventQueue (const Key_T& iKey)
+    : _key (iKey), _parent (NULL), _progressStatus (0, 0) {
   }
   
   // //////////////////////////////////////////////////////////////////////
   EventQueue::EventQueue (const EventQueue& iEventQueue)
-    : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL) {
+    : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL), _progressStatus (0, 0) {
     assert (false);
   }
   
@@ -37,8 +39,22 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   std::string EventQueue::toString() const {
     std::ostringstream oStr;
-    oStr << _eventList.size() << std::endl;
+    oStr << "(" << _eventList.size() << ") "
+         << _progressStatus.first << "/" << _progressStatus.second;
+    return oStr.str();
+  }
 
+  // //////////////////////////////////////////////////////////////////////
+  std::string EventQueue::display() const {
+    std::ostringstream oStr;
+
+    oStr << toString() << std::endl;
+    
+    /*
+     * \note The following can be very consuming (in time, CPU and
+     * memory) when there are a lot of demand streams (e.g., several
+     * hundreds of thousands). Uncomment it only for debug purposes.
+    */
     unsigned int demandStreamIdx = 1;
     for (NbOfEventsByDemandStreamMap_T::const_iterator itNbOfEventsMap =
            _nbOfEvents.begin(); itNbOfEventsMap != _nbOfEvents.end();
@@ -106,7 +122,7 @@ namespace stdair {
                         << ". EventQueue: " << toString());
       throw EventException ("No progress_status can be inserted for the "
                             "following DemandStream: " + iDemandStreamKeyStr
-                            + ". EventQueue: " + describeKey());
+                            + ". EventQueue: " + toString());
     }
   }
 
@@ -145,63 +161,27 @@ namespace stdair {
         throw EventException ("No Boost progress_display can be inserted for "
                               "the following DemandStream: "
                               + lDemandStreamKeyStr + ". EventQueue: "
-                              + describeKey());
+                              + toString());
       }
+
+      // Update the overall progress status
+      ++_progressStatus.first;
+      _progressStatus.second += lExpectedTotalNbOfEvents;
     }
   }
   
   // //////////////////////////////////////////////////////////////////////
   NbOfEventsPair_T EventQueue::
   getStatus (const DemandStreamKeyStr_T& iDemandStreamKey) const {
-    Count_T oCurrentNbOfEvents = 0.0;
-    Count_T oTotalNbOfEvents = 0.0;
     
     NbOfEventsByDemandStreamMap_T::const_iterator itNbOfEventsMap =
       _nbOfEvents.find (iDemandStreamKey);
     if (itNbOfEventsMap != _nbOfEvents.end()) {
-      const NbOfEventsPair_T& lNbOfEventsPair = itNbOfEventsMap->second;
-      oCurrentNbOfEvents = lNbOfEventsPair.first;
-      oTotalNbOfEvents = lNbOfEventsPair.second;
+      const NbOfEventsPair_T& oNbOfEventsPair = itNbOfEventsMap->second;
+      return oNbOfEventsPair;
     }
 
-    return NbOfEventsPair_T (oCurrentNbOfEvents, oTotalNbOfEvents);
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  Count_T EventQueue::calculateTotalNbOfEvents() const {
-    Count_T oTotalNbOfEvents = 0.0;
-
-    for (NbOfEventsByDemandStreamMap_T::const_iterator itNbOfEventsMap =
-           _nbOfEvents.begin(); itNbOfEventsMap != _nbOfEvents.end();
-         ++itNbOfEventsMap) {
-      const NbOfEventsPair_T& lNbOfEventsPair = itNbOfEventsMap->second;
-      const Count_T& lExpectedTotalNbOfEvents = lNbOfEventsPair.second;
-      oTotalNbOfEvents += lExpectedTotalNbOfEvents;
-    }
-    
-    return oTotalNbOfEvents;
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
-  ProgressPercentage_T EventQueue::calculateProgress() const {
-    ProgressPercentage_T oProgress = 0.0;
-    Count_T oCurrentNbOfEvents = 0.0;
-    Count_T oTotalNbOfEvents = 0.0;
-    
-    for (NbOfEventsByDemandStreamMap_T::const_iterator itNbOfEventsMap =
-           _nbOfEvents.begin(); itNbOfEventsMap != _nbOfEvents.end();
-         ++itNbOfEventsMap) {
-      const NbOfEventsPair_T& lNbOfEventsPair = itNbOfEventsMap->second;
-      
-      const Count_T& lCurrentNbOfEvents = lNbOfEventsPair.first;
-      oCurrentNbOfEvents += lCurrentNbOfEvents;
-      
-      const Count_T& lExpectedTotalNbOfEvents = lNbOfEventsPair.second;
-      oTotalNbOfEvents += lExpectedTotalNbOfEvents;
-    }
-
-    oProgress = oCurrentNbOfEvents / oTotalNbOfEvents;
-    return oProgress;
+    return NbOfEventsPair_T (0.0, 1e-3);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -218,11 +198,15 @@ namespace stdair {
     const DemandStreamKeyStr_T& lDemandStreamKeyStr =
       lEventStruct.getDemandStreamKey();
 
-    // Retrieve the progress status for that demand stream
+    // Retrieve the progress status specific to that demand stream
     const NbOfEventsPair_T& lNbOfEventsPair = getStatus (lDemandStreamKeyStr);
 
-    // Update the progress status of the event structure
-    lEventStruct.setStatus (lNbOfEventsPair);
+    // Update the progress status of the event structure, specific to
+    // the demand stream
+    lEventStruct.setSpecificStatus (lNbOfEventsPair);
+
+    // Update the overall progress status of the event structure
+    lEventStruct.setOverallStatus (_progressStatus);
 
     // Remove the event, which has just been retrieved
     _eventList.erase (itEvent);
@@ -259,13 +243,27 @@ namespace stdair {
     const DemandStreamKeyStr_T& lDemandStreamKeyStr =
       ioEventStruct.getDemandStreamKey();
 
+    // Update the progress status for the corresponding demand stream
     NbOfEventsByDemandStreamMap_T::iterator itNbOfEventsMap =
       _nbOfEvents.find (lDemandStreamKeyStr);
     if (itNbOfEventsMap != _nbOfEvents.end()) {
       NbOfEventsPair_T& lNbOfEventsPair = itNbOfEventsMap->second;
       stdair::Count_T& lCurrentNbOfEvents = lNbOfEventsPair.first;
       ++lCurrentNbOfEvents;
+      
+    } else {
+      STDAIR_LOG_ERROR ("No Boost progress_display can be retrieved "
+                        << "for the following DemandStream: "
+                        << lDemandStreamKeyStr
+                        << ". EventQueue: " << toString());
+      throw EventException ("No Boost progress_display can be retrieved for "
+                            "the following DemandStream: "
+                            + lDemandStreamKeyStr + ". EventQueue: "
+                            + toString());
     }
+
+    // Update the overall progress status
+    ++_progressStatus.first;
 
     return insertionSucceeded;
   }

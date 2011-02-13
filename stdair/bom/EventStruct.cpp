@@ -15,7 +15,8 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct()
     : _eventType (EventType::BKG_REQ), _eventTimeStamp (0),
-      _demandStreamKeyStr (""), _progressStatus (0, 0) {
+      _demandStreamKeyStr (""), _specificProgressStatus (0.0, 1e-3),
+      _overallProgressStatus (0.0, 1e-3) {
     assert (false);
   }
   
@@ -24,7 +25,7 @@ namespace stdair {
                             const DemandStreamKeyStr_T& iDemandStreamKey,
                             BookingRequestPtr_T ioRequestPtr)
     : _eventType (iEventType), _demandStreamKeyStr (iDemandStreamKey),
-      _progressStatus (0, 0) {
+      _specificProgressStatus (0.0, 1e-3), _overallProgressStatus (0.0, 1e-3) {
 
     //
     assert (ioRequestPtr != NULL);
@@ -43,8 +44,10 @@ namespace stdair {
     : _eventType (iEventStruct._eventType),
       _eventTimeStamp (iEventStruct._eventTimeStamp),
       _demandStreamKeyStr (iEventStruct._demandStreamKeyStr),
-      _progressStatus (iEventStruct._progressStatus.first,
-                       iEventStruct._progressStatus.second) {
+      _specificProgressStatus (iEventStruct._specificProgressStatus.first,
+                               iEventStruct._specificProgressStatus.second),
+      _overallProgressStatus (iEventStruct._overallProgressStatus.first,
+                              iEventStruct._overallProgressStatus.second) {
 
     //
     if (iEventStruct._request != NULL) {
@@ -64,8 +67,12 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string EventStruct::describe() const {
     std::ostringstream oStr;
-    oStr << "[" << _eventType << "][" << _progressStatus.first
-         << "/" << _progressStatus.second << "] "<< _eventTimeStamp;
+    oStr << "[" << _eventType
+         << "][" << _overallProgressStatus.first
+         << "/" << _overallProgressStatus.second
+         << "][" << _specificProgressStatus.first
+         << "/" << _specificProgressStatus.second
+         << "] " << _eventTimeStamp;
     
     switch (_eventType) {
     case EventType::BKG_REQ: {

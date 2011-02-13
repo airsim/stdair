@@ -6,6 +6,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <iosfwd>
+#include <string>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
@@ -47,7 +48,40 @@ namespace stdair {
       return _holderMap;
     }
     
+    /** Get the overall progress status (for the whole event queue). */
+    const NbOfEventsPair_T& getStatus() const {
+      return _progressStatus;
+    }
+    /** Get the current number of events (for the whole event queue). */
+    const Count_T& getCurrentNbOfEvents() const {
+      return _progressStatus.first;
+    }
+    /** Get the expected total number of events (for the whole event queue). */
+    const Count_T& getExpectedTotalNbOfEvents() const {
+      return _progressStatus.second;
+    }
 
+    // /////////// Setters ///////////////
+    /** Set/update the progress status. */
+    void setStatus (const NbOfEventsPair_T& iNbOfEventsPair) {
+      _progressStatus = iNbOfEventsPair;
+    }
+    /** Set/update the progress status. */
+    void setStatus (const Count_T& iCurrentNbOfEvents,
+                    const Count_T& iExpectedTotalNbOfEvents) {
+      _progressStatus.first = iCurrentNbOfEvents;
+      _progressStatus.second = iExpectedTotalNbOfEvents;
+    }
+    /** Set the current number of events (for the whole event queue). */
+    void setCurrentNbOfEvents (const Count_T& iCurrentNbOfEvents) {
+      _progressStatus.first = iCurrentNbOfEvents;
+    }
+    /** Set the expected total number of events (for the whole event queue). */
+    void setExpectedTotalNbOfEvents (const Count_T& iExpectedTotalNbOfEvents) {
+      _progressStatus.second = iExpectedTotalNbOfEvents;
+    }
+
+    
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -68,6 +102,15 @@ namespace stdair {
     const std::string describeKey() const {
       return _key.toString();
     }
+    
+    /*
+     * @brief Display the full content of the event queue, with all
+     * its demand streams.
+     * <br>That method can be very consuming (in time, CPU and
+     * memory) when there are a lot of demand streams (e.g., several
+     * hundreds of thousands). Call it only for debug purposes.
+    */
+    std::string display() const;
     
     
   public:
@@ -143,23 +186,6 @@ namespace stdair {
     void initProgressDisplays (ProgressDisplayMap_T&);
 
     /**
-     * Retrieve the status for a given demand stream.
-     * <br>The status is composed of, for the given demand stream:
-     * <ul>
-     *   <li>the current number of events (already generated),</li>
-     *   <li>the total number of events (to be generated).</li>
-     * </ul>
-     */
-    NbOfEventsPair_T getStatus (const DemandStreamKeyStr_T&) const;
-
-    /**
-     * Calculate the expected total number of events to be generated.
-     * <br>The total number is the sum, for all the demand streams,
-     * of the expected number of events.
-    */
-    Count_T calculateTotalNbOfEvents() const;
-
-    /**
      * Calculate the progress status.
      * <br>The progress is status is the ratio of:
      * <ul>
@@ -169,7 +195,22 @@ namespace stdair {
      *       streams.</li>
      * </ul>
      */
-    ProgressPercentage_T calculateProgress() const;
+    ProgressPercentage_T calculateProgress() const {
+      return (_progressStatus.first / _progressStatus.second);
+    }
+
+    /**
+     * Retrieve the status for a given demand stream.
+     * <br>The status is composed of, for the given demand stream:
+     * <ul>
+     *   <li>the current number of events (already generated),</li>
+     *   <li>the total number of events (to be generated).</li>
+     * </ul>
+     * <br>Normally, that method has not to be used directly, as
+     * EventStruct::getStatus() gives the same information, just after
+     * a call to EventQueue::popEvent().
+     */
+    NbOfEventsPair_T getStatus (const DemandStreamKeyStr_T&) const;
 
 
   public:
@@ -213,6 +254,11 @@ namespace stdair {
      * each demand stream.
      */
     NbOfEventsByDemandStreamMap_T _nbOfEvents;
+    
+    /**
+     * Pair of counters holding the overall progress status.
+     */
+    NbOfEventsPair_T _progressStatus;
   };
 
 }
