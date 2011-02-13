@@ -16,17 +16,19 @@ namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
   EventQueue::EventQueue ()
-    : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL), _progressStatus (0, 0) {
+    : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL),
+      _progressStatus (0.0, 0.0) {
   }
   
   // //////////////////////////////////////////////////////////////////////
   EventQueue::EventQueue (const Key_T& iKey)
-    : _key (iKey), _parent (NULL), _progressStatus (0, 0) {
+    : _key (iKey), _parent (NULL), _progressStatus (0.0, 0.0) {
   }
   
   // //////////////////////////////////////////////////////////////////////
   EventQueue::EventQueue (const EventQueue& iEventQueue)
-    : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL), _progressStatus (0, 0) {
+    : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL),
+      _progressStatus (0.0, 0.0) {
     assert (false);
   }
   
@@ -124,6 +126,9 @@ namespace stdair {
                             "following DemandStream: " + iDemandStreamKeyStr
                             + ". EventQueue: " + toString());
     }
+
+    // Update the overall progress status
+    _progressStatus.second += iExpectedTotalNbOfEvents;
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -163,10 +168,6 @@ namespace stdair {
                               + lDemandStreamKeyStr + ". EventQueue: "
                               + toString());
       }
-
-      // Update the overall progress status
-      ++_progressStatus.first;
-      _progressStatus.second += lExpectedTotalNbOfEvents;
     }
   }
   
@@ -205,6 +206,10 @@ namespace stdair {
     // the demand stream
     lEventStruct.setSpecificStatus (lNbOfEventsPair);
 
+    // Update the overall progress status, to account for the event
+    // that is being popped out of the event queue
+    ++_progressStatus.first;
+    
     // Update the overall progress status of the event structure
     lEventStruct.setOverallStatus (_progressStatus);
 
@@ -251,9 +256,6 @@ namespace stdair {
       stdair::Count_T& lCurrentNbOfEvents = lNbOfEventsPair.first;
       ++lCurrentNbOfEvents;
     }
-
-    // Update the overall progress status
-    ++_progressStatus.first;
 
     return insertionSucceeded;
   }
