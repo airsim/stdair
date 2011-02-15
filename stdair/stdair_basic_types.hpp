@@ -106,7 +106,7 @@ namespace stdair {
   typedef unsigned short NbOfAirlines_T;
 
   /** Define an availability. */
-  typedef double Availability_T;
+  typedef short Availability_T;
 
   /** Define the price of a travel solution. */
   typedef double Fare_T;

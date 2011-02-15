@@ -28,6 +28,9 @@ namespace stdair {
   /** Define the refundable availability of a tickets. */
   typedef bool NonRefundable_T;
 
+  /** Define the saturday stay of a tickets. */
+  typedef bool SaturdayStay_T;
+
   /** Define the average ratio (between 0 and 100) of demand with
       a saturday stay status equal to TRUE. */
   typedef unsigned int SaturdayStayRatio_T;

@@ -31,6 +31,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/SegmentPeriodTypes.hpp \
 		$(top_srcdir)/stdair/bom/AirlineFeatureTypes.hpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionTypes.hpp \
+		$(top_srcdir)/stdair/bom/FareOptionTypes.hpp \
 		$(top_srcdir)/stdair/bom/BookingRequestTypes.hpp \
 		$(top_srcdir)/stdair/bom/EventTypes.hpp \
 		$(top_srcdir)/stdair/bom/YieldStoreTypes.hpp \
@@ -53,6 +54,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/DoWStruct.hpp \
 		$(top_srcdir)/stdair/bom/PeriodStruct.hpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionStruct.hpp \
+		$(top_srcdir)/stdair/bom/FareOptionStruct.hpp \
 		$(top_srcdir)/stdair/bom/BookingRequestStruct.hpp \
 		$(top_srcdir)/stdair/bom/AirlineStruct.hpp \
 		$(top_srcdir)/stdair/bom/EventStruct.hpp \
@@ -92,6 +94,7 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/DoWStruct.cpp \
 		$(top_srcdir)/stdair/bom/PeriodStruct.cpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionStruct.cpp \
+		$(top_srcdir)/stdair/bom/FareOptionStruct.cpp \
 		$(top_srcdir)/stdair/bom/BookingRequestStruct.cpp \
 		$(top_srcdir)/stdair/bom/AirlineStruct.cpp \
 		$(top_srcdir)/stdair/bom/EventStruct.cpp \

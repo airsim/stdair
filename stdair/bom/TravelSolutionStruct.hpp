@@ -9,9 +9,12 @@
 #include <string>
 #include <vector>
 // StdAir
-#include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
 #include <stdair/bom/BookingClassTypes.hpp>
+#include <stdair/bom/FareOptionStruct.hpp>
+#include <stdair/bom/FareOptionTypes.hpp>
+#include <stdair/bom/TravelSolutionTypes.hpp>
 
 namespace stdair {
 
@@ -19,41 +22,31 @@ namespace stdair {
   struct TravelSolutionStruct : public StructAbstract {
   public:
     // /////////// Getters ///////////////
-    /** Get the fare/price. */
-    const Fare_T getFare() const {
-      return _fare;
-    }
-    /** Get the availability. */
-    const Availability_T getAvailability() const {
-      return _availability;
-    }
-    /** Get the list of segment-date keys. */
-    const KeyList_T& getSegmentDateKeyList () const {
-      return _segmentDateKeyList;
-    }
-    /** Get the list of booking-class keys. */
-    const ClassList_String_T& getBookingClassKeyList () const { 
-      return _bookingClassKeyList; 
+    /** Get the segment path. */
+    const SegmentPath_T& getSegmentPath () const {
+      return _segmentPath;
     }
 
+    /** Get the holder of avalabilities. */
+    const ClassAvailabilityMapHolder_T& getClassAvailabilityMapHolder () const {
+      return _classAvailabilityMapHolder;
+    }
+
+    /** Get the list of fare options. */
+    const FareOptionList_T& getFareOptionList () const {
+      return _fareOptionList;
+    }
+    
   public:
     // /////////// Setters ///////////////
-    /** Set the fare/price. */
-    void setFare (const Fare_T& iFare) {
-      _fare = iFare;
-    }
-    /** Set the availability. */
-    void setAvailability (const Availability_T& iAvail) {
-      _availability=iAvail;
-    }
-    /** Add a segment-date key to the dedicated list. */
-    void addSegmentDateKey (const std::string& iKey) {
-      _segmentDateKeyList.push_back (iKey);
-    }
-    /** Add a booking-class key to the dedicated list. */
-    void addBookingClassKey (const char iKey) {
-      _bookingClassKeyList.push_back (iKey);
-    }
+    /** Add a segment key to the segment path. */
+    void addSegment (const std::string&);
+
+    /** Add a class availability map. */
+    void addClassAvailabilityMap (const ClassAvailabilityMap_T&);
+
+    /** Add a fare option. */
+    void addFareOption (const FareOptionStruct&);
 
   public:
     // /////////// Display support method /////////////
@@ -74,22 +67,17 @@ namespace stdair {
     TravelSolutionStruct ();
     /** Destructor. */
     ~TravelSolutionStruct ();
-    /** Default copy constructor. */
-    TravelSolutionStruct (const TravelSolutionStruct&);
     
   private:
     // ///////////////////// Attributes //////////////////////
     /** The list of segment-date whole keys which make the travel solution. */
-    KeyList_T _segmentDateKeyList;
-    
-    /** The list of booking class keys which make the travel solution. */
-    ClassList_String_T _bookingClassKeyList;
-    
-    /** The fare of the travel solution. */
-    Fare_T _fare;
+    SegmentPath_T _segmentPath;
 
-    /** The availability of the travel solution. */
-    Availability_T _availability;
+    /** The list of availabilities for each segment-date. */
+    ClassAvailabilityMapHolder_T _classAvailabilityMapHolder;
+
+    /** The list of fare options. */
+    FareOptionList_T _fareOptionList;
   };
 
 }

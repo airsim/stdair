@@ -7,7 +7,9 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <list>
+#include <map>
 // STDAIR
+#include <stdair/stdair_types.hpp>
 #include <stdair/bom/key_types.hpp>
 
 namespace stdair {
@@ -23,6 +25,12 @@ namespace stdair {
 
   /** Define the list of segment paths. */
   typedef std::list<SegmentPath_T> SegmentPathList_T;
+
+  /** Define booking class - availability map. */
+  typedef std::map<const ClassCode_T, Availability_T> ClassAvailabilityMap_T;
+
+  /** Define list of booking class - availability maps. */
+  typedef std::list<ClassAvailabilityMap_T> ClassAvailabilityMapHolder_T;
 
 }
 #endif // __STDAIR_BOM_TRAVELSOLUTIONTYPES_HPP
