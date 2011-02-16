@@ -113,7 +113,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Fri Dec 03 2010 Son Nguyen Kim <nguyenkims@gmail.com> 99.99.99-1
+* Fri Feb 18 2011 Son Nguyen Kim <nguyenkims@gmail.com> 99.99.99-1
+- Upstream update
+
+* Wed Feb 16 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.13.0-1
 - Upstream update
 
 * Sat Feb 12 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.12.0-1
