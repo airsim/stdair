@@ -50,7 +50,7 @@ namespace stdair {
   std::string EventQueue::display() const {
     std::ostringstream oStr;
 
-    oStr << toString() << std::endl;
+    oStr << toString();
     
     /*
      * \note The following can be very consuming (in time, CPU and
@@ -62,11 +62,11 @@ namespace stdair {
            _nbOfEvents.begin(); itNbOfEventsMap != _nbOfEvents.end();
          ++itNbOfEventsMap, ++demandStreamIdx) {
       const DemandStreamKeyStr_T& lDemandStreyKeyStr = itNbOfEventsMap->first;
-      oStr << "[" << demandStreamIdx << "][" << lDemandStreyKeyStr << "] ";
+      oStr << ", [" << demandStreamIdx << "][" << lDemandStreyKeyStr << "] ";
       const NbOfEventsPair_T& lNbOfEventsPair = itNbOfEventsMap->second;
       const stdair::Count_T& lCurrentNbOfEvents = lNbOfEventsPair.first;
       const stdair::Count_T& lExpectedTotalNbOfEvents = lNbOfEventsPair.second;
-      oStr << lCurrentNbOfEvents << " / " << lExpectedTotalNbOfEvents;
+      oStr << lCurrentNbOfEvents << "/" << lExpectedTotalNbOfEvents;
     }
     
     return oStr.str();
