@@ -121,7 +121,8 @@ namespace stdair {
     // Initialise the progress status object for the current demand stream
     const Count_T lExpectedTotalNbOfEventsInt =
       std::floor (iExpectedTotalNbOfEvents);
-    const ProgressStatus lProgressStatus (1, lExpectedTotalNbOfEventsInt);
+    const ProgressStatus lProgressStatus (1, lExpectedTotalNbOfEventsInt,
+                                          lExpectedTotalNbOfEventsInt);
       
     // Insert the (Boost) progress display object into the dedicated map
     const bool hasInsertBeenSuccessful =
