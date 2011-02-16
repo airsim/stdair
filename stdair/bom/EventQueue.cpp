@@ -94,8 +94,6 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void EventQueue::reset() {
-    _progressStatus.first = stdair::DEFAULT_PROGRESS_STATUS;
-    _progressStatus.second = stdair::DEFAULT_PROGRESS_STATUS;
     _holderMap.clear();
     _eventList.clear();
     _nbOfEvents.clear();
