@@ -17,18 +17,22 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   EventQueue::EventQueue ()
     : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL),
-      _progressStatus (0.0, 0.0) {
+      _progressStatus (stdair::DEFAULT_PROGRESS_STATUS,
+                       stdair::DEFAULT_PROGRESS_STATUS) {
   }
   
   // //////////////////////////////////////////////////////////////////////
   EventQueue::EventQueue (const Key_T& iKey)
-    : _key (iKey), _parent (NULL), _progressStatus (0.0, 0.0) {
+    : _key (iKey), _parent (NULL),
+      _progressStatus (stdair::DEFAULT_PROGRESS_STATUS,
+                       stdair::DEFAULT_PROGRESS_STATUS) {
   }
   
   // //////////////////////////////////////////////////////////////////////
   EventQueue::EventQueue (const EventQueue& iEventQueue)
     : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL),
-      _progressStatus (0.0, 0.0) {
+      _progressStatus (stdair::DEFAULT_PROGRESS_STATUS,
+                       stdair::DEFAULT_PROGRESS_STATUS) {
     assert (false);
   }
   
@@ -90,8 +94,8 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void EventQueue::reset() {
-    _progressStatus.first = 0.0;
-    _progressStatus.second = 0.0;
+    _progressStatus.first = stdair::DEFAULT_PROGRESS_STATUS;
+    _progressStatus.second = stdair::DEFAULT_PROGRESS_STATUS;
     _holderMap.clear();
     _eventList.clear();
     _nbOfEvents.clear();
@@ -111,7 +115,9 @@ namespace stdair {
      */
     
     // Initialise the progress status object for the current demand stream
-    const NbOfEventsPair_T lNbOfEventsPair (1, iExpectedTotalNbOfEvents);
+    const Count_T lExpectedTotalNbOfEventsInt =
+      std::floor (iExpectedTotalNbOfEvents);
+    const NbOfEventsPair_T lNbOfEventsPair (1, lExpectedTotalNbOfEventsInt);
       
     // Insert the (Boost) progress display object into the dedicated map
     const bool hasInsertBeenSuccessful =
@@ -184,7 +190,8 @@ namespace stdair {
       return oNbOfEventsPair;
     }
 
-    return NbOfEventsPair_T (0.0, 1e-3);
+    return NbOfEventsPair_T (stdair::DEFAULT_PROGRESS_STATUS,
+                             stdair::DEFAULT_PROGRESS_STATUS);
   }
 
   // //////////////////////////////////////////////////////////////////////

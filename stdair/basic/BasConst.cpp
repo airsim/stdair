@@ -231,6 +231,9 @@ namespace stdair {
   /** Default ID for the event queue. */
   const EventQueueID_T DEFAULT_EVENT_QUEUE_ID = "EQ01";
 
+  /** Default progress status. */
+  const Count_T DEFAULT_PROGRESS_STATUS = 0;
+  
 
   // //////// Booking Request /////////
   /** Default party size in a request. */
