@@ -78,7 +78,7 @@ namespace stdair {
   // typedef unsigned short NbOfSeats_T;
 
   /** Count */
-  typedef int Count_T;
+  typedef unsigned int Count_T;
   
   /** Number of passengers (in a group) for a booking. */
   typedef unsigned short PartySize_T;

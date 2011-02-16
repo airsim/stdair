@@ -64,7 +64,7 @@ namespace stdair {
 
   private:
     // //////// Attributes /////////
-    /** Frequent flyer type. */
+    /** Event type. */
     EN_EventType _type;
   };
 

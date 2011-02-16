@@ -46,7 +46,9 @@ namespace stdair {
   std::string EventQueue::toString() const {
     std::ostringstream oStr;
     oStr << "(" << _eventList.size() << ") "
-         << _progressStatus.first << "/" << _progressStatus.second;
+         << _progressStatus.getCurrentNb() << "/{"
+         << _progressStatus.getExpectedNb() << ","
+         << _progressStatus.getActualNb() << "}";
     return oStr.str();
   }
 
@@ -65,12 +67,12 @@ namespace stdair {
     for (NbOfEventsByDemandStreamMap_T::const_iterator itNbOfEventsMap =
            _nbOfEvents.begin(); itNbOfEventsMap != _nbOfEvents.end();
          ++itNbOfEventsMap, ++demandStreamIdx) {
+
       const DemandStreamKeyStr_T& lDemandStreyKeyStr = itNbOfEventsMap->first;
       oStr << ", [" << demandStreamIdx << "][" << lDemandStreyKeyStr << "] ";
-      const NbOfEventsPair_T& lNbOfEventsPair = itNbOfEventsMap->second;
-      const stdair::Count_T& lCurrentNbOfEvents = lNbOfEventsPair.first;
-      const stdair::Count_T& lExpectedTotalNbOfEvents = lNbOfEventsPair.second;
-      oStr << lCurrentNbOfEvents << "/" << lExpectedTotalNbOfEvents;
+
+      const ProgressStatus& lProgressStatus = itNbOfEventsMap->second;
+      oStr << lProgressStatus;
     }
     
     return oStr.str();
@@ -95,7 +97,7 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   void EventQueue::reset() {
     // Reset only the current number of events, not the expected one
-    _progressStatus.first = stdair::DEFAULT_PROGRESS_STATUS;
+    _progressStatus.setCurrentNb (DEFAULT_PROGRESS_STATUS);
     
     //
     _holderMap.clear();
@@ -119,13 +121,13 @@ namespace stdair {
     // Initialise the progress status object for the current demand stream
     const Count_T lExpectedTotalNbOfEventsInt =
       std::floor (iExpectedTotalNbOfEvents);
-    const NbOfEventsPair_T lNbOfEventsPair (1, lExpectedTotalNbOfEventsInt);
+    const ProgressStatus lProgressStatus (1, lExpectedTotalNbOfEventsInt);
       
     // Insert the (Boost) progress display object into the dedicated map
     const bool hasInsertBeenSuccessful =
       _nbOfEvents.insert (NbOfEventsByDemandStreamMap_T::
                           value_type (iDemandStreamKeyStr,
-                                      lNbOfEventsPair)).second;
+                                      lProgressStatus)).second;
 
     if (hasInsertBeenSuccessful == false) {
       STDAIR_LOG_ERROR ("No progress_status can be inserted "
@@ -138,62 +140,25 @@ namespace stdair {
     }
 
     // Update the overall progress status
-    _progressStatus.second += iExpectedTotalNbOfEvents;
+    _progressStatus.setExpectedNb (_progressStatus.getExpectedNb()
+                                   + iExpectedTotalNbOfEvents);
+
+    _progressStatus.setActualNb (_progressStatus.getActualNb()
+                                   + iExpectedTotalNbOfEvents);
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void EventQueue::
-  initProgressDisplays (ProgressDisplayMap_T& ioProgressDisplayMap) {
-
-    ProgressDisplayMap_T::iterator itProgressDisplayMap =
-      ioProgressDisplayMap.begin();
-    for (NbOfEventsByDemandStreamMap_T::const_iterator itNbOfEventsMap =
-           _nbOfEvents.begin();  itNbOfEventsMap != _nbOfEvents.end();
-          ++itProgressDisplayMap, ++itNbOfEventsMap) {
-      // Demand stream
-      const DemandStreamKeyStr_T& lDemandStreamKeyStr = itNbOfEventsMap->first;
-      
-      // Expected total number of events for the current demand stream
-      const NbOfEventsPair_T& lNbOfEventsPair = itNbOfEventsMap->second;
-      const Count_T& lExpectedTotalNbOfEvents = lNbOfEventsPair.second;
-
-      // Initialise the (Boost) progress display object for the
-      // current demand stream
-      ProgressDisplayPtr lProgressDisplayPtr =
-        boost::make_shared<boost::progress_display> (lExpectedTotalNbOfEvents);
-
-      // Insert the (Boost) progress display object into the dedicated map
-      const bool hasInsertBeenSuccessful =
-        ioProgressDisplayMap.insert (ProgressDisplayMap_T::
-                                     value_type (lDemandStreamKeyStr,
-                                                 lProgressDisplayPtr)).second;
-
-      if (hasInsertBeenSuccessful == false) {
-        STDAIR_LOG_ERROR ("No Boost progress_display can be inserted "
-                          << "for the following DemandStream: "
-                          << lDemandStreamKeyStr
-                          << ". EventQueue: " << toString());
-        throw EventException ("No Boost progress_display can be inserted for "
-                              "the following DemandStream: "
-                              + lDemandStreamKeyStr + ". EventQueue: "
-                              + toString());
-      }
-    }
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
-  NbOfEventsPair_T EventQueue::
+  ProgressStatus EventQueue::
   getStatus (const DemandStreamKeyStr_T& iDemandStreamKey) const {
     
     NbOfEventsByDemandStreamMap_T::const_iterator itNbOfEventsMap =
       _nbOfEvents.find (iDemandStreamKey);
     if (itNbOfEventsMap != _nbOfEvents.end()) {
-      const NbOfEventsPair_T& oNbOfEventsPair = itNbOfEventsMap->second;
-      return oNbOfEventsPair;
+      const ProgressStatus& oProgressStatus = itNbOfEventsMap->second;
+      return oProgressStatus;
     }
 
-    return NbOfEventsPair_T (stdair::DEFAULT_PROGRESS_STATUS,
-                             stdair::DEFAULT_PROGRESS_STATUS);
+    return ProgressStatus();
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -211,15 +176,16 @@ namespace stdair {
       lEventStruct.getDemandStreamKey();
 
     // Retrieve the progress status specific to that demand stream
-    const NbOfEventsPair_T& lNbOfEventsPair = getStatus (lDemandStreamKeyStr);
+    const ProgressStatus& lProgressStatus = getStatus (lDemandStreamKeyStr);
 
     // Update the progress status of the event structure, specific to
     // the demand stream
-    lEventStruct.setSpecificStatus (lNbOfEventsPair);
+    lEventStruct.setSpecificStatus (lProgressStatus);
 
-    // Update the overall progress status, to account for the event
-    // that is being popped out of the event queue
-    ++_progressStatus.first;
+    // Update the (current number part of the) overall progress
+    // status, to account for the event that is being popped out of
+    // the event queue
+    ++_progressStatus;
     
     // Update the overall progress status of the event structure
     lEventStruct.setOverallStatus (_progressStatus);
@@ -263,9 +229,8 @@ namespace stdair {
     NbOfEventsByDemandStreamMap_T::iterator itNbOfEventsMap =
       _nbOfEvents.find (lDemandStreamKeyStr);
     if (itNbOfEventsMap != _nbOfEvents.end()) {
-      NbOfEventsPair_T& lNbOfEventsPair = itNbOfEventsMap->second;
-      stdair::Count_T& lCurrentNbOfEvents = lNbOfEventsPair.first;
-      ++lCurrentNbOfEvents;
+      ProgressStatus& lProgressStatus = itNbOfEventsMap->second;
+      ++lProgressStatus;
     }
 
     return insertionSucceeded;
