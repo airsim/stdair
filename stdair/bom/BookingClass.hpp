@@ -4,6 +4,9 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STL
+#include <iosfwd>
+#include <string>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
@@ -46,6 +49,81 @@ namespace stdair {
     /** Get the map of children holders. */
     const HolderMap_T& getHolderMap() const {
       return _holderMap;
+    }
+
+    /** Get teh sub-class code. */
+    const SubclassCode_T& getSubclassCode() const {
+      return _subclassCode;
+    }
+
+    /** Get the authorisation level (AU, i.e., cumulated protection). */
+    const AuthorizationLevel_T& getAuthorizationLevel() const {
+      return _cumulatedProtection;
+    }
+
+    /** Get the protection. */
+    const AuthorizationLevel_T& getProtection() const {
+      return _protection;
+    }
+
+    /** Get the negotiated space. */
+    const NbOfSeats_T& getNegotiatedSpace() const {
+      return _nego;
+    }
+
+    /** Get the overbooking rate. */
+    const OverbookingRate_T& getNoShowPercentage() const {
+      return _noShowPercentage;
+    }
+
+    /** Get the overbooking percentage. */
+    const OverbookingRate_T& getOverbookingPercentage() const {
+      return _overbookingPercentage;
+    }
+
+    /** Get the number of bookings. */
+    const NbOfBookings_T& getNbOfBookings() const {
+      return _nbOfBookings;
+    }
+
+    /** Get the number of group bookings. */
+    const NbOfBookings_T& getNbOfGroupBookings() const {
+      return _groupNbOfBookings;
+    }
+
+    /** Get the number of pending group bookings. */
+    const NbOfBookings_T& getNbOfPendingGroupBookings() const {
+      return _groupPendingNbOfBookings;
+    }
+
+    /** Get the number of staff bookings. */
+    const NbOfBookings_T& getNbOfStaffBookings() const {
+      return _staffNbOfBookings;
+    }
+
+    /** Get the number of wait-list bookings. */
+    const NbOfBookings_T& getNbOfWLBookings() const {
+      return _wlNbOfBookings;
+    }
+
+    /** Get the expected number of passengers to board (ETB). */
+    const NbOfBookings_T& getETB() const {
+      return _etb;
+    }
+
+    /** Get the net segment class availability. */
+    const Availability_T& getNetClassAvailability() const {
+      return _netClassAvailability;
+    }
+
+    /** Get the segment class availability. */
+    const Availability_T& getSegmentAvailability() const {
+      return _segmentAvailability;
+    }
+
+    /** Net revenue availability. */
+    const Availability_T& getNetRevenueAvailability() const {
+      return _netRevenueAvailability;
     }
 
 
@@ -102,34 +180,49 @@ namespace stdair {
     /** Map holding the children (SegmentDate and LegDate objects). */
     HolderMap_T _holderMap;
 
+    /** Sub-class code. */
     SubclassCode_T _subclassCode;
 
+    /** Cumulated protection. */
     AuthorizationLevel_T _cumulatedProtection;
 
+    /** Protection. */
     AuthorizationLevel_T _protection;
 
+    /** Negotiated space. */
     NbOfSeats_T _nego;
 
+    /** Overbooking rate. */
     OverbookingRate_T _noShowPercentage;
 
+    /** Overbooking percentage. */
     OverbookingRate_T _overbookingPercentage;
 
+    /** Number of bookings. */
     NbOfBookings_T _nbOfBookings;
 
+    /** Number of group bookings. */
     NbOfBookings_T _groupNbOfBookings;
 
+    /** Number of pending group bookings. */
     NbOfBookings_T _groupPendingNbOfBookings;
 
+    /** Number of staff bookings. */
     NbOfBookings_T _staffNbOfBookings;
 
+    /** Number of wait-list bookings. */
     NbOfBookings_T _wlNbOfBookings;
 
+    /** Expected to board (ETB). */
     NbOfBookings_T _etb;
 
+    /** Net segment class availability. */
     Availability_T _netClassAvailability;
 
+    /** Segment class availability. */
     Availability_T _segmentAvailability;
 
+    /** Net revenue availability. */
     Availability_T _netRevenueAvailability;
   };
 

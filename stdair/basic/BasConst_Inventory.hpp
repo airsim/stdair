@@ -22,9 +22,12 @@ namespace stdair {
   /** Default Destination. */
   extern const AirportCode_T DEFAULT_DESTINATION;
   
-  /** Default Cabin. */
-  extern const CabinCode_T DEFAULT_CABIN;
-  
+  /** Default Cabin Code. */
+  extern const CabinCode_T DEFAULT_CABIN_CODE;
+
+  /** Default Fare Family Code. */
+  extern const FamilyCode_T DEFAULT_FARE_FAMILY_CODE;
+
   /** Default Bid-Price. */
   extern const BidPrice_T DEFAULT_BID_PRICE;
 

@@ -11,7 +11,7 @@
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentCabinKey::SegmentCabinKey() : _cabinCode (DEFAULT_CABIN) {
+  SegmentCabinKey::SegmentCabinKey() : _cabinCode (DEFAULT_CABIN_CODE) {
     assert (false);
   }
 

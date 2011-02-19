@@ -54,7 +54,7 @@ namespace stdair {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  void LegDate::setElapsedTime(const Duration_T& iElapsedTime) {
+  void LegDate::setElapsedTime (const Duration_T& iElapsedTime) {
     // Set Elapsed time
     _elapsedTime = iElapsedTime;
 

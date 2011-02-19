@@ -4,28 +4,41 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STL
+#include <iosfwd>
+#include <string>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/KeyAbstract.hpp>
 
 namespace stdair {
 
-  /** Key of fare family. */
+  /**
+   * Key of a given fare family, made of a fare family code.
+   */
   struct FareFamilyKey : public KeyAbstract {
     
+    // /////////// Constructors and destructors ///////////
+  private:
+    /** Default constructor. */
+    FareFamilyKey();
+    
   public:
-    // /////////// Construction ///////////
     /** Constructor. */
     FareFamilyKey (const FamilyCode_T& iFamilyCode);
+    /** Default copy constructor. */
+    FareFamilyKey (const FareFamilyKey&);
     /** Destructor. */
-    ~FareFamilyKey ();
-    
+    ~FareFamilyKey();
+
+
     // /////////// Getters //////////
     /** Get the family code. */
     const FamilyCode_T& getFamilyCode () const {
       return _familyCode;
     }
     
+
     // /////////// Display support methods /////////
     /** Dump a Business Object Key into an output stream.
         @param ostream& the output stream. */
@@ -41,8 +54,9 @@ namespace stdair {
    */
     const std::string toString() const;
     
+
   private:
-    // Attributes
+    // ///////////////// Attributes ///////////////
     /** Family code. */
     FamilyCode_T _familyCode;
   };

@@ -4,6 +4,9 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STL
+#include <iosfwd>
+#include <string>
 // StdAir 
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
@@ -94,8 +97,10 @@ namespace stdair {
     // ////////// Attributes /////////
     /** Primary key (flight number and departure date). */
     Key_T _key;
+
     /** Pointer on the parent class (Inventory). */
     BomAbstract* _parent;
+
     /** Map holding the children (SegmentDate and LegDate objects). */
     HolderMap_T _holderMap;
   };

@@ -44,7 +44,7 @@ namespace stdair {
   typedef double NbOfFlightDates_T;
 
   /** Define the commited space of a cabin. */
-  typedef double CommitedSpace_T;
+  typedef double CommittedSpace_T;
 
   /** Define the unsold protection (UPR). */
   typedef double UPR_T;

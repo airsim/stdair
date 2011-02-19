@@ -4,7 +4,6 @@
 // STL
 #include <cassert>
 // StdAir
-#include <stdair/basic/BasConst_BomManager.hpp>
 #include <stdair/bom/BomManager.hpp>
 
 namespace stdair {

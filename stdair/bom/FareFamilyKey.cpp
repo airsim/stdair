@@ -2,11 +2,23 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
+#include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/FareFamilyKey.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  FareFamilyKey::FareFamilyKey() : _familyCode (DEFAULT_FARE_FAMILY_CODE) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  FareFamilyKey::FareFamilyKey (const FareFamilyKey& iFareFamilyKey)
+    : _familyCode (iFareFamilyKey._familyCode) {
+  }
 
   // ////////////////////////////////////////////////////////////////////
   FareFamilyKey::FareFamilyKey (const FamilyCode_T& iFamilyCode)
@@ -19,7 +31,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   void FareFamilyKey::toStream (std::ostream& ioOut) const {
-    ioOut << "FareFamilyKey: " << toString() << std::endl;
+    ioOut << "FareFamilyKey: " << toString();
   }
 
   // ////////////////////////////////////////////////////////////////////

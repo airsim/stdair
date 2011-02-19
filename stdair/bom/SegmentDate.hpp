@@ -4,6 +4,9 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STL
+#include <iosfwd>
+#include <string>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
@@ -20,7 +23,7 @@ namespace stdair {
     friend class FacBomManager;
     
   public:
-    // Type definitions.
+    // ////////// Type definitions ////////////
     /** Definition allowing to retrieve the associated BOM key type. */
     typedef SegmentDateKey Key_T;
 
@@ -45,6 +48,11 @@ namespace stdair {
     /** Get the off point (part of the primary key). */
     const AirportCode_T& getOffPoint () const {
       return _key.getOffPoint();
+    }
+
+    /** Get the map of children holders. */
+    const HolderMap_T& getHolderMap() const {
+      return _holderMap;
     }
 
     /** Get the boarding date. */
@@ -80,11 +88,6 @@ namespace stdair {
     /** Get the date offset (off date - boarding date). */
     const DateOffset_T getDateOffset () const {
       return _offDate - _boardingDate;
-    }
-
-    /** Get the map of children holders. */
-    const HolderMap_T& getHolderMap() const {
-      return _holderMap;
     }
 
     /** Get the time offset between boarding and off points.

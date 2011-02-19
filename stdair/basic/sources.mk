@@ -10,7 +10,7 @@ stdair_bas_h_sources = \
 		$(top_srcdir)/stdair/basic/BasConst_Yield.hpp \
 		$(top_srcdir)/stdair/basic/BasConst_Period_BOM.hpp \
 		$(top_srcdir)/stdair/basic/BasConst_TravelSolution.hpp \
-		$(top_srcdir)/stdair/basic/BasConst_BomManager.hpp \
+		$(top_srcdir)/stdair/basic/BasConst_BomDisplay.hpp \
 		$(top_srcdir)/stdair/basic/StructAbstract.hpp \
 		$(top_srcdir)/stdair/basic/BasChronometer.hpp \
 		$(top_srcdir)/stdair/basic/BasFileMgr.hpp \

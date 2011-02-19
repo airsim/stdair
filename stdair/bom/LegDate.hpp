@@ -4,6 +4,9 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STL
+#include <iosfwd>
+#include <string>
 // StdAir 
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
@@ -38,32 +41,37 @@ namespace stdair {
     }
 
     /** Get the boarding point (part of the primary key). */
-    const AirportCode_T& getBoardingPoint () const {
+    const AirportCode_T& getBoardingPoint() const {
       return _key.getBoardingPoint();
     }
 
+    /** Get the map of children holders. */
+    const HolderMap_T& getHolderMap() const {
+      return _holderMap;
+    }
+
     /** Get the off point. */
-    const AirportCode_T& getOffPoint () const {
+    const AirportCode_T& getOffPoint() const {
       return _offPoint;
     }
 
     /** Get the boarding date. */
-    const Date_T& getBoardingDate () const {
+    const Date_T& getBoardingDate() const {
       return _boardingDate;
     }
 
     /** Get the boarding time. */
-    const Duration_T& getBoardingTime () const {
+    const Duration_T& getBoardingTime() const {
       return _boardingTime;
     }
 
     /** Get the off date. */
-    const Date_T& getOffDate () const {
+    const Date_T& getOffDate() const {
       return _offDate;
     }
 
     /** Get the off time. */
-    const Duration_T& getOffTime () const {
+    const Duration_T& getOffTime() const {
       return _offTime;
     }
 
@@ -78,12 +86,12 @@ namespace stdair {
     }
 
     /** Get the leg capacity. */
-    const CabinCapacity_T& getCapacity () const {
+    const CabinCapacity_T& getCapacity() const {
       return _capacity;
     }
 
     /** Get the date offset (off date - boarding date). */
-    const DateOffset_T getDateOffset () const {
+    const DateOffset_T getDateOffset() const {
       return _offDate - _boardingDate;
     }
 
@@ -92,11 +100,6 @@ namespace stdair {
         TimeOffset = (OffTime - BoardingTime) + (OffDate - BoardingDate) * 24
         - ElapsedTime. */
     const Duration_T getTimeOffset() const;
-
-    /** Get the map of children holders. */
-    const HolderMap_T& getHolderMap() const {
-      return _holderMap;
-    }
 
 
   public:
@@ -128,9 +131,10 @@ namespace stdair {
 
     /** Set the elapsed time. */
     void setElapsedTime (const Duration_T&);
-    
+
+  private:
     /** Method computing the distance of the segment (in kilometers). */
-    void updateDistanceFromElapsedTime ();
+    void updateDistanceFromElapsedTime();
     
 
   public:
@@ -146,7 +150,7 @@ namespace stdair {
     void fromStream (std::istream& ioIn) {
     }
 
-   /** Get the serialised version of the Business Object. */
+    /** Get the serialised version of the Business Object. */
     std::string toString() const;
     
     /** Get a string describing the  key. */

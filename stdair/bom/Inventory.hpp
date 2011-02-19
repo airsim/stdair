@@ -6,6 +6,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <iosfwd>
+#include <string>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
