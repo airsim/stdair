@@ -4,19 +4,29 @@
 // STL
 #include <cassert>
 #include <sstream>
-// STDAIR
-#include <stdair/basic/BasConst_BookingClass.hpp>
-#include <stdair/basic/BasConst_Yield.hpp>
+// StdAir
+#include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/BookingClass.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  BookingClass::BookingClass() : _key (DEFAULT_CLASS_CODE), _parent (NULL) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  BookingClass::BookingClass (const BookingClass&)
+    : _key (DEFAULT_CLASS_CODE), _parent (NULL) {
+    assert (false);
+  }
 
   // ////////////////////////////////////////////////////////////////////
   BookingClass::BookingClass (const Key_T& iKey) : _key (iKey), _parent (NULL) {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  BookingClass::~BookingClass () {
+  BookingClass::~BookingClass() {
   }
 
   // ////////////////////////////////////////////////////////////////////

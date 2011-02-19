@@ -2,11 +2,18 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
+#include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/SegmentCabinKey.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  SegmentCabinKey::SegmentCabinKey() : _cabinCode (DEFAULT_CABIN) {
+    assert (false);
+  }
 
   // ////////////////////////////////////////////////////////////////////
   SegmentCabinKey::SegmentCabinKey (const CabinCode_T& iCabinCode)
@@ -24,7 +31,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   void SegmentCabinKey::toStream (std::ostream& ioOut) const {
-    ioOut << "SegmentCabinKey: " << toString() << std::endl;
+    ioOut << "SegmentCabinKey: " << toString();
   }
 
   // ////////////////////////////////////////////////////////////////////

@@ -9,26 +9,33 @@
 #include <stdair/bom/KeyAbstract.hpp>
 
 namespace stdair {
-  /** Key of leg-date. */
+
+  /**
+   * Key of a given leg-date, made of an origin airport.
+   */
   struct LegDateKey : public KeyAbstract {
     
+    // /////////// Constructors and destructors ///////////
   private:
-    // /////////// Default constructor //////////
-    LegDateKey () { };
+    /** Default constructor. */
+    LegDateKey();
+
   public:
-    // /////////// Construction ///////////
-    /** Constructors. */
+    /** Constructor. */
     LegDateKey (const AirportCode_T& iBoardingPoint);
+    /** Default copy constructor. */
     LegDateKey (const LegDateKey&);
     /** Destructor. */
-    ~LegDateKey ();
+    ~LegDateKey();
     
+
     // /////////// Getters //////////
     /** Get the boarding point. */
     const AirportCode_T& getBoardingPoint() const {
       return _boardingPoint;
     }
     
+
     // /////////// Display support methods /////////
     /** Dump a Business Object Key into an output stream.
         @param ostream& the output stream. */
@@ -45,9 +52,10 @@ namespace stdair {
        marketing classes for the same leg-date. */
     const std::string toString() const;
     
+
   private:
-    // Attributes
-    /** Boardinging airport. */
+    // ///////////////// Attributes ///////////////
+    /** Boarding airport. */
     AirportCode_T _boardingPoint;
   };
 

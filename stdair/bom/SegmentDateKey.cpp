@@ -2,15 +2,23 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
+#include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/SegmentDateKey.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
+  SegmentDateKey::SegmentDateKey()
+    : _boardingPoint (DEFAULT_ORIGIN), _offPoint (DEFAULT_DESTINATION) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   SegmentDateKey::SegmentDateKey (const AirportCode_T& iBoardingPoint,
-                                      const AirportCode_T& iOffPoint)
+                                  const AirportCode_T& iOffPoint)
     : _boardingPoint (iBoardingPoint), _offPoint (iOffPoint) {
   }
 

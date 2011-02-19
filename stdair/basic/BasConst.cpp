@@ -191,53 +191,53 @@ namespace stdair {
 
   // //////// (Leg-)YieldRange-related BOM ///////
   /** Default yield value. */
-  const Yield_T DEFAULT_YIELD_VALUE = 0.0;
+  const Yield_T DEFAULT_YIELD_VALUE (0.0);
 
   /** Default yield max value. */
   const Yield_T DEFAULT_YIELD_MAX_VALUE = std::numeric_limits<double>::max();
     
   /** Default number of bookings for YieldRangeStruct_T. */
-  const NbOfBookings_T DEFAULT_YIELD_NB_OF_BOOKINGS = 0.0;
+  const NbOfBookings_T DEFAULT_YIELD_NB_OF_BOOKINGS (0.0);
 
   /** Default booking number. */
-  const Identity_T DEFAULT_BOOKING_NUMBER = 0;
+  const Identity_T DEFAULT_BOOKING_NUMBER (0);
 
   /** Default cancellation number for YieldRangeStruct_T. */
-  const NbOfCancellations_T DEFAULT_YIELD_NB_OF_CANCELLATIONS = 0.0;
+  const NbOfCancellations_T DEFAULT_YIELD_NB_OF_CANCELLATIONS (0.0);
 
   /** Default no-shows number for YieldRangeStruct_T. */
-  const NbOfNoShows_T DEFAULT_YIELD_NB_OF_NOSHOWS = 0.0;
+  const NbOfNoShows_T DEFAULT_YIELD_NB_OF_NOSHOWS (0.0);
 
   /** Default availability for YieldRangeStruct_T. */
-  const Availability_T DEFAULT_YIELD_AVAILABILITY = 0.0;
+  const Availability_T DEFAULT_YIELD_AVAILABILITY (0.0);
 
   /** Default boolean for booking limit availability for
       YieldRangeStruct_T. */
-  const CensorshipFlag_T DEFAULT_YIELD_CENSORSHIPFLAG = false;
+  const CensorshipFlag_T DEFAULT_YIELD_CENSORSHIPFLAG (false);
   
   /** Default booking limit value for YieldRangeStruct_T. */
-  const BookingLimit_T DEFAULT_YIELD_BOOKING_LIMIT = 0.0;
+  const BookingLimit_T DEFAULT_YIELD_BOOKING_LIMIT (0.0);
   
   /** Default over-booking rate for YieldRangeStruct_T. */
-  const OverbookingRate_T DEFAULT_YIELD_OVERBOOKING_RATE = 0.0;
+  const OverbookingRate_T DEFAULT_YIELD_OVERBOOKING_RATE (0.0);
   
 
   // //////// OnD-related BOM ///////
   /** Default value of Fare. */
-  const Fare_T DEFAULT_OND_FARE_VALUE = 0.0;
+  const Fare_T DEFAULT_OND_FARE_VALUE (0.0);
 
 
   // //////// Event Generation /////////
   /** Default ID for the event queue. */
-  const EventQueueID_T DEFAULT_EVENT_QUEUE_ID = "EQ01";
+  const EventQueueID_T DEFAULT_EVENT_QUEUE_ID ("EQ01");
 
   /** Default progress status. */
-  const Count_T DEFAULT_PROGRESS_STATUS = 0;
+  const Count_T DEFAULT_PROGRESS_STATUS (0);
   
 
   // //////// Booking Request /////////
   /** Default party size in a request. */
-  const PartySize_T DEFAULT_PARTY_SIZE = 1;
+  const PartySize_T DEFAULT_PARTY_SIZE (1);
 
     
   // //////// Travel Solutions ///////
@@ -254,24 +254,39 @@ namespace stdair {
   const PriceCurrency_T DEFAULT_CURRENCY ("EUR");
 
   /** Default availability status for a travel solution. */
-  const AvailabilityStatus_T DEFAULT_AVAILABILITY_STATUS = false;
+  const AvailabilityStatus_T DEFAULT_AVAILABILITY_STATUS (false);
 
 
   // //////// Inventory-related BOM ///////
-  /** Default Bid-Price. */
-  const BidPrice_T DEFAULT_BID_PRICE = 0.0;
+  /** Default Flight Number. */
+  const FlightNumber_T DEFAULT_FLIGHT_NUMBER (9999);
   
+  /** Default Flight Date. */
+  const Date_T DEFAULT_FLIGHT_DATE (2010, boost::gregorian::Jan, 1);
+  
+  /** Default Bid-Price. */
+  const BidPrice_T DEFAULT_BID_PRICE (0.0);
+  
+  /** Default Origin. */
+  const AirportCode_T DEFAULT_ORIGIN ("NCE");
+  
+  /** Default Destination. */
+  const AirportCode_T DEFAULT_DESTINATION ("JFK");
+  
+  /** Default Cabin. */
+  const CabinCode_T DEFAULT_CABIN ("Y");
+
   /** Default Bid-Price Vector. */
   const BidPriceVector_T DEFAULT_BID_PRICE_VECTOR = std::vector<BidPrice_T>();
 
   /** Maximal number of legs linked to a single flight-date.
       <br>Note that the number of derived segments is n*(n+1)/2 if n
       is the number of legs. */
-  const unsigned short MAXIMAL_NUMBER_OF_LEGS_IN_FLIGHT = 7;
+  const unsigned short MAXIMAL_NUMBER_OF_LEGS_IN_FLIGHT (7);
   
   /** Maximal number of segments linked to a single O&D
       (Origin & Destination). */
-  const unsigned short MAXIMAL_NUMBER_OF_SEGMENTS_IN_OND = 3;
+  const unsigned short MAXIMAL_NUMBER_OF_SEGMENTS_IN_OND (3);
 
   
   // ////////// BomManager-related constants ///////////

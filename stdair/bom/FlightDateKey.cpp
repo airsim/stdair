@@ -2,11 +2,19 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
+#include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/FlightDateKey.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  FlightDateKey::FlightDateKey ()
+    : _flightNumber (DEFAULT_FLIGHT_NUMBER), _flightDate (DEFAULT_FLIGHT_DATE) {
+    assert (false);
+  }
 
   // ////////////////////////////////////////////////////////////////////
   FlightDateKey::FlightDateKey (const FlightNumber_T& iFlightNumber,
@@ -25,7 +33,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   void FlightDateKey::toStream (std::ostream& ioOut) const {
-    ioOut << "FlightDateKey: " << toString() << std::endl;
+    ioOut << "FlightDateKey: " << toString();
   }
 
   // ////////////////////////////////////////////////////////////////////

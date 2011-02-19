@@ -2,16 +2,24 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
+#include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/LegDateKey.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
+  LegDateKey::LegDateKey() : _boardingPoint (DEFAULT_ORIGIN) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   LegDateKey::LegDateKey (const AirportCode_T& iBoardingPoint) 
     : _boardingPoint (iBoardingPoint) {
   }
+
   // ////////////////////////////////////////////////////////////////////
   LegDateKey::LegDateKey (const LegDateKey& iKey)
     : _boardingPoint (iKey._boardingPoint) {
@@ -23,7 +31,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   void LegDateKey::toStream (std::ostream& ioOut) const {
-    ioOut << "LegDateKey: " << toString() << std::endl;
+    ioOut << "LegDateKey: " << toString();
   }
 
   // ////////////////////////////////////////////////////////////////////

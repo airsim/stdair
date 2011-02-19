@@ -10,26 +10,32 @@
 
 namespace stdair {
 
-  /** Key of segment-cabin. */
+  /**
+   * Key of a given segment-cabin, made of a cabin code.
+   */
   struct SegmentCabinKey : public KeyAbstract {
 
+    // /////////// Constructors and destructors ///////////
   private:
-    // /////////// Default constructor //////////
-    SegmentCabinKey () { };
+    /** Default constructor. */
+    SegmentCabinKey();
+
   public:
-    // /////////// Construction ///////////
     /** Constructor. */
     SegmentCabinKey (const CabinCode_T& iCabinCode);
+    /** Default copy constructor. */
     SegmentCabinKey (const SegmentCabinKey&);
     /** Destructor. */
     ~SegmentCabinKey ();
     
+
     // /////////// Getters //////////
     /** Get the cabin code. */
     const CabinCode_T& getCabinCode () const {
       return _cabinCode;
     }
     
+
     // /////////// Display support methods /////////
     /** Dump a Business Object Key into an output stream.
         @param ostream& the output stream. */
@@ -46,8 +52,9 @@ namespace stdair {
        marketing classes for the same segment-cabin. */
     const std::string toString() const;
 
+
   private:
-    // Attributes
+    // ///////////////// Attributes ///////////////
     /** Cabin code. */
     CabinCode_T _cabinCode;
   };

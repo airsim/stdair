@@ -10,20 +10,26 @@
 
 namespace stdair {
 
-  /** Key of segment-date. */
+  /**
+   * Key of a given segment-date, made of an origin and a destination
+   * airports.
+   */
   struct SegmentDateKey : public KeyAbstract {
 
+    // /////////// Constructors and destructors ///////////
   private:
-    // /////////// Default constructor //////////
-    SegmentDateKey () { };
+    /** Default constructor. */
+    SegmentDateKey();
+
   public:
-    // /////////// Construction ///////////
-    /** Constructors. */
+    /** Constructor. */
     SegmentDateKey (const AirportCode_T&, const AirportCode_T&);
+    /** Default copy constructor. */
     SegmentDateKey (const SegmentDateKey&);
     /** Destructor. */
-    ~SegmentDateKey ();
+    ~SegmentDateKey();
     
+
     // /////////// Getters //////////
     /** Get the boardinging point. */
     const AirportCode_T& getBoardingPoint() const {
@@ -35,6 +41,7 @@ namespace stdair {
       return _offPoint;
     }
     
+
     // /////////// Display support methods /////////
     /** Dump a Business Object Key into an output stream.
         @param ostream& the output stream. */
@@ -51,9 +58,10 @@ namespace stdair {
        marketing classes for the same segment-date. */
     const std::string toString() const;
 
+
   private:
-    // Attributes
-    /** Boardinging airport. */
+    // ///////////////// Attributes ///////////////
+    /** Boarding airport. */
     AirportCode_T _boardingPoint;
 
     /** Arrival airport. */

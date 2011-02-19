@@ -5,10 +5,23 @@
 #include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
 
 namespace stdair {
 
+  // ////////////////////////////////////////////////////////////////////
+  FlightDate::FlightDate()
+    : _key (DEFAULT_FLIGHT_NUMBER, DEFAULT_FLIGHT_DATE), _parent (NULL) {
+    assert (false);
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  FlightDate::FlightDate (const FlightDate&)
+    : _key (DEFAULT_FLIGHT_NUMBER, DEFAULT_FLIGHT_DATE), _parent (NULL) {
+    assert (false);
+  }
+  
   // ////////////////////////////////////////////////////////////////////
   FlightDate::FlightDate (const Key_T& iKey)
     : _key (iKey), _parent (NULL) {

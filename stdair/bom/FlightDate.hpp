@@ -12,7 +12,10 @@
 
 namespace stdair {
 
-  /** Class representing the actual attributes for an airline flight-date. */
+  /**
+   * Class representing the actual attributes for an airline
+   * flight-date.
+   */
   class FlightDate : public BomAbstract {
     template <typename BOM> friend class FacBom;
     friend class FacBomManager;
@@ -75,14 +78,18 @@ namespace stdair {
     
   protected:
     // ////////// Constructors and destructors /////////
-    /** Default constructor. */
+    /** Constructor. */
     FlightDate (const Key_T&);
-    /** Default copy constructor. */
-    FlightDate (const FlightDate&);
     /** Destructor. */
     virtual ~FlightDate();
 
+  private:
+    /** Default constructor. */
+    FlightDate();
+    /** Default copy constructor. */
+    FlightDate (const FlightDate&);
     
+
   protected:
     // ////////// Attributes /////////
     /** Primary key (flight number and departure date). */

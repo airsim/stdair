@@ -4,19 +4,31 @@
 // STL
 #include <cassert>
 #include <sstream>
-// STDAIR
+// StdAir
 #include <stdair/basic/BasConst_BookingClass.hpp>
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/SegmentDate.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::SegmentDate (const Key_T& iKey)
-    : _key (iKey), _parent (NULL) {
+  SegmentDate::SegmentDate()
+    : _key (DEFAULT_ORIGIN, DEFAULT_DESTINATION), _parent (NULL) {
+    assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::~SegmentDate () {
+  SegmentDate::SegmentDate (const SegmentDate&)
+    : _key (DEFAULT_ORIGIN, DEFAULT_DESTINATION), _parent (NULL) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  SegmentDate::SegmentDate (const Key_T& iKey) : _key (iKey), _parent (NULL) {
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  SegmentDate::~SegmentDate() {
   }
 
   // ////////////////////////////////////////////////////////////////////
