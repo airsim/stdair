@@ -76,7 +76,7 @@ namespace stdair {
          << "," << _specificProgressStatus.getActualNb()
          << "}] ";
 
-    const Duration_T lRequestDateDelta (0, 0, 0, _eventTimeStamp);
+    const Duration_T lRequestDateDelta (0, 0, 0, _eventTimeStamp / 1000.0);
     const DateTime_T lRequestDate (DEFAULT_DATETIME + lRequestDateDelta);
     oStr << lRequestDate;
     
