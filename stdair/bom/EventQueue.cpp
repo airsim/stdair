@@ -99,9 +99,16 @@ namespace stdair {
     // Reset only the current number of events, not the expected one
     _progressStatus.reset();
     
-    //
+    // Empty the list of events
     _eventList.clear();
-    _nbOfEvents.clear();
+
+    // Reset the progress statuses for all the demand streams
+    for (NbOfEventsByDemandStreamMap_T::iterator itNbOfEvents =
+           _nbOfEvents.begin();
+         itNbOfEvents != _nbOfEvents.end(); ++itNbOfEvents) {
+      ProgressStatus& lProgressStatus = itNbOfEvents->second;
+      lProgressStatus.reset();
+    }
   }
   
   // //////////////////////////////////////////////////////////////////////
