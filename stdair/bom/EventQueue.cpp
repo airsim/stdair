@@ -100,7 +100,7 @@ namespace stdair {
     _progressStatus.setCurrentNb (DEFAULT_PROGRESS_STATUS);
     
     //
-    _holderMap.clear();
+    //_holderMap.clear();
     _eventList.clear();
     _nbOfEvents.clear();
   }
