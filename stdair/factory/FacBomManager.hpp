@@ -6,6 +6,8 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <iosfwd>
+#include <list>
+#include <map>
 // STDAIR
 #include <stdair/bom/BomHolder.hpp>
 #include <stdair/bom/BomManager.hpp>
@@ -68,8 +70,8 @@ namespace stdair {
     
     BomHolder<OBJECT2>* lBomHolder_ptr = NULL;
 
-    // Find the corresponding bom holder within the object1, if it does not
-    // exist, then create one.    
+    // Find the corresponding BomHolder within the object1. If it does
+    // not exist, then create one.
     HolderMap_T::const_iterator itHolder =
       ioObject1._holderMap.find (&typeid (OBJECT2));
     
@@ -97,7 +99,7 @@ namespace stdair {
   template <typename OBJECT1, typename OBJECT2> void FacBomManager::
   addToMap (OBJECT1& ioObject1, OBJECT2& ioObject2, const MapKey_T& iKey) {
     BomHolder<OBJECT2>& lBomHolder = instance().getBomHolder<OBJECT2>(ioObject1);
-    bool insertionSucceeded =
+    const bool insertionSucceeded =
       lBomHolder._bomMap.insert (typename std::map<const MapKey_T, OBJECT2*>::
                                  value_type (iKey, &ioObject2)).second;
 
@@ -127,7 +129,7 @@ namespace stdair {
   template <typename OBJECT1, typename OBJECT2> void FacBomManager::
   addToListAndMap (OBJECT1& ioObject1, OBJECT2& ioObject2, const MapKey_T& iKey){
     BomHolder<OBJECT2>& lBomHolder = instance().getBomHolder<OBJECT2>(ioObject1);
-    bool insertionSucceeded =
+    const bool insertionSucceeded =
       lBomHolder._bomMap.insert (typename std::map<const MapKey_T, OBJECT2*>::
                                  value_type (iKey, &ioObject2)).second;
 

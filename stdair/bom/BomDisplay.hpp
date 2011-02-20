@@ -31,6 +31,7 @@ namespace stdair {
     /**
      * Recursively display (dump in the underlying output log stream)
      * the objects of the BOM tree.
+     *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const BomRoot& Root of the BOM tree to be displayed.
@@ -40,6 +41,7 @@ namespace stdair {
     /**
      * Recursively display (dump in the underlying output log stream)
      * the objects of the BOM tree from the level of the given Inventory.
+     *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const Inventory& Root of the BOM tree to be displayed.
@@ -49,6 +51,7 @@ namespace stdair {
     /**
      * Recursively display (dump in the underlying output log stream)
      * the objects of the BOM tree from the level of the given FlightDate.
+     *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const FlightDate& Root of the BOM tree to be displayed.
@@ -57,7 +60,8 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the objects of the BOM tree from the level of the given LegDate.
+     * the leg-date level objects of the BOM tree.
+     *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const FlightDate& Root of the BOM tree to be displayed.
@@ -66,7 +70,8 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the objects of the BOM tree from the level of the given SegmentDate.
+     * the segment-date level objects of the BOM tree.
+     *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const FlightDate& Root of the BOM tree to be displayed.
@@ -75,7 +80,8 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the objects of the BOM tree from the level of the given LegCabin.
+     * the leg-cabin level objects of the BOM tree.
+     *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const FlightDate& Root of the BOM tree to be displayed.
@@ -84,7 +90,8 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the objects of the BOM tree from the level of the given SegmentCabin.
+     * the segment-cabin level objects of the BOM tree.
+     *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const FlightDate& Root of the BOM tree to be displayed.
@@ -93,7 +100,8 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the objects of the BOM tree from the level of the given FareFamily.
+     * the fare families level objects of the BOM tree.
+     *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const FlightDate& Root of the BOM tree to be displayed.
@@ -102,7 +110,18 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the objects of the BOM tree from the level of the given BookingClass.
+     * the bucket holder level objects of the BOM tree.
+     *
+     * @param std::ostream& Output stream in which the BOM tree should be
+     *        logged/dumped.
+     * @param const FlightDate& Root of the BOM tree to be displayed.
+     */
+    static void csvBucketDisplay (std::ostream&, const FlightDate&);
+
+    /**
+     * Recursively display (dump in the underlying output log stream)
+     * the segment-class level objects of the BOM tree.
+     *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const FlightDate& Root of the BOM tree to be displayed.
