@@ -117,13 +117,13 @@ namespace stdair {
              const NbOfRequests_T& iExpectedTotalNbOfEvents) {
 
     /**
-     * \note After the initialisation of the event queue (e.g., by a
-     * call to the TRADEMGEN_Service::generateFirstRequests() method),
-     * there are, by construction, exactly as many events as distinct
-     * demand streams. Indeed, the event queue contains a single event
+     * \note After the initialisation of the DemandStream objects
+     * attached to the event queue, there are, by construction,
+     * exactly as many events as there are distinct demand
+     * streams. Indeed, the event queue contains a single event
      * structure for every demand stream.
      */
-    
+
     // Initialise the progress status object for the current demand stream
     const Count_T lExpectedTotalNbOfEventsInt =
       std::floor (iExpectedTotalNbOfEvents);
@@ -151,6 +151,24 @@ namespace stdair {
 
     _progressStatus.setActualNb (_progressStatus.getActualNb()
                                    + iExpectedTotalNbOfEvents);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void EventQueue::
+  updateStatus (const DemandStreamKeyStr_T& iDemandStreamKeyStr,
+                const NbOfRequests_T& iExpectedTotalNbOfEvents) {
+
+    // Initialise the progress status object for the current demand stream
+    const Count_T lExpectedTotalNbOfEventsInt =
+      std::floor (iExpectedTotalNbOfEvents);
+      
+    // Update the progress status for the corresponding demand stream
+    NbOfEventsByDemandStreamMap_T::iterator itNbOfEvents =
+      _nbOfEvents.find (iDemandStreamKeyStr);
+    if (itNbOfEvents != _nbOfEvents.end()) {
+      ProgressStatus& lProgressStatus = itNbOfEvents->second;
+      lProgressStatus.setActualNb (lExpectedTotalNbOfEventsInt);
+    }
   }
 
   // //////////////////////////////////////////////////////////////////////
