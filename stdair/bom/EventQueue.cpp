@@ -15,7 +15,7 @@
 namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
-  EventQueue::EventQueue ()
+  EventQueue::EventQueue()
     : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL),
       _progressStatus (stdair::DEFAULT_PROGRESS_STATUS,
                        stdair::DEFAULT_PROGRESS_STATUS) {
@@ -37,7 +37,7 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  EventQueue::~EventQueue () {
+  EventQueue::~EventQueue() {
     _eventList.clear();
     _nbOfEvents.clear();
   }
@@ -97,10 +97,9 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   void EventQueue::reset() {
     // Reset only the current number of events, not the expected one
-    _progressStatus.setCurrentNb (DEFAULT_PROGRESS_STATUS);
+    _progressStatus.reset();
     
     //
-    //_holderMap.clear();
     _eventList.clear();
     _nbOfEvents.clear();
   }
