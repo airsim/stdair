@@ -169,7 +169,7 @@ namespace stdair {
     BookingClass (const BookingClass&);
 
 
-  public:
+  protected:
     // ////////// Attributes /////////
     /** Primary key (booking class code). */
     Key_T _key;
