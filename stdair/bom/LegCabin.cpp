@@ -31,8 +31,8 @@ namespace stdair {
       _committedSpace (DEFAULT_COMMITTED_SPACE),
       _availabilityPool (DEFAULT_AVAILABILITY),
       _availability (DEFAULT_AVAILABILITY),
-      _bidPriceVector (DEFAULT_BID_PRICE_VECTOR),
-      _currentBidPrice (DEFAULT_BID_PRICE) {
+      _currentBidPrice (DEFAULT_BID_PRICE),
+      _bidPriceVector (DEFAULT_BID_PRICE_VECTOR) {
   }
 
   // ////////////////////////////////////////////////////////////////////
