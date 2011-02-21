@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 // StdAir
-#include <stdair/stdair_types.hpp>
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
 #include <stdair/bom/BookingClassTypes.hpp>
 #include <stdair/bom/FareOptionStruct.hpp>

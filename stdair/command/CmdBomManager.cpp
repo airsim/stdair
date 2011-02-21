@@ -377,5 +377,60 @@ namespace stdair {
     // STDAIR_LOG_DEBUG ("BookingClass: "
     //                   << lCDGSFOSegmentYCabin1FamilyQClass.toString());
   }
+  
+  // //////////////////////////////////////////////////////////////////////
+  void CmdBomManager::buildSampleBomForRMOL (BomRoot& ioBomRoot,
+                                             const CabinCapacity_T& iCapacity) {
+    // Inventory
+    const InventoryKey lXXKey ("XX");
+    Inventory& lXXInv =
+      FacBom<Inventory>::instance().create (lXXKey);
+    FacBomManager::instance().addToList (ioBomRoot, lXXInv);
 
+    // Flight-date
+    FlightNumber_T lFlightNumber = 7;
+    Date_T lDate (2011, 1, 1);
+    FlightDateKey lFlightDateKey (lFlightNumber, lDate);
+
+    FlightDate& lXX7_20110101_FD =
+      FacBom<FlightDate>::instance().create (lFlightDateKey);
+    FacBomManager::instance().addToList (lXXInv, lXX7_20110101_FD);
+
+    // Leg-date
+    const AirportCode_T lXXX ("XXX");
+    LegDateKey lLegDateKey (lXXX);
+
+    LegDate& lXXXLeg = FacBom<LegDate>::instance().create (lLegDateKey);
+    FacBomManager::instance().addToList (lXX7_20110101_FD, lXXXLeg);
+
+    // Leg-cabin
+    const CabinCode_T lX ("X");
+    LegCabinKey lXLegCabinKey (lX);
+
+    LegCabin& lXXXLegXCabin =
+      FacBom<LegCabin>::instance().create (lXLegCabinKey);
+    FacBomManager::instance().addToList (lXXXLeg, lXXXLegXCabin);
+
+    lXXXLegXCabin.setCapacities (iCapacity);
+
+    // Segment-date
+    const AirportCode_T lYYY ("YYY");
+    SegmentDateKey lSegmentDateKey (lXXX, lYYY);
+
+    SegmentDate& lXXXYYYSegment =
+      FacBom<SegmentDate>::instance().create (lSegmentDateKey);
+    FacBomManager::instance().addToList (lXX7_20110101_FD, lXXXYYYSegment);
+    FacBomManager::instance().addToList (lXXXLeg, lXXXYYYSegment);
+    FacBomManager::instance().addToList (lXXXYYYSegment, lXXXLeg);
+
+    // Segment-cabin
+    SegmentCabinKey lXSegmentCabinKey (lX);
+
+    SegmentCabin& lXXXYYYSegmentXCabin =
+      FacBom<SegmentCabin>::instance().create (lXSegmentCabinKey);
+    FacBomManager::instance().addToList (lXXXYYYSegment, lXXXYYYSegmentXCabin);
+    FacBomManager::instance().addToList (lXXXLegXCabin, lXXXYYYSegmentXCabin);
+    FacBomManager::instance().addToList (lXXXYYYSegmentXCabin, lXXXLegXCabin);
+  }
+  
 }

@@ -8,7 +8,6 @@
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/AirlineFeatureKey.hpp>
 #include <stdair/bom/AirlineFeatureTypes.hpp>
-#include <stdair/bom/OptimizerStruct.hpp>
 
 namespace stdair {
 
@@ -32,7 +31,7 @@ namespace stdair {
     // //////////// Setters //////////
     /** Intialization method. */
     void init (const ForecasterMode_T&, const HistoricalDataLimit_T&,
-               const OptimizerStruct&, const ControlMode_T&);
+               const ControlMode_T&);
     
   public:
     // /////////// Display support methods /////////
@@ -68,9 +67,6 @@ namespace stdair {
 
     /** The size of the moving average window. */
     HistoricalDataLimit_T _historicalDataLimit;
-
-    /** The type of optimizer. */
-    OptimizerStruct _optimizerStruct;
 
     /** The type of inventory control. */
     ControlMode_T _controlMode;

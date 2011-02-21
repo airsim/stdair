@@ -12,6 +12,8 @@
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/LegCabinKey.hpp>
 #include <stdair/bom/LegCabinTypes.hpp>
+#include <stdair/bom/VirtualClassStruct.hpp>
+#include <stdair/bom/VirtualClassTypes.hpp>
 
 namespace stdair {
 
@@ -301,6 +303,9 @@ namespace stdair {
     
     /** Bid-Price Vector (BPV). */
     BidPriceVector_T _bidPriceVector;
+
+    /** List of virtual classes (for revenue management optimisation). */
+    VirtualClassList_T _virtualClassList;
 
   public:
     /** Capacity adjustment of the cabin, due to check-in (DCS) regrade. */
