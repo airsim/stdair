@@ -30,6 +30,7 @@ namespace stdair {
     /** Definition allowing to retrieve the associated BOM key type. */
     typedef BookingClassKey Key_T;
 
+
   public:
     // /////////// Getters ////////////
     /** Get the booking class key. */
@@ -170,7 +171,7 @@ namespace stdair {
     }
 
   public:
-    // ////////////// Business Methodes /////////////////
+    // ////////////// Business Methods /////////////////
     /** Register a sale. */
     void sell (const NbOfBookings_T&);
 
