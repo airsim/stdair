@@ -5,6 +5,7 @@
 #include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
@@ -382,55 +383,50 @@ namespace stdair {
   void CmdBomManager::buildSampleBomForRMOL (BomRoot& ioBomRoot,
                                              const CabinCapacity_T& iCapacity) {
     // Inventory
-    const InventoryKey lXXKey ("XX");
-    Inventory& lXXInv =
-      FacBom<Inventory>::instance().create (lXXKey);
-    FacBomManager::instance().addToList (ioBomRoot, lXXInv);
+    const InventoryKey lInventoryKey ("DEFAULT_AIRLINE_CODE");
+    Inventory& lInv =
+      FacBom<Inventory>::instance().create (lInventoryKey);
+    FacBomManager::instance().addToList (ioBomRoot, lInv);
 
     // Flight-date
-    FlightNumber_T lFlightNumber = 7;
-    Date_T lDate (2011, 1, 1);
-    FlightDateKey lFlightDateKey (lFlightNumber, lDate);
+    FlightDateKey lFlightDateKey (DEFAULT_FLIGHT_NUMBER, DEFAULT_FLIGHT_DATE);
 
-    FlightDate& lXX7_20110101_FD =
+    FlightDate& lFlightDate =
       FacBom<FlightDate>::instance().create (lFlightDateKey);
-    FacBomManager::instance().addToList (lXXInv, lXX7_20110101_FD);
+    FacBomManager::instance().addToList (lInv, lFlightDate);
 
     // Leg-date
-    const AirportCode_T lXXX ("XXX");
-    LegDateKey lLegDateKey (lXXX);
+    LegDateKey lLegDateKey (DEFAULT_ORIGIN);
 
-    LegDate& lXXXLeg = FacBom<LegDate>::instance().create (lLegDateKey);
-    FacBomManager::instance().addToList (lXX7_20110101_FD, lXXXLeg);
+    LegDate& lLeg = FacBom<LegDate>::instance().create (lLegDateKey);
+    FacBomManager::instance().addToList (lFlightDate, lLeg);
 
     // Leg-cabin
-    const CabinCode_T lX ("X");
-    LegCabinKey lXLegCabinKey (lX);
+    LegCabinKey lLegCabinKey (DEFAULT_CABIN_CODE);
 
-    LegCabin& lXXXLegXCabin =
-      FacBom<LegCabin>::instance().create (lXLegCabinKey);
-    FacBomManager::instance().addToList (lXXXLeg, lXXXLegXCabin);
+    LegCabin& lLegCabin =
+      FacBom<LegCabin>::instance().create (lLegCabinKey);
+    FacBomManager::instance().addToList (lLeg, lLegCabin);
 
-    lXXXLegXCabin.setCapacities (iCapacity);
+    lLegCabin.setCapacities (iCapacity);
 
     // Segment-date
-    const AirportCode_T lYYY ("YYY");
-    SegmentDateKey lSegmentDateKey (lXXX, lYYY);
+    SegmentDateKey lSegmentDateKey (DEFAULT_ORIGIN, DEFAULT_DESTINATION);
 
-    SegmentDate& lXXXYYYSegment =
+    SegmentDate& lSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
-    FacBomManager::instance().addToList (lXX7_20110101_FD, lXXXYYYSegment);
-    FacBomManager::instance().addToList (lXXXLeg, lXXXYYYSegment);
-    FacBomManager::instance().addToList (lXXXYYYSegment, lXXXLeg);
+    FacBomManager::instance().addToList (lFlightDate, lSegment);
+    FacBomManager::instance().addToList (lLeg, lSegment);
+    FacBomManager::instance().addToList (lSegment, lLeg);
 
     // Segment-cabin
-    SegmentCabinKey lXSegmentCabinKey (lX);
+    SegmentCabinKey lSegmentCabinKey (DEFAULT_CABIN_CODE);
 
-    SegmentCabin& lXXXYYYSegmentXCabin =
-      FacBom<SegmentCabin>::instance().create (lXSegmentCabinKey);
-    FacBomManager::instance().addToList (lXXXYYYSegment, lXXXYYYSegmentXCabin);
-    FacBomManager::instance().addToList (lXXXLegXCabin, lXXXYYYSegmentXCabin);
-    FacBomManager::instance().addToList (lXXXYYYSegmentXCabin, lXXXLegXCabin);
+    SegmentCabin& lSegmentCabin =
+      FacBom<SegmentCabin>::instance().create (lSegmentCabinKey);
+    FacBomManager::instance().addToList (lSegment, lSegmentCabin);
+    FacBomManager::instance().addToList (lLegCabin, lSegmentCabin);
+    FacBomManager::instance().addToList (lSegmentCabin, lLegCabin);
   }
   
 }
