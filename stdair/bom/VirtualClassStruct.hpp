@@ -25,7 +25,13 @@ namespace stdair {
     /** Getter for the attributes. */
     const Yield_T& getYield () const { return _yield; }
     const MeanValue_T& getMean () const { return _mean; }
-    const StdDevValue_T& getStdDev () const {return _stdDev; }
+    const StdDevValue_T& getStdDev () const { return _stdDev; }
+    const BookingLimit_T& getCumulatedBookingLimit () const {
+      return _cumulatedBookingLimit;
+    }
+    const ProtectionLevel_T& getCumulatedProtection () const {
+      return _cumulatedProtection;
+    }
     
   public:
     // /////////// Setters ///////////////
@@ -33,7 +39,13 @@ namespace stdair {
     void setYield (const Yield_T& iYield) { _yield = iYield; }
     void setMean (const MeanValue_T& iMean) { _mean = iMean; }
     void setStdDev (const StdDevValue_T& iStdDev) { _stdDev = iStdDev; }
-
+    void setCumulatedBookingLimit (const BookingLimit_T& iBL) {
+      _cumulatedBookingLimit = iBL;
+    }
+    void setCumulatedProtection (const ProtectionLevel_T& iP) {
+      _cumulatedProtection = iP;
+    }
+    
   public:
     // /////////// Display support method /////////////
     /** Dump a Business Object into an output stream.
@@ -67,6 +79,12 @@ namespace stdair {
     /** Demand distribution. */
     MeanValue_T _mean;
     StdDevValue_T _stdDev;
+
+    /** Booking limit. */
+    BookingLimit_T _cumulatedBookingLimit;
+
+    /** Protection level. */
+    ProtectionLevel_T _cumulatedProtection;
   };
 
 }

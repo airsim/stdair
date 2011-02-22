@@ -142,6 +142,16 @@ namespace stdair {
       return _groupNbOfBookings;
     }
 
+    /** The virtual class list. */
+    VirtualClassList_T& getVirtualClassList() {
+      return _virtualClassList;
+    }
+
+    /** Reset the bid price vector and return it. */
+    BidPriceVector_T& getEmptyBidPriceVector() {
+      _bidPriceVector.clear(); return _bidPriceVector;
+    }
+
 
   public:
     // ///////////// Setters ///////////////
@@ -226,7 +236,6 @@ namespace stdair {
       _groupNbOfBookings = iGroupSeats;
     }
 
-
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -248,11 +257,19 @@ namespace stdair {
       return _key.toString();
     }
 
+    /** Display the virtual class list content. */
+    const std::string displayVirtualClassList () const;
+
 
   public:
     // /////////// Business methods //////////
     /** Register a sale. */
     void updateFromReservation (const NbOfBookings_T&);
+
+    /** Add a virtual class to the list. */
+    void addVirtualClass (const VirtualClassStruct& iVC) {
+      _virtualClassList.push_back (iVC);
+    }
 
 
   protected:
