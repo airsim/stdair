@@ -433,6 +433,14 @@ namespace stdair {
     LegDate& lLeg = FacBom<LegDate>::instance().create (lLegDateKey);
     FacBomManager::instance().addToList (lFlightDate, lLeg);
 
+    // Fill the LegDate content
+    lLeg.setOffPoint (DEFAULT_DESTINATION);
+    lLeg.setBoardingDate (DEFAULT_FLIGHT_DATE);
+    lLeg.setOffDate (DEFAULT_FLIGHT_DATE);
+    lLeg.setBoardingTime (Duration_T (14, 0, 0));
+    lLeg.setOffTime (Duration_T (16, 0, 0));
+    lLeg.setElapsedTime (Duration_T (8, 0, 0));
+
     // Leg-cabin
     LegCabinKey lLegCabinKey (DEFAULT_CABIN_CODE);
 
@@ -448,8 +456,17 @@ namespace stdair {
     SegmentDate& lSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
     FacBomManager::instance().addToList (lFlightDate, lSegment);
+
+    // Links between the segment-date and the leg-date
     FacBomManager::instance().addToList (lLeg, lSegment);
     FacBomManager::instance().addToList (lSegment, lLeg);
+
+    // Fill the SegmentDate content
+    lSegment.setBoardingDate (DEFAULT_FLIGHT_DATE);
+    lSegment.setOffDate (DEFAULT_FLIGHT_DATE);
+    lSegment.setBoardingTime (Duration_T (14, 0, 0));
+    lSegment.setOffTime (Duration_T (16, 0, 0));
+    lSegment.setElapsedTime (Duration_T (8, 0, 0));
 
     // Segment-cabin
     SegmentCabinKey lSegmentCabinKey (DEFAULT_CABIN_CODE);
@@ -457,8 +474,28 @@ namespace stdair {
     SegmentCabin& lSegmentCabin =
       FacBom<SegmentCabin>::instance().create (lSegmentCabinKey);
     FacBomManager::instance().addToList (lSegment, lSegmentCabin);
+
+    // Links between the segment-cabin and the leg-cabin
     FacBomManager::instance().addToList (lLegCabin, lSegmentCabin);
     FacBomManager::instance().addToList (lSegmentCabin, lLegCabin);
+
+    // Create a FareFamily (1) for the Segment LHR-BKK, cabin Y on BA's Inv
+    const FamilyCode_T l1 ("EcoSaver");
+    FareFamilyKey l1FareFamilyKey (l1);
+
+    FareFamily& lSegmentYCabin1Family =
+      FacBom<FareFamily>::instance().create (l1FareFamilyKey);
+    FacBomManager::instance().addToList (lSegmentCabin, lSegmentYCabin1Family);
+
+    // Create a booking-class
+    const ClassCode_T lQ ("Q");
+    BookingClassKey lQBookingClassKey (lQ);
+
+    BookingClass& lSegmentYCabin1FamilyQClass =
+      FacBom<BookingClass>::instance().create (lQBookingClassKey);
+    FacBomManager::instance().addToList (lSegmentYCabin1Family,
+                                         lSegmentYCabin1FamilyQClass);
+
   }
   
 }

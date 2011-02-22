@@ -3,8 +3,6 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-#include <istream>
-#include <ostream>
 #include <sstream>
 // StdAir
 #include <stdair/bom/BookingRequestStruct.hpp>
@@ -12,7 +10,7 @@
 namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
-  BookingRequestStruct::BookingRequestStruct ()
+  BookingRequestStruct::BookingRequestStruct()
     :  _partySize (0), _stayDuration (0), _wtp (0.0), _valueOfTime (0.0) {
     assert (false);
   }
@@ -63,7 +61,7 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  BookingRequestStruct::~BookingRequestStruct () {
+  BookingRequestStruct::~BookingRequestStruct() {
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -78,9 +76,9 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string BookingRequestStruct::describe() const {
     std::ostringstream oStr;
-    oStr << _origin << " - " << _destination
-         << " " << _pos << " " << _preferredDepartureDate
-         << " " << _requestDateTime << " " << _preferredCabin
+    oStr << "At " << _requestDateTime
+         << ", for (" << _pos << ") " << _origin << "-" << _destination
+         << " " << _preferredDepartureDate << " " << _preferredCabin
          << " " << _partySize << " " << _channel << " " << _tripType 
          << " " << _stayDuration << " " << _frequentFlyerType
          << " " << _preferredDepartureTime << " " << _wtp

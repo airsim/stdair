@@ -81,9 +81,15 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void STDAIR_Service::buildSampleBom() {
+  void STDAIR_Service::buildSampleBom (const bool isForRMOL,
+                                       const CabinCapacity_T iCabinCapacity) {
     // Build a sample BOM tree
-    CmdBomManager::buildSampleBom (_bomRoot);
+    if (isForRMOL == true) {
+      CmdBomManager::buildSampleBomForRMOL (_bomRoot, iCabinCapacity);
+
+    } else {
+      CmdBomManager::buildSampleBom (_bomRoot);
+    }
   }
 
   // //////////////////////////////////////////////////////////////////////
