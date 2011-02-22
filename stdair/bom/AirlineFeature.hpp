@@ -5,6 +5,7 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // StdAir
+#include <stdair/stdair_rm_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/AirlineFeatureKey.hpp>
 #include <stdair/bom/AirlineFeatureTypes.hpp>
