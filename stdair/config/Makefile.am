@@ -13,6 +13,7 @@ all-local: stdair-paths.hpp
 stdair-paths.hpp: Makefile
 	@echo '#ifndef __STDAIR_PATHS_HPP' > $@
 	@echo '#define __STDAIR_PATHS_HPP' >> $@
+	@echo >> $@
 	@echo '#define PACKAGE "stdair"' >> $@
 	@echo '#define PACKAGE_NAME "STDAIR"' >> $@
 	@echo '#define PACKAGE_VERSION "@VERSION@"' >> $@
@@ -21,4 +22,7 @@ stdair-paths.hpp: Makefile
 	@echo '#define LIBEXECDIR "$(libexecdir)"' >> $@
 	@echo '#define DATADIR "$(datadir)"' >> $@
 	@echo '#define DOCDIR "$(docdir)"' >> $@
+	@echo '#define STDAIR_SAMPLE_DIR "$(sampledir)"' >> $@
+	@echo >> $@
 	@echo '#endif // __STDAIR_PATHS_HPP' >> $@
+	@echo >> $@

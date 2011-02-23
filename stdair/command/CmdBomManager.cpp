@@ -5,6 +5,7 @@
 #include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_General.hpp>
 #include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
@@ -162,6 +163,17 @@ namespace stdair {
     lBKKLeg.setOffTime (l1540);
     lBKKLeg.setElapsedTime (l0905);
 
+    // Link the segment-dates with the leg-dates
+    FacBomManager::instance().addToList (lLHRLeg, lLHRSYDSegment);
+    FacBomManager::instance().addToList (lLHRLeg, lLHRBKKSegment);
+    FacBomManager::instance().addToList (lBKKLeg, lLHRSYDSegment);
+    FacBomManager::instance().addToList (lBKKLeg, lBKKSYDSegment);
+    FacBomManager::instance().addToList (lLHRSYDSegment, lLHRLeg);
+    FacBomManager::instance().addToList (lLHRBKKSegment, lLHRLeg);
+    FacBomManager::instance().addToList (lLHRSYDSegment, lBKKLeg);
+    FacBomManager::instance().addToList (lBKKSYDSegment, lBKKLeg);
+
+
     // Step 0.5: segment-cabin level
     // Create a SegmentCabin (Y) for the Segment LHR-BKK of BA's Inventory
     const CabinCode_T lY ("Y");
@@ -208,6 +220,17 @@ namespace stdair {
 
     // Display the leg-cabin
     // STDAIR_LOG_DEBUG ("LegCabin: " << lBKKLegYCabin.toString());
+
+    // Link the segment-cabins with the leg-cabins
+    FacBomManager::instance().addToList (lLHRLegYCabin, lLHRSYDSegmentYCabin);
+    FacBomManager::instance().addToList (lLHRLegYCabin, lLHRBKKSegmentYCabin);
+    FacBomManager::instance().addToList (lBKKLegYCabin, lLHRSYDSegmentYCabin);
+    FacBomManager::instance().addToList (lBKKLegYCabin, lBKKSYDSegmentYCabin);
+    FacBomManager::instance().addToList (lLHRSYDSegmentYCabin, lLHRLegYCabin);
+    FacBomManager::instance().addToList (lLHRBKKSegmentYCabin, lLHRLegYCabin);
+    FacBomManager::instance().addToList (lLHRSYDSegmentYCabin, lBKKLegYCabin);
+    FacBomManager::instance().addToList (lBKKSYDSegmentYCabin, lBKKLegYCabin);
+
 
     // Step 0.7: fare family level
     // Create a FareFamily (1) for the Segment LHR-BKK, cabin Y on BA's Inv
@@ -336,6 +359,11 @@ namespace stdair {
     // Display the leg-date
     // STDAIR_LOG_DEBUG ("LegDate: " << lCDGLeg.toString());
 
+    // Link the segment-dates with the leg-dates
+    FacBomManager::instance().addToList (lCDGLeg, lCDGSFOSegment);
+    FacBomManager::instance().addToList (lCDGSFOSegment, lCDGLeg);
+
+
     // Step 0.5: segment-cabin level
     // Create a SegmentCabin (Y) for the Segment CDG-SFO of AF's Inventory
     SegmentCabin& lCDGSFOSegmentYCabin =
@@ -353,6 +381,10 @@ namespace stdair {
 
     // Display the leg-cabin
     // STDAIR_LOG_DEBUG ("LegCabin: " << lLHRLegYCabin.toString());
+
+    // Link the segment-dates with the leg-dates
+    FacBomManager::instance().addToList (lCDGLegYCabin, lCDGSFOSegmentYCabin);
+    FacBomManager::instance().addToList (lCDGSFOSegmentYCabin, lCDGLegYCabin);
 
 
     // Step 0.7: fare family level
@@ -383,7 +415,7 @@ namespace stdair {
   void CmdBomManager::buildSampleBomForRMOL (BomRoot& ioBomRoot,
                                              const CabinCapacity_T& iCapacity) {
     // Inventory
-    const InventoryKey lInventoryKey ("DEFAULT_AIRLINE_CODE");
+    const InventoryKey lInventoryKey (DEFAULT_AIRLINE_CODE);
     Inventory& lInv =
       FacBom<Inventory>::instance().create (lInventoryKey);
     FacBomManager::instance().addToList (ioBomRoot, lInv);
@@ -399,6 +431,14 @@ namespace stdair {
     LegDate& lLeg = FacBom<LegDate>::instance().create (lLegDateKey);
     FacBomManager::instance().addToList (lFlightDate, lLeg);
 
+    // Fill the LegDate content
+    lLeg.setOffPoint (DEFAULT_DESTINATION);
+    lLeg.setBoardingDate (DEFAULT_FLIGHT_DATE);
+    lLeg.setOffDate (DEFAULT_FLIGHT_DATE);
+    lLeg.setBoardingTime (Duration_T (14, 0, 0));
+    lLeg.setOffTime (Duration_T (16, 0, 0));
+    lLeg.setElapsedTime (Duration_T (8, 0, 0));
+
     // Leg-cabin
     LegCabinKey lLegCabinKey (DEFAULT_CABIN_CODE);
     LegCabin& lLegCabin =
@@ -412,16 +452,45 @@ namespace stdair {
     SegmentDate& lSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
     FacBomManager::instance().addToList (lFlightDate, lSegment);
+
+    // Links between the segment-date and the leg-date
     FacBomManager::instance().addToList (lLeg, lSegment);
     FacBomManager::instance().addToList (lSegment, lLeg);
+
+    // Fill the SegmentDate content
+    lSegment.setBoardingDate (DEFAULT_FLIGHT_DATE);
+    lSegment.setOffDate (DEFAULT_FLIGHT_DATE);
+    lSegment.setBoardingTime (Duration_T (14, 0, 0));
+    lSegment.setOffTime (Duration_T (16, 0, 0));
+    lSegment.setElapsedTime (Duration_T (8, 0, 0));
 
     // Segment-cabin
     SegmentCabinKey lSegmentCabinKey (DEFAULT_CABIN_CODE);
     SegmentCabin& lSegmentCabin =
       FacBom<SegmentCabin>::instance().create (lSegmentCabinKey);
     FacBomManager::instance().addToList (lSegment, lSegmentCabin);
+
+    // Links between the segment-cabin and the leg-cabin
     FacBomManager::instance().addToList (lLegCabin, lSegmentCabin);
     FacBomManager::instance().addToList (lSegmentCabin, lLegCabin);
+
+    // Create a FareFamily (1) for the Segment LHR-BKK, cabin Y on BA's Inv
+    const FamilyCode_T l1 ("EcoSaver");
+    FareFamilyKey l1FareFamilyKey (l1);
+
+    FareFamily& lSegmentYCabin1Family =
+      FacBom<FareFamily>::instance().create (l1FareFamilyKey);
+    FacBomManager::instance().addToList (lSegmentCabin, lSegmentYCabin1Family);
+
+    // Create a booking-class
+    const ClassCode_T lQ ("Q");
+    BookingClassKey lQBookingClassKey (lQ);
+
+    BookingClass& lSegmentYCabin1FamilyQClass =
+      FacBom<BookingClass>::instance().create (lQBookingClassKey);
+    FacBomManager::instance().addToList (lSegmentYCabin1Family,
+                                         lSegmentYCabin1FamilyQClass);
+
   }
   
 }

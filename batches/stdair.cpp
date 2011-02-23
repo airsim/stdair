@@ -26,11 +26,17 @@
 const std::string K_STDAIR_DEFAULT_LOG_FILENAME ("stdair.log");
 
 /** Default name and location for the (CSV) input file. */
-const std::string K_STDAIR_DEFAULT_INPUT_FILENAME ("../../test/samples/stdair01.csv");
+const std::string K_STDAIR_DEFAULT_INPUT_FILENAME (STDAIR_SAMPLE_DIR
+                                                   "/schedule01.csv");
 
 /** Default for the input type. It can be either built-in or provided by an
     input file. That latter must then be given with the -i option. */
 const bool K_STDAIR_DEFAULT_BUILT_IN_INPUT = false;
+
+/** Default for the RMOL sample BOM tree. If that sample BOM tree is
+    chosen to be built, no other BOM tree (either built-in or parsed
+    from an input file) will be built. */
+const bool K_STDAIR_DEFAULT_BUILT_FOR_RMOL = false;
 
 /** Early return status (so that it can be differentiated from an
     error). */
@@ -46,10 +52,14 @@ template<class T> std::ostream& operator<< (std::ostream& os,
 
 /** Read and parse the command line options. */
 int readConfiguration (int argc, char* argv[], bool& ioIsBuiltin,
+                       bool& ioIsForRMOL,
                        stdair::Filename_T& ioInputFilename,
                        std::string& ioLogFilename) {
   // Default for the built-in input
   ioIsBuiltin = K_STDAIR_DEFAULT_BUILT_IN_INPUT;
+
+  // Default for the RMOL input
+  ioIsForRMOL = K_STDAIR_DEFAULT_BUILT_FOR_RMOL;
   
   // Declare a group of options that will be allowed only on command line
   boost::program_options::options_description generic ("Generic options");
@@ -65,6 +75,8 @@ int readConfiguration (int argc, char* argv[], bool& ioIsBuiltin,
   config.add_options()
     ("builtin,b",
      "The sample BOM tree can be either built-in or parsed from an input file. That latter must then be given with the -i/--input option")
+    ("rmol,r",
+     "Build a sample BOM tree for RMOL")
     ("input,i",
      boost::program_options::value< std::string >(&ioInputFilename)->default_value(K_STDAIR_DEFAULT_INPUT_FILENAME),
      "(CVS) input file for the demand distributions")
@@ -120,13 +132,28 @@ int readConfiguration (int argc, char* argv[], bool& ioIsBuiltin,
   if (vm.count ("builtin")) {
     ioIsBuiltin = true;
   }
+
+  if (vm.count ("rmol")) {
+    ioIsForRMOL = true;
+
+    // The RMOL sample tree takes precedence over the default built-in BOM tree
+    ioIsBuiltin = false;
+  }
   const std::string isBuiltinStr = (ioIsBuiltin == true)?"yes":"no";
   std::cout << "The BOM should be built-in? " << isBuiltinStr << std::endl;
 
-  if (ioIsBuiltin == false) {
+  const std::string isForRMOLStr = (ioIsForRMOL == true)?"yes":"no";
+  std::cout << "The BOM should be built-in for RMOL? " << isForRMOLStr
+            << std::endl;
+
+  if (ioIsBuiltin == false && ioIsForRMOL == false) {
     if (vm.count ("input")) {
       ioInputFilename = vm["input"].as< std::string >();
       std::cout << "Input filename is: " << ioInputFilename << std::endl;
+
+    } else {
+      std::cerr << "Either one among the -b/--builtin, -r/--rmol or -i/--input "
+                << "options must be specified" << std::endl;
     }
   }
 
@@ -142,8 +169,12 @@ int readConfiguration (int argc, char* argv[], bool& ioIsBuiltin,
 // ///////////////// M A I N ////////////////////
 int main (int argc, char* argv[]) {
 
-  // Built-in
+  // State whether the BOM tree should be built-in or parsed from an
+  // input file
   bool isBuiltin;
+
+  // State whether a sample BOM tree should be built for RMOL.
+  bool isForRMOL;
     
   // Input file name
   stdair::Filename_T lInputFilename;
@@ -153,7 +184,8 @@ int main (int argc, char* argv[]) {
     
   // Call the command-line option parser
   const int lOptionParserStatus =
-    readConfiguration (argc, argv, isBuiltin, lInputFilename, lLogFilename);
+    readConfiguration (argc, argv, isBuiltin, isForRMOL, lInputFilename,
+                       lLogFilename);
 
   if (lOptionParserStatus == K_STDAIR_EARLY_RETURN_STATUS) {
     return 0;
@@ -172,9 +204,18 @@ int main (int argc, char* argv[]) {
   STDAIR_LOG_DEBUG ("Welcome to stdair");
 
   // Check wether or not a (CSV) input file should be read
-  if (isBuiltin == true) {
-    // Build a sample BOM tree
-    stdairService.buildSampleBom();
+  if (isBuiltin == true || isForRMOL == true) {
+
+    if (isForRMOL == true) {
+      // Build the sample BOM tree for RMOL
+      stdairService.buildSampleBom (true);
+
+    } else {
+      assert (isBuiltin == true);
+
+      // Build a sample BOM tree
+      stdairService.buildSampleBom();
+    }
       
   } else {
     // Read the input file

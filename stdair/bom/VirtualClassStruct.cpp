@@ -8,19 +8,25 @@
 #include <stdair/bom/VirtualClassStruct.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  VirtualClassStruct::VirtualClassStruct() : _bookingClass (NULL) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  VirtualClassStruct::VirtualClassStruct (const VirtualClassStruct& iVC)
+    : _bookingClass (iVC._bookingClass), _yield (iVC._yield),
+      _mean (iVC._mean), _stdDev (iVC._stdDev) {
+  }
+  
   // ////////////////////////////////////////////////////////////////////
   VirtualClassStruct::VirtualClassStruct (BookingClass& ioBookingClass) {
     _bookingClass = &ioBookingClass;
   }
 
   // ////////////////////////////////////////////////////////////////////
-  VirtualClassStruct:: VirtualClassStruct (const VirtualClassStruct& iVC)
-    : _bookingClass (iVC._bookingClass), _yield (iVC._yield),
-      _mean (iVC._mean), _stdDev (iVC._stdDev) {
-  }
-  
-  // ////////////////////////////////////////////////////////////////////
-  VirtualClassStruct::~VirtualClassStruct () {
+  VirtualClassStruct::~VirtualClassStruct() {
     _bookingClass = NULL;
   }
   
@@ -37,8 +43,7 @@ namespace stdair {
   const std::string VirtualClassStruct::describe() const {
     std::ostringstream oStr;
     oStr << "Yield: " << _yield
-         << ", Demand Mean: " << _mean
-         << ", Demand SD: " << _stdDev << std::endl;
+         << ", Demand N (" << _mean << ", " << _stdDev << ")";
     return oStr.str();
   }
 

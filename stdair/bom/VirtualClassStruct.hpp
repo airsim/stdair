@@ -22,26 +22,54 @@ namespace stdair {
   struct VirtualClassStruct : public StructAbstract {
   public:
     // /////////// Getters ///////////////
-    /** Getter for the attributes. */
-    const Yield_T& getYield () const { return _yield; }
-    const MeanValue_T& getMean () const { return _mean; }
-    const StdDevValue_T& getStdDev () const { return _stdDev; }
+    /** Get the yield (average price paid for that virtual class). */
+    const Yield_T& getYield() const {
+      return _yield;
+    }
+
+    /** Get the mean value of the demand distribution. */
+    const MeanValue_T& getMean() const {
+      return _mean;
+    }
+
+    /** Get the standard deviation of the demand distribution. */
+    const StdDevValue_T& getStdDev() const {
+      return _stdDev;
+    }
+
+    /** Get the booking limit of the class. */
     const BookingLimit_T& getCumulatedBookingLimit () const {
       return _cumulatedBookingLimit;
     }
+
+    /** Get the protection level of the class. */
     const ProtectionLevel_T& getCumulatedProtection () const {
       return _cumulatedProtection;
     }
     
   public:
     // /////////// Setters ///////////////
-    /** Setter for the attributes (except the origin booking class pointer). */
-    void setYield (const Yield_T& iYield) { _yield = iYield; }
-    void setMean (const MeanValue_T& iMean) { _mean = iMean; }
-    void setStdDev (const StdDevValue_T& iStdDev) { _stdDev = iStdDev; }
+    /** Set the yield (average price paid for that virtual class). */
+    void setYield (const Yield_T& iYield) {
+      _yield = iYield;
+    }
+
+    /** Set the mean value of the demand distribution. */
+    void setMean (const MeanValue_T& iMean) {
+      _mean = iMean;
+    }
+
+    /** Set the standard deviation of the demand distribution. */
+    void setStdDev (const StdDevValue_T& iStdDev) {
+      _stdDev = iStdDev;
+    }
+    
+    /** Set the booking limit of the class. */
     void setCumulatedBookingLimit (const BookingLimit_T& iBL) {
       _cumulatedBookingLimit = iBL;
     }
+    
+    /** Set the protection level of the class. */
     void setCumulatedProtection (const ProtectionLevel_T& iP) {
       _cumulatedProtection = iP;
     }
@@ -59,25 +87,33 @@ namespace stdair {
     /** Display of the structure. */
     const std::string describe() const;
   
+
   public:
     // //////////// Constructors & Destructor ///////////////
-    /** Main constructors. */
-    VirtualClassStruct ();
-    VirtualClassStruct (BookingClass&);
+    /** Constructor. */
     VirtualClassStruct (const VirtualClassStruct&);
+    /** Default copy constructor. */
+    VirtualClassStruct (BookingClass&);
     /** Destructor. */
-    ~VirtualClassStruct ();
+    ~VirtualClassStruct();
     
   private:
+    /** Default constructor. */
+    VirtualClassStruct();
+
+
+  private:
     // ///////////////////// Attributes //////////////////////
-    /** The origin booking class. */
+    /** Pointer on the origin booking class. */
     BookingClass* _bookingClass;
 
     /** Yield. */
     Yield_T _yield;
 
-    /** Demand distribution. */
+    /** Mean value of the demand distribution. */
     MeanValue_T _mean;
+
+    /** Standard deviation of the demand distribution. */
     StdDevValue_T _stdDev;
 
     /** Booking limit. */
