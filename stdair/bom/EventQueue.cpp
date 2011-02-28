@@ -68,7 +68,7 @@ namespace stdair {
            _nbOfEvents.begin(); itNbOfEventsMap != _nbOfEvents.end();
          ++itNbOfEventsMap, ++demandStreamIdx) {
 
-      const DemandStreamKeyStr_T& lDemandStreyKeyStr = itNbOfEventsMap->first;
+      const EventContentKey_T& lDemandStreyKeyStr = itNbOfEventsMap->first;
       oStr << ", [" << demandStreamIdx << "][" << lDemandStreyKeyStr << "] ";
 
       const ProgressStatus& lProgressStatus = itNbOfEventsMap->second;
@@ -113,7 +113,7 @@ namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
   void EventQueue::
-  addStatus (const DemandStreamKeyStr_T& iDemandStreamKeyStr,
+  addStatus (const EventContentKey_T& iEventContentKey,
              const NbOfRequests_T& iExpectedTotalNbOfEvents) {
 
     /**
@@ -132,16 +132,16 @@ namespace stdair {
     // Insert the (Boost) progress display object into the dedicated map
     const bool hasInsertBeenSuccessful =
       _nbOfEvents.insert (NbOfEventsByDemandStreamMap_T::
-                          value_type (iDemandStreamKeyStr,
+                          value_type (iEventContentKey,
                                       lProgressStatus)).second;
 
     if (hasInsertBeenSuccessful == false) {
       STDAIR_LOG_ERROR ("No progress_status can be inserted "
                         << "for the following DemandStream: "
-                        << iDemandStreamKeyStr
+                        << iEventContentKey
                         << ". EventQueue: " << toString());
       throw EventException ("No progress_status can be inserted for the "
-                            "following DemandStream: " + iDemandStreamKeyStr
+                            "following DemandStream: " + iEventContentKey
                             + ". EventQueue: " + toString());
     }
 
@@ -155,7 +155,7 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void EventQueue::
-  updateStatus (const DemandStreamKeyStr_T& iDemandStreamKeyStr,
+  updateStatus (const EventContentKey_T& iEventContentKey,
                 const NbOfRequests_T& iExpectedTotalNbOfEvents) {
 
     // Initialise the progress status object for the current demand stream
@@ -164,7 +164,7 @@ namespace stdair {
       
     // Update the progress status for the corresponding demand stream
     NbOfEventsByDemandStreamMap_T::iterator itNbOfEvents =
-      _nbOfEvents.find (iDemandStreamKeyStr);
+      _nbOfEvents.find (iEventContentKey);
     if (itNbOfEvents != _nbOfEvents.end()) {
       ProgressStatus& lProgressStatus = itNbOfEvents->second;
       lProgressStatus.setActualNb (lExpectedTotalNbOfEventsInt);
@@ -173,7 +173,7 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   ProgressStatus EventQueue::
-  getStatus (const DemandStreamKeyStr_T& iDemandStreamKey) const {
+  getStatus (const EventContentKey_T& iDemandStreamKey) const {
     
     NbOfEventsByDemandStreamMap_T::const_iterator itNbOfEventsMap =
       _nbOfEvents.find (iDemandStreamKey);
@@ -196,11 +196,11 @@ namespace stdair {
     EventStruct lEventStruct = itEvent->second;
 
     // Extract the key of the demand stream
-    const DemandStreamKeyStr_T& lDemandStreamKeyStr =
-      lEventStruct.getDemandStreamKey();
+    const EventContentKey_T& lEventContentKey =
+      lEventStruct.getEventContentKey();
 
     // Retrieve the progress status specific to that demand stream
-    const ProgressStatus& lProgressStatus = getStatus (lDemandStreamKeyStr);
+    const ProgressStatus& lProgressStatus = getStatus (lEventContentKey);
 
     // Update the progress status of the event structure, specific to
     // the demand stream
@@ -246,12 +246,12 @@ namespace stdair {
     }
 
     // Extract the corresponding demand stream key
-    const DemandStreamKeyStr_T& lDemandStreamKeyStr =
-      ioEventStruct.getDemandStreamKey();
+    const EventContentKey_T& lEventContentKey =
+      ioEventStruct.getEventContentKey();
 
     // Update the progress status for the corresponding demand stream
     NbOfEventsByDemandStreamMap_T::iterator itNbOfEventsMap =
-      _nbOfEvents.find (lDemandStreamKeyStr);
+      _nbOfEvents.find (lEventContentKey);
     if (itNbOfEventsMap != _nbOfEvents.end()) {
       ProgressStatus& lProgressStatus = itNbOfEventsMap->second;
       ++lProgressStatus;
