@@ -446,6 +446,7 @@ namespace stdair {
     FacBomManager::instance().addToList (lLeg, lLegCabin);
 
     lLegCabin.setCapacities (iCapacity);
+    lLegCabin.setAvailabilityPool (iCapacity);
 
     // Segment-date
     SegmentDateKey lSegmentDateKey (DEFAULT_ORIGIN, DEFAULT_DESTINATION);

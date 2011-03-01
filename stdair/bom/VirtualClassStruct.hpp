@@ -12,6 +12,7 @@
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/stdair_maths_types.hpp>
+#include <stdair/stdair_rm_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
 
 namespace stdair {
@@ -46,6 +47,9 @@ namespace stdair {
     const ProtectionLevel_T& getCumulatedProtection () const {
       return _cumulatedProtection;
     }
+
+    /** Get the generated demand sample vector for Monte-Carlo method. */
+    const GeneratedDemandVector_T& getGeneratedDemandVector () const;
     
   public:
     // /////////// Setters ///////////////
