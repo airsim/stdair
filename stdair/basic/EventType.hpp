@@ -16,7 +16,8 @@ namespace stdair {
   public:
     typedef enum { 
       BKG_REQ = 0,
-      OPT_NOT,
+      OPT_NOT_4_FD,
+      OPT_NOT_4_NET,
       SKD_CHG,
       LAST_VALUE
     } EN_EventType;
