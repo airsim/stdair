@@ -15,9 +15,21 @@ namespace stdair {
     { "BookingRequest", "OptimisationNotificationForFlightDate",
       "OptimisationNotificationForNetwork", "ScheduleChange" };
 
+  // //////////////////////////////////////////////////////////////////////
   const char EventType::_typeLabels[LAST_VALUE] = { 'B', 'F', 'N', 'S' };
 
   
+  // //////////////////////////////////////////////////////////////////////
+  EventType::EventType()
+    : _type (LAST_VALUE) {
+    assert (false);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  EventType::EventType (const EventType& iEventType)
+    : _type (iEventType._type) {
+  }
+
   // //////////////////////////////////////////////////////////////////////
   EventType::EventType (const EN_EventType& iEventType)
     : _type (iEventType) {

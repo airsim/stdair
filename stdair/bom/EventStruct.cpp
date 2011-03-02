@@ -120,13 +120,17 @@ namespace stdair {
     case EventType::BKG_REQ: {
       assert (_bookingRequest != NULL);
       oStr << ", " << _eventType << ", " << _bookingRequest->describe();
+      break;
     }
     case EventType::OPT_NOT_4_FD: {
       assert (_optimisationNotification != NULL);
       oStr << ", " << _eventType
            << ", " << _optimisationNotification->describe();
+      break;
     }
     default: {
+      oStr << ", " << _eventType << " (not yet recognised)";
+      break;
     }
     }
 
