@@ -21,6 +21,9 @@ namespace stdair {
   /** Define a list of airline code. */
   typedef std::vector<AirlineCode_T> AirlineCodeList_T;
 
+  /** Define the list of list of class codes as a string. */
+  typedef std::vector<ClassList_String_T> ClassList_StringList_T;
+
   /** Define a list of class code. */
   typedef std::vector<ClassCode_T> ClassCodeList_T;
 

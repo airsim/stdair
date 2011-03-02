@@ -29,7 +29,7 @@ namespace stdair {
   public:
     // /////////// Setters ///////////////
     /** Set attributes. */
-    void addClass (const ClassCode_T& iClassCode);
+    void addClass (const std::string);
     void setFare (const Fare_T& iFare) { _fare = iFare; }
     void setChangeFees (const ChangeFees_T iRes) { _changeFee = iRes; }
     void setNonRefundable (const NonRefundable_T iRes) { _nonRefundable = iRes;}

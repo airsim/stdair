@@ -29,7 +29,18 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string TravelSolutionStruct::describe() const {
     std::ostringstream oStr;
-      
+    oStr << "Segment path: ";
+    for (SegmentPath_T::const_iterator lItSegmentPath = _segmentPath.begin();
+         lItSegmentPath != _segmentPath.end();
+         lItSegmentPath++) {
+      oStr << *lItSegmentPath;
+    }
+    for (FareOptionList_T::const_iterator lItFareOption = _fareOptionList.begin();
+         lItFareOption != _fareOptionList.end();
+         lItFareOption ++) {
+      FareOptionStruct lFareOption = *lItFareOption;
+      oStr << lFareOption.describe();
+    }
     return oStr.str();
   }
 
