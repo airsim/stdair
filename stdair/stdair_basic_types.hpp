@@ -102,6 +102,9 @@ namespace stdair {
   /** Define the price of a travel solution. */
   typedef double Fare_T;
 
+  /** Define the unsigned index type. */
+  typedef unsigned int UnsignedIndex_T;
+
   // ///////////// Technical ////////////////
   /** File or directory name.
       <br>It may contain paths, relative or absolute (e.g., /foo/bar
