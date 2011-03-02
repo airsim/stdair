@@ -54,8 +54,14 @@ namespace stdair {
     EventType (const EN_EventType&);
     /** Constructor. */
     EventType (const char iType);
+    /** Default copy constructor. */
+    EventType (const EventType&);
 
-    
+  private:
+    /** Default constructor. */
+    EventType();
+  
+
   private:
     /** String version of the enumeration. */    
     static const std::string _labels[LAST_VALUE];
