@@ -36,6 +36,11 @@ namespace stdair {
     const FareOptionList_T& getFareOptionList () const {
       return _fareOptionList;
     }
+
+    /** Get the chosen fare option. */
+    const FareOptionStruct& getChosenFareOption () const {
+      return _chosenFareOption;
+    }
     
   public:
     // /////////// Setters ///////////////
