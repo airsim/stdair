@@ -5,6 +5,7 @@
 #include <cassert>
 // StdAir
 #include <stdair/factory/FacAbstract.hpp>
+#include <stdair/service/FacServiceAbstract.hpp>
 #include <stdair/service/FacSupervisor.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/service/DBSessionManager.hpp>
@@ -25,19 +26,23 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   FacSupervisor::~FacSupervisor() {
     cleanBomLayer();
+    cleanServiceLayer();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FacSupervisor::
-  registerFacBom (FacAbstract* ioFac_ptr) {
-    _facPool.push_back (ioFac_ptr);
+  void FacSupervisor::registerBomFactory (FacAbstract* ioFac_ptr) {
+    _bomPool.push_back (ioFac_ptr);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void FacSupervisor::registerServiceFactory (FacServiceAbstract* ioFac_ptr) {
+    _svcPool.push_back (ioFac_ptr);
   }
 
   // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::cleanBomLayer() {
-    for (FactoryPool_T::const_iterator itFactory =
-           _facPool.begin();
-         itFactory != _facPool.end(); itFactory++) {
+    for (BomFactoryPool_T::const_iterator itFactory = _bomPool.begin();
+         itFactory != _bomPool.end(); itFactory++) {
       const FacAbstract* currentFactory_ptr = *itFactory;
       assert (currentFactory_ptr != NULL);
 
@@ -45,7 +50,21 @@ namespace stdair {
     }
 
     // Empty the pool of factories
-    _facPool.clear();
+    _bomPool.clear();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void FacSupervisor::cleanServiceLayer() {
+    for (ServiceFactoryPool_T::const_iterator itFactory = _svcPool.begin();
+         itFactory != _svcPool.end(); itFactory++) {
+      const FacServiceAbstract* currentFactory_ptr = *itFactory;
+      assert (currentFactory_ptr != NULL);
+      
+      delete (currentFactory_ptr); currentFactory_ptr = NULL;
+    }
+    
+    // Empty the pool of Service Factories
+    _svcPool.clear();
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -61,7 +80,13 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void FacSupervisor::cleanAll () {
+  void FacSupervisor::cleanAll() {
+
+    // Clean the service layer
+    if (_instance != NULL) {
+      _instance->cleanServiceLayer();
+    }
+
     // Clean the static instance of the database session manager
     cleanDBSessionManager();
 

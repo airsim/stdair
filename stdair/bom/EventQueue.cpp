@@ -64,7 +64,7 @@ namespace stdair {
      * hundreds of thousands). Uncomment it only for debug purposes.
     */
     unsigned int demandStreamIdx = 1;
-    for (NbOfEventsByDemandStreamMap_T::const_iterator itNbOfEventsMap =
+    for (NbOfEventsByContentKeyMap_T::const_iterator itNbOfEventsMap =
            _nbOfEvents.begin(); itNbOfEventsMap != _nbOfEvents.end();
          ++itNbOfEventsMap, ++demandStreamIdx) {
 
@@ -103,7 +103,7 @@ namespace stdair {
     _eventList.clear();
 
     // Reset the progress statuses for all the demand streams
-    for (NbOfEventsByDemandStreamMap_T::iterator itNbOfEvents =
+    for (NbOfEventsByContentKeyMap_T::iterator itNbOfEvents =
            _nbOfEvents.begin();
          itNbOfEvents != _nbOfEvents.end(); ++itNbOfEvents) {
       ProgressStatus& lProgressStatus = itNbOfEvents->second;
@@ -112,8 +112,100 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
+  const Count_T& EventQueue::
+  getCurrentNbOfEvents (const EventType::EN_EventType& iType) const {
+
+    // Retrieve the ProgressStatus structure corresponding to the
+    // given event type
+    ProgressStatusMap_T::const_iterator itProgressStatus =
+      _progressStatusMap.find (iType);
+    if (itProgressStatus == _progressStatusMap.end()) {
+      //
+      STDAIR_LOG_ERROR ("No ProgressStatus structure can be retrieved in the "
+                        << "EventQueue: " << display());
+      assert (false);
+    }
+    
+    const ProgressStatus& lProgressStatus = itProgressStatus->second;
+    return lProgressStatus.getCurrentNb();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  const Count_T& EventQueue::
+  getExpectedTotalNbOfEvents (const EventType::EN_EventType& iType) const {
+
+    // Retrieve the ProgressStatus structure corresponding to the
+    // given event type
+    ProgressStatusMap_T::const_iterator itProgressStatus =
+      _progressStatusMap.find (iType);
+    if (itProgressStatus == _progressStatusMap.end()) {
+      //
+      STDAIR_LOG_ERROR ("No ProgressStatus structure can be retrieved in the "
+                        << "EventQueue: " << display());
+      assert (false);
+    }
+    
+    const ProgressStatus& lProgressStatus = itProgressStatus->second;
+    return lProgressStatus.getExpectedNb();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  const Count_T& EventQueue::
+  getActualTotalNbOfEvents (const EventType::EN_EventType& iType) const {
+
+    // Retrieve the ProgressStatus structure corresponding to the
+    // given event type
+    ProgressStatusMap_T::const_iterator itProgressStatus =
+      _progressStatusMap.find (iType);
+    if (itProgressStatus == _progressStatusMap.end()) {
+      //
+      STDAIR_LOG_ERROR ("No ProgressStatus structure can be retrieved in the "
+                        << "EventQueue: " << display());
+      assert (false);
+    }
+    
+    const ProgressStatus& lProgressStatus = itProgressStatus->second;
+    return lProgressStatus.getActualNb();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void EventQueue::updateStatus (const EventType::EN_EventType& iType,
+                                 const ProgressStatus& iProgressStatus) {
+
+    // Retrieve, if existing, the ProgressStatus structure
+    // corresponding to the given event type
+    ProgressStatusMap_T::iterator itProgressStatus =
+      _progressStatusMap.find (iType);
+    if (itProgressStatus == _progressStatusMap.end()) {
+      const bool hasInsertBeenSuccessful =
+        _progressStatusMap.insert (ProgressStatusMap_T::
+                                   value_type (iType, iProgressStatus)).second;
+      
+      if (hasInsertBeenSuccessful == false) {
+        STDAIR_LOG_ERROR ("No progress_status can be inserted "
+                          << "for the following event type: "
+                          << EventType::getLabel(iType)
+                          << ". EventQueue: " << toString());
+        throw EventException ("No progress_status can be inserted for the "
+                              "following event type: "
+                              + EventType::getLabel(iType)
+                              + ". EventQueue: " + toString());
+      }
+
+      return;
+    }
+    
+    ProgressStatus& lProgressStatus = itProgressStatus->second;
+
+    // Update the progress status
+    const Count_T& lCurrentNb = iProgressStatus.getCurrentNb();
+    lProgressStatus.setCurrentNb (lCurrentNb);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   void EventQueue::
-  addStatus (const EventContentKey_T& iEventContentKey,
+  addStatus (const EventType::EN_EventType& iType,
+             const EventContentKey_T& iEventContentKey,
              const NbOfRequests_T& iExpectedTotalNbOfEvents) {
 
     /**
@@ -124,33 +216,56 @@ namespace stdair {
      * structure for every demand stream.
      */
 
-    // Initialise the progress status object for the current demand stream
+    // Initialise the progress status object
     const Count_T lExpectedTotalNbOfEventsInt =
       std::floor (iExpectedTotalNbOfEvents);
     const ProgressStatus lProgressStatus (lExpectedTotalNbOfEventsInt);
       
     // Insert the (Boost) progress display object into the dedicated map
     const bool hasInsertBeenSuccessful =
-      _nbOfEvents.insert (NbOfEventsByDemandStreamMap_T::
+      _nbOfEvents.insert (NbOfEventsByContentKeyMap_T::
                           value_type (iEventContentKey,
                                       lProgressStatus)).second;
 
     if (hasInsertBeenSuccessful == false) {
       STDAIR_LOG_ERROR ("No progress_status can be inserted "
-                        << "for the following DemandStream: "
+                        << "for the following event content key: "
                         << iEventContentKey
                         << ". EventQueue: " << toString());
       throw EventException ("No progress_status can be inserted for the "
-                            "following DemandStream: " + iEventContentKey
+                            "following event content key: " + iEventContentKey
                             + ". EventQueue: " + toString());
     }
 
+    // Update the progress status for the given event type
+    updateStatus (iType, lProgressStatus);
+    
     // Update the overall progress status
     _progressStatus.setExpectedNb (_progressStatus.getExpectedNb()
                                    + iExpectedTotalNbOfEvents);
 
     _progressStatus.setActualNb (_progressStatus.getActualNb()
-                                   + iExpectedTotalNbOfEvents);
+                                 + iExpectedTotalNbOfEvents);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void EventQueue::
+  updateStatus (const EventType::EN_EventType& iType,
+                const NbOfRequests_T& iExpectedTotalNbOfEvents) {
+
+    // Initialise the progress status object for the current content type key
+    Count_T lExpectedTotalNbOfEventsInt = std::floor (iExpectedTotalNbOfEvents);
+      
+    // Update the progress status for the corresponding content type key
+    ProgressStatusMap_T::iterator itProgressStatus =
+      _progressStatusMap.find (iType);
+    if (itProgressStatus != _progressStatusMap.end()) {
+      ProgressStatus& lProgressStatus = itProgressStatus->second;
+      //
+      lExpectedTotalNbOfEventsInt += lProgressStatus.getActualNb();
+      //
+      lProgressStatus.setActualNb (lExpectedTotalNbOfEventsInt);
+    }
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -158,12 +273,12 @@ namespace stdair {
   updateStatus (const EventContentKey_T& iEventContentKey,
                 const NbOfRequests_T& iExpectedTotalNbOfEvents) {
 
-    // Initialise the progress status object for the current demand stream
+    // Initialise the progress status object for the current content type key
     const Count_T lExpectedTotalNbOfEventsInt =
       std::floor (iExpectedTotalNbOfEvents);
       
-    // Update the progress status for the corresponding demand stream
-    NbOfEventsByDemandStreamMap_T::iterator itNbOfEvents =
+    // Update the progress status for the corresponding content type key
+    NbOfEventsByContentKeyMap_T::iterator itNbOfEvents =
       _nbOfEvents.find (iEventContentKey);
     if (itNbOfEvents != _nbOfEvents.end()) {
       ProgressStatus& lProgressStatus = itNbOfEvents->second;
@@ -172,11 +287,30 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  const ProgressStatus& EventQueue::
+  getStatus (const EventType::EN_EventType& iType) const {
+
+    // Retrieve the ProgressStatus structure corresponding to the
+    // given event type
+    ProgressStatusMap_T::const_iterator itProgressStatus =
+      _progressStatusMap.find (iType);
+    if (itProgressStatus == _progressStatusMap.end()) {
+      //
+      STDAIR_LOG_ERROR ("No ProgressStatus structure can be retrieved in the "
+                        << "EventQueue: " << display());
+      assert (false);
+    }
+
+    const ProgressStatus& oProgressStatus = itProgressStatus->second;
+    return oProgressStatus;
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   ProgressStatus EventQueue::
-  getStatus (const EventContentKey_T& iDemandStreamKey) const {
+  getStatus (const EventContentKey_T& iEventContentKey) const {
     
-    NbOfEventsByDemandStreamMap_T::const_iterator itNbOfEventsMap =
-      _nbOfEvents.find (iDemandStreamKey);
+    NbOfEventsByContentKeyMap_T::const_iterator itNbOfEventsMap =
+      _nbOfEvents.find (iEventContentKey);
     if (itNbOfEventsMap != _nbOfEvents.end()) {
       const ProgressStatus& oProgressStatus = itNbOfEventsMap->second;
       return oProgressStatus;
@@ -186,36 +320,87 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  ProgressPercentage_T EventQueue::
+  calculateProgress (const EventType::EN_EventType& iType) const {
+
+    // Retrieve the ProgressStatus structure corresponding to the
+    // given event type
+    ProgressStatusMap_T::const_iterator itProgressStatus =
+      _progressStatusMap.find (iType);
+    if (itProgressStatus == _progressStatusMap.end()) {
+      //
+      STDAIR_LOG_ERROR ("No ProgressStatus structure can be retrieved in the "
+                        << "EventQueue: " << display());
+      assert (false);
+    }
+    
+    const ProgressStatus& lProgressStatus = itProgressStatus->second;
+    return lProgressStatus.progress();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   EventStruct EventQueue::popEvent() {
     assert (_eventList.empty() == false);
 
+    /**
+     * 1. Update the event queue itself.
+     */
     // Get an iterator on the first event (sorted by date-time stamps)
     EventList_T::iterator itEvent = _eventList.begin();
 
-    // Extract the corresponding Event structure
+    /**
+     * Extract (a copy of) the corresponding Event structure. We make
+     * a copy here, as the resulting EventStruct structure will be
+     * returned by this method.
+     */
     EventStruct lEventStruct = itEvent->second;
 
-    // Extract the key of the demand stream
+    // Update the (current number part of the) overall progress status,
+    // to account for the event that is being popped out of the event
+    // queue.
+    ++_progressStatus;
+    
+    // Remove the event, which has just been retrieved
+    _eventList.erase (itEvent);
+
+
+    /**
+     * 2. Update the progress statuses held by the EventStruct structure.
+     *
+     * 2.1. Update the progress status specific to the event type (e.g.,
+     *      booking request, optimisation notification).
+     */
+    // Retrieve the event type
+    const EventType::EN_EventType& lEventType = lEventStruct.getEventType();
+
+    // Retrieve the progress status specific to that event type
+    const ProgressStatus& lEventTypeProgressStatus = getStatus (lEventType);
+
+    // Update the progress status of the event structure, specific to
+    // the content type key.
+    lEventStruct.setTypeSpecificStatus (lEventTypeProgressStatus);
+
+    /**
+     * 2.2. Update the progress status specific to the content key (e.g.,
+     *      demand stream key, DCP rule key).
+     */
+    // Extract the key of the event content
     const EventContentKey_T& lEventContentKey =
       lEventStruct.getEventContentKey();
 
-    // Retrieve the progress status specific to that demand stream
-    const ProgressStatus& lProgressStatus = getStatus (lEventContentKey);
+    // Retrieve the progress status specific to that event content key
+    const ProgressStatus& lEventContentKeyProgressStatus =
+      getStatus (lEventContentKey);
 
     // Update the progress status of the event structure, specific to
-    // the demand stream
-    lEventStruct.setSpecificStatus (lProgressStatus);
+    // the content type key.
+    lEventStruct.setKeySpecificStatus (lEventContentKeyProgressStatus);
 
-    // Update the (current number part of the) overall progress
-    // status, to account for the event that is being popped out of
-    // the event queue
-    ++_progressStatus;
-    
+    /**
+     * 2.3. Update the overall progress status.
+     */
     // Update the overall progress status of the event structure
     lEventStruct.setOverallStatus (_progressStatus);
-
-    // Remove the event, which has just been retrieved
-    _eventList.erase (itEvent);
 
     //
     return lEventStruct;
@@ -228,10 +413,11 @@ namespace stdair {
                                              ioEventStruct)).second;
 
     /**
-       If the insertion has not been successful, try repeatedly until the
-       insertion becomes successful.
-       <br>The date-time is counted in milliseconds (1e-3 second). Hence,
-       one thousand (1e3) of attempts correspond to 1 second.
+     * If the insertion has not been successful, try repeatedly until
+     * the insertion becomes successful.
+     *
+     * The date-time is counted in milliseconds (1e-3 second). Hence,
+     * one thousand (1e3) of attempts correspond to 1 second.
     */
     const unsigned int idx = 0;
     while (insertionSucceeded == false && idx != 1e3) {
@@ -245,12 +431,19 @@ namespace stdair {
                                                ioEventStruct)).second;
     }
 
-    // Extract the corresponding demand stream key
+    // Update the progress status for the corresponding event type
+    const EventType::EN_EventType& lEventType = ioEventStruct.getEventType();
+    ProgressStatusMap_T::iterator itProgressStatus =
+      _progressStatusMap.find (lEventType);
+    if (itProgressStatus != _progressStatusMap.end()) {
+      ProgressStatus& lProgressStatus = itProgressStatus->second;
+      ++lProgressStatus;
+    }
+
+    // Update the progress status for the corresponding event content key
     const EventContentKey_T& lEventContentKey =
       ioEventStruct.getEventContentKey();
-
-    // Update the progress status for the corresponding demand stream
-    NbOfEventsByDemandStreamMap_T::iterator itNbOfEventsMap =
+    NbOfEventsByContentKeyMap_T::iterator itNbOfEventsMap =
       _nbOfEvents.find (lEventContentKey);
     if (itNbOfEventsMap != _nbOfEvents.end()) {
       ProgressStatus& lProgressStatus = itNbOfEventsMap->second;

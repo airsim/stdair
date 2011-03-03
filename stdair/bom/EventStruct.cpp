@@ -18,7 +18,8 @@ namespace stdair {
   EventStruct::EventStruct()
     : _eventType (EventType::BKG_REQ), _eventTimeStamp (0),
       _eventContentKey(),
-      _specificProgressStatus(), _overallProgressStatus() {
+      _typeSpecificProgressStatus(), _keySpecificProgressStatus(),
+      _overallProgressStatus() {
     assert (false);
   }
   
@@ -27,7 +28,8 @@ namespace stdair {
                             const EventContentKey_T& iEventContentKey,
                             BookingRequestPtr_T ioRequestPtr)
     : _eventType (iEventType), _eventContentKey (iEventContentKey),
-      _specificProgressStatus(), _overallProgressStatus() {
+      _typeSpecificProgressStatus(), _keySpecificProgressStatus(),
+      _overallProgressStatus() {
 
     //
     assert (ioRequestPtr != NULL);
@@ -50,7 +52,8 @@ namespace stdair {
                             const DateTime_T& iDCPDate,
                             OptimisationNotificationStructPtr_T ioOptimisationNotificationStructPtr)
     : _eventType (iEventType), _eventContentKey (iEventContentKey),
-      _specificProgressStatus(), _overallProgressStatus() {
+      _typeSpecificProgressStatus(), _keySpecificProgressStatus(),
+      _overallProgressStatus() {
 
     //
     assert (ioOptimisationNotificationStructPtr != NULL);
@@ -72,7 +75,8 @@ namespace stdair {
     : _eventType (iEventStruct._eventType),
       _eventTimeStamp (iEventStruct._eventTimeStamp),
       _eventContentKey (iEventStruct._eventContentKey),
-      _specificProgressStatus (iEventStruct._specificProgressStatus),
+      _typeSpecificProgressStatus (iEventStruct._typeSpecificProgressStatus),
+      _keySpecificProgressStatus (iEventStruct._keySpecificProgressStatus),
       _overallProgressStatus (iEventStruct._overallProgressStatus) {
 
     //
@@ -99,13 +103,19 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string EventStruct::describe() const {
     std::ostringstream oStr;
-    oStr << "[" << EventType (_eventType)
-         << "][" << _overallProgressStatus.getCurrentNb()
+    oStr << "[" << EventType (_eventType);
+
+    oStr << "][" << _overallProgressStatus.getCurrentNb()
          << "/{" << _overallProgressStatus.getExpectedNb()
-         << "," << _overallProgressStatus.getActualNb()
-         << "}][" << _specificProgressStatus.getCurrentNb()
-         << "/{" << _specificProgressStatus.getExpectedNb()
-         << "," << _specificProgressStatus.getActualNb()
+         << "," << _overallProgressStatus.getActualNb();
+
+    oStr << "}][" << _typeSpecificProgressStatus.getCurrentNb()
+         << "/{" << _typeSpecificProgressStatus.getExpectedNb()
+         << "," << _typeSpecificProgressStatus.getActualNb();
+
+    oStr << "}][" << _keySpecificProgressStatus.getCurrentNb()
+         << "/{" << _keySpecificProgressStatus.getExpectedNb()
+         << "," << _keySpecificProgressStatus.getActualNb()
          << "}] ";
 
     //

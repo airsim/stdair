@@ -10,6 +10,7 @@
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/basic/ProgressStatus.hpp>
+#include <stdair/basic/EventType.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/EventQueueKey.hpp>
 #include <stdair/bom/EventQueueTypes.hpp>
@@ -19,19 +20,62 @@ namespace stdair {
 
   /**
    * @brief Class holding event structures.
-   * <br>The type of events are for instance booking requests,
-   * optimisation notifications, schedule changes.
+   *
+   * Event types may be:
+   * <ul>
+   *  <li>booking requests,</li>
+   *  <li>optimisation notifications,</li>
+   *  <li>(simulation) break point,</li>
+   *  <li>schedule changes.</li>
+   * </ul>
+   *
+   * The event content would be, respectively:
+   * <ul>
+   *  <li>a demand stream (generating booking requests),</li>
+   *  <li>a DCP rule (generation optimisation notifications),</li>
+   *  <li>a break point rule (generating simulation break points),</li>
+   *  <li>a schedule update (generating schedule changes).</li>
+   * </ul>
+   *
+   * The EventQueue object keeps track of the simulation progress,
+   * overall and broken down (independently) both by event type and by
+   * content key. Following is a full example:
+   * <ul>
+   *  <li>Break down by event type:</li>
+   *  <ul>
+   *   <li>Booking request: 9 events out of {expected: 20, actual: 20}</li>
+   *   <li>Optimisation notification: 7 events out of {expected: 32, actual: 32}</li>
+   *  </ul>
+   *  <li>Break down by content key:</li>
+   *  <ul>
+   *   <li>"SIN-BKK" demand stream: 5 events out of {expected: 10, actual: 11}</li>
+   *   <li>"SIN-NRT" demand stream: 4 events out of {expected: 10, actual: 9}</li>
+   *   <li>"SQ 12" DCP rule: 2 events out of {expected: 16, actual: 16}</li>
+   *   <li>"SQ 25" DCP rule: 5 events out of {expected: 16, actual: 16}</li>
+   *  </ul>
+   *  <li>Overall status: 16 events out of {expected: 52, actual: 52}</li>
+   * </ul>
    */
-  struct EventQueue : public BomAbstract {
+  class EventQueue : public BomAbstract {
     template <typename BOM> friend class FacBom;
     friend class FacBomManager;
 
   public:
     // ////////// Type definitions ////////////
-    /** Definition allowing to retrieve the associated BOM key type. */
+    /**
+     * Definition allowing to retrieve the associated BOM key type.
+     */
     typedef EventQueueKey Key_T;
 
+    /**
+     * Definition of the (STL) map of ProgressStatus structures, one
+     * for each event type (e.g., booking request, optimisation
+     * notification).
+     */
+    typedef std::map<EventType::EN_EventType,
+                     ProgressStatus> ProgressStatusMap_T;
     
+
   public:
     // /////////// Getters ///////////////
     /** Get the event queue key. */
@@ -66,6 +110,18 @@ namespace stdair {
       return _progressStatus.getActualNb();
     }
 
+    /** Get the overall progress status (for the whole event queue). */
+    const ProgressStatus& getStatus (const EventType::EN_EventType&) const;
+
+    /** Get the current number of events (for the whole event queue). */
+    const Count_T& getCurrentNbOfEvents (const EventType::EN_EventType&) const;
+
+    /** Get the expected total number of events (for the whole event queue). */
+    const Count_T& getExpectedTotalNbOfEvents (const EventType::EN_EventType&) const;
+
+    /** Get the actual total number of events (for the whole event queue). */
+    const Count_T& getActualTotalNbOfEvents (const EventType::EN_EventType&) const;
+
     // /////////// Setters ///////////////
     /** Set/update the progress status. */
     void setStatus (const ProgressStatus& iProgressStatus) {
@@ -98,7 +154,7 @@ namespace stdair {
       _progressStatus.setActualNb (iActualTotalNbOfEvents);
     }
 
-    
+
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -179,31 +235,61 @@ namespace stdair {
     bool isQueueDone() const;
 
     /**
-     * Initialise the progress statuses for the given demand stream.
-     * <br>The progress status is actually a pair of counters:
+     * Initialise the progress statuses for the given event content
+     * type (e.g., demand stream, DCP rule).
+     *
+     * The progress status is actually a pair of counters:
      * <ul>
      *   <li>The current number of (already generated) events, for the
-     *       given demand stream. That number is initialised
+     *       given event content type. That number is initialised
      *       to 0 (no event has been generated yet).</li>
      *   <li>The total number of events (to be generated), also for the
-     *       given demand stream.</li>
+     *       given event content type.</li>
      * </ul>
      */
-    void addStatus (const DemandStreamKeyStr_T&,
+    void addStatus (const EventType::EN_EventType&,
+                    const EventContentKey_T&,
                     const NbOfRequests_T& iExpectedTotalNbOfEvents);
 
     /**
-     * Update the progress statuses for the given demand stream.
-     * <br>The progress status is actually a pair of counters:
+     * Set/update the progress status for the corresponding event type.
+     *
+     * If there is no ProgressStatus object for that event type yet,
+     * one is inserted. Otherwise, the ProgressStatus object is updated.
+     */
+    void updateStatus (const EventType::EN_EventType&,
+                       const ProgressStatus& iProgressStatus);
+
+    /**
+     * Update the progress statuses for the given event type (e.g.,
+     * booking request, optimistion notification).
+     *
+     * The progress status is actually a pair of counters:
      * <ul>
      *   <li>The current number of (already generated) events, for the
-     *       given demand stream. That number is initialised
+     *       given event type. That number is initialised
      *       to 0 (no event has been generated yet).</li>
      *   <li>The total number of events (to be generated), also for the
-     *       given demand stream.</li>
+     *       given event type.</li>
      * </ul>
      */
-    void updateStatus (const DemandStreamKeyStr_T&,
+    void updateStatus (const EventType::EN_EventType&,
+                       const NbOfRequests_T& iActualTotalNbOfEvents);
+
+    /**
+     * Update the progress statuses for the given event content key
+     * (e.g., demand stream, DCP rule).
+     *
+     * The progress status is actually a pair of counters:
+     * <ul>
+     *   <li>The current number of (already generated) events, for the
+     *       given event content key. That number is initialised
+     *       to 0 (no event has been generated yet).</li>
+     *   <li>The total number of events (to be generated), also for the
+     *       given event content key.</li>
+     * </ul>
+     */
+    void updateStatus (const EventContentKey_T&,
                        const NbOfRequests_T& iActualTotalNbOfEvents);
 
     /**
@@ -221,8 +307,22 @@ namespace stdair {
     }
 
     /**
-     * Retrieve the status for a given demand stream.
-     * <br>The status is composed of, for the given demand stream:
+     * Calculate the progress status.
+     * <br>The progress is status is the ratio of:
+     * <ul>
+     *   <li>the current number of events, summed over all the demand
+     *       streams,</li>
+     *   <li>over the total number of events, also summed over all the demand
+     *       streams.</li>
+     * </ul>
+     */
+    ProgressPercentage_T calculateProgress(const EventType::EN_EventType&) const;
+
+    /**
+     * Retrieve the status for a given event content type (e.g.,
+     * demand stream, DCP rule).
+     *
+     * The status is composed of, for the given event content type:
      * <ul>
      *   <li>the current number of events (already generated),</li>
      *   <li>the total number of events (to be generated).</li>
@@ -231,7 +331,7 @@ namespace stdair {
      * EventStruct::getStatus() gives the same information, just after
      * a call to EventQueue::popEvent().
      */
-    ProgressStatus getStatus (const DemandStreamKeyStr_T&) const;
+    ProgressStatus getStatus (const EventContentKey_T&) const;
 
 
   public:
@@ -250,36 +350,50 @@ namespace stdair {
     /** Default copy constructor. */
     EventQueue (const EventQueue&);
     /** Destructor. */
-    ~EventQueue ();
+    ~EventQueue();
   private:
     /** Default constructor. */
-    EventQueue ();
+    EventQueue();
     
 
   protected:
     // ////////// Attributes /////////
-    /** Primary key (ID). */
+    /**
+     * Primary key (ID).
+     */
     Key_T _key;
 
-    /** Pointer on the parent class (BomRoot). */
+    /**
+     * Pointer on the parent class (BomRoot).
+     */
     BomAbstract* _parent;
 
-    /** Map holding the children (DemandStream objects). */
+    /**
+     * Map holding the children (e.g., DemandStream objects, DCPRule objects).
+     */
     HolderMap_T _holderMap;
 
-    /** List of events. */
+    /**
+     * List of events.
+     */
     EventList_T _eventList;
 
     /**
      * Status (current number of events, total expected and actual
-     * number of events) for each demand stream.
+     * number of events) for each content key (e.g., demand stream
+     * key, DCP rule key).
      */
-    NbOfEventsByDemandStreamMap_T _nbOfEvents;
+    NbOfEventsByContentKeyMap_T _nbOfEvents;
     
     /**
      * Counters holding the overall progress status.
      */
     ProgressStatus _progressStatus;
+
+    /**
+     * Counters holding the overall progress status, for each event type.
+     */
+    ProgressStatusMap_T _progressStatusMap;
   };
 
 }

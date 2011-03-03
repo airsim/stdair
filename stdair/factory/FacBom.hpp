@@ -7,47 +7,74 @@
 // STL
 #include <cassert>
 #include <string>
+#include <list>
 // StdAir 
 #include <stdair/factory/FacAbstract.hpp>
 #include <stdair/service/FacSupervisor.hpp>
 #include <stdair/service/Logger.hpp>
 
 namespace stdair {  
-  /** Base class for Factory layer. */
+
+  /**
+   * @brief Base class for Factory layer.
+   */
   template <typename BOM>
   class FacBom : public FacAbstract {
-    // Internal type definitions.
+
+    /// Internal type definitions.
     typedef std::list<BOM*> BomPool_T;
     typedef typename BOM::Key_T Key_T;
 
+
   public:
-    // ///////////// Business methods. ////////////
-    /** Provide the unique instance.
-        <br>The singleton is instantiated when first used.
-        @return FacBom& */
+    // ///////////// Business methods ////////////
+    /**
+     * Provide the unique instance.
+     *
+     * The singleton is instantiated when first used.
+     * @return FacBom&
+     */
     static FacBom& instance();
 
-    /** Create a BOM object, given a key or not. */
+    /**
+     * Create a BOM object, given a key or not.
+     */
     BOM& create ();
     BOM& create (const Key_T&);
     
   protected:
-    /** Default Constructor.
-        <br>This constructor is protected to ensure the class is . */
+    /**
+     * Default Constructor.
+     */
     FacBom() {}
 
   public:
-    /** Destructor. */
-    ~FacBom() { clean(); }
-    /** Destroyed all the object instantiated by this factory. */
+    /**
+     * Destructor.
+     */
+    ~FacBom() {
+      clean();
+    }
+
+    /**
+     * Destroyed all the object instantiated by this factory.
+     */
     void clean();
     
+
   private:
-    /** The unique instance.*/
+    // ///////////////////// Attributes //////////////////
+    /**
+     * The unique instance.
+     */
     static FacBom* _instance;
-    /** List of instantiated Business Objects*/
+
+    /**
+     * List of instantiated Business Objects.
+     */
     BomPool_T _pool;
   };
+
 
   // ////////////////////////////////////////////////////////////////////
   template <typename BOM> FacBom<BOM>* FacBom<BOM>::_instance = NULL;
@@ -58,7 +85,7 @@ namespace stdair {
       _instance = new FacBom ();
       assert (_instance != NULL);
 
-      FacSupervisor::instance().registerFacBom (_instance);
+      FacSupervisor::instance().registerBomFactory (_instance);
     }
     return *_instance;
   }

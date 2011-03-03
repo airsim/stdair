@@ -10,9 +10,12 @@
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomDisplay.hpp>
 #include <stdair/bom/BomRoot.hpp>
-#include <stdair/factory/FacBom.hpp>
+#include <stdair/bom/EventQueue.hpp>
+#include <stdair/bom/EventStruct.hpp>
 #include <stdair/command/CmdBomManager.hpp>
 #include <stdair/service/FacSupervisor.hpp>
+#include <stdair/service/FacSTDAIRServiceContext.hpp>
+#include <stdair/service/STDAIR_ServiceContext.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/service/DBSessionManager.hpp>
 #include <stdair/STDAIR_Service.hpp>
@@ -20,22 +23,22 @@
 namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
-  STDAIR_Service::STDAIR_Service()
-    : _bomRoot (FacBom<BomRoot>::instance().create()) {
+  STDAIR_Service::STDAIR_Service() : _stdairServiceContext (NULL) {
   }
 
   // //////////////////////////////////////////////////////////////////////
   STDAIR_Service::STDAIR_Service (const STDAIR_Service& iService) 
-    : _bomRoot (FacBom<BomRoot>::instance().create()) {
+    : _stdairServiceContext (NULL) {
     assert (false);
   }
 
   // //////////////////////////////////////////////////////////////////////
   STDAIR_Service::STDAIR_Service (const BasLogParams& iLogParams)  
-    : _bomRoot (FacBom<BomRoot>::instance().create()) {
-    // The root of the BOM tree, on which all of the other BOM objects
-    // will be attached, is being created with the STDAIR_Service constructor.
+    : _stdairServiceContext (NULL) {
 
+    // Initialise the service context
+    initServiceContext();
+    
     // Set the log file
     logInit (iLogParams);
 
@@ -46,9 +49,10 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   STDAIR_Service::STDAIR_Service (const BasLogParams& iLogParams,
                                   const BasDBParams& iDBParams) 
-    : _bomRoot (FacBom<BomRoot>::instance().create()) { 
-    // The root of the BOM tree, on which all of the other BOM objects
-    // will be attached, is being created with the STDAIR_Service constructor.
+    : _stdairServiceContext (NULL) { 
+
+    // Initialise the service context
+    initServiceContext();
 
     // Set the log file
     logInit (iLogParams);
@@ -67,6 +71,16 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  void STDAIR_Service::initServiceContext () {
+    // Initialise the service context
+    STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      FacSTDAIRServiceContext::instance().create();
+
+    // Store the stdair service context
+    _stdairServiceContext = &lSTDAIR_ServiceContext;
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   void STDAIR_Service::logInit (const BasLogParams& iLogParams) {
     Logger::init (iLogParams);
   }
@@ -81,23 +95,45 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
+  BomRoot& STDAIR_Service::getBomRoot() const {
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    return lSTDAIR_ServiceContext.getBomRoot();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   void STDAIR_Service::buildSampleBom (const bool isForRMOL,
                                        const CabinCapacity_T iCabinCapacity) {
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    
     // Build a sample BOM tree
     if (isForRMOL == true) {
-      CmdBomManager::buildSampleBomForRMOL (_bomRoot, iCabinCapacity);
+      CmdBomManager::buildSampleBomForRMOL (lBomRoot, iCabinCapacity);
 
     } else {
-      CmdBomManager::buildSampleBom (_bomRoot);
+      CmdBomManager::buildSampleBom (lBomRoot);
     }
   }
 
   // //////////////////////////////////////////////////////////////////////
   std::string STDAIR_Service::csvDisplay() const {
     std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
     
     // Dump the content of the whole BOM tree into the string
-    BomDisplay::csvDisplay (oStr, _bomRoot);
+    BomDisplay::csvDisplay (oStr, lBomRoot);
     
     return oStr.str();
   }
@@ -105,6 +141,130 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   void STDAIR_Service::finalise() {
     FacSupervisor::cleanAll();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  const Count_T& STDAIR_Service::
+  getExpectedTotalNumberOfEventsToBeGenerated() const {
+    
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the event queue object instance
+    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
+    
+    // Delegate the call to the dedicated command
+    const Count_T& oExpectedTotalNumberOfEventsToBeGenerated =
+      lQueue.getExpectedTotalNbOfEvents();
+
+    //
+    return oExpectedTotalNumberOfEventsToBeGenerated;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  const Count_T& STDAIR_Service::
+  getExpectedTotalNumberOfEventsToBeGenerated (const EventType::EN_EventType& iType) const {
+    
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the event queue object instance
+    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
+    
+    // Delegate the call to the dedicated command
+    const Count_T& oExpectedTotalNumberOfEventsToBeGenerated =
+      lQueue.getExpectedTotalNbOfEvents (iType);
+
+    //
+    return oExpectedTotalNumberOfEventsToBeGenerated;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  const Count_T& STDAIR_Service::
+  getActualTotalNumberOfEventsToBeGenerated() const {
+    
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the event queue object instance
+    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
+    
+    // Delegate the call to the dedicated command
+    const Count_T& oActualTotalNumberOfEventsToBeGenerated =
+      lQueue.getActualTotalNbOfEvents();
+
+    //
+    return oActualTotalNumberOfEventsToBeGenerated;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  const Count_T& STDAIR_Service::
+  getActualTotalNumberOfEventsToBeGenerated (const EventType::EN_EventType& iType) const {
+    
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the event queue object instance
+    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
+    
+    // Delegate the call to the dedicated command
+    const Count_T& oActualTotalNumberOfEventsToBeGenerated =
+      lQueue.getActualTotalNbOfEvents (iType);
+
+    //
+    return oActualTotalNumberOfEventsToBeGenerated;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  EventStruct STDAIR_Service::popEvent() const {
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the event queue object instance
+    EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
+    
+    // Extract the next event from the queue
+    const EventStruct& oEventStruct = lQueue.popEvent();
+
+    //
+    return oEventStruct;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  bool STDAIR_Service::isQueueDone() const {
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the event queue object instance
+    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
+    
+    // Calculates whether the event queue has been fully emptied
+    const bool isQueueDone = lQueue.isQueueDone();
+
+    //
+    return isQueueDone;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void STDAIR_Service::reset() const {
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the event queue object instance
+    EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
+    
+    // Delegate the call to the event queue object
+    lQueue.reset();
   }
 
 }

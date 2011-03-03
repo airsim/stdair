@@ -18,19 +18,25 @@
 
 namespace stdair {
 
-  // Forward declarations
+  /// Forward declarations
   struct EventStruct;
   
-  /** Define an element of a event list */
+  /**
+   * Define an element of a event list.
+   */
   typedef std::pair<const LongDuration_T, EventStruct> EventListElement_T;
   
-  /** Define a list of events */
+  /**
+   * Define a list of events.
+   */
   typedef std::map<const LongDuration_T, EventStruct> EventList_T;
 
-  /** Define a map allowing tracking the progress status for each
-      demand stream. */
-  typedef std::map<const DemandStreamKeyStr_T,
-                   ProgressStatus> NbOfEventsByDemandStreamMap_T;
+  /**
+   * Define a map allowing tracking the progress status for each
+   * content key (e.g., demand stream key, DCP rule key).
+   */
+  typedef std::map<const EventContentKey_T,
+                   ProgressStatus> NbOfEventsByContentKeyMap_T;
   
 }
 #endif // __STDAIR_BOM_EVENTTYPES_HPP

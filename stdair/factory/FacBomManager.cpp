@@ -17,7 +17,7 @@ namespace stdair {
       _instance = new FacBomManager ();
       assert (_instance != NULL);
 
-      FacSupervisor::instance().registerFacBom (_instance);
+      FacSupervisor::instance().registerBomFactory (_instance);
     }
     return *_instance;
   }
