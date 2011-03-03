@@ -29,12 +29,23 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string FareOptionStruct::describe() const {
     std::ostringstream oStr;
-      
+    oStr  << "\n    Class path: ";
+    for (ClassList_StringList_T::const_iterator itClassPath =
+           _classPath.begin(); itClassPath != _classPath.end(); ++itClassPath) {
+      oStr << *itClassPath << " ";
+    }
+    oStr << "\n    Fare:       ";
+    oStr << _fare
+         << "\n    Conditions: "
+         << _changeFee  << " "
+         << _nonRefundable << " "
+         << _saturdayStay;
     return oStr.str();
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void FareOptionStruct::addClass (const ClassCode_T& iClassCode) {
-    _classPath.append (iClassCode);
+  void FareOptionStruct::addClassList (const std::string iClassCodeList) {
+    _classPath.push_back (iClassCodeList);
   }
+
 }
