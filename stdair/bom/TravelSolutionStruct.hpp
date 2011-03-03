@@ -39,7 +39,8 @@ namespace stdair {
 
     /** Get the chosen fare option. */
     const FareOptionStruct& getChosenFareOption () const {
-      return _chosenFareOption;
+      assert (_chosenFareOption != NULL);
+      return *_chosenFareOption;
     }
     
   public:
@@ -55,7 +56,7 @@ namespace stdair {
 
     /** Set the chosen fare option. */
     void setChosenFareOption (const FareOptionStruct& iChosenFO) {
-      _chosenFareOption = iChosenFO;
+      _chosenFareOption = &iChosenFO;
     }
 
   public:
@@ -90,7 +91,7 @@ namespace stdair {
     FareOptionList_T _fareOptionList;
 
     /** The chosen fare option. */
-    FareOptionStruct _chosenFareOption;
+    const FareOptionStruct* _chosenFareOption;
   };
 
 }
