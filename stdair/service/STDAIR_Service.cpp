@@ -24,6 +24,12 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   STDAIR_Service::STDAIR_Service() : _stdairServiceContext (NULL) {
+
+    // Initialise the service context
+    initServiceContext();
+    
+    // Initialise the (remaining of the) context
+    init();
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -71,7 +77,7 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void STDAIR_Service::initServiceContext () {
+  void STDAIR_Service::initServiceContext() {
     // Initialise the service context
     STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
       FacSTDAIRServiceContext::instance().create();
