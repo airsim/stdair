@@ -48,6 +48,11 @@ namespace stdair {
     /** Add a fare option. */
     void addFareOption (const FareOptionStruct&);
 
+    /** Set the chosen fare option. */
+    void setChosenFareOption (const FareOptionStruct& iChosenFO) {
+      _chosenFareOption = iChosenFO;
+    }
+
   public:
     // /////////// Display support method /////////////
     /** Dump a Business Object into an output stream.
@@ -78,6 +83,9 @@ namespace stdair {
 
     /** The list of fare options. */
     FareOptionList_T _fareOptionList;
+
+    /** The chosen fare option. */
+    FareOptionStruct _chosenFareOption;
   };
 
 }
