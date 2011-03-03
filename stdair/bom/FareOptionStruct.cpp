@@ -30,10 +30,9 @@ namespace stdair {
   const std::string FareOptionStruct::describe() const {
     std::ostringstream oStr;
     oStr  << "\n    Class path: ";
-    for (ClassList_String_T::const_iterator lItClassPath = _classPath.begin();
-         lItClassPath != _classPath.end();
-         lItClassPath ++) {
-      oStr << *lItClassPath << " ";
+    for (ClassList_StringList_T::const_iterator itClassPath =
+           _classPath.begin(); itClassPath != _classPath.end(); ++itClassPath) {
+      oStr << *itClassPath << " ";
     }
     oStr << "\n    Fare:       ";
     oStr << _fare
@@ -45,8 +44,8 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void FareOptionStruct::addClass (const std::string iClassCodeList) {
-    _classPath.append (iClassCodeList);
+  void FareOptionStruct::addClassList (const std::string iClassCodeList) {
+    _classPath.push_back (iClassCodeList);
   }
 
 }

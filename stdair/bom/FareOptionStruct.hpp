@@ -20,7 +20,7 @@ namespace stdair {
   public:
     // /////////// Getters ///////////////
     /** Get attributes. */
-    const ClassList_String_T& getClassPath () const { return _classPath; }
+    const ClassList_StringList_T& getClassPath () const { return _classPath; }
     const Fare_T& getFare () const { return _fare; }
     const ChangeFees_T getChangeFees () const { return _changeFee; }
     const NonRefundable_T getNonRefundable () const {return _nonRefundable; }
@@ -29,7 +29,7 @@ namespace stdair {
   public:
     // /////////// Setters ///////////////
     /** Set attributes. */
-    void addClass (const std::string);
+    void addClassList (const std::string);
     void setFare (const Fare_T& iFare) { _fare = iFare; }
     void setChangeFees (const ChangeFees_T iRes) { _changeFee = iRes; }
     void setNonRefundable (const NonRefundable_T iRes) { _nonRefundable = iRes;}
@@ -58,7 +58,7 @@ namespace stdair {
   private:
     // ///////////////////// Attributes //////////////////////
     /** The class path. */
-    ClassList_String_T _classPath;
+    ClassList_StringList_T _classPath;
 
     /** Fare. */
     Fare_T _fare;
