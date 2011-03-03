@@ -116,6 +116,12 @@ rm -rf $RPM_BUILD_ROOT
 * Sat Mar  5 2011 Son Nguyen Kim <nguyenkims@gmail.com> 99.99.99-1
 - Upstream update
 
+* Thu Mar  3 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.19.0-1
+- Upstream update
+
+* Thu Mar  3 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.18.0-1
+- Upstream update
+
 * Wed Mar  2 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.17.0-1
 - Upstream update
 
