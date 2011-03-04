@@ -2,7 +2,7 @@
 %global mydocs __tmp_docdir
 #
 Name:           stdair
-Version:        99.99.99
+Version:        0.20.0
 Release:        1%{?dist}
 
 Summary:        C++ Standard Airline IT Object Library
@@ -113,7 +113,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Sat Mar  5 2011 Son Nguyen Kim <nguyenkims@gmail.com> 99.99.99-1
+* Fri Mar  4 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.20.0-1
 - Upstream update
 
 * Thu Mar  3 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.19.0-1
