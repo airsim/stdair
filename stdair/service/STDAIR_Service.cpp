@@ -94,6 +94,11 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   void STDAIR_Service::dbInit (const BasDBParams& iDBParams) {
     DBSessionManager::init (iDBParams);
+
+    // Store the database parameters into the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    lSTDAIR_ServiceContext.setDBParams (iDBParams);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -116,6 +121,19 @@ namespace stdair {
     return lSTDAIR_ServiceContext.getEventQueue();
   }
 
+  // //////////////////////////////////////////////////////////////////////
+  BasLogParams STDAIR_Service::getLogParams() const {
+    return Logger::getLogParams();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  const BasDBParams& STDAIR_Service::getDBParams() const {
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    return lSTDAIR_ServiceContext.getDBParams();
+  }
+  
   // //////////////////////////////////////////////////////////////////////
   void STDAIR_Service::buildSampleBom (const bool isForRMOL,
                                        const CabinCapacity_T iCabinCapacity) {

@@ -3,14 +3,24 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-#include <istream>
-#include <ostream>
+#include <iostream>
 #include <sstream>
 // StdAir
 #include <stdair/basic/BasLogParams.hpp>
 
 namespace stdair {
 
+  // //////////////////////////////////////////////////////////////////////
+  BasLogParams::BasLogParams()
+    : _logLevel (LOG::DEBUG), _logStream (std::cout) {
+    assert (false);
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  BasLogParams::BasLogParams (const BasLogParams& iLogParams)
+    : _logLevel (iLogParams._logLevel), _logStream (iLogParams._logStream) {
+  }
+  
   // //////////////////////////////////////////////////////////////////////
   BasLogParams::BasLogParams (const LOG::EN_LogLevel iLogLevel,
                               std::ostream& ioLogOutputStream)
@@ -22,12 +32,8 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void BasLogParams::toStream (std::ostream& ioOut) const {
-    ioOut << toString();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  void BasLogParams::fromStream (std::istream&) {
+  const std::string BasLogParams::describe() const {
+    return toString();
   }
 
   // //////////////////////////////////////////////////////////////////////

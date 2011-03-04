@@ -9,11 +9,14 @@
 #include <string>
 // Stdair
 #include <stdair/stdair_log.hpp>
+#include <stdair/basic/StructAbstract.hpp>
 
 namespace stdair {
 
-  /** Structure holding parameters for logging. */
-  struct BasLogParams {
+  /**
+   * Structure holding parameters for logging.
+   */
+  struct BasLogParams : public StructAbstract {
     friend class Logger;
   public:
     // ///////// Getters ////////
@@ -34,40 +37,53 @@ namespace stdair {
     
   public:
     // ///////// Busines methods ////////
-    /** Check that all the parameters are fine. */
-    bool check () const;
+    /**
+     * Check that all the parameters are fine.
+     */
+    bool check() const;
 
     
   public:
     // ///////// Display methods ////////
-    /** Dump a structure into an output stream.
-        @param ostream& the output stream. */
-    void toStream (std::ostream& ioOut) const;
+    /**
+     * Get the serialised version of the DBParams structure.
+     */
+    const std::string describe() const;
 
-    /** Read a structure from an input stream.
-        @param istream& the input stream. */
-    void fromStream (std::istream&);
-
-    /** Get a short display of the LOGParams structure. */
+    /**
+     * Get a short display of the LOGParams structure.
+     */
     std::string toShortString() const;
     
-    /** Get the serialised version of the LOGParams structure. */
+    /**
+     * Get the serialised version of the LOGParams structure.
+     */
     std::string toString() const;
 
     
   public:
-    /** Main Constructor. */
+    /**
+     * Main Constructor.
+     */
     BasLogParams (const LOG::EN_LogLevel iLogLevel,
                   std::ostream& ioLogOutputStream);
 
-    /** Default Constructor. */
-    // BasLogParams ();
-    /** Default copy constructor. */
-    // BasLogParams (const BasLogParams&);
-    
-    /** Destructor. */
+    /**
+     * Copy constructor.
+     */
+    BasLogParams (const BasLogParams&);
+
+    /**
+     * Destructor.
+     */
     ~BasLogParams();
 
+  private:
+    /**
+     * Default Constructor.
+     */
+    BasLogParams();
+    
     
   private:
     // /////// Attributes /////////

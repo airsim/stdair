@@ -8,6 +8,8 @@
 #include <string>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
+#include <stdair/basic/BasLogParams.hpp>
+#include <stdair/basic/BasDBParams.hpp>
 #include <stdair/service/ServiceAbstract.hpp>
 
 namespace stdair {
@@ -38,9 +40,22 @@ namespace stdair {
      */
     EventQueue& getEventQueue() const;
 
+    /**
+     * Get the database parameters.
+     */
+    const BasDBParams& getDBParams() const {
+      return _dbParams;
+    }
+
 
   private:
     // ///////// Setters //////////
+    /**
+     * Set the database parameters.
+     */
+    void setDBParams (const BasDBParams& iDBParams) {
+      _dbParams = iDBParams;
+    }
 
     
   private:
@@ -113,6 +128,11 @@ namespace stdair {
      * @brief EventQueue.
      */
     EventQueue* _eventQueue;
+
+    /**
+     * Database parameters.
+     */
+    BasDBParams _dbParams;
   };
 
 }

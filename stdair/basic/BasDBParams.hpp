@@ -9,35 +9,38 @@
 #include <string>
 // Stdair
 #include <stdair/stdair_db.hpp>
+#include <stdair/basic/StructAbstract.hpp>
 
 namespace stdair {
 
-  /** Structure holding the parameters for connection to a database. */
-  struct BasDBParams {
+  /**
+   * @brief Structure holding the parameters for connection to a database.
+   */
+  struct BasDBParams : public StructAbstract {
   public:
     // ///////// Getters ////////
     /** Get the database user name. */
-    std::string getUser() const {
+    const std::string& getUser() const {
       return _user;
     }
     
     /** Get the database user password. */
-    std::string getPassword() const {
+    const std::string& getPassword() const {
       return _passwd;
     }
     
     /** Get the database host name. */
-    std::string getHost() const {
+    const std::string& getHost() const {
       return _host;
     }
     
     /** Get the database port number. */
-    std::string getPort() const {
+    const std::string& getPort() const {
       return _port;
     }
     
     /** Get the database name. */
-    std::string getDBName() const {
+    const std::string& getDBName() const {
       return _dbname;
     }
     
@@ -71,41 +74,53 @@ namespace stdair {
     
   public:
     // ///////// Busines methods ////////
-    /** Check that all the parameters are fine. */
-    bool check () const;
+    /**
+     * Check that all the parameters are fine.
+     */
+    bool check() const;
 
     
   public:
     // ///////// Display methods ////////
-    /** Dump a structure into an output stream.
-        @param ostream& the output stream. */
-    void toStream (std::ostream& ioOut) const;
+    /**
+     * Get the serialised version of the DBParams structure.
+     */
+    const std::string describe() const;
 
-    /** Read a structure from an input stream.
-        @param istream& the input stream. */
-    void fromStream (std::istream&);
-
-    /** Get a short display of the DBParams structure. */
+    /**
+     * Get a short display of the DBParams structure.
+     */
     std::string toShortString() const;
     
-    /** Get the serialised version of the DBParams structure. */
+    /**
+     * Get the serialised version of the DBParams structure.
+     */
     std::string toString() const;
 
     
   public:
-    /** Main Constructor. */
+    /**
+     * Main Constructor.
+     */
     BasDBParams (const std::string& iDBUser, const std::string& iDBPasswd,
                  const std::string& iDBHost, const std::string& iDBPort,
                  const std::string& iDBName);
 
-    /** Default Constructor. */
-    // BasDBParams ();
-    /** Default copy constructor. */
-    // BasDBParams (const BasDBParams&);
-    
-    /** Destructor. */
-    ~BasDBParams();
+    /**
+     * Default Constructor.
+     */
+    BasDBParams();
 
+    /**
+     * Default copy constructor.
+     */
+    BasDBParams (const BasDBParams&);
+
+    /**
+     * Destructor.
+     */
+    ~BasDBParams();
+    
     
   private:
     // /////// Attributes /////////

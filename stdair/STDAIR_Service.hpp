@@ -230,6 +230,16 @@ namespace stdair {
      */
     EventQueue& getEventQueue() const;
     
+    /**
+     * Get the log parameters.
+     */
+    BasLogParams getLogParams() const;
+
+    /**
+     * Get the database parameters.
+     */
+    const BasDBParams& getDBParams() const;
+
 
   private:
     // /////// Construction and Destruction helper methods ///////

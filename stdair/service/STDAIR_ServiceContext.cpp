@@ -69,9 +69,9 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string STDAIR_ServiceContext::shortDisplay() const {
     std::ostringstream oStr;
-    oStr << "STDAIR_ServiceContext ";
+    oStr << "STDAIR_ServiceContext -- DB: " << _dbParams;
     if (_eventQueue != NULL) {
-      oStr << " - Queue: " << _eventQueue->toString();
+      oStr << " -- Queue: " << _eventQueue->toString();
     }
     return oStr.str();
   }

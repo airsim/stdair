@@ -10,37 +10,51 @@
 
 namespace stdair {
 
-  /** Base class for the light structures. */
+  /**
+   * @brief Base class for the light structures.
+   */
   struct StructAbstract {
   public:
 
-    /** Destructor. */
+    /**
+     * Destructor.
+     */
     virtual ~StructAbstract() {}
 
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object into an output stream.
+     *
+     * @param ostream& the output stream.
+     */
     void toStream (std::ostream& ioOut) const {
       ioOut << describe();
     }
 
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object from an input stream.
+     *
+     * @param istream& the input stream.
+     */
     virtual void fromStream (std::istream& ioIn) {}
 
-    /** Display of the structure. */
+    /**
+     * Display of the structure.
+     */
     virtual const std::string describe() const = 0;
 
   protected:
-    /** Protected Default Constructor to ensure this class is abtract. */
+    /**
+     * Protected Default Constructor to ensure this class is abtract.
+     */
     StructAbstract() {}
   };
 }
 
 /**
-   Piece of code given by Nicolai M. Josuttis, Section 13.12.1 "Implementing
-   Output Operators" (p653) of his book "The C++ Standard Library: A Tutorial
-   and Reference", published by Addison-Wesley.
-*/
+ * Piece of code given by Nicolai M. Josuttis, Section 13.12.1 "Implementing
+ * Output Operators" (p653) of his book "The C++ Standard Library: A Tutorial
+ * and Reference", published by Addison-Wesley.
+ */
 template <class charT, class traits>
 inline
 std::basic_ostream<charT, traits>&
@@ -65,10 +79,10 @@ operator<< (std::basic_ostream<charT, traits>& ioOut,
 }
 
 /**
-   Piece of code given by Nicolai M. Josuttis, Section 13.12.1 "Implementing
-   Output Operators" (pp655-657) of his book "The C++ Standard Library:
-   A Tutorial and Reference", published by Addison-Wesley.
-*/
+ * Piece of code given by Nicolai M. Josuttis, Section 13.12.1 "Implementing
+ * Output Operators" (pp655-657) of his book "The C++ Standard Library:
+ * A Tutorial and Reference", published by Addison-Wesley.
+ */
 template <class charT, class traits>
 inline
 std::basic_istream<charT, traits>&

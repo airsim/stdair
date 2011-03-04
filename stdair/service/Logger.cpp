@@ -12,7 +12,7 @@ namespace stdair {
   Logger* Logger::_instance = NULL;
   
   // //////////////////////////////////////////////////////////////////////
-  Logger::Logger () : _level (LOG::DEBUG), _logStream (std::cout) {
+  Logger::Logger() : _level (LOG::DEBUG), _logStream (std::cout) {
     assert (false);
   }
 
@@ -27,7 +27,7 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  Logger::~Logger () {
+  Logger::~Logger() {
     // std::cout << "In Logger destructor" << std::endl;
   }
 
