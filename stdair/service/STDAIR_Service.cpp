@@ -172,6 +172,7 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void STDAIR_Service::finalise() {
+    // Clean all the objects
     FacSupervisor::cleanAll();
   }
 
