@@ -12,7 +12,7 @@
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
-#include <stdair/stdair_demand_types.hpp>
+#include <stdair/stdair_event_types.hpp>
 #include <stdair/basic/ProgressStatus.hpp>
 #include <stdair/bom/key_types.hpp>
 
