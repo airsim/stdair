@@ -109,6 +109,14 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  EventQueue& STDAIR_Service::getEventQueue() const {
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    return lSTDAIR_ServiceContext.getEventQueue();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   void STDAIR_Service::buildSampleBom (const bool isForRMOL,
                                        const CabinCapacity_T iCabinCapacity) {
     // Retrieve the StdAir service context

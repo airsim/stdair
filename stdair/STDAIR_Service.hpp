@@ -28,6 +28,7 @@ namespace stdair {
 
   /// Forward declarations
   class BomRoot;
+  class EventQueue;
   class EventStruct;
   class STDAIR_ServiceContext;
   
@@ -218,6 +219,16 @@ namespace stdair {
      * @param[out] BomRoot& Reference on the BomRoot.
      */
     BomRoot& getBomRoot() const;
+    
+    /**
+     * @brief Get a reference on the EventQueue object.
+     *
+     * If the service context has not been initialised, that
+     * method throws an exception (failing assertion).
+     *
+     * @param[out] EventQueue& Reference on the EventQueue.
+     */
+    EventQueue& getEventQueue() const;
     
 
   private:
