@@ -43,7 +43,12 @@ namespace stdair {
     
     
     // ///////// Setters //////////
-    // No setters
+    /**
+     * State whether or not multiple initialisations are to be forced.
+     */
+    void setForcedInitialisationFlag (const bool iForceMultipleInstance) {
+      _forceMultipleInit = iForceMultipleInstance;
+    }
     
     
   public:
