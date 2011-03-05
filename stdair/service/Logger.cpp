@@ -32,15 +32,19 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void Logger::init (const BasLogParams& iLogParams) {
-    // Sanity check
-    if (_instance != NULL) {
+  void Logger::init (const BasLogParams& iLogParams,
+                     const bool iForceMultipleInstance) {
+
+    //
+    if (_instance != NULL && iForceMultipleInstance == false) {
       STDAIR_LOG_ERROR ("Error: the log stream has already been initialised");
       assert (false);
     }
-    assert (_instance == NULL);
 
-    _instance = new Logger (iLogParams);
+    //
+    if (_instance == NULL) {
+      _instance = new Logger (iLogParams);
+    }
   }
 
   // //////////////////////////////////////////////////////////////////////

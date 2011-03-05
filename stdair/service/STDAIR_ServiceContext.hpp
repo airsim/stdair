@@ -70,7 +70,12 @@ namespace stdair {
      */
     const std::string display() const;
 
+    /**
+     * Display of the structure.
+     */
+    const std::string describe() const;
     
+
   private:
     // /////// Construction / initialisation ////////
     /**
