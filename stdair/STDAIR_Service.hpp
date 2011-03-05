@@ -54,11 +54,8 @@ namespace stdair {
      * that log outputs can be directed onto that stream.
      *
      * @param[in] const BasLogParams& Parameters for the output log stream.
-     * @param[in] const bool Whether or not multiple initialisation should
-     *        be forced.
      */
-    STDAIR_Service (const BasLogParams&,
-                    const bool iForceMultipleInstance = false);
+    STDAIR_Service (const BasLogParams&);
 
     /**
      * @brief Constructor.
@@ -74,11 +71,8 @@ namespace stdair {
      *
      * @param[in] const BasLogParams& Parameters for the output log stream.
      * @param[in] const BasDBParams& Parameters for the database session.
-     * @param[in] const bool Whether or not multiple initialisation should
-     *        be forced.
      */
-    STDAIR_Service (const BasLogParams&, const BasDBParams&,
-                    const bool iForceMultipleInstance = false);
+    STDAIR_Service (const BasLogParams&, const BasDBParams&);
 
     /**
      * @brief Destructor.
@@ -279,10 +273,8 @@ namespace stdair {
      * AIRINV_Master_Service, and the other one for AIRINV_Service.
      *
      * @param[in] const BasLogParams& Parameters for the output log stream.
-     * @param[in] const bool Whether or not multiple initialisation should
-     *        be forced.
      */
-    void logInit (const BasLogParams&, const bool iForceMultipleInstance);
+    void logInit (const BasLogParams&);
     
     /**
      * @brief Initialise the database session.

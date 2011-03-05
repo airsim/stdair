@@ -39,15 +39,14 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  STDAIR_Service::STDAIR_Service (const BasLogParams& iLogParams,
-                                  const bool iForceMultipleInstance)  
+  STDAIR_Service::STDAIR_Service (const BasLogParams& iLogParams)  
     : _stdairServiceContext (NULL) {
 
     // Initialise the service context
     initServiceContext();
     
     // Set the log file
-    logInit (iLogParams, iForceMultipleInstance);
+    logInit (iLogParams);
 
     // Initialise the (remaining of the) context
     init();
@@ -55,15 +54,14 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   STDAIR_Service::STDAIR_Service (const BasLogParams& iLogParams,
-                                  const BasDBParams& iDBParams,
-                                  const bool iForceMultipleInstance) 
+                                  const BasDBParams& iDBParams) 
     : _stdairServiceContext (NULL) { 
 
     // Initialise the service context
     initServiceContext();
 
     // Set the log file
-    logInit (iLogParams, iForceMultipleInstance);
+    logInit (iLogParams);
 
     // Create a database session
     dbInit (iDBParams);
@@ -89,9 +87,8 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void STDAIR_Service::logInit (const BasLogParams& iLogParams,
-                                const bool iForceMultipleInstance) {
-    Logger::init (iLogParams, iForceMultipleInstance);
+  void STDAIR_Service::logInit (const BasLogParams& iLogParams) {
+    Logger::init (iLogParams);
   }
 
   // //////////////////////////////////////////////////////////////////////
