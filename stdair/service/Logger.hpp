@@ -93,23 +93,9 @@ namespace stdair {
     /**
      * Initialise the static Logger instance.
      *
-     * The log service must not be initialised twice, unless explicitly
-     * forced to.
-     *
-     * As of March 2011, the only known case is when AIRINV_Service is
-     * invoked from AIRINV_Master_Service. Indeed, those two should live
-     * in two different processes, connected through the network (MPI).
-     *
-     * But, for test reason, it is easier to deploy those two services
-     * within the same process. So, when testing, the same static instance
-     * of the Logger service is initialised twice, once for
-     * AIRINV_Master_Service, and the other one for AIRINV_Service.
-     *
      * @param const BasLogParams&
-     * @param const bool Whether or not multiple initialisation should
-     *        be forced.
      */
-    static void init (const BasLogParams&, const bool iForceMultipleInstance);
+    static void init (const BasLogParams&);
 
     /**
      * Get the log parameters.

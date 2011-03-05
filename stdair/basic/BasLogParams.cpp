@@ -12,19 +12,23 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   BasLogParams::BasLogParams()
-    : _logLevel (LOG::DEBUG), _logStream (std::cout) {
+    : _logLevel (LOG::DEBUG), _logStream (std::cout),
+      _forceMultipleInit (false) {
     assert (false);
   }
   
   // //////////////////////////////////////////////////////////////////////
   BasLogParams::BasLogParams (const BasLogParams& iLogParams)
-    : _logLevel (iLogParams._logLevel), _logStream (iLogParams._logStream) {
+    : _logLevel (iLogParams._logLevel), _logStream (iLogParams._logStream),
+      _forceMultipleInit (iLogParams._forceMultipleInit) {
   }
   
   // //////////////////////////////////////////////////////////////////////
   BasLogParams::BasLogParams (const LOG::EN_LogLevel iLogLevel,
-                              std::ostream& ioLogOutputStream)
-    : _logLevel (iLogLevel), _logStream (ioLogOutputStream) {
+                              std::ostream& ioLogOutputStream,
+                              const bool iForceMultipleInstance)
+    : _logLevel (iLogLevel), _logStream (ioLogOutputStream),
+      _forceMultipleInit (iForceMultipleInstance) {
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -38,8 +42,9 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   std::string BasLogParams::toShortString() const {
+    const std::string isForcedStr = (_forceMultipleInit == true)?" (forced)":"";
     std::ostringstream oStr;
-    oStr << LOG::_logLevels[_logLevel];
+    oStr << LOG::_logLevels[_logLevel] << isForcedStr;
     return oStr.str();
   }
     
