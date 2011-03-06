@@ -9,7 +9,7 @@
 
 namespace stdair {
 
-  // Forward declarations
+  /// Forward declarations
   class BomRoot;
   class Inventory;
   class FlightDate;
@@ -19,7 +19,7 @@ namespace stdair {
   class SegmentCabin;
   class FareFamily;
   class BookingClass;
-
+  struct BookingRequestStruct;
 
   /**
    * @brief Utility class to display TraDemGen objects with a pretty
@@ -28,6 +28,11 @@ namespace stdair {
   class BomDisplay {
   public:
     // //////////////// Display support methods /////////////////
+    /**
+     * Helper fuction to display an interger.
+     */
+    static void intDisplay (std::ostream&, const int&);
+
     /**
      * Recursively display (dump in the underlying output log stream)
      * the objects of the BOM tree.
@@ -127,6 +132,16 @@ namespace stdair {
      * @param const FlightDate& Root of the BOM tree to be displayed.
      */
     static void csvBookingClassDisplay (std::ostream&, const FlightDate&);
+
+    /**
+     * Recursively display (dump in the underlying output log stream)
+     * the objects of the given BOM tree.
+     *
+     * @param std::ostream& Output stream in which the BOM tree should be
+     *        logged/dumped.
+     * @param const BookingRequestStruct& Root of the BOM tree to be displayed.
+     */
+    static void csvDisplay (std::ostream&, const BookingRequestStruct&);
   };
   
 }
