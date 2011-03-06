@@ -102,7 +102,15 @@ namespace stdair {
     // Empty the list of events
     _eventList.clear();
 
-    // Reset the progress statuses for all the demand streams
+    // Reset the progress statuses for all the event types
+    for (ProgressStatusMap_T::iterator itProgressStatus =
+           _progressStatusMap.begin();
+         itProgressStatus != _progressStatusMap.end(); ++itProgressStatus) {
+      ProgressStatus& lProgressStatus = itProgressStatus->second;
+      lProgressStatus.reset();
+    }
+
+    // Reset the progress statuses for all the content keys
     for (NbOfEventsByContentKeyMap_T::iterator itNbOfEvents =
            _nbOfEvents.begin();
          itNbOfEvents != _nbOfEvents.end(); ++itNbOfEvents) {
