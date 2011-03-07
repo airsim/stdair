@@ -10,7 +10,7 @@
 #include <map>
 // Boost Random
 #include <boost/random/linear_congruential.hpp>
-#include <boost/random/uniform_01.hpp>
+#include <boost/random/uniform_real.hpp>
 #include <boost/random/variate_generator.hpp>
 
 namespace stdair {
@@ -45,7 +45,7 @@ namespace stdair {
    * Uniform random generator.
    */
   typedef boost::variate_generator<stdair::BaseGenerator_T&,
-                                   boost::uniform_01<> > UniformGenerator_T;
+                                   boost::uniform_real<> > UniformGenerator_T;
 
   /**
    * Define a mean value (e.g., 20.2).
