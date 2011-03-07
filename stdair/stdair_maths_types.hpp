@@ -42,10 +42,15 @@ namespace stdair {
   typedef boost::minstd_rand BaseGenerator_T;
 
   /**
+   * Uniform distribution of real numbers (by default, double).
+   */
+  typedef boost::uniform_real<> UniformDistribution_T;
+
+  /**
    * Uniform random generator.
    */
-  typedef boost::variate_generator<stdair::BaseGenerator_T&,
-                                   boost::uniform_real<> > UniformGenerator_T;
+  typedef boost::variate_generator<BaseGenerator_T&,
+                                   UniformDistribution_T> UniformGenerator_T;
 
   /**
    * Define a mean value (e.g., 20.2).
