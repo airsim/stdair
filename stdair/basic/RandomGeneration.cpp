@@ -1,3 +1,6 @@
+// //////////////////////////////////////////////////////////////////////
+// Import section
+// //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
 // Boost
@@ -43,7 +46,7 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   RealNumber_T RandomGeneration::generateUniform01() {
-    UniformGenerator_T lGenerator (_generator, boost::uniform_01<>());
+    UniformGenerator_T lGenerator (_generator, boost::uniform_real<>(0, 1));
     return lGenerator();
   }
   

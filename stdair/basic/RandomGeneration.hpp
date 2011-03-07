@@ -4,9 +4,6 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// Boost Random
-#include <boost/random/uniform_real.hpp>
-#include <boost/random/variate_generator.hpp>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_maths_types.hpp>
