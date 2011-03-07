@@ -13,8 +13,13 @@
 
 namespace stdair {
   
+  /**
+   * \note As per Boost bug #3516 (https://svn.boost.org/trac/boost/ticket/3516)
+   *       the seed should not be set to 0 (at least on versions of Boost
+   *       lower than 1.44).
+   */
   // //////////////////////////////////////////////////////////////////////
-  RandomGeneration::RandomGeneration() : _seed (0), _generator (0) {
+  RandomGeneration::RandomGeneration() : _seed (1), _generator (1) {
   }
 
   // //////////////////////////////////////////////////////////////////////
