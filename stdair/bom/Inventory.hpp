@@ -88,7 +88,9 @@ namespace stdair {
     // /////////// (Boost) Serialisation support methods /////////
     /** Serialisation. */
     template<class Archive>
-    void serialize (Archive& ar, const unsigned int iFileVersion);
+    void serialize (Archive& ar, const unsigned int iFileVersion) {
+      ar & _key;
+    }
 
 
   protected:

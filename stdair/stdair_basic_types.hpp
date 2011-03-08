@@ -58,6 +58,9 @@ namespace stdair {
   /** Define a price value (e.g., 1000.0 Euros). */
   typedef double PriceValue_T;
 
+  /** Define a yield value (e.g., 1000.0 Euros). */
+  typedef double YieldValue_T;
+
   /** Define a price currency (e.g., EUR for Euros). */
   typedef std::string PriceCurrency_T;
 

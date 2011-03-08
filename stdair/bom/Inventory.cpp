@@ -36,11 +36,5 @@ namespace stdair {
     return oStr.str();
   }
 
-  // ////////////////////////////////////////////////////////////////////
-  template<class Archive>
-  void Inventory::serialize (Archive& ar, const unsigned int iFileVersion) {
-    ar & _key;
-  }
-
 }
 

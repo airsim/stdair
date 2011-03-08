@@ -8,13 +8,9 @@
 #include <iosfwd>
 #include <string>
 // Boost.Serialization
-#include <boost/archive/tmpdir.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/base_object.hpp>
-#include <boost/serialization/utility.hpp>
-#include <boost/serialization/list.hpp>
-#include <boost/serialization/assume_abstract.hpp>
+#include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/KeyAbstract.hpp>
@@ -93,7 +89,9 @@ namespace stdair {
      * Serialisation.
      */
     template<class Archive>
-    void serialize (Archive& ar, const unsigned int iFileVersion);
+    void serialize (Archive& ar, const unsigned int iFileVersion) {
+      ar & _airlineCode;
+    }
 
 
   private:
