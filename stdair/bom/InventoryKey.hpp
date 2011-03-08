@@ -4,6 +4,17 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STL
+#include <iosfwd>
+#include <string>
+// Boost.Serialization
+#include <boost/archive/tmpdir.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/base_object.hpp>
+#include <boost/serialization/utility.hpp>
+#include <boost/serialization/list.hpp>
+#include <boost/serialization/assume_abstract.hpp>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/KeyAbstract.hpp>
@@ -11,52 +22,85 @@
 namespace stdair {
   
   /**
-   * Key of a given inventory, made of the airline code.
+   * @brief Key of a given inventory, made of the airline code.
    */
   struct InventoryKey : public KeyAbstract {
+    friend class boost::serialization::access;
     
     // /////////// Constructors and destructors ///////////
   private:
-    /** Default constructor. */
+    /**
+     * Default constructor.
+     */
     InventoryKey();
     
   public:
     // /////////// Construction ///////////
-    /** Constructor. */
+    /**
+     * Constructor.
+     */
     InventoryKey (const AirlineCode_T& iAirlineCode);
-    /** Default copy constructor. */
+    /**
+     * Copy constructor.
+     */
     InventoryKey (const InventoryKey&);
-    /** Destructor. */
-    ~InventoryKey ();
+    /**
+     * Destructor.
+     */
+    ~InventoryKey();
     
 
     // /////////// Getters //////////
-    /** Get the airline code. */
+    /**
+     * Get the airline code.
+     */
     const AirlineCode_T& getAirlineCode() const {
       return _airlineCode;
     }
 
 
+  public:
     // /////////// Display support methods /////////
-    /** Dump a Business Object Key into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object Key into an output stream.
+     *
+     * @param ostream& the output stream.
+     */
     void toStream (std::ostream& ioOut) const;
     
-    /** Read a Business Object Key from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object Key from an input stream.
+     *
+     * @param istream& the input stream.
+     */
     void fromStream (std::istream& ioIn);
       
-   /** Get the serialised version of the Business Object Key.
-       <br>That string is unique, at the level of a given Business Object,
-       when among children of a given parent Business Object.
-       <br>For instance, "H" and "K" allow to differentiate among two
-       marketing classes for the same segment-date. */
+   /**
+    * Get the serialised version of the Business Object Key.
+    *
+    * That string is unique, at the level of a given Business Object,
+    * when among children of a given parent Business Object.
+    *
+    * For instance, "H" and "K" allow to differentiate among two
+    * marketing classes for the same segment-date.
+    */
     const std::string toString() const;
+
+
+  public:
+    // /////////// (Boost) Serialisation support methods /////////
+    /**
+     * Serialisation.
+     */
+    template<class Archive>
+    void serialize (Archive& ar, const unsigned int iFileVersion);
 
 
   private:
     // ///////////////// Attributes ///////////////
-    /** Airline code. */
+    /**
+     * Airline code.
+     */
     AirlineCode_T _airlineCode;
   };
 

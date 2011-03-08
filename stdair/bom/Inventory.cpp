@@ -26,7 +26,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory::~Inventory () {
+  Inventory::~Inventory() {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -34,6 +34,12 @@ namespace stdair {
     std::ostringstream oStr;
     oStr << describeKey();
     return oStr.str();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  template<class Archive>
+  void Inventory::serialize (Archive& ar, const unsigned int iFileVersion) {
+    ar & _key;
   }
 
 }

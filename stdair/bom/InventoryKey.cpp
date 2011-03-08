@@ -45,4 +45,10 @@ namespace stdair {
     return oStr.str();
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  template<class Archive>
+  void InventoryKey::serialize (Archive& ar, const unsigned int iFileVersion) {
+    ar & _airlineCode;
+  }
+
 }

@@ -24,6 +24,7 @@ namespace stdair {
   class Inventory : public BomAbstract {
     template <typename BOM> friend class FacBom;
     friend class FacBomManager;
+    friend class boost::serialization::access;
 
   public :
     // ////////// Type definitions ////////////
@@ -82,7 +83,14 @@ namespace stdair {
       return _key.toString();
     }
 
-    
+
+  public:
+    // /////////// (Boost) Serialisation support methods /////////
+    /** Serialisation. */
+    template<class Archive>
+    void serialize (Archive& ar, const unsigned int iFileVersion);
+
+
   protected:
     // ////////// Constructors and destructors /////////
     /** Constructor. */
