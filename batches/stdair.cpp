@@ -16,7 +16,7 @@
 #include <boost/lexical_cast.hpp>
 // StdAir
 #include <stdair/stdair_types.hpp>
-#include <stdair/bom/BomRoot.hpp>
+#include <stdair/bom/BomArchive.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/STDAIR_Service.hpp>
 #include <stdair/config/stdair-paths.hpp>
