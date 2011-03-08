@@ -302,6 +302,13 @@ namespace stdair {
       (Origin & Destination). */
   const unsigned short MAXIMAL_NUMBER_OF_SEGMENTS_IN_OND (3);
 
+  // ////////// Key and display related /////////////
+  /** Default field delimiter. */
+  const std::string DEFAULT_FLD_DELIMITER ("; ");
+
+  /** Default field delimiter size. */
+  const unsigned int DEFAULT_FLD_DELIMITER_SIZE (DEFAULT_FLD_DELIMITER.size());
+
   
   // ////////// BomManager-related constants ///////////
   /** Array with the indentation spaces needed for all the BOM

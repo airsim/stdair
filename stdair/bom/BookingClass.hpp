@@ -60,12 +60,17 @@ namespace stdair {
 
     /** Get the authorisation level (AU, i.e., cumulated protection). */
     const AuthorizationLevel_T& getAuthorizationLevel() const {
-      return _cumulatedProtection;
+      return _au;
     }
 
     /** Get the protection. */
-    const AuthorizationLevel_T& getProtection() const {
+    const ProtectionLevel_T& getProtection() const {
       return _protection;
+    }
+
+    /** Get the cumulated protection. */
+    const ProtectionLevel_T& getCumulatedProtection() const {
+      return _cumulatedProtection;
     }
 
     /** Get the negotiated space. */
@@ -142,6 +147,21 @@ namespace stdair {
 
   public:
     // /////////// Setters ////////////
+    /** Cumulated protection. */
+    void setCumulatedProtection (const ProtectionLevel_T& iPL) {
+      _cumulatedProtection = iPL;
+    }
+
+    /** Protection. */
+    void setProtection (const ProtectionLevel_T& iPL) {
+      _protection = iPL;
+    }
+
+    /** Authorization level. */
+    void setAuthorizationLevel (const AuthorizationLevel_T& iAU) {
+      _au = iAU;
+    }
+
     /** Yield. */
     void setYield (const Yield_T& iYield) { _yield = iYield; }
     
@@ -213,10 +233,13 @@ namespace stdair {
     SubclassCode_T _subclassCode;
 
     /** Cumulated protection. */
-    AuthorizationLevel_T _cumulatedProtection;
+    ProtectionLevel_T _cumulatedProtection;
 
     /** Protection. */
-    AuthorizationLevel_T _protection;
+    ProtectionLevel_T _protection;
+
+    /** Authorization level. */
+    AuthorizationLevel_T _au;
 
     /** Negotiated space. */
     NbOfSeats_T _nego;
