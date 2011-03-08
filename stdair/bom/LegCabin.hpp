@@ -159,6 +159,7 @@ namespace stdair {
     void setCapacities (const CabinCapacity_T& iCapacity) {
       _offeredCapacity = iCapacity;
       _physicalCapacity = iCapacity;
+      setAvailabilityPool (iCapacity - _committedSpace);
     }
     
     /** Set the number of sold seat. */

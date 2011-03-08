@@ -84,5 +84,11 @@ namespace stdair {
   /** Default number of bookings. */
   extern const NbOfBookings_T DEFAULT_CLASS_NB_OF_BOOKINGS;
 
+  /** Default field delimiter. */
+  extern const std::string DEFAULT_FLD_DELIMITER;
+
+  /** Default field delimiter size. */
+  extern const unsigned int DEFAULT_FLD_DELIMITER_SIZE;
+
 }
 #endif // __STDAIR_BAS_BASCONST_GENERAL_HPP

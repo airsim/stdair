@@ -3,6 +3,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/key_types.hpp \
 		$(top_srcdir)/stdair/bom/KeyAbstract.hpp \
 		$(top_srcdir)/stdair/bom/BomManager.hpp \
+		$(top_srcdir)/stdair/bom/BomArchive.hpp \
 		$(top_srcdir)/stdair/bom/BomDisplay.hpp \
 		$(top_srcdir)/stdair/bom/BomHolderKey.hpp \
 		$(top_srcdir)/stdair/bom/BomRootKey.hpp \
@@ -82,6 +83,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/TimePeriodTypes.hpp
 stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/BomManager.cpp \
+		$(top_srcdir)/stdair/bom/BomArchive.cpp \
 		$(top_srcdir)/stdair/bom/BomDisplay.cpp \
 		$(top_srcdir)/stdair/bom/BomHolderKey.cpp \
 		$(top_srcdir)/stdair/bom/BomRootKey.cpp \
