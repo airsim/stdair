@@ -9,7 +9,7 @@
 #include <stdair/stdair_types.hpp>
 
 namespace stdair  {
-  /** Key of fare position. */
+  /** Key of fare point of sale and channel. */
   struct PosChannelKey : public KeyAbstract {
 
   private:
@@ -24,9 +24,9 @@ namespace stdair  {
     ~PosChannelKey ();
     
     // /////////// Getter //////////
-    /** Get the position. */
-    const CityCode_T& getPosition() const {
-      return _position;
+    /** Get the point of sale. */
+    const CityCode_T& getPos() const {
+      return _pos;
     }
    
     /** Get the channel. */
@@ -50,8 +50,8 @@ namespace stdair  {
 
   private:
     // Attributes
-    /** City code position */
-    CityCode_T _position;
+    /** City code point of sale. */
+    CityCode_T _pos;
 
     /** Booking channel
         (D=direct, I=indirect, N=oNline, F=oFfline). */

@@ -10,14 +10,14 @@
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  PosChannelKey::PosChannelKey (const CityCode_T& iPosition,
+  PosChannelKey::PosChannelKey (const CityCode_T& iPos,
                                 const ChannelLabel_T& iChannel)
-    : _position (iPosition), _channel(iChannel) {
+    : _pos (iPos), _channel(iChannel) {
   }
 
   // ////////////////////////////////////////////////////////////////////
   PosChannelKey::PosChannelKey (const PosChannelKey& iKey)
-    : _position (iKey._position), _channel (iKey._channel) {
+    : _pos (iKey._pos), _channel (iKey._channel) {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string PosChannelKey::toString() const {
     std::ostringstream oStr;
-    oStr << _position << "," << _channel << std::endl; 
+    oStr << _pos << "," << _channel << std::endl; 
     return oStr.str();
   }
 
