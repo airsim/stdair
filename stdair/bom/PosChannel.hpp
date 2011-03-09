@@ -14,7 +14,7 @@ namespace stdair {
   template <typename BOM> class FacBom;
   class FacBomManager;
 
-  /** Class representing the actual attributes for a fare position . */
+  /** Class representing the actual attributes for a fare point of sale. */
   class PosChannel : public stdair::BomAbstract {
     template <typename BOM> friend class stdair::FacBom;
     friend class stdair::FacBomManager;
@@ -43,8 +43,8 @@ namespace stdair {
   public:
     // ////////// Getters ////////////
     const Key_T& getKey() const { return _key; }
-    const CityCode_T& getPosition() const {
-      return _key.getPosition();
+    const CityCode_T& getPos() const {
+      return _key.getPos();
     }
     const ChannelLabel_T& getChannel() const {
       return _key.getChannel();

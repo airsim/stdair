@@ -16,13 +16,13 @@ namespace stdair {
   // Forward declarations.
   class PosChannel;
   
-  /** Define the fare-position list. */
+  /** Define the fare-point_of_sale list. */
   typedef std::list<PosChannel*> PosChannelList_T;
 
-  /** Define the fare-position map. */
+  /** Define the fare-point_of_sale map. */
   typedef std::map<const MapKey_T, PosChannel*> PosChannelMap_T;
 
-  /** Define the list of pair<MapKey_T, FarePosition>. */
+  /** Define the list of pair<MapKey_T, PosChannel>. */
   typedef std::pair<MapKey_T, PosChannel*> PosChannelWithKey_T;
   typedef std::list<PosChannelWithKey_T> PosChannelDetailedList_T;
 }
