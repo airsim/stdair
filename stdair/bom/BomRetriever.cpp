@@ -184,18 +184,19 @@ namespace stdair {
     SegmentDate* oSegmentDate_ptr = NULL;
 
     // Retrieve the flight-date
-    FlightDate* oFlightDate_ptr =
+    FlightDate* lFlightDate_ptr =
       BomRetriever::retrieveFlightDateFromLongKey (iInventory, iFullKeyStr);
-    if (oFlightDate_ptr == NULL) {
+
+    if (lFlightDate_ptr == NULL) {
       return oSegmentDate_ptr;
     }
-    assert (oFlightDate_ptr != NULL);
+    assert (lFlightDate_ptr != NULL);
 
     // Extract the segment-date key (i.e., origin and destination)
     const SegmentDateKey& lSegmentDateKey =
       BomKeyManager::extractSegmentDateKey (iFullKeyStr);
 
-    oSegmentDate_ptr = oFlightDate_ptr->getSegmentDate (lSegmentDateKey);
+    oSegmentDate_ptr = lFlightDate_ptr->getSegmentDate (lSegmentDateKey);
 
     return oSegmentDate_ptr;
   }
@@ -339,6 +340,7 @@ namespace stdair {
     // Retrieve the segment-date
     SegmentDate* lSegmentDate_ptr =
       BomRetriever::retrieveSegmentDateFromLongKey (iInventory, iFullKeyStr);
+
     if (lSegmentDate_ptr == NULL) {
       return oBookingClass_ptr;
     }

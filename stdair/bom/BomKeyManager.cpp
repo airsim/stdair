@@ -33,7 +33,7 @@ namespace stdair {
   /**
    * Delimitors for the tokenisation process.
    */
-  const boost::char_separator<char> TokeniserSeparator (",. ");
+  const boost::char_separator<char> TokeniserSeparator (",./ ");
 
   /**
    * Dash delimitor for the tokenisation process.
@@ -88,8 +88,6 @@ namespace stdair {
       throw KeyNotFoundException ("No airline code can be found in '"
                                   + iFullKeyStr + "'");
     }
-
-    const AirlineCode_T lAirlineCode (*itToken);
 
     // Flight number
     ++itToken;

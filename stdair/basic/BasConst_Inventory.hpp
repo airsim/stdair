@@ -45,6 +45,9 @@ namespace stdair {
 
   /** Maximal offered capacity in a cabin. */
   extern const Availability_T MAXIMAL_AVAILABILITY;
-    
+
+  /** Default seat index (for a bucket and/or Bid-Price Vector slot). */
+  extern const SeatIndex_T DEFAULT_SEAT_INDEX;
+
 }
 #endif // __STDAIR_BAS_BASCONST_INVENTORY_HPP
