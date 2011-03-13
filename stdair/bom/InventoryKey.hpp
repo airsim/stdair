@@ -7,13 +7,16 @@
 // STL
 #include <iosfwd>
 #include <string>
-// Boost.Serialization
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/KeyAbstract.hpp>
+
+/// Forward declarations
+namespace boost {
+  namespace serialization {
+    class access;
+  }
+}
 
 namespace stdair {
   
@@ -36,10 +39,12 @@ namespace stdair {
      * Constructor.
      */
     InventoryKey (const AirlineCode_T& iAirlineCode);
+
     /**
      * Copy constructor.
      */
     InventoryKey (const InventoryKey&);
+
     /**
      * Destructor.
      */
@@ -71,15 +76,15 @@ namespace stdair {
      */
     void fromStream (std::istream& ioIn);
       
-   /**
-    * Get the serialised version of the Business Object Key.
-    *
-    * That string is unique, at the level of a given Business Object,
-    * when among children of a given parent Business Object.
-    *
-    * For instance, "H" and "K" allow to differentiate among two
-    * marketing classes for the same segment-date.
-    */
+    /**
+     * Get the serialised version of the Business Object Key.
+     *
+     * That string is unique, at the level of a given Business Object,
+     * when among children of a given parent Business Object.
+     *
+     * For instance, "H" and "K" allow to differentiate among two
+     * marketing classes for the same segment-date.
+     */
     const std::string toString() const;
 
 
@@ -89,9 +94,14 @@ namespace stdair {
      * Serialisation.
      */
     template<class Archive>
-    void serialize (Archive& ar, const unsigned int iFileVersion) {
-      ar & _airlineCode;
-    }
+    void serialize (Archive& ar, const unsigned int iFileVersion);
+
+  private:
+    /**
+     * Serialisation helper (allows to be sure the template method is
+     * instantiated).
+     */
+    void serialisationImplementation();
 
 
   private:

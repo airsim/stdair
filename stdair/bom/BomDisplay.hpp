@@ -6,6 +6,8 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <iosfwd>
+// StdAir
+#include <stdair/bom/TravelSolutionTypes.hpp>
 
 namespace stdair {
 
@@ -19,7 +21,6 @@ namespace stdair {
   class SegmentCabin;
   class FareFamily;
   class BookingClass;
-  struct BookingRequestStruct;
 
   /**
    * @brief Utility class to display TraDemGen objects with a pretty
@@ -28,11 +29,6 @@ namespace stdair {
   class BomDisplay {
   public:
     // //////////////// Display support methods /////////////////
-    /**
-     * Helper fuction to display an interger.
-     */
-    static void intDisplay (std::ostream&, const int&);
-
     /**
      * Recursively display (dump in the underlying output log stream)
      * the objects of the BOM tree.
@@ -134,14 +130,13 @@ namespace stdair {
     static void csvBookingClassDisplay (std::ostream&, const FlightDate&);
 
     /**
-     * Recursively display (dump in the underlying output log stream)
-     * the objects of the given BOM tree.
+     * Display (dump in the returned string) the full list of travel
+     * solution structures.
      *
-     * @param std::ostream& Output stream in which the BOM tree should be
-     *        logged/dumped.
-     * @param const BookingRequestStruct& Root of the BOM tree to be displayed.
+     * @return std::string Output string in which the list of travel
+     *        solutions is logged/dumped.
      */
-    static void csvDisplay (std::ostream&, const BookingRequestStruct&);
+    static void csvDisplay (std::ostream&, const TravelSolutionList_T&);
   };
   
 }

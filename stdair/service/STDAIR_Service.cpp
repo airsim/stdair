@@ -12,6 +12,7 @@
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/EventQueue.hpp>
 #include <stdair/bom/EventStruct.hpp>
+#include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/command/CmdBomManager.hpp>
 #include <stdair/service/FacSupervisor.hpp>
 #include <stdair/service/FacSTDAIRServiceContext.hpp>
@@ -154,6 +155,25 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  void STDAIR_Service::
+  buildSampleTravelSolutions (TravelSolutionList_T& ioTravelSolutionList) {
+    // Build a sample list of travel solution structures
+    CmdBomManager::buildSampleTravelSolutions (ioTravelSolutionList);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  BookingRequestStruct STDAIR_Service::
+  buildSampleBookingRequest (const bool isForCRS) {
+
+    // Build a sample booking request structure
+    if (isForCRS == true) {
+      return CmdBomManager::buildSampleBookingRequestForCRS();
+    }
+
+    return CmdBomManager::buildSampleBookingRequest();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   std::string STDAIR_Service::csvDisplay() const {
     std::ostringstream oStr;
 
@@ -166,6 +186,21 @@ namespace stdair {
     
     // Dump the content of the whole BOM tree into the string
     BomDisplay::csvDisplay (oStr, lBomRoot);
+    
+    return oStr.str();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::
+  csvDisplay (const TravelSolutionList_T& iTravelSolutionList) const {
+    std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Dump the content of the whole list of travel solutions into the string
+    BomDisplay::csvDisplay (oStr, iTravelSolutionList);
     
     return oStr.str();
   }

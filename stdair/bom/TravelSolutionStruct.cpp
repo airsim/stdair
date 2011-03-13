@@ -10,12 +10,11 @@
 
 namespace stdair {
   // ////////////////////////////////////////////////////////////////////
-  TravelSolutionStruct::TravelSolutionStruct ()
-    : _chosenFareOption (NULL) {
+  TravelSolutionStruct::TravelSolutionStruct() : _chosenFareOption (NULL) {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  TravelSolutionStruct::~TravelSolutionStruct () {
+  TravelSolutionStruct::~TravelSolutionStruct() {
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -30,17 +29,54 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string TravelSolutionStruct::describe() const {
     std::ostringstream oStr;
+
     oStr << "Segment path: ";
+    unsigned short idx = 0;
     for (SegmentPath_T::const_iterator lItSegmentPath = _segmentPath.begin();
-         lItSegmentPath != _segmentPath.end();
-         lItSegmentPath++) {
-      oStr << *lItSegmentPath;
+         lItSegmentPath != _segmentPath.end(); ++lItSegmentPath, ++idx) {
+      if (idx != 0) {
+        oStr << "-";
+      }
+      const std::string& lSegmentKey = *lItSegmentPath;
+      oStr << lSegmentKey;
     }
-    for (FareOptionList_T::const_iterator lItFareOption = _fareOptionList.begin();
-         lItFareOption != _fareOptionList.end();
-         lItFareOption ++) {
-      FareOptionStruct lFareOption = *lItFareOption;
+
+    oStr << "; fare options: ";
+    idx = 0;
+    for (FareOptionList_T::const_iterator lItFareOption= _fareOptionList.begin();
+         lItFareOption != _fareOptionList.end(); ++lItFareOption, ++idx) {
+      if (idx != 0) {
+        oStr << " , ";
+      }
+      const FareOptionStruct& lFareOption = *lItFareOption;
       oStr << lFareOption.describe();
+    }
+    return oStr.str();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  const std::string TravelSolutionStruct::display() const {
+    std::ostringstream oStr;
+
+    unsigned short idx = 0;
+    for (SegmentPath_T::const_iterator lItSegmentPath = _segmentPath.begin();
+         lItSegmentPath != _segmentPath.end(); ++lItSegmentPath, ++idx) {
+      if (idx != 0) {
+        oStr << "-";
+      }
+      const std::string& lSegmentKey = *lItSegmentPath;
+      oStr << lSegmentKey;
+    }
+
+    oStr << " --- ";
+    idx = 0;
+    for (FareOptionList_T::const_iterator lItFareOption= _fareOptionList.begin();
+         lItFareOption != _fareOptionList.end(); ++lItFareOption, ++idx) {
+      if (idx != 0) {
+        oStr << " , ";
+      }
+      const FareOptionStruct& lFareOption = *lItFareOption;
+      oStr << lFareOption.display();
     }
     return oStr.str();
   }

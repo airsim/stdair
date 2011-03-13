@@ -43,9 +43,10 @@ namespace stdair {
   /** Define a identity number. */
   typedef unsigned long Identity_T;
 
-  /** Trip type */
+  /** Type of trip type (RO=outbound of round-trip, RI=inbound of round-trip, 
+      OW=one way). */
   typedef std::string TripType_T;
-  
+
   /** Monetary value */
   typedef double MonetaryValue_T;
   

@@ -11,11 +11,12 @@
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/stdair_demand_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
-#include <stdair/bom/BookingRequestTypes.hpp>
 
 namespace stdair {
 
-  /** Structure holding the elements of a booking request. */
+  /**
+   * @brief Structure holding the elements of a booking request.
+   */
   struct BookingRequestStruct : public StructAbstract {
   public:
     // /////////////// Getters /////////////////
@@ -37,6 +38,11 @@ namespace stdair {
     /** Get the requested departure date. */
     const Date_T& getPreferedDepartureDate() const {
       return _preferredDepartureDate;
+    }
+
+    /** Get the preferred departure time. */
+    const Duration_T& getPreferredDepartureTime() const {
+      return _preferredDepartureTime;
     }
 
     /** Get the request datetime. */
@@ -74,11 +80,6 @@ namespace stdair {
       return _frequentFlyerType;
     }
 
-    /** Get the preferred departure time. */
-    const Duration_T& getPreferredDepartureTime() const {
-      return _preferredDepartureTime;
-    }
-
     /** Get the willingness-to-pay. */
     const WTP_T& getWTP() const {
       return _wtp;
@@ -89,22 +90,84 @@ namespace stdair {
       return _valueOfTime;
     }
       
+
+  public:
     // /////////// Display support method /////////////
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object into an output stream.
+     * @param ostream& the output stream.
+     */
     void toStream (std::ostream& ioOut) const;
 
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object from an input stream.
+     * @param istream& the input stream.
+     */
     void fromStream (std::istream& ioIn);
 
-    /** Display of the structure. */
+    /**
+     * Display of the structure.
+     */
     const std::string describe() const;
 
+    /**
+     * Display of the structure.
+     *
+     * <ul>
+     *  <li>#id,</li>
+     *  <li>request_date (YYMMDD),</li>
+     *  <li>request_time (HHMMSS),</li>
+     *  <li>POS (three-letter code),</li>
+     *  <li>Channel (two-letter code):</li>
+     *  <ul>
+     *   <li>'D' for direct or 'I' for indirect,</li>
+     *   <li>'N' for oNline or 'F' for oFfline,</li>
+     *  </ul>
+     *  <li>Origin (three-letter code),</li>
+     *  <li>Destination (three-letter code),</li>
+     *  <li>Preferred departure date (YYMMDD),</li>
+     *  <li>Preferred departure time (HHMM),</li>
+     *  <li>Min departure time (HHMM),</li>
+     *  <li>Max departure time (HHMM),</li>
+     *  <li>Preferred arrival date (YYMMDD),</li>
+     *  <li>Preferred arrival time (HHMM),</li>
+     *  <li>Preferred cabin:</li>
+     *  <ul>
+     *   <li>'F' for first,</li>
+     *   <li>'C' for club/business,</li>
+     *   <li>'W' for economy plus,</li>
+     *   <li>'M' for economy,</li>
+     *  </ul>
+     *  <li>Trip type:</li>
+     *  <ul>
+     *   <li>'OW' for a one-way trip,</li>
+     *   <li>'RO' for the outbound part of a rount-trip,</li>
+     *   <li>'RI' for the inbound part of a rount-trip,</li>
+     *  </ul>
+     *  <li>Duration of stay (expressed as a number of days),</li>
+     *  <li>Frequent flyer tier:</li>
+     *  <ul>
+     *   <li>'G' for gold,</li>
+     *   <li>'S' for silver,</li>
+     *   <li>'K' for basic,</li>
+     *   <li>'N' for none,</li>
+     *  </ul>
+     *  <li>Willingness-to-pay (WTP, expressed as a monetary unit,
+     *      e.g., EUR),</li>
+     *  <li>Disutility per stop (expressed as a monetary unit, e.g., EUR),</li>
+     *  <li>Value of time (EUR per hour),</li>
+     * </ul>
+     *
+     * @return const std::string The output of the booking request structure.
+     */
+    const std::string display() const;
+
     
-    // /////////////// Constructors and Destructors /////////////////
   public:
-    /** Constructor. */
+    // /////////////// Constructors and Destructors /////////////////
+    /**
+     * Constructor.
+     */
     BookingRequestStruct (const AirportCode_T& iOrigin,
                           const AirportCode_T& iDestination,
                           const AirportCode_T& iPOS,
@@ -120,18 +183,25 @@ namespace stdair {
                           const WTP_T& iWTP,
                           const PriceValue_T& iValueOfTime);
 
-    /** Copy constructor. */
+    /**
+     * Copy constructor.
+     */
     BookingRequestStruct (const BookingRequestStruct&);
     
-  private:
-    /** Default constructor.
-        <br>It is private so that it can not be used. */
-    BookingRequestStruct ();
-
-  public:
-    /** Destructor. */
+    /**
+     * Destructor.
+     */
     ~BookingRequestStruct();
     
+
+  private:
+    /**
+     * Default constructor.
+     *
+     * It is private so that it can not be used.
+     */
+    BookingRequestStruct();
+
 
   private:
     // /////////////// Attributes /////////////////
@@ -147,6 +217,9 @@ namespace stdair {
     /** Departure date. */
     const Date_T _preferredDepartureDate;
 
+    /** Preferred departure time. */
+    const Duration_T _preferredDepartureTime;
+    
     /** Request date-time */
     const DateTime_T _requestDateTime;
 
@@ -169,9 +242,6 @@ namespace stdair {
     /** Frequent flyer type (P=Platinum, G=Gold, S=Silver, M=Member, N=None). */
     const FrequentFlyer_T _frequentFlyerType;
 
-    /** Preferred departure time. */
-    const Duration_T _preferredDepartureTime;
-    
     /** Willingness-To-Pay. */
     const WTP_T _wtp;
 
