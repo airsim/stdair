@@ -8,8 +8,8 @@
 // STL
 #include <list>
 #include <map>
-// STDAIR
-#include <stdair/stdair_types.hpp>
+// StdAir
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/bom/key_types.hpp>
 
 namespace stdair {

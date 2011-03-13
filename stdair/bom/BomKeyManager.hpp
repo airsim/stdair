@@ -29,7 +29,7 @@ namespace stdair {
   public:
     // //////////////// Key management support methods /////////////////
     /**
-     * Build an InventoryKey object from a (full) key string.
+     * Build a InventoryKey structure from a (full) key string.
      *
      * The full key string gathers airline code, flight number, origin
      * and destination, cabin and booking class. It corresponds to the
@@ -37,12 +37,12 @@ namespace stdair {
      * structures.
      *
      * @param const std::string& The full key string.
-     * @return InventoryKey The just built InventoryKey object.
+     * @return InventoryKey The just built InventoryKey structure.
      */
     static InventoryKey extractInventoryKey (const std::string& iFullKeyStr);
 
     /**
-     * Build an FlightDateKey object from a (full) key string.
+     * Build a FlightDateKey structure from a (full) key string.
      *
      * The full key string gathers airline code, flight number, origin
      * and destination, cabin and booking class. It corresponds to the
@@ -50,12 +50,12 @@ namespace stdair {
      * structures.
      *
      * @param const std::string& The full key string.
-     * @return FlightDateKey The just built FlightDateKey object.
+     * @return FlightDateKey The just built FlightDateKey structure.
      */
     static FlightDateKey extractFlightDateKey (const std::string& iFullKeyStr);
 
     /**
-     * Build an SegmentDateKey object from a (full) key string.
+     * Build a SegmentDateKey structure from a (full) key string.
      *
      * The full key string gathers airline code, flight number, origin
      * and destination, cabin and booking class. It corresponds to the
@@ -63,12 +63,12 @@ namespace stdair {
      * structures.
      *
      * @param const std::string& The full key string.
-     * @return SegmentDateKey The just built SegmentDateKey object.
+     * @return SegmentDateKey The just built SegmentDateKey structure.
      */
     static SegmentDateKey extractSegmentDateKey (const std::string& iFullKeyStr);
 
     /**
-     * Build an BookingClassKey object from a (full) key string.
+     * Build a BookingClassKey structure from a (full) key string.
      *
      * The full key string gathers airline code, flight number, origin
      * and destination, cabin and booking class. It corresponds to the
@@ -76,10 +76,20 @@ namespace stdair {
      * structures.
      *
      * @param const std::string& The full key string.
-     * @return BookingClassKey The just built BookingClassKey object.
+     * @return BookingClassKey The just built BookingClassKey structure.
      */
     static BookingClassKey
     extractBookingClassKey (const std::string& iFullKeyStr);
+
+    /**
+     * Build a BookingClassKey structure from a list of booking class
+     * codes. For now, it takes the first booking class code.
+     *
+     * @param const ClassList_String_T& The list of booking class codes.
+     * @return BookingClassKey The just built BookingClassKey structure.
+     */
+    static BookingClassKey
+    extractBookingClassKeyFromClassList (const ClassList_String_T& iClassList);
   };
   
 }

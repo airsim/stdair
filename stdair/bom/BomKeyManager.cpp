@@ -35,6 +35,11 @@ namespace stdair {
    */
   const boost::char_separator<char> TokeniserSeparator (",. ");
 
+  /**
+   * Dash delimitor for the tokenisation process.
+   */
+  const boost::char_separator<char> TokeniserDashSeparator ("-");
+
 
   // ////////////////////////////////////////////////////////////////////
   InventoryKey BomKeyManager::
@@ -260,6 +265,36 @@ namespace stdair {
 
     //
     const BookingClassKey oBookingClassKey (lClassCode);
+
+    return oBookingClassKey;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  BookingClassKey BomKeyManager::
+  extractBookingClassKeyFromClassList (const ClassList_String_T& iClassList) {
+
+    // Token-ise the full key string
+    Tokeniser_T lTokens (iClassList, TokeniserDashSeparator);
+
+    //
+    Tokeniser_T::iterator itToken = lTokens.begin();
+
+    // Booking class code
+    //
+    //
+    if (itToken == lTokens.end()) {
+      STDAIR_LOG_ERROR ("No booking class code can be found in '"
+                        << iClassList << "'");
+      throw KeyNotFoundException ("No booking class code can be found in '"
+                                  + iClassList + "'");
+    }
+
+    const ClassCode_T lClassCode (*itToken);
+
+    //
+    const BookingClassKey oBookingClassKey (lClassCode);
+
+    return oBookingClassKey;
   }
 
 }
