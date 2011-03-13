@@ -8,14 +8,18 @@
 #include <iosfwd>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_date_time_types.hpp>
 
 namespace stdair {
 
   /// Forward declarations
   class BomRoot;
+  struct InventoryKey;
   class Inventory;
+  struct FlightDateKey;
   class FlightDate;
   class LegDate;
+  struct SegmentDateKey;
   class SegmentDate;
   class LegCabin;
   class SegmentCabin;
