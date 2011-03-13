@@ -16,6 +16,7 @@
 #include <stdair/bom/SegmentCabin.hpp>
 #include <stdair/bom/FareFamily.hpp>
 #include <stdair/bom/BookingClass.hpp>
+#include <stdair/bom/Bucket.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
 #include <stdair/bom/TravelSolutionStruct.hpp>
 #include <stdair/bom/BomDisplay.hpp>
@@ -132,7 +133,7 @@ namespace stdair {
     csvLegCabinDisplay (oStream, iFlightDate);
 
     //
-    // csvBucketDisplay (oStream, iFlightDate);
+    csvBucketDisplay (oStream, iFlightDate);
 
     //
     csvFareFamilyDisplay (oStream, iFlightDate);
@@ -380,7 +381,7 @@ namespace stdair {
     oStream << "******************************************" << std::endl;
     oStream << "Buckets:" << std::endl
             << "--------" << std::endl;
-    oStream << "Leg, Cabin, Yield, AU, SS, AV, "
+    oStream << "Leg, Cabin, Yield, AU/SI, SS, AV, "
             << std::endl;
 
     // Retrieve the key of the flight-date
@@ -411,16 +412,26 @@ namespace stdair {
            itLC != lLegCabinList.end(); ++itLC) {
         const LegCabin* lLC_ptr = *itLC;
         assert (lLC_ptr != NULL);
-      
-        oStream << lBoardPoint << "-" << lOffPoint << ", ";
-        oStream << lLC_ptr->getCabinCode() << ", ";
-        /*
+
+        // Retrieve the key of the leg-cabin
+        const CabinCode_T& lCabinCode = lLC_ptr->getCabinCode();      
+
+        // Browse the buckets
+        const BucketList_T& lBucketList = BomManager::getList<Bucket> (*lLC_ptr);
+        for (BucketList_T::const_iterator itBuck = lBucketList.begin();
+             itBuck != lBucketList.end(); ++itBuck) {
+          const Bucket* lBucket_ptr = *itBuck;
+          assert (lBucket_ptr != NULL);
+
+          oStream << lBoardPoint << "-" << lOffPoint << ", "
+                  << lCabinCode << ", ";
+
           oStream << lBucket_ptr->getYieldRangeUpperValue() << ", "
-          << lBucket_ptr->getAU() << ", "
-          << lBucket_ptr->getSoldSeats() << ", "
-          << lBucket_ptr->getAvailability() << ", ";
-        */
-        oStream << std::endl;
+                  << lBucket_ptr->getSeatIndex() << ", "
+                  << lBucket_ptr->getSoldSeats() << ", "
+                  << lBucket_ptr->getAvailability() << ", ";
+          oStream << std::endl;
+        }
       }
     }
     oStream << "******************************************" << std::endl;

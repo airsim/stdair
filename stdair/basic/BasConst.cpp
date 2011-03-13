@@ -105,7 +105,7 @@ namespace stdair {
   const FlightPathCode_T DEFAULT_FLIGHTPATH_CODE ("");
 
 
-  // //////// (Segment-)Class-related BOM ///////
+  // //////// Inventory-related BOM ///////
   /** Default distance value (kilometers). */
   const Distance_T DEFAULT_DISTANCE_VALUE (0);
 
@@ -147,13 +147,19 @@ namespace stdair {
   /** Maximal offered capacity in a cabin. */
   const Availability_T MAXIMAL_AVAILABILITY (9999.0);
 
+  /** Default seat index (for a bucket and/or Bid-Price Vector slot). */
+  const SeatIndex_T DEFAULT_SEAT_INDEX (1);
+
+
+  // //////// (Segment-)Class-related BOM ///////
   /** Default boolean for censorship flag given the status of
       availability for BookingClass. */
   const CensorshipFlag_T DEFAULT_CLASS_CENSORSHIPFLAG (false);
 
   /** Default list of censorship flag given the status of 
       availability for BookingClass. */
-  const CensorshipFlagList_T DEFAULT_CLASS_CENSORSHIPFLAG_LIST = std::vector<CensorshipFlag_T>();
+  const CensorshipFlagList_T DEFAULT_CLASS_CENSORSHIPFLAG_LIST =
+    std::vector<CensorshipFlag_T>();
 
   /** Default booking limit value for BookingClass. */
   const BookingLimit_T DEFAULT_CLASS_BOOKING_LIMIT (9999.0);

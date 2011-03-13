@@ -16,7 +16,7 @@ namespace stdair {
   // Forward declarations.
   class LegCabin;
 
- /** Define the leg-cabin list. */
+  /** Define the leg-cabin list. */
   typedef std::list<LegCabin*> LegCabinList_T;
 
   /** Define the leg-cabin map. */
