@@ -519,9 +519,36 @@ namespace stdair {
     const FareOptionStruct lFareOption (lClassPath, lFare, lChangeFee,
                                         isRefundable, lSaturdayStay);
 
-    // Add the fare option
+    // Add (a copy of) the fare option
     lTS.addFareOption (lFareOption);
-    lTS.setChosenFareOption (lFareOption);
+
+    // Get a reference on the (copy of the) fare option (held by the
+    // travel solution structure)
+    const FareOptionList_T& lFOList = lTS.getFareOptionList();
+    assert (lFOList.empty() == false);
+    const FareOptionStruct& lFOCopy = lFOList.front();
+    
+    /**
+     * Store within the travel solution structure the chosen travel solution
+     *
+     * \note It is important to retrieve the copy (of the fare
+     *       option). Indeed, the travel solution structure stores a
+     *       pointer on the fare option structure. And, here, the
+     *       'lFareOption' structure is temporary. Hence, once out of
+     *       that method, the travel solution structure would hold a
+     *       pointer on an invalid memory zone.
+     */
+    lTS.setChosenFareOption (lFOCopy);
+
+    // Map of class availabilities: set the availability for the Q
+    // booking class (the one corresponding to the fare option) to 8.
+    ClassAvailabilityMap_T lClassAvailabilityMap;
+    const Availability_T lAvl (8);
+    const bool hasInsertBeenSuccessful = lClassAvailabilityMap.
+      insert (ClassAvailabilityMap_T::value_type (lClassPath, lAvl)).second;
+
+    // Add the map to the dedicated list held by the travel solution
+    lTS.addClassAvailabilityMap (lClassAvailabilityMap);
 
     // Add the travel solution to the list
     ioTravelSolutionList.push_back (lTS);
