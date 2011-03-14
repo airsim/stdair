@@ -340,9 +340,9 @@ namespace stdair {
         // Retrieve the key of the segment-cabin
         const CabinCode_T& lCabinCode = lSC_ptr->getCabinCode();
 
-        // Check whether there are SegmentDate objects
+        // Check whether there are fare family objects
         if (BomManager::hasList<FareFamily> (*lSC_ptr) == false) {
-          return;
+          continue;
         }
     
         // Browse the fare families
@@ -412,6 +412,11 @@ namespace stdair {
            itLC != lLegCabinList.end(); ++itLC) {
         const LegCabin* lLC_ptr = *itLC;
         assert (lLC_ptr != NULL);
+
+        // Check whether there are bucket objects
+        if (BomManager::hasList<Bucket> (*lLC_ptr) == false) {
+          continue;
+        }
 
         // Retrieve the key of the leg-cabin
         const CabinCode_T& lCabinCode = lLC_ptr->getCabinCode();      
