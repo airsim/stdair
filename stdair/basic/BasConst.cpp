@@ -351,11 +351,16 @@ namespace stdair {
   const unsigned short MAXIMAL_NUMBER_OF_SEGMENTS_IN_OND (3);
 
   // ////////// Key and display related /////////////
-  /** Default field delimiter. */
-  const std::string DEFAULT_FLD_DELIMITER ("; ");
+  /** Default delimiter for string display (e.g delimiter for inventory key
+      and flight-date key). */
+  const std::string DEFAULT_KEY_FLD_DELIMITER (";");
 
-  /** Default field delimiter size. */
-  const unsigned int DEFAULT_FLD_DELIMITER_SIZE (DEFAULT_FLD_DELIMITER.size());
+  /** Default sub delimiter for string display (e.g delimiter for flight number
+      and departure date of a flight-date key). */
+  const std::string DEFAULT_KEY_SUB_FLD_DELIMITER (",");
+
+  /** Default token for decoding a full string display. */
+  const boost::char_separator<char> DEFAULT_KEY_TOKEN_DELIMITER (";, ");
 
   
   // ////////// BomManager-related constants ///////////

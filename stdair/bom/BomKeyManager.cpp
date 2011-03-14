@@ -10,6 +10,7 @@
 #include <boost/date_time/gregorian/parsers.hpp>
 // StdAir
 #include <stdair/stdair_exceptions.hpp>
+#include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/BomRootKey.hpp>
 #include <stdair/bom/InventoryKey.hpp>
 #include <stdair/bom/FlightDateKey.hpp>
@@ -31,11 +32,6 @@ namespace stdair {
   typedef boost::tokenizer<boost::char_separator<char> > Tokeniser_T;
 
   /**
-   * Delimitors for the tokenisation process.
-   */
-  const boost::char_separator<char> TokeniserSeparator (",./ ");
-
-  /**
    * Dash delimitor for the tokenisation process.
    */
   const boost::char_separator<char> TokeniserDashSeparator ("-");
@@ -46,7 +42,7 @@ namespace stdair {
   extractInventoryKey (const std::string& iFullKeyStr) {
 
     // Token-ise the full key string
-    Tokeniser_T lTokens (iFullKeyStr, TokeniserSeparator);
+    Tokeniser_T lTokens (iFullKeyStr, DEFAULT_KEY_TOKEN_DELIMITER);
 
     //
     Tokeniser_T::iterator itToken = lTokens.begin();
@@ -74,7 +70,7 @@ namespace stdair {
   extractFlightDateKey (const std::string& iFullKeyStr) {
 
     // Token-ise the full key string
-    Tokeniser_T lTokens (iFullKeyStr, TokeniserSeparator);
+    Tokeniser_T lTokens (iFullKeyStr, DEFAULT_KEY_TOKEN_DELIMITER);
 
     //
     Tokeniser_T::iterator itToken = lTokens.begin();
@@ -126,7 +122,7 @@ namespace stdair {
   extractSegmentDateKey (const std::string& iFullKeyStr) {
 
     // Token-ise the full key string
-    Tokeniser_T lTokens (iFullKeyStr, TokeniserSeparator);
+    Tokeniser_T lTokens (iFullKeyStr, DEFAULT_KEY_TOKEN_DELIMITER);
 
     //
     Tokeniser_T::iterator itToken = lTokens.begin();
@@ -195,7 +191,7 @@ namespace stdair {
   extractBookingClassKey (const std::string& iFullKeyStr) {
 
     // Token-ise the full key string
-    Tokeniser_T lTokens (iFullKeyStr, TokeniserSeparator);
+    Tokeniser_T lTokens (iFullKeyStr, DEFAULT_KEY_TOKEN_DELIMITER);
 
     //
     Tokeniser_T::iterator itToken = lTokens.begin();

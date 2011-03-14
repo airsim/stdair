@@ -12,6 +12,7 @@
 #include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/basic/BasConst_Inventory.hpp>
+#include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/FlightDateKey.hpp>
 
 namespace stdair {
@@ -51,7 +52,8 @@ namespace stdair {
     std::ostringstream oStr;
     const std::string& lFlightDateStr =
       boost::gregorian::to_simple_string (_flightDate);
-    oStr << _flightNumber << ", " << lFlightDateStr;
+    oStr << _flightNumber
+         << DEFAULT_KEY_SUB_FLD_DELIMITER << " " << lFlightDateStr;
     return oStr.str();
   }
 
