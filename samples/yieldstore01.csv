@@ -1,15 +1,7 @@
-// Yields: yield ID; OriginCity; DestinationCity; DateRangeStart; DateRangeEnd; DepartureTimeRangeStart; DepartureTimeRangeEnd; Yield; AirlineCode; Class
-1; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 4200.0; BA; A;
-2; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 3900.0; BA; F;
-3; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 3420.0; BA; I;
-4; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 3150.0; BA; D;
-5; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 2820.0; BA; C;
-6; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 2500.0; BA; J;
-7; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 2220.0; BA; T; 
-8; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 1990.0; BA; W;
-9; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 1690.0; BA; M;
-10; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 1450.0; BA; K;
-11; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 1230.0; BA; H;
-12; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 1090.0; BA; B;
-13; LHR; JFK; 2008-06-01; 2009-12-31; 00:00; 23:59; 800.0; BA; Y;
+// Yields: yield ID;  OriginCity; DestinationCity; DateRangeStart; DateRangeEnd; DepartureTimeRangeStart; DepartureTimeRangeEnd; POS; Channel; Yield; Segments
+// Segment: AirlineCode; Class; 
+1; SIN; BKK; 2010-01-15; 2010-12-31; 00:00; 23:59; Y; 200.0; SQ; Y;
+2; SIN; HND; 2010-01-15; 2010-12-31; 00:00; 23:59; Y; 200.0; SQ; Y;
+3; SIN; NCE; 2010-01-15; 2010-12-31; 00:00; 23:59; Y; 1200.0; SQ; Y; AF; YLMN;
+
 
