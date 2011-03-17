@@ -19,13 +19,13 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   FlightDate::FlightDate()
-    : _key (DEFAULT_FLIGHT_NUMBER, DEFAULT_FLIGHT_DATE), _parent (NULL) {
+    : _key (DEFAULT_FLIGHT_NUMBER, DEFAULT_DEPARTURE_DATE), _parent (NULL) {
     assert (false);
   }
   
   // ////////////////////////////////////////////////////////////////////
   FlightDate::FlightDate (const FlightDate&)
-    : _key (DEFAULT_FLIGHT_NUMBER, DEFAULT_FLIGHT_DATE), _parent (NULL) {
+    : _key (DEFAULT_FLIGHT_NUMBER, DEFAULT_DEPARTURE_DATE), _parent (NULL) {
     assert (false);
   }
   
@@ -46,8 +46,8 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   LegDate* FlightDate::getLegDate (const std::string& iLegDateKeyStr) const {
-    LegDate* oLegDate_ptr = NULL;
-    BomManager::getObjectPtr<LegDate> (*this, iLegDateKeyStr);
+    LegDate* oLegDate_ptr =
+      BomManager::getObjectPtr<LegDate> (*this, iLegDateKeyStr);
     return oLegDate_ptr;
   }
 
@@ -59,8 +59,8 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   SegmentDate* FlightDate::
   getSegmentDate (const std::string& iSegmentDateKeyStr) const {
-    SegmentDate* oSegmentDate_ptr = NULL;
-    BomManager::getObjectPtr<SegmentDate> (*this, iSegmentDateKeyStr);
+    SegmentDate* oSegmentDate_ptr = 
+      BomManager::getObjectPtr<SegmentDate> (*this, iSegmentDateKeyStr);
     return oSegmentDate_ptr;
   }
 

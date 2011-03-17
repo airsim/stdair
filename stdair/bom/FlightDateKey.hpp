@@ -54,8 +54,8 @@ namespace stdair {
     }
 
     /** Get the departure date of the (first leg of the) flight. */
-    const Date_T& getFlightDate() const {
-      return _flightDate;
+    const Date_T& getDepartureDate() const {
+      return _departureDate;
     }
 
 
@@ -112,7 +112,7 @@ namespace stdair {
     /**
      * Departure date of the (first leg of the) flight.
      */
-    Date_T _flightDate;
+    Date_T _departureDate;
   };
 
 }

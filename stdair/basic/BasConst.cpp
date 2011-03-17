@@ -27,7 +27,7 @@ namespace stdair {
   const NbOfFlightDates_T DEFAULT_NB_OF_FLIGHTDATES (0.0);
 
   /** Null time duration (in boost::time_duration unit).*/
-  const Duration_T NULL_BOOST_TIME_DURATION (0, 0, 0);
+  const Duration_T NULL_BOOST_TIME_DURATION (-1, -1, -1);
 
   /** Default number of days in a year. */
   const unsigned int DEFAULT_NB_OF_DAYS_IN_A_YEAR (365);
@@ -264,7 +264,7 @@ namespace stdair {
   const AirportCode_T DEFAULT_POS ("ROW");
     
   /** Default departure date. */
-  const Date_T DEFAULT_PREFERRED_DEPARTURE_DATE (DEFAULT_FLIGHT_DATE);
+  const Date_T DEFAULT_PREFERRED_DEPARTURE_DATE (DEFAULT_DEPARTURE_DATE);
 
   /** Default preferred departure time (08:00). */
   const Duration_T DEFAULT_PREFERRED_DEPARTURE_TIME (8, 0, 0);
@@ -321,19 +321,22 @@ namespace stdair {
   const FlightNumber_T DEFAULT_FLIGHT_NUMBER (9999);
   
   /** Default Flight Date. */
-  const Date_T DEFAULT_FLIGHT_DATE (2011, boost::gregorian::Jan, 1);
+  const Date_T DEFAULT_DEPARTURE_DATE (1900, boost::gregorian::Jan, 1);
   
   /** Default Bid-Price. */
   const BidPrice_T DEFAULT_BID_PRICE (0.0);
   
   /** Default Origin. */
-  const AirportCode_T DEFAULT_ORIGIN ("NCE");
+  const AirportCode_T DEFAULT_ORIGIN ("XXX");
   
   /** Default Destination. */
-  const AirportCode_T DEFAULT_DESTINATION ("JFK");
+  const AirportCode_T DEFAULT_DESTINATION ("XXX");
+  
+  /** Default airport code value ('').. */
+  const AirportCode_T DEFAULT_NULL_AIRPORT_CODE ("");
   
   /** Default Cabin Code. */
-  const CabinCode_T DEFAULT_CABIN_CODE ("Y");
+  const CabinCode_T DEFAULT_CABIN_CODE ("X");
 
   /** Default Fare Family Code. */
   const FamilyCode_T DEFAULT_FARE_FAMILY_CODE ("EcoSaver");

@@ -63,8 +63,8 @@ namespace stdair {
     }
 
     /** Get the flight date (part of the primary key). */
-    const Date_T& getFlightDate() const {
-      return _key.getFlightDate();
+    const Date_T& getDepartureDate() const {
+      return _key.getDepartureDate();
     }
 
     /** Get the map of children holders. */

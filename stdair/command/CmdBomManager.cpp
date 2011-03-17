@@ -423,7 +423,7 @@ namespace stdair {
     FacBomManager::instance().addToList (ioBomRoot, lInv);
 
     // Flight-date
-    FlightDateKey lFlightDateKey (DEFAULT_FLIGHT_NUMBER, DEFAULT_FLIGHT_DATE);
+    FlightDateKey lFlightDateKey (DEFAULT_FLIGHT_NUMBER, DEFAULT_DEPARTURE_DATE);
     FlightDate& lFlightDate =
       FacBom<FlightDate>::instance().create (lFlightDateKey);
     FacBomManager::instance().addToList (lInv, lFlightDate);
@@ -435,8 +435,8 @@ namespace stdair {
 
     // Fill the LegDate content
     lLeg.setOffPoint (DEFAULT_DESTINATION);
-    lLeg.setBoardingDate (DEFAULT_FLIGHT_DATE);
-    lLeg.setOffDate (DEFAULT_FLIGHT_DATE);
+    lLeg.setBoardingDate (DEFAULT_DEPARTURE_DATE);
+    lLeg.setOffDate (DEFAULT_DEPARTURE_DATE);
     lLeg.setBoardingTime (Duration_T (14, 0, 0));
     lLeg.setOffTime (Duration_T (16, 0, 0));
     lLeg.setElapsedTime (Duration_T (8, 0, 0));
@@ -461,8 +461,8 @@ namespace stdair {
     FacBomManager::instance().addToList (lSegment, lLeg);
 
     // Fill the SegmentDate content
-    lSegment.setBoardingDate (DEFAULT_FLIGHT_DATE);
-    lSegment.setOffDate (DEFAULT_FLIGHT_DATE);
+    lSegment.setBoardingDate (DEFAULT_DEPARTURE_DATE);
+    lSegment.setOffDate (DEFAULT_DEPARTURE_DATE);
     lSegment.setBoardingTime (Duration_T (14, 0, 0));
     lSegment.setOffTime (Duration_T (16, 0, 0));
     lSegment.setElapsedTime (Duration_T (8, 0, 0));
@@ -528,7 +528,7 @@ namespace stdair {
     const Availability_T lAvl (8);
     const bool hasInsertBeenSuccessful = lClassAvailabilityMap.
       insert (ClassAvailabilityMap_T::value_type (lClassPath, lAvl)).second;
-
+    assert (hasInsertBeenSuccessful == true);
     // Add the map to the dedicated list held by the travel solution
     lTS.addClassAvailabilityMap (lClassAvailabilityMap);
 

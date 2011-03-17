@@ -58,8 +58,8 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   SegmentCabin* SegmentDate::
   getSegmentCabin (const std::string& iSegmentCabinKeyStr) const {
-    SegmentCabin* oSegmentCabin_ptr = NULL;
-    BomManager::getObjectPtr<SegmentCabin> (*this, iSegmentCabinKeyStr);
+    SegmentCabin* oSegmentCabin_ptr = 
+      BomManager::getObjectPtr<SegmentCabin> (*this, iSegmentCabinKeyStr);
     return oSegmentCabin_ptr;
   }
 

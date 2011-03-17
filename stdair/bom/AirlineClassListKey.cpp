@@ -5,13 +5,15 @@
 #include <ostream>
 #include <sstream>
 // STDAIR
+#include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/AirlineClassListKey.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  AirlineClassListKey::AirlineClassListKey (const AirlineCodeList_T& iAirlineCodeList,
-                                            const ClassList_StringList_T& iClassCodeList)
+  AirlineClassListKey::
+  AirlineClassListKey (const AirlineCodeList_T& iAirlineCodeList,
+                       const ClassList_StringList_T& iClassCodeList)
     : _airlineCodeList (iAirlineCodeList), _classCodeList (iClassCodeList) {
   }
 
@@ -43,7 +45,8 @@ namespace stdair {
            _classCodeList.begin();
          lItClassCode != _classCodeList.end();
          lItClassCode++) {
-      oStr << *lItAirlineCode << " " << *lItClassCode << ",  ";
+      oStr << *lItAirlineCode << " " << *lItClassCode
+           << DEFAULT_KEY_SUB_FLD_DELIMITER << " ";
       lItAirlineCode++;
     }
     oStr << std::endl; 

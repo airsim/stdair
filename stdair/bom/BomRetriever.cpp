@@ -17,6 +17,7 @@
 #include <stdair/bom/FareFamily.hpp>
 #include <stdair/bom/BookingClass.hpp>
 #include <stdair/bom/BomRetriever.hpp>
+#include <stdair/bom/ParsedKey.hpp>
 #include <stdair/service/Logger.hpp>
 
 namespace stdair {
@@ -30,21 +31,6 @@ namespace stdair {
     // Extract the inventory key (i.e., airline code)
     const InventoryKey& lInventoryKey =
       BomKeyManager::extractInventoryKey (iFullKeyStr);
-
-    oInventory_ptr = iBomRoot.getInventory (lInventoryKey);
-
-    return oInventory_ptr;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  Inventory* BomRetriever::
-  retrieveInventoryFromShortKey (const BomRoot& iBomRoot,
-                                 const std::string& iKeyStr) {
-    Inventory* oInventory_ptr = NULL;
-
-    // Extract the inventory key (i.e., airline code)
-    const InventoryKey& lInventoryKey =
-      BomKeyManager::extractInventoryKey (iKeyStr);
 
     oInventory_ptr = iBomRoot.getInventory (lInventoryKey);
 
@@ -115,21 +101,6 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   FlightDate* BomRetriever::
-  retrieveFlightDateFromShortKey (const Inventory& iInventory,
-                                  const std::string& iKeyStr) {
-    FlightDate* oFlightDate_ptr = NULL;
-
-    // Extract the flight-date key (i.e., flight number and date)
-    const FlightDateKey& lFlightDateKey =
-      BomKeyManager::extractFlightDateKey (iKeyStr);
-
-    oFlightDate_ptr = iInventory.getFlightDate (lFlightDateKey);
-
-    return oFlightDate_ptr;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  FlightDate* BomRetriever::
   retrieveFlightDateFromKey (const Inventory& iInventory,
                              const FlightDateKey& iKey) {
     FlightDate* oFlightDate_ptr = NULL;
@@ -183,21 +154,29 @@ namespace stdair {
                                   const std::string& iFullKeyStr) {
     SegmentDate* oSegmentDate_ptr = NULL;
 
-    // Retrieve the flight-date
-    FlightDate* lFlightDate_ptr =
-      BomRetriever::retrieveFlightDateFromLongKey (iInventory, iFullKeyStr);
+    ParsedKey lParsedKey = BomKeyManager::extractKeys (iFullKeyStr);
 
-    if (lFlightDate_ptr == NULL) {
+    if (iInventory.getAirlineCode() != lParsedKey._airlineCode) {
+      STDAIR_LOG_DEBUG ("Airline code: " << lParsedKey._airlineCode);
       return oSegmentDate_ptr;
     }
-    assert (lFlightDate_ptr != NULL);
 
-    // Extract the segment-date key (i.e., origin and destination)
-    const SegmentDateKey& lSegmentDateKey =
-      BomKeyManager::extractSegmentDateKey (iFullKeyStr);
+    FlightDate* lFlightDate_ptr =
+      retrieveFlightDateFromKey (iInventory, lParsedKey.getFlightDateKey());
+    if (lFlightDate_ptr == NULL) {
+      STDAIR_LOG_DEBUG ("Flight-date key: "
+                        << lParsedKey.getFlightDateKey().toString());
+      return oSegmentDate_ptr;
+    }
 
-    oSegmentDate_ptr = lFlightDate_ptr->getSegmentDate (lSegmentDateKey);
-
+    oSegmentDate_ptr =
+      retrieveSegmentDateFromKey (*lFlightDate_ptr, lParsedKey.getSegmentKey());
+    if (oSegmentDate_ptr == NULL) {
+      STDAIR_LOG_DEBUG ("Segment-date key: "
+                        << lParsedKey.getSegmentKey().toString());
+      return oSegmentDate_ptr;
+    }
+    
     return oSegmentDate_ptr;
   }
 
@@ -210,21 +189,6 @@ namespace stdair {
     // Extract the segment-date key (i.e., origin and destination)
     const SegmentDateKey& lSegmentDateKey =
       BomKeyManager::extractSegmentDateKey (iFullKeyStr);
-
-    oSegmentDate_ptr = iFlightDate.getSegmentDate (lSegmentDateKey);
-
-    return oSegmentDate_ptr;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  SegmentDate* BomRetriever::
-  retrieveSegmentDateFromShortKey (const FlightDate& iFlightDate,
-                                   const std::string& iKeyStr) {
-    SegmentDate* oSegmentDate_ptr = NULL;
-
-    // Extract the segment-date key (i.e., origin and destination)
-    const SegmentDateKey& lSegmentDateKey =
-      BomKeyManager::extractSegmentDateKey (iKeyStr);
 
     oSegmentDate_ptr = iFlightDate.getSegmentDate (lSegmentDateKey);
 
@@ -259,88 +223,14 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   BookingClass* BomRetriever::
-  retrieveBookingClassFromLongKey (const BomRoot& iBomRoot,
-                                   const std::string& iFullKeyStr) {
-    BookingClass* oBookingClass_ptr = NULL;
-
-    // Retrieve the segment-date
-    SegmentDate* lSegmentDate_ptr =
-      BomRetriever::retrieveSegmentDateFromLongKey (iBomRoot, iFullKeyStr);
-    if (lSegmentDate_ptr == NULL) {
-      return oBookingClass_ptr;
-    }
-    assert (lSegmentDate_ptr != NULL);
-
-    // Extract the booking class key (i.e., booking class code)
-    const BookingClassKey& lBookingClassKey =
-      BomKeyManager::extractBookingClassKey (iFullKeyStr);
-
-    // Browse the segment-cabins
-    const SegmentCabinList_T& lSegmentCabinList =
-      BomManager::getList<SegmentCabin> (*lSegmentDate_ptr);
-    for (SegmentCabinList_T::const_iterator itCabin =
-           lSegmentCabinList.begin();
-         itCabin != lSegmentCabinList.end(); ++itCabin) {
-      SegmentCabin* lSegmentCabin_ptr = *itCabin;
-      assert (lSegmentCabin_ptr != NULL);
-
-      oBookingClass_ptr =
-        BomManager::getObjectPtr<BookingClass> (*lSegmentCabin_ptr,
-                                                lBookingClassKey.toString());
-    }
-
-    return oBookingClass_ptr;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  BookingClass* BomRetriever::
-  retrieveBookingClassFromLongKey (const Inventory& iInventory,
-                                   const std::string& iFullKeyStr) {
-    BookingClass* oBookingClass_ptr = NULL;
-
-    // Retrieve the segment-date
-    SegmentDate* lSegmentDate_ptr =
-      BomRetriever::retrieveSegmentDateFromLongKey (iInventory, iFullKeyStr);
-    if (lSegmentDate_ptr == NULL) {
-      return oBookingClass_ptr;
-    }
-    assert (lSegmentDate_ptr != NULL);
-
-    // Extract the booking class key (i.e., booking class code)
-    const BookingClassKey& lBookingClassKey =
-      BomKeyManager::extractBookingClassKey (iFullKeyStr);
-
-    // Browse the segment-cabins
-    const SegmentCabinList_T& lSegmentCabinList =
-      BomManager::getList<SegmentCabin> (*lSegmentDate_ptr);
-    for (SegmentCabinList_T::const_iterator itCabin =
-           lSegmentCabinList.begin();
-         itCabin != lSegmentCabinList.end(); ++itCabin) {
-      SegmentCabin* lSegmentCabin_ptr = *itCabin;
-      assert (lSegmentCabin_ptr != NULL);
-
-      oBookingClass_ptr =
-        BomManager::getObjectPtr<BookingClass> (*lSegmentCabin_ptr,
-                                                lBookingClassKey.toString());
-      if (oBookingClass_ptr != NULL) {
-        break;
-      }
-    }
-
-    return oBookingClass_ptr;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  BookingClass* BomRetriever::
   retrieveBookingClassFromLongKey (const Inventory& iInventory,
                                    const std::string& iFullKeyStr,
                                    const ClassCode_T& iClassCode) {
     BookingClass* oBookingClass_ptr = NULL;
 
-    // Retrieve the segment-date
     SegmentDate* lSegmentDate_ptr =
-      BomRetriever::retrieveSegmentDateFromLongKey (iInventory, iFullKeyStr);
-
+      retrieveSegmentDateFromLongKey (iInventory, iFullKeyStr);
+      
     if (lSegmentDate_ptr == NULL) {
       return oBookingClass_ptr;
     }

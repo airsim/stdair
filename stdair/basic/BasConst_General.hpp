@@ -65,19 +65,7 @@ namespace stdair {
 
   /** Default number of airlines. */
   extern const NbOfAirlines_T DEFAULT_NBOFAIRLINES;
-
-  /** Default airlineCode value ('XX'). */
-  extern const AirlineCode_T DEFAULT_AIRLINE_CODE;
-
-  /** Default airlineCode value (''). */
-  extern const AirlineCode_T DEFAULT_NULL_AIRLINE_CODE;
   
-  /** Default classCode value ('X'). */
-  extern const ClassCode_T DEFAULT_CLASS_CODE;
-  
-  /** Default null classCode value (''). */
-  extern const ClassCode_T DEFAULT_NULL_CLASS_CODE;
-
   /** Default number of days in a year. */
   extern const unsigned int DEFAULT_NB_OF_DAYS_IN_A_YEAR;
   

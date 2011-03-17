@@ -19,19 +19,20 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   FlightDateKey::FlightDateKey()
-    : _flightNumber (DEFAULT_FLIGHT_NUMBER), _flightDate (DEFAULT_FLIGHT_DATE) {
+    : _flightNumber (DEFAULT_FLIGHT_NUMBER),
+      _departureDate (DEFAULT_DEPARTURE_DATE) {
     assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////
   FlightDateKey::FlightDateKey (const FlightNumber_T& iFlightNumber,
                                 const Date_T& iFlightDate)
-    : _flightNumber (iFlightNumber), _flightDate (iFlightDate) {
+    : _flightNumber (iFlightNumber), _departureDate (iFlightDate) {
   }
 
   // ////////////////////////////////////////////////////////////////////
   FlightDateKey::FlightDateKey (const FlightDateKey& iKey)
-    : _flightNumber (iKey._flightNumber), _flightDate (iKey._flightDate) {
+    : _flightNumber (iKey._flightNumber), _departureDate (iKey._departureDate) {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -50,10 +51,10 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string FlightDateKey::toString() const {
     std::ostringstream oStr;
-    const std::string& lFlightDateStr =
-      boost::gregorian::to_simple_string (_flightDate);
+    const std::string& lDepartureDateStr =
+      boost::gregorian::to_simple_string (_departureDate);
     oStr << _flightNumber
-         << DEFAULT_KEY_SUB_FLD_DELIMITER << " " << lFlightDateStr;
+         << DEFAULT_KEY_SUB_FLD_DELIMITER << " " << lDepartureDateStr;
     return oStr.str();
   }
 
@@ -72,9 +73,9 @@ namespace stdair {
   template<class Archive>
   void FlightDateKey::serialize (Archive& ioArchive,
                                  const unsigned int iFileVersion) {
-    std::string lFlightDateStr =
-      boost::gregorian::to_simple_string (_flightDate);
-    ioArchive & _flightNumber & lFlightDateStr;
+    std::string lDepartureDateStr =
+      boost::gregorian::to_simple_string (_departureDate);
+    ioArchive & _flightNumber & lDepartureDateStr;
   }
 
 }

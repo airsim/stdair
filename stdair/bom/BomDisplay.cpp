@@ -162,7 +162,7 @@ namespace stdair {
 
     // Retrieve the key of the flight-date
     const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
-    const Date_T& lFlightDateDate = iFlightDate.getFlightDate();
+    const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
 
     // Check whether there are LegDate objects
     if (BomManager::hasList<LegDate> (iFlightDate) == false) {
@@ -225,7 +225,7 @@ namespace stdair {
     
     // Retrieve the key of the flight-date
     const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
-    const Date_T& lFlightDateDate = iFlightDate.getFlightDate();
+    const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
     
     // Check whether there are LegDate objects
     if (BomManager::hasList<LegDate> (iFlightDate) == false) {
@@ -310,7 +310,7 @@ namespace stdair {
     
     // Retrieve the key of the flight-date
     // const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
-    // const Date_T& lFlightDateDate = iFlightDate.getFlightDate();
+    // const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
 
     // Check whether there are SegmentDate objects
     if (BomManager::hasList<SegmentDate> (iFlightDate) == false) {
@@ -386,7 +386,7 @@ namespace stdair {
 
     // Retrieve the key of the flight-date
     // const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
-    // const Date_T& lFlightDateDate = iFlightDate.getFlightDate();
+    // const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
 
     // Check whether there are LegDate objects
     if (BomManager::hasList<LegDate> (iFlightDate) == false) {
@@ -466,7 +466,7 @@ namespace stdair {
     
     // Retrieve the key of the flight-date
     // const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
-    // const Date_T& lFlightDateDate = iFlightDate.getFlightDate();
+    // const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
     
     // Check whether there are SegmentDate objects
     if (BomManager::hasList<SegmentDate> (iFlightDate) == false) {
