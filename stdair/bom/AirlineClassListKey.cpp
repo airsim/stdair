@@ -63,7 +63,7 @@ namespace stdair {
       const ClassCode_T& lClassCode = *itClassCode;
       oStr << lAirlineCode << " " << lClassCode;
     }
-    oStr << std::endl; 
+
     return oStr.str();
   }
 
