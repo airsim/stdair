@@ -73,6 +73,10 @@ namespace stdair {
   template<class Archive>
   void FlightDateKey::serialize (Archive& ioArchive,
                                  const unsigned int iFileVersion) {
+    /**
+     * \note The serialised member should not be const (as, as far as
+     *       I understand, they are tracked by Boost.Serialisation).
+     */
     std::string lDepartureDateStr =
       boost::gregorian::to_simple_string (_departureDate);
     ioArchive & _flightNumber & lDepartureDateStr;

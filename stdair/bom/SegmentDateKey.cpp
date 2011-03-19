@@ -67,7 +67,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   template<class Archive>
   void SegmentDateKey::serialize (Archive& ioArchive,
-                                 const unsigned int iFileVersion) {
+                                  const unsigned int iFileVersion) {
     ioArchive & _boardingPoint & _offPoint;
   }
 

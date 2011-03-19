@@ -8,8 +8,8 @@
 #include <boost/tokenizer.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/date_time/gregorian/parsers.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 // StdAir
+#include <stdair/stdair_exceptions.hpp>
 #include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/InventoryKey.hpp>

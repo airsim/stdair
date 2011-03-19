@@ -5,22 +5,32 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // StdAir
-#include <stdair/stdair_types.hpp>
+#include <stdair/stdair_inventory_types.hpp>
+#include <stdair/stdair_date_time_types.hpp>
 
 namespace stdair {
 
   // //////// Inventory-related BOM ///////
-  /** Default airlineCode value ('XX'). */
+  /** Default airline code value ("XX"). */
   extern const AirlineCode_T DEFAULT_AIRLINE_CODE;
 
-  /** Default airlineCode value (''). */
+  /** Default airline code value (""). */
   extern const AirlineCode_T DEFAULT_NULL_AIRLINE_CODE;
   
-  /** Default Flight Number. */
+  /** Default airline code list value (empty vector). */
+  extern const AirlineCodeList_T DEFAULT_AIRLINE_CODE_LIST;
+
+  /** Default flight number (9999). */
   extern const FlightNumber_T DEFAULT_FLIGHT_NUMBER;
   
-  /** Default Flight Date. */
+  /** Default flight departure date (01/01/1900). */
   extern const Date_T DEFAULT_DEPARTURE_DATE;
+  
+  /** Default airport code value ("XXX"). */
+  extern const AirportCode_T DEFAULT_AIRPORT_CODE;
+
+  /** Default airport code value ("").. */
+  extern const AirportCode_T DEFAULT_NULL_AIRPORT_CODE;
   
   /** Default Origin. */
   extern const AirportCode_T DEFAULT_ORIGIN;
@@ -28,20 +38,20 @@ namespace stdair {
   /** Default Destination. */
   extern const AirportCode_T DEFAULT_DESTINATION;
   
-  /** Default airport code value ('').. */
-  extern const AirportCode_T DEFAULT_NULL_AIRPORT_CODE;
-  
   /** Default Cabin Code. */
   extern const CabinCode_T DEFAULT_CABIN_CODE;
 
   /** Default Fare Family Code. */
   extern const FamilyCode_T DEFAULT_FARE_FAMILY_CODE;
 
-  /** Default classCode value ('X'). */
+  /** Default class code value ("X"). */
   extern const ClassCode_T DEFAULT_CLASS_CODE;
 
-  /** Default classCode value (''). */
+  /** Default null class code value (""). */
   extern const ClassCode_T DEFAULT_NULL_CLASS_CODE;
+
+  /** Default class code list value (empty vector). */
+  extern const ClassList_StringList_T DEFAULT_CLASS_CODE_LIST;
 
   /** Default Bid-Price. */
   extern const BidPrice_T DEFAULT_BID_PRICE;
