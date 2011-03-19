@@ -80,32 +80,17 @@ namespace stdair {
   /** Default non refundable value (false). */
   const NonRefundable_T DEFAULT_NON_REFUNDABLE (false);
   
-  /** Default airlineCode value ('XX'). */
-  const AirlineCode_T DEFAULT_AIRLINE_CODE ("XX");
-
-  /** Default airlineCode value (''). */
-  const AirlineCode_T DEFAULT_NULL_AIRLINE_CODE ("");
-
-  /** Default airportCode value ('XXX'). */
-  const AirportCode_T DEFAULT_AIRPORT_CODE ("XXX");
-
-  /** Default family code value ('X'). */
+  /** Default family code value ("X"). */
   const ClassCode_T DEFAULT_FAMILY_CODE ("0");
-
-  /** Default classCode value ('X'). */
-  const ClassCode_T DEFAULT_CLASS_CODE ("X");
 
   /** Default number of airlines. */
   const NbOfAirlines_T DEFAULT_NBOFAIRLINES (0);
 
-  /** Default classCode value (''). */
-  const ClassCode_T DEFAULT_NULL_CLASS_CODE ("");
-
-  /** Default flightPathCode value (''). */
+  /** Default flight-path code value (""). */
   const FlightPathCode_T DEFAULT_FLIGHTPATH_CODE ("");
 
 
-  // //////// Inventory-related BOM ///////
+  // //////// Booking-class-related BOM ///////
   /** Default distance value (kilometers). */
   const Distance_T DEFAULT_DISTANCE_VALUE (0);
 
@@ -146,9 +131,6 @@ namespace stdair {
 
   /** Maximal offered capacity in a cabin. */
   const Availability_T MAXIMAL_AVAILABILITY (9999.0);
-
-  /** Default seat index (for a bucket and/or Bid-Price Vector slot). */
-  const SeatIndex_T DEFAULT_SEAT_INDEX (1);
 
 
   // //////// (Segment-)Class-related BOM ///////
@@ -317,14 +299,26 @@ namespace stdair {
 
 
   // //////// Inventory-related BOM ///////
-  /** Default Flight Number. */
+  /** Default airline code value ("XX"). */
+  const AirlineCode_T DEFAULT_AIRLINE_CODE ("XX");
+
+  /** Default airline code value (""). */
+  const AirlineCode_T DEFAULT_NULL_AIRLINE_CODE ("");
+
+  /** Default airline code list value (empty vector). */
+  const AirlineCodeList_T DEFAULT_AIRLINE_CODE_LIST;
+
+  /** Default flight number (9999). */
   const FlightNumber_T DEFAULT_FLIGHT_NUMBER (9999);
   
-  /** Default Flight Date. */
+  /** Default flight departure date (01/01/1900). */
   const Date_T DEFAULT_DEPARTURE_DATE (1900, boost::gregorian::Jan, 1);
   
-  /** Default Bid-Price. */
-  const BidPrice_T DEFAULT_BID_PRICE (0.0);
+  /** Default airport code value ("XXX"). */
+  const AirportCode_T DEFAULT_AIRPORT_CODE ("XXX");
+
+  /** Default airport code value ('').. */
+  const AirportCode_T DEFAULT_NULL_AIRPORT_CODE ("");
   
   /** Default Origin. */
   const AirportCode_T DEFAULT_ORIGIN ("XXX");
@@ -332,15 +326,24 @@ namespace stdair {
   /** Default Destination. */
   const AirportCode_T DEFAULT_DESTINATION ("XXX");
   
-  /** Default airport code value ('').. */
-  const AirportCode_T DEFAULT_NULL_AIRPORT_CODE ("");
-  
   /** Default Cabin Code. */
   const CabinCode_T DEFAULT_CABIN_CODE ("X");
 
   /** Default Fare Family Code. */
   const FamilyCode_T DEFAULT_FARE_FAMILY_CODE ("EcoSaver");
 
+  /** Default class code value ("X"). */
+  const ClassCode_T DEFAULT_CLASS_CODE ("X");
+
+  /** Default null class code value (""). */
+  const ClassCode_T DEFAULT_NULL_CLASS_CODE ("");
+
+  /** Default class code list value (empty vector). */
+  const ClassList_StringList_T DEFAULT_CLASS_CODE_LIST;
+
+  /** Default Bid-Price. */
+  const BidPrice_T DEFAULT_BID_PRICE (0.0);
+  
   /** Default Bid-Price Vector. */
   const BidPriceVector_T DEFAULT_BID_PRICE_VECTOR = std::vector<BidPrice_T>();
 
@@ -352,6 +355,10 @@ namespace stdair {
   /** Maximal number of segments linked to a single O&D
       (Origin & Destination). */
   const unsigned short MAXIMAL_NUMBER_OF_SEGMENTS_IN_OND (3);
+
+  /** Default seat index (for a bucket and/or Bid-Price Vector slot). */
+  const SeatIndex_T DEFAULT_SEAT_INDEX (1);
+
 
   // ////////// Key and display related /////////////
   /** Default delimiter for string display (e.g delimiter for inventory key
