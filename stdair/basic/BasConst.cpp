@@ -323,14 +323,17 @@ namespace stdair {
   /** Default Origin. */
   const AirportCode_T DEFAULT_ORIGIN ("XXX");
   
-  /** Default Destination. */
+  /** Default destination. */
   const AirportCode_T DEFAULT_DESTINATION ("XXX");
   
-  /** Default Cabin Code. */
+  /** Default cabin code. */
   const CabinCode_T DEFAULT_CABIN_CODE ("X");
 
-  /** Default Fare Family Code. */
+  /** Default fare family Code. */
   const FamilyCode_T DEFAULT_FARE_FAMILY_CODE ("EcoSaver");
+
+  /** Default null fare family Code ("NoFF"). */
+  const FamilyCode_T DEFAULT_NULL_FARE_FAMILY_CODE ("NoFF");
 
   /** Default class code value ("X"). */
   const ClassCode_T DEFAULT_CLASS_CODE ("X");

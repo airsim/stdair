@@ -4,23 +4,36 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR 
+// STL
+#include <iosfwd>
+#include <string>
+// StdAir 
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/FareFamilyKey.hpp>
 #include <stdair/bom/FareFamilyTypes.hpp>
 
+/// Forward declarations
+namespace boost {
+  namespace serialization {
+    class access;
+  }
+}
+
 namespace stdair {
 
   /**
-   * Class representing the actual attributes for a family fare.
+   * @brief Class representing the actual attributes for a family fare.
    */
   class FareFamily : public BomAbstract {
     template <typename BOM> friend class FacBom;
     friend class FacBomManager;
+    friend class boost::serialization::access;
 
   public:
     // ////////// Type definitions ////////////
-    /** Definition allowing to retrieve the associated BOM key type. */
+    /**
+     * Definition allowing to retrieve the associated BOM key type.
+     */
     typedef FareFamilyKey Key_T;
 
 
@@ -49,49 +62,91 @@ namespace stdair {
 
   public:
     // /////////// Display support methods /////////
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object into an output stream.
+     *
+     * @param ostream& the output stream.
+     */
     void toStream (std::ostream& ioOut) const {
       ioOut << toString();
     }
 
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object from an input stream.
+     *
+     * @param istream& the input stream.
+     */
     void fromStream (std::istream& ioIn) {
     }
 
-    /** Get the serialised version of the Business Object. */
+    /**
+     * Get the serialised version of the Business Object.
+     */
     std::string toString() const;
     
-    /** Get a string describing the key. */
+    /**
+     * Get a string describing the  key.
+     */
     const std::string describeKey() const {
       return _key.toString();
     }
 
+    
+  public:
+    // /////////// (Boost) Serialisation support methods /////////
+    /**
+     * Serialisation.
+     */
+    template<class Archive>
+    void serialize (Archive& ar, const unsigned int iFileVersion);
+
+  private:
+    /**
+     * Serialisation helper (allows to be sure the template method is
+     * instantiated).
+     */
+    void serialisationImplementation();
+
 
   protected:
     // ////////// Constructors and destructors /////////
-    /** Constructor. */
+    /**
+     * Constructor.
+     */
     FareFamily (const Key_T&);
-    /** Destructor. */
+
+    /**
+     * Destructor.
+     */
     virtual ~FareFamily();
 
   private:
-    /** Default constructor. */
+    /**
+     * Default constructor.
+     */
     FareFamily();
-    /** Default copy constructor. */
+
+    /**
+     * Copy constructor.
+     */
     FareFamily (const FareFamily&);
 
 
   public:
     // ////////// Attributes /////////
-    /** Primary key (origin and destination). */
+    /**
+     * Primary key (fare family code).
+     */
     Key_T _key;
 
-    /** Pointer on the parent class (Inventory). */
+    /**
+     * Pointer on the parent class (SegmentCabin).
+     */
     BomAbstract* _parent;
     
-    /** Map holding the children (SegmentCabin objects). */
+    /**
+     * Map holding the children (BookingClass objects).
+     */
     HolderMap_T _holderMap;
   };
 
