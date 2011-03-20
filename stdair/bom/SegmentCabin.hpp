@@ -16,7 +16,8 @@
 namespace stdair {
 
   /**
-   * Class representing the actual attributes for an airline segment-cabin.
+   * @brief Class representing the actual attributes for an airline
+   * segment-cabin.
    */
   class SegmentCabin : public BomAbstract {
     template <typename BOM> friend class FacBom;
@@ -24,28 +25,48 @@ namespace stdair {
     
   public:
     // ////////// Type definitions ////////////
-    /** Definition allowing to retrieve the associated BOM key type. */
+    /**
+     * Definition allowing to retrieve the associated BOM key type.
+     */
     typedef SegmentCabinKey Key_T;
 
 
   public:
     // /////////// Getters ///////////// 
-    /** Get the segment-cabin key. */
+    /**
+     * Get the segment-cabin key (cabin code).
+     */
     const Key_T& getKey() const {
       return _key;
     }
 
-    /** Get the parent object. */
+    /**
+     * Get the parent object.
+     */
     BomAbstract* const getParent() const {
       return _parent;
     }
     
-    /** Get the cabin code (primary key). */
+    /**
+     * Get the cabin code (primary key).
+     */
     const CabinCode_T& getCabinCode() const {
       return _key.getCabinCode();
     }
     
-    /** Get the map of children holders. */
+    /**
+     * Get the (segment-date, segment-cabin) key (board point, off
+     * point and cabin code).
+     *
+     * \note That method assumes that the parent object derives from
+     *       the SegmentDate class, as it needs to have access to the
+     *       describeKey() method.
+     */
+    const MapKey_T getFullerKey() const;
+
+    /**
+     * Get the map of children holders.
+     */
     const HolderMap_T& getHolderMap() const {
       return _holderMap;
     }

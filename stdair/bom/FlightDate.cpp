@@ -11,6 +11,7 @@
 // StdAir
 #include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/BomManager.hpp>
+#include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/LegDate.hpp>
 #include <stdair/bom/SegmentDate.hpp>
@@ -37,6 +38,14 @@ namespace stdair {
   FlightDate::~FlightDate() {
   }
   
+  // ////////////////////////////////////////////////////////////////////
+  const AirlineCode_T& FlightDate::getAirlineCode() const {
+    const Inventory* lInventory_ptr =
+      static_cast<const Inventory*> (getParent());
+    assert (lInventory_ptr != NULL);
+    return lInventory_ptr->getAirlineCode();
+  }
+
   // ////////////////////////////////////////////////////////////////////
   std::string FlightDate::toString() const {
     std::ostringstream oStr;

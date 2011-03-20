@@ -6,6 +6,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <iosfwd>
+#include <string>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>

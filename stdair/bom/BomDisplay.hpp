@@ -120,6 +120,17 @@ namespace stdair {
     static void csvBucketDisplay (std::ostream&, const FlightDate&);
 
     /**
+     * Display (dump in the underlying output log stream) the segment-class,
+     * without going recursively deeper in the BOM tree.
+     *
+     * @param std::ostream& Output stream in which the BOM tree should be
+     *        logged/dumped.
+     * @param const BookingClass& Root of the BOM tree to be displayed.
+     * @param const std::string& Leading string to be displayed.
+     */
+    static void csvBookingClassDisplay (std::ostream&, const BookingClass&,
+                                        const std::string& iLeadingString);
+    /**
      * Recursively display (dump in the underlying output log stream)
      * the segment-class level objects of the BOM tree.
      *

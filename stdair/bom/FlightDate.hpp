@@ -67,7 +67,18 @@ namespace stdair {
       return _key.getDepartureDate();
     }
 
-    /** Get the map of children holders. */
+    /**
+     * Get the airline code (key of the parent object).
+     *
+     * \note That method assumes that the parent object derives from
+     *       the Inventory class, as it needs to have access to the
+     *       getAirlineCode() method.
+     */
+    const AirlineCode_T& getAirlineCode() const;
+
+    /**
+     * Get the map of children holders.
+     */
     const HolderMap_T& getHolderMap() const {
       return _holderMap;
     }
