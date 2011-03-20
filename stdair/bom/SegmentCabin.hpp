@@ -13,6 +13,13 @@
 #include <stdair/bom/SegmentCabinKey.hpp>
 #include <stdair/bom/SegmentCabinTypes.hpp>
 
+/// Forward declarations
+namespace boost {
+  namespace serialization {
+    class access;
+  }
+}
+
 namespace stdair {
 
   /**
@@ -22,6 +29,7 @@ namespace stdair {
   class SegmentCabin : public BomAbstract {
     template <typename BOM> friend class FacBom;
     friend class FacBomManager;
+    friend class boost::serialization::access;
     
   public:
     // ////////// Type definitions ////////////
@@ -156,56 +164,98 @@ namespace stdair {
 
 
   public:
-    // /////////// Display support methods /////////
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
-    void toStream (std::ostream& ioOut) const {
-      ioOut << toString();
-    }
-
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
-    void fromStream (std::istream& ioIn) {
-    }
-
-    /** Get the serialised version of the Business Object. */
-    std::string toString() const;
-    
-    /** Get a string describing the  key. */
-    const std::string describeKey() const {
-      return _key.toString();
-    }
-
-
-  public:
     // /////////// Business methods //////////
     /** Register a sale. */
     void updateFromReservation (const NbOfBookings_T&);
 
     
+  public:
+    // /////////// Display support methods /////////
+    /**
+     * Dump a Business Object into an output stream.
+     *
+     * @param ostream& the output stream.
+     */
+    void toStream (std::ostream& ioOut) const {
+      ioOut << toString();
+    }
+
+    /**
+     * Read a Business Object from an input stream.
+     *
+     * @param istream& the input stream.
+     */
+    void fromStream (std::istream& ioIn) {
+    }
+
+    /**
+     * Get the serialised version of the Business Object.
+     */
+    std::string toString() const;
+    
+    /**
+     * Get a string describing the  key.
+     */
+    const std::string describeKey() const {
+      return _key.toString();
+    }
+
+    
+  public:
+    // /////////// (Boost) Serialisation support methods /////////
+    /**
+     * Serialisation.
+     */
+    template<class Archive>
+    void serialize (Archive& ar, const unsigned int iFileVersion);
+
+  private:
+    /**
+     * Serialisation helper (allows to be sure the template method is
+     * instantiated).
+     */
+    void serialisationImplementation();
+
+
   protected:
     // ////////// Constructors and destructors /////////
-    /** Constructor. */
+    /**
+     * Constructor.
+     */
     SegmentCabin (const Key_T&);
-    /** Destructor. */
+
+    /**
+     * Destructor.
+     */
     virtual ~SegmentCabin();
 
   private:
-    /** Default constructor. */
+    /**
+     * Default constructor.
+     */
     SegmentCabin();
-    /** Default copy constructor. */
+
+    /**
+     * Copy constructor.
+     */
     SegmentCabin (const SegmentCabin&);
 
 
   protected:
     // ////////// Attributes /////////
-    /** Primary key (cabin code). */
+    /**
+     * Primary key (cabin code).
+     */
     Key_T _key;
 
-    /** Pointer on the parent class (SegmentDate). */
+    /**
+     * Pointer on the parent class (SegmentDate).
+     */
     BomAbstract* _parent;
     
-    /** Map holding the children (FareFamily or BookingClass objects). */
+    /**
+     * Map holding the children (FareFamily or BookingClass objects).
+     */
     HolderMap_T _holderMap;
 
     /** Capacity of the cabin. */

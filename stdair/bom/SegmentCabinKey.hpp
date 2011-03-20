@@ -53,7 +53,7 @@ namespace stdair {
   public:
     // /////////// Getters //////////
     /** Get the cabin code. */
-    const CabinCode_T& getCabinCode () const {
+    const CabinCode_T& getCabinCode() const {
       return _cabinCode;
     }
 
