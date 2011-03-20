@@ -228,29 +228,17 @@ namespace stdair {
                                    const ClassCode_T& iClassCode) {
     BookingClass* oBookingClass_ptr = NULL;
 
-    SegmentDate* lSegmentDate_ptr =
-      retrieveSegmentDateFromLongKey (iInventory, iFullKeyStr);
-      
+    SegmentDate* lSegmentDate_ptr = retrieveSegmentDateFromLongKey (iInventory,
+                                                                    iFullKeyStr);
+
     if (lSegmentDate_ptr == NULL) {
       return oBookingClass_ptr;
     }
     assert (lSegmentDate_ptr != NULL);
 
-    // Browse the segment-cabins
-    const SegmentCabinList_T& lSegmentCabinList =
-      BomManager::getList<SegmentCabin> (*lSegmentDate_ptr);
-    for (SegmentCabinList_T::const_iterator itCabin =
-           lSegmentCabinList.begin();
-         itCabin != lSegmentCabinList.end(); ++itCabin) {
-      SegmentCabin* lSegmentCabin_ptr = *itCabin;
-      assert (lSegmentCabin_ptr != NULL);
-
-      oBookingClass_ptr =
-        BomManager::getObjectPtr<BookingClass> (*lSegmentCabin_ptr, iClassCode);
-      if (oBookingClass_ptr != NULL) {
-        break;
-      }
-    }
+    // 
+    oBookingClass_ptr =
+      BomManager::getObjectPtr<BookingClass> (*lSegmentDate_ptr, iClassCode);
 
     return oBookingClass_ptr;
   }

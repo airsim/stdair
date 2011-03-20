@@ -56,7 +56,7 @@ namespace stdair {
     }
     
     /** Get the boarding point (part of the primary key). */
-    const AirportCode_T& getBoardingPoint () const {
+    const AirportCode_T& getBoardingPoint() const {
       return _key.getBoardingPoint();
     }
 

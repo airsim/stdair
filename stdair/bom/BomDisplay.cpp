@@ -122,8 +122,10 @@ namespace stdair {
     /**
      * Flight-date level (only)
      */
+    const AirlineCode_T& lAirlineCode = iFlightDate.getAirlineCode();
     oStream << "******************************************" << std::endl;
-    oStream << "FlightDate: " << iFlightDate.describeKey()  << std::endl;
+    oStream << "FlightDate: " << lAirlineCode << iFlightDate.describeKey()
+            << std::endl;
     oStream << "******************************************" << std::endl;
 
     //
@@ -156,11 +158,12 @@ namespace stdair {
     oStream << "******************************************" << std::endl;
     oStream << "Leg-Dates:" << std::endl
             << "----------" << std::endl;
-    oStream << "FlightNb (FlightDate), Leg, BoardDate, BoardTime, "
+    oStream << "Flight, Leg, BoardDate, BoardTime, "
             << "OffDate, OffTime, Date Offset, Time Offset, Elapsed, "
             << "Distance, Capacity, " << std::endl;
 
     // Retrieve the key of the flight-date
+    const AirlineCode_T& lAirlineCode = iFlightDate.getAirlineCode();
     const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
     const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
 
@@ -177,7 +180,9 @@ namespace stdair {
       const LegDate* lLD_ptr = *itLD;
       assert (lLD_ptr != NULL);
       
-      oStream << lFlightNumber << " (" << lFlightDateDate << "), ";
+      oStream << lAirlineCode << lFlightNumber << " "
+              << lFlightDateDate << ", ";
+
       oStream << lLD_ptr->getBoardingPoint() << "-"
               << lLD_ptr->getOffPoint() << ", "
               << lLD_ptr->getBoardingDate() << ", "
@@ -218,12 +223,13 @@ namespace stdair {
     oStream << "******************************************" << std::endl;
     oStream << "LegCabins:" << std::endl
             << "----------" << std::endl;
-    oStream << "FlightNb (FlightDate), Leg, Cabin, "
+    oStream << "Flight, Leg, Cabin, "
             << "OffedCAP, PhyCAP, RgdADJ, AU, UPR, SS, Staff, WL, Group, "
             << "CommSpace, AvPool, Avl, NAV, GAV, ACP, ETB, BidPrice, "
             << std::endl;
     
     // Retrieve the key of the flight-date
+    const AirlineCode_T& lAirlineCode = iFlightDate.getAirlineCode();
     const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
     const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
     
@@ -241,6 +247,7 @@ namespace stdair {
       assert (lLD_ptr != NULL);
 
       // Retrieve the key of the leg-date, as well as its off point
+      const Date_T& lLegDateDate = lLD_ptr->getBoardingDate();
       const AirportCode_T& lBoardPoint = lLD_ptr->getBoardingPoint();
       const AirportCode_T& lOffPoint = lLD_ptr->getOffPoint();
 
@@ -252,9 +259,12 @@ namespace stdair {
         const LegCabin* lLC_ptr = *itLC;
         assert (lLC_ptr != NULL);
       
-        oStream << lFlightNumber << " (" << lFlightDateDate << "), ";
-        oStream << lBoardPoint << "-" << lOffPoint << ", ";
-          
+        oStream << lAirlineCode << lFlightNumber << " "
+                << lFlightDateDate << ", ";
+
+        oStream << lBoardPoint << "-" << lOffPoint
+                << " " << lLegDateDate << ", ";
+
         oStream << lLC_ptr->getCabinCode() << ", ";
 
         oStream << lLC_ptr->getOfferedCapacity() << ", "
@@ -289,7 +299,6 @@ namespace stdair {
     /**
      * Segment-cabin level (only)
      */
-
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -305,12 +314,13 @@ namespace stdair {
     oStream << "******************************************" << std::endl;
     oStream << "SegmentCabins:" << std::endl
             << "--------------" << std::endl;
-    oStream << "Segment, Cabin, FF, Bkgs, MIN, UPR, "
+    oStream << "Flight, Segment, Cabin, FF, Bkgs, MIN, UPR, "
             << "CommSpace, AvPool, BP, " << std::endl;
     
     // Retrieve the key of the flight-date
-    // const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
-    // const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
+    const AirlineCode_T& lAirlineCode = iFlightDate.getAirlineCode();
+    const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
+    const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
 
     // Check whether there are SegmentDate objects
     if (BomManager::hasList<SegmentDate> (iFlightDate) == false) {
@@ -326,6 +336,7 @@ namespace stdair {
       assert (lSD_ptr != NULL);
       
       // Retrieve the key of the segment-date, as well as its dates
+      const Date_T& lSegmentDateDate = lSD_ptr->getBoardingDate();
       const AirportCode_T& lBoardPoint = lSD_ptr->getBoardingPoint();
       const AirportCode_T& lOffPoint = lSD_ptr->getOffPoint();
 
@@ -352,10 +363,15 @@ namespace stdair {
              itFF != lFareFamilyList.end(); ++itFF) {
           const FareFamily* lFF_ptr = *itFF;
           assert (lFF_ptr != NULL);
-          
-          // Display the fare family
-          oStream << lBoardPoint << "-" << lOffPoint << ", ";
+
+          oStream << lAirlineCode << lFlightNumber << " "
+                  << lFlightDateDate << ", ";
+
+          oStream << lBoardPoint << "-" << lOffPoint << " "
+                  << lSegmentDateDate << ", ";
+
           oStream << lCabinCode << ", " << lFF_ptr->getFamilyCode() << ", ";
+
           oStream << lSC_ptr->getBookingCounter() << ", "
                   << lSC_ptr->getMIN() << ", "
                   << lSC_ptr->getUPR() << ", "
@@ -381,12 +397,13 @@ namespace stdair {
     oStream << "******************************************" << std::endl;
     oStream << "Buckets:" << std::endl
             << "--------" << std::endl;
-    oStream << "Leg, Cabin, Yield, AU/SI, SS, AV, "
+    oStream << "Flight, Leg, Cabin, Yield, AU/SI, SS, AV, "
             << std::endl;
 
     // Retrieve the key of the flight-date
-    // const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
-    // const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
+    const AirlineCode_T& lAirlineCode = iFlightDate.getAirlineCode();
+    const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
+    const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
 
     // Check whether there are LegDate objects
     if (BomManager::hasList<LegDate> (iFlightDate) == false) {
@@ -402,6 +419,7 @@ namespace stdair {
       assert (lLD_ptr != NULL);
       
       // Retrieve the key of the leg-date, as well as its off point
+      const Date_T& lLegDateDate = lLD_ptr->getBoardingDate();
       const AirportCode_T& lBoardPoint = lLD_ptr->getBoardingPoint();
       const AirportCode_T& lOffPoint = lLD_ptr->getOffPoint();
 
@@ -428,8 +446,11 @@ namespace stdair {
           const Bucket* lBucket_ptr = *itBuck;
           assert (lBucket_ptr != NULL);
 
-          oStream << lBoardPoint << "-" << lOffPoint << ", "
-                  << lCabinCode << ", ";
+          oStream << lAirlineCode << lFlightNumber << " "
+                  << lFlightDateDate << ", ";
+
+          oStream << lBoardPoint << "-" << lOffPoint << " "
+                  << lLegDateDate << ", " << lCabinCode << ", ";
 
           oStream << lBucket_ptr->getYieldRangeUpperValue() << ", "
                   << lBucket_ptr->getSeatIndex() << ", "
@@ -444,29 +465,61 @@ namespace stdair {
     
   // ////////////////////////////////////////////////////////////////////
   void BomDisplay::csvBookingClassDisplay (std::ostream& oStream,
-                                           const FlightDate& iFlightDate) {
+                                           const BookingClass& iBookingClass,
+                                           const std::string& iLeadingString) {
     // Save the formatting flags for the given STL output stream
     FlagSaver flagSaver (oStream);
 
     /**
      * Booking-class level (only)
+     *
+     * See the method below (csvBookingClassDisplay() at FlightDate level)
+     * for the details of the header.
      */
+    oStream << iLeadingString << iBookingClass.getClassCode();
+
+    if (iBookingClass.getSubclassCode() == 0) {
+      oStream << ", ";
+    } else {
+      oStream << iBookingClass.getSubclassCode() << ", ";
+    }
+    oStream << iBookingClass.getAuthorizationLevel() << " ("
+            << iBookingClass.getProtection() << "), "
+            << iBookingClass.getNegotiatedSpace() << ", "
+            << iBookingClass.getNoShowPercentage() << ", "
+            << iBookingClass.getOverbookingPercentage() << ", "
+            << iBookingClass.getNbOfBookings() << ", "
+            << iBookingClass.getNbOfGroupBookings() << " ("
+            << iBookingClass.getNbOfPendingGroupBookings() << "), "
+            << iBookingClass.getNbOfStaffBookings() << ", "
+            << iBookingClass.getNbOfWLBookings() << ", "
+            << iBookingClass.getETB() << ", "
+            << iBookingClass.getNetClassAvailability() << ", "
+            << iBookingClass.getNetRevenueAvailability() << ", "
+            << iBookingClass.getSegmentAvailability() << ", "
+            << std::endl;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::csvBookingClassDisplay (std::ostream& oStream,
+                                           const FlightDate& iFlightDate) {
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    // Headers
     oStream << "******************************************" << std::endl;
     oStream << "Subclasses:" << std::endl
             << "-----------" << std::endl;
-    oStream << "Segment, Cabin, Subclass, MIN, N, MAX, N, "
-            << "Bkgs, WL-Bkgs, "
-            << "OB%, SEs, NewSEs, "
-            << "UPR, CUPR, CnUPR, tmpUPR, FctdBkgs, "
-            << "MNO, NewMNO, CMNO, SEChange, "
-            << "GrUpMAX, RmgMAX, "
-            << "ClassAvl, RevAvl, SegAvl, FLDYield, SDRYield, FavAvl, "
-            << "Low-NL, High-NL, ProfName, ProfType, NoShow, NegoSeats, "
+    oStream << "Flight, Segment, Cabin, Subclass, MIN/AU (Prot), "
+            << "Nego, NS%, OB%, "
+            << "Bkgs, GrpBks (pdg), StfBkgs, WLBkgs, ETB, "
+            << "ClassAvl, RevAvl, SegAvl, "
             << std::endl;
-    
+
     // Retrieve the key of the flight-date
-    // const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
-    // const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
+    const AirlineCode_T& lAirlineCode = iFlightDate.getAirlineCode();
+    const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
+    const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
     
     // Check whether there are SegmentDate objects
     if (BomManager::hasList<SegmentDate> (iFlightDate) == false) {
@@ -482,6 +535,7 @@ namespace stdair {
       assert (lSD_ptr != NULL);
       
       // Retrieve the key of the segment-date, as well as its dates
+      const Date_T& lSegmentDateDate = lSD_ptr->getBoardingDate();
       const AirportCode_T& lBoardPoint = lSD_ptr->getBoardingPoint();
       const AirportCode_T& lOffPoint = lSD_ptr->getOffPoint();
       
@@ -496,55 +550,67 @@ namespace stdair {
         // Retrieve the key of the segment-cabin
         const CabinCode_T& lCabinCode = lSC_ptr->getCabinCode();
         
-        // Check whether there are SegmentDate objects
-        if (BomManager::hasList<FareFamily> (*lSC_ptr) == false) {
+        // Build the leading string to be displayed
+        std::ostringstream oLeadingStr;
+        oLeadingStr << lAirlineCode << lFlightNumber << " "
+                    << lFlightDateDate << ", "
+                    << lBoardPoint << "-" << lOffPoint << " "
+                    << lSegmentDateDate << ", "
+                    << lCabinCode << ", ";
+
+        // Default Fare Family code, when there are no FF
+        FamilyCode_T lFamilyCode ("NoFF");
+
+        // Check whether there are FareFamily objects
+        if (BomManager::hasList<FareFamily> (*lSC_ptr) == true) {
+
+          // Browse the fare families
+          const FareFamilyList_T& lFareFamilyList =
+            BomManager::getList<FareFamily> (*lSC_ptr);
+          for (FareFamilyList_T::const_iterator itFF = lFareFamilyList.begin();
+               itFF != lFareFamilyList.end(); ++itFF) {
+            const FareFamily* lFF_ptr = *itFF;
+            assert (lFF_ptr != NULL);
+
+            // Retrieve the key of the segment-cabin
+            lFamilyCode = lFF_ptr->getFamilyCode();
+
+            // Browse the booking-classes
+            const BookingClassList_T& lBookingClassList =
+              BomManager::getList<BookingClass> (*lFF_ptr);
+            for (BookingClassList_T::const_iterator itBC =
+                   lBookingClassList.begin();
+                 itBC != lBookingClassList.end(); ++itBC) {
+              const BookingClass* lBC_ptr = *itBC;
+              assert (lBC_ptr != NULL);
+
+              // Complete the leading string to be displayed
+              oLeadingStr << lFamilyCode << ", ";
+
+              //
+              csvBookingClassDisplay (oStream, *lBC_ptr, oLeadingStr.str());
+            }
+          }
+
           return;
         }
-    
-        // Browse the fare families
-        const FareFamilyList_T& lFareFamilyList =
-          BomManager::getList<FareFamily> (*lSC_ptr);
-        for (FareFamilyList_T::const_iterator itFF = lFareFamilyList.begin();
-             itFF != lFareFamilyList.end(); ++itFF) {
-          const FareFamily* lFF_ptr = *itFF;
-          assert (lFF_ptr != NULL);
-          
-          // Retrieve the key of the segment-cabin
-          const FamilyCode_T& lFamilyCode = lFF_ptr->getFamilyCode();
-        
-          // Browse the booking-classes
-          const BookingClassList_T& lBookingClassList =
-            BomManager::getList<BookingClass> (*lFF_ptr);
-          for (BookingClassList_T::const_iterator itBC =
-                 lBookingClassList.begin();
-               itBC != lBookingClassList.end(); ++itBC) {
-            const BookingClass* lBC_ptr = *itBC;
-            assert (lBC_ptr != NULL);
-            
-            oStream << lBoardPoint << "-" << lOffPoint << ", ";
-            oStream << lCabinCode << ", " << lFamilyCode << ", "
-                    << lBC_ptr->getClassCode();
-            if (lBC_ptr->getSubclassCode() != 0) {
-              oStream << ", ";
-            } else {
-              oStream << lBC_ptr->getSubclassCode() << ", ";
-            }
-            oStream << lBC_ptr->getAuthorizationLevel() << " ("
-                    << lBC_ptr->getProtection() << "), "
-                    << lBC_ptr->getNegotiatedSpace() << ", "
-                    << lBC_ptr->getNoShowPercentage() << ", "
-                    << lBC_ptr->getOverbookingPercentage() << ", "
-                    << lBC_ptr->getNbOfBookings() << ", "
-                    << lBC_ptr->getNbOfGroupBookings() << ", "
-                    << lBC_ptr->getNbOfPendingGroupBookings() << ", "
-                    << lBC_ptr->getNbOfStaffBookings() << ", "
-                    << lBC_ptr->getNbOfWLBookings() << ", "
-                    << lBC_ptr->getETB() << ", "
-                    << lBC_ptr->getNetClassAvailability() << ", "
-                    << lBC_ptr->getSegmentAvailability() << ", "
-                    << lBC_ptr->getNetRevenueAvailability() << ", "
-                    << std::endl;
-          }
+        assert (BomManager::hasList<FareFamily> (*lSC_ptr) == false);
+
+        // The fare family code is a fake one ('NoFF'), and therefore
+        // does not vary
+        oLeadingStr << lFamilyCode << ", ";
+
+        // Browse the booking-classes, directly from the segment-cabin object
+        const BookingClassList_T& lBookingClassList =
+          BomManager::getList<BookingClass> (*lSC_ptr);
+        for (BookingClassList_T::const_iterator itBC =
+               lBookingClassList.begin();
+             itBC != lBookingClassList.end(); ++itBC) {
+          const BookingClass* lBC_ptr = *itBC;
+          assert (lBC_ptr != NULL);
+
+          //
+          csvBookingClassDisplay (oStream, *lBC_ptr, oLeadingStr.str());
         }
       }
     }

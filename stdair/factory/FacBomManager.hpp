@@ -129,23 +129,37 @@ namespace stdair {
   template <typename OBJECT1, typename OBJECT2> void FacBomManager::
   addToListAndMap (OBJECT1& ioObject1, OBJECT2& ioObject2, const MapKey_T& iKey){
     BomHolder<OBJECT2>& lBomHolder = instance().getBomHolder<OBJECT2>(ioObject1);
+
     const bool insertionSucceeded =
       lBomHolder._bomMap.insert (typename std::map<const MapKey_T, OBJECT2*>::
                                  value_type (iKey, &ioObject2)).second;
 
     if (insertionSucceeded == false) {
-      STDAIR_LOG_ERROR ("Cannot add the given object to the map: "
-                        << ioObject1.describeKey() << "; " << iKey);
-      STDAIR_LOG_DEBUG ("Map contain: ");
+      std::ostringstream oStr;
+      oStr << "Cannot add the given object (key: '" << iKey
+           << "') to the map of the object whose key is '"
+           << ioObject1.describeKey()
+           << "'. Indeed, that latter's map probably already contains that key. "
+           << "Following are the keys already held by the map '";
+
+      unsigned short idx = 0;
       for (typename std::map<const MapKey_T, OBJECT2*>::const_iterator iter =
              lBomHolder._bomMap.begin(); 
-           iter != lBomHolder._bomMap.end(); ++iter) {
+           iter != lBomHolder._bomMap.end(); ++iter, ++idx) {
         const OBJECT2* lCurrentObject_ptr = iter->second;
         assert (lCurrentObject_ptr != NULL);
-        STDAIR_LOG_DEBUG (lCurrentObject_ptr->describeKey() << "; ");
+
+        if (idx != 0) {
+          oStr << "; ";
+        }
+        oStr << lCurrentObject_ptr->describeKey();
       }
-      throw ObjectLinkingException ("");
+      oStr << "'";
+
+      STDAIR_LOG_ERROR (oStr.str());
+      throw ObjectLinkingException (oStr.str());
     }
+
     lBomHolder._bomList.push_back (&ioObject2);    
   }
 

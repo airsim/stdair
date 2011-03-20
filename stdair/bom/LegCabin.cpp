@@ -7,6 +7,9 @@
 // StdAir
 #include <stdair/basic/BasConst_BookingClass.hpp>
 #include <stdair/basic/BasConst_Inventory.hpp>
+#include <stdair/basic/BasConst_BomDisplay.hpp>
+#include <stdair/bom/BomManager.hpp>
+#include <stdair/bom/LegDate.hpp>
 #include <stdair/bom/LegCabin.hpp>
 
 namespace stdair {
@@ -37,6 +40,15 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   LegCabin::~LegCabin() {
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  const MapKey_T LegCabin::getFullerKey() const {
+    const LegDate& lLegDate = BomManager::getParent<LegDate> (*this);
+
+    const MapKey_T oFullKey =
+      lLegDate.describeKey() + DEFAULT_KEY_FLD_DELIMITER + getCabinCode();
+    return oFullKey;
   }
 
   // ////////////////////////////////////////////////////////////////////
