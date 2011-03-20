@@ -87,7 +87,6 @@ stdair_bom_h_sources = \
 stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/BomKeyManager.cpp \
 		$(top_srcdir)/stdair/bom/ParsedKey.cpp \
-		$(top_srcdir)/stdair/bom/BomManager.cpp \
 		$(top_srcdir)/stdair/bom/BomRetriever.cpp \
 		$(top_srcdir)/stdair/bom/BomArchive.cpp \
 		$(top_srcdir)/stdair/bom/BomDisplay.cpp \
