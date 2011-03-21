@@ -510,7 +510,7 @@ namespace stdair {
     oStream << "******************************************" << std::endl;
     oStream << "Subclasses:" << std::endl
             << "-----------" << std::endl;
-    oStream << "Flight, Segment, Cabin, Subclass, MIN/AU (Prot), "
+    oStream << "Flight, Segment, Cabin, FF, Subclass, MIN/AU (Prot), "
             << "Nego, NS%, OB%, "
             << "Bkgs, GrpBks (pdg), StfBkgs, WLBkgs, ETB, "
             << "ClassAvl, RevAvl, SegAvl, "
@@ -575,6 +575,9 @@ namespace stdair {
             // Retrieve the key of the segment-cabin
             lFamilyCode = lFF_ptr->getFamilyCode();
 
+            // Complete the leading string to be displayed
+            oLeadingStr << lFamilyCode << ", ";
+
             // Browse the booking-classes
             const BookingClassList_T& lBookingClassList =
               BomManager::getList<BookingClass> (*lFF_ptr);
@@ -583,9 +586,6 @@ namespace stdair {
                  itBC != lBookingClassList.end(); ++itBC) {
               const BookingClass* lBC_ptr = *itBC;
               assert (lBC_ptr != NULL);
-
-              // Complete the leading string to be displayed
-              oLeadingStr << lFamilyCode << ", ";
 
               //
               csvBookingClassDisplay (oStream, *lBC_ptr, oLeadingStr.str());
