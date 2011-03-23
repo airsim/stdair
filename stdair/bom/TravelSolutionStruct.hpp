@@ -39,6 +39,11 @@ namespace stdair {
       return _fareOptionList;
     }
 
+    /** Get the non-const list of fare options. */
+    FareOptionList_T& getFareOptionListRef() {
+      return _fareOptionList;
+    }
+
     /** Get the chosen fare option. */
     const FareOptionStruct& getChosenFareOption() const {
       assert (_chosenFareOption != NULL);
