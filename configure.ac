@@ -220,6 +220,7 @@ AC_CONFIG_FILES(
 	samples/RDS01/Makefile
 	test/Makefile
 	test/inheritance/Makefile
+	test/guillotine/Makefile
 	test/archi_intru/Makefile
 	test/archi_static_cast/Makefile
 	test/mpl/Makefile
