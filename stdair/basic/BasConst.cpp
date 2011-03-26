@@ -94,6 +94,9 @@ namespace stdair {
   /** Default distance value (kilometers). */
   const Distance_T DEFAULT_DISTANCE_VALUE (0);
 
+  /** Default closed class code. */
+  const ClassCode_T DEFAULT_CLOSED_CLASS_CODE ("CC");
+    
   /** Default number of bookings (with counted cancellation)
       for BookingClass. */
   const NbOfBookings_T DEFAULT_CLASS_NB_OF_BOOKINGS (0);
@@ -126,8 +129,11 @@ namespace stdair {
   /** Default commited space value for Leg cabins. */
   const BlockSpace_T DEFAULT_BLOCK_SPACE (0.0);
     
-  /** Default availability. */
-  const Availability_T DEFAULT_AVAILABILITY (0.0);
+  /** Default null availability (0.0). */
+  const Availability_T DEFAULT_NULL_AVAILABILITY (0.0);
+
+  /** Default availability (9.0). */
+  const Availability_T DEFAULT_AVAILABILITY (9.0);
 
   /** Maximal offered capacity in a cabin. */
   const Availability_T MAXIMAL_AVAILABILITY (9999.0);
@@ -161,9 +167,6 @@ namespace stdair {
   /** Default booking rate for OnD bookings over overall class bookings. */
   const BookingRatio_T DEFAULT_OND_BOOKING_RATE (0.0);
 
-  /** Default closed class code. */
-  const ClassCode_T DEFAULT_CLOSED_CLASS_CODE ("CC");
-    
   /** Default Fare value. */
   const Fare_T DEFAULT_FARE_VALUE (0.0);
 

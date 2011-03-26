@@ -11,16 +11,25 @@
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  FareOptionStruct::FareOptionStruct() : _fare (DEFAULT_FARE_VALUE) {
+  FareOptionStruct::FareOptionStruct()
+    : _fare (DEFAULT_FARE_VALUE), _avl (DEFAULT_AVAILABILITY) {
   }
   
+  // ////////////////////////////////////////////////////////////////////
+  FareOptionStruct::FareOptionStruct (const FareOptionStruct& iFO)
+    : _classPath (iFO._classPath),
+      _fare (iFO._fare), _avl (iFO._avl), _changeFee (iFO._changeFee),
+      _nonRefundable (iFO._nonRefundable), _saturdayStay (iFO._saturdayStay) {
+  }
+
   // ////////////////////////////////////////////////////////////////////
   FareOptionStruct::FareOptionStruct (const std::string& iClassPath,
                                       const Fare_T& iFare,
                                       const ChangeFees_T& iChangeFee,
                                       const NonRefundable_T& iNonRefundable,
                                       const SaturdayStay_T& iSaturdayNightStay)
-    : _fare (iFare), _changeFee (iChangeFee), _nonRefundable (iNonRefundable),
+    : _fare (iFare), _avl (DEFAULT_AVAILABILITY),
+      _changeFee (iChangeFee), _nonRefundable (iNonRefundable),
       _saturdayStay (iSaturdayNightStay) {
     _classPath.push_back (iClassPath);
   }
