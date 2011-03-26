@@ -13,45 +13,49 @@
 namespace stdair {
 
   // //////// (Segment-)Class-related BOM ///////
-  /** Default distance value (kilometers). */
+  /** Default distance value, in kilometers (0). */
   extern const Distance_T DEFAULT_DISTANCE_VALUE;
 
-  /** Default closed class code. */
+  /** Default closed class code ("CC"). */
   extern const ClassCode_T DEFAULT_CLOSED_CLASS_CODE;
 
   /** Default number of bookings (with counted cancellation)
-      for BookingClass. */
+      for BookingClass (0). */
   extern const NbOfBookings_T DEFAULT_CLASS_NB_OF_BOOKINGS;
 
   /** Default number of bookings (without cancellation)
-      for BookingClass. */
+      for BookingClass (0). */
   extern const NbOfBookings_T DEFAULT_CLASS_TOTAL_NB_OF_BOOKINGS;
 
-  /** Default unconstrained demand for BookingClass. */
+  /** Default unconstrained demand for BookingClass (0). */
   extern const NbOfBookings_T DEFAULT_CLASS_UNCONSTRAINED_DEMAND;
 
-  /** Default remaining future demand mean for BookingClass. */
+  /** Default remaining future demand mean for BookingClass (0). */
   extern const NbOfBookings_T DEFAULT_CLASS_REMAINING_DEMAND_MEAN;
 
-  /** Default remaining futre demand standard deviation for BookingClass. */
+  /** Default remaining futre demand standard deviation for
+      BookingClass (0). */
   extern const NbOfBookings_T DEFAULT_CLASS_REMAINING_DEMAND_STANDARD_DEVIATION;
 
-  /** Default number of cancellations for BookingClass. */
+  /** Default number of cancellations for BookingClass (0). */
   extern const NbOfCancellations_T DEFAULT_CLASS_NB_OF_CANCELLATIONS;
 
-  /** Default number of no-shows for BookingClass. */
+  /** Default number of no-shows for BookingClass (0). */
   extern const NbOfNoShows_T DEFAULT_CLASS_NB_OF_NOSHOWS;
 
-  /** Default cabin capacity for Leg cabins. */
+  /** Default cabin capacity for Leg cabins (0.0). */
   extern const CabinCapacity_T DEFAULT_CABIN_CAPACITY;
 
-  /** Default commited space value for Leg cabins. */
+  /** Default commited space value for Leg cabins (0.0). */
   extern const CommittedSpace_T DEFAULT_COMMITTED_SPACE;
 
-  /** Default commited space value for Leg cabins. */
+  /** Default commited space value for Leg cabins (0.0). */
   extern const BlockSpace_T DEFAULT_BLOCK_SPACE;
     
-  /** Default availability. */
+  /** Default null availability (0.0). */
+  extern const Availability_T DEFAULT_NULL_AVAILABILITY;
+
+  /** Default availability (9.0). */
   extern const Availability_T DEFAULT_AVAILABILITY;
 
   /** Default boolean for censorship flag given the status of 

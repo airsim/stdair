@@ -124,6 +124,11 @@ namespace stdair {
                       const NonRefundable_T&, const SaturdayStay_T&);
 
     /**
+     * Copy constructor.
+     */
+    FareOptionStruct (const FareOptionStruct&);
+
+    /**
      * Destructor.
      */
     ~FareOptionStruct();
