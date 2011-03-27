@@ -29,7 +29,7 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   ProgressStatus::ProgressStatus (const Count_T& iActualNb)
     : _currentNb (DEFAULT_PROGRESS_STATUS),
-      _expectedNb (iActualNb), _actualNb (iActualNb) {
+      _expectedNb (iActualNb), _actualNb (DEFAULT_PROGRESS_STATUS) {
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -49,6 +49,7 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   void ProgressStatus::reset() {
     _currentNb = DEFAULT_PROGRESS_STATUS;
+    _actualNb = DEFAULT_PROGRESS_STATUS;
   }
 
   // //////////////////////////////////////////////////////////////////////

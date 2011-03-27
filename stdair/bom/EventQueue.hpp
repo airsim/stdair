@@ -110,18 +110,38 @@ namespace stdair {
       return _progressStatus.getActualNb();
     }
 
-    /** Get the overall progress status (for the whole event queue). */
-    const ProgressStatus& getStatus (const EventType::EN_EventType&) const;
+    /**
+     * Get the progress status for the given event type (e.g., booking
+     * request, optimisation notification, schedule change, break point).
+     */
+    ProgressStatus getStatus (const EventType::EN_EventType&) const;
 
-    /** Get the current number of events (for the whole event queue). */
+    /** Get the current number of events for the given event type. */
     const Count_T& getCurrentNbOfEvents (const EventType::EN_EventType&) const;
 
-    /** Get the expected total number of events (for the whole event queue). */
+    /** Get the expected total number of events for the given event type. */
     const Count_T& getExpectedTotalNbOfEvents (const EventType::EN_EventType&) const;
 
-    /** Get the actual total number of events (for the whole event queue). */
+    /** Get the actual total number of events for the given event type. */
     const Count_T& getActualTotalNbOfEvents (const EventType::EN_EventType&) const;
 
+    /**
+     * Retrieve the status for a given event content key (e.g.,
+     * booking request key, optimisation notification key).
+     *
+     * The status is composed of, for the given event content type:
+     * <ul>
+     *   <li>the current number of events (already generated),</li>
+     *   <li>the total number of events (to be generated).</li>
+     * </ul>
+     * <br>Normally, that method has not to be used directly, as
+     * EventStruct::getStatus() gives the same information, just after
+     * a call to EventQueue::popEvent().
+     */
+    ProgressStatus getStatus (const EventContentKey_T&) const;
+
+
+  public:
     // /////////// Setters ///////////////
     /** Set/update the progress status. */
     void setStatus (const ProgressStatus& iProgressStatus) {
@@ -154,34 +174,59 @@ namespace stdair {
       _progressStatus.setActualNb (iActualTotalNbOfEvents);
     }
 
+    /**
+     * Set the progress status for the given event type (e.g., booking
+     * request, optimisation notification, schedule change, break point).
+     */
+    void setStatus (const EventType::EN_EventType& iType,
+                    const ProgressStatus& iProgressStatus);
+
+    /**
+     * Set the status for a given event content key (e.g.,
+     * booking request key, optimisation notification key).
+     */
+    void setStatus (const EventContentKey_T& iEventContentKey,
+                    const ProgressStatus& iProgressStatus);
+
 
   public:
     // /////////// Display support methods /////////
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object into an output stream.
+     *
+     * @param ostream& the output stream.
+     */
     void toStream (std::ostream& ioOut) const {
       ioOut << toString();
     }
 
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object from an input stream.
+     *
+     * @param istream& the input stream.
+     */
     void fromStream (std::istream& ioIn) {
     }
 
-    /** Get the serialised version of the Business Object. */
+    /**
+     * Get the serialised version of the Business Object.
+     */
     std::string toString() const;
     
-    /** Get a string describing the  key. */
+    /**
+     * Get a string describing the  key.
+     */
     const std::string describeKey() const {
       return _key.toString();
     }
     
     /*
-     * @brief Display the full content of the event queue, with all
-     * its demand streams.
-     * <br>That method can be very consuming (in time, CPU and
-     * memory) when there are a lot of demand streams (e.g., several
-     * hundreds of thousands). Call it only for debug purposes.
+     * Display the full content of the event queue, with all its
+     * demand streams.
+     *
+     * That method can be very consuming (in time, CPU and memory)
+     * when there are a lot of demand streams (e.g., several hundreds
+     * of thousands). Call it only for debug purposes.
     */
     std::string display() const;
     
@@ -211,26 +256,30 @@ namespace stdair {
 
     /**
      * Add event.
-     * <br>If there already is an event with the same date-time, move
-     * the given event one nanosecond forward, and retry the insertion
+     *
+     * If there already is an event with the same date-time, move the
+     * given event one nanosecond forward, and retry the insertion
      * until it succeeds.
-     * <br>That method:
+     *
+     * That method:
      * <ul>
      *   <li>first adds the event structure in the dedicated list,</li>
      *   <li>then retrieves the corresponding demand stream,</li>
      *   <li>and update accordingly the corresponding progress
      *     statuses.</li>
      * </ul>
+     *
      * @param stdair::EventStruct& The reference on EventStruct is not
-     *   constant, because the EventStruct object can be altered: its
-     *   date-time stamp can be changed accordingly to the location
-     *   where it has been inserted in the event queue.
+     *        constant, because the EventStruct object can be altered:
+     *        its date-time stamp can be changed accordingly to the
+     *        location where it has been inserted in the event queue.
      */
     bool addEvent (EventStruct&);
 
     /**
      * States whether the event queue has reached the end.
-     * <br>For now, that method states whether the event queue is empty.
+     *
+     * For now, that method states whether the event queue is empty.
      */
     bool isQueueDone() const;
 
@@ -252,7 +301,9 @@ namespace stdair {
                     const NbOfRequests_T& iExpectedTotalNbOfEvents);
 
     /**
-     * Set/update the progress status for the corresponding event type.
+     * Set/update the progress status for the corresponding event type
+     * (e.g., booking request, optimisation notification, schedule
+     * change, break point).
      *
      * If there is no ProgressStatus object for that event type yet,
      * one is inserted. Otherwise, the ProgressStatus object is updated.
@@ -261,8 +312,8 @@ namespace stdair {
                        const ProgressStatus& iProgressStatus);
 
     /**
-     * Update the progress statuses for the given event type (e.g.,
-     * booking request, optimistion notification).
+     * Update the progress statuses for the given event type (e.g., booking
+     * request, optimisation notification, schedule change, break point).
      *
      * The progress status is actually a pair of counters:
      * <ul>
@@ -278,7 +329,7 @@ namespace stdair {
 
     /**
      * Update the progress statuses for the given event content key
-     * (e.g., demand stream, DCP rule).
+     * (e.g., booking request key, optimisation notification key).
      *
      * The progress status is actually a pair of counters:
      * <ul>
@@ -318,21 +369,6 @@ namespace stdair {
      */
     ProgressPercentage_T calculateProgress(const EventType::EN_EventType&) const;
 
-    /**
-     * Retrieve the status for a given event content type (e.g.,
-     * demand stream, DCP rule).
-     *
-     * The status is composed of, for the given event content type:
-     * <ul>
-     *   <li>the current number of events (already generated),</li>
-     *   <li>the total number of events (to be generated).</li>
-     * </ul>
-     * <br>Normally, that method has not to be used directly, as
-     * EventStruct::getStatus() gives the same information, just after
-     * a call to EventQueue::popEvent().
-     */
-    ProgressStatus getStatus (const EventContentKey_T&) const;
-
 
   public:
     // ////////// Debug methods /////////
@@ -369,7 +405,9 @@ namespace stdair {
     BomAbstract* _parent;
 
     /**
-     * Map holding the children (e.g., DemandStream objects, DCPRule objects).
+     * Map holding the children (e.g., DemandStream objects for
+     * booking requests, DCPRule objects for optimisation
+     * notifications).
      */
     HolderMap_T _holderMap;
 
@@ -380,8 +418,8 @@ namespace stdair {
 
     /**
      * Status (current number of events, total expected and actual
-     * number of events) for each content key (e.g., demand stream
-     * key, DCP rule key).
+     * number of events) for each content key (e.g., booking request
+     * key, optimisation notification key).
      */
     NbOfEventsByContentKeyMap_T _nbOfEvents;
     
@@ -391,7 +429,9 @@ namespace stdair {
     ProgressStatus _progressStatus;
 
     /**
-     * Counters holding the overall progress status, for each event type.
+     * Counters holding the overall progress status, for each event
+     * type (e.g., booking request, optimisation notification,
+     * schedule change, break point).
      */
     ProgressStatusMap_T _progressStatusMap;
   };
