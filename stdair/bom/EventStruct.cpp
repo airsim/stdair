@@ -103,19 +103,22 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string EventStruct::describe() const {
     std::ostringstream oStr;
-    oStr << "[" << EventType (_eventType);
-
-    oStr << "][" << _overallProgressStatus.getCurrentNb()
-         << "/{" << _overallProgressStatus.getExpectedNb()
-         << "," << _overallProgressStatus.getActualNb();
-
-    oStr << "}][" << _typeSpecificProgressStatus.getCurrentNb()
+    oStr << "[" << EventType (_eventType) << "]"
+         << "[" << _typeSpecificProgressStatus.getCurrentNb()
          << "/{" << _typeSpecificProgressStatus.getExpectedNb()
-         << "," << _typeSpecificProgressStatus.getActualNb();
+         << "," << _typeSpecificProgressStatus.getActualNb()
+         << "}]";
 
-    oStr << "}][" << _keySpecificProgressStatus.getCurrentNb()
+    oStr << "-[\"" << _eventContentKey << "\"]"
+         << "[" << _keySpecificProgressStatus.getCurrentNb()
          << "/{" << _keySpecificProgressStatus.getExpectedNb()
          << "," << _keySpecificProgressStatus.getActualNb()
+         << "}]";
+
+    oStr << "-[Overall]"
+         << "[" << _overallProgressStatus.getCurrentNb()
+         << "/{" << _overallProgressStatus.getExpectedNb()
+         << "," << _overallProgressStatus.getActualNb()
          << "}] ";
 
     //
