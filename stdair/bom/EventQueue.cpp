@@ -147,10 +147,13 @@ namespace stdair {
     ProgressStatusMap_T::const_iterator itProgressStatus =
       _progressStatusMap.find (iType);
     if (itProgressStatus == _progressStatusMap.end()) {
+      std::ostringstream oStr;
+      oStr << "No ProgressStatus structure can be retrieved in the EventQueue '"
+           << display() << "'. The EventQueue should be initialised, e.g., by "
+           << "calling a buildSampleBom() method.";
       //
-      STDAIR_LOG_ERROR ("No ProgressStatus structure can be retrieved in the "
-                        << "EventQueue: " << display());
-      assert (false);
+      STDAIR_LOG_ERROR (oStr.str());
+      throw EventQueueException (oStr.str());
     }
     
     const ProgressStatus& lProgressStatus = itProgressStatus->second;
