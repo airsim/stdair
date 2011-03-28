@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 #include <map>
+// BOOST
+#include <boost/multi_array.hpp>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
@@ -123,6 +125,15 @@ namespace stdair {
   /** Define the vector of protection levels.
       <br> It is a vector of double. */
   typedef std::vector<double> ProtectionLevelVector_T;
+
+  /** Define a snapshot block. */
+  typedef boost::multi_array<double, 2> SnapshotBlock_T;
+  
+  /** Define the snapshot block number. */
+  typedef unsigned short BlockNumber_T;
+
+  /** Define the index type within a snapshot block. */
+  typedef unsigned short BlockIndex_T;
 
 }
 #endif // __STDAIR_STDAIR_INVENTORY_TYPES_HPP

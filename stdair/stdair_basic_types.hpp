@@ -29,6 +29,9 @@ namespace stdair {
   /** Define the type for flight numbers. */
   typedef unsigned short FlightNumber_T;
 
+  /** Define the type for guillotine numbers. */
+  typedef unsigned short GuillotineNumber_T;
+
   /** Define the cabin code (class of service, e.g., first, business,
       economy). */
   typedef std::string CabinCode_T;

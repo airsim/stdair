@@ -120,7 +120,7 @@ namespace stdair {
     }
 
     /** Retrive the Bid-Price Vector. */
-    BidPriceVector_T& getBidPriceVector() {
+    const BidPriceVector_T& getBidPriceVector() const {
       return _bidPriceVector;
     }
 
@@ -160,6 +160,11 @@ namespace stdair {
     /** Set the value of availability pool. */
     void setAvailabilityPool (const Availability_T& iAvailabilityPool) {
       _availabilityPool = iAvailabilityPool;
+    }
+
+    /** Set the Bid-Price Vector. */
+    void setBidPriceVector (const BidPriceVector_T& iBPV) {
+      _bidPriceVector = iBPV;
     }
 
 

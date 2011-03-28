@@ -67,6 +67,11 @@ namespace stdair {
       return _key.getDepartureDate();
     }
 
+    /** Get the guilltine block number. */
+    const GuillotineNumber_T& getGuillotineBlockNumbe() const {
+      return _guillotineNumber;
+    }
+
     /**
      * Get the airline code (key of the parent object).
      *
@@ -131,7 +136,12 @@ namespace stdair {
      */
     SegmentDate* getSegmentDate (const SegmentDateKey&) const;
 
-
+  public:
+    // /////////// Setters /////////////
+    void setGuillotineBlockNumber (const GuillotineNumber_T& iNumber) {
+      _guillotineNumber = iNumber;
+    }
+    
   public:
     // /////////// Display support methods /////////
     /**
@@ -220,6 +230,11 @@ namespace stdair {
      * Map holding the children (SegmentDate and LegDate objects).
      */
     HolderMap_T _holderMap;
+
+    /**
+     * The guillotine block number.
+     */
+    GuillotineNumber_T _guillotineNumber;
   };
 
 }
