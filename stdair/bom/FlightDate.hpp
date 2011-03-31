@@ -68,7 +68,7 @@ namespace stdair {
     }
 
     /** Get the guilltine block number. */
-    const GuillotineNumber_T& getGuillotineBlockNumbe() const {
+    const GuillotineNumber_T& getGuillotineBlockNumber() const {
       return _guillotineNumber;
     }
 
@@ -138,6 +138,7 @@ namespace stdair {
 
   public:
     // /////////// Setters /////////////
+    /** Set the guillotine block number. */
     void setGuillotineBlockNumber (const GuillotineNumber_T& iNumber) {
       _guillotineNumber = iNumber;
     }

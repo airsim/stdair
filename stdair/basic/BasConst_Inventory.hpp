@@ -80,5 +80,11 @@ namespace stdair {
   /** Default seat index (for a bucket and/or Bid-Price Vector slot)(e.g., 1). */
   extern const SeatIndex_T DEFAULT_SEAT_INDEX;
 
+  /** Default value type (within a guillotine block) for fare family. */
+  extern const std::string DEFAULT_FARE_FAMILY_VALUE_TYPE;
+
+  /** Default value type (within a guillotine block) for segment-cabin. */
+  extern const std::string DEFAULT_SEGMENT_CABIN_VALUE_TYPE;
+
 }
 #endif // __STDAIR_BAS_BASCONST_INVENTORY_HPP

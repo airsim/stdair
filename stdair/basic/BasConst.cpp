@@ -368,6 +368,13 @@ namespace stdair {
   /** Default seat index (for a bucket and/or Bid-Price Vector slot). */
   const SeatIndex_T DEFAULT_SEAT_INDEX (1);
 
+  /** Default value type (within a guillotine block) for fare family. */
+  const std::string DEFAULT_FARE_FAMILY_VALUE_TYPE ("FF");
+
+  /** Default value type (within a guillotine block) for segment-cabin. */
+  const std::string DEFAULT_SEGMENT_CABIN_VALUE_TYPE ("SC");
+
+
 
   // ////////// Key and display related /////////////
   /** Default delimiter for string display (e.g delimiter for inventory key
