@@ -86,7 +86,10 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/DatePeriodTypes.hpp \
 		$(top_srcdir)/stdair/bom/TimePeriod.hpp \
 		$(top_srcdir)/stdair/bom/TimePeriodKey.hpp \
-		$(top_srcdir)/stdair/bom/TimePeriodTypes.hpp
+		$(top_srcdir)/stdair/bom/TimePeriodTypes.hpp \
+		$(top_srcdir)/stdair/bom/FareFeatures.hpp \
+		$(top_srcdir)/stdair/bom/FareFeaturesKey.hpp \
+		$(top_srcdir)/stdair/bom/FareFeaturesTypes.hpp
 stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/BomKeyManager.cpp \
 		$(top_srcdir)/stdair/bom/ParsedKey.cpp \
@@ -144,5 +147,7 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/DatePeriod.cpp \
 		$(top_srcdir)/stdair/bom/DatePeriodKey.cpp \
 		$(top_srcdir)/stdair/bom/TimePeriod.cpp \
-		$(top_srcdir)/stdair/bom/TimePeriodKey.cpp
+		$(top_srcdir)/stdair/bom/TimePeriodKey.cpp \
+		$(top_srcdir)/stdair/bom/FareFeatures.cpp \
+		$(top_srcdir)/stdair/bom/FareFeaturesKey.cpp
 
