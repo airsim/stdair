@@ -4,10 +4,6 @@
 // STL
 #include <cassert>
 #include <sstream>
-// Boost.Serialization
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/BomManager.hpp>
@@ -18,7 +14,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   Inventory::Inventory() : _key (DEFAULT_AIRLINE_CODE), _parent (NULL) {
-    //assert (false);
+    // That constructor is used by the serialisation process
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -54,24 +50,6 @@ namespace stdair {
   FlightDate* Inventory::
   getFlightDate (const FlightDateKey& iFlightDateKey) const {
     return getFlightDate (iFlightDateKey.toString());
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  void Inventory::serialisationImplementation() {
-    std::ostringstream oStr;
-    boost::archive::text_oarchive oa (oStr);
-    oa << *this;
-
-    std::istringstream iStr;
-    boost::archive::text_iarchive ia (iStr);
-    ia >> *this;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  template<class Archive>
-  void Inventory::serialize (Archive& ioArchive,
-                             const unsigned int iFileVersion) {
-    ioArchive & _key;
   }
 
 }

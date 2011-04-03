@@ -158,7 +158,7 @@ BOOST_AUTO_TEST_CASE (bom_structure_instantiation_test) {
   const stdair::InventoryKey lBAKey (lBAAirlineCode);
   myprovider::Inventory& lBAInv =
     stdair::FacBom<myprovider::Inventory>::instance().create (lBAKey);
-  stdair::FacBomManager::instance().addToList (lBomRoot, lBAInv);
+  stdair::FacBomManager::addToList (lBomRoot, lBAInv);
 
   BOOST_CHECK_EQUAL (lBAInv.describeKey(), lBAAirlineCode);
   BOOST_CHECK_MESSAGE (lBAInv.describeKey() == lBAAirlineCode,
@@ -171,7 +171,7 @@ BOOST_AUTO_TEST_CASE (bom_structure_instantiation_test) {
   const stdair::InventoryKey lAFKey (lAFAirlineCode);
   myprovider::Inventory& lAFInv =
     stdair::FacBom<myprovider::Inventory>::instance().create (lAFKey);
-  stdair::FacBomManager::instance().addToList (lBomRoot, lAFInv);
+  stdair::FacBomManager::addToList (lBomRoot, lAFInv);
 
   BOOST_CHECK_EQUAL (lAFInv.describeKey(), lAFAirlineCode);
   BOOST_CHECK_MESSAGE (lAFInv.describeKey() == lAFAirlineCode,
