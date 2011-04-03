@@ -1,8 +1,6 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STL
-#include <string>
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
 #include <stdair/basic/BasConst_BomDisplay.hpp>
@@ -17,6 +15,9 @@
 namespace stdair {
 
   // ///////// General /////////
+  /** Default value for the BOM tree root key (" -- ROOT -- "). */
+  const std::string DEFAULT_BOM_ROOT_KEY (" -- ROOT -- ");
+
   /** Default very small value. */
   const double DEFAULT_EPSILON_VALUE (0.0001); 
   
@@ -41,7 +42,9 @@ namespace stdair {
   const DatePeriod_T BOOST_DEFAULT_DATE_PERIOD (Date_T (2007, 1, 1),
                                                 Date_T (2007, 1, 1));
 
-  const std::string DOW_STR[] = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+  /** Day names (in English). */
+  const std::string DOW_STR[] =
+    {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
 
   /** Default DOW String (e.g., "0000000"). */
   const DOW_String_T DEFAULT_DOW_STRING ("0000000");
@@ -60,8 +63,8 @@ namespace stdair {
   /** Default epsilon duration (1 nanosecond). */
   const Duration_T DEFAULT_EPSILON_DURATION (0, 0, 0, 1);
 
-  /** Number of seconds in one day */
-  const Count_T SECONDS_IN_ONE_DAY (86000);
+  /** Number of seconds in one day. */
+  const Count_T SECONDS_IN_ONE_DAY (86400);
   
   /** Number of milliseconds in one second */
   const Count_T MILLISECONDS_IN_ONE_SECOND (1000);

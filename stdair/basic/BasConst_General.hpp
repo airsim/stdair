@@ -4,18 +4,23 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STL
+#include <string>
 // StdAir
 #include <stdair/stdair_types.hpp>
 
 namespace stdair {
 
-  /** Default epsilon value. */
+  /** Default value for the BOM tree root key (" -- ROOT -- "). */
+  extern const std::string DEFAULT_BOM_ROOT_KEY;
+
+  /** Default epsilon value (1e-4). */
   extern const double DEFAULT_EPSILON_VALUE;
 
   /** Default cabin capacity for Leg cabins. */
   extern const CabinCapacity_T DEFAULT_CABIN_CAPACITY;
 
-  /** Default number of generated flight dates . */
+  /** Default number of generated flight dates (0). */
   extern const NbOfFlightDates_T DEFAULT_NB_OF_FLIGHTDATES;
 
   /** Default number of bookings for BookingClass. */
@@ -39,22 +44,22 @@ namespace stdair {
   /** Default booking rate for OnD bookings over overall class bookings. */
   extern const BookingRatio_T DEFAULT_OND_BOOKING_RATE;
 
-  /** Number of seconds in one day */
+  /** Number of seconds in one day (86400). */
   extern const Count_T SECONDS_IN_ONE_DAY;
   
-  /** Number of milliseconds in one second */
+  /** Number of milliseconds in one second (1000). */
   extern const Count_T MILLISECONDS_IN_ONE_SECOND;
 
-  /** Default date for the General. */
+  /** Default date for the General (1-Jan-2010). */
   extern const Date_T DEFAULT_DATE;
   
-  /** Default date&time. */
+  /** Default date-time (1-Jan-2010). */
   extern const DateTime_T DEFAULT_DATETIME;
 
-  /** Default epsilon duration. */
+  /** Default epsilon duration (1 nanosecond). */
   extern const Duration_T DEFAULT_EPSILON_DURATION;
 
-  /** Default random seed. */
+  /** Default random seed (120765987). */
   extern const RandomSeed_T DEFAULT_RANDOM_SEED;
     
   /** Null time duration (in boost::time_duration unit).*/
@@ -63,13 +68,13 @@ namespace stdair {
   /** Default value of Availability. */
   extern const Fare_T DEFAULT_CLASS_FARE_VALUE;
 
-  /** Default number of airlines. */
+  /** Default number of airlines (0). */
   extern const NbOfAirlines_T DEFAULT_NBOFAIRLINES;
   
-  /** Default number of days in a year. */
+  /** Default number of days in a year (365). */
   extern const unsigned int DEFAULT_NB_OF_DAYS_IN_A_YEAR;
   
-  /** Default number of bookings. */
+  /** Default number of bookings (0). */
   extern const NbOfBookings_T DEFAULT_CLASS_NB_OF_BOOKINGS;
 }
 #endif // __STDAIR_BAS_BASCONST_GENERAL_HPP

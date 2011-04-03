@@ -30,7 +30,12 @@ namespace stdair {
     /**
      * Default constructor.
      */
-    BomRootKey();
+    BomRootKey ();
+
+    /**
+     * Constructor.
+     */
+    BomRootKey (const std::string& iIdentification);
 
     /**
      * Copy constructor.
@@ -41,6 +46,16 @@ namespace stdair {
      * Destructor.
      */
     ~BomRootKey();
+
+
+  public:
+    // /////////// Getters //////////
+    /**
+     * Get the identification.
+     */
+    const std::string& getID() const {
+      return _id;
+    }
 
 
   public:
@@ -85,6 +100,14 @@ namespace stdair {
      * instantiated).
      */
     void serialisationImplementation();
+
+
+  private:
+    // ///////////////// Attributes ///////////////
+    /**
+     * Identification.
+     */
+    std::string _id;
   };
 
 }

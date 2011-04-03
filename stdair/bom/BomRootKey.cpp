@@ -2,23 +2,31 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
-#include <ostream>
+#include <cassert>
 #include <sstream>
 // Boost.Serialization
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/serialization/access.hpp>
 // StdAir
+#include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/BomRootKey.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  BomRootKey::BomRootKey() {
+  BomRootKey::BomRootKey()
+    : _id (DEFAULT_BOM_ROOT_KEY) {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  BomRootKey::BomRootKey (const BomRootKey& iBomRootKey) {
+  BomRootKey::BomRootKey (const BomRootKey& iBomRootKey)
+    : _id (iBomRootKey._id) {
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  BomRootKey::BomRootKey (const std::string& iIdentification)
+    : _id (iIdentification) {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -37,7 +45,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string BomRootKey::toString() const {
     std::ostringstream oStr;
-    oStr << " -- ROOT -- ";
+    oStr << _id;
     return oStr.str();
   }
   
@@ -56,6 +64,7 @@ namespace stdair {
   template<class Archive>
   void BomRootKey::serialize (Archive& ioArchive,
                               const unsigned int iFileVersion) {
+    ioArchive & _id;
   }
 
 }
