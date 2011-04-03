@@ -20,10 +20,14 @@
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_MODULE StdAirTest
 #include <boost/test/unit_test.hpp>
+// Boost Serialisation
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/STDAIR_Service.hpp>
+#include <stdair/bom/BomDisplay.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/factory/FacBom.hpp>
@@ -98,7 +102,7 @@ BOOST_AUTO_TEST_CASE (mpl_structure_test) {
  */
 BOOST_AUTO_TEST_CASE (stdair_service_initialisation_test) {
   // Output log File
-  const std::string lLogFilename ("testServiceInitialisation.log");
+  const std::string lLogFilename ("StandardAirlineITTestSuite_init.log");
     
   // Set the log parameters
   std::ofstream logOutputFile;
@@ -114,7 +118,7 @@ BOOST_AUTO_TEST_CASE (stdair_service_initialisation_test) {
   // Retrieve (a reference on) the top of the BOM tree
   stdair::BomRoot& lBomRoot = stdairService.getBomRoot();
 
-  // Retrieve the BomRoot key, and compare it to the one expected
+  // Retrieve the BomRoot key, and compare it to the expected one
   const std::string& lBomRootKeyStr = lBomRoot.describeKey();
   const std::string lBomRootString (" -- ROOT -- ");
 
@@ -192,6 +196,108 @@ BOOST_AUTO_TEST_CASE (bom_structure_instantiation_test) {
                          << "', does not match that of the Inventory object: '"
                          << lInv_ptr->describeKey() << "'");
   }
+}
+
+/**
+ * Test the serialisation of Standard Airline IT BOM objects.
+ */
+BOOST_AUTO_TEST_CASE (bom_structure_serialisation_test) {
+
+  // Backup (thanks to Boost.Serialisation) file
+  const std::string lBackupFilename = "StandardAirlineITTestSuite_serial.txt";
+
+  // Output log File
+  const std::string lLogFilename ("StandardAirlineITTestSuite_serial.log");
+    
+  // Set the log parameters
+  std::ofstream logOutputFile;
+  
+  // Open and clean the log outputfile
+  logOutputFile.open (lLogFilename.c_str());
+  logOutputFile.clear();
+  
+  // Initialise the stdair BOM
+  const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
+  stdair::STDAIR_Service stdairService (lLogParams);
+
+  // Build a sample BOM tree
+  stdairService.buildSampleBom();
+
+  // DEBUG: Display the whole BOM tree
+  const std::string& lCSVDump = stdairService.csvDisplay();
+  STDAIR_LOG_DEBUG (lCSVDump);
+
+  // Retrieve (a reference on) the top of the BOM tree
+  stdair::BomRoot& lBomRoot = stdairService.getBomRoot();
+
+  // Retrieve the BomRoot key, and compare it to the expected one
+  const std::string lBAInvKeyStr ("BA");
+  stdair::Inventory* lBAInv_ptr = lBomRoot.getInventory (lBAInvKeyStr);
+
+  // DEBUG
+  STDAIR_LOG_DEBUG ("There should be an Inventory object corresponding to the '"
+                    << lBAInvKeyStr << "' key.");
+
+  BOOST_REQUIRE_MESSAGE (lBAInv_ptr != NULL,
+                         "An Inventory object should exist with the key, '"
+                         << lBAInvKeyStr << "'.");
+
+  // create and open a character archive for output
+  std::ofstream ofs (lBackupFilename.c_str());
+
+  // save data to archive
+  {
+    boost::archive::text_oarchive oa (ofs);
+    // write class instance to archive
+    oa << lBomRoot;
+    // archive and stream closed when destructors are called
+  }
+
+  // ... some time later restore the class instance to its orginal state
+  stdair::BomRoot& lRestoredBomRoot =
+    stdair::FacBom<stdair::BomRoot>::instance().create();
+  {
+    // create and open an archive for input
+    std::ifstream ifs (lBackupFilename.c_str());
+    boost::archive::text_iarchive ia(ifs);
+    // read class state from archive
+    ia >> lRestoredBomRoot;
+    // archive and stream closed when destructors are called
+  }
+  
+  // DEBUG: Display the whole BOM tree
+  std::ostringstream oRestoredCSVDumpStr;
+  stdair::BomDisplay::csvDisplay (oRestoredCSVDumpStr, lRestoredBomRoot);
+  STDAIR_LOG_DEBUG (oRestoredCSVDumpStr.str());
+
+  // Retrieve the BomRoot key, and compare it to the expected one
+  const std::string& lBomRootKeyStr = lRestoredBomRoot.describeKey();
+  const std::string lBomRootString (" -- ROOT -- ");
+
+  // DEBUG
+  STDAIR_LOG_DEBUG ("The BOM root key is '" << lBomRootKeyStr
+                    << "'. It should be equal to '" << lBomRootString << "'");
+  
+  BOOST_CHECK_EQUAL (lBomRootKeyStr, lBomRootString);
+  BOOST_CHECK_MESSAGE (lBomRootKeyStr == lBomRootString,
+                       "The BOM root key, '" << lBomRootKeyStr
+                       << "', should be equal to '" << lBomRootString
+                       << "', but is not.");
+
+  // Retrieve the Inventory
+  stdair::Inventory* lRestoredBAInv_ptr =
+    lRestoredBomRoot.getInventory (lBAInvKeyStr);
+
+  // DEBUG
+  STDAIR_LOG_DEBUG ("There should be an Inventory object corresponding to the '"
+                    << lBAInvKeyStr << "' key.");
+
+  BOOST_CHECK_MESSAGE (lRestoredBAInv_ptr != NULL,
+                       "An Inventory object should exist with the key, '"
+                       << lBAInvKeyStr << "'.");
+
+  // Close the Log outputFile
+  logOutputFile.close();
 }
 
 // End the test suite
