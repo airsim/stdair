@@ -1,0 +1,107 @@
+cmake_minimum_required (VERSION 2.6)
+
+##############################################################
+##############################################################
+###                  ALL-LIBRARIES PACKAGE                 ###
+##############################################################
+##############################################################
+
+include ( InstallRequiredSystemLibraries )
+set ( CPACK_RPM_PACKAGE_LICENSE "Commercial" ) 
+set ( CPACK_RPM_PACKAGE_GROUP "Applications/Optimization" )
+set ( CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}" )
+set ( CPACK_INSTALLED_DIRECTORIES "" )
+set ( CPACK_INSTALL_CMAKE_PROJECTS "${PROJECT_BINARY_DIR};${PROJECT_NAME};ALL;/" )
+include( CPack )
+
+##############################################################
+##############################################################
+###            COMMON VARIABLES TO ALL PROJECTS            ###
+##############################################################
+##############################################################
+# CMake scripts path
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/config/)
+##############################################################
+##############################################################
+###             GENERAL COMPILATION SECTION                ###
+##############################################################
+##############################################################
+include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ) 
+# Dependencies
+# ~~~~~~~~~~ BOOST ~~~~~~~~~~
+find_package( Boost 1.39 REQUIRED COMPONENTS program_options date_time iostreams)
+
+##############################################################
+##############################################################
+###                   CROSS-COMPILATION                    ###
+##############################################################
+##############################################################
+# Windows doesn't have a RPATH equivalent, we have to put all
+# binaries together or change PATH
+# See: http://www.cmake.org/pipermail/cmake/2009-May/029464.html
+if ( WIN32 AND CMAKE_CROSSCOMPILING )
+  execute_process ( COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/patch_wine_registry.sh WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE MINGW32DLL_IN_WINE )
+  if ( ${MINGW32DLL_IN_WINE} EQUAL 1 )
+    message ( FATAL_ERROR "Win32 cross-compilation required but Wine env is not correctly set up" )
+  endif ()
+endif ()
+
+# Linker flags
+set ( DLL_COMPAT_LDFLAGS "" ) 
+if ( WIN32 )
+  set ( DLL_COMPAT_LDFLAGS "-Wl,--kill-at,--add-stdcall-alias,--enable-stdcall-fixup,-dll" CACHE INTERNAL "Link flags for creating dlls compatible with VC++" ) 
+  if ( CMAKE_CROSSCOMPILING )
+    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=strict-aliasing -mno-cygwin -mwindows -mwin32" )
+  endif()
+
+  set  ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-aliasing -m32" )
+else ()
+  set  ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -fPIC" )
+endif ()
+
+
+##############################################################
+##############################################################
+   
+
+
+##############################################################
+##############################################################
+###                LIBRARY/APPS NAMES                      ###
+###                                                        ###
+### IDs must be *globally* unique, names can be duplicated ###
+###                                                        ### 
+### Libraries' IDs are named *_LIBRARIES to allow using    ###
+### used supplied variables transparently in the standard  ###
+### manner.                                                ###
+##############################################################
+##############################################################
+## optimizer's sources being used (ilegally) by other modules 
+set ( DR_OPT_SHARED_LIBRARIES    "droptshared"  CACHE INTERNAL "" )
+set ( DR_OPT_SHARED_LIBRARY_NAME "droptshared"  CACHE INTERNAL "" )
+## drcommon/
+set ( DR_COMMON_LIBRARIES    "drcommon"  CACHE INTERNAL "" )
+set ( DR_COMMON_LIBRARY_NAME "drcommon"  CACHE INTERNAL "" )
+## drwebservices/
+set ( DR_BR_WS_LIBRARIES         "brwslib"      CACHE INTERNAL "" )
+set ( DR_BR_WS_LIBRARY_NAME      "drbrws"       CACHE INTERNAL "" )
+set ( DR_OPT_WS_LIBRARIES        "optwslib"     CACHE INTERNAL "" )
+set ( DR_OPT_WS_LIBRARY_NAME     "droptws"      CACHE INTERNAL "" )
+## drbr/
+set ( DR_BR_JAVA         "drjava"     CACHE INTERNAL "" )
+set ( DR_BR_PB           "drprotobuf" CACHE INTERNAL "" )
+set ( DR_BR_LIBRARIES    "drbrlib"      CACHE INTERNAL "" )
+set ( DR_BR_LIBRARIES_DEPS "drbrlibdep" CACHE INTERNAL "" )
+set ( DR_BR_LIBRARY_NAME "drbr"         CACHE INTERNAL "" )
+set ( DR_BR_APP_ID       "drbrcmd"      CACHE INTERNAL "" )
+set ( DR_BR_APP_NAME     "drbrcmd"      CACHE INTERNAL "" )
+set ( DR_BR_SRV_ID       "drbrsrv"      CACHE INTERNAL "" )
+set ( DR_BR_SRV_NAME     "drbr"         CACHE INTERNAL "" )
+## droptimizer/
+set ( DR_OPT_LIBRARIES    "droptimizerlib"  CACHE INTERNAL "" )
+set ( DR_OPT_LIBRARY_NAME "droptimizer"     CACHE INTERNAL "" )
+set ( DR_OPT_APP_ID       "droptimizercmd"  CACHE INTERNAL "" )
+set ( DR_OPT_APP_NAME     "droptimizercmd"  CACHE INTERNAL "" )
+set ( DR_OPT_SRV_ID       "droptimizersrv"  CACHE INTERNAL "" )
+set ( DR_OPT_SRV_NAME     "droptimizer"     CACHE INTERNAL "" )
+

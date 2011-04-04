@@ -1,0 +1,23 @@
+#
+# Tests
+#
+if(Boost_FOUND)
+
+    include(add_test_suite)
+
+    enable_testing() 
+
+    # * StdAir Test Suite
+    file ( GLOB_RECURSE stdairtest_SOURCES stdair/*.cpp )
+    add_test_suite(StdAirTest "${stdairtest_SOURCES}" ${STDAIR_LIBRARIES})
+
+    # * Next test suite
+    # ...
+
+    # Don't forget to add the test suite to the DEPENDS argument list
+    add_custom_target(
+                      check
+                      COMMAND ${CMAKE_CTEST_COMMAND}
+                      DEPENDS StdAirTest
+                     )
+endif()
