@@ -214,13 +214,9 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   std::string STDAIR_Service::
   csvDisplay (const TravelSolutionList_T& iTravelSolutionList) const {
-    std::ostringstream oStr;
-
-    // Retrieve the StdAir service context
-    assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
 
     // Dump the content of the whole list of travel solutions into the string
+    std::ostringstream oStr;
     BomDisplay::csvDisplay (oStr, iTravelSolutionList);
     
     return oStr.str();
