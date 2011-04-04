@@ -112,6 +112,13 @@ namespace stdair {
     // /////////// (Boost) Serialisation support methods /////////
     /**
      * Serialisation.
+     *
+     * That method is used both for serialisation a BOM tree (into a
+     * backup file/stream), as well as re-instantiating a BOM tree
+     * from a back-up file/stream.
+     *
+     * \note The implementation of that method is to be found in the
+     *       CmdBomSerialiser command.
      */
     template<class Archive>
     void serialize (Archive& ar, const unsigned int iFileVersion);
@@ -120,6 +127,9 @@ namespace stdair {
     /**
      * Serialisation helper (allows to be sure the template method is
      * instantiated).
+     *
+     * \note The implementation of that method is to be found in the
+     *       CmdBomSerialiser command.
      */
     void serialisationImplementation();
 
