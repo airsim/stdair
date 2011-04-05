@@ -51,16 +51,61 @@ namespace stdair {
 
     /**
      * Serialise the children (Inventory objects).
-     *
-     * \note As for now, when re-instantiated, the parent pointer is
-     *       no longer set correctly (it remains NULL). When the
-     *       _bomList is recreated, the link with the parent has to be
-     *       reset.
-     * \todo Find a way to recreate the link to the parent.
      */
     //ioArchive.register_type (static_cast<Inventory*> (NULL));
     ioArchive & lBomHolder_ptr->_bomList;
     ioArchive & lBomHolder_ptr->_bomMap;
+
+    /**
+     * For each child, if needed, re-set the pointer on its parent.
+     * Indeed, when the backup file/stream is parsed and the BOM tree
+     * re-instantiated, the parent pointer is set to NULL. The upwards
+     * link (from the BOM object to its parent) must therefore be re-set.
+     */
+    typedef typename BomHolder<BOM_OBJECT2>::BomList_T BomList_T;
+    const BomList_T& lBomList = lBomHolder_ptr->_bomList;
+    for (typename BomList_T::const_iterator itObject = lBomList.begin();
+         itObject != lBomList.end(); ++itObject) {
+      BOM_OBJECT2* lObject2_ptr = *itObject;
+      assert (lObject2_ptr != NULL);
+
+      if (lObject2_ptr->getParent() == NULL) {
+        /**
+         * Since the pointer on the parent object is NULL, it means
+         * that we are parsing the backup file/stream and
+         * re-instantiating the BOM tree.
+         */
+        FacBomManager::linkWithParent (ioObject1, *lObject2_ptr);
+      }
+    }
+
+    /**
+     * The above code does not handle the case when the children are
+     * held only through a (STL) map (BomMap_T), and not through a
+     * (STL) list (BomList_T).
+     * Indeed, if the BomList_T is empty (but not the map), the links
+     * of the objects to their parents are not re-set by the above
+     * code. We need to browse the BomMap_T to do the job.
+     */
+    typedef typename BomHolder<BOM_OBJECT2>::BomMap_T BomMap_T;
+    const BomMap_T& lBomMap = lBomHolder_ptr->_bomMap;
+    if (lBomList.empty() == true && lBomMap.empty() == false) {
+
+      for (typename BomMap_T::const_iterator itObject = lBomMap.begin();
+           itObject != lBomMap.end(); ++itObject) {
+        BOM_OBJECT2* lObject2_ptr = itObject->second;
+        assert (lObject2_ptr != NULL);
+
+        if (lObject2_ptr->getParent() == NULL) {
+          /**
+           * Since the pointer on the parent object is NULL, it means
+           * that we are parsing the backup file/stream and
+           * re-instantiating the BOM tree.
+           */
+          FacBomManager::linkWithParent (ioObject1, *lObject2_ptr);
+        }
+      }
+    }
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -107,10 +152,8 @@ namespace stdair {
 
     // Serialise the children of the Inventory object, i.e., the
     // FlightDate children
-    /*
     stdair::serialiseHelper<Archive, Inventory, FlightDate> (*this, ioArchive,
                                                              iFileVersion);
-    */
   }
 
 }

@@ -32,13 +32,13 @@ namespace stdair {
      * Get the container (STL list) of OBJECT2 objects within the OBJECT1 object.
      */
     template <typename OBJECT2, typename OBJECT1>
-    static const std::list<OBJECT2*>& getList (const OBJECT1&);
+    static const typename BomHolder<OBJECT2>::BomList_T& getList(const OBJECT1&);
 
     /**
      * Get the container (STL map) of OBJECT2 objects within the OBJECT1 object.
      */
     template <typename OBJECT2, typename OBJECT1>
-    static const std::map<const MapKey_T, OBJECT2*>& getMap (const OBJECT1&);
+    static const typename BomHolder<OBJECT2>::BomMap_T& getMap (const OBJECT1&);
 
     /**
      * Check if the list of object2 has been initialised.
@@ -93,6 +93,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   template <typename OBJECT2, typename OBJECT1> 
   const BomHolder<OBJECT2>& BomManager::getBomHolder (const OBJECT1& iObject1) {
+
     const HolderMap_T& lHolderMap = iObject1.getHolderMap();
     
     HolderMap_T::const_iterator itHolder = lHolderMap.find (&typeid (OBJECT2));
@@ -113,14 +114,15 @@ namespace stdair {
   
   // ////////////////////////////////////////////////////////////////////
   template <typename OBJECT2, typename OBJECT1>
-  const std::list<OBJECT2*>& BomManager::getList (const OBJECT1& iObject1) {
+  const typename BomHolder<OBJECT2>::BomList_T& BomManager::
+  getList (const OBJECT1& iObject1) {
     const BomHolder<OBJECT2>& lBomHolder = getBomHolder<OBJECT2> (iObject1);
     return lBomHolder._bomList;
   }
   
   // ////////////////////////////////////////////////////////////////////
   template <typename OBJECT2, typename OBJECT1>
-  const std::map<const MapKey_T, OBJECT2*>& BomManager::
+  const typename BomHolder<OBJECT2>::BomMap_T& BomManager::
   getMap (const OBJECT1& iObject1) {
     const BomHolder<OBJECT2>& lBomHolder = getBomHolder<OBJECT2> (iObject1);
     return lBomHolder._bomMap;
@@ -179,7 +181,6 @@ namespace stdair {
                                      const MapKey_T& iKey) {
     OBJECT2* oBom_ptr = NULL;
     
-    typedef std::map<const MapKey_T, OBJECT2*> BomMap_T;
     const HolderMap_T& lHolderMap = iObject1.getHolderMap();
 
     typename HolderMap_T::const_iterator itHolder = 
@@ -190,9 +191,10 @@ namespace stdair {
       BomHolder<OBJECT2>* const lBomHolder_ptr = 
         static_cast<BomHolder<OBJECT2>* const> (itHolder->second);
       assert (lBomHolder_ptr != NULL);
-    
+
+      //
+      typedef typename BomHolder<OBJECT2>::BomMap_T BomMap_T;
       BomMap_T& lBomMap =  lBomHolder_ptr->_bomMap;
-    
       typename BomMap_T::iterator itBom = lBomMap.find (iKey);
 
       if (itBom != lBomMap.end()) {
