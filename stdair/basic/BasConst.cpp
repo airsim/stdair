@@ -230,7 +230,7 @@ namespace stdair {
 
   /** Default reference (oldest) date for the events. No event can
       occur before that date. */
-  const Date_T DEFAULT_EVENT_OLDEST_DATE (2010, boost::gregorian::Jan, 1);
+  const Date_T DEFAULT_EVENT_OLDEST_DATE (2009, boost::gregorian::Jan, 1);
 
   /** Default reference (oldest) date-time for the events. No event can
       occur before that date-time. */
