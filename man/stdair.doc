@@ -29,6 +29,12 @@
     hard-coded parameters (demand distribution details and resource/cabin
     capacities).
 
+ \b -r, \b --rmol<br>
+    The sample BOM tree corresponds to a typical usage by RMOL
+
+ \b -c, \b --crs<br>
+    The sample BOM tree corresponds to a typical usage by SimCRS
+
  \b -i, \b --input <path-to-input-file><br>
     Path (absolute or relative) of the (CVS) input file specifying the demand
     distribution parameters and resource (cabin) capacities.<br>
