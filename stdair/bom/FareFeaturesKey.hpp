@@ -1,5 +1,5 @@
-#ifndef __SIMFQT_BOM_FAREFEATURESKEY_HPP
-#define __SIMFQT_BOM_FAREFEATURESKEY_HPP
+#ifndef __STDAIR_BOM_FAREFEATURESKEY_HPP
+#define __STDAIR_BOM_FAREFEATURESKEY_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -97,4 +97,4 @@ namespace stdair  {
   };
 
 }
-#endif // __SIMFQT_BOM_FAREFEATURESKEY_HPP
+#endif // __STDAIR_BOM_FAREFEATURESKEY_HPP

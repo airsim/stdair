@@ -1,0 +1,31 @@
+// //////////////////////////////////////////////////////////////////////
+// Import section
+// //////////////////////////////////////////////////////////////////////
+// STL
+#include <cassert>
+#include <sstream>
+// StdAir
+#include <stdair/basic/BasConst_General.hpp>
+#include <stdair/service/Logger.hpp>
+#include <stdair/bom/YieldFeatures.hpp>
+
+namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  YieldFeatures::YieldFeatures (const Key_T& iKey)
+    : _key (iKey), _parent (NULL)  {
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  YieldFeatures::~YieldFeatures () {
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  std::string YieldFeatures::toString() const {
+    std::ostringstream oStr;
+    oStr << describeKey();
+    return oStr.str();
+  }
+
+}
+
