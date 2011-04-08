@@ -114,6 +114,18 @@ namespace stdair {
     void buildSampleBomForFareQuoter ();
 
     /**
+     * Build a sample BOM tree, and attach it to the BomRoot instance.
+     *
+     * As for now, two sample BOM trees can be built.
+     * <ul>
+     *   <li>
+     *   <li></li>
+     * </ul>
+     *
+     */
+    void buildSampleBomForAirRAC ();
+
+    /**
      * Build a sample list of travel solutions.
      *
      * As of now (March 2011), that list is made of the following
