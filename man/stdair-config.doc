@@ -34,7 +34,7 @@ macros, that are included with \e StdAir, for GNU autoconf.
     Show the StdAir installation prefix.
 
 \section sec_see_also SEE ALSO
- \b stdair-config(1), \b boost-config(1)
+ \b stdair(1), \b stdair-config(1), \b boost-config(1)
 
 \section sec_copyright COPYRIGHT
 

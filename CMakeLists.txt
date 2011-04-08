@@ -13,7 +13,7 @@ set (PACKAGE_NAME "${PACKAGE_NAME_TMP}" CACHE INTERNAL "Description")
 ##
 # Version
 set (stdair_VERSION_MAJOR 0)
-set (stdair_VERSION_MINOR 24)
+set (stdair_VERSION_MINOR 25)
 set (stdair_VERSION_PATCH 0)
 set (stdair_VERSION "${stdair_VERSION_MAJOR}.${stdair_VERSION_MINOR}.${stdair_VERSION_PATCH}")
 
@@ -37,10 +37,10 @@ set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
 set (CPACK_SOURCE_GENERATOR "RPM;TGZ")
 
 # CMake scripts path
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/config/)
+set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/config/)
 
 # Compilation
-set (CMAKE_CXX_FLAGS "-Wall -Werror")
+set (CMAKE_CXX_FLAGS "-g -Wall -Werror")
 include_directories(BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}) 
 
 # Dependencies
@@ -69,5 +69,6 @@ endif()
 # Subdirs
 add_subdirectory (${PROJECT_NAME})
 add_subdirectory (batches)
+add_subdirectory (man)
 add_subdirectory (doc)
 add_subdirectory (test)
