@@ -37,7 +37,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string TimePeriodKey::toString() const {
     std::ostringstream oStr;
-    oStr << _timeRangeStart << "-" << _timeRangeEnd << std::endl; 
+    oStr << _timeRangeStart << "-" << _timeRangeEnd; 
     return oStr.str();
   }
 

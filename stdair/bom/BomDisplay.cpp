@@ -16,6 +16,12 @@
 #include <stdair/bom/SegmentCabin.hpp>
 #include <stdair/bom/FareFamily.hpp>
 #include <stdair/bom/BookingClass.hpp>
+#include <stdair/bom/AirportPair.hpp>
+#include <stdair/bom/PosChannel.hpp>
+#include <stdair/bom/DatePeriod.hpp>
+#include <stdair/bom/TimePeriod.hpp>
+#include <stdair/bom/FareFeatures.hpp>
+#include <stdair/bom/AirlineClassList.hpp>
 #include <stdair/bom/Bucket.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
 #include <stdair/bom/TravelSolutionStruct.hpp>
@@ -637,4 +643,216 @@ namespace stdair {
     }
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::csvSimFQTDisplay (std::ostream& oStream,
+                                     const BomRoot& iBomRoot) {
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    /**
+     * Bom root level (only)
+     */
+    oStream << std::endl;
+    oStream << "==============================================================="
+            << std::endl;
+    oStream << "BomRoot: " << iBomRoot.describeKey() << std::endl;
+    oStream << "==============================================================="
+            << std::endl;
+
+    // Check whether there are airport pairs objects
+    if (BomManager::hasList<AirportPair> (iBomRoot) == false) {
+      return;
+    }
+    
+    // Browse the airport pairs
+    const AirportPairList_T& lAirportPairList =
+      BomManager::getList<AirportPair> (iBomRoot);
+    for (AirportPairList_T::const_iterator itAir = lAirportPairList.begin();
+         itAir != lAirportPairList.end(); ++itAir ) {
+      const AirportPair* lAir_ptr = *itAir;
+      assert (lAir_ptr != NULL);
+
+      // Display the airport pair object
+      csvAirportPairDisplay (oStream, *lAir_ptr);
+    }
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::csvAirportPairDisplay (std::ostream& oStream,
+                                          const AirportPair& iAirportPair) {
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    /**
+     * Airport pair level (only)
+     */
+    oStream << "+++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+    oStream << "AirportPair: " << iAirportPair.describeKey() << std::endl;
+    oStream << "+++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+    
+    // Check whether there are FlightDate objects
+    if (BomManager::hasList<PosChannel> (iAirportPair) == false) {
+      return;
+    }
+    
+    // Browse the pos-channel objects
+    const PosChannelList_T& lPosChannelList =
+      BomManager::getList<PosChannel> (iAirportPair);
+    for (PosChannelList_T::const_iterator itPC = lPosChannelList.begin();
+         itPC != lPosChannelList.end(); ++itPC) {
+      const PosChannel* lPC_ptr = *itPC;
+      assert (lPC_ptr != NULL);
+      
+      // Display the flight-date
+      csvPosChannelDisplay (oStream, *lPC_ptr);
+    }   
+  }
+    
+  // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::csvPosChannelDisplay (std::ostream& oStream,
+                                         const PosChannel& iPosChannel) {
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    /**
+     * PosChannel level (only)
+     */
+    oStream << "******************************************" << std::endl;
+    oStream << "PosChannel: " << iPosChannel.describeKey() << std::endl;
+    oStream << "******************************************" << std::endl;
+
+    // Check whether there are date-period objects
+    if (BomManager::hasList<DatePeriod> (iPosChannel) == false) {
+      return;
+    }
+    
+    // Browse the date-period objects
+    const DatePeriodList_T& lDatePeriodList =
+      BomManager::getList<DatePeriod> (iPosChannel);
+    for (DatePeriodList_T::const_iterator itDP = lDatePeriodList.begin();
+         itDP != lDatePeriodList.end(); ++itDP) {
+      const DatePeriod* lDP_ptr = *itDP;
+      assert (lDP_ptr != NULL);
+      
+      // Display the date-period
+      csvDateDisplay (oStream, *lDP_ptr);
+    }
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::csvDateDisplay (std::ostream& oStream,
+                                   const DatePeriod& iDatePeriod) {
+
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    /**
+     * Date-Period level (only).
+     */
+    oStream << "------------------------------------------" << std::endl;
+    oStream << "DatePeriod: " << iDatePeriod.describeKey() << std::endl;
+    oStream << "------------------------------------------" << std::endl;
+
+    // Check whether there are time-period objects
+    if (BomManager::hasList<TimePeriod> (iDatePeriod) == false) {
+      return;
+    }
+
+    // Browse the time-period objects
+    const TimePeriodList_T& lTimePeriodList =
+      BomManager::getList<TimePeriod> (iDatePeriod);
+    for (TimePeriodList_T::const_iterator itTP = lTimePeriodList.begin();
+         itTP != lTimePeriodList.end(); ++itTP) {
+      const TimePeriod* lTP_ptr = *itTP;
+      assert (lTP_ptr != NULL);
+      
+      // Display the time-period
+      csvTimeDisplay (oStream, *lTP_ptr);
+    }
+    
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::csvTimeDisplay (std::ostream& oStream,
+                                   const TimePeriod& iTimePeriod) {
+
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    /**
+     * Time-Period level (only).
+     */
+    oStream << "----------------------------------------" << std::endl;
+    oStream << "TimePeriod: " << iTimePeriod.describeKey() << std::endl;
+    oStream << "----------------------------------------" << std::endl;
+    
+    // Check whether there are time-period objects
+    if (BomManager::hasList<FareFeatures> (iTimePeriod) == false) {
+      return;
+    }
+
+    // Browse the time-period objects
+    const FareFeaturesList_T& lFareFeaturesList =
+      BomManager::getList<FareFeatures> (iTimePeriod);
+    for (FareFeaturesList_T::const_iterator itFF = lFareFeaturesList.begin();
+         itFF != lFareFeaturesList.end(); ++itFF) {
+      const FareFeatures* lFF_ptr = *itFF;
+      assert (lFF_ptr != NULL);
+      
+      // Display the time-period
+      csvFeaturesDisplay (oStream, *lFF_ptr);
+    }
+    
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::csvFeaturesDisplay (std::ostream& oStream,
+                                       const FareFeatures& iFareFeatures) {
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    /**
+     * Fare-Features level (only).
+     */
+    oStream << "--------------------------------------" << std::endl;
+    oStream << "Fare-Features: " << iFareFeatures.describeKey() << std::endl;
+    oStream << "--------------------------------------" << std::endl;
+   
+    // Check whether there are AirlineClassList objects
+    if (BomManager::hasList<AirlineClassList> (iFareFeatures) == false) {
+      return;
+    }
+    
+    // Browse the leg-dates
+    const AirlineClassListList_T& lAirlineClassListList =
+      BomManager::getList<AirlineClassList> (iFareFeatures);
+    for (AirlineClassListList_T::const_iterator itACL =
+           lAirlineClassListList.begin();
+         itACL != lAirlineClassListList.end(); ++itACL) {
+      const AirlineClassList* lACL_ptr = *itACL;
+      assert (lACL_ptr != NULL);
+
+      // Display the airline-class list
+      csvAirlineClassDisplay(oStream, *lACL_ptr);
+      
+    }
+    
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::
+  csvAirlineClassDisplay  (std::ostream& oStream,
+                           const AirlineClassList& iAirlineClassList) {
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    /**
+     * AirlineClassList level (only).
+     */
+    oStream << "------------------------------------" << std::endl;
+    oStream << "AirlineClassList: "
+            << iAirlineClassList.describeKey() << std::endl;
+    oStream << "------------------------------------" << std::endl;
+  }
+    
 }

@@ -36,7 +36,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string PosChannelKey::toString() const {
     std::ostringstream oStr;
-    oStr << _pos << "," << _channel << std::endl; 
+    oStr << _pos << "," << _channel; 
     return oStr.str();
   }
 

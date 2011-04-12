@@ -35,7 +35,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string DatePeriodKey::toString() const {
     std::ostringstream oStr;
-    oStr << _datePeriod << std::endl; 
+    oStr << _datePeriod;
     return oStr.str();
   }
 
