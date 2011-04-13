@@ -298,7 +298,7 @@ namespace stdair {
      */
     void addStatus (const EventType::EN_EventType&,
                     const EventContentKey_T&,
-                    const NbOfRequests_T& iExpectedTotalNbOfEvents);
+                    const NbOfEvents_T& iExpectedTotalNbOfEvents);
 
     /**
      * Set/update the progress status for the corresponding event type

@@ -223,7 +223,7 @@ namespace stdair {
   void EventQueue::
   addStatus (const EventType::EN_EventType& iType,
              const EventContentKey_T& iEventContentKey,
-             const NbOfRequests_T& iExpectedTotalNbOfEvents) {
+             const NbOfEvents_T& iExpectedTotalNbOfEvents) {
 
     /**
      * \note After the initialisation of the DemandStream objects

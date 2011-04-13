@@ -1,6 +1,6 @@
 // //////////////////////////////////////////////////////////////////////
-#ifndef __STDAIR_BOM_OPTIMISATIONNOTIFICATIONTYPES_HPP
-#define __STDAIR_BOM_OPTIMISATIONNOTIFICATIONTYPES_HPP
+#ifndef __STDAIR_BOM_SNAPSHOTTYPES_HPP
+#define __STDAIR_BOM_SNAPSHOTTYPES_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -11,13 +11,12 @@
 namespace stdair {
 
   // Forward declarations
-  struct OptimisationNotificationStruct;
+  struct SnapshotStruct;
   
   // ///////////// Type definitions //////////////
-  /** Define the smart pointer to a optimisation notification. */
-  typedef boost::
-  shared_ptr<OptimisationNotificationStruct> OptimisationNotificationPtr_T;
+  /** Define the smart pointer to a snapshot . */
+  typedef boost::shared_ptr<SnapshotStruct> SnapshotPtr_T;
   
 }
-#endif // __STDAIR_BOM_OPTIMISATIONNOTIFICATIONTYPES_HPP
+#endif // __STDAIR_BOM_SNAPSHOTTYPES_HPP
 

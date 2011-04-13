@@ -16,6 +16,7 @@
 #include <stdair/bom/EventTypes.hpp>
 #include <stdair/bom/BookingRequestTypes.hpp>
 #include <stdair/bom/OptimisationNotificationTypes.hpp>
+#include <stdair/bom/SnapshotTypes.hpp>
 
 namespace stdair {
 
@@ -67,6 +68,18 @@ namespace stdair {
     getOptimisationNotificationStruct() const {
       assert (_optimisationNotification != NULL);
       return *_optimisationNotification;
+    }
+    
+    /**
+     * Get a reference on the snapshot referred to by event.
+     *
+     * \note When that event is not of type snapshot 
+     * for snapshot (EventType::OPT_NOT_4_FD), an
+     * assertion fails.
+     */
+    const SnapshotStruct& getSnapshotStruct() const {
+      assert (_snapshot != NULL);
+      return *_snapshot;
     }
 
     /**
@@ -235,9 +248,10 @@ namespace stdair {
     EventStruct (const EventType::EN_EventType&, const EventContentKey_T&, 
                  BookingRequestPtr_T);
     /** Constructor for events corresponding to optimisation requests. */
-    EventStruct (const EventType::EN_EventType&, const EventContentKey_T&,
-                 const DateTime_T& iDCPDate,
-                 OptimisationNotificationStructPtr_T);
+    EventStruct (const EventType::EN_EventType&, const DateTime_T& iDCPDate,
+                 OptimisationNotificationPtr_T);
+    /** Constructor for events corresponding to snapshot requests. */
+    EventStruct (const EventType::EN_EventType&, SnapshotPtr_T);
     /** Copy constructor. */
     EventStruct (const EventStruct&);
 
@@ -276,7 +290,12 @@ namespace stdair {
     /**
      * Pointer to the optimisation notification referred to by the event.
      */
-    OptimisationNotificationStructPtr_T _optimisationNotification;
+    OptimisationNotificationPtr_T _optimisationNotification;
+
+    /**
+     * Pointer to the snapshot referred to by the event.
+     */
+    SnapshotPtr_T _snapshot;
 
     /**
      * Counters holding the progress status.
