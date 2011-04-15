@@ -17,17 +17,13 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct()
-    : _eventType (EventType::BKG_REQ), _eventTimeStamp (0),
-      _typeSpecificProgressStatus(), _keySpecificProgressStatus(),
-      _overallProgressStatus() {
-    assert (false);
+    : _eventType (EventType::BKG_REQ), _eventTimeStamp (0) {
   }
   
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
                             BookingRequestPtr_T ioRequestPtr)
-    : _eventType (iEventType), _typeSpecificProgressStatus(), 
-      _keySpecificProgressStatus(), _overallProgressStatus() {
+    : _eventType (iEventType) {
 
     //
     assert (ioRequestPtr != NULL);
@@ -48,8 +44,7 @@ namespace stdair {
   EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
                             const DateTime_T& iDCPDate,
                             OptimisationNotificationPtr_T ioOptimisationNotificationPtr)
-    : _eventType (iEventType), _typeSpecificProgressStatus(), 
-      _keySpecificProgressStatus(), _overallProgressStatus() {
+    : _eventType (iEventType) {
 
     //
     assert (ioOptimisationNotificationPtr != NULL);
@@ -69,8 +64,7 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
                             SnapshotPtr_T ioSnapshotPtr)
-    : _eventType (iEventType), _typeSpecificProgressStatus(),
-      _keySpecificProgressStatus(), _overallProgressStatus() {
+    : _eventType (iEventType) {
 
     //
     assert (ioSnapshotPtr != NULL);
@@ -90,10 +84,7 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct (const EventStruct& iEventStruct)
     : _eventType (iEventStruct._eventType),
-      _eventTimeStamp (iEventStruct._eventTimeStamp),
-      _typeSpecificProgressStatus (iEventStruct._typeSpecificProgressStatus),
-      _keySpecificProgressStatus (iEventStruct._keySpecificProgressStatus),
-      _overallProgressStatus (iEventStruct._overallProgressStatus) {
+      _eventTimeStamp (iEventStruct._eventTimeStamp) {
 
     //
     if (iEventStruct._bookingRequest != NULL) {
@@ -125,17 +116,6 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string EventStruct::describe() const {
     std::ostringstream oStr;
-    oStr << "[" << EventType (_eventType) << "]"
-         << "[" << _typeSpecificProgressStatus.getCurrentNb()
-         << "/{" << _typeSpecificProgressStatus.getExpectedNb()
-         << "," << _typeSpecificProgressStatus.getActualNb()
-         << "}]";
-
-    oStr << "-[Overall]"
-         << "[" << _overallProgressStatus.getCurrentNb()
-         << "/{" << _overallProgressStatus.getExpectedNb()
-         << "," << _overallProgressStatus.getActualNb()
-         << "}] ";
 
     //
     const Duration_T lEventDateTimeDelta =

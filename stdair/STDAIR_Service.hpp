@@ -31,6 +31,7 @@ namespace stdair {
   class BomRoot;
   class EventQueue;
   class EventStruct;
+  struct ProgressStatusSet;
   struct BookingRequestStruct;
   class STDAIR_ServiceContext;
   
@@ -271,7 +272,7 @@ namespace stdair {
      * @return EventStruct A copy of the event structure,
      *   which comes first in time from within the event queue.
      */
-    EventStruct popEvent() const;
+    ProgressStatusSet popEvent (EventStruct&) const;
 
     /**
      * States whether the event queue has reached the end.

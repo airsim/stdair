@@ -284,7 +284,7 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  EventStruct EventQueue::popEvent() {
+  ProgressStatusSet EventQueue::popEvent (EventStruct& ioEventStruct) {
     assert (_eventList.empty() == false);
 
     /**
@@ -299,8 +299,11 @@ namespace stdair {
      * from the list (and erased). Moreover, the resulting EventStruct
      * structure will be returned by this method.
      */
-    EventStruct lEventStruct = itEvent->second;
-
+    ioEventStruct = itEvent->second;
+    // Retrieve the event type
+    const EventType::EN_EventType& lEventType = ioEventStruct.getEventType();
+    ProgressStatusSet oProgressStatusSet (lEventType);
+  
     // Update the (current number part of the) overall progress status,
     // to account for the event that is being popped out of the event
     // queue.
@@ -316,8 +319,6 @@ namespace stdair {
      * 2.1. Update the progress status specific to the event type (e.g.,
      *      booking request, optimisation notification).
      */
-    // Retrieve the event type
-    const EventType::EN_EventType& lEventType = lEventStruct.getEventType();
 
     // Retrieve the progress status specific to that event type
     ProgressStatus lEventTypeProgressStatus = getStatus (lEventType);
@@ -328,18 +329,18 @@ namespace stdair {
     // Store back the progress status
     setStatus (lEventType, lEventTypeProgressStatus);
 
-    // Update the progress status of the event structure, specific to
-    // the content type key.
-    lEventStruct.setTypeSpecificStatus (lEventTypeProgressStatus);
+    // Update the progress status of the progress status set, specific to
+    // the event type.
+    oProgressStatusSet.setTypeSpecificStatus (lEventTypeProgressStatus);
 
     /**
      * 2.2. Update the overall progress status.
      */
-    // Update the overall progress status of the event structure
-    lEventStruct.setOverallStatus (_progressStatus);
+    // Update the overall progress status of the progress status set.
+    oProgressStatusSet.setOverallStatus (_progressStatus);
 
     //
-    return lEventStruct;
+    return oProgressStatusSet;
   }
 
   // //////////////////////////////////////////////////////////////////////

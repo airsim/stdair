@@ -9,7 +9,7 @@
 #include <string>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
-#include <stdair/basic/ProgressStatus.hpp>
+#include <stdair/basic/ProgressStatusSet.hpp>
 #include <stdair/basic/EventType.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/EventQueueKey.hpp>
@@ -226,10 +226,10 @@ namespace stdair {
      *   <li>That (first) event/element is then removed from the event
      *     queue</li>
      *   <li>The progress status is updated for the corresponding
-     *     demand stream.</li>
+     *     event generator.</li>
      * </ul>
      */
-    EventStruct popEvent();
+     ProgressStatusSet popEvent (EventStruct&);
 
     /**
      * Add event.
