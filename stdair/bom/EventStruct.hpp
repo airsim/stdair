@@ -40,11 +40,6 @@ namespace stdair {
     const EventType::EN_EventType& getEventType() const {
       return _eventType;
     }
-    
-    /** Get the key of the content of the event. */
-    const EventContentKey_T& getEventContentKey() const {
-      return _eventContentKey;
-    }
 
     /**
      * Get a reference on the booking request referred to by event.
@@ -245,8 +240,7 @@ namespace stdair {
     // ////////// Constructors and destructors /////////
   public:
     /** Constructor for events corresponding to booking requests. */
-    EventStruct (const EventType::EN_EventType&, const EventContentKey_T&, 
-                 BookingRequestPtr_T);
+    EventStruct (const EventType::EN_EventType&, BookingRequestPtr_T);
     /** Constructor for events corresponding to optimisation requests. */
     EventStruct (const EventType::EN_EventType&, const DateTime_T& iDCPDate,
                  OptimisationNotificationPtr_T);
@@ -276,11 +270,6 @@ namespace stdair {
      * event date-time (2010-01-01 00:00:00).
      */
     LongDuration_T _eventTimeStamp;
-    
-    /**
-     * Key of the content referred to by the event.
-     */
-    EventContentKey_T _eventContentKey;
     
     /**
      * Pointer to the booking request referred to by the event.

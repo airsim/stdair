@@ -11,6 +11,7 @@
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/stdair_demand_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
+#include <stdair/bom/BookingRequestTypes.hpp>
 
 namespace stdair {
 
@@ -20,6 +21,11 @@ namespace stdair {
   struct BookingRequestStruct : public StructAbstract {
   public:
     // /////////////// Getters /////////////////
+    /** Get the demand generator key. */
+    const DemandGeneratorKey_T& getDemandGeneratorKey () const {
+      return _generatorKey;
+    }
+    
     /** Get the requested origin. */
     const AirportCode_T& getOrigin() const {
       return _origin;
@@ -168,7 +174,8 @@ namespace stdair {
     /**
      * Constructor.
      */
-    BookingRequestStruct (const AirportCode_T& iOrigin,
+    BookingRequestStruct (const DemandGeneratorKey_T& iGeneratorKey,
+                          const AirportCode_T& iOrigin,
                           const AirportCode_T& iDestination,
                           const AirportCode_T& iPOS,
                           const Date_T& iDepartureDate,
@@ -205,6 +212,9 @@ namespace stdair {
 
   private:
     // /////////////// Attributes /////////////////
+    /** Demand generator key. */
+    const DemandGeneratorKey_T _generatorKey;
+    
     /** Origin. */
     const AirportCode_T _origin;
 

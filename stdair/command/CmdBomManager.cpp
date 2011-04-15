@@ -823,7 +823,9 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   BookingRequestStruct CmdBomManager::buildSampleBookingRequest() {
-
+    // Demand generator key.
+    const DemandGeneratorKey_T lGeneratorKey ("LHR, SYD, 2011-Jun-10, Eco");
+    
     // Origin
     const AirportCode_T lOrigin ("LHR");
 
@@ -874,7 +876,8 @@ namespace stdair {
     const PriceValue_T lValueOfTime (100.0);
 
     // Creation of the booking request structure
-    BookingRequestStruct oBookingRequest (lOrigin, lDestination, lPOS,
+    BookingRequestStruct oBookingRequest (lGeneratorKey, lOrigin,
+                                          lDestination, lPOS,
                                           lPreferredDepartureDate,
                                           lRequestDateTime,
                                           lPreferredCabin,
@@ -889,7 +892,9 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   BookingRequestStruct CmdBomManager::buildSampleBookingRequestForCRS() {
-
+    // Demand generator key.
+    const DemandGeneratorKey_T lGeneratorKey ("SIN, BKK, 2010-Jan-30, Eco");
+    
     // Origin
     const AirportCode_T lOrigin ("SIN");
 
@@ -940,7 +945,8 @@ namespace stdair {
     const PriceValue_T lValueOfTime (100.0);
 
     // Creation of the booking request structure
-    BookingRequestStruct oBookingRequest (lOrigin, lDestination, lPOS,
+    BookingRequestStruct oBookingRequest (lGeneratorKey, lOrigin,
+                                          lDestination, lPOS,
                                           lPreferredDepartureDate,
                                           lRequestDateTime,
                                           lPreferredCabin,

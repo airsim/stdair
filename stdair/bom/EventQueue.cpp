@@ -39,7 +39,6 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   EventQueue::~EventQueue() {
     _eventList.clear();
-    _nbOfEvents.clear();
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -57,23 +56,6 @@ namespace stdair {
     std::ostringstream oStr;
 
     oStr << toString();
-    
-    /*
-     * \note The following can be very consuming (in time, CPU and
-     * memory) when there are a lot of demand streams (e.g., several
-     * hundreds of thousands). Uncomment it only for debug purposes.
-    */
-    unsigned int demandStreamIdx = 1;
-    for (NbOfEventsByContentKeyMap_T::const_iterator itNbOfEventsMap =
-           _nbOfEvents.begin(); itNbOfEventsMap != _nbOfEvents.end();
-         ++itNbOfEventsMap, ++demandStreamIdx) {
-
-      const EventContentKey_T& lDemandStreyKeyStr = itNbOfEventsMap->first;
-      oStr << ", [" << demandStreamIdx << "][" << lDemandStreyKeyStr << "] ";
-
-      const ProgressStatus& lProgressStatus = itNbOfEventsMap->second;
-      oStr << lProgressStatus;
-    }
     
     return oStr.str();
   }
@@ -110,13 +92,6 @@ namespace stdair {
       lProgressStatus.reset();
     }
 
-    // Reset the progress statuses for all the content keys
-    for (NbOfEventsByContentKeyMap_T::iterator itNbOfEvents =
-           _nbOfEvents.begin();
-         itNbOfEvents != _nbOfEvents.end(); ++itNbOfEvents) {
-      ProgressStatus& lProgressStatus = itNbOfEvents->second;
-      lProgressStatus.reset();
-    }
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -222,38 +197,13 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   void EventQueue::
   addStatus (const EventType::EN_EventType& iType,
-             const EventContentKey_T& iEventContentKey,
              const NbOfEvents_T& iExpectedTotalNbOfEvents) {
-
-    /**
-     * \note After the initialisation of the DemandStream objects
-     * attached to the event queue, there are, by construction,
-     * exactly as many events as there are distinct demand
-     * streams. Indeed, the event queue contains a single event
-     * structure for every demand stream.
-     */
-
+    
     // Initialise the progress status object
     const Count_T lExpectedTotalNbOfEventsInt =
       std::floor (iExpectedTotalNbOfEvents);
     const ProgressStatus lProgressStatus (lExpectedTotalNbOfEventsInt);
       
-    // Insert the (Boost) progress display object into the dedicated map
-    const bool hasInsertBeenSuccessful =
-      _nbOfEvents.insert (NbOfEventsByContentKeyMap_T::
-                          value_type (iEventContentKey,
-                                      lProgressStatus)).second;
-
-    if (hasInsertBeenSuccessful == false) {
-      STDAIR_LOG_ERROR ("No progress_status can be inserted "
-                        << "for the following event content key: "
-                        << iEventContentKey
-                        << ". EventQueue: " << toString());
-      throw EventException ("No progress_status can be inserted for the "
-                            "following event content key: " + iEventContentKey
-                            + ". EventQueue: " + toString());
-    }
-
     // Update the progress status for the given event type
     updateStatus (iType, lProgressStatus);
     
@@ -267,9 +217,9 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void EventQueue::updateStatus (const EventType::EN_EventType& iType,
-                                 const NbOfRequests_T& iActualNbOfEvents) {
+                                 const NbOfEvents_T& iActualNbOfEvents) {
 
-    // Initialise the progress status object for the current content type key
+    // Initialise the progress status object for the type key
     Count_T lActualNbOfEventsInt = std::floor (iActualNbOfEvents);
       
     // Update the progress status for the corresponding content type key
@@ -280,22 +230,6 @@ namespace stdair {
       //
       lActualNbOfEventsInt += lProgressStatus.getActualNb();
       //
-      lProgressStatus.setActualNb (lActualNbOfEventsInt);
-    }
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  void EventQueue::updateStatus (const EventContentKey_T& iEventContentKey,
-                                 const NbOfRequests_T& iActualNbOfEvents) {
-
-    // Initialise the progress status object for the current content type key
-    const Count_T lActualNbOfEventsInt = std::floor (iActualNbOfEvents);
-      
-    // Update the progress status for the corresponding content type key
-    NbOfEventsByContentKeyMap_T::iterator itNbOfEvents =
-      _nbOfEvents.find (iEventContentKey);
-    if (itNbOfEvents != _nbOfEvents.end()) {
-      ProgressStatus& lProgressStatus = itNbOfEvents->second;
       lProgressStatus.setActualNb (lActualNbOfEventsInt);
     }
   }
@@ -315,20 +249,6 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void EventQueue::setStatus (const EventContentKey_T& iEventContentKey,
-                              const ProgressStatus& iProgressStatus) {
-
-    // Retrieve the ProgressStatus structure corresponding to the
-    // given event type
-    NbOfEventsByContentKeyMap_T::iterator itProgressStatus =
-      _nbOfEvents.find (iEventContentKey);
-    assert (itProgressStatus != _nbOfEvents.end());
-
-    // Update the ProgressStatus structure
-    itProgressStatus->second = iProgressStatus;
-  }
-
-  // //////////////////////////////////////////////////////////////////////
   ProgressStatus EventQueue::
   getStatus (const EventType::EN_EventType& iType) const {
 
@@ -338,20 +258,6 @@ namespace stdair {
       _progressStatusMap.find (iType);
     if (itProgressStatus != _progressStatusMap.end()) {
       const ProgressStatus& oProgressStatus = itProgressStatus->second;
-      return oProgressStatus;
-    }
-
-    return ProgressStatus();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  ProgressStatus EventQueue::
-  getStatus (const EventContentKey_T& iEventContentKey) const {
-    
-    NbOfEventsByContentKeyMap_T::const_iterator itNbOfEventsMap =
-      _nbOfEvents.find (iEventContentKey);
-    if (itNbOfEventsMap != _nbOfEvents.end()) {
-      const ProgressStatus& oProgressStatus = itNbOfEventsMap->second;
       return oProgressStatus;
     }
 
@@ -427,27 +333,7 @@ namespace stdair {
     lEventStruct.setTypeSpecificStatus (lEventTypeProgressStatus);
 
     /**
-     * 2.2. Update the progress status specific to the content key (e.g.,
-     *      demand stream key, DCP rule key).
-     */
-    // Extract the key of the event content
-    const EventContentKey_T& lEventContentKey= lEventStruct.getEventContentKey();
-
-    // Retrieve the progress status specific to that event content key
-    ProgressStatus lEventContentKeyProgressStatus = getStatus (lEventContentKey);
-
-    // Increase the current number of events
-    ++lEventContentKeyProgressStatus;
-
-    // Store back the progress status
-    setStatus (lEventContentKey, lEventContentKeyProgressStatus);
-
-    // Update the progress status of the event structure, specific to
-    // the content type key.
-    lEventStruct.setKeySpecificStatus (lEventContentKeyProgressStatus);
-
-    /**
-     * 2.3. Update the overall progress status.
+     * 2.2. Update the overall progress status.
      */
     // Update the overall progress status of the event structure
     lEventStruct.setOverallStatus (_progressStatus);

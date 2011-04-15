@@ -18,7 +18,6 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct()
     : _eventType (EventType::BKG_REQ), _eventTimeStamp (0),
-      _eventContentKey(),
       _typeSpecificProgressStatus(), _keySpecificProgressStatus(),
       _overallProgressStatus() {
     assert (false);
@@ -26,11 +25,9 @@ namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
-                            const EventContentKey_T& iEventContentKey,
                             BookingRequestPtr_T ioRequestPtr)
-    : _eventType (iEventType), _eventContentKey (iEventContentKey),
-      _typeSpecificProgressStatus(), _keySpecificProgressStatus(),
-      _overallProgressStatus() {
+    : _eventType (iEventType), _typeSpecificProgressStatus(), 
+      _keySpecificProgressStatus(), _overallProgressStatus() {
 
     //
     assert (ioRequestPtr != NULL);
@@ -94,7 +91,6 @@ namespace stdair {
   EventStruct::EventStruct (const EventStruct& iEventStruct)
     : _eventType (iEventStruct._eventType),
       _eventTimeStamp (iEventStruct._eventTimeStamp),
-      _eventContentKey (iEventStruct._eventContentKey),
       _typeSpecificProgressStatus (iEventStruct._typeSpecificProgressStatus),
       _keySpecificProgressStatus (iEventStruct._keySpecificProgressStatus),
       _overallProgressStatus (iEventStruct._overallProgressStatus) {
@@ -133,12 +129,6 @@ namespace stdair {
          << "[" << _typeSpecificProgressStatus.getCurrentNb()
          << "/{" << _typeSpecificProgressStatus.getExpectedNb()
          << "," << _typeSpecificProgressStatus.getActualNb()
-         << "}]";
-
-    oStr << "-[\"" << _eventContentKey << "\"]"
-         << "[" << _keySpecificProgressStatus.getCurrentNb()
-         << "/{" << _keySpecificProgressStatus.getExpectedNb()
-         << "," << _keySpecificProgressStatus.getActualNb()
          << "}]";
 
     oStr << "-[Overall]"

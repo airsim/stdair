@@ -125,22 +125,6 @@ namespace stdair {
     /** Get the actual total number of events for the given event type. */
     const Count_T& getActualTotalNbOfEvents (const EventType::EN_EventType&) const;
 
-    /**
-     * Retrieve the status for a given event content key (e.g.,
-     * booking request key, optimisation notification key).
-     *
-     * The status is composed of, for the given event content type:
-     * <ul>
-     *   <li>the current number of events (already generated),</li>
-     *   <li>the total number of events (to be generated).</li>
-     * </ul>
-     * <br>Normally, that method has not to be used directly, as
-     * EventStruct::getStatus() gives the same information, just after
-     * a call to EventQueue::popEvent().
-     */
-    ProgressStatus getStatus (const EventContentKey_T&) const;
-
-
   public:
     // /////////// Setters ///////////////
     /** Set/update the progress status. */
@@ -179,13 +163,6 @@ namespace stdair {
      * request, optimisation notification, schedule change, break point).
      */
     void setStatus (const EventType::EN_EventType& iType,
-                    const ProgressStatus& iProgressStatus);
-
-    /**
-     * Set the status for a given event content key (e.g.,
-     * booking request key, optimisation notification key).
-     */
-    void setStatus (const EventContentKey_T& iEventContentKey,
                     const ProgressStatus& iProgressStatus);
 
 
@@ -284,21 +261,20 @@ namespace stdair {
     bool isQueueDone() const;
 
     /**
-     * Initialise the progress statuses for the given event content
-     * type (e.g., demand stream, DCP rule).
+     * Initialise the progress statuses for the given event 
+     * type (e.g., request, snapshot).
      *
      * The progress status is actually a pair of counters:
      * <ul>
      *   <li>The current number of (already generated) events, for the
-     *       given event content type. That number is initialised
+     *       given event type. That number is initialised
      *       to 0 (no event has been generated yet).</li>
      *   <li>The total number of events (to be generated), also for the
-     *       given event content type.</li>
+     *       given event type.</li>
      * </ul>
      */
     void addStatus (const EventType::EN_EventType&,
-                    const EventContentKey_T&,
-                    const NbOfEvents_T& iExpectedTotalNbOfEvents);
+                    const NbOfRequests_T& iExpectedTotalNbOfEvents);
 
     /**
      * Set/update the progress status for the corresponding event type
@@ -325,23 +301,7 @@ namespace stdair {
      * </ul>
      */
     void updateStatus (const EventType::EN_EventType&,
-                       const NbOfRequests_T& iActualTotalNbOfEvents);
-
-    /**
-     * Update the progress statuses for the given event content key
-     * (e.g., booking request key, optimisation notification key).
-     *
-     * The progress status is actually a pair of counters:
-     * <ul>
-     *   <li>The current number of (already generated) events, for the
-     *       given event content key. That number is initialised
-     *       to 0 (no event has been generated yet).</li>
-     *   <li>The total number of events (to be generated), also for the
-     *       given event content key.</li>
-     * </ul>
-     */
-    void updateStatus (const EventContentKey_T&,
-                       const NbOfRequests_T& iActualTotalNbOfEvents);
+                       const NbOfEvents_T& iActualTotalNbOfEvents);
 
     /**
      * Calculate the progress status.
@@ -415,13 +375,6 @@ namespace stdair {
      * List of events.
      */
     EventList_T _eventList;
-
-    /**
-     * Status (current number of events, total expected and actual
-     * number of events) for each content key (e.g., booking request
-     * key, optimisation notification key).
-     */
-    NbOfEventsByContentKeyMap_T _nbOfEvents;
     
     /**
      * Counters holding the overall progress status.
