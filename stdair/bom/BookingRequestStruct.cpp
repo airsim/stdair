@@ -81,6 +81,33 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
+  BookingRequestStruct::
+  BookingRequestStruct (const AirportCode_T& iOrigin,
+                        const AirportCode_T& iDestination,
+                        const AirportCode_T& iPOS,
+                        const Date_T& iDepartureDate,
+                        const DateTime_T& iRequestDateTime,
+                        const CabinCode_T& iPreferredCabin,
+                        const NbOfSeats_T& iPartySize,
+                        const ChannelLabel_T& iChannel,
+                        const TripType_T& iTripType,
+                        const DayDuration_T& iStayDuration,
+                        const FrequentFlyer_T& iFrequentFlyerType,
+                        const Duration_T& iPreferredDepartureTime,
+                        const WTP_T& iWTP,
+                        const PriceValue_T& iValueOfTime)
+    : _generatorKey (""), _origin (iOrigin),
+      _destination (iDestination), _pos (iPOS), 
+      _preferredDepartureDate (iDepartureDate), 
+      _preferredDepartureTime (iPreferredDepartureTime),
+      _requestDateTime (iRequestDateTime),
+      _preferredCabin (iPreferredCabin), _partySize (iPartySize),
+      _channel (iChannel), _tripType (iTripType),
+      _stayDuration (iStayDuration), _frequentFlyerType (iFrequentFlyerType),
+      _wtp (iWTP), _valueOfTime (iValueOfTime) {
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
   BookingRequestStruct::~BookingRequestStruct() {
   }
   
