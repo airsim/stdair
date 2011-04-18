@@ -35,7 +35,8 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   BookingRequestStruct::
   BookingRequestStruct (const BookingRequestStruct& iBookingRequest)
-    : _origin (iBookingRequest._origin),
+    : _generatorKey (iBookingRequest._generatorKey),
+      _origin (iBookingRequest._origin),
       _destination (iBookingRequest._destination),
       _pos (iBookingRequest._pos),
       _preferredDepartureDate (iBookingRequest._preferredDepartureDate), 
@@ -53,7 +54,8 @@ namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
   BookingRequestStruct::
-  BookingRequestStruct (const AirportCode_T& iOrigin,
+  BookingRequestStruct (const DemandGeneratorKey_T& iGeneratorKey,
+                        const AirportCode_T& iOrigin,
                         const AirportCode_T& iDestination,
                         const AirportCode_T& iPOS,
                         const Date_T& iDepartureDate,
@@ -67,8 +69,9 @@ namespace stdair {
                         const Duration_T& iPreferredDepartureTime,
                         const WTP_T& iWTP,
                         const PriceValue_T& iValueOfTime)
-    : _origin (iOrigin), _destination (iDestination),
-      _pos (iPOS), _preferredDepartureDate (iDepartureDate), 
+    : _generatorKey (iGeneratorKey), _origin (iOrigin),
+      _destination (iDestination), _pos (iPOS), 
+      _preferredDepartureDate (iDepartureDate), 
       _preferredDepartureTime (iPreferredDepartureTime),
       _requestDateTime (iRequestDateTime),
       _preferredCabin (iPreferredCabin), _partySize (iPartySize),

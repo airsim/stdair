@@ -17,6 +17,10 @@ namespace stdair {
   /** Define the smart pointer to a booking request. */
   typedef boost::shared_ptr<BookingRequestStruct> BookingRequestPtr_T;
   
+  /** Define the hash key for the demand generator. */
+  typedef std::string DemandGeneratorKey_T;
+
+  
 }
 #endif // __STDAIR_BOM_BOOKINGREQUESTTYPES_HPP
 

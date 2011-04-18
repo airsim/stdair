@@ -10,26 +10,20 @@
 #include <stdair/basic/BasConst_Event.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/OptimisationNotificationStruct.hpp>
+#include <stdair/bom/SnapshotStruct.hpp>
 #include <stdair/bom/EventStruct.hpp>
 
 namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct()
-    : _eventType (EventType::BKG_REQ), _eventTimeStamp (0),
-      _eventContentKey(),
-      _typeSpecificProgressStatus(), _keySpecificProgressStatus(),
-      _overallProgressStatus() {
-    assert (false);
+    : _eventType (EventType::BKG_REQ), _eventTimeStamp (0) {
   }
   
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
-                            const EventContentKey_T& iEventContentKey,
                             BookingRequestPtr_T ioRequestPtr)
-    : _eventType (iEventType), _eventContentKey (iEventContentKey),
-      _typeSpecificProgressStatus(), _keySpecificProgressStatus(),
-      _overallProgressStatus() {
+    : _eventType (iEventType) {
 
     //
     assert (ioRequestPtr != NULL);
@@ -48,17 +42,14 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
-                            const EventContentKey_T& iEventContentKey,
                             const DateTime_T& iDCPDate,
-                            OptimisationNotificationStructPtr_T ioOptimisationNotificationStructPtr)
-    : _eventType (iEventType), _eventContentKey (iEventContentKey),
-      _typeSpecificProgressStatus(), _keySpecificProgressStatus(),
-      _overallProgressStatus() {
+                            OptimisationNotificationPtr_T ioOptimisationNotificationPtr)
+    : _eventType (iEventType) {
 
     //
-    assert (ioOptimisationNotificationStructPtr != NULL);
+    assert (ioOptimisationNotificationPtr != NULL);
     _optimisationNotification =
-      boost::make_shared<OptimisationNotificationStruct> (*ioOptimisationNotificationStructPtr);
+      boost::make_shared<OptimisationNotificationStruct> (*ioOptimisationNotificationPtr);
     assert (_optimisationNotification != NULL);
     
     /**
@@ -69,15 +60,31 @@ namespace stdair {
     const Duration_T lDuration = iDCPDate - DEFAULT_EVENT_OLDEST_DATETIME;
     _eventTimeStamp = lDuration.total_milliseconds();
   }
+  
+  // //////////////////////////////////////////////////////////////////////
+  EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
+                            SnapshotPtr_T ioSnapshotPtr)
+    : _eventType (iEventType) {
+
+    //
+    assert (ioSnapshotPtr != NULL);
+    _snapshot = boost::make_shared<SnapshotStruct> (*ioSnapshotPtr);
+    assert (_snapshot != NULL);
+    
+    /**
+     * Compute and store the number of milliseconds between the
+     * date-time of the snapshot and DEFAULT_EVENT_OLDEST_DATETIME
+     * (as of Feb. 2011, that date is set to Jan. 1, 2010).
+     */
+    const Duration_T lDuration =
+      _snapshot->getSnapshotTime() - DEFAULT_EVENT_OLDEST_DATETIME;
+    _eventTimeStamp = lDuration.total_milliseconds();
+  }
 
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct (const EventStruct& iEventStruct)
     : _eventType (iEventStruct._eventType),
-      _eventTimeStamp (iEventStruct._eventTimeStamp),
-      _eventContentKey (iEventStruct._eventContentKey),
-      _typeSpecificProgressStatus (iEventStruct._typeSpecificProgressStatus),
-      _keySpecificProgressStatus (iEventStruct._keySpecificProgressStatus),
-      _overallProgressStatus (iEventStruct._overallProgressStatus) {
+      _eventTimeStamp (iEventStruct._eventTimeStamp) {
 
     //
     if (iEventStruct._bookingRequest != NULL) {
@@ -89,6 +96,12 @@ namespace stdair {
     if (iEventStruct._optimisationNotification != NULL) {
       _optimisationNotification =
         boost::make_shared<OptimisationNotificationStruct> (*iEventStruct._optimisationNotification);
+    }
+
+    //
+    if (iEventStruct._snapshot != NULL) {
+      _snapshot =
+        boost::make_shared<SnapshotStruct>(*iEventStruct._snapshot);
     }
   }
   
@@ -103,30 +116,13 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string EventStruct::describe() const {
     std::ostringstream oStr;
-    oStr << "[" << EventType (_eventType) << "]"
-         << "[" << _typeSpecificProgressStatus.getCurrentNb()
-         << "/{" << _typeSpecificProgressStatus.getExpectedNb()
-         << "," << _typeSpecificProgressStatus.getActualNb()
-         << "}]";
-
-    oStr << "-[\"" << _eventContentKey << "\"]"
-         << "[" << _keySpecificProgressStatus.getCurrentNb()
-         << "/{" << _keySpecificProgressStatus.getExpectedNb()
-         << "," << _keySpecificProgressStatus.getActualNb()
-         << "}]";
-
-    oStr << "-[Overall]"
-         << "[" << _overallProgressStatus.getCurrentNb()
-         << "/{" << _overallProgressStatus.getExpectedNb()
-         << "," << _overallProgressStatus.getActualNb()
-         << "}] ";
 
     //
-    const Duration_T lRequestDateDelta =
+    const Duration_T lEventDateTimeDelta =
       boost::posix_time::milliseconds (_eventTimeStamp);
-    const DateTime_T lRequestDate (DEFAULT_EVENT_OLDEST_DATETIME
-                                   + lRequestDateDelta);
-    oStr << lRequestDate;
+    const DateTime_T lEventDateTime (DEFAULT_EVENT_OLDEST_DATETIME
+                                   + lEventDateTimeDelta);
+    oStr << lEventDateTime;
 
     //
     switch (_eventType) {
@@ -139,6 +135,12 @@ namespace stdair {
       assert (_optimisationNotification != NULL);
       oStr << ", " << _eventType
            << ", " << _optimisationNotification->describe();
+      break;
+    }
+    case EventType::SNAPSHOT: {
+      assert (_snapshot != NULL);
+      oStr << ", " << _eventType
+           << ", " << _snapshot->describe();
       break;
     }
     default: {
