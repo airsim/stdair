@@ -892,9 +892,6 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   BookingRequestStruct CmdBomManager::buildSampleBookingRequestForCRS() {
-    // Demand generator key.
-    const DemandGeneratorKey_T lGeneratorKey ("SIN, BKK, 2010-Jan-30, Eco");
-    
     // Origin
     const AirportCode_T lOrigin ("SIN");
 

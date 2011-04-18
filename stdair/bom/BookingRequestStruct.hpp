@@ -172,7 +172,7 @@ namespace stdair {
   public:
     // /////////////// Constructors and Destructors /////////////////
     /**
-     * Constructor.
+     * Default constructor.
      */
     BookingRequestStruct (const DemandGeneratorKey_T& iGeneratorKey,
                           const AirportCode_T& iOrigin,
@@ -190,6 +190,23 @@ namespace stdair {
                           const WTP_T& iWTP,
                           const PriceValue_T& iValueOfTime);
 
+    /**
+     * Constructor without the demand generator key, used for batches.
+     */
+    BookingRequestStruct (const AirportCode_T& iOrigin,
+                          const AirportCode_T& iDestination,
+                          const AirportCode_T& iPOS,
+                          const Date_T& iDepartureDate,
+                          const DateTime_T& iRequestDateTime,
+                          const CabinCode_T& iPreferredCabin,
+                          const NbOfSeats_T& iPartySize,
+                          const ChannelLabel_T& iChannel,
+                          const TripType_T& iTripType,
+                          const DayDuration_T& iStayDuration,
+                          const FrequentFlyer_T& iFrequentFlyerType,
+                          const Duration_T& iPreferredDepartureTime,
+                          const WTP_T& iWTP,
+                          const PriceValue_T& iValueOfTime);
     /**
      * Copy constructor.
      */
