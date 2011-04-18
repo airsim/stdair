@@ -350,7 +350,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  EventStruct STDAIR_Service::popEvent() const {
+  ProgressStatusSet STDAIR_Service::popEvent (EventStruct& ioEventStruct) const {
 
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
@@ -360,10 +360,7 @@ namespace stdair {
     EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
     
     // Extract the next event from the queue
-    const EventStruct& oEventStruct = lQueue.popEvent();
-
-    //
-    return oEventStruct;
+    return lQueue.popEvent (ioEventStruct);
   }
 
   // ////////////////////////////////////////////////////////////////////

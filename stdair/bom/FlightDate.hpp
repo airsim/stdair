@@ -233,7 +233,7 @@ namespace stdair {
     HolderMap_T _holderMap;
 
     /**
-     * The guillotine block number.
+     * The guillotine block number used for Revenue Management activities.
      */
     GuillotineNumber_T _guillotineNumber;
   };
