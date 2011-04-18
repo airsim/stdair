@@ -8,6 +8,7 @@
 #include <stdair/stdair_types.hpp>
 #include <stdair/basic/BasChronometer.hpp>
 #include <stdair/bom/BomManager.hpp>
+#include <stdair/bom/BomRetriever.hpp>
 #include <stdair/bom/BomDisplay.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/EventQueue.hpp>
@@ -220,6 +221,37 @@ namespace stdair {
     
     // Dump the content of the whole BOM tree into the string
     BomDisplay::csvDisplay (oStr, lBomRoot);
+    
+    return oStr.str();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::
+  csvDisplay (const stdair::AirlineCode_T& iAirlineCode,
+              const stdair::FlightNumber_T& iFlightNumber,
+              const stdair::Date_T& iDepartureDate) const {
+    std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+
+    // Retrieve the flight-date object corresponding to the key
+    FlightDate* lFlightDate_ptr = 
+      BomRetriever::retrieveFlightDateFromKeySet (lBomRoot, iAirlineCode,
+                                                  iFlightNumber, iDepartureDate);
+
+    // Dump the content of the whole BOM tree into the string
+    if (lFlightDate_ptr != NULL) {
+      BomDisplay::csvDisplay (oStr, *lFlightDate_ptr);
+      
+    } else {
+      oStr << "   No flight-date found for the given key: '"
+           << iAirlineCode << iFlightNumber << " - " << iDepartureDate << "'";
+    }
     
     return oStr.str();
   }

@@ -300,6 +300,20 @@ namespace stdair {
     std::string csvDisplay() const;
 
     /**
+     * Recursively display (dump in the returned string) the flight-date
+     * corresponding to the parameters given as input.
+     *
+     * @param const stdair::AirlineCode_T& Airline code of the flight to display.
+     * @param const stdair::FlightNumber_T& Flight number of the
+     *        flight to display.
+     * @param const stdair::Date_T& Departure date of the flight to display.
+     * @return std::string Output string in which the BOM tree is
+     *        logged/dumped.
+     */
+    std::string csvDisplay (const AirlineCode_T&, const FlightNumber_T&,
+                            const Date_T& iDepartureDate) const;
+
+    /**
      * Display (dump in the returned string) the full list of travel
      * solution structures.
      *
