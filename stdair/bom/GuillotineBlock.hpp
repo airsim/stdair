@@ -64,9 +64,9 @@ namespace stdair {
 
   public:
     // //////////// Setters /////////////
-    /** Set the flight-date and value type index maps and initialise
+    /** Set the segment-cabin and value type index maps and initialise
         the snapshot blocks. */
-    void initSnapshotBlocks (const FlightDateIndexMap_T&,
+    void initSnapshotBlocks (const SegmentCabinIndexMap_T&,
                              const ValueTypeIndexMap_T&);
     
   public:
@@ -152,11 +152,11 @@ namespace stdair {
     /** Map holding the children (SegmentBlock and LegBlock objects). */
     HolderMap_T _holderMap;
 
-    /** Map holding the flight-date position within the snapshot blocks. */
-    FlightDateIndexMap_T _flightDateIndexMap;
+    /** Map holding the segment-cabin position within the snapshot blocks. */
+    SegmentCabinIndexMap_T _segmentCabinIndexMap;
 
     /** Map holding the value type (class, Q-equivalent, etc) within a
-        a flight-date inside the snapshot blocks. */
+        a segment-cabin inside the snapshot blocks. */
     ValueTypeIndexMap_T _valueTypesIndexMap;
 
     /** Booking snapshot block. */
