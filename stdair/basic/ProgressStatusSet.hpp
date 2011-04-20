@@ -9,6 +9,7 @@
 #include <string>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_event_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
 #include <stdair/basic/EventType.hpp>
 #include <stdair/basic/ProgressStatus.hpp>
@@ -64,8 +65,10 @@ namespace stdair {
 
     /** Set/update the progress status specific to the content key
         for that event. */
-    void setSpecificGeneratorStatus (const ProgressStatus& iProgressStatus) {
+    void setSpecificGeneratorStatus (const ProgressStatus& iProgressStatus,
+                                     const EventGeneratorKey_T& iKey) {
       _generatorProgressStatus = iProgressStatus;
+      _generatorKey = iKey;
     }
 
     /** Set/update the overall progress status (absolute, for all the
@@ -119,6 +122,11 @@ namespace stdair {
      * Counters holding the progress status of all events altogether
      */
     ProgressStatus _overallProgressStatus;
+
+    /**
+     * The key of the specific generator.
+     */
+    EventGeneratorKey_T _generatorKey;
   };
 
 }

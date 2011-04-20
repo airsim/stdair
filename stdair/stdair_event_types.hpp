@@ -19,5 +19,8 @@ namespace stdair {
   /** Define an ID for an EventQueue object. */
   typedef std::string EventQueueID_T;
 
+  /** Define a key string of an event generator. */
+  typedef std::string EventGeneratorKey_T;
+
 }
 #endif // __STDAIR_STDAIR_EVENT_TYPES_HPP
