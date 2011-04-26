@@ -17,7 +17,7 @@ namespace stdair {
 
   // Forward declarations
   class GuillotineBlock;
-  class FlightDate;
+  class SegmentCabin;
 
   // //////////////////////// Type definitions /////////////////////////
   /** Define the guillotine-block list. */
@@ -26,8 +26,8 @@ namespace stdair {
   /** Define the guillotine-block map. */
   typedef std::map<const MapKey_T, GuillotineBlock*> GuillotineBlockMap_T;
 
-  /** Define the map between the flight-dates and the block number. */
-  typedef std::map<const FlightDate*, BlockNumber_T> FlightDateIndexMap_T;
+  /** Define the map between the segment-cabins and the block number. */
+  typedef std::map<const SegmentCabin*, BlockNumber_T> SegmentCabinIndexMap_T;
 
   /** Define the map between the value type of the snapshots and their index. */
   typedef std::map<const MapKey_T, BlockIndex_T> ValueTypeIndexMap_T;

@@ -12,14 +12,14 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   ProgressStatusSet::ProgressStatusSet()
     : _eventType (EventType::LAST_VALUE), _typeSpecificProgressStatus(), 
-      _generatorProgressStatus(), _overallProgressStatus() {
+      _generatorProgressStatus(), _overallProgressStatus(), _generatorKey ("") {
     assert (false);
   }
 
   // //////////////////////////////////////////////////////////////////////
   ProgressStatusSet::ProgressStatusSet (const EventType::EN_EventType& iType)
     : _eventType (iType), _typeSpecificProgressStatus(), 
-      _generatorProgressStatus(), _overallProgressStatus() {
+      _generatorProgressStatus(), _overallProgressStatus(), _generatorKey ("") {
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -28,7 +28,8 @@ namespace stdair {
       : _eventType (iProgressStatusSet._eventType),
         _typeSpecificProgressStatus(iProgressStatusSet._typeSpecificProgressStatus),
         _generatorProgressStatus (iProgressStatusSet._generatorProgressStatus),
-        _overallProgressStatus (iProgressStatusSet._overallProgressStatus) {
+        _overallProgressStatus (iProgressStatusSet._overallProgressStatus),
+        _generatorKey (iProgressStatusSet._generatorKey) {
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -55,7 +56,7 @@ namespace stdair {
          << "," << _typeSpecificProgressStatus.getActualNb()
          << "}]";
 
-    oStr << "[ Specific generator: ]"
+    oStr << " [Specific generator: " << _generatorKey << "]"
          << "[" << _generatorProgressStatus.getCurrentNb()
          << "/{" << _generatorProgressStatus.getExpectedNb()
          << "," << _generatorProgressStatus.getActualNb()

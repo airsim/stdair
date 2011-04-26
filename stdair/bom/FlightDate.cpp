@@ -94,7 +94,7 @@ namespace stdair {
   template<class Archive>
   void FlightDate::serialize (Archive& ioArchive,
                              const unsigned int iFileVersion) {
-    ioArchive & _key & _guillotineNumber;
+    ioArchive & _key;
   }
 
 }
