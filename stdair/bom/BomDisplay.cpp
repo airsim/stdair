@@ -8,6 +8,7 @@
 #include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRoot.hpp>
+#include <stdair/bom/EventQueue.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/LegDate.hpp>
@@ -53,6 +54,23 @@ namespace stdair {
     /** Saved STL stream flags. */
     std::ios::fmtflags _streamFlags;
   };
+
+  // ////////////////////////////////////////////////////////////////////
+  std::string BomDisplay::csvDisplay (const EventQueue& iEventQueue) {
+    std::ostringstream oStream;
+
+    /**
+     * Event queue level (only)
+     */
+    oStream << std::endl;
+    oStream << "==============================================================="
+            << std::endl;
+    oStream << "EventQueue: " << iEventQueue.describeKey() << std::endl;
+    oStream << "==============================================================="
+            << std::endl;
+
+    return oStream.str();
+  }
 
   // ////////////////////////////////////////////////////////////////////
   void BomDisplay::csvDisplay (std::ostream& oStream,
