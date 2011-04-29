@@ -21,10 +21,19 @@ int main (int argc, char* argv[]) {
 
   typedef Guillotine_Block_T::index_range range;
   
-  Guillotine_Block_T::array_view<1>::type myview =
-    lSnapShotHolder [ boost::indices[range(1,3)][2] ];
+  Guillotine_Block_T::array_view<1>::type myview1 =
+    lSnapShotHolder [ boost::indices[range(0,3)][2] ];
 
-  std::cout << myview[0] << ", " << myview[1] << std::endl;
+  std::cout << myview1[0] << ", " << myview1[1] << std::endl;
+  myview1[0] = 1000;
 
+  Guillotine_Block_T::array_view<1>::type myview2 =
+    lSnapShotHolder [ boost::indices[range(0,3)][2] ];
+
+  std::cout << myview2[0] << ", " << myview2[1] << std::endl;
+
+  Guillotine_Block_T::array_view<1>::type myview3 = myview2;
+  myview3[0] = 0;
+  std::cout << myview3[0] << ", " << myview3[1] << std::endl;
   return 0;
 }

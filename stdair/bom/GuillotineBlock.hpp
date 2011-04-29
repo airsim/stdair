@@ -62,6 +62,44 @@ namespace stdair {
       return _holderMap;
     }
 
+    /** Get the segment-cabin index map. */
+    const SegmentCabinIndexMap_T& getSegmentCabinIndexMap() const {
+      return _segmentCabinIndexMap;
+    }
+
+    /** Get the value type index map. */
+    const ValueTypeIndexMap_T& getValueTypeIndexMap() const {
+      return _valueTypesIndexMap;
+    }
+
+    /** Get the const view of snapshots for a given DTD and a range of
+        segment-cabins. */
+    ConstSegmentCabinDTDSnapshotView_T
+    getConstSegmentCabinDTDBookingSnapshotView (const BlockNumber_T,
+                                                const BlockNumber_T,
+                                                const DTD_T) const;
+
+    /** Get the const view of snapshots for a given range of DTD and a range of
+        segment-cabins. */
+    ConstSegmentCabinDTDRangeSnapshotView_T
+    getConstSegmentCabinDTDRangeBookingSnapshotView (const BlockNumber_T,
+                                                     const BlockNumber_T,
+                                                     const DTD_T,
+                                                     const DTD_T) const;
+
+    /** Get the view of snapshots for a given DTD and a range of
+        segment-cabins. */
+    SegmentCabinDTDSnapshotView_T
+    getSegmentCabinDTDBookingSnapshotView (const BlockNumber_T,
+                                           const BlockNumber_T, const DTD_T);
+
+    /** Get the view of snapshots for a given range of DTD and a range of
+        segment-cabins. */
+    SegmentCabinDTDRangeSnapshotView_T
+    getSegmentCabinDTDRangeBookingSnapshotView (const BlockNumber_T,
+                                                const BlockNumber_T,
+                                                const DTD_T, const DTD_T);
+
   public:
     // //////////// Setters /////////////
     /** Set the segment-cabin and value type index maps and initialise
