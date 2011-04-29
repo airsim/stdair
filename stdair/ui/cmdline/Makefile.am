@@ -10,7 +10,7 @@ lib_LTLIBRARIES = libstdairuicl.la
 #
 MAINTAINERCLEANFILES = Makefile.in
 
-libstdairuicl_la_SOURCES = $(stdair_cmd_h_sources) $(stdair_cmd_cc_sources) 
+libstdairuicl_la_SOURCES = $(stdair_uicl_h_sources) $(stdair_uicl_cc_sources) 
 libstdairuicl_la_CXXFLAGS = $(BOOST_CFLAGS)
 libstdairuicl_la_LIBADD =
 libstdairuicl_la_LDFLAGS = \
@@ -20,4 +20,4 @@ libstdairuicl_la_LDFLAGS = \
 
 # Header files
 pkgincludedir = $(includedir)/stdair/ui/cmdline
-pkginclude_HEADERS = $(stdair_cmd_h_sources)
+pkginclude_HEADERS = $(stdair_uicl_h_sources)
