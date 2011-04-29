@@ -6,7 +6,7 @@ include $(srcdir)/sources.mk
 
 MAINTAINERCLEANFILES = Makefile.in
 
-SUBDIRS = basic bom dbadaptor factory command config service
+SUBDIRS = basic bom dbadaptor factory command config service ui
 
 #EXTRA_DIST = config_msvc.h
 EXTRA_DIST =
@@ -21,7 +21,9 @@ libstdair_la_LIBADD = \
 			$(top_builddir)/stdair/dbadaptor/libstdairdba.la \
 			$(top_builddir)/stdair/factory/libstdairfac.la \
 			$(top_builddir)/stdair/command/libstdaircmd.la \
-			$(top_builddir)/stdair/service/libstdairsvc.la
+			$(top_builddir)/stdair/service/libstdairsvc.la \
+			$(top_builddir)/stdair/ui/libstdairui.la
+
 libstdair_la_LDFLAGS = \
 	$(BOOST_DATE_TIME_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) \
 	$(BOOST_FILESYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(SOCI_LIBS) \
