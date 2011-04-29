@@ -111,6 +111,24 @@ if test -z "${CXXFLAGS}"; then
    CXXFLAGS="-g -Wall"
 fi
 
+# -----------------------------------------------------------------
+# Readline: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
+# -----------------------------------------------------------------
+AM_PATH_READLINE([6.0])
+AC_SUBST(READLINE_VERSION)
+AC_SUBST(READLINE_CFLAGS)
+AC_SUBST(READLINE_LIBS)
+
+# -----------------------------------------------------------
+# Python: http://www.python.org
+# -----------------------------------------------------------
+PGAC_CHECK_PYTHON_EMBED_SETUP
+AC_SUBST(PYTHON_VERSION)
+AC_SUBST(PYTHON_LIBS)
+AC_SUBST(PYTHON_CFLAGS)
+AC_SUBST(PYTHON_ADD_LIBS)
+
+
 # --------------------------------------------------------
 # Boost (STL Extensions: http://www.boost.org)
 # --------------------------------------------------------
@@ -207,6 +225,7 @@ AC_CONFIG_FILES(
 	stdair/command/Makefile
 	stdair/config/Makefile
 	stdair/service/Makefile	
+	stdair/core/Makefile
 	stdair/ui/Makefile
 	stdair/ui/cmdline/Makefile
 	batches/Makefile
@@ -279,6 +298,17 @@ Compiler/linker flags/libs/defs:
   - LIBS ................... : ${LIBS}
 
 External libraries:
+  - Readline ............... :
+    o READLINE_VERSION ..... : ${READLINE_VERSION}
+    o READLINE_CFLAGS ...... : ${READLINE_CFLAGS}
+    o READLINE_LIBS ........ : ${READLINE_LIBS} 
+
+  - Python ................. :
+    o PYTHON_VERSION ....... : ${PYTHON_VERSION}
+    o PYTHON_CFLAGS ........ : ${PYTHON_CFLAGS}
+    o PYTHON_LIBS .......... : ${PYTHON_LIBS} 
+    o PYTHON_ADD_LIBS ...... : ${PYTHON_ADD_LIBS} 
+
   - Boost .................. :
     o BOOST_VERSION ........ : ${BOOST_VERSION}
     o BOOST_CFLAGS ......... : ${BOOST_CFLAGS}
