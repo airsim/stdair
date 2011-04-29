@@ -86,5 +86,8 @@ namespace stdair {
   /** Default value type (within a guillotine block) for segment-cabin. */
   extern const std::string DEFAULT_SEGMENT_CABIN_VALUE_TYPE;
 
+  /** Default value for max day-to-departure (365). */
+  extern const int DEFAULT_MAX_DTD;
+
 }
 #endif // __STDAIR_BAS_BASCONST_INVENTORY_HPP
