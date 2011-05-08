@@ -39,16 +39,14 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory* BomRoot::
-  getInventory (const std::string& iInventoryKeyStr) const {
+  Inventory* BomRoot::getInventory (const std::string& iInventoryKeyStr) const {
     Inventory* oInventory_ptr =
       BomManager::getObjectPtr<Inventory> (*this, iInventoryKeyStr);
     return oInventory_ptr;
   }
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory* BomRoot::
-  getInventory (const InventoryKey& iInventoryKey) const {
+  Inventory* BomRoot::getInventory (const InventoryKey& iInventoryKey) const {
     return getInventory (iInventoryKey.toString());
   }
 

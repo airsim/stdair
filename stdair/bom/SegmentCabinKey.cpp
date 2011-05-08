@@ -71,4 +71,13 @@ namespace stdair {
     ioArchive & _cabinCode;
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  // Explicit template instantiation
+  namespace ba = boost::archive;
+  template void SegmentCabinKey::
+  serialize<ba::text_oarchive> (ba::text_oarchive&, unsigned int);
+  template void SegmentCabinKey::
+  serialize<ba::text_iarchive> (ba::text_iarchive&, unsigned int);
+  // ////////////////////////////////////////////////////////////////////
+
 }

@@ -4,10 +4,6 @@
 // STL
 #include <cassert>
 #include <sstream>
-// Boost.Serialization
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/basic/BasConst_BookingClass.hpp>
 #include <stdair/basic/BasConst_Inventory.hpp>
@@ -67,24 +63,6 @@ namespace stdair {
   SegmentCabin* SegmentDate::
   getSegmentCabin (const SegmentCabinKey& iSegmentCabinKey) const {
     return getSegmentCabin (iSegmentCabinKey.toString());
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  void SegmentDate::serialisationImplementation() {
-    std::ostringstream oStr;
-    boost::archive::text_oarchive oa (oStr);
-    oa << *this;
-
-    std::istringstream iStr;
-    boost::archive::text_iarchive ia (iStr);
-    ia >> *this;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  template<class Archive>
-  void SegmentDate::serialize (Archive& ioArchive,
-                             const unsigned int iFileVersion) {
-    ioArchive & _key;
   }
 
 }
