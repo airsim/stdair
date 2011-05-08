@@ -71,4 +71,13 @@ namespace stdair {
     ioArchive & _familyCode;
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  // Explicit template instantiation
+  namespace ba = boost::archive;
+  template void FareFamilyKey::serialize<ba::text_oarchive> (ba::text_oarchive&,
+                                                             unsigned int);
+  template void FareFamilyKey::serialize<ba::text_iarchive> (ba::text_iarchive&,
+                                                             unsigned int);
+  // ////////////////////////////////////////////////////////////////////
+
 }

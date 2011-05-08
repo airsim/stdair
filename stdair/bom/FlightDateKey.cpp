@@ -82,4 +82,13 @@ namespace stdair {
     ioArchive & _flightNumber & lDepartureDateStr;
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  // Explicit template instantiation
+  namespace ba = boost::archive;
+  template void FlightDateKey::serialize<ba::text_oarchive> (ba::text_oarchive&,
+                                                             unsigned int);
+  template void FlightDateKey::serialize<ba::text_iarchive> (ba::text_iarchive&,
+                                                             unsigned int);
+  // ////////////////////////////////////////////////////////////////////
+  
 }
