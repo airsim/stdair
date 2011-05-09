@@ -12,6 +12,6 @@ archi_static_cast_SOURCES = $(archi_static_cast_h_sources) $(archi_static_cast_c
 archi_static_cast_CXXFLAGS = $(BOOST_CFLAGS)
 archi_static_cast_LDADD = $(BOOST_LIB)
 archi_static_cast_LDFLAGS = $(BOOST_PROGRAM_OPTIONS_LIB) \
-	$(top_builddir)/stdair/libstdair.la
+	$(top_builddir)/stdair/core/libstdair.la
 
 EXTRA_DIST =
