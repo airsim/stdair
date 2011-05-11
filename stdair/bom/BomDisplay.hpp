@@ -188,16 +188,6 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the objects of the BOM tree from the level of the given FlightDate.
-     *
-     * @param std::ostream& Output stream in which the BOM tree should be
-     *        logged/dumped.
-     * @param const PosChannel& Root of the BOM tree to be displayed.
-     */
-    static void csvPosChannelDisplay (std::ostream&, const PosChannel&);
-
-    /**
-     * Recursively display (dump in the underlying output log stream)
      * the leg-date level objects of the BOM tree.
      *
      * @param std::ostream& Output stream in which the BOM tree should be
@@ -205,6 +195,16 @@ namespace stdair {
      * @param const DatePeriod& Root of the BOM tree to be displayed.
      */
     static void csvDateDisplay (std::ostream&, const DatePeriod&);
+
+    /**
+     * Recursively display (dump in the underlying output log stream)
+     * the objects of the BOM tree from the level of the given FlightDate.
+     *
+     * @param std::ostream& Output stream in which the BOM tree should be
+     *        logged/dumped.
+     * @param const PosChannel& Root of the BOM tree to be displayed.
+     */
+    static void csvPosChannelDisplay (std::ostream&, const PosChannel&);
 
     /**
      * Recursively display (dump in the underlying output log stream)

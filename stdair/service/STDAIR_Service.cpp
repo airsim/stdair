@@ -14,6 +14,7 @@
 #include <stdair/bom/EventQueue.hpp>
 #include <stdair/bom/EventStruct.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
+#include <stdair/bom/DatePeriod.hpp>
 #include <stdair/command/CmdBomManager.hpp>
 #include <stdair/service/FacSupervisor.hpp>
 #include <stdair/service/FacSTDAIRServiceContext.hpp>
@@ -263,6 +264,38 @@ namespace stdair {
     // Dump the content of the whole list of travel solutions into the string
     std::ostringstream oStr;
     BomDisplay::csvDisplay (oStr, iTravelSolutionList);
+    
+    return oStr.str();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::
+  csvDisplay (const stdair::AirportCode_T& iOrigin,
+              const stdair::AirportCode_T& iDestination,
+              const stdair::Date_T& iDepartureDate) const {
+    std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+
+    // Retrieve the flight-date object corresponding to the key
+    DatePeriodList_T lDatePeriodList;
+    BomRetriever::retrieveFareRuleFromKeySet (lBomRoot, iOrigin,
+                                              iDestination, iDepartureDate,
+                                              lDatePeriodList);
+
+    // Dump the content of the whole BOM tree into the string
+    /**if (lDatePeriod_ptr != NULL) {
+      BomDisplay::csvDisplay (oStr, *lDatePeriod_ptr);
+      
+    } else {
+      oStr << "   No flight-date found for the given key: '"
+           << iOrigin << "-" << iDestination << " - " << iDepartureDate << "'";
+    }*/
     
     return oStr.str();
   }

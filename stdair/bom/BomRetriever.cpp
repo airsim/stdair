@@ -18,6 +18,7 @@
 #include <stdair/bom/BookingClass.hpp>
 #include <stdair/bom/BomRetriever.hpp>
 #include <stdair/bom/ParsedKey.hpp>
+#include <stdair/bom/AirportPair.hpp>
 #include <stdair/service/Logger.hpp>
 
 namespace stdair {
@@ -264,6 +265,48 @@ namespace stdair {
       BomManager::getObjectPtr<BookingClass> (*lSegmentDate_ptr, iClassCode);
 
     return oBookingClass_ptr;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  AirportPair* BomRetriever::
+  retrieveFareRuleFromKeySet (const BomRoot& iBomRoot,
+                              const stdair::AirportCode_T& iOrigin,
+                              const stdair::AirportCode_T& iDestination) {
+
+    // Get the Airport pair stream of the segment path.
+    const AirportPairKey lAirportPairKey (iOrigin, iDestination);
+    
+    // Search for the fare rules having the same origin and
+    // destination airport as the travel solution
+    AirportPair* oAirportPair_ptr = BomManager::
+      getObjectPtr<AirportPair> (iBomRoot, lAirportPairKey.toString());  
+
+    return oAirportPair_ptr;
+   
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomRetriever::
+  retrieveFareRuleFromKeySet (const BomRoot& iBomRoot,
+                              const stdair::AirportCode_T& iOrigin,
+                              const stdair::AirportCode_T& iDestination,
+                              const stdair::Date_T& iDepartureDate,
+                              stdair::DatePeriodList_T& ioDatePeriodList) {
+
+    /** // Retrieve the airport-pair
+    AirportPair* oAirportPair_ptr =
+      BomRetriever::retrieveFareRuleFromKeySet (iBomRoot, iOrigin,
+                                                iDestination);
+    if (oAirportPair_ptr == NULL) {
+      return oDatePeriod_ptr;
+    }
+    assert (oAirportPair_ptr != NULL);
+
+    //
+    // oDatePeriod_ptr = retrieveFlightDateFromKey (*oAirportPair_ptr,
+    //                                   iDepartureDate);
+ */ 
+   
   }
 
 }

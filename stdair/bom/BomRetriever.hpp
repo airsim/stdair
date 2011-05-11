@@ -9,6 +9,7 @@
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
+#include <stdair/bom/DatePeriod.hpp>
 
 namespace stdair {
 
@@ -25,6 +26,8 @@ namespace stdair {
   class SegmentCabin;
   class FareFamily;
   class BookingClass;
+  class DatePeriod;
+  class AirportPair;
 
   /**
    * @brief Utility class to retrieve StdAir objects.
@@ -234,6 +237,31 @@ namespace stdair {
     retrieveBookingClassFromLongKey (const Inventory&,
                                      const std::string& iFullKeyStr,
                                      const ClassCode_T&);
+
+    
+    /**
+    
+    */ 
+    static AirportPair*
+    retrieveFareRuleFromKeySet (const BomRoot& ,
+                                const stdair::AirportCode_T&,
+                                const stdair::AirportCode_T&);
+    
+    /**
+     * Retrieve a FlightDate object from an FlightDateKey structure.
+     *
+     * @param const Inventory& The root of the BOM tree.
+     * @param const FlightNumber_T& Part of the key.
+     * @param const Date_T& Part of the key.
+     * @return FlightDate* The just retrieved FlightDate object.
+    */ 
+    static void
+    retrieveFareRuleFromKeySet (const BomRoot&,
+                                const stdair::AirportCode_T&,
+                                const stdair::AirportCode_T&,
+                                const stdair::Date_T&,
+                                stdair::DatePeriodList_T&);
+
   };
   
 }
