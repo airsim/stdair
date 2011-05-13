@@ -119,6 +119,14 @@ AC_SUBST(READLINE_VERSION)
 AC_SUBST(READLINE_CFLAGS)
 AC_SUBST(READLINE_LIBS)
 
+# -----------------------------------------------------------------
+# ZeroMQ: http://zeromq.org
+# -----------------------------------------------------------------
+AM_PATH_ZEROMQ([2.0])
+AC_SUBST(READLINE_VERSION)
+AC_SUBST(READLINE_CFLAGS)
+AC_SUBST(READLINE_LIBS)
+
 # -----------------------------------------------------------
 # Python: http://www.python.org
 # -----------------------------------------------------------
@@ -302,6 +310,11 @@ External libraries:
     o READLINE_VERSION ..... : ${READLINE_VERSION}
     o READLINE_CFLAGS ...... : ${READLINE_CFLAGS}
     o READLINE_LIBS ........ : ${READLINE_LIBS} 
+
+  - ZeroMQ ................. :
+    o ZEROMQ_VERSION ....... : ${ZEROMQ_VERSION}
+    o ZEROMQ_CFLAGS ........ : ${ZEROMQ_CFLAGS}
+    o ZEROMQ_LIBS .......... : ${ZEROMQ_LIBS} 
 
   - Python ................. :
     o PYTHON_VERSION ....... : ${PYTHON_VERSION}
