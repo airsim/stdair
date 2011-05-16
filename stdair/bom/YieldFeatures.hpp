@@ -44,14 +44,9 @@ namespace stdair {
     stdair::BomAbstract* const getParent() const { return _parent; }
     const  stdair::HolderMap_T& getHolderMap() const { return _holderMap; }
 
-    /** Get the cabin. */
+    /** Get the cabin code. */
     const stdair::CabinCode_T& getCabinCode() const {
       return _key.getCabinCode();
-    }
-    
-    /** Get the yield. */
-    const stdair::Yield_T& getYield() const {
-      return _key.getYield();
     }
 
   protected:
@@ -66,7 +61,6 @@ namespace stdair {
     Key_T _key;
     BomAbstract* _parent;
     HolderMap_T _holderMap;
-
   };
 
 }

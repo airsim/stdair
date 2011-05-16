@@ -20,6 +20,7 @@ namespace stdair {
       OPT_NOT_4_NET,
       SKD_CHG,
       SNAPSHOT,
+      RM,
       BRK_PT,
       LAST_VALUE
     } EN_EventType;

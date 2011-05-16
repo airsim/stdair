@@ -17,7 +17,7 @@ namespace stdair  {
   public:
     // /////////// Construction ///////////
     /** Constructors. */
-    YieldFeaturesKey (const stdair::CabinCode_T&, const stdair::Yield_T&);
+    YieldFeaturesKey (const stdair::CabinCode_T&);
     YieldFeaturesKey (const YieldFeaturesKey&);
     /** Destructor. */
     ~YieldFeaturesKey ();
@@ -28,11 +28,6 @@ namespace stdair  {
     const stdair::CabinCode_T& getCabinCode() const {
       return _cabinCode;
     }  
-
-    /** Get the yield. */
-    const stdair::Yield_T& getYield() const {
-      return _yield;
-    }
   
     // /////////// Display support methods /////////
     /** Dump a Business Object Key into an output stream.
@@ -52,9 +47,6 @@ namespace stdair  {
     // Attributes
     /** Cabin code. */
     stdair::CabinCode_T _cabinCode;
- 
-    /** Yield value.*/
-    stdair::Yield_T _yield;
 
   };
 

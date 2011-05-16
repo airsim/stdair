@@ -247,9 +247,6 @@ namespace stdair {
 
   /** Default Willingness-to-Pay (WTP, as expressed as a monetary unit). */
   const WTP_T DEFAULT_WTP (1000.0);
-
-  /** Default Point-Of-Sale (POS). */
-  const AirportCode_T DEFAULT_POS ("ROW");
     
   /** Default departure date. */
   const Date_T DEFAULT_PREFERRED_DEPARTURE_DATE (DEFAULT_DEPARTURE_DATE);
@@ -274,8 +271,11 @@ namespace stdair {
   /** Default preferred cabin. */
   const CabinCode_T DEFAULT_PREFERRED_CABIN ("M");
 
-  /** Default channel (direct on-line). */
-  const ChannelLabel_T DEFAULT_CHANNEL ("DN");
+  /** Default point-of-sale. */
+  const AirportCode_T DEFAULT_POS ("ALL");
+
+  /** Default channel. */
+  const ChannelLabel_T DEFAULT_CHANNEL ("DC");
 
   /** Default trip type (one-way). */
   const TripType_T DEFAULT_TRIP_TYPE ("OW");
@@ -379,6 +379,14 @@ namespace stdair {
 
   /** Default value for max day-to-departure (365). */
   const int DEFAULT_MAX_DTD = 365;
+
+  /** Defaut data collection point list. */
+  const DCPList_T DEFAULT_DCP_LIST = DefaultDCPList::init();
+  DCPList_T DefaultDCPList::init() {
+    DCPList_T oDCPList;
+    oDCPList.push_back (3); oDCPList.push_back (1); oDCPList.push_back (0);
+    return oDCPList;
+  }
 
 
   // ////////// Key and display related /////////////
