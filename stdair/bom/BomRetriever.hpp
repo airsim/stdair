@@ -240,27 +240,50 @@ namespace stdair {
 
     
     /**
-    
-    */ 
-    static AirportPair*
-    retrieveFareRuleFromKeySet (const BomRoot& ,
-                                const stdair::AirportCode_T&,
-                                const stdair::AirportCode_T&);
-    
-    /**
-     * Retrieve a FlightDate object from an FlightDateKey structure.
+     * Retrieve an AirportPair object from an AirportPair structure.
      *
-     * @param const Inventory& The root of the BOM tree.
-     * @param const FlightNumber_T& Part of the key.
-     * @param const Date_T& Part of the key.
-     * @return FlightDate* The just retrieved FlightDate object.
-    */ 
+     * @param const BomRoot& The root of the BOM tree.
+     * @param const AirportCode_T& Origin, part of the key.
+     * @param const AirportCode_T& Destination, part of the key.
+     * @return AirportPair* The just retrieved AirportPair object.
+     */
+    static AirportPair*
+    retrieveAirportPairFromKeySet (const BomRoot& ,
+                                   const stdair::AirportCode_T&,
+                                   const stdair::AirportCode_T&);
+
+    /**
+     * Retrieve a list of date-period corresponding to a flight
+     * date.
+     *
+     * @param const AirportPair& The root of the BOM tree.
+     * @param const Date_T& Departure Date of the flight
+     * @param stdair::DatePeriodList_T& List of DatePeriod to
+     *                                  display.
+     */ 
     static void
-    retrieveFareRuleFromKeySet (const BomRoot&,
-                                const stdair::AirportCode_T&,
-                                const stdair::AirportCode_T&,
-                                const stdair::Date_T&,
-                                stdair::DatePeriodList_T&);
+    retrieveDatePeriodListFromKey (const AirportPair&,
+                                    const stdair::Date_T&,
+                                    stdair::DatePeriodList_T&);
+
+     /**
+     * Retrieve a list of date-period from a set of keys.
+     *
+     * @param const BomRoot& The root of the BOM tree.
+     * @param const AirportCode_T& Part of the AirportPair key:
+     *                             the origin airport
+     * @param const AirportCode_T& Part of the AirportPair key:
+     *                             the destination airport.
+     * @param const Date_T& Departure date of the flight
+     * @param stdair::DatePeriodList_T& List of DatePeriod to
+     *                                  display.
+     */
+    static void
+    retrieveDatePeriodListFromKeySet (const BomRoot&,
+                                      const stdair::AirportCode_T&,
+                                      const stdair::AirportCode_T&,
+                                      const stdair::Date_T&,
+                                      stdair::DatePeriodList_T&);
 
   };
   

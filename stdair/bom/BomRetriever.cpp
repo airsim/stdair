@@ -269,9 +269,9 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   AirportPair* BomRetriever::
-  retrieveFareRuleFromKeySet (const BomRoot& iBomRoot,
-                              const stdair::AirportCode_T& iOrigin,
-                              const stdair::AirportCode_T& iDestination) {
+  retrieveAirportPairFromKeySet (const BomRoot& iBomRoot,
+                                 const stdair::AirportCode_T& iOrigin,
+                                 const stdair::AirportCode_T& iDestination) {
 
     // Get the Airport pair stream of the segment path.
     const AirportPairKey lAirportPairKey (iOrigin, iDestination);
@@ -287,25 +287,55 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   void BomRetriever::
-  retrieveFareRuleFromKeySet (const BomRoot& iBomRoot,
-                              const stdair::AirportCode_T& iOrigin,
-                              const stdair::AirportCode_T& iDestination,
-                              const stdair::Date_T& iDepartureDate,
-                              stdair::DatePeriodList_T& ioDatePeriodList) {
+  retrieveDatePeriodListFromKey (const AirportPair& iAirportPair,
+                                 const stdair::Date_T& iDepartureDate,
+                                 stdair::DatePeriodList_T& ioDatePeriodList) {
 
-    /** // Retrieve the airport-pair
+    // Get the list of date-period
+    const DatePeriodList_T& lFareDatePeriodList =
+      BomManager::getList<DatePeriod> (iAirportPair);
+
+    // Browse the date-period list
+    for (DatePeriodList_T::const_iterator itDateRange =
+           lFareDatePeriodList.begin();
+         itDateRange != lFareDatePeriodList.end(); ++itDateRange) {
+
+      DatePeriod* lCurrentFareDatePeriod_ptr = *itDateRange ;
+      assert (lCurrentFareDatePeriod_ptr != NULL);
+
+      // Select the date-period objects having a corresponding date range
+      const bool isDepartureDateValid =
+        lCurrentFareDatePeriod_ptr->isDepartureDateValid (iDepartureDate);
+      
+      // Add the date-period objects having a corresponding date range
+      // to the list to display
+      if (isDepartureDateValid == true) {
+        ioDatePeriodList.push_back(lCurrentFareDatePeriod_ptr);
+      }
+    }
+
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomRetriever::
+  retrieveDatePeriodListFromKeySet (const BomRoot& iBomRoot,
+                                    const stdair::AirportCode_T& iOrigin,
+                                    const stdair::AirportCode_T& iDestination,
+                                    const stdair::Date_T& iDepartureDate,
+                                    stdair::DatePeriodList_T& ioDatePeriodList) {
+
+    // Retrieve the airport-pair
     AirportPair* oAirportPair_ptr =
-      BomRetriever::retrieveFareRuleFromKeySet (iBomRoot, iOrigin,
-                                                iDestination);
+      BomRetriever::retrieveAirportPairFromKeySet(iBomRoot, iOrigin,
+                                                 iDestination);
     if (oAirportPair_ptr == NULL) {
-      return oDatePeriod_ptr;
+      return;
     }
     assert (oAirportPair_ptr != NULL);
 
-    //
-    // oDatePeriod_ptr = retrieveFlightDateFromKey (*oAirportPair_ptr,
-    //                                   iDepartureDate);
- */ 
+    // Retrieve the flight date
+    BomRetriever::retrieveDatePeriodListFromKey (*oAirportPair_ptr, iDepartureDate,
+                                                 ioDatePeriodList);
    
   }
 

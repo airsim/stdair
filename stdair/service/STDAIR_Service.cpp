@@ -284,18 +284,17 @@ namespace stdair {
 
     // Retrieve the flight-date object corresponding to the key
     DatePeriodList_T lDatePeriodList;
-    BomRetriever::retrieveFareRuleFromKeySet (lBomRoot, iOrigin,
-                                              iDestination, iDepartureDate,
-                                              lDatePeriodList);
+    BomRetriever::retrieveDatePeriodListFromKeySet (lBomRoot, iOrigin,
+                                                    iDestination, iDepartureDate,
+                                                    lDatePeriodList);
 
     // Dump the content of the whole BOM tree into the string
-    /**if (lDatePeriod_ptr != NULL) {
-      BomDisplay::csvDisplay (oStr, *lDatePeriod_ptr);
-      
+    if (lDatePeriodList.empty()) {
+      oStr << "   No fare-rule found for the given key: '"
+            << iOrigin << "-" << iDestination << " - " << iDepartureDate << "'";
     } else {
-      oStr << "   No flight-date found for the given key: '"
-           << iOrigin << "-" << iDestination << " - " << iDepartureDate << "'";
-    }*/
+      BomDisplay::csvDisplay (oStr, lDatePeriodList);
+    }
     
     return oStr.str();
   }
