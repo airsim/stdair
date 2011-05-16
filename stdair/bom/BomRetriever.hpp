@@ -9,6 +9,7 @@
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
+#include <stdair/bom/DatePeriod.hpp>
 
 namespace stdair {
 
@@ -25,6 +26,8 @@ namespace stdair {
   class SegmentCabin;
   class FareFamily;
   class BookingClass;
+  class DatePeriod;
+  class AirportPair;
 
   /**
    * @brief Utility class to retrieve StdAir objects.
@@ -234,6 +237,54 @@ namespace stdair {
     retrieveBookingClassFromLongKey (const Inventory&,
                                      const std::string& iFullKeyStr,
                                      const ClassCode_T&);
+
+    
+    /**
+     * Retrieve an AirportPair object from an AirportPair structure.
+     *
+     * @param const BomRoot& The root of the BOM tree.
+     * @param const AirportCode_T& Origin, part of the key.
+     * @param const AirportCode_T& Destination, part of the key.
+     * @return AirportPair* The just retrieved AirportPair object.
+     */
+    static AirportPair*
+    retrieveAirportPairFromKeySet (const BomRoot& ,
+                                   const stdair::AirportCode_T&,
+                                   const stdair::AirportCode_T&);
+
+    /**
+     * Retrieve a list of date-period corresponding to a flight
+     * date.
+     *
+     * @param const AirportPair& The root of the BOM tree.
+     * @param const Date_T& Departure Date of the flight
+     * @param stdair::DatePeriodList_T& List of DatePeriod to
+     *                                  display.
+     */ 
+    static void
+    retrieveDatePeriodListFromKey (const AirportPair&,
+                                    const stdair::Date_T&,
+                                    stdair::DatePeriodList_T&);
+
+     /**
+     * Retrieve a list of date-period from a set of keys.
+     *
+     * @param const BomRoot& The root of the BOM tree.
+     * @param const AirportCode_T& Part of the AirportPair key:
+     *                             the origin airport
+     * @param const AirportCode_T& Part of the AirportPair key:
+     *                             the destination airport.
+     * @param const Date_T& Departure date of the flight
+     * @param stdair::DatePeriodList_T& List of DatePeriod to
+     *                                  display.
+     */
+    static void
+    retrieveDatePeriodListFromKeySet (const BomRoot&,
+                                      const stdair::AirportCode_T&,
+                                      const stdair::AirportCode_T&,
+                                      const stdair::Date_T&,
+                                      stdair::DatePeriodList_T&);
+
   };
   
 }

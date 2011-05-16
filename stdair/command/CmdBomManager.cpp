@@ -612,17 +612,6 @@ namespace stdair {
     FacBomManager::addToListAndMap (ioBomRoot, lLHRSYDAirportPair);
     FacBomManager::linkWithParent (ioBomRoot, lLHRSYDAirportPair);
 
-    // Set the point-of-sale-channel primary key.
-    const CityCode_T& lPosLHR("LHR");
-    const ChannelLabel_T& lChannelDN("DN");
-    const PosChannelKey lPosLHRChannelDNKey (lPosLHR, lChannelDN);  
-
-    // Create the PositionKey object and link it to the AirportPair object.
-    PosChannel& lPosLHRChannelDN =
-      FacBom<PosChannel>::instance().create (lPosLHRChannelDNKey);
-    FacBomManager::addToListAndMap (lLHRSYDAirportPair, lPosLHRChannelDN);
-    FacBomManager::linkWithParent (lLHRSYDAirportPair, lPosLHRChannelDN);
-
     // Set the fare date-period primary key.
     const Date_T lDateRangeStart (2011, 1, 15);
     const Date_T lDateRangeEnd (2011, 12, 31);
@@ -632,8 +621,19 @@ namespace stdair {
     // Create the DatePeriodKey object and link it to the PosChannel object.
     DatePeriod& lFareDatePeriod =
       FacBom<DatePeriod>::instance().create (lFareDatePeriodKey);
-    FacBomManager::addToListAndMap (lPosLHRChannelDN, lFareDatePeriod);
-    FacBomManager::linkWithParent (lPosLHRChannelDN, lFareDatePeriod);    
+    FacBomManager::addToListAndMap (lLHRSYDAirportPair, lFareDatePeriod);
+    FacBomManager::linkWithParent (lLHRSYDAirportPair, lFareDatePeriod);    
+
+    // Set the point-of-sale-channel primary key.
+    const CityCode_T& lPosLHR("LHR");
+    const ChannelLabel_T& lChannelDN("DN");
+    const PosChannelKey lPosLHRChannelDNKey (lPosLHR, lChannelDN);  
+
+    // Create the PositionKey object and link it to the AirportPair object.
+    PosChannel& lPosLHRChannelDN =
+      FacBom<PosChannel>::instance().create (lPosLHRChannelDNKey);
+    FacBomManager::addToListAndMap (lFareDatePeriod, lPosLHRChannelDN);
+    FacBomManager::linkWithParent (lFareDatePeriod, lPosLHRChannelDN);
    
     // Set the fare time-period primary key.
     const Duration_T l0000 (00, 00, 0);
@@ -646,8 +646,8 @@ namespace stdair {
     // Create the TimePeriodKey and link it to the DatePeriod object.
     TimePeriod& lFareTimePeriod =
       FacBom<TimePeriod>::instance().create (lFareTimePeriodKey);
-    FacBomManager::addToListAndMap (lFareDatePeriod, lFareTimePeriod);
-    FacBomManager::linkWithParent (lFareDatePeriod, lFareTimePeriod);        
+    FacBomManager::addToListAndMap (lPosLHRChannelDN, lFareTimePeriod);
+    FacBomManager::linkWithParent (lPosLHRChannelDN, lFareTimePeriod);        
 
     // Generate the FareRule
     const DayDuration_T& lAdvancePurchase(0);

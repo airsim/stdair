@@ -8,6 +8,7 @@
 #include <iosfwd>
 // StdAir
 #include <stdair/bom/TravelSolutionTypes.hpp>
+#include <stdair/bom/DatePeriodTypes.hpp>
 
 namespace stdair {
 
@@ -40,9 +41,9 @@ namespace stdair {
      * Recursively display (dump in the underlying output log stream)
      * the objects of the BOM tree.
      *
-     * @param std::ostream& Output stream in which the BOM tree should be
-     *        logged/dumped.
      * @param const stdair::EventQueue& Root of the BOM tree to be displayed.
+     * @return std::string Output string in which the BOM tree should be
+     *        logged/dumped.
      */
     static std::string csvDisplay (const EventQueue&);
 
@@ -158,13 +159,24 @@ namespace stdair {
     static void csvBookingClassDisplay (std::ostream&, const FlightDate&);
 
     /**
-     * Display (dump in the returned string) the full list of travel
-     * solution structures.
+     * Display (dump in the underlying output log stream) the full list of
+     * travel solution structures.
      *
-     * @return std::string Output string in which the list of travel
+     * @param std::ostream& Output stream in which the list of travel
      *        solutions is logged/dumped.
+     * @param TravelSolutionList_T& List of travel solutions to display.
      */
     static void csvDisplay (std::ostream&, const TravelSolutionList_T&);
+
+    /**
+     * Display (dump in the underlying output log stream) the full list of
+     * date period fare rule sub bom tree.
+     *
+     * @param std::ostream& Output stream in which the list of travel
+     *        solutions is logged/dumped.
+     * @param DatePeriodList_T& List of date period to display.
+     */
+    static void csvDisplay (std::ostream&, const DatePeriodList_T&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -178,7 +190,8 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the objects of the BOM tree from the level of the given Inventory.
+     * the objects of the BOM tree from the level of the given airport
+     * pair.
      *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
@@ -188,17 +201,8 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the objects of the BOM tree from the level of the given FlightDate.
-     *
-     * @param std::ostream& Output stream in which the BOM tree should be
-     *        logged/dumped.
-     * @param const PosChannel& Root of the BOM tree to be displayed.
-     */
-    static void csvPosChannelDisplay (std::ostream&, const PosChannel&);
-
-    /**
-     * Recursively display (dump in the underlying output log stream)
-     * the leg-date level objects of the BOM tree.
+     * the objects of the BOM tree from the level of the given date
+     * range.
      *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
@@ -208,7 +212,19 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the segment-date level objects of the BOM tree.
+     * the objects of the BOM tree from the level of the given point of
+     * sale channel.
+     *
+     * @param std::ostream& Output stream in which the BOM tree should be
+     *        logged/dumped.
+     * @param const PosChannel& Root of the BOM tree to be displayed.
+     */
+    static void csvPosChannelDisplay (std::ostream&, const PosChannel&);
+
+    /**
+     * Recursively display (dump in the underlying output log stream)
+     * the objects of the BOM tree from the level of the given time
+     * range.
      *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
@@ -218,7 +234,7 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the leg-cabin level objects of the BOM tree.
+     * the fare features objects of the BOM tree.
      *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
@@ -228,13 +244,15 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the segment-cabin level objects of the BOM tree.
+     * the airline class objects of the BOM tree.
      *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const AirlineClassList& Root of the BOM tree to be displayed.
      */
     static void csvAirlineClassDisplay (std::ostream&, const AirlineClassList&);
+
+    
 
   };
   
