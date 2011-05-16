@@ -40,7 +40,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   std::string AirlineClassList::toString() const {
     std::ostringstream oStr;
-    oStr << describeKey();
+    oStr << describeKey() << ", " << _yield;
     return oStr.str();
   }
 
@@ -59,7 +59,7 @@ namespace stdair {
   template<class Archive>
   void AirlineClassList::serialize (Archive& ioArchive,
                                     const unsigned int iFileVersion) {
-    ioArchive & _key;
+    ioArchive & _key & _yield;
   }
 
 }

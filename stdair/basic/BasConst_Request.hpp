@@ -20,7 +20,7 @@ namespace stdair {
   /** Default Willingness-to-Pay (WTP, as expressed as a monetary unit). */
   extern const WTP_T DEFAULT_WTP;
 
-  /** Default Point-Of-Sale (POS, e.g., "ROW"). */
+  /** Default Point-Of-Sale (POS, e.g., "WORLD"). */
   extern const AirportCode_T DEFAULT_POS;
     
   /** Default departure date (e.g., 01-Jan-2011). */

@@ -76,5 +76,8 @@ namespace stdair {
   
   /** Default number of bookings (0). */
   extern const NbOfBookings_T DEFAULT_CLASS_NB_OF_BOOKINGS;
+
+  /** Default channel. */
+  extern const ChannelLabel_T DEFAULT_CHANNEL;
 }
 #endif // __STDAIR_BAS_BASCONST_GENERAL_HPP

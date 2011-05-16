@@ -22,6 +22,9 @@ namespace stdair {
 
   /** City code */
   typedef LocationCode_T CityCode_T;
+
+  /** Define the key description. */
+  typedef std::string KeyDescription_T;
   
   /** Define the Airline Code type (2-letter-code, e.g., BA). */
   typedef std::string AirlineCode_T;

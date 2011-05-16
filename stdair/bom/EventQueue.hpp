@@ -327,7 +327,7 @@ namespace stdair {
      *       streams.</li>
      * </ul>
      */
-    ProgressPercentage_T calculateProgress(const EventType::EN_EventType&) const;
+    ProgressPercentage_T calculateProgress(const EventType::EN_EventType&)const;
 
 
   public:
