@@ -735,14 +735,14 @@ namespace stdair {
     // Generate the YieldRule
     const CabinCode_T& lCabinCode ("Y");
     const Yield_T& lYield (900.0);
-    const YieldFeaturesKey lYieldFeaturesKey (lCabinCode, lYield);
+    const YieldFeaturesKey lYieldFeaturesKey (lCabinCode);
 
     // Create the YieldFeaturesKey and link it to the TimePeriod object.
     YieldFeatures& lYieldFeatures =
       FacBom<YieldFeatures>::instance().create (lYieldFeaturesKey);
     FacBomManager::addToListAndMap (lYieldTimePeriod, lYieldFeatures);
-    FacBomManager::linkWithParent (lYieldTimePeriod, lYieldFeatures);        
-
+    FacBomManager::linkWithParent (lYieldTimePeriod, lYieldFeatures);     
+                                              
     // Generate Segment Features and link them to their YieldRule.
     AirlineCodeList_T lAirlineCodeList;
     lAirlineCodeList.push_back("BA");
@@ -753,9 +753,10 @@ namespace stdair {
 
     // Create the AirlineClassListKey and link it to the YieldFeatures object.
     AirlineClassList& lAirlineClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lAirlineClassListKey);
+      stdair::FacBom<AirlineClassList>::instance().create(lAirlineClassListKey);
     FacBomManager::addToListAndMap (lYieldFeatures, lAirlineClassList);
     FacBomManager::linkWithParent (lYieldFeatures, lAirlineClassList);
+    lAirlineClassList.setYield (lYield);
   }
 
   // //////////////////////////////////////////////////////////////////////

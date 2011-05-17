@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <list>
 // BOOST
 #include <boost/multi_array.hpp>
 // StdAir
@@ -83,6 +84,12 @@ namespace stdair {
 
   /** Define the type of day-to-departure. */
   typedef short DTD_T;
+  
+  /** Define the type of data collection point. */
+  typedef short DCP_T;
+  
+  /** Define the type of data collection point list. */
+  typedef std::list<DCP_T> DCPList_T;
 
   /** Define the list of censorship flags (une list per booking
       class, one censorship flag per DCP). */

@@ -89,5 +89,9 @@ namespace stdair {
   /** Default value for max day-to-departure (365). */
   extern const int DEFAULT_MAX_DTD;
 
+  /** Defaut data collection point list. */
+  extern const DCPList_T DEFAULT_DCP_LIST;
+  struct DefaultDCPList { static DCPList_T init(); };
+
 }
 #endif // __STDAIR_BAS_BASCONST_INVENTORY_HPP

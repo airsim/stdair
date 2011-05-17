@@ -43,6 +43,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/BookingRequestTypes.hpp \
 		$(top_srcdir)/stdair/bom/OptimisationNotificationTypes.hpp \
 		$(top_srcdir)/stdair/bom/SnapshotTypes.hpp \
+		$(top_srcdir)/stdair/bom/RMEventTypes.hpp \
 		$(top_srcdir)/stdair/bom/EventQueueTypes.hpp \
 		$(top_srcdir)/stdair/bom/EventTypes.hpp \
 		$(top_srcdir)/stdair/bom/YieldStoreTypes.hpp \
@@ -71,6 +72,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/BookingRequestStruct.hpp \
 		$(top_srcdir)/stdair/bom/OptimisationNotificationStruct.hpp \
 		$(top_srcdir)/stdair/bom/SnapshotStruct.hpp \
+		$(top_srcdir)/stdair/bom/RMEventStruct.hpp \
 		$(top_srcdir)/stdair/bom/AirlineStruct.hpp \
 		$(top_srcdir)/stdair/bom/EventStruct.hpp \
 		$(top_srcdir)/stdair/bom/EventQueue.hpp \
@@ -141,6 +143,7 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/BookingRequestStruct.cpp \
 		$(top_srcdir)/stdair/bom/OptimisationNotificationStruct.cpp \
 		$(top_srcdir)/stdair/bom/SnapshotStruct.cpp \
+		$(top_srcdir)/stdair/bom/RMEventStruct.cpp \
 		$(top_srcdir)/stdair/bom/AirlineStruct.cpp \
 		$(top_srcdir)/stdair/bom/EventStruct.cpp \
 		$(top_srcdir)/stdair/bom/EventQueue.cpp \
