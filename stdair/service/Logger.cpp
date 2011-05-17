@@ -8,22 +8,18 @@
 #include <stdair/service/Logger.hpp>
 
 namespace stdair {
-
-  Logger* Logger::_instance = NULL;
   
   // //////////////////////////////////////////////////////////////////////
-  Logger::Logger() : _level (LOG::DEBUG), _logStream (std::cout) {
-    assert (false);
+  Logger::Logger()
+    : _level (LOG::DEBUG), _logStream (&std::cout),
+      _hasBeenInitialised (false) {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  Logger::Logger (const Logger&) : _level (LOG::DEBUG), _logStream (std::cout) {
+  Logger::Logger (const Logger&)
+    : _level (LOG::DEBUG), _logStream (&std::cout),
+      _hasBeenInitialised (false) {
     assert (false);
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  Logger::Logger (const BasLogParams& iLogParams) 
-    : _level (iLogParams._logLevel), _logStream (iLogParams._logStream) {
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -35,33 +31,36 @@ namespace stdair {
   void Logger::init (const BasLogParams& iLogParams) {
 
     //
-    if (_instance != NULL && iLogParams.getForcedInitialisationFlag() == false) {
+    Logger& lInstance = instance();
+    const bool hasBeenInitialised = lInstance.getStatus();
+    if (hasBeenInitialised == true
+        && iLogParams.getForcedInitialisationFlag() == false) {
       STDAIR_LOG_ERROR ("Error: the log stream has already been initialised");
       assert (false);
     }
 
-    //
-    if (_instance == NULL) {
-      _instance = new Logger (iLogParams);
-    }
+    lInstance.setLevel (iLogParams._logLevel);
+    lInstance.setStream (iLogParams._logStream);
+    lInstance.setStatus (true);
   }
 
   // //////////////////////////////////////////////////////////////////////
   Logger& Logger::instance() {
-    if (_instance == NULL) {
-      throw NonInitialisedLogServiceException("");
-    }
-    assert (_instance != NULL);
-    return *_instance;
+    static Logger _instance;
+    return _instance;
   }
   
   // //////////////////////////////////////////////////////////////////////
+  BasLogParams Logger::getLogParams() {
+    std::ostream* oStream_ptr = instance()._logStream;
+    assert (oStream_ptr != NULL);
+    return BasLogParams (instance()._level, *oStream_ptr);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   void Logger::clean() {
-    // std::cout << "In Logger::clean(), before static instance deletion"
-    //       << std::endl;
-    delete _instance; _instance = NULL;
-    // std::cout << "In Logger::clean(), after static instance deletion"
-    //       << std::endl;
+    Logger& lInstance = instance();
+    lInstance.setStatus (false);
   }
   
 }
