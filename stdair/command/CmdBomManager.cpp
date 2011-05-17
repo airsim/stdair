@@ -677,6 +677,7 @@ namespace stdair {
     const Fare_T& lFare (900.0);
     AirlineClassList& lAirlineClassList =
       stdair::FacBom<AirlineClassList>::instance().create (lAirlineClassListKey);
+    lAirlineClassList.setFare(900.0);
     FacBomManager::addToListAndMap (lFareFeatures, lAirlineClassList);
     FacBomManager::linkWithParent (lFareFeatures, lAirlineClassList);
   }
