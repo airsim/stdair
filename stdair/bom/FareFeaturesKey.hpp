@@ -19,7 +19,7 @@ namespace stdair  {
     /** Constructors. */
     FareFeaturesKey (const DayDuration_T&,const SaturdayStay_T&,
                      const ChangeFees_T&, const NonRefundable_T&,
-                     const DayDuration_T&, const Fare_T&);
+                     const DayDuration_T&);
     FareFeaturesKey (const FareFeaturesKey&);
     /** Destructor. */
     ~FareFeaturesKey ();
@@ -48,11 +48,6 @@ namespace stdair  {
     /** Get the minimum stay. */
     const DayDuration_T& getMinimumStay() const {
       return _minimumStay;
-    }
-
-    /** Get the fare. */
-    const Fare_T& getFare() const {
-      return _fare;
     }
     
     // /////////// Display support methods /////////
@@ -90,9 +85,6 @@ namespace stdair  {
     /** Number of days that the customer spent
 	into the destination city.*/
     DayDuration_T _minimumStay;
- 
-    /** Fare value.*/
-    Fare_T _fare;
 
   };
 
