@@ -69,10 +69,19 @@ namespace stdair {
       return _yield;
     }
 
+    /** Get the fare. */
+    const stdair::Fare_T& getFare() const {
+      return _fare;
+    }
+
   public:
     // /////////// Setters //////////////
     void setYield (const Yield_T& iYield) {
       _yield = iYield;
+    }
+    
+    void setFare (const Fare_T& iFare) {
+      _fare = iFare;
     }
 
   public:
@@ -166,7 +175,12 @@ namespace stdair {
     /*
      * Yield value.
      */
-    stdair::Yield_T _yield;
+    Yield_T _yield;
+
+    /*
+     * Fare value.
+     */
+    Fare_T _fare;
   };
 
 }

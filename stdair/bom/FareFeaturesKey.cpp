@@ -14,11 +14,10 @@ namespace stdair {
                                     const stdair::SaturdayStay_T& iSaturdayStay,
                                     const stdair::ChangeFees_T& iChangeFees,
                                     const stdair::NonRefundable_T& iNonRefundable,
-                                    const stdair::DayDuration_T& iMinimumStay,
-                                    const stdair::Fare_T& iFare)
+                                    const stdair::DayDuration_T& iMinimumStay)
     : _advancePurchase(iAdvancePurchase),_saturdayStay(iSaturdayStay),
       _changeFees(iChangeFees), _nonRefundable(iNonRefundable),
-      _minimumStay(iMinimumStay), _fare(iFare) {
+      _minimumStay(iMinimumStay) {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -27,8 +26,7 @@ namespace stdair {
       _saturdayStay(iKey.getSaturdayStay()),
       _changeFees(iKey.getChangeFees()), 
       _nonRefundable(iKey.getRefundableOption()),
-      _minimumStay(iKey.getMinimumStay()), 
-      _fare(iKey.getFare()) {
+      _minimumStay(iKey.getMinimumStay()) {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -49,7 +47,7 @@ namespace stdair {
     std::ostringstream oStr;
     oStr << _advancePurchase << "-"<< _saturdayStay << "-"
          << _changeFees << "-" << _nonRefundable << "-"
-         << _minimumStay << "-" << _fare;
+         << _minimumStay;
     return oStr.str();
   }
 
