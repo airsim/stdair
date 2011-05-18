@@ -652,10 +652,9 @@ namespace stdair {
     const ChangeFees_T lChangeFees (20.0);
     const NonRefundable_T lNonRefundable (true);
     const DayDuration_T lMinimumStay (0); 
-    const Fare_T lFare (900.0);
     const FareFeaturesKey lFareFeaturesKey (lAdvancePurchase, lSaturdayStay,
                                             lChangeFees, lNonRefundable,
-                                            lMinimumStay, lFare);
+                                            lMinimumStay);
 
     // Create the FareFeaturesKey and link it to the TimePeriod object.
     FareFeatures& lFareFeatures =
@@ -672,8 +671,10 @@ namespace stdair {
                                                     lClassCodeList);
 
     // Create the AirlineClassListKey and link it to the FareFeatures object.
+    const Fare_T& lFare (900.0);
     AirlineClassList& lAirlineClassList =
       stdair::FacBom<AirlineClassList>::instance().create (lAirlineClassListKey);
+    lAirlineClassList.setFare(900.0);
     FacBomManager::addToListAndMap (lFareFeatures, lAirlineClassList);
     FacBomManager::linkWithParent (lFareFeatures, lAirlineClassList);
   }

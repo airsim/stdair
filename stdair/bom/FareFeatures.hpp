@@ -69,11 +69,6 @@ namespace stdair {
       return _key.getMinimumStay();
     }
 
-    /** Get the fare. */
-    const stdair::Fare_T& getFare() const {
-      return _key.getFare();
-    }
-
   public:
     // ////////////// Business methods ///////////////
     /** Check if a given stay duration is greater or equal to
