@@ -20,24 +20,15 @@
 #include <stdair/service/Logger.hpp>
 
 namespace stdair {
-
-  DBSessionManager* DBSessionManager::_instance = NULL;
   
   // //////////////////////////////////////////////////////////////////////
   DBSessionManager::DBSessionManager () : _dbSession (NULL) {
-    assert (false);
   }
 
   // //////////////////////////////////////////////////////////////////////
   DBSessionManager::DBSessionManager (const DBSessionManager&)
     : _dbSession (NULL) {
     assert (false);
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  DBSessionManager::DBSessionManager (const BasDBParams& iDBParams) 
-    : _dbSession (NULL) {
-    dbInit (iDBParams);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -83,32 +74,18 @@ namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
   void DBSessionManager::init (const BasDBParams& iDBParams) {
-    // Sanity check
-    if (_instance != NULL) {
-      STDAIR_LOG_ERROR ("Error: the DB session has already been initialised");
-      assert (false);
-    }
-    assert (_instance == NULL);
-
-    _instance = new DBSessionManager (iDBParams);
+    DBSessionManager& lInstance = instance();
+    lInstance.dbInit (iDBParams);
   }
   
   // //////////////////////////////////////////////////////////////////////
   DBSessionManager& DBSessionManager::instance() {
-    if (_instance == NULL) {
-      throw NonInitialisedDBSessionManagerException("");
-    }
-    assert (_instance != NULL);
-    return *_instance;
+    static DBSessionManager _instance;
+    return _instance;
   }
   
   // //////////////////////////////////////////////////////////////////////
   void DBSessionManager::clean() {
-    //std::cout<< "In DBSessionManager::clean(),before static instance deletion"
-    //       << std::endl;
-    delete _instance; _instance = NULL;
-    //std::cout<< "In DBSessionManager::clean(),after static instance deletion"
-    //       << std::endl;
   }
   
   // //////////////////////////////////////////////////////////////////////

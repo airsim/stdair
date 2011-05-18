@@ -31,8 +31,6 @@ namespace stdair {
   private:
     /** Default constructors are private so that only the required 
         constructor can be used. */
-    DBSessionManager (const BasDBParams&);
-    /** Default constructor. It must not be used. */
     DBSessionManager ();
     /** Default copy constructor. It must not be used. */
     DBSessionManager (const DBSessionManager&);
@@ -58,9 +56,6 @@ namespace stdair {
 
     
   private:
-    /** Instance object.*/
-    static DBSessionManager* _instance;
-
     /** Database session handler. */
     DBSession_T* _dbSession;
   };

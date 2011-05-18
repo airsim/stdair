@@ -58,9 +58,10 @@ namespace stdair {
     template <typename T>
     void log (const LOG::EN_LogLevel iLevel, const int iLineNumber,
               const std::string& iFileName, const T& iToBeLogged) {
+      assert (_logStream != NULL);
       if (iLevel <= _level) {
-        _logStream << "[" << LOG::_logLevels[iLevel] << "]" << iFileName << ":"
-                   << iLineNumber << ": " << iToBeLogged << std::endl;
+        *_logStream << "[" << LOG::_logLevels[iLevel] << "]" << iFileName << ":"
+                    << iLineNumber << ": " << iToBeLogged << std::endl;
       }
     }
     
@@ -73,12 +74,36 @@ namespace stdair {
   private:
     // /////////////////// Initialisation and finalisation ////////////////
     /**
+     * Record the fact that the static instance has been initialised.
+     */
+    bool getStatus() const {
+      return _hasBeenInitialised;
+    }
+
+    /**
+     * Set the log level (e.g., Debug, Notification, Error, etc.).
+     */
+    void setLevel (const LOG::EN_LogLevel& iLevel) {
+      _level = iLevel;
+    }
+
+    /**
+     * Set the log stream (e.g., a file or std::cout).
+     */
+    void setStream (std::ostream& ioStream) {
+      _logStream = &ioStream;
+    }
+
+    /**
+     * Record the fact that the static instance has been initialised.
+     */
+    void setStatus (const bool iStatus) {
+      _hasBeenInitialised = iStatus;
+    }
+
+    /**
      * Default constructors are private so that only the required 
      * constructor can be used.
-     */
-    Logger (const BasLogParams&);
-    /**
-     * Default constructor. It must not be used.
      */
     Logger();
     /**
@@ -100,9 +125,7 @@ namespace stdair {
     /**
      * Get the log parameters.
      */
-    static BasLogParams getLogParams() {
-      return BasLogParams (instance()._level, instance()._logStream);
-    }
+    static BasLogParams getLogParams();
 
     /**
      * Delete the static Logger instance.
@@ -113,11 +136,6 @@ namespace stdair {
   private:
     // /////////////////// Attributes ////////////////
     /**
-     * Instance object.
-     */
-    static Logger* _instance;
-
-    /**
      * Log level.
      */
     LOG::EN_LogLevel _level;
@@ -125,7 +143,12 @@ namespace stdair {
     /**
      * Stream dedicated to the logs.
      */
-    std::ostream& _logStream;
+    std::ostream* _logStream;
+
+    /**
+     * State whether the Logger instance has alredy been initialised.
+     */
+    bool _hasBeenInitialised;
   };
   
 }
