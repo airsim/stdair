@@ -54,60 +54,8 @@ namespace stdair {
   };
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonExport (std::ostream& oStream,
-                                  const FlightDate& iFlightDate) {
-    // Save the formatting flags for the given STL output stream
-    FlagSaver flagSaver (oStream);
-
-    // Create an empty property tree object
-    bpt::ptree pt;
-
-    /**
-     * Flight-date level (only)
-     */
-    const AirlineCode_T& lAirlineCode = iFlightDate.getAirlineCode();
-    const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
-    const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
-
-    // Put airline code in property tree
-    pt.put ("flight_date.airline_code", lAirlineCode);
-
-    // Put flight number level in property tree
-    pt.put ("flight_date.flight_number", lFlightNumber);
-
-    // Put the flight departure date in property tree
-    const std::string& lDepartureDateStr =
-      boost::gregorian::to_simple_string (lFlightDateDate);
-    pt.put ("flight_date.departure_date", lDepartureDateStr);
-
-    //
-    jsonLegDateExport (oStream, iFlightDate);
-
-    //
-    //jsonLegCabinExport (oStream, iFlightDate);
-
-    //
-    //jsonBucketExport (oStream, iFlightDate);
-
-    //
-    //jsonFareFamilyExport (oStream, iFlightDate);
-
-    //
-    //jsonBookingClassExport (oStream, iFlightDate);
-
-    // Write the property tree into the JSON stream.
-    write_json (oStream, pt);
-  }
-    
-  // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonLegDateExport (std::ostream& oStream,
-                                         const FlightDate& iFlightDate) {
-    // Save the formatting flags for the given STL output stream
-    FlagSaver flagSaver (oStream);
-
-    // Create an empty property tree object
-    bpt::ptree pt;
-
+  void jsonLegDateExport (bpt::ptree& ioPropertyTree,
+                          const FlightDate& iFlightDate) {
     /**
      * Leg-date level (only).
      */
@@ -118,67 +66,58 @@ namespace stdair {
     }
     
     // Browse the leg-dates
+    unsigned short idx = 0;
     const LegDateList_T& lLegDateList =
       BomManager::getList<LegDate> (iFlightDate);
     for (LegDateList_T::const_iterator itLD = lLegDateList.begin();
-         itLD != lLegDateList.end(); ++itLD) {
+         itLD != lLegDateList.end(); ++itLD, ++idx) {
       const LegDate* lLD_ptr = *itLD;
       assert (lLD_ptr != NULL);
       
-      // Put boarding point in property tree
-      pt.put ("flight_date.leg.board_point", lLD_ptr->getBoardingPoint());
-      // Put off point in property tree
-      pt.put ("flight_date.leg.off_point", lLD_ptr->getOffPoint());
-      // Put boarding date in property tree
-      pt.put ("flight_date.leg.board_date", lLD_ptr->getBoardingDate());
-      // Put off date in property tree
-      pt.put ("flight_date.leg.off_date", lLD_ptr->getOffDate());
-      // Put boarding time in property tree
-      pt.put ("flight_date.leg.board_time", lLD_ptr->getBoardingTime());
-      // Put off time in property tree
-      pt.put ("flight_date.leg.off_time", lLD_ptr->getOffTime());
-      // Put elapsed time in property tree
-      pt.put ("flight_date.leg.elapsed_time", lLD_ptr->getElapsedTime());
-      // Put date offset in property tree
-      pt.put ("flight_date.leg.date_offset", lLD_ptr->getDateOffset());
-      // Put time offset in property tree
-      pt.put ("flight_date.leg.time_offset", lLD_ptr->getTimeOffset());
-      // Put distance in property tree
-      pt.put ("flight_date.leg.distance", lLD_ptr->getDistance());
-      // Put capacity in property tree
-      pt.put ("flight_date.leg.capacity", lLD_ptr->getCapacity());
-    }
+      //
+      bpt::ptree lLegDateArray;
 
-    // Write the property tree into the JSON stream.
-    write_json (oStream, pt);
+      // Put boarding point in property tree
+      lLegDateArray.put ("board_point", lLD_ptr->getBoardingPoint());
+      // Put off point in property tree
+      lLegDateArray.put ("off_point", lLD_ptr->getOffPoint());
+      // Put boarding date in property tree
+      lLegDateArray.put ("board_date", lLD_ptr->getBoardingDate());
+      // Put off date in property tree
+      lLegDateArray.put ("off_date", lLD_ptr->getOffDate());
+      // Put boarding time in property tree
+      lLegDateArray.put ("board_time", lLD_ptr->getBoardingTime());
+      // Put off time in property tree
+      lLegDateArray.put ("off_time", lLD_ptr->getOffTime());
+      // Put elapsed time in property tree
+      lLegDateArray.put ("elapsed_time", lLD_ptr->getElapsedTime());
+      // Put date offset in property tree
+      lLegDateArray.put ("date_offset", lLD_ptr->getDateOffset());
+      // Put time offset in property tree
+      lLegDateArray.put ("time_offset", lLD_ptr->getTimeOffset());
+      // Put distance in property tree
+      lLegDateArray.put ("distance", lLD_ptr->getDistance());
+      // Put capacity in property tree
+      lLegDateArray.put ("capacity", lLD_ptr->getCapacity());
+
+      //
+      std::ostringstream oStream;
+      oStream << "flight_date.legs";
+      ioPropertyTree.put_child (oStream.str(), lLegDateArray);
+    }
   }
     
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonSegmentDateExport (std::ostream& oStream,
-                                             const FlightDate& iFlightDate) {
-    // Save the formatting flags for the given STL output stream
-    FlagSaver flagSaver (oStream);
-
-    // Create an empty property tree object
-    bpt::ptree pt;
-
+  void jsonSegmentDateExport (bpt::ptree& ioPropertyTree,
+                              const FlightDate& iFlightDate) {
     /**
      * Segment-date level (only)
      */
-
-    // Write the property tree into the JSON stream.
-    write_json (oStream, pt);
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonLegCabinExport (std::ostream& oStream,
-                                          const FlightDate& iFlightDate) {
-    // Save the formatting flags for the given STL output stream
-    FlagSaver flagSaver (oStream);
-
-    // Create an empty property tree object
-    bpt::ptree pt;
-
+  void jsonLegCabinExport (bpt::ptree& ioPropertyTree,
+                           const FlightDate& iFlightDate) {
     /**
      * Leg-cabin level (only)
      */
@@ -204,8 +143,11 @@ namespace stdair {
         const LegCabin* lLC_ptr = *itLC;
         assert (lLC_ptr != NULL);
       
-        oStream << lLC_ptr->getCabinCode() << ", ";
+        // Put boarding point in property tree
+        ioPropertyTree.put ("flight_date.leg.cabin.code",
+                            lLC_ptr->getCabinCode());
 
+        /*
         oStream << lLC_ptr->getOfferedCapacity() << ", "
                 << lLC_ptr->getPhysicalCapacity() << ", "
                 << lLC_ptr->getRegradeAdjustment() << ", "
@@ -224,39 +166,22 @@ namespace stdair {
                 << lLC_ptr->getETB() << ", "
                 << lLC_ptr->getCurrentBidPrice() << ", "
                 << std::endl;
+        */
       }
     }
-
-    // Write the property tree into the JSON stream.
-    write_json (oStream, pt);
   }
     
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonSegmentCabinExport (std::ostream& oStream,
-                                              const FlightDate& iFlightDate) {
-    // Save the formatting flags for the given STL output stream
-    FlagSaver flagSaver (oStream);
-
-    // Create an empty property tree object
-    bpt::ptree pt;
-
+  void jsonSegmentCabinExport (bpt::ptree& ioPropertyTree,
+                               const FlightDate& iFlightDate) {
     /**
      * Segment-cabin level (only)
      */
-
-    // Write the property tree into the JSON stream.
-    write_json (oStream, pt);
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonFareFamilyExport (std::ostream& oStream,
-                                            const FlightDate& iFlightDate) {
-    // Save the formatting flags for the given STL output stream
-    FlagSaver flagSaver (oStream);
-
-    // Create an empty property tree object
-    bpt::ptree pt;
-
+  void jsonFareFamilyExport (bpt::ptree& ioPropertyTree,
+                             const FlightDate& iFlightDate) {
     /**
      * Fare family level (only)
      */
@@ -288,15 +213,21 @@ namespace stdair {
         }
     
         // Browse the fare families
+        unsigned short ffIdx = 0;
         const FareFamilyList_T& lFareFamilyList =
           BomManager::getList<FareFamily> (*lSC_ptr);
         for (FareFamilyList_T::const_iterator itFF = lFareFamilyList.begin();
-             itFF != lFareFamilyList.end(); ++itFF) {
+             itFF != lFareFamilyList.end(); ++itFF, ++ffIdx) {
           const FareFamily* lFF_ptr = *itFF;
           assert (lFF_ptr != NULL);
 
-          oStream << lFF_ptr->getFamilyCode() << ", ";
+          //
+          bpt::ptree lFFArray;
 
+          // Put boarding point in property tree
+          lFFArray.put ("code", lFF_ptr->getFamilyCode());
+
+          /*
           oStream << lSC_ptr->getBookingCounter() << ", "
                   << lSC_ptr->getMIN() << ", "
                   << lSC_ptr->getUPR() << ", "
@@ -304,23 +235,20 @@ namespace stdair {
                   << lSC_ptr->getAvailabilityPool() << ", "
                   << lSC_ptr->getCurrentBidPrice() << ", "
                   << std::endl;
+          */
+
+          //
+          std::ostringstream oStream;
+          oStream << "flight_date.segment.cabin.fare_families";
+          ioPropertyTree.put_child (oStream.str(), lFFArray);
         }
       }
     }
-
-    // Write the property tree into the JSON stream.
-    write_json (oStream, pt);
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonBucketExport (std::ostream& oStream,
-                                        const FlightDate& iFlightDate) {
-    // Save the formatting flags for the given STL output stream
-    FlagSaver flagSaver (oStream);
-
-    // Create an empty property tree object
-    bpt::ptree pt;
-
+  void jsonBucketExport (bpt::ptree& ioPropertyTree,
+                         const FlightDate& iFlightDate) {
     /**
      * Bucket level (only)
      */
@@ -358,42 +286,41 @@ namespace stdair {
           const Bucket* lBucket_ptr = *itBuck;
           assert (lBucket_ptr != NULL);
 
-          oStream << lBucket_ptr->getYieldRangeUpperValue() << ", "
-                  << lBucket_ptr->getSeatIndex() << ", "
+          // Put yield range upper value in property tree
+          ioPropertyTree.put ("flight_date.leg.cabin.bucket.yield_range_upper",
+                              lBucket_ptr->getYieldRangeUpperValue());
+          /*
+          oStream << lBucket_ptr->getSeatIndex() << ", "
                   << lBucket_ptr->getSoldSeats() << ", "
                   << lBucket_ptr->getAvailability() << ", ";
-          oStream << std::endl;
+          */
         }
       }
     }
-
-    // Write the property tree into the JSON stream.
-    write_json (oStream, pt);
   }
     
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonBookingClassExport (std::ostream& oStream,
-                                           const BookingClass& iBookingClass,
-                                           const std::string& iLeadingString) {
-    // Save the formatting flags for the given STL output stream
-    FlagSaver flagSaver (oStream);
-
-    // Create an empty property tree object
-    bpt::ptree pt;
-
+  void jsonBookingClassExport (bpt::ptree& ioPropertyTree,
+                               const BookingClass& iBookingClass,
+                               const std::string& iLeadingString) {
     /**
      * Booking-class level (only)
      *
      * See the method below (jsonBookingClassExport() at FlightDate level)
      * for the details of the header.
      */
-    oStream << iLeadingString << iBookingClass.getClassCode();
+    std::ostringstream oStream;
+    oStream << iBookingClass.getClassCode();
 
-    if (iBookingClass.getSubclassCode() == 0) {
-      oStream << ", ";
-    } else {
-      oStream << iBookingClass.getSubclassCode() << ", ";
+    if (iBookingClass.getSubclassCode() != 0) {
+      oStream << iBookingClass.getSubclassCode();
     }
+
+    // Put boarding point in property tree
+    ioPropertyTree.put ("flight_date.segment.cabin.fare_family.booking_class.code",
+                        oStream.str());
+
+    /*
     oStream << iBookingClass.getAuthorizationLevel() << " ("
             << iBookingClass.getProtection() << "), "
             << iBookingClass.getNegotiatedSpace() << ", "
@@ -409,20 +336,12 @@ namespace stdair {
             << iBookingClass.getNetRevenueAvailability() << ", "
             << iBookingClass.getSegmentAvailability() << ", "
             << std::endl;
-
-    // Write the property tree into the JSON stream.
-    write_json (oStream, pt);
+    */
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonBookingClassExport (std::ostream& oStream,
-                                              const FlightDate& iFlightDate) {
-    // Save the formatting flags for the given STL output stream
-    FlagSaver flagSaver (oStream);
-
-    // Create an empty property tree object
-    bpt::ptree pt;
-
+  void jsonBookingClassExport (bpt::ptree& ioPropertyTree,
+                               const FlightDate& iFlightDate) {
     // Check whether there are SegmentDate objects
     if (BomManager::hasList<SegmentDate> (iFlightDate) == false) {
       return;
@@ -477,7 +396,8 @@ namespace stdair {
               assert (lBC_ptr != NULL);
 
               //
-              jsonBookingClassExport (oStream, *lBC_ptr, oLeadingStr.str());
+              jsonBookingClassExport (ioPropertyTree, *lBC_ptr,
+                                      oLeadingStr.str());
             }
           }
 
@@ -499,13 +419,56 @@ namespace stdair {
           assert (lBC_ptr != NULL);
 
           //
-          jsonBookingClassExport (oStream, *lBC_ptr, oLeadingStr.str());
+          jsonBookingClassExport (ioPropertyTree, *lBC_ptr, oLeadingStr.str());
         }
       }
     }
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomJSONExport::jsonExport (std::ostream& oStream,
+                                  const FlightDate& iFlightDate) {
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    // Create an empty property tree object
+    bpt::ptree pt;
+
+    /**
+     * Flight-date level (only)
+     */
+    const AirlineCode_T& lAirlineCode = iFlightDate.getAirlineCode();
+    const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
+    const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
+
+    // Put airline code in property tree
+    pt.put ("flight_date.airline_code", lAirlineCode);
+
+    // Put flight number level in property tree
+    pt.put ("flight_date.flight_number", lFlightNumber);
+
+    // Put the flight departure date in property tree
+    const std::string& lDepartureDateStr =
+      boost::gregorian::to_simple_string (lFlightDateDate);
+    pt.put ("flight_date.departure_date", lDepartureDateStr);
+
+    //
+    jsonLegDateExport (pt, iFlightDate);
+
+    //
+    //jsonLegCabinExport (pt, iFlightDate);
+
+    //
+    //jsonBucketExport (pt, iFlightDate);
+
+    //
+    //jsonFareFamilyExport (pt, iFlightDate);
+
+    //
+    //jsonBookingClassExport (pt, iFlightDate);
 
     // Write the property tree into the JSON stream.
     write_json (oStream, pt);
   }
-
+    
 }
