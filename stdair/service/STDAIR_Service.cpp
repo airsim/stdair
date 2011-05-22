@@ -4,6 +4,9 @@
 // STL
 #include <cassert>
 #include <sstream>
+// Boost Property Tree
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 // StdAir
 #include <stdair/stdair_types.hpp>
 #include <stdair/basic/BasChronometer.hpp>
@@ -23,6 +26,8 @@
 #include <stdair/service/Logger.hpp>
 #include <stdair/service/DBSessionManager.hpp>
 #include <stdair/STDAIR_Service.hpp>
+
+namespace bpt = boost::property_tree;
 
 namespace stdair {
 
@@ -234,8 +239,23 @@ namespace stdair {
       BomJSONExport::jsonExport (oStr, *lFlightDate_ptr);
       
     } else {
-      oStr << "error - No flight-date found for the given key: '"
-           << iAirlineCode << iFlightNumber << " - " << iDepartureDate << "'";
+      //
+      bpt::ptree lPropertyTree;
+      
+      // Build the appropriate message, so that the client may know that
+      // no flight-date can be found for that given key.
+      std::ostringstream oNoFlightDateStream;
+      oNoFlightDateStream << "No flight-date found for the given key: '"
+                          << iAirlineCode << iFlightNumber
+                          << " - " << iDepartureDate << "'";
+      const std::string oNoFlightDateString (oNoFlightDateStream.str());
+
+      // Put in the property tree the fact that no flight-date has been found.
+      // \note That is not (necessary) an error.
+      lPropertyTree.put ("error", oNoFlightDateString.c_str());
+
+      // Write the property tree into the JSON stream.
+      write_json (oStr, lPropertyTree);
     }
     
     return oStr.str();
