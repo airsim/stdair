@@ -56,6 +56,9 @@ namespace stdair {
     /** Set the class-path. */
     void addClassList (const std::string);
 
+    /** Empty the class-path. */
+    void emptyClassList ();
+
     /** Set the fare value. */
     void setFare (const Fare_T& iFare) {
       _fare = iFare;
