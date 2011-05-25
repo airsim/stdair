@@ -13,8 +13,7 @@ URL:            http://sourceforge.net/projects/%{name}/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 %{?el5:BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)}
 
-BuildRequires:  boost-devel
-BuildRequires:  soci-mysql-devel
+BuildRequires:  boost-devel, soci-mysql-devel, zeromq-devel
 
 
 %description
