@@ -16,9 +16,17 @@ set (PACKAGE_NAME "${PACKAGE_NAME_TMP}" CACHE INTERNAL "Description")
 ##
 # Version
 set (stdair_VERSION_MAJOR 0)
-set (stdair_VERSION_MINOR 25)
+set (stdair_VERSION_MINOR 32)
 set (stdair_VERSION_PATCH 0)
 set (stdair_VERSION "${stdair_VERSION_MAJOR}.${stdair_VERSION_MINOR}.${stdair_VERSION_PATCH}")
+
+##
+# SCM (Git)
+find_package (Git)
+if (Git_FOUND)
+  Git_WC_INFO (${CMAKE_CURRENT_SOURCE_DIR} ER)
+  set (GIT_REVISION ${ER_WC_REVISION})
+endif (Git_FOUND)
 
 ##
 # Library target
@@ -37,15 +45,18 @@ set (CPACK_PACKAGE_CONTACT "Denis Arnaud <denis_arnaud@users.sourceforge.net>")
 set (CPACK_PACKAGE_VENDOR "Denis Arnaud")
 set (CPACK_PACKAGE_VERSION_MAJOR "${stdair_VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${stdair_VERSION_MINOR}")
-set (CPACK_PACKAGE_VERSION_PATCH "${stdair_VERSION_PATCH}")
+#set (CPACK_PACKAGE_VERSION_PATCH "${stdair_VERSION_PATCH}")
+set (CPACK_PACKAGE_VERSION_PATCH "${GIT_REVISION}")
 set (CPACK_PACKAGE_VERSION "${stdair_VERSION}")
 set (CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/README)
 set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
 
-#set (CPACK_SOURCE_GENERATOR "DEB;RPM;TGZ")
-set (CPACK_GENERATOR "DEB;RPM;TGZ")
+#set (CPACK_SOURCE_GENERATOR "DEB;RPM;TGZ;TBZ2")
+set (CPACK_GENERATOR "TGZ;TBZ2")
 #set (CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.3.6), libgcc1 (>= 1:4.1)")
-include(CPack)
+include (CPack)
+# Add a 'dist' target, similar to what is given by GNU Autotools
+add_custom_target (dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 
 ##
 # "Other" Documentation
@@ -59,7 +70,7 @@ set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/config/)
 # Compilation
 #set (CMAKE_CXX_FLAGS "-g -Wall -Wextra -pedantic -Werror")
 set (CMAKE_CXX_FLAGS "-g -Wall -Werror")
-include_directories(BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}) 
+include_directories (BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}) 
 
 # Dependencies
 # ~~~~~~~~~~ BOOST ~~~~~~~~~~
@@ -68,6 +79,7 @@ find_package ( Boost 1.44 REQUIRED COMPONENTS program_options date_time
 if (Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 endif()
+
 # ~~~~~~~~~~ MySQL ~~~~~~~~~
 find_package ( MySQL )
 if (MYSQL_FOUND)
@@ -83,6 +95,10 @@ find_package ( SOCIMySQL )
 if (SOCIMYSQL_FOUND)
   include_directories(${SOCIMYSQL_INCLUDE_DIR})
 endif()
+
+# ~~~~~~~~~~ MySQL ~~~~~~~~~
+find_package (Doxygen REQUIRED)
+
 
 # Subdirs
 add_subdirectory (${PROJECT_NAME})
