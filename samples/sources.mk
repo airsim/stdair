@@ -6,6 +6,8 @@ sample_csv_sources = \
 	$(top_srcdir)/samples/demand05.csv \
 	$(top_srcdir)/samples/demand06.csv \
 	$(top_srcdir)/samples/demand07.csv \
+	$(top_srcdir)/samples/demand08.csv \
+	$(top_srcdir)/samples/demand09.csv \
 	$(top_srcdir)/samples/fare01.csv \
 	$(top_srcdir)/samples/fareError01.csv \
 	$(top_srcdir)/samples/fareError02.csv \
@@ -24,6 +26,9 @@ sample_csv_sources = \
 	$(top_srcdir)/samples/rm06.csv \
 	$(top_srcdir)/samples/rm07.csv \
 	$(top_srcdir)/samples/rm08.csv \
+	$(top_srcdir)/samples/rm09.csv \
+	$(top_srcdir)/samples/rm10.csv \
+	$(top_srcdir)/samples/rm11.csv \
 	$(top_srcdir)/samples/schedule01.csv \
 	$(top_srcdir)/samples/schedule02.csv \
 	$(top_srcdir)/samples/schedule03.csv \

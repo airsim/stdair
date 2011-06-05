@@ -247,7 +247,7 @@ AC_CONFIG_FILES(
 	doc/local/Makefile
 	doc/doxygen_html.cfg
 	samples/Makefile
-	samples/RDS01/Makefile
+	samples/rds01/Makefile
 	test/Makefile
 	test/inheritance/Makefile
 	test/guillotine/Makefile

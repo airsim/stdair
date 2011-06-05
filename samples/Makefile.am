@@ -3,7 +3,7 @@ include $(top_srcdir)/Makefile.common
 include $(srcdir)/sources.mk
 
 ##
-SUBDIRS = RDS01
+SUBDIRS = rds01
 
 MAINTAINERCLEANFILES = Makefile.in Makefile
 
