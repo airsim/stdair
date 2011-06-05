@@ -41,6 +41,6 @@ set_property (DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES
   "${CMAKE_CURRENT_BINARY_DIR}/man3")
 
 # Installation of the manual pages
-set (MAN_PATH "share/${PROJECT_NAME}/man")
+set (MAN_PATH "share/man")
 install (DIRECTORY "${man1_DIR}" DESTINATION ${MAN_PATH})
 install (DIRECTORY "${man3_DIR}" DESTINATION ${MAN_PATH})

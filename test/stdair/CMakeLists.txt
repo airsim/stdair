@@ -9,8 +9,8 @@ if (Boost_FOUND)
   enable_testing() 
 
   # * StdAir Test Suite
-  file ( GLOB_RECURSE stdairtest_SOURCES *.cpp )
-  add_test_suite (StdAirTest "${stdairtest_SOURCES}" ${STDAIR_LIBRARIES})
+  file (GLOB stdairtest_SOURCES *.cpp)
+  add_test_suite (StdAirTest "${stdairtest_SOURCES}" ${STDAIR_LIB_TARGET})
 
   # * Next test suite
   # ...

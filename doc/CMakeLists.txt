@@ -9,7 +9,6 @@
 set (OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
 set (top_srcdir       "${CMAKE_SOURCE_DIR}")
 set (srcdir           "${CMAKE_CURRENT_SOURCE_DIR}")
-set (doc_FILES        "${CMAKE_CURRENT_BINARY_DIR}/html")
 #
 set (DOXYGEN_OUTPUT_DIRECTORY "${OUTPUT_DIRECTORY}")
 
@@ -29,26 +28,32 @@ set (doclocal_SOURCES ${doclocaldoc_SOURCES} ${doclocalhtml_SOURCES})
 # Aggregating all the documentation sources
 set (doc_SOURCES ${doctutorial_SOURCES} ${doclocal_SOURCES})
 
-# Add the 'docs' target, depending on the documentation sources and
+# Add the 'doc' target, depending on the documentation sources and
 # launching Doxygen
-add_custom_target (docs
-  COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen_html.cfg ${doc_SOURCES}
-  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/doxygen_html.cfg ${doc_SOURCES}
-  COMMENT "Building doc ...")
+add_custom_target (doc
+  COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen_html.cfg
+  COMMENT "Generating documentation with Doxygen...")
+#add_custom_target (doc
+#  COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen_html.cfg ${doc_SOURCES}
+#  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/doxygen_html.cfg ${doc_SOURCES}
+#  COMMENT "Building doc ...")
 
 # Copy the images into the target directory.
 # First, a CMake configuration file is written. Then, a target is added, 
 # using that CMake configuration file. Indeed, the file() directive is
 # executed only at configuration time (when 'cmake' is called), whereas
 # the add_custom_command() is triggered by every 'make' command.
+set (htmldoc_DIR "${CMAKE_CURRENT_BINARY_DIR}/html")
+set (pdfdoc_DIR "${CMAKE_CURRENT_BINARY_DIR}/latex")
 file (WRITE ${CMAKE_BINARY_DIR}/copy_doc_images.cmake
   "file (COPY ${docimages_DIR}/${CPACK_PACKAGE_NAME}_logo.png	
-       DESTINATION ${doc_FILES})
-   file (COPY ${docimages_DIR}/sfx_logo.png DESTINATION ${doc_FILES})
-   file (COPY ${docimages_DIR}/favicon.ico DESTINATION ${doc_FILES})")
+       DESTINATION ${htmldoc_DIR})
+   file (COPY ${docimages_DIR}/sfx_logo.png DESTINATION ${htmldoc_DIR})
+   file (COPY ${docimages_DIR}/favicon.ico DESTINATION ${htmldoc_DIR})")
 #
 add_custom_target (copy_doc_images
- COMMAND ${CMAKE_COMMAND} -P copy_doc_images.cmake)
+ COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/copy_doc_images.cmake)
+add_dependencies (doc copy_doc_images)
 
 # Clean-up $build/html and $build/latex on 'make clean'
 set_property (DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES 
@@ -58,4 +63,5 @@ set_property (DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES
 
 # Installation of the HTML documentation
 set (DOC_PATH "share/doc/${PROJECT_NAME}-${CPACK_PACKAGE_VERSION}")
-install (DIRECTORY ${doc_FILES} DESTINATION ${DOC_PATH})
+install (DIRECTORY ${htmldoc_DIR} DESTINATION ${DOC_PATH})
+install (DIRECTORY ${pdfdoc_DIR} DESTINATION ${DOC_PATH})
