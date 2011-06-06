@@ -11,6 +11,7 @@
 // Boost Random
 #include <boost/random/linear_congruential.hpp>
 #include <boost/random/uniform_real.hpp>
+#include <boost/random/exponential_distribution.hpp>
 #include <boost/random/variate_generator.hpp>
 
 namespace stdair {
@@ -51,6 +52,14 @@ namespace stdair {
    */
   typedef boost::variate_generator<BaseGenerator_T&,
                                    UniformDistribution_T> UniformGenerator_T;
+
+  /** Type definiton for the exponential distribution (characteristics). */
+  typedef boost::exponential_distribution<> ExponentialDistribution_T;
+
+
+  /** Type definition for the exponential distribution random generator. */
+  typedef boost::variate_generator<BaseGenerator_T&,
+                                   ExponentialDistribution_T> ExponentialGenerator_T;
 
   /**
    * Define a mean value (e.g., 20.2).
