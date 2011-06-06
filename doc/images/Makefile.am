@@ -1,3 +1,4 @@
 include $(top_srcdir)/Makefile.common
 
-EXTRA_DIST = stdair_logo.png sfx_logo.png favicon.ico
+EXTRA_DIST = stdair_logo.png sfx_logo.png favicon.ico \
+	stdair_icon.ico stdair_icon.png stdair_icon.ppm

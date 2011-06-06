@@ -15,7 +15,7 @@ sampledir = @sampledir@
 #
 noinst_DATA = $(sample_csv_sources) 
 
-EXTRA_DIST = $(noinst_DATA)
+EXTRA_DIST = $(noinst_DATA) README_airinv.txt
 
 # Targets
 install-data-local:

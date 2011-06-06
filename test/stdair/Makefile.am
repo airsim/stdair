@@ -5,7 +5,7 @@ include $(srcdir)/sources.mk
 ##
 SUBDIRS =
 
-EXTRA_DIST =
+EXTRA_DIST = MPBomRoot.hpp MPBomRoot.cpp
 
 ##
 # Test library
