@@ -21,12 +21,25 @@ set (stdair_VERSION_MINOR 32)
 set (stdair_VERSION_PATCH 0)
 set (stdair_VERSION "${stdair_VERSION_MAJOR}.${stdair_VERSION_MINOR}.${stdair_VERSION_PATCH}")
 set (PACKAGE_VERSION "${stdair_VERSION}")
-
 # Note that the soname could be different from the version. The soname
 # should change only the ABI compatibility is no longer guaranteed.
 set (GENERIC_LIB_VERSION "${stdair_VERSION}")
 set (GENERIC_LIB_SOVERSION "${stdair_VERSION_MAJOR}.${stdair_VERSION_MINOR}")
 set (LIBDIR "lib${LIB_SUFFIX}")
+
+##
+# Project options
+option (BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON)
+option (INSTALL_DOC "Set to OFF to skip build/install Documentation" ON)
+# Set default cmake build type to Debug (None Debug Release RelWithDebInfo
+# MinSizeRel)
+if (NOT CMAKE_BUILD_TYPE)
+  set (CMAKE_BUILD_TYPE "Debug")
+endif()
+# Set default install prefix to project root directory
+if (CMAKE_INSTALL_PREFIX STREQUAL "/usr/local")
+  set (CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}")
+endif()
 
 ##
 # Library target. It is specified here because both the stair (for the library
@@ -46,6 +59,12 @@ if (Git_FOUND)
 endif (Git_FOUND)
 
 ##
+# "Other" Documentation
+set (OTHERDOC_FILES AUTHORS NEWS README)
+set (OTHERDOC_PATH "share/doc/${CPACK_PACKAGE_NAME}-${stdair_VERSION}")
+install (FILES ${OTHERDOC_FILES} DESTINATION ${OTHERDOC_PATH})
+
+##
 # Packaging
 include (InstallRequiredSystemLibraries)
 set (CPACK_PACKAGE_NAME "${PROJECT_NAME}")
@@ -54,26 +73,31 @@ set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_NAME} aims at providing a clea
 
 set (CPACK_PACKAGE_CONTACT "Denis Arnaud <denis_arnaud@users.sourceforge.net>")
 set (CPACK_PACKAGE_VENDOR "Denis Arnaud")
-set (CPACK_PACKAGE_VERSION_MAJOR "${stdair_VERSION_MAJOR}")
-set (CPACK_PACKAGE_VERSION_MINOR "${stdair_VERSION_MINOR}")
-#set (CPACK_PACKAGE_VERSION_PATCH "${stdair_VERSION_PATCH}")
-set (CPACK_PACKAGE_VERSION_PATCH "${GIT_REVISION}")
-set (CPACK_PACKAGE_VERSION "${stdair_VERSION}")
+set (CPACK_PACKAGE_VERSION_MAJOR ${stdair_VERSION_MAJOR})
+set (CPACK_PACKAGE_VERSION_MINOR ${stdair_VERSION_MINOR})
+#set (CPACK_PACKAGE_VERSION_PATCH ${stdair_VERSION_PATCH})
+set (CPACK_PACKAGE_VERSION_PATCH ${GIT_REVISION})
+set (CPACK_PACKAGE_VERSION ${stdair_VERSION})
 set (CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/README)
-set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
-
-#set (CPACK_SOURCE_GENERATOR "DEB;RPM;TGZ;TBZ2")
-set (CPACK_GENERATOR "TGZ;TBZ2")
+set (CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/COPYING)
+set (CPACK_GENERATOR "TBZ2")
 #set (CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.3.6), libgcc1 (>= 1:4.1)")
-include (CPack)
-# Add a 'dist' target, similar to what is given by GNU Autotools
-add_custom_target (dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 
-##
-# "Other" Documentation
-set (OTHERDOC_FILES AUTHORS NEWS README)
-set (OTHERDOC_PATH "share/doc/${CPACK_PACKAGE_NAME}-${stdair_VERSION}")
-install (FILES ${OTHERDOC_FILES} DESTINATION ${OTHERDOC_PATH})
+# Available types of package: DEB, RPM, TZ, TGZ, TBZ2
+set (CPACK_SOURCE_GENERATOR "TBZ2")
+set (CPACK_SOURCE_PACKAGE_FILE_NAME 
+  "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}"
+  CACHE INTERNAL "tarball basename")
+set (AUTOTOOLS_IGNRD "/tmp/;/tmp2/;/autom4te\\\\.cache/;autogen\\\\.sh$")
+set (SPCFC_IGNRD "${CPACK_PACKAGE_NAME}-paths\\\\.hpp")
+set (PACK_IGNRD "${CPACK_PACKAGE_NAME}\\\\.spec;/build/;\\\\.gz$;\\\\.bz2$")
+set (EDIT_IGNRD "\\\\.swp$;\\\\.#;/#;~$")
+set (SCM_IGNRD 
+  "/CVS/;/\\\\.svn/;/\\\\.bzr/;/\\\\.hg/;/\\\\.git/;\\\\.gitignore$")
+set (CPACK_SOURCE_IGNORE_FILES
+  "${AUTOTOOLS_IGNRD};${SPCFC_IGNRD};${SCM_IGNRD};${EDIT_IGNRD};${PACK_IGNRD}"
+  CACHE STRING "CPACK will ignore these files")
+#set (CPACK_SOURCE_IGNORE_DIRECTORY ${CPACK_SOURCE_IGNORE_FILES} .git)
 
 ##
 # For the other developers to use that project
@@ -117,6 +141,9 @@ endif()
 # ~~~~~~~~~~ MySQL ~~~~~~~~~
 find_package (Doxygen REQUIRED)
 
+##
+# Build the header file for the project
+include (config/project_path.cmake)
 
 # Subdirs
 add_subdirectory (${PROJECT_NAME})
@@ -126,3 +153,46 @@ add_subdirectory (samples)
 add_subdirectory (man)
 add_subdirectory (doc)
 add_subdirectory (test)
+
+##
+# Packaging
+include (CPack)
+# Add a 'dist' target, similar to what is given by GNU Autotools
+add_custom_target (dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
+
+
+# Display status message for important variables
+message (STATUS)
+message (STATUS "-------------------------------------------------------------")
+message (STATUS "BUILD_SHARED_LIBS = ${BUILD_SHARED_LIBS}" )
+message (STATUS "CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX}" )
+message (STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}" )
+message (STATUS "CMAKE_MODULE_PATH = ${CMAKE_MODULE_PATH}" )
+message (STATUS "INSTALL_DOC = ${INSTALL_DOC}" )
+message (STATUS)
+message (STATUS "CPACK_PACKAGE_CONTACT = ${CPACK_PACKAGE_CONTACT}")
+message (STATUS "CPACK_PACKAGE_VENDOR = ${CPACK_PACKAGE_VENDOR}")
+message (STATUS "CPACK_PACKAGE_VERSION = ${CPACK_PACKAGE_VERSION}")
+message (STATUS "CPACK_PACKAGE_DESCRIPTION_FILE = ${CPACK_PACKAGE_DESCRIPTION_FILE}")
+message (STATUS "CPACK_RESOURCE_FILE_LICENSE = ${CPACK_RESOURCE_FILE_LICENSE}")
+message (STATUS "CPACK_GENERATOR = ${CPACK_GENERATOR}")
+message (STATUS "CPACK_DEBIAN_PACKAGE_DEPENDS = ${CPACK_DEBIAN_PACKAGE_DEPENDS}")
+message (STATUS "CPACK_SOURCE_GENERATOR = ${CPACK_SOURCE_GENERATOR}")
+message (STATUS "CPACK_SOURCE_PACKAGE_FILE_NAME = ${CPACK_SOURCE_PACKAGE_FILE_NAME}")
+message (STATUS)
+message (STATUS "Change a value with: cmake -D<Variable>=<Value>" )
+message (STATUS "-------------------------------------------------------------")
+message (STATUS)
+
+# Force some variables that could be defined in the command line to be
+# written to cache
+set (BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS}" CACHE BOOL
+  "Set to OFF to build static libraries" FORCE)
+set (CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}" CACHE PATH
+  "Where to install ${PROJECT_NAME}" FORCE)
+set (CMAKE_BUILD_TYPE "${CMAKE_BUILD_TYPE}" CACHE STRING
+  "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel." FORCE)
+set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" CACHE PATH
+  "Path to custom CMake Modules" FORCE)
+set (INSTALL_DOC "${INSTALL_DOC}" CACHE BOOL
+  "Set to OFF to skip build/install Documentation" FORCE)
