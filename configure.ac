@@ -257,6 +257,18 @@ AC_CONFIG_FILES(
 	db/Makefile
 	db/data/Makefile
 	db/admin/Makefile
+	db/admin/clean_all_tables.sh
+	db/admin/clean_a_table.sh
+	db/admin/count_all_tables.sh
+	db/admin/count_a_table.sh
+	db/admin/create_airinv_db.sh
+	db/admin/create_airinv_user.sh
+	db/admin/create_dsim_db.sh
+	db/admin/create_dsim_user.sh
+	db/admin/dump_airinv_db_structure.sh
+	db/admin/dump_dsim_db_structure.sh
+	db/admin/load_airinv_dsim_data.sh
+	db/admin/load_dsim_data.sh
 	test/Makefile
 	test/inheritance/Makefile
 	test/guillotine/Makefile
