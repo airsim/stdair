@@ -21,7 +21,9 @@ namespace boost {
 }
 
 namespace stdair {
-
+  // Forward declarations
+  class GuillotineBlock;
+  
   /**
    * @brief Class representing the actual attributes for an airline
    * segment-cabin.
@@ -79,9 +81,10 @@ namespace stdair {
       return _holderMap;
     }
 
-    /** Get the guilltine block number. */
-    const GuillotineNumber_T& getGuillotineBlockNumber() const {
-      return _guillotineNumber;
+    /** Get the guilltine block. */
+    const GuillotineBlock& getGuillotineBlock() const {
+      assert (_guillotineBlock != NULL);
+      return *_guillotineBlock;
     }
 
     /** Get the cabin capacity. */
@@ -119,22 +122,26 @@ namespace stdair {
       return _availabilityPool;
     }
 
-    /** Retrive the current Bid-Price. */
+    /** Retrieve the current Bid-Price. */
     const BidPrice_T& getCurrentBidPrice() const {
       return _currentBidPrice;
     }
 
-    /** Retrive the Bid-Price Vector. */
+    /** Retrieve the Bid-Price Vector. */
     const BidPriceVector_T& getBidPriceVector() const {
       return _bidPriceVector;
     }
 
+    /** Retrieve the status of fare family. */
+    const bool getFareFamalyStatus() const {
+      return _fareFamilyActivation;
+    }
 
   public:
     // ///////// Setters //////////
-    /** Set the guillotine block number. */
-    void setGuillotineBlockNumber (const GuillotineNumber_T& iNumber) {
-      _guillotineNumber = iNumber;
+    /** Set the guillotine block. */
+    void setGuillotineBlock (GuillotineBlock& ioGuillotine) {
+      _guillotineBlock = &ioGuillotine;
     }
 
     /** Set the cabin capacity. */
@@ -175,6 +182,11 @@ namespace stdair {
     /** Set the Bid-Price Vector. */
     void setBidPriceVector (const BidPriceVector_T& iBPV) {
       _bidPriceVector = iBPV;
+    }
+
+    /** Activate fare family. */
+    void activateFareFamily () {
+      _fareFamilyActivation = true;
     }
 
 
@@ -274,9 +286,9 @@ namespace stdair {
     HolderMap_T _holderMap;
 
     /**
-     * The guillotine block number used for Revenue Management activities.
+     * The guillotine block used for Revenue Management activities.
      */
-    GuillotineNumber_T _guillotineNumber;
+    GuillotineBlock* _guillotineBlock;
 
     /** Capacity of the cabin. */
     CabinCapacity_T _capacity;
@@ -304,6 +316,9 @@ namespace stdair {
 
     /** Current Bid-Price (BP). */
     BidPrice_T _currentBidPrice;
+
+    /** Indicate if fare family is in use. */
+    bool _fareFamilyActivation;
   };
 
 }

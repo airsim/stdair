@@ -21,6 +21,9 @@ namespace boost {
 }
 
 namespace stdair {
+  // Forward declarations
+  class SegmentCabin;
+
   /**
    * @brief Class representing the actual attributes for an airline
    * guillotine-block.
@@ -72,6 +75,12 @@ namespace stdair {
       return _valueTypesIndexMap;
     }
 
+    /** Get the block index corresponding to the given value type. */
+    const BlockIndex_T& getBlockIndex (const MapKey_T&) const;
+
+    /** Get the block number corresponding to the givent segment-cabin. */
+    const BlockNumber_T& getBlockNumber (const SegmentCabin&) const;
+
     /** Get the const view of snapshots for a given DTD and a range of
         segment-cabins. */
     ConstSegmentCabinDTDSnapshotView_T
@@ -99,6 +108,89 @@ namespace stdair {
     getSegmentCabinDTDRangeBookingSnapshotView (const BlockNumber_T,
                                                 const BlockNumber_T,
                                                 const DTD_T, const DTD_T);
+
+    /** Get the const view of snapshots for a given DTD and a range of
+        segment-cabins. */
+    ConstSegmentCabinDTDSnapshotView_T
+    getConstSegmentCabinDTDCancellationSnapshotView (const BlockNumber_T,
+                                                const BlockNumber_T,
+                                                const DTD_T) const;
+
+    /** Get the const view of snapshots for a given range of DTD and a range of
+        segment-cabins. */
+    ConstSegmentCabinDTDRangeSnapshotView_T
+    getConstSegmentCabinDTDRangeCancellationSnapshotView (const BlockNumber_T,
+                                                          const BlockNumber_T,
+                                                          const DTD_T,
+                                                          const DTD_T) const;
+
+    /** Get the view of snapshots for a given DTD and a range of
+        segment-cabins. */
+    SegmentCabinDTDSnapshotView_T
+    getSegmentCabinDTDCancellationSnapshotView (const BlockNumber_T,
+                                                const BlockNumber_T,
+                                                const DTD_T);
+
+    /** Get the view of snapshots for a given range of DTD and a range of
+        segment-cabins. */
+    SegmentCabinDTDRangeSnapshotView_T
+    getSegmentCabinDTDRangeCancellationSnapshotView (const BlockNumber_T,
+                                                     const BlockNumber_T,
+                                                     const DTD_T, const DTD_T);
+
+    /** Get the const view of snapshots for a given DTD and a range of
+        segment-cabins. */
+    ConstSegmentCabinDTDSnapshotView_T
+    getConstSegmentCabinDTDProductAndPriceOrientedBookingSnapshotView
+    (const BlockNumber_T, const BlockNumber_T, const DTD_T) const;
+
+    /** Get the const view of snapshots for a given range of DTD and a range of
+        segment-cabins. */
+    ConstSegmentCabinDTDRangeSnapshotView_T
+    getConstSegmentCabinDTDRangeProductAndPriceOrientedBookingSnapshotView
+    (const BlockNumber_T, const BlockNumber_T, const DTD_T, const DTD_T) const;
+
+    /** Get the view of snapshots for a given DTD and a range of
+        segment-cabins. */
+    SegmentCabinDTDSnapshotView_T
+    getSegmentCabinDTDProductAndPriceOrientedBookingSnapshotView
+    (const BlockNumber_T, const BlockNumber_T, const DTD_T);
+
+    /** Get the view of snapshots for a given range of DTD and a range of
+        segment-cabins. */
+    SegmentCabinDTDRangeSnapshotView_T
+    getSegmentCabinDTDRangeProductAndPriceOrientedBookingSnapshotView
+    (const BlockNumber_T, const BlockNumber_T, const DTD_T, const DTD_T);
+
+    /** Get the const view of snapshots for a given DTD and a range of
+        segment-cabins. */
+    ConstSegmentCabinDTDSnapshotView_T
+    getConstSegmentCabinDTDAvailabilitySnapshotView (const BlockNumber_T,
+                                                     const BlockNumber_T,
+                                                     const DTD_T) const;
+    
+    /** Get the const view of snapshots for a given range of DTD and a range of
+        segment-cabins. */
+    ConstSegmentCabinDTDRangeSnapshotView_T
+    getConstSegmentCabinDTDRangeAvailabilitySnapshotView (const BlockNumber_T,
+                                                          const BlockNumber_T,
+                                                          const DTD_T,
+                                                          const DTD_T) const;
+    
+    /** Get the view of snapshots for a given DTD and a range of
+        segment-cabins. */
+    SegmentCabinDTDSnapshotView_T
+    getSegmentCabinDTDAvailabilitySnapshotView (const BlockNumber_T,
+                                                const BlockNumber_T,
+                                                const DTD_T);
+
+    /** Get the view of snapshots for a given range of DTD and a range of
+        segment-cabins. */
+    SegmentCabinDTDRangeSnapshotView_T
+    getSegmentCabinDTDRangeAvailabilitySnapshotView (const BlockNumber_T,
+                                                     const BlockNumber_T,
+                                                     const DTD_T, const DTD_T);
+
 
   public:
     // //////////// Setters /////////////
@@ -187,7 +279,7 @@ namespace stdair {
     /** Pointer on the parent class (Inventory). */
     BomAbstract* _parent;
 
-    /** Map holding the children (SegmentBlock and LegBlock objects). */
+    /** Map holding the children. */
     HolderMap_T _holderMap;
 
     /** Map holding the segment-cabin position within the snapshot blocks. */
@@ -199,6 +291,15 @@ namespace stdair {
 
     /** Booking snapshot block. */
     SnapshotBlock_T _bookingSnapshotBlock;
+
+    /** Cancellation snapshot block. */
+    SnapshotBlock_T _cancellationSnapshotBlock;
+
+    /** Price & product oriented booking block. */
+    SnapshotBlock_T _productAndPriceOrientedBookingSnapshotBlock;
+
+    /** Price & product oriented booking block. */
+    SnapshotBlock_T _availabilitySnapshotBlock;
   };
 
 }

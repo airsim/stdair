@@ -30,7 +30,6 @@ namespace stdair {
     /** Definition allowing to retrieve the associated BOM key type. */
     typedef BookingClassKey Key_T;
 
-
   public:
     // /////////// Getters ////////////
     /** Get the booking class key. */
@@ -73,19 +72,24 @@ namespace stdair {
       return _cumulatedProtection;
     }
 
+    /** Get the cumulated booking limit. */
+    const BookingLimit_T& getCumulatedBookingLimit() const {
+      return _cumulatedBookingLimit;
+    }
+
     /** Get the negotiated space. */
     const NbOfSeats_T& getNegotiatedSpace() const {
       return _nego;
     }
 
-    /** Get the overbooking rate. */
+    /** Get the no-show rate. */
     const OverbookingRate_T& getNoShowPercentage() const {
       return _noShowPercentage;
     }
 
-    /** Get the overbooking percentage. */
-    const OverbookingRate_T& getOverbookingPercentage() const {
-      return _overbookingPercentage;
+    /** Get the cancellation rate. */
+    const OverbookingRate_T& getCancellationPercentage() const {
+      return _cancellationPercentage;
     }
 
     /** Get the number of bookings. */
@@ -111,6 +115,11 @@ namespace stdair {
     /** Get the number of wait-list bookings. */
     const NbOfBookings_T& getNbOfWLBookings() const {
       return _wlNbOfBookings;
+    }
+
+    /** Get the number of cancellations. */
+    const NbOfCancellations_T& getNbOfCancellations() const {
+      return _nbOfCancellations;
     }
 
     /** Get the expected number of passengers to board (ETB). */
@@ -156,10 +165,20 @@ namespace stdair {
     void setProtection (const ProtectionLevel_T& iPL) {
       _protection = iPL;
     }
+    
+    /** Cumulated booking limit. */
+    void setCumulatedBookingLimit (const BookingLimit_T& iBL) {
+      _cumulatedBookingLimit = iBL;
+    }
 
     /** Authorization level. */
     void setAuthorizationLevel (const AuthorizationLevel_T& iAU) {
       _au = iAU;
+    }
+
+    /** Set availability. */
+    void setSegmentAvailability (const Availability_T& iAvl) {
+      _segmentAvailability = iAvl;
     }
 
     /** Yield. */
@@ -238,6 +257,9 @@ namespace stdair {
     /** Protection. */
     ProtectionLevel_T _protection;
 
+    /** Cumulated booking limit. */
+    BookingLimit_T _cumulatedBookingLimit;
+
     /** Authorization level. */
     AuthorizationLevel_T _au;
 
@@ -247,8 +269,8 @@ namespace stdair {
     /** Overbooking rate. */
     OverbookingRate_T _noShowPercentage;
 
-    /** Overbooking percentage. */
-    OverbookingRate_T _overbookingPercentage;
+    /** Cancellation rate. */
+    OverbookingRate_T _cancellationPercentage;
 
     /** Number of bookings. */
     NbOfBookings_T _nbOfBookings;
@@ -264,6 +286,9 @@ namespace stdair {
 
     /** Number of wait-list bookings. */
     NbOfBookings_T _wlNbOfBookings;
+
+    /** Number of cancellations. */
+    NbOfCancellations_T _nbOfCancellations;
 
     /** Expected to board (ETB). */
     NbOfBookings_T _etb;

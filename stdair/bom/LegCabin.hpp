@@ -292,6 +292,11 @@ namespace stdair {
       _virtualClassList.push_back (iVC);
     }
 
+    /** Reset the virtual class list. */
+    void resetVirtualClassList() {
+      _virtualClassList.clear();
+    }
+
 
   protected:
     // ////////// Constructors and destructors /////////

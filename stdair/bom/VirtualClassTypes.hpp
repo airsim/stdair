@@ -7,6 +7,9 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <list>
+#include <map>
+// STDAIR
+#include <stdair/stdair_basic_types.hpp>
 
 namespace stdair {
 
@@ -15,6 +18,9 @@ namespace stdair {
   
   /** Define the booking class list. */
   typedef std::list<VirtualClassStruct> VirtualClassList_T;
+  
+  /** Define the booking class map. */
+  typedef std::map<const Yield_T, VirtualClassStruct> VirtualClassMap_T;
 }
 #endif // __STDAIR_BOM_VIRTUALCLASSTYPES_HPP
 
