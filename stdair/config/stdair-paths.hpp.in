@@ -1,15 +1,14 @@
-#ifndef __STDAIR_PATHS_HPP
-#define __STDAIR_PATHS_HPP
+#ifndef __STDAIR_PATHS_HPP__
+#define __STDAIR_PATHS_HPP__
 
-#define PACKAGE "${PROJECT_NAME}"
-#define PACKAGE_NAME "${CPACK_PROJECT_NAME}"
-#define PACKAGE_VERSION "${CPACK_PACKAGE_VERSION}"
-#define PREFIXDIR "${prefix}"
-#define BINDIR "${bindir}"
-#define LIBEXECDIR "${libexecdir}"
-#define DATADIR "${datadir}"
-#define DOCDIR "${docdir}"
-#define STDAIR_SAMPLE_DIR "${sampledir}"
+#define PACKAGE "@PROJECT_NAME@"
+#define PACKAGE_NAME "@PACKAGE_NAME@"
+#define PACKAGE_VERSION "@PACKAGE_VERSION@"
+#define PREFIXDIR "@prefix@"
+#define BINDIR "@bindir@"
+#define LIBEXECDIR "@libexecdir@"
+#define DATADIR "@datadir@"
+#define DOCDIR "@docdir@"
+#define STDAIR_SAMPLE_DIR "@sampledir@"
 
-#endif // __STDAIR_PATHS_HPP
-
+#endif // __STDAIR_PATHS_HPP__

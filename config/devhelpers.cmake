@@ -2,21 +2,6 @@
 # For the other developers to use the StdAir project
 #
 
-# Define the substitutes for the variables present in the develpment
-# support files. Note that PACKAGE, PACKAGE_NAME and PACKAGE_VERSION
-# are defined in the main CMakeLists.txt (of the top root directory).
-set (prefix       "${CMAKE_INSTALL_PREFIX}")
-set (exec_prefix  "${prefix}")
-set (libdir       "${exec_prefix}/${LIBDIR}")
-set (includedir   "${prefix}/include")
-set (datarootdir  "${prefix}/share")
-set (datadir      "${datarootdir}")
-set (pkgdatadir   "${datarootdir}/${CPACK_PACKAGE_NAME}")
-set (sampledir    "${datarootdir}/${CPACK_PACKAGE_NAME}/samples")
-set (docdir       "${datarootdir}/doc/${CPACK_PACKAGE_NAME}-${stdair_VERSION}")
-set (mandir       "${datarootdir}/man")
-set (infodir      "${datarootdir}/info")
-
 # Configure helper (e.g., to easily retrieve the version and compilation flags)
 set (CFG_SCRIPT ${CPACK_PACKAGE_NAME}-config)
 set (CFG_SCRIPT_PATH bin)

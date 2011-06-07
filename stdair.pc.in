@@ -1,14 +1,23 @@
 prefix=@prefix@
-exec_prefix=@exec_prefix@
-libdir=@libdir@
-includedir=@includedir@
-datarootdir=@datarootdir@
-datadir=@datadir@
-pkgdatadir=@pkgdatadir@
-sampledir=@sampledir@
-docdir=@docdir@
-mandir=@mandir@
-infodir=@infodir@
+exec_prefix=${prefix}
+bindir=${exec_prefix}/bin
+libdir=${exec_prefix}/lib
+libexecdir=${exec_prefix}/libexec
+sbindir=${exec_prefix}/sbin
+sysconfdir=${prefix}/etc
+includedir=${prefix}/include
+datarootdir=${prefix}/share
+datadir=${datarootdir}
+pkgdatadir=${datarootdir}/@PACKAGE@
+sampledir=${datarootdir}/@PACKAGE@/samples
+docdir=${datarootdir}/doc/@PACKAGE@-@PACKAGE_VERSION@
+mandir=${datarootdir}/man
+infodir=${datarootdir}/info
+htmldir=${docdir}/html
+pdfdir=${docdir}/html
+pkgincludedir=${includedir}/@PACKAGE@
+pkglibdir=${libdir}/@PACKAGE@
+pkglibexecdir=${libexecdir}/@PACKAGE@
 
 Name: @PACKAGE_PRETTY_NAME@
 Description: C++ Standard Airline IT Object Library

@@ -61,7 +61,7 @@ endif (Git_FOUND)
 ##
 # "Other" Documentation
 set (OTHERDOC_FILES AUTHORS NEWS README)
-set (OTHERDOC_PATH "share/doc/${CPACK_PACKAGE_NAME}-${stdair_VERSION}")
+set (OTHERDOC_PATH "share/doc/${PACKAGE}-${PACKAGE_VERSION}")
 install (FILES ${OTHERDOC_FILES} DESTINATION ${OTHERDOC_PATH})
 
 ##
@@ -89,15 +89,18 @@ set (CPACK_SOURCE_PACKAGE_FILE_NAME
   "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}"
   CACHE INTERNAL "tarball basename")
 set (AUTOTOOLS_IGNRD "/tmp/;/tmp2/;/autom4te\\\\.cache/;autogen\\\\.sh$")
-set (SPCFC_IGNRD "${CPACK_PACKAGE_NAME}-paths\\\\.hpp")
 set (PACK_IGNRD "${CPACK_PACKAGE_NAME}\\\\.spec;/build/;\\\\.gz$;\\\\.bz2$")
 set (EDIT_IGNRD "\\\\.swp$;\\\\.#;/#;~$")
 set (SCM_IGNRD 
   "/CVS/;/\\\\.svn/;/\\\\.bzr/;/\\\\.hg/;/\\\\.git/;\\\\.gitignore$")
 set (CPACK_SOURCE_IGNORE_FILES
-  "${AUTOTOOLS_IGNRD};${SPCFC_IGNRD};${SCM_IGNRD};${EDIT_IGNRD};${PACK_IGNRD}"
+  "${AUTOTOOLS_IGNRD};${SCM_IGNRD};${EDIT_IGNRD};${PACK_IGNRD}"
   CACHE STRING "CPACK will ignore these files")
 #set (CPACK_SOURCE_IGNORE_DIRECTORY ${CPACK_SOURCE_IGNORE_FILES} .git)
+
+##
+# Set all the directory pathes for the project (e.g., prefix, libdir, bindir)
+include (config/project_config.cmake)
 
 ##
 # For the other developers to use that project
@@ -114,6 +117,7 @@ set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/config/)
 set (CMAKE_CXX_FLAGS "-Wall -Werror")
 include_directories (BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}) 
 
+##
 # Dependencies
 # ~~~~~~~~~~ BOOST ~~~~~~~~~~
 find_package (Boost 1.44 REQUIRED COMPONENTS program_options date_time 
@@ -142,9 +146,6 @@ endif()
 find_package (Doxygen REQUIRED)
 
 ##
-# Build the header file for the project
-include (config/project_path.cmake)
-
 # Subdirs
 add_subdirectory (${PROJECT_NAME})
 add_subdirectory (${PROJECT_NAME}/ui/cmdline)
