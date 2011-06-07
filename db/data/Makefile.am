@@ -13,14 +13,14 @@ pkgdatadir = @pkgdatadir@
 dbdir = @dbdir@/data
 
 #
-noinst_DATA = $(db_data_csv_sources)
+noinst_DATA = $(db_data_csv_sources) $(db_data_sql_sources)
 
 EXTRA_DIST = $(noinst_DATA)
 
 # Targets
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(dbdir); \
-	for f in $(db_data_csv_sources); do \
+	for f in $(db_data_csv_sources) $(db_data_sql_sources); do \
 		$(INSTALL_DATA) $$f $(DESTDIR)$(dbdir); \
 	done
 

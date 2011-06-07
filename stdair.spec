@@ -69,6 +69,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 # Remove unpackaged files from the buildroot
 rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.la
 
+# Fix some permissions
+find $RPM_BUILD_ROOT%{_libexecdir}/%{name} -type f -name '*.sh' -exec chmod 755 {} \;
+
 mkdir -p %{mydocs}
 mv $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/html %{mydocs}
 
@@ -86,8 +89,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/%{name}
 %{_libdir}/lib*.so.*
 %{_mandir}/man1/%{name}.1.*
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/*.sh
 %dir %{_datadir}/%{name}
-%{_datadir}/%{name}/db/data/*.sh
 %{_datadir}/%{name}/db/data/*.sql
 %{_datadir}/%{name}/db/data/*.csv
 %{_datadir}/%{name}/samples/*.csv
