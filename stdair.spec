@@ -87,6 +87,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.so.*
 %{_mandir}/man1/%{name}.1.*
 %dir %{_datadir}/%{name}
+%{_datadir}/%{name}/db/data/*.sh
+%{_datadir}/%{name}/db/data/*.sql
+%{_datadir}/%{name}/db/data/*.csv
 %{_datadir}/%{name}/samples/*.csv
 %{_datadir}/%{name}/samples/rds01/*.csv
 
