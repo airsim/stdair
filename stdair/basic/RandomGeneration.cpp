@@ -79,4 +79,24 @@ namespace stdair {
 
     return lRealNumberOfRequestsToBeGenerated;
   }
+
+  // //////////////////////////////////////////////////////////////////////
+  RealNumber_T RandomGeneration::generateExponential (const RealNumber_T& lambda) {
+    /** Exponential distribution
+        <br>Note: Boost.Math exponential distribution takes lambda as
+        the parameter, whereas the GSL (GNU Scientific Library) takes
+        mu (== 1/lambda). */
+    ExponentialDistribution_T lExponentialDistribution (lambda);
+    
+    /** Random generator for the exponential distribution. */
+    ExponentialGenerator_T lExponentialDistributionGenerator (_generator,
+                                                              lExponentialDistribution); 
+
+    // Generate a random variate, expressed in (fractional) day
+    const RealNumber_T lExponentialVariateInDays =
+      lExponentialDistributionGenerator();
+
+    return lExponentialVariateInDays;
+  }
+
 }

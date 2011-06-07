@@ -1,4 +1,4 @@
-## RDS01 sub-directory of the StdAir sample files
+## db/data sub-directory of the StdAir project
 include $(top_srcdir)/Makefile.common
 include $(srcdir)/sources.mk
 
@@ -10,22 +10,22 @@ MAINTAINERCLEANFILES = Makefile.in Makefile
 ##
 datadir = @datadir@
 pkgdatadir = @pkgdatadir@
-sampledir = @sampledir@/rds01
+dbdir = @dbdir@/data
 
 #
-noinst_DATA = $(sample_rds01_csv_sources)
+noinst_DATA = $(db_data_csv_sources)
 
 EXTRA_DIST = $(noinst_DATA)
 
 # Targets
 install-data-local:
-	$(mkinstalldirs) $(DESTDIR)$(sampledir); \
-	for f in $(sample_rds01_csv_sources); do \
-		$(INSTALL_DATA) $$f $(DESTDIR)$(sampledir); \
+	$(mkinstalldirs) $(DESTDIR)$(dbdir); \
+	for f in $(db_data_csv_sources); do \
+		$(INSTALL_DATA) $$f $(DESTDIR)$(dbdir); \
 	done
 
 uninstall-local:
-	rm -rf $(DESTDIR)$(sampledir)
+	rm -rf $(DESTDIR)$(dbdir)
 
 clean-local:
 	rm -rf *.log *.tag

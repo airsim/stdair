@@ -1,3 +1,7 @@
+/*!
+ * \page cmd_bom_manager_cpp C++ Class Building Sample StdAir BOM Trees
+ * \code
+ */
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
@@ -671,7 +675,7 @@ namespace stdair {
                                                     lClassCodeList);
 
     // Create the AirlineClassListKey and link it to the FareFeatures object.
-    const Fare_T& lFare (900.0);
+    // const Fare_T& lFare (900.0);
     AirlineClassList& lAirlineClassList =
       stdair::FacBom<AirlineClassList>::instance().create (lAirlineClassListKey);
     lAirlineClassList.setFare(900.0);
@@ -945,3 +949,7 @@ namespace stdair {
   }
 
 }
+
+/*!
+ * \endcode
+ */

@@ -10,6 +10,10 @@ lib_LTLIBRARIES = libstdairuicl.la
 #
 MAINTAINERCLEANFILES = Makefile.in
 
+EXTRA_DIST = readline_autocomp.h readline_autocomp.hpp
+
+##
+#
 libstdairuicl_la_SOURCES = $(stdair_uicl_h_sources) $(stdair_uicl_cc_sources) 
 libstdairuicl_la_CXXFLAGS = $(BOOST_CFLAGS)
 libstdairuicl_la_LIBADD =

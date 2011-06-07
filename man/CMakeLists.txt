@@ -1,45 +1,52 @@
 ##
-# StdAir manual pages
-# Generated with Doxygen
+# StdAir manual pages, generated with Doxygen.
 #
-find_package ( Doxygen )
-if ( DOXYGEN_FOUND )
 
-  #
-  set (OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"     )
-  set (top_srcdir       "${CMAKE_SOURCE_DIR}"             )
-  set (srcdir           "${CMAKE_CURRENT_SOURCE_DIR}"     )
-  set (man1_DIR         "${CMAKE_CURRENT_BINARY_DIR}/man1")
-  set (man3_DIR         "${CMAKE_CURRENT_BINARY_DIR}/man3")
+# Define the substitutes for the variables present in the Doxygen
+# configuration files. Note that PACKAGE, PACKAGE_NAME and PACKAGE_VERSION
+# are defined in the main CMakeLists.txt (of the top root directory).
+set (OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"     )
+set (top_srcdir       "${CMAKE_SOURCE_DIR}"             )
+set (srcdir           "${CMAKE_CURRENT_SOURCE_DIR}"     )
 
-  # Manual page sources
-  set (man1_SOURCES "stdair.doc stdair-config.doc")
-  set (man3_SOURCES "stdair-library.doc")
+set (man1_DIR         "${CMAKE_CURRENT_BINARY_DIR}/man1")
+set (man3_DIR         "${CMAKE_CURRENT_BINARY_DIR}/man3")
 
-  # Convert the Doxygen configuration files (basically, just replace
-  # the @src_dir@ macro).
-  configure_file (doxygen_man1.cfg.in doxygen_man1.cfg @ONLY)
-  configure_file (doxygen_man3.cfg.in doxygen_man3.cfg @ONLY)
-  
-  #
-  add_custom_target (man1pages ALL DEPENDS ${man1_SOURCES})
-  add_custom_target (man3pages ALL DEPENDS ${man3_SOURCES})
-  add_custom_target (package_with_man DEPENDS man1pages man3pages COMMAND make package)
+# Convert the Doxygen configuration files (basically, just replace
+# the @<variable>@ variables).
+set (DOXYGEN_CFG1_SRC doxygen_man1.cfg.in)
+set (DOXYGEN_CFG1 ${CMAKE_CURRENT_BINARY_DIR}/doxygen_man1.cfg)
+configure_file (${DOXYGEN_CFG1_SRC} ${DOXYGEN_CFG1} @ONLY)
+set (DOXYGEN_CFG3_SRC doxygen_man3.cfg.in)
+set (DOXYGEN_CFG3 ${CMAKE_CURRENT_BINARY_DIR}/doxygen_man3.cfg)
+configure_file (${DOXYGEN_CFG3_SRC} ${DOXYGEN_CFG3} @ONLY)
 
-  #
-  add_custom_command (OUTPUT "${man1_SOURCES}" COMMAND ${DOXYGEN_EXECUTABLE} 
-	"doxygen_man1.cfg" COMMENT "Building section 1 manual pages ...")
-  add_custom_command (OUTPUT "${man3_SOURCES}" COMMAND ${DOXYGEN_EXECUTABLE} 
-	"doxygen_man3.cfg" COMMENT "Building section 3 manal pages ...")
+## Manual page sources
+# Section 1 (general commands)
+set (man1_SOURCES stdair.doc stdair-config.doc)
+# Section 3 (development)
+set (man3_SOURCES stdair-library.doc)
 
-  #
-  set_property (DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES 
-	"${CMAKE_CURRENT_BINARY_DIR}/man1")
-  set_property (DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES 
-	"${CMAKE_CURRENT_BINARY_DIR}/man3")
+# Add the build rule for Doxygen for section 1 manual pages
+set (DOXYGEN_OUTPUT1 ${man1_DIR}/stdair-config.1)
+add_custom_command (OUTPUT ${DOXYGEN_OUTPUT1}
+  COMMAND ${DOXYGEN_EXECUTABLE} ARGS ${DOXYGEN_CFG1}
+  DEPENDS ${DOXYGEN_CFG1} ${man1_SOURCES}
+  COMMENT "Generating section 1 manual pages with Doxygen, from '${DOXYGEN_CFG1}'...")
+# Add the build rule for Doxygen for section 3 manual pages
+set (DOXYGEN_OUTPUT3 ${man3_DIR}/stdair-library.3)
+add_custom_command (OUTPUT ${DOXYGEN_OUTPUT3}
+  COMMAND ${DOXYGEN_EXECUTABLE} ARGS ${DOXYGEN_CFG3}
+  DEPENDS ${DOXYGEN_CFG3} ${man3_SOURCES}
+  COMMENT "Generating section 3 manual pages with Doxygen, from '${DOXYGEN_CFG3}'...")
+# Add the 'man' target, depending on the generated manual page documentation
+add_custom_target (man ALL DEPENDS ${DOXYGEN_OUTPUT1} ${DOXYGEN_OUTPUT3})
 
-  #
-  install (DIRECTORY "${man1_DIR}" DESTINATION "share/${PROJECT_NAME}/man")
-  install (DIRECTORY "${man3_DIR}" DESTINATION "share/${PROJECT_NAME}/man")
+# Clean-up $build/man1 and $build/man3 on 'make clean'
+set_property (DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES 
+  ${man1_DIR} ${man3_DIR})
 
-endif ()
+# Installation of the manual pages
+set (MAN_PATH "share/man")
+install (DIRECTORY "${man1_DIR}" DESTINATION ${MAN_PATH})
+install (DIRECTORY "${man3_DIR}" DESTINATION ${MAN_PATH})

@@ -56,7 +56,7 @@ while test $# -gt 0; do
       ;;
 
     --version)
-      echo @VERSION@
+      echo @PACKAGE_VERSION@
       ;;
 
     --help)

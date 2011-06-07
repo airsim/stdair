@@ -1,3 +1,7 @@
+/*!
+ * \page bom_display_cpp C++ Utility Class Browsing and Dumping the StdAir BOM Tree
+ * \code
+ */
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
@@ -894,3 +898,7 @@ namespace stdair {
   }
     
 }
+
+/*!
+ * \endcode
+ */

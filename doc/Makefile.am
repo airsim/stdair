@@ -12,7 +12,7 @@ include $(top_srcdir)/stdair/sources.mk
 include $(top_srcdir)/batches/sources.mk
 include $(top_srcdir)/test/stdair/sources.mk
 
-SUBDIRS = images tutorial local
+SUBDIRS = diagrams images tutorial local
 
 docdir = @docdir@
 

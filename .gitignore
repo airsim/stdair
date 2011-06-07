@@ -17,5 +17,6 @@ Makefile.in
 /config/missing
 /configure
 /stdair/config.h.in*
+/stdair/config/stdair-paths.hpp
 /test/stdair/*_utfresults.xml
 

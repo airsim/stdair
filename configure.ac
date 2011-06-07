@@ -75,6 +75,10 @@ AC_SUBST(pkgdatadir)
 sampledir="${pkgdatadir}/samples"
 AC_SUBST(sampledir)
 
+# Set the database (DB) directory for StdAir
+dbdir="${pkgdatadir}/db"
+AC_SUBST(dbdir)
+
 # Check for info pages
 AC_ARG_ENABLE(info-doc, 
               [AS_HELP_STRING([--disable-info-doc],
@@ -232,6 +236,7 @@ AC_CONFIG_FILES(
 	stdair/factory/Makefile
 	stdair/command/Makefile
 	stdair/config/Makefile
+	stdair/config/stdair-paths.hpp
 	stdair/service/Makefile	
 	stdair/core/Makefile
 	stdair/ui/Makefile
@@ -241,13 +246,17 @@ AC_CONFIG_FILES(
 	man/doxygen_man1.cfg
 	man/doxygen_man3.cfg
 	doc/Makefile
+	doc/diagrams/Makefile
 	doc/images/Makefile
 	doc/tutorial/Makefile
 	doc/tutorial/src/Makefile
 	doc/local/Makefile
 	doc/doxygen_html.cfg
 	samples/Makefile
-	samples/RDS01/Makefile
+	samples/rds01/Makefile
+	db/Makefile
+	db/data/Makefile
+	db/admin/Makefile
 	test/Makefile
 	test/inheritance/Makefile
 	test/guillotine/Makefile
@@ -273,6 +282,7 @@ Directories:
   - datadir ................ : ${datadir}
   - pkgdatadir ............. : ${pkgdatadir}
   - sampledir .............. : ${sampledir}
+  - dbdir .................. : ${dbdir}
   - docdir ................. : ${docdir}
   - mandir ................. : ${mandir}
   - infodir ................ : ${infodir}

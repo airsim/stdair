@@ -43,6 +43,12 @@ namespace stdair {
      * specified by a mean and a standard deviation.
      */
     RealNumber_T generateNormal (const RealNumber_T&, const RealNumber_T&);
+
+    /**
+     * Generate a randomized number following an exponential distribution
+     * specified by a mean and a lambda parameter.
+     */
+    RealNumber_T generateExponential (const RealNumber_T&);
     
 
   public:

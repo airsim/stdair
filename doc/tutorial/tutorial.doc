@@ -38,18 +38,22 @@ A few steps:
 
 \subsection tut_build_bom_root Instanciate the BOM Root Object
 
-\dontinclude stdair.cpp
+\dontinclude CmdBomManager.cpp
 
-First, a BOM root object (i.e., a root for all the classes in the
-project) has to be instantiated. Let us give it a name, \c lBomRoot for
-instance. The corresponding \c StdAir type (class) is <tt>stdair::BomRoot</tt>.
+First, a BOM root object (i.e., a root for all the classes in the project) 
+is instantiated by the <tt>stdair::STDAIR_ServiceContext</tt> context object,
+when the <tt>stdair::STDAIR_Service</tt> is itself instantiated. The 
+corresponding \c StdAir type (class) is <tt>stdair::BomRoot</tt>.
 
-\skipline lBomRoot
-\line FacBom
+In the following sample, that object is named \c ioBomRoot, and is given
+as input/output parameter of the
+<tt>stdair::CmdBomManager::buildSampleBom()</tt> method:
+
+\skipline ioBomRoot
 
 \subsection tut_build_inventory Instanciate the (Airline) Inventory Object
 
-Then, an airline inventory object can be instantiated. Let us give it
+An airline inventory object can then be instantiated. Let us give it
 the "BA" airline code (corresponding to <a
 href="http://www.ba.com">British Airways</a>) as the object key. That
 is, an object (let us name it \c lBAKey) of type (class)
@@ -62,16 +66,16 @@ Thanks to that key, an airline inventory object, i.e. of type (class)
 airline inventory object \c lBAInv.
 
 \skipline lBAInv
-\line FacBom
 
 \subsection tut_build_link Link the Inventory Object with the BOM Root
 
 Then, both objects have to be linked: the airline inventory object
 (<tt>stdair::Inventory</tt>) has to be linked with the root of the BOM
 tree (<tt>stdair::BomRoot</tt>). That operation is as simple as using the 
-<tt>stdair::FacBomManager::addToList()</tt> method:
+<tt>stdair::FacBomManager::addToListAndMap()</tt> method:
 
-\skipline addToList
+\line addToListAndMap
+\line linkWithParent
 
 \subsection tut_build_inventory_another Build Another Airline Inventory
 
@@ -80,9 +84,13 @@ href="http://www.airfrance.com">Air France</a>) company, is
 instantiated the same way:
 
 \skipline lAFKey
-\until FacBomManager
+\until linkWithParent
+
+See the corresponding full program (\ref cmd_bom_manager_cpp) for more details.
 
 \subsection tut_dump_bom_tree Dump The BOM Tree Content
+
+\dontinclude BomDisplay.cpp
 
 From the \c BomRoot (of type <tt>stdair::BomRoot</tt>) object
 instance, the list of airline inventories (of type
@@ -93,11 +101,14 @@ instance, the list of airline inventories (of type
 
 ... and browsed:
 \skipline const_iterator
-\until STDAIR_LOG_DEBUG
+\until csvDisplay
+
+See the corresponding full program (\ref bom_display_cpp) for more details.
 
 \subsection tut_result_output Result of the Tutorial Program
 
-When this program is run, the output should look like:
+When the <tt>stdair.cpp</tt> program is run (with the <tt>-b</tt>
+option), the output should look like:
 
 \include stdair.ref
 
