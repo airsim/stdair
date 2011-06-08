@@ -191,8 +191,8 @@ configure_file (StdAirConfigVersion.cmake.in
   "${PROJECT_BINARY_DIR}/StdAirConfigVersion.cmake" @ONLY)
 
 # Install the export set for use with the install-tree
-#install (EXPORT StdAirLibraryDepends DESTINATION
-#  "${INSTALL_DATA_DIR}/${PACKAGE}/CMake" COMPONENT dev)
+install (EXPORT StdAirLibraryDepends DESTINATION
+  "${INSTALL_DATA_DIR}/${PACKAGE}/CMake" COMPONENT dev)
 
 # Create a StdAirConfig.cmake file for the use from the install tree
 # and install it

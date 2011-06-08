@@ -45,7 +45,9 @@ endif()
 
 ## Installation
 # Library
-install (TARGETS ${STDAIR_LIB_TARGET} LIBRARY DESTINATION ${LIBDIR})
+install (TARGETS ${STDAIR_LIB_TARGET} 
+  EXPORT StdAirLibraryDepends
+  LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib)
 
 # Install header files
 install (FILES ${stdairlib_HEADERS} DESTINATION include/${CPACK_PACKAGE_NAME})
