@@ -36,10 +36,27 @@ option (INSTALL_DOC "Set to OFF to skip build/install Documentation" ON)
 if (NOT CMAKE_BUILD_TYPE)
   set (CMAKE_BUILD_TYPE "Debug")
 endif()
+
 # Set default install prefix to project root directory
 if (CMAKE_INSTALL_PREFIX STREQUAL "/usr/local")
   set (CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}")
 endif()
+
+# Offer the user the choice of overriding the installation directories
+set (INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
+set (INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
+set (INSTALL_INCLUDE_DIR include CACHE PATH
+  "Installation directory for header files")
+set (INSTALL_DATA_DIR share CACHE PATH
+  "Installation directory for data files")
+
+# Make relative paths absolute (needed later on)
+foreach (p LIB BIN INCLUDE DATA)
+  set (var INSTALL_${p}_DIR)
+  if (NOT IS_ABSOLUTE "${${var}}")
+    set (${var} "${CMAKE_INSTALL_PREFIX}/${${var}}")
+  endif()
+endforeach()
 
 ##
 # Library target. It is specified here because both the stair (for the library
@@ -155,6 +172,42 @@ add_subdirectory (samples)
 add_subdirectory (man)
 add_subdirectory (doc)
 add_subdirectory (test)
+
+# Add all targets to the build-tree export set
+export (TARGETS ${PROJECT_NAME} ${STDAIR_LIB_TARGET} ${STDAIR_UICL_LIB_TARGET}
+  FILE "${PROJECT_BINARY_DIR}/StdAirLibraryDepends.cmake")
+
+# Export the package for use from the build-tree
+# (this registers the build-tree with a global CMake-registry)
+export (PACKAGE stdair)
+
+# Create a StdAirConfig.cmake file for the use from the build tree
+set (STDAIR_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
+set (STDAIR_LIB_DIR "${PROJECT_BINARY_DIR}/${PACKAGE}")
+set (STDAIR_CMAKE_DIR "${PROJECT_BINARY_DIR}")
+configure_file (StdAirConfig.cmake.in
+  "${PROJECT_BINARY_DIR}/StdAirConfig.cmake" @ONLY)
+configure_file (StdAirConfigVersion.cmake.in
+  "${PROJECT_BINARY_DIR}/StdAirConfigVersion.cmake" @ONLY)
+
+# Install the export set for use with the install-tree
+#install (EXPORT StdAirLibraryDepends DESTINATION
+#  "${INSTALL_DATA_DIR}/${PACKAGE}/CMake" COMPONENT dev)
+
+# Create a StdAirConfig.cmake file for the use from the install tree
+# and install it
+set (STDAIR_INCLUDE_DIRS "${INSTALL_INCLUDE_DIR}")
+set (STDAIR_LIB_DIR "${INSTALL_LIB_DIR}")
+set (STDAIR_CMAKE_DIR "${INSTALL_DATA_DIR}/${PACKAGE}/CMake")
+configure_file (StdAirConfig.cmake.in
+  "${PROJECT_BINARY_DIR}/InstallFiles/StdAirConfig.cmake" @ONLY)
+configure_file (StdAirConfigVersion.cmake.in
+  "${PROJECT_BINARY_DIR}/InstallFiles/StdAirConfigVersion.cmake" @ONLY)
+install (FILES
+  "${PROJECT_BINARY_DIR}/InstallFiles/StdAirConfig.cmake"
+  "${PROJECT_BINARY_DIR}/InstallFiles/StdAirConfigVersion.cmake"
+  DESTINATION "${STDAIR_CMAKE_DIR}" COMPONENT dev)
+
 
 ##
 # Packaging
