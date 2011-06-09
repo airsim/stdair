@@ -13,5 +13,5 @@ set (STDAIR_LIBRARY_DIRS "@STDAIR_LIB_DIR@")
 include ("@STDAIR_CMAKE_DIR@/StdAirLibraryDepends.cmake")
 
 # These are IMPORTED targets created by StdAirLibraryDepends.cmake
-set (STDAIR_LIBRARIES foo)
-set (STDAIR_EXECUTABLE bar)
+set (STDAIR_LIBRARIES stdairlib stdairuicllib)
+set (STDAIR_EXECUTABLE stdair)

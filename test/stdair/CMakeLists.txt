@@ -10,7 +10,7 @@ if (Boost_FOUND)
 
   # * StdAir Test Suite
   file (GLOB stdairtest_SOURCES *.cpp)
-  add_test_suite (StdAirTest "${stdairtest_SOURCES}" ${STDAIR_LIB_TARGET})
+  add_test_suite (StdAirTest "${stdairtest_SOURCES}" ${STDAIR_LIB_TARGET} ${BOOST_LIBS_FOR_TEST})
 
   # * Next test suite
   # ...

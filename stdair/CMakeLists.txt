@@ -6,8 +6,8 @@ set (PROJ_PATH_CFG_SRC config/${PACKAGE}-paths.hpp.in)
 set (PROJ_PATH_CFG ${CMAKE_CURRENT_BINARY_DIR}/config/${PACKAGE}-paths.hpp)
 configure_file (${PROJ_PATH_CFG_SRC} ${PROJ_PATH_CFG} @ONLY)
 
-# Add the 'cfg_hdr' target, depending on the converted header
-add_custom_target (cfg_hdr ALL DEPENDS ${PROJ_PATH_CFG})
+# Add the 'hdr_cfg' target, depending on the converted header
+add_custom_target (hdr_cfg ALL DEPENDS ${PROJ_PATH_CFG})
 
 
 ##
@@ -16,12 +16,22 @@ add_custom_target (cfg_hdr ALL DEPENDS ${PROJ_PATH_CFG})
 # provided there and add_subdirectory is used here (and the
 # corresponding sources removed from here, of course).
 # The libraries could then be assembled as CMake modules.
-file (GLOB stdairlib_SOURCES 
-  *.hpp basic/*.hpp bom/*.hpp factory/*.hpp
-  dbadaptor/*.hpp command/*.hpp service/*.hpp ${PROJ_PATH_CFG}
+file (GLOB stdairlib_root_HEADERS *.hpp)
+file (GLOB stdairlib_basic_HEADERS basic/*.hpp)
+file (GLOB stdairlib_bom_HEADERS bom/*.hpp)
+file (GLOB stdairlib_factory_HEADERS factory/*.hpp)
+file (GLOB stdairlib_dbadaptor_HEADERS dbadaptor/*.hpp)
+file (GLOB stdairlib_command_HEADERS command/*.hpp)
+file (GLOB stdairlib_service_HEADERS service/*.hpp)
+set (stdairlib_HEADERS
+  ${stdairlib_root_HEADERS} ${stdairlib_basic_HEADERS}
+  ${stdairlib_bom_HEADERS} ${stdairlib_factory_HEADERS}
+  ${stdairlib_dbadaptor_HEADERS} ${stdairlib_command_HEADERS}
+  ${stdairlib_service_HEADERS} ${PROJ_PATH_CFG})
+file (GLOB stdairlib_SOURCES
   *.cpp basic/*.cpp bom/*.cpp factory/*.cpp
   dbadaptor/*.cpp command/*.cpp service/*.cpp)
-file (GLOB stdairlib_HEADERS *.hpp)
+set (stdairlib_SOURCES ${stdairlib_HEADERS} ${stdairlib_SOURCES})
 
 
 ## Assembling
@@ -29,17 +39,21 @@ file (GLOB stdairlib_HEADERS *.hpp)
 add_library (${STDAIR_LIB_TARGET} SHARED ${stdairlib_SOURCES})
 # Dependencies on other libraries (Boost, MySQL, SOCI)
 target_link_libraries (${STDAIR_LIB_TARGET} 
-  ${Boost_LIBRARIES} ${MYSQL_LIBRARIES}
+  ${BOOST_LIBS_FOR_LIB} ${MYSQL_LIBRARIES}
   ${SOCI_LIBRARIES} ${SOCIMYSQL_LIBRARIES})
-add_dependencies (${STDAIR_LIB_TARGET} cfg_hdr)
+#
+add_dependencies (${STDAIR_LIB_TARGET} hdr_cfg)
 # Filename and SONAME
 if (WIN32)
   set_target_properties (${STDAIR_LIB_TARGET} PROPERTIES 
-	OUTPUT_NAME ${STDAIR_LIB_NAME} VERSION ${GENERIC_LIB_VERSION})
+	OUTPUT_NAME ${STDAIR_LIB_NAME} 
+	VERSION ${GENERIC_LIB_VERSION}
+	PUBLIC_HEADER "${stdairlib_root_HEADERS}")
 else()
   set_target_properties (${STDAIR_LIB_TARGET} PROPERTIES 
 	OUTPUT_NAME ${STDAIR_LIB_NAME}
-	VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
+	VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION}
+	PUBLIC_HEADER "${stdairlib_root_HEADERS}")
 endif()
 
 
@@ -47,21 +61,36 @@ endif()
 # Library
 install (TARGETS ${STDAIR_LIB_TARGET} 
   EXPORT StdAirLibraryDepends
-  LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib)
+  RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
+  LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib
+  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/${PACKAGE}" COMPONENT dev)
 
 # Install header files
-install (FILES ${stdairlib_HEADERS} DESTINATION include/${CPACK_PACKAGE_NAME})
-install (DIRECTORY basic DESTINATION include/${CPACK_PACKAGE_NAME}
+install (DIRECTORY basic
+  EXPORT StdAirLibraryDepends
+  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/${PACKAGE}" COMPONENT dev
   FILES_MATCHING PATTERN "*.hpp")
-install (DIRECTORY bom DESTINATION include/${CPACK_PACKAGE_NAME}
+install (DIRECTORY bom
+  EXPORT StdAirLibraryDepends
+  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/${PACKAGE}" COMPONENT dev
   FILES_MATCHING PATTERN "*.hpp")
-install (DIRECTORY factory DESTINATION include/${CPACK_PACKAGE_NAME}
+install (DIRECTORY factory
+  EXPORT StdAirLibraryDepends
+  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/${PACKAGE}" COMPONENT dev
   FILES_MATCHING PATTERN "*.hpp")
-install (DIRECTORY dbadaptor DESTINATION include/${CPACK_PACKAGE_NAME}
+install (DIRECTORY dbadaptor
+  EXPORT StdAirLibraryDepends
+  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/${PACKAGE}" COMPONENT dev
   FILES_MATCHING PATTERN "*.hpp")
-install (DIRECTORY command DESTINATION include/${CPACK_PACKAGE_NAME}
+install (DIRECTORY command
+  EXPORT StdAirLibraryDepends
+  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/${PACKAGE}" COMPONENT dev
   FILES_MATCHING PATTERN "*.hpp")
-install (DIRECTORY service DESTINATION include/${CPACK_PACKAGE_NAME}
+install (DIRECTORY service
+  EXPORT StdAirLibraryDepends
+  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/${PACKAGE}" COMPONENT dev
   FILES_MATCHING PATTERN "*.hpp")
 install (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/config
-  DESTINATION include/${CPACK_PACKAGE_NAME} FILES_MATCHING PATTERN "*.hpp")
+  EXPORT StdAirLibraryDepends
+  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/${PACKAGE}" COMPONENT dev
+  FILES_MATCHING PATTERN "*.hpp")

@@ -136,11 +136,20 @@ include_directories (BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 
 ##
 # Dependencies
+#
 # ~~~~~~~~~~ BOOST ~~~~~~~~~~
+#
+# Note: ${Boost_DATE_TIME_LIBRARY} and ${Boost_PROGRAM_OPTIONS_LIBRARY}
+# are already set by ${SOCIMYSQL_LIBRARIES} and/or ${SOCI_LIBRARIES}.
+#
 find_package (Boost 1.44 REQUIRED COMPONENTS program_options date_time 
   iostreams serialization filesystem unit_test_framework)
 if (Boost_FOUND)
   include_directories (${Boost_INCLUDE_DIRS})
+  set (BOOST_LIBS_FOR_LIB ${Boost_IOSTREAMS_LIBRARY}
+	${Boost_SERIALIZATION_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
+  set (BOOST_LIBS_FOR_BIN "")
+  set (BOOST_LIBS_FOR_TEST ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 endif()
 
 # ~~~~~~~~~~ MySQL ~~~~~~~~~
@@ -159,7 +168,7 @@ if (SOCIMYSQL_FOUND)
   include_directories (${SOCIMYSQL_INCLUDE_DIR})
 endif()
 
-# ~~~~~~~~~~ MySQL ~~~~~~~~~
+# ~~~~~~~~~~ Doxygen ~~~~~~~~~
 find_package (Doxygen REQUIRED)
 
 ##
@@ -218,7 +227,7 @@ add_custom_target (dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 
 # Display status message for important variables
 message (STATUS)
-message (STATUS "-------------------------------------------------------------")
+message (STATUS "=============================================================")
 message (STATUS "BUILD_SHARED_LIBS = ${BUILD_SHARED_LIBS}" )
 message (STATUS "CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX}" )
 message (STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}" )
@@ -235,8 +244,26 @@ message (STATUS "CPACK_DEBIAN_PACKAGE_DEPENDS = ${CPACK_DEBIAN_PACKAGE_DEPENDS}"
 message (STATUS "CPACK_SOURCE_GENERATOR = ${CPACK_SOURCE_GENERATOR}")
 message (STATUS "CPACK_SOURCE_PACKAGE_FILE_NAME = ${CPACK_SOURCE_PACKAGE_FILE_NAME}")
 message (STATUS)
+message (STATUS "External libraries:")
+message (STATUS "-------------------")
+message (STATUS "* Boost:")
+message (STATUS "  - Boost_INCLUDE_DIRS ........ : ${Boost_INCLUDE_DIRS}")
+message (STATUS "  - BOOST_LIBS_FOR_LIB ........ : ${BOOST_LIBS_FOR_LIB}")
+message (STATUS "  - BOOST_LIBS_FOR_BIN ........ : ${BOOST_LIBS_FOR_BIN}")
+message (STATUS "  - BOOST_LIBS_FOR_TEST ....... : ${BOOST_LIBS_FOR_TEST}")
+message (STATUS)
+message (STATUS "* MySQL:")
+message (STATUS "  - MYSQL_INCLUDE_DIR ......... : ${MYSQL_INCLUDE_DIR}")
+message (STATUS "  - MYSQL_LIBRARIES ........... : ${MYSQL_LIBRARIES}")
+message (STATUS)
+message (STATUS "* SOCI:")
+message (STATUS "  - SOCI_INCLUDE_DIR .......... : ${SOCI_INCLUDE_DIR}")
+message (STATUS "  - SOCIMYSQL_INCLUDE_DIR ..... : ${SOCIMYSQL_INCLUDE_DIR}")
+message (STATUS "  - SOCI_LIBRARIES ............ : ${SOCI_LIBRARIES}")
+message (STATUS "  - SOCIMYSQL_LIBRARIES ....... : ${SOCIMYSQL_LIBRARIES}")
+message (STATUS)
 message (STATUS "Change a value with: cmake -D<Variable>=<Value>" )
-message (STATUS "-------------------------------------------------------------")
+message (STATUS "=============================================================")
 message (STATUS)
 
 # Force some variables that could be defined in the command line to be

@@ -31,6 +31,3 @@ echo "" && \
 exit 0
 
 #echo "- configure."     && ./configure "$@" && exit 0
-
-exit 1
-
