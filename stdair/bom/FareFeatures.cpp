@@ -29,6 +29,27 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   bool FareFeatures::
+  IsTripTypeValid (const stdair::TripType_T& iBookingRequestTripType) const {
+
+    const stdair::TripType_T& lFareTripType = getTripType ();
+    // Check if the fare trip type is the same as the booking request trip type.
+    if (iBookingRequestTripType == lFareTripType) {
+      // One way case.
+      return true;
+    } else if (iBookingRequestTripType == "RI" ||
+               iBookingRequestTripType == "RO") {
+      // Round trip case.
+      if (lFareTripType == "RT") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  bool FareFeatures::
   IsStayDurationValid (const stdair::DayDuration_T& iStayDuration) const {
 
     // Check if the stay duration is lower or equal to the minimum one.

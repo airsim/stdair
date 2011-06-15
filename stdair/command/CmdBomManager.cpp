@@ -651,14 +651,15 @@ namespace stdair {
     FacBomManager::linkWithParent (lPosLHRChannelDN, lFareTimePeriod);        
 
     // Generate the FareRule
+    const TripType_T lTripType ("RT");
     const DayDuration_T lAdvancePurchase (0);
     const SaturdayStay_T lSaturdayStay (true); 
     const ChangeFees_T lChangeFees (20.0);
     const NonRefundable_T lNonRefundable (true);
     const DayDuration_T lMinimumStay (0); 
-    const FareFeaturesKey lFareFeaturesKey (lAdvancePurchase, lSaturdayStay,
-                                            lChangeFees, lNonRefundable,
-                                            lMinimumStay);
+    const FareFeaturesKey lFareFeaturesKey (lTripType, lAdvancePurchase,
+                                            lSaturdayStay, lChangeFees,
+                                            lNonRefundable, lMinimumStay);
 
     // Create the FareFeaturesKey and link it to the TimePeriod object.
     FareFeatures& lFareFeatures =

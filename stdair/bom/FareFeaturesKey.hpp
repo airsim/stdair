@@ -17,14 +17,19 @@ namespace stdair  {
   public:
     // /////////// Construction ///////////
     /** Constructors. */
-    FareFeaturesKey (const DayDuration_T&,const SaturdayStay_T&,
-                     const ChangeFees_T&, const NonRefundable_T&,
-                     const DayDuration_T&);
+    FareFeaturesKey (const TripType_T&, const DayDuration_T&,
+                     const SaturdayStay_T&, const ChangeFees_T&,
+                     const NonRefundable_T&, const DayDuration_T&);
     FareFeaturesKey (const FareFeaturesKey&);
     /** Destructor. */
     ~FareFeaturesKey ();
 
     // /////////// Getters //////////
+    /** Get the fare trip type. */
+    const TripType_T& getTripType() const {
+      return _tripType;
+    }
+
     /** Get the fare day duration. */
     const DayDuration_T& getAdvancePurchase() const {
       return _advancePurchase;
@@ -66,6 +71,10 @@ namespace stdair  {
 
   private:
     // Attributes
+    
+    /** Type of trip type (RT=round-trip, OW=one way). */
+    TripType_T _tripType;
+    
     /** Number of days that the ticket is sold before the
 	flightDate.*/
     DayDuration_T _advancePurchase;
