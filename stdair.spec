@@ -118,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 * Sat Jun 11 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 99.99.99-1
 - Upstream update 
 
+* Wed Jun 15 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.34.0-1
+- Upstream update
+
 * Tue Jun  7 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.33.0-1
 - Upstream update
 
