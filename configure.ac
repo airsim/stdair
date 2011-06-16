@@ -68,6 +68,15 @@ AC_ARG_ENABLE(exceptions,
                          [Define if you want exceptions handling])])
 test "x$enable_exceptions" != "xno" && enable_exceptions=yes
 
+# Set the LIB_SUFFIX variable, depending on the x86 architecture
+# (either 32 or 64 bits)
+if test -d /usr/lib64; then
+  LIB_SUFFIX="64"
+else
+  LIB_SUFFIX=""
+fi
+AC_SUBST(LIB_SUFFIX)
+
 # Set the data directory for StdAir
 pkgdatadir="${datadir}/stdair"
 AC_SUBST(pkgdatadir)
