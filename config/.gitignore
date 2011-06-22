@@ -1,4 +1,5 @@
 tmp
+/build/
 INSTALL
 Makefile.in
 aclocal.m4
@@ -17,6 +18,7 @@ airsched
 avlcal/
 dsim/
 rmol/
+sevmgr/
 stdair/
 simcrs/
 simfqt/
