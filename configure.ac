@@ -43,6 +43,9 @@ case $host in
     ;;
 esac
 
+# Set default language to C++
+AC_LANG([C++])
+
 # Checks for programs
 save_CFLAGS="$CFLAGS"
 save_CXXFLAGS="$CXXFLAGS"
@@ -56,9 +59,6 @@ AC_PROG_INSTALL
 AC_PROG_LIBTOOL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-
-# Set default language to C++
-AC_LANG([C++])
 
 # Check for exceptions switch
 AC_ARG_ENABLE(exceptions,
