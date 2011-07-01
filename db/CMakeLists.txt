@@ -11,6 +11,8 @@ set (srcdir           ${CMAKE_CURRENT_SOURCE_DIR})
 
 set (db_admin_DIR     admin)
 set (db_data_DIR      data)
+set (STDAIR_DB_DATA_DIR
+  ${CMAKE_INSTALL_PREFIX}/share/${PACKAGE}/db/${db_data_DIR})
 
 ##
 # Convert the database admin files (basically, just replace the @<variable>@

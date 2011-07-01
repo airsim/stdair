@@ -1,7 +1,6 @@
 #!/bin/sh
 #
-# Three parameters are optional:
-# - the name of the database (on the MySQL server)
+# Two parameters are optional:
 # - the host server of the database
 # - the port of the database
 #
@@ -15,21 +14,18 @@ DB_HOST="localhost"
 # Database server port
 DB_PORT="3306"
 
+# Parsing of the command-line options
 if [ "$1" != "" ]; then
-	DB_NAME=$1
-fi
-
-if [ "$2" != "" ]; then
-	DB_HOST=$2
+	DB_HOST=$1
 fi 
 
-if [ "$3" != "" ]; then
-	DB_PORT=$3
+if [ "$2" != "" ]; then
+	DB_PORT=$2
 fi
 
 
 if [ "$1" = "--help" -o  "$1" = "-h" -o  "$1" = "-H" ]; then
-	echo "Usage: $0 [ <Name of Database> <Host> <Port> ]"
+	echo "Usage: $0 [ <Host> <Port> ]"
 	echo ""
 	exit -1
 fi
@@ -54,12 +50,13 @@ DB_PASSWD=${userinput_pw}
 
 #
 createDSimUser() {
-	echo "Creating the DSim user within the database:"
-	mysql -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} ${DB_NAME} < ${SQL_FILE}
-	mysql -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} -e "flush privileges"
+    echo "Creating the '${DB_USER}' user within the database..."
+    mysql -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} ${DB_NAME} < ${SQL_FILE}
+    mysql -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} -e "flush privileges"
+    echo "... Done: the '${DB_USER}' user has been created."
 }
 
 # Creating the DSim user
-SQL_FILE="create_dsim_user.sql"
+SQL_FILE="@STDAIR_DB_DATA_DIR@/create_dsim_user.sql"
 createDSimUser
 

@@ -1,7 +1,6 @@
 #!/bin/sh
 #
-# Three parameters are optional:
-# - the name of the database (on the MySQL server)
+# Two parameters are optional:
 # - the host server of the database
 # - the port of the database
 #
@@ -16,20 +15,16 @@ DB_HOST="localhost"
 DB_PORT="3306"
 
 if [ "$1" != "" ]; then
-	DB_NAME=$1
-fi
-
-if [ "$2" != "" ]; then
-	DB_HOST=$2
+	DB_HOST=$1
 fi 
 
-if [ "$3" != "" ]; then
-	DB_PORT=$3
+if [ "$2" != "" ]; then
+	DB_PORT=$2
 fi
 
-
+# Parsing of the command-line options
 if [ "$1" = "--help" -o  "$1" = "-h" -o "$1" = "-H" ]; then
-	echo "Usage: $0 [ <Name of Database> <Host> <Port> ]"
+	echo "Usage: $0 [ <Host> <Port> ]"
 	echo ""
 	exit -1
 fi
@@ -56,5 +51,6 @@ DB_PASSWD=${userinput_pw}
 SQL_STATEMENT="create database if not exists ${DB_NAME} default character set utf8 collate utf8_unicode_ci"
 
 #
-echo "The database '${DB_NAME}' will be created:"
+echo "The database '${DB_NAME}' will be created..."
 mysql -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} mysql -e "${SQL_STATEMENT}"
+echo "... Done: the database '${DB_NAME}' has been created."

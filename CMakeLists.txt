@@ -16,9 +16,9 @@ set (PACKAGE_NAME "${PACKAGE_NAME_TMP}" CACHE INTERNAL "Description")
 
 ##
 # Version
-set (stdair_VERSION_MAJOR 99)
-set (stdair_VERSION_MINOR 99)
-set (stdair_VERSION_PATCH 99)
+set (stdair_VERSION_MAJOR 0)
+set (stdair_VERSION_MINOR 34)
+set (stdair_VERSION_PATCH 0)
 set (stdair_VERSION "${stdair_VERSION_MAJOR}.${stdair_VERSION_MINOR}.${stdair_VERSION_PATCH}")
 set (PACKAGE_VERSION "${stdair_VERSION}")
 # Note that the soname could be different from the version. The soname

@@ -36,12 +36,25 @@ DB_PASSWD="airinv"
 # Database Name
 DB_NAME="sim_airinv"
 
+##
 # Create the tables
-SQL_FILE="create_airinv_tables.sql"
-echo "Creating the tables for Airinv:"
+SQL_FILE="@STDAIR_DB_DATA_DIR@/create_airinv_tables.sql"
+echo "Creating the tables for '${DB_USER}@${DB_NAME}'..."
 mysql -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} ${DB_NAME} < ${SQL_FILE}
+echo "... Done: the tables have been created for '${DB_USER}@${DB_NAME}'."
 
+##
+loadTableIntoDB() {
+    CSV_FILE="@STDAIR_DB_DATA_DIR@/${DB_TABLE}.csv"
+    SQL_STATEMENT="load data local infile '${CSV_FILE}' ignore"
+    SQL_STATEMENT="${SQL_STATEMENT} into table ${DB_TABLE} fields terminated by ','"
+    SQL_STATEMENT="${SQL_STATEMENT} enclosed by '' escaped by '\\\\' ignore 1 lines"
+    echo "Data will be loaded into the '${DB_TABLE}' table for '${DB_USER}@${DB_NAME}'..."
+    mysql -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} ${DB_NAME} -e "${SQL_STATEMENT}"
+    echo "... Done: data has been loaded into the '${DB_TABLE}' table for '${DB_USER}@${DB_NAME}'."
+}
+
+##
 # Load the data into the tables
-SQL_FILE="fill_airinv_tables.sql"
-echo "Load data into the tables of Airinv:"
-mysql -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} ${DB_NAME} < ${SQL_FILE}
+DB_TABLE="airlines"
+loadTableIntoDB
