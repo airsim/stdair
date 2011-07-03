@@ -39,11 +39,12 @@ endif()
 
 # Set default install prefix to project root directory
 if (CMAKE_INSTALL_PREFIX STREQUAL "/usr/local")
-  set (CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}")
+  set (CMAKE_INSTALL_PREFIX "/usr")
 endif()
 
 # Offer the user the choice of overriding the installation directories
-set (INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
+set (INSTALL_LIB_DIR ${LIBDIR} CACHE
+  PATH "Installation directory for libraries")
 set (INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
 set (INSTALL_INCLUDE_DIR include CACHE PATH
   "Installation directory for header files")
@@ -116,27 +117,11 @@ set (CPACK_SOURCE_IGNORE_FILES
 #set (CPACK_SOURCE_IGNORE_DIRECTORY ${CPACK_SOURCE_IGNORE_FILES} .git)
 
 ##
-# Set all the directory pathes for the project (e.g., prefix, libdir, bindir)
-include (config/project_config.cmake)
-
-##
-# For the other developers to use that project
-include (config/devhelpers.cmake)
-
-# CMake scripts path
-set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/config/)
-
-# Compilation
-# Note: the debug flag (-g) is set (or not) by giving the
-# corresponding option when calling cmake:
-# cmake -DCMAKE_BUILD_TYPE:STRING={Debug,Release,MinSizeRel,RelWithDebInfo}
-#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Werror")
-set (CMAKE_CXX_FLAGS "-Wall -Werror")
-include_directories (BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}) 
-
-##
 # Dependencies
 #
+# CMake scripts, to find some dependencies (e.g., Boost, MySQL, SOCI)
+set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/config/)
+
 # ~~~~~~~~~~ BOOST ~~~~~~~~~~
 #
 # Note: ${Boost_DATE_TIME_LIBRARY} and ${Boost_PROGRAM_OPTIONS_LIBRARY}
@@ -146,30 +131,59 @@ find_package (Boost 1.44 REQUIRED COMPONENTS program_options date_time
   iostreams serialization filesystem unit_test_framework)
 if (Boost_FOUND)
   include_directories (${Boost_INCLUDE_DIRS})
-  set (BOOST_LIBS_FOR_LIB ${Boost_IOSTREAMS_LIBRARY}
-	${Boost_SERIALIZATION_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
-  set (BOOST_LIBS_FOR_BIN "")
+  set (BOOST_LIBS_FOR_LIB 
+	${Boost_IOSTREAMS_LIBRARY} ${Boost_SERIALIZATION_LIBRARY}
+	${Boost_FILESYSTEM_LIBRARY})
+##
+# See https://bugzilla.redhat.com/show_bug.cgi?id=718504
+# For now, SOCI is linked with the single-threaded version of boost-date-time
+# (and of boost-program-options). So, we do not add the multi-threaded versions
+# of those libraries to the dependencies, otherwise we would end up with
+# some strange behaviour of the generated binaries and libraries.
+# For instance, when a program exits and the static variables are garbaged
+# collected, two versions of the same library means two garbage collections
+# for the same objects...
+# When SOCI will be delivered with the multi-threaded Boost as dependency,
+# just uncomment the following line:
+# set (BOOST_LIBS_FOR_LIB ${BOOST_LIBS_FOR_LIB} ${Boost_DATE_TIME_LIBRARY})
+  set (BOOST_LIBS_FOR_BIN ${Boost_PROGRAM_OPTIONS_LIBRARY})
   set (BOOST_LIBS_FOR_TEST ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-endif()
+endif (Boost_FOUND)
 
 # ~~~~~~~~~~ MySQL ~~~~~~~~~
 find_package (MySQL)
 if (MYSQL_FOUND)
   include_directories (${MYSQL_INCLUDE_DIR})
-endif()
+endif (MYSQL_FOUND)
 
 # ~~~~~~~~~~ SOCI ~~~~~~~~~~
 find_package (SOCI)
 if (SOCI_FOUND)
   include_directories (${SOCI_INCLUDE_DIR})
-endif()
+endif (SOCI_FOUND)
 find_package (SOCIMySQL)
 if (SOCIMYSQL_FOUND)
   include_directories (${SOCIMYSQL_INCLUDE_DIR})
-endif()
+endif (SOCIMYSQL_FOUND)
 
 # ~~~~~~~~~~ Doxygen ~~~~~~~~~
 find_package (Doxygen REQUIRED)
+
+##
+# Set all the directory pathes for the project (e.g., prefix, libdir, bindir)
+include (config/project_config.cmake)
+
+##
+# For the other developers to use that project
+include (config/devhelpers.cmake)
+
+# Compilation
+# Note: the debug flag (-g) is set (or not) by giving the
+# corresponding option when calling cmake:
+# cmake -DCMAKE_BUILD_TYPE:STRING={Debug,Release,MinSizeRel,RelWithDebInfo}
+#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Werror")
+set (CMAKE_CXX_FLAGS "-Wall -Werror")
+include_directories (BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}) 
 
 ##
 # Subdirs
@@ -190,15 +204,6 @@ export (TARGETS ${PROJECT_NAME} ${STDAIR_LIB_TARGET} ${STDAIR_UICL_LIB_TARGET}
 # (this registers the build-tree with a global CMake-registry)
 export (PACKAGE stdair)
 
-# Create a StdAirConfig.cmake file for the use from the build tree
-set (STDAIR_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
-set (STDAIR_LIB_DIR "${PROJECT_BINARY_DIR}/${PACKAGE}")
-set (STDAIR_CMAKE_DIR "${PROJECT_BINARY_DIR}")
-configure_file (StdAirConfig.cmake.in
-  "${PROJECT_BINARY_DIR}/StdAirConfig.cmake" @ONLY)
-configure_file (StdAirConfigVersion.cmake.in
-  "${PROJECT_BINARY_DIR}/StdAirConfigVersion.cmake" @ONLY)
-
 # Install the export set for use with the install-tree
 install (EXPORT StdAirLibraryDepends DESTINATION
   "${INSTALL_DATA_DIR}/${PACKAGE}/CMake" COMPONENT dev)
@@ -206,6 +211,7 @@ install (EXPORT StdAirLibraryDepends DESTINATION
 # Create a StdAirConfig.cmake file for the use from the install tree
 # and install it
 set (STDAIR_INCLUDE_DIRS "${INSTALL_INCLUDE_DIR}")
+set (STDAIR_BIN_DIR "${INSTALL_BIN_DIR}")
 set (STDAIR_LIB_DIR "${INSTALL_LIB_DIR}")
 set (STDAIR_CMAKE_DIR "${INSTALL_DATA_DIR}/${PACKAGE}/CMake")
 configure_file (StdAirConfig.cmake.in
@@ -232,8 +238,15 @@ message (STATUS "BUILD_SHARED_LIBS = ${BUILD_SHARED_LIBS}" )
 message (STATUS "CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX}" )
 message (STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}" )
 message (STATUS "CMAKE_MODULE_PATH = ${CMAKE_MODULE_PATH}" )
+message (STATUS)
+message (STATUS "---")
+message (STATUS "INSTALL_LIB_DIR = ${INSTALL_LIB_DIR}")
+message (STATUS "INSTALL_BIN_DIR = ${INSTALL_BIN_DIR}")
+message (STATUS "INSTALL_INCLUDE_DIR = ${INSTALL_INCLUDE_DIR}")
+message (STATUS "INSTALL_DATA_DIR = ${INSTALL_DATA_DIR}")
 message (STATUS "INSTALL_DOC = ${INSTALL_DOC}" )
 message (STATUS)
+message (STATUS "---")
 message (STATUS "CPACK_PACKAGE_CONTACT = ${CPACK_PACKAGE_CONTACT}")
 message (STATUS "CPACK_PACKAGE_VENDOR = ${CPACK_PACKAGE_VENDOR}")
 message (STATUS "CPACK_PACKAGE_VERSION = ${CPACK_PACKAGE_VERSION}")
