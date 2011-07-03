@@ -45,12 +45,12 @@ esac
 
 # Set default language to C++
 AC_LANG([C++])
+AC_LANG_CPLUSPLUS
 
 # Checks for programs
 save_CFLAGS="$CFLAGS"
 save_CXXFLAGS="$CXXFLAGS"
 save_FFLAGS="$FFLAGS"
-AC_LANG_SOURCE(C++)
 AC_PROG_CXX
 AC_PROG_CXXCPP
 CXXFLAGS="$save_CXXFLAGS"
