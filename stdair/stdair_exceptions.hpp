@@ -160,6 +160,14 @@ namespace stdair {
     ObjectNotFoundException (const std::string& iWhat)
       : RootException (iWhat) {}
   };
+
+  /** Input file parsing failure. */
+  class ParsingFileFailedException : public ParserException {
+  public:
+    /** Constructor. */
+    ParsingFileFailedException (const std::string& iWhat)
+      : ParserException (iWhat) {}
+  };
   
   /** Database. */
   class SQLDatabaseException : public RootException {
