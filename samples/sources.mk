@@ -1,13 +1,5 @@
 sample_csv_sources = \
 	$(top_srcdir)/samples/demand01.csv \
-	$(top_srcdir)/samples/demand02.csv \
-	$(top_srcdir)/samples/demand03.csv \
-	$(top_srcdir)/samples/demand04.csv \
-	$(top_srcdir)/samples/demand05.csv \
-	$(top_srcdir)/samples/demand06.csv \
-	$(top_srcdir)/samples/demand07.csv \
-	$(top_srcdir)/samples/demand08.csv \
-	$(top_srcdir)/samples/demand09.csv \
 	$(top_srcdir)/samples/fare01.csv \
 	$(top_srcdir)/samples/fareError01.csv \
 	$(top_srcdir)/samples/fareError02.csv \
