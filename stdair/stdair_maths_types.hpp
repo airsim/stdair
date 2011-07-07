@@ -11,6 +11,7 @@
 // Boost Random
 #include <boost/random/linear_congruential.hpp>
 #include <boost/random/uniform_real.hpp>
+#include <boost/random/normal_distribution.hpp>
 #include <boost/random/exponential_distribution.hpp>
 #include <boost/random/variate_generator.hpp>
 
@@ -52,6 +53,17 @@ namespace stdair {
    */
   typedef boost::variate_generator<BaseGenerator_T&,
                                    UniformDistribution_T> UniformGenerator_T;
+
+  /**
+   * Normal distribution of real numbers (by default, double).
+   */
+  typedef boost::normal_distribution<> NormalDistribution_T;
+
+  /**
+   * Nornal random generator.
+   */
+  typedef boost::variate_generator<BaseGenerator_T&,
+                                   NormalDistribution_T> NormalGenerator_T;
 
   /** Type definiton for the exponential distribution (characteristics). */
   typedef boost::exponential_distribution<> ExponentialDistribution_T;
