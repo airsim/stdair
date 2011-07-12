@@ -27,6 +27,7 @@
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/STDAIR_Service.hpp>
+#include <stdair/basic/float_utils.hpp>
 #include <stdair/bom/BomDisplay.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/BomManager.hpp>
@@ -66,6 +67,27 @@ BOOST_GLOBAL_FIXTURE (UnitTestConfig);
 
 // Start the test suite
 BOOST_AUTO_TEST_SUITE (master_test_suite)
+
+/**
+ * Test the comparison of two floating point numbers, first the Boost way,
+ * then the Google way.
+ */
+BOOST_AUTO_TEST_CASE (float_comparison_test) {
+  float a = 0.2f;
+  a = 5*a;
+  const float b = 1.0f;
+
+  // Test the Boost way
+  BOOST_CHECK_MESSAGE (a == b, "The two floats (" << a << " and " << b
+                       << ") should be equal, but are not");
+  BOOST_CHECK_CLOSE (a, b, 0.0001);
+
+  // Test the Google way
+  const FloatingPoint<float> lhs (a), rhs (b);
+  BOOST_CHECK_MESSAGE (lhs.AlmostEquals (rhs),
+                       "The two floats (" << a << " and " << b
+                       << ") should be equal, but are not");
+}
 
 /**
  * Test MPL-based type handling, just as a proof-of-concept. It does
