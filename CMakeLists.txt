@@ -134,18 +134,7 @@ if (Boost_FOUND)
   set (BOOST_LIBS_FOR_LIB 
 	${Boost_IOSTREAMS_LIBRARY} ${Boost_SERIALIZATION_LIBRARY}
 	${Boost_FILESYSTEM_LIBRARY})
-##
-# See https://bugzilla.redhat.com/show_bug.cgi?id=718504
-# For now, SOCI is linked with the single-threaded version of boost-date-time
-# (and of boost-program-options). So, we do not add the multi-threaded versions
-# of those libraries to the dependencies, otherwise we would end up with
-# some strange behaviour of the generated binaries and libraries.
-# For instance, when a program exits and the static variables are garbaged
-# collected, two versions of the same library means two garbage collections
-# for the same objects...
-# When SOCI will be delivered with the multi-threaded Boost as dependency,
-# just uncomment the following line:
-# set (BOOST_LIBS_FOR_LIB ${BOOST_LIBS_FOR_LIB} ${Boost_DATE_TIME_LIBRARY})
+  set (BOOST_LIBS_FOR_LIB ${BOOST_LIBS_FOR_LIB} ${Boost_DATE_TIME_LIBRARY})
   set (BOOST_LIBS_FOR_BIN ${Boost_PROGRAM_OPTIONS_LIBRARY})
   set (BOOST_LIBS_FOR_TEST ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 endif (Boost_FOUND)
