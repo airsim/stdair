@@ -1,24 +1,17 @@
 #
 # StdAir Tests
 #
-if (Boost_FOUND)
+module_set_name (stdair)
 
-  # CMake macro (defined in config/add_test_suite.cmake)
-  include (add_test_suite)
 
-  enable_testing() 
+##
+# Specify each test suite configuration
 
-  # * StdAir Test Suite
-  file (GLOB stdairtest_SOURCES *.cpp)
-  add_test_suite (StdAirTest "${stdairtest_SOURCES}" ${STDAIR_LIB_TARGET} ${BOOST_LIBS_FOR_TEST})
+# * StdAir Test Suite
+file (GLOB stdairtest_SOURCES *.cpp)
+module_test_add_suite (StdAirTest "${stdairtest_SOURCES}" stdair)
 
-  # * Next test suite
-  # ...
 
-  # Don't forget to add the test suite to the DEPENDS argument list
-  add_custom_target (
-	check
-    COMMAND ${CMAKE_CTEST_COMMAND}
-    DEPENDS StdAirTest)
-
-endif()
+##
+# Register all the test suites to be built and performed
+module_test_build_all ()

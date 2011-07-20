@@ -13,7 +13,7 @@ set (STDAIR_VERSION "@PACKAGE_VERSION@")
 set (STDAIR_BINARY_DIRS "@STDAIR_BIN_DIR@")
 set (STDAIR_INCLUDE_DIRS "@STDAIR_INCLUDE_DIRS@")
 set (STDAIR_LIBRARY_DIRS "@STDAIR_LIB_DIR@")
-set (STDAIR_SAMPLE_DIR "@sampledir@")
+set (STDAIR_SAMPLE_DIR "@STDAIR_SAMPLE_DIR@")
 
 # Our library dependencies (contains definitions for IMPORTED targets)
 include ("@STDAIR_CMAKE_DIR@/stdair-library-depends.cmake")
