@@ -698,17 +698,6 @@ namespace stdair {
     FacBomManager::addToListAndMap (ioBomRoot, lLHRSYDAirportPair);
     FacBomManager::linkWithParent (ioBomRoot, lLHRSYDAirportPair);
 
-    // Set the point-of-sale-channel primary key.
-    const CityCode_T& lPosLHR("LHR");
-    const ChannelLabel_T& lChannelDN("DN");
-    const PosChannelKey lPosLHRChannelDNKey (lPosLHR, lChannelDN);  
-
-    // Create the PositionKey object and link it to the AirportPair object.
-    PosChannel& lPosLHRChannelDN =
-      FacBom<PosChannel>::instance().create (lPosLHRChannelDNKey);
-    FacBomManager::addToListAndMap (lLHRSYDAirportPair, lPosLHRChannelDN);
-    FacBomManager::linkWithParent (lLHRSYDAirportPair, lPosLHRChannelDN);
-
     // Set the yield date-period primary key.
     const Date_T lDateRangeStart (2011, 1, 15);
     const Date_T lDateRangeEnd (2011, 12, 31);
@@ -718,8 +707,19 @@ namespace stdair {
     // Create the DatePeriodKey object and link it to the PosChannel object.
     DatePeriod& lYieldDatePeriod =
       FacBom<DatePeriod>::instance().create (lYieldDatePeriodKey);
-    FacBomManager::addToListAndMap (lPosLHRChannelDN, lYieldDatePeriod);
-    FacBomManager::linkWithParent (lPosLHRChannelDN, lYieldDatePeriod);    
+    FacBomManager::addToListAndMap (lLHRSYDAirportPair, lYieldDatePeriod);
+    FacBomManager::linkWithParent (lLHRSYDAirportPair, lYieldDatePeriod);    
+
+    // Set the point-of-sale-channel primary key.
+    const CityCode_T& lPosLHR("LHR");
+    const ChannelLabel_T& lChannelDN("DN");
+    const PosChannelKey lPosLHRChannelDNKey (lPosLHR, lChannelDN);  
+
+    // Create the PositionKey object and link it to the AirportPair object.
+    PosChannel& lPosLHRChannelDN =
+      FacBom<PosChannel>::instance().create (lPosLHRChannelDNKey);
+    FacBomManager::addToListAndMap (lYieldDatePeriod, lPosLHRChannelDN);
+    FacBomManager::linkWithParent (lYieldDatePeriod, lPosLHRChannelDN);
    
     // Set the yield time-period primary key.
     const Duration_T l0000 (00, 00, 0);
@@ -731,13 +731,14 @@ namespace stdair {
     // Create the TimePeriodKey and link it to the DatePeriod object.
     TimePeriod& lYieldTimePeriod =
       FacBom<TimePeriod>::instance().create (lYieldTimePeriodKey);
-    FacBomManager::addToListAndMap (lYieldDatePeriod, lYieldTimePeriod);
-    FacBomManager::linkWithParent (lYieldDatePeriod, lYieldTimePeriod);        
+    FacBomManager::addToListAndMap (lPosLHRChannelDN, lYieldTimePeriod);
+    FacBomManager::linkWithParent (lPosLHRChannelDN, lYieldTimePeriod);        
 
     // Generate the YieldRule
     const CabinCode_T lCabinCode ("Y");
+    const TripType_T lTripType ("RT");
     const Yield_T lYield (900.0);
-    const YieldFeaturesKey lYieldFeaturesKey (lCabinCode);
+    const YieldFeaturesKey lYieldFeaturesKey (lCabinCode, lTripType);
 
     // Create the YieldFeaturesKey and link it to the TimePeriod object.
     YieldFeatures& lYieldFeatures =

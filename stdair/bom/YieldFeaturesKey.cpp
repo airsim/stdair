@@ -10,13 +10,15 @@
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  YieldFeaturesKey::YieldFeaturesKey (const stdair::CabinCode_T& iCabin)
-    : _cabinCode (iCabin) {
+  YieldFeaturesKey::YieldFeaturesKey (const stdair::TripType_T& iTripType,
+                                      const stdair::CabinCode_T& iCabin)
+    : _tripType(iTripType), _cabinCode (iCabin) {
   }
 
   // ////////////////////////////////////////////////////////////////////
   YieldFeaturesKey::YieldFeaturesKey (const YieldFeaturesKey& iKey)
-    : _cabinCode (iKey._cabinCode) {
+    : _tripType(iKey.getTripType()),
+      _cabinCode (iKey.getCabinCode()) {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -35,7 +37,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string YieldFeaturesKey::toString() const {
     std::ostringstream oStr;
-    oStr << _cabinCode;
+    oStr << _tripType << " -- " << _cabinCode;
     return oStr.str();
   }
 

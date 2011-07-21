@@ -17,12 +17,17 @@ namespace stdair  {
   public:
     // /////////// Construction ///////////
     /** Constructors. */
-    YieldFeaturesKey (const stdair::CabinCode_T&);
+    YieldFeaturesKey (const stdair::TripType_T&,
+                      const stdair::CabinCode_T&);
     YieldFeaturesKey (const YieldFeaturesKey&);
     /** Destructor. */
     ~YieldFeaturesKey ();
 
     // /////////// Getters //////////
+    /** Get the fare trip type. */
+    const TripType_T& getTripType() const {
+      return _tripType;
+    }
 
     /** Get the cabin. */
     const stdair::CabinCode_T& getCabinCode() const {
@@ -45,6 +50,10 @@ namespace stdair  {
 
   private:
     // Attributes
+    
+    /** Type of trip type (RT=round-trip, OW=one way). */
+    TripType_T _tripType;
+    
     /** Cabin code. */
     stdair::CabinCode_T _cabinCode;
 

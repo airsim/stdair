@@ -49,6 +49,18 @@ namespace stdair {
       return _key.getCabinCode();
     }
 
+    /** Get the trip type. */
+    const stdair::TripType_T& getTripType() const {
+      return _key.getTripType();
+    }
+
+  public:
+    // ////////////// Business methods ///////////////
+
+    /** Check if the fare rule trip type corresponds to the booking
+        request trip type. */
+    bool IsTripTypeValid (const TripType_T&) const;
+
   protected:
     /** Default constructors. */
     YieldFeatures (const Key_T&);
