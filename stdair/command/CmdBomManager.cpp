@@ -627,8 +627,8 @@ namespace stdair {
     FacBomManager::linkWithParent (lLHRSYDAirportPair, lFareDatePeriod);    
 
     // Set the point-of-sale-channel primary key.
-    const CityCode_T& lPosLHR("LHR");
-    const ChannelLabel_T& lChannelDN("DN");
+    const CityCode_T lPosLHR ("LHR");
+    const ChannelLabel_T lChannelDN ("DN");
     const PosChannelKey lPosLHRChannelDNKey (lPosLHR, lChannelDN);  
 
     // Create the PositionKey object and link it to the AirportPair object.
@@ -711,8 +711,8 @@ namespace stdair {
     FacBomManager::linkWithParent (lLHRSYDAirportPair, lYieldDatePeriod);    
 
     // Set the point-of-sale-channel primary key.
-    const CityCode_T& lPosLHR("LHR");
-    const ChannelLabel_T& lChannelDN("DN");
+    const CityCode_T lPosLHR ("LHR");
+    const ChannelLabel_T lChannelDN ("DN");
     const PosChannelKey lPosLHRChannelDNKey (lPosLHR, lChannelDN);  
 
     // Create the PositionKey object and link it to the AirportPair object.
@@ -747,10 +747,8 @@ namespace stdair {
     FacBomManager::linkWithParent (lYieldTimePeriod, lYieldFeatures);     
                                               
     // Generate Segment Features and link them to their YieldRule.
-    AirlineCodeList_T lAirlineCodeList;
-    lAirlineCodeList.push_back ("BA");
-    ClassList_StringList_T lClassCodeList;
-    lClassCodeList.push_back ("Y");
+    AirlineCodeList_T lAirlineCodeList; lAirlineCodeList.push_back ("BA");
+    ClassList_StringList_T lClassCodeList; lClassCodeList.push_back ("Y");
     const AirlineClassListKey lAirlineClassListKey (lAirlineCodeList,
                                                     lClassCodeList);
 
