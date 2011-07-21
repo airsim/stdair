@@ -3,50 +3,49 @@
 module_set_name (stdair)
 
 ##
-# Convert the configuration headers (basically, just replace the @<variable>@
-# variables).
-module_generate_config_helpers ()
-
-##
-# Source directories for the standard library.
-# All the sources within each of the directories/layers will be used and
+# Building and installation of the "standard library".
+# All the sources within each of the layers/sub-directories are used and
 # assembled, in order to form a single library, named here the
 # "standard library".
-module_define_sources (basic bom factory dbadaptor command service)
+# The three parameters (among which only the first one is mandatory) are:
+#  * A semi-colon separated list of all the layers in which header and source
+#    files are to be found.
+#  * Whether or not all the header files should be published. By default, only
+#    the header files of the root directory are to be published.
+#  * A list of additional dependency on inter-module library targets.
+module_library_add_standard(".;basic;bom;factory;dbadaptor;command;service" all)
 
 ##
-# Assembling
+# Building and installation of a specific library.
+# The first four parameters are mandatory and correspond to:
+#  * The short name of the library to be built.
+#    Note that the library (CMake) target is derived directly from the library
+#    short name: a 'lib' suffix is just appended to the short name.
+#  * The directory where to find the header files.
+#  * The header files to be published/installed along with the library.
+#  * The source files to build the library.
+#    Note that the source files contain at least the header files. Hence,
+#    even when there are no .cpp source files, the .hpp files will appear.
+#
+# Note that the header and source files should be given as single parameters,
+# i.e., enclosed by double quotes (").
+#
 # The additional parameters, if given, correspond to the names of the
 # modules this current module depends upon. Dependencies on the
 # external libraries (e.g., Boost, SOCI, StdAir) are automatically
 # appended, thanks to the get_external_libs() macro.
-module_library_add_standard ()
-
-# Specification of the additional libraries: target, headers and sources
-#file (GLOB ${PROJECT_NAME}uicl_HEADERS ui/cmdline/SReadline.hpp)
-module_library_add_specific (${PROJECT_NAME}uicl 
+module_library_add_specific (${PROJECT_NAME}uicl ui/cmdline 
   "ui/cmdline/SReadline.hpp" "ui/cmdline/SReadline.hpp")
 
 ##
-# Library installation
-# The parameters correspond to additional libraries to be installed.
-# When no parameter is given, only the standard library is installed.
-module_library_install_all (${PROJECT_NAME}uicl)
-
-
-##
-# Header installation for the non-root layers
-module_header_install_standard ()
-
-##
-# Assembling: specify the standard binary target for the current module.
-module_binary_add_standard (../batches)
-
-##
-# Binary installation
-# The parameters correspond to additional binaries to be installed.
-# When no parameter is given, only the standard binary is installed.
-module_binary_install_all ()
+# Building and installation of the executables/binaries.
+# The two parameters (among which only the first one is mandatory) are:
+#  * The path/directory where the header and source files can be found
+#    in order to build the executable.
+#  * If specified, the name to be given to the executable. If no such name
+#    is given as parameter, the executable is given the name of the current
+#    module.
+module_binary_add (../batches)
 
 ##
 # Install the CMake import helper, so that third party projects can refer to it
