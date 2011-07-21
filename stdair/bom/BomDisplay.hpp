@@ -186,11 +186,8 @@ namespace stdair {
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const BomRoot& Root of the BOM tree to be displayed.
-     * @param const bool& Boolean telling if the boom root is a fare bom root (value true) or a yield one (value false).
      */
-    static void csvSimFQTAirRACDisplay (std::ostream&,
-                                        const BomRoot&,
-                                        const bool&);
+    static void csvSimFQTAirRACDisplay (std::ostream&, const BomRoot&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -200,11 +197,8 @@ namespace stdair {
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const AirportPair& Root of the BOM tree to be displayed.
-     * @param const bool& Boolean telling if the boom root is a fare bom root (value true) or a yield one (value false).
      */
-    static void csvAirportPairDisplay (std::ostream&,
-                                       const AirportPair&,
-                                       const bool&);
+    static void csvAirportPairDisplay (std::ostream&, const AirportPair&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -214,11 +208,8 @@ namespace stdair {
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const DatePeriod& Root of the BOM tree to be displayed.
-     * @param const bool& Boolean telling if the boom root is a fare bom root (value true) or a yield one (value false).
      */
-    static void csvDateDisplay (std::ostream&,
-                                const DatePeriod&,
-                                const bool&);
+    static void csvDateDisplay (std::ostream&, const DatePeriod&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -228,11 +219,8 @@ namespace stdair {
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const PosChannel& Root of the BOM tree to be displayed.
-     * @param const bool& Boolean telling if the boom root is a fare bom root (value true) or a yield one (value false).
      */
-    static void csvPosChannelDisplay (std::ostream&,
-                                      const PosChannel&,
-                                      const bool&);
+    static void csvPosChannelDisplay (std::ostream&, const PosChannel&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -242,31 +230,30 @@ namespace stdair {
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const TimePeriod& Root of the BOM tree to be displayed.
-     * @param const bool& Boolean telling if the boom root is a fare bom root (value true) or a yield one (value false).
      */
-    static void csvTimeDisplay (std::ostream&,
-                                const TimePeriod&,
-                                const bool&);
+    static void csvTimeDisplay (std::ostream&, const TimePeriod&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the fare features objects of the BOM tree.
+     * the list of fare/yield features objects of the BOM tree.
      *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
-     * @param const FareFeatures& Root of the BOM tree to be displayed.
+     * @param const TimePeriod& Root of the BOM tree to be displayed.
      */
-    static void csvFeaturesDisplay (std::ostream&, const FareFeatures&);
+    template <typename FEATURE_TYPE>
+    static void csvFeatureListDisplay (std::ostream& oStream, const TimePeriod&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the yield features objects of the BOM tree.
+     * the fare/yield features objects of the BOM tree.
      *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
-     * @param const YieldFeatures& Root of the BOM tree to be displayed.
+     * @param const FEATURE_TYPE& Root of the BOM tree to be displayed.
      */
-    static void csvFeaturesDisplay (std::ostream&, const YieldFeatures&);
+    template <typename FEATURE_TYPE>
+    static void csvFeaturesDisplay (std::ostream& oStream, const FEATURE_TYPE&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -277,9 +264,6 @@ namespace stdair {
      * @param const AirlineClassList& Root of the BOM tree to be displayed.
      */
     static void csvAirlineClassDisplay (std::ostream&, const AirlineClassList&);
-
-    
-
   };
   
 }

@@ -681,14 +681,13 @@ namespace stdair {
       assert (lDP_ptr != NULL);
       
       // Display the date-period object
-      csvDateDisplay (oStream, *lDP_ptr, true);
+      csvDateDisplay (oStream, *lDP_ptr);
     }   
   }
 
   // ////////////////////////////////////////////////////////////////////
   void BomDisplay::csvSimFQTAirRACDisplay (std::ostream& oStream,
-                                           const BomRoot& iBomRoot,
-                                           const bool& iSimFQTBomTree) {
+                                           const BomRoot& iBomRoot) {
     // Save the formatting flags for the given STL output stream
     FlagSaver flagSaver (oStream);
 
@@ -716,14 +715,13 @@ namespace stdair {
       assert (lAir_ptr != NULL);
 
       // Display the airport pair object
-      csvAirportPairDisplay (oStream, *lAir_ptr, iSimFQTBomTree);
+      csvAirportPairDisplay (oStream, *lAir_ptr);
     }
   }
 
   // ////////////////////////////////////////////////////////////////////
   void BomDisplay::csvAirportPairDisplay (std::ostream& oStream,
-                                          const AirportPair& iAirportPair,
-                                          const bool& iSimFQTBomTree) {
+                                          const AirportPair& iAirportPair) {
     // Save the formatting flags for the given STL output stream
     FlagSaver flagSaver (oStream);
 
@@ -748,14 +746,13 @@ namespace stdair {
       assert (lDP_ptr != NULL);
       
       // Display the date-period object
-      csvDateDisplay (oStream, *lDP_ptr, iSimFQTBomTree);
+      csvDateDisplay (oStream, *lDP_ptr);
     }   
   }
 
   // ////////////////////////////////////////////////////////////////////
   void BomDisplay::csvDateDisplay (std::ostream& oStream,
-                                   const DatePeriod& iDatePeriod,
-                                   const bool& iSimFQTBomTree) {
+                                   const DatePeriod& iDatePeriod) {
 
     // Save the formatting flags for the given STL output stream
     FlagSaver flagSaver (oStream);
@@ -781,15 +778,13 @@ namespace stdair {
       assert (lPC_ptr != NULL);
       
       // Display the pos-channel object
-      csvPosChannelDisplay (oStream, *lPC_ptr, iSimFQTBomTree);
+      csvPosChannelDisplay (oStream, *lPC_ptr);
     }   
-    
   }
   
   // ////////////////////////////////////////////////////////////////////
   void BomDisplay::csvPosChannelDisplay (std::ostream& oStream,
-                                         const PosChannel& iPosChannel,
-                                         const bool& iSimFQTBomTree) {
+                                         const PosChannel& iPosChannel) {
     // Save the formatting flags for the given STL output stream
     FlagSaver flagSaver (oStream);
 
@@ -814,15 +809,13 @@ namespace stdair {
       assert (lTP_ptr != NULL);
       
       // Display the time-period object
-      csvTimeDisplay (oStream, *lTP_ptr, iSimFQTBomTree);
+      csvTimeDisplay (oStream, *lTP_ptr);
     }
-    
   }
   
   // ////////////////////////////////////////////////////////////////////
   void BomDisplay::csvTimeDisplay (std::ostream& oStream,
-                                   const TimePeriod& iTimePeriod,
-                                   const bool& iSimFQTBomTree) {
+                                   const TimePeriod& iTimePeriod) {
 
     // Save the formatting flags for the given STL output stream
     FlagSaver flagSaver (oStream);
@@ -834,67 +827,59 @@ namespace stdair {
     oStream << "TimePeriod: " << iTimePeriod.describeKey() << std::endl;
     oStream << "----------------------------------------" << std::endl;
 
-    if (iSimFQTBomTree == true) {
-      // Check whether there are fare-features objects
-      if (BomManager::hasList<FareFeatures> (iTimePeriod) == false) {
-        return;
-      }
-
-      // Browse the fare-features objects
-      const FareFeaturesList_T& lFareFeaturesList =
-        BomManager::getList<FareFeatures> (iTimePeriod);
-      for (FareFeaturesList_T::const_iterator itFF = lFareFeaturesList.begin();
-           itFF != lFareFeaturesList.end(); ++itFF) {
-        const FareFeatures* lFF_ptr = *itFF;
-        assert (lFF_ptr != NULL);
-      
-        // Display the fare-features object
-        csvFeaturesDisplay (oStream, *lFF_ptr);
-      }
-    } else {
-
-      // Check whether there are yield-features objects
-      if (BomManager::hasList<YieldFeatures> (iTimePeriod) == false) {
-        return;
-      }
-
-      // Browse the yield-features objects
-      const YieldFeaturesList_T& lYieldFeaturesList =
-        BomManager::getList<YieldFeatures> (iTimePeriod);
-      for (YieldFeaturesList_T::const_iterator itYF = lYieldFeaturesList.begin();
-           itYF != lYieldFeaturesList.end(); ++itYF) {
-        const YieldFeatures* lYF_ptr = *itYF;
-        assert (lYF_ptr != NULL);
-      
-        // Display the yield-features object
-        csvFeaturesDisplay (oStream, *lYF_ptr);
-      }
-
-    }
-    
+    // Only one of the fare/yield feature list exists. Each of the following
+    // two methods will check for the existence of the list. So, only the
+    // existing list will be actually displayed.
+    csvFeatureListDisplay<FareFeatures> (oStream, iTimePeriod);
+    csvFeatureListDisplay<YieldFeatures> (oStream, iTimePeriod);
   }
 
   // ////////////////////////////////////////////////////////////////////
+  template <typename FEATURE_TYPE>
+  void BomDisplay::csvFeatureListDisplay (std::ostream& oStream,
+                                          const TimePeriod& iTimePeriod) {
+
+    // Check whether there are fare/yield-feature objects
+    if (BomManager::hasList<FEATURE_TYPE> (iTimePeriod) == false) {
+      return;
+    }
+
+    // Browse the fare/yield-feature objects
+    typedef typename BomHolder<FEATURE_TYPE>::BomList_T FeaturesList_T;
+    const FeaturesList_T& lFeaturesList =
+      BomManager::getList<FEATURE_TYPE> (iTimePeriod);
+    for (typename FeaturesList_T::const_iterator itFF = lFeaturesList.begin();
+         itFF != lFeaturesList.end(); ++itFF) {
+      const FEATURE_TYPE* lFF_ptr = *itFF;
+      assert (lFF_ptr != NULL);
+
+      // Display the fare-features object
+      csvFeaturesDisplay (oStream, *lFF_ptr);
+    }
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  template <typename FEATURE_TYPE>
   void BomDisplay::csvFeaturesDisplay (std::ostream& oStream,
-                                       const FareFeatures& iFareFeatures) {
+                                       const FEATURE_TYPE& iFeatures) {
     // Save the formatting flags for the given STL output stream
     FlagSaver flagSaver (oStream);
 
     /**
-     * Fare-Features level (only).
+     * Fare/yield-Features level (only).
      */
     oStream << "--------------------------------------" << std::endl;
-    oStream << "Fare-Features: " << iFareFeatures.describeKey() << std::endl;
+    oStream << "Fare/yield-Features: " << iFeatures.describeKey() << std::endl;
     oStream << "--------------------------------------" << std::endl;
    
     // Check whether there are airlineClassList objects
-    if (BomManager::hasList<AirlineClassList> (iFareFeatures) == false) {
+    if (BomManager::hasList<AirlineClassList> (iFeatures) == false) {
       return;
     }
     
     // Browse the airlineClassList objects
     const AirlineClassListList_T& lAirlineClassListList =
-      BomManager::getList<AirlineClassList> (iFareFeatures);
+      BomManager::getList<AirlineClassList> (iFeatures);
     for (AirlineClassListList_T::const_iterator itACL =
            lAirlineClassListList.begin();
          itACL != lAirlineClassListList.end(); ++itACL) {
@@ -903,43 +888,7 @@ namespace stdair {
 
       // Display the airlineClassList object
       csvAirlineClassDisplay(oStream, *lACL_ptr);
-      
     }
-    
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  void BomDisplay::csvFeaturesDisplay (std::ostream& oStream,
-                                       const YieldFeatures& iYieldFeatures) {
-    // Save the formatting flags for the given STL output stream
-    FlagSaver flagSaver (oStream);
-
-    /**
-     * Yield-Features level (only).
-     */
-    oStream << "--------------------------------------" << std::endl;
-    oStream << "Yield-Features: " << iYieldFeatures.describeKey() << std::endl;
-    oStream << "--------------------------------------" << std::endl;
-   
-    // Check whether there are airlineClassList objects
-    if (BomManager::hasList<AirlineClassList> (iYieldFeatures) == false) {
-      return;
-    }
-    
-    // Browse the airlineClassList objects
-    const AirlineClassListList_T& lAirlineClassListList =
-      BomManager::getList<AirlineClassList> (iYieldFeatures);
-    for (AirlineClassListList_T::const_iterator itACL =
-           lAirlineClassListList.begin();
-         itACL != lAirlineClassListList.end(); ++itACL) {
-      const AirlineClassList* lACL_ptr = *itACL;
-      assert (lACL_ptr != NULL);
-
-      // Display the airlineClassList object
-      csvAirlineClassDisplay(oStream, *lACL_ptr);
-      
-    }
-    
   }
 
   // ////////////////////////////////////////////////////////////////////
