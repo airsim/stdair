@@ -28,6 +28,7 @@ namespace stdair {
   class DatePeriod;
   class TimePeriod;
   class FareFeatures;
+  class YieldFeatures;
   class AirlineClassList;
 
   /**
@@ -185,8 +186,11 @@ namespace stdair {
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const BomRoot& Root of the BOM tree to be displayed.
+     * @param const bool& Boolean telling if the boom root is a fare bom root (value true) or a yield one (value false).
      */
-    static void csvSimFQTDisplay (std::ostream&, const BomRoot&);
+    static void csvSimFQTAirRACDisplay (std::ostream&,
+                                        const BomRoot&,
+                                        const bool&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -196,8 +200,11 @@ namespace stdair {
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const AirportPair& Root of the BOM tree to be displayed.
+     * @param const bool& Boolean telling if the boom root is a fare bom root (value true) or a yield one (value false).
      */
-    static void csvAirportPairDisplay (std::ostream&, const AirportPair&);
+    static void csvAirportPairDisplay (std::ostream&,
+                                       const AirportPair&,
+                                       const bool&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -207,8 +214,11 @@ namespace stdair {
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const DatePeriod& Root of the BOM tree to be displayed.
+     * @param const bool& Boolean telling if the boom root is a fare bom root (value true) or a yield one (value false).
      */
-    static void csvDateDisplay (std::ostream&, const DatePeriod&);
+    static void csvDateDisplay (std::ostream&,
+                                const DatePeriod&,
+                                const bool&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -218,8 +228,11 @@ namespace stdair {
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const PosChannel& Root of the BOM tree to be displayed.
+     * @param const bool& Boolean telling if the boom root is a fare bom root (value true) or a yield one (value false).
      */
-    static void csvPosChannelDisplay (std::ostream&, const PosChannel&);
+    static void csvPosChannelDisplay (std::ostream&,
+                                      const PosChannel&,
+                                      const bool&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -229,8 +242,11 @@ namespace stdair {
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
      * @param const TimePeriod& Root of the BOM tree to be displayed.
+     * @param const bool& Boolean telling if the boom root is a fare bom root (value true) or a yield one (value false).
      */
-    static void csvTimeDisplay (std::ostream&, const TimePeriod&);
+    static void csvTimeDisplay (std::ostream&,
+                                const TimePeriod&,
+                                const bool&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -241,6 +257,16 @@ namespace stdair {
      * @param const FareFeatures& Root of the BOM tree to be displayed.
      */
     static void csvFeaturesDisplay (std::ostream&, const FareFeatures&);
+
+    /**
+     * Recursively display (dump in the underlying output log stream)
+     * the yield features objects of the BOM tree.
+     *
+     * @param std::ostream& Output stream in which the BOM tree should be
+     *        logged/dumped.
+     * @param const YieldFeatures& Root of the BOM tree to be displayed.
+     */
+    static void csvFeaturesDisplay (std::ostream&, const YieldFeatures&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
