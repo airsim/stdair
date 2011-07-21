@@ -23,7 +23,8 @@ echo "mkdir -p tmp && cd tmp && \\" && \
 echo " ../configure --prefix=/home/user/dev/deliveries/stdair-99.99.99 --srcdir=.." && \
 echo "" && \
 echo "Alternatively" && \
-echo "mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-99.99.99 -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE:STRING=Debug .." && \
+echo "mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-99.99.99 \\" \
+echo " -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=OFF .." && \
 echo "" && \
 echo "Then:" && \
 echo "make && make doc && make install" && \
