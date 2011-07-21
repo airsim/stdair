@@ -12,6 +12,19 @@
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
+  // TODO (gsabatier): replace the hard-coded constants by BasConst ones.
+  FareFeatures::FareFeatures()
+    : _key ("RT", 7, true, true, true, 3), _parent (NULL)  {
+    // That constructor is used by the serialisation process
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  FareFeatures::FareFeatures (const FareFeatures& iFeatures)
+    : _key (iFeatures.getKey()), _parent (NULL)  {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   FareFeatures::FareFeatures (const Key_T& iKey)
     : _key (iKey), _parent (NULL)  {
   }
@@ -29,31 +42,34 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   bool FareFeatures::
-  IsTripTypeValid (const stdair::TripType_T& iBookingRequestTripType) const {
+  isTripTypeValid (const TripType_T& iBookingRequestTripType) const {
+    bool oIsTripTypeValidFlag = true;
 
-    const stdair::TripType_T& lFareTripType = getTripType ();
-    // Check if the fare trip type is the same as the booking request trip type.
+    const TripType_T& lFareTripType = getTripType();
+    // Check whether the fare trip type is the same as the booking request
+    // trip type
     if (iBookingRequestTripType == lFareTripType) {
-      // One way case.
-      return true;
-    } else if (iBookingRequestTripType == "RI" ||
-               iBookingRequestTripType == "RO") {
-      // Round trip case.
+      // One way case
+      return oIsTripTypeValidFlag;
+    }
+
+    if (iBookingRequestTripType == "RI" || iBookingRequestTripType == "RO") {
+      // Round trip case
       if (lFareTripType == "RT") {
-        return true;
-      } else {
-        return false;
+        return oIsTripTypeValidFlag;
       }
     }
-    return false;
+
+    oIsTripTypeValidFlag = false;
+    return oIsTripTypeValidFlag;
   }
 
   // ////////////////////////////////////////////////////////////////////
   bool FareFeatures::
-  IsStayDurationValid (const stdair::DayDuration_T& iStayDuration) const {
+  isStayDurationValid (const DayDuration_T& iStayDuration) const {
 
     // Check if the stay duration is lower or equal to the minimum one.
-    const stdair::DayDuration_T& lMinimumDayDuration = getMinimumStay ();
+    const DayDuration_T& lMinimumDayDuration = getMinimumStay();
     if (lMinimumDayDuration > iStayDuration) {
       return false;
     }
@@ -63,17 +79,19 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   bool FareFeatures::
-  IsAdvancePurchaseValid (const stdair::DateTime_T& iBookingRequestDateTime,
-                          const stdair::DateTime_T& iFlightDateTime) const {
+  isAdvancePurchaseValid (const DateTime_T& iBookingRequestDateTime,
+                          const DateTime_T& iFlightDateTime) const {
+    bool oIsAdvancePurchaseValidFlag = true;
 
-    // Check if the departure date is within the date range.
-    long lAdvancedPurchase = getAdvancePurchase ();
-    const stdair::DateOffset_T lMinimumAdvancedPurchase(lAdvancedPurchase);
-    const stdair::DateTime_T& lCriticalDate = iFlightDateTime - lMinimumAdvancedPurchase;
+    // Check whether the departure date is within the date range.
+    const DayDuration_T& lAdvancedPurchase = getAdvancePurchase();
+    const DateOffset_T lMinimumAdvancedPurchase (lAdvancedPurchase);
+    const DateTime_T lCriticalDate = iFlightDateTime - lMinimumAdvancedPurchase;
       
     if (lCriticalDate < iBookingRequestDateTime) {
-       return false;
-     }
+      oIsAdvancePurchaseValidFlag = false;
+      return oIsAdvancePurchaseValidFlag;
+    }
 
     return true;
   }

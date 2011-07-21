@@ -4,59 +4,86 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR
+// StdAir
 #include <stdair/bom/KeyAbstract.hpp>
 #include <stdair/stdair_date_time_types.hpp>
 #include <stdair/stdair_demand_types.hpp>
 #include <stdair/stdair_inventory_types.hpp>
 
 namespace stdair  {
-  /** Key of date-period. */
+  
+  /**
+   * @brief Key of date-period.
+   */
   struct YieldFeaturesKey : public KeyAbstract {
-
   public:
     // /////////// Construction ///////////
-    /** Constructors. */
-    YieldFeaturesKey (const stdair::TripType_T&,
-                      const stdair::CabinCode_T&);
+    /**
+     * Main constructor.
+     */
+    YieldFeaturesKey (const TripType_T&, const CabinCode_T&);
+    /**
+     * Copy constructor.
+     */
     YieldFeaturesKey (const YieldFeaturesKey&);
-    /** Destructor. */
+    /**
+     * Destructor.
+     */
     ~YieldFeaturesKey ();
+  private:
+    /**
+     * Default constructor.
+     */
+    YieldFeaturesKey();
 
+  public:
     // /////////// Getters //////////
-    /** Get the fare trip type. */
+    /**
+     * Get the fare trip type.
+     */
     const TripType_T& getTripType() const {
       return _tripType;
     }
 
-    /** Get the cabin. */
-    const stdair::CabinCode_T& getCabinCode() const {
+    /**
+     * Get the cabin.
+     */
+    const CabinCode_T& getCabinCode() const {
       return _cabinCode;
     }  
   
+  public:
     // /////////// Display support methods /////////
-    /** Dump a Business Object Key into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object Key into an output stream.
+     * @param ostream& the output stream.
+     */
     void toStream (std::ostream& ioOut) const;
 
-    /** Read a Business Object Key from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object Key from an input stream.
+     * @param istream& the input stream.
+     */
     void fromStream (std::istream& ioIn);
 
-   /** Get the serialised version of the Business Object Key.
-       <br>That string is unique, at the level of a given Business Object,
-       when among children of a given parent Business Object. */
+   /**
+    * Get the serialised version of the Business Object Key.
+    * That string is unique, at the level of a given Business Object,
+    * when among children of a given parent Business Object.
+    */
     const std::string toString() const;
 
   private:
-    // Attributes
-    
-    /** Type of trip type (RT=round-trip, OW=one way). */
+    // //////////////// Attributes //////////////////
+    /**
+     * Type of trip type (RT=round-trip, OW=one way).
+     */
     TripType_T _tripType;
     
-    /** Cabin code. */
-    stdair::CabinCode_T _cabinCode;
-
+    /**
+     * Cabin code.
+     */
+    CabinCode_T _cabinCode;
   };
 
 }

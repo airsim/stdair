@@ -12,6 +12,19 @@
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
+  // TODO (gsabatier): replace the hard-coded constants by BasConst ones.
+  YieldFeatures::YieldFeatures()
+    : _key ("RT", "Y"), _parent (NULL)  {
+    // That constructor is used by the serialisation process
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  YieldFeatures::YieldFeatures (const YieldFeatures& iFeatures)
+    : _key (iFeatures.getKey()), _parent (NULL)  {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   YieldFeatures::YieldFeatures (const Key_T& iKey)
     : _key (iKey), _parent (NULL)  {
   }
@@ -29,25 +42,27 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   bool YieldFeatures::
-  IsTripTypeValid (const stdair::TripType_T& iBookingRequestTripType) const {
+  isTripTypeValid (const TripType_T& iBookingRequestTripType) const {
+    bool oIsTripTypeValidFlag = true;
 
-    const stdair::TripType_T& lYieldTripType = getTripType ();
-    // Check if the yield trip type is the same as the booking request trip type.
+    // Check whether the yield trip type is the same as the booking request
+    // trip type
+    const TripType_T& lYieldTripType = getTripType();
     if (iBookingRequestTripType == lYieldTripType) {
-      // One way case.
-      return true;
-    } else if (iBookingRequestTripType == "RI" ||
-               iBookingRequestTripType == "RO") {
+      // One way case
+      return oIsTripTypeValidFlag;
+    }
+
+    if (iBookingRequestTripType == "RI" || iBookingRequestTripType == "RO") {
       // Round trip case.
       if (lYieldTripType == "RT") {
-        return true;
-      } else {
-        return false;
+        return oIsTripTypeValidFlag;
       }
     }
+
+    oIsTripTypeValidFlag = false;
     return false;
   }
-
 
 }
 
