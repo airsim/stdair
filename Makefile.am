@@ -26,12 +26,12 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 configure \
 #       In a not so distant future, however, the GNU Autotools build support
 #       may be deprecated and removed.
 CMAKE_BUILD_FILES = CMakeLists.common CMakeLists.txt \
-	stdair/CMakeLists.txt stdair/ui/cmdline/CMakeLists.txt \
-	batches/CMakeLists.txt \
+	stdair/CMakeLists.txt batches/CMakeLists.txt \
 	doc/CMakeLists.txt man/CMakeLists.txt samples/CMakeLists.txt \
-	test/CMakeLists.txt test/stdair/CMakeLists.txt \
-	config/add_test_suite.cmake config/devhelpers.cmake \
-	config/FindMySQL.cmake config/FindSOCI.cmake config/FindSOCIMySQL.cmake
+	test/stdair/CMakeLists.txt \
+	config/devhelpers.cmake config/project_config_embeddable.cmake \
+	config/FindMySQL.cmake config/FindSOCI.cmake config/FindSOCIMySQL.cmake \
+	config/FindReadline.cmake	
 
 # Note 1: the RPM specification file (@PACKAGE@.spec) must not be distributed
 # with the rest of the source code. The tar-ball will be used by the packaging
