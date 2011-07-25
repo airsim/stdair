@@ -141,7 +141,7 @@ namespace stdair {
     /**
      * Destructor.
      */
-    ~AirlineClassList();
+    virtual ~AirlineClassList();
 
   private:
     /**

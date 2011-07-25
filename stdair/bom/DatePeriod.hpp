@@ -58,7 +58,7 @@ namespace stdair {
     DatePeriod (const Key_T&);
     DatePeriod (const DatePeriod&);
     /** Destructor. */
-    ~DatePeriod();
+    virtual ~DatePeriod();
 
   protected:
     // Attributes

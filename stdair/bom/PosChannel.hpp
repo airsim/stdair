@@ -57,7 +57,7 @@ namespace stdair {
     PosChannel (const Key_T&);
     PosChannel (const PosChannel&);
     /** Destructor. */
-    ~PosChannel();
+    virtual ~PosChannel();
 
   protected:
     // Attributes

@@ -61,7 +61,7 @@ namespace stdair {
     TimePeriod (const Key_T&);
     TimePeriod (const TimePeriod&);
     /** Destructor. */
-    ~TimePeriod();
+    virtual ~TimePeriod();
 
   protected:
     // Attributes

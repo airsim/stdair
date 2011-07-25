@@ -55,7 +55,7 @@ namespace stdair {
     AirportPair (const Key_T&);
     AirportPair (const AirportPair&);
     /** Destructor. */
-    ~AirportPair();
+    virtual ~AirportPair();
 
   protected:
     // Attributes
