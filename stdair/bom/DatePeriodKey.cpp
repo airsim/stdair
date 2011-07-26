@@ -5,9 +5,16 @@
 #include <ostream>
 #include <sstream>
 // STDAIR
+#include <stdair/basic/BasConst_Period_BOM.hpp>
 #include <stdair/bom/DatePeriodKey.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  DatePeriodKey::DatePeriodKey()
+    : _datePeriod (BOOST_DEFAULT_DATE_PERIOD) {
+    assert (false);
+  }
 
   // ////////////////////////////////////////////////////////////////////
   DatePeriodKey::DatePeriodKey (const stdair::DatePeriod_T& iDatePeriod)

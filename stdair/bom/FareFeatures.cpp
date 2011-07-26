@@ -5,16 +5,22 @@
 #include <cassert>
 #include <sstream>
 // StdAir
-#include <stdair/basic/BasConst_General.hpp>
+#include <stdair/basic/BasConst_DefaultObject.hpp>
+#include <stdair/basic/BasConst_Request.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/bom/FareFeatures.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  // TODO (gsabatier): replace the hard-coded constants by BasConst ones.
   FareFeatures::FareFeatures()
-    : _key ("RT", 7, true, true, true, 3), _parent (NULL)  {
+    : _key (TRIP_TYPE_ONE_WAY,
+            NO_ADVANCE_PURCHASE,
+            SATURDAY_STAY,
+            CHANGE_FEES,
+            NON_REFUNDABLE,
+            NO_STAY_DURATION),
+      _parent (NULL)  {
     // That constructor is used by the serialisation process
   }
 
@@ -53,9 +59,10 @@ namespace stdair {
       return oIsTripTypeValidFlag;
     }
 
-    if (iBookingRequestTripType == "RI" || iBookingRequestTripType == "RO") {
+    if (iBookingRequestTripType == TRIP_TYPE_INBOUND
+        || iBookingRequestTripType == TRIP_TYPE_OUTBOUND) {
       // Round trip case
-      if (lFareTripType == "RT") {
+      if (lFareTripType == TRIP_TYPE_ROUND_TRIP) {
         return oIsTripTypeValidFlag;
       }
     }

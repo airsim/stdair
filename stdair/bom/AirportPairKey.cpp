@@ -6,9 +6,17 @@
 #include <sstream>
 // STDAIR
 #include <stdair/basic/BasConst_BomDisplay.hpp>
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/AirportPairKey.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  AirportPairKey::AirportPairKey ()
+    : _boardingPoint (DEFAULT_ORIGIN), 
+      _offPoint (DEFAULT_DESTINATION) {
+    assert (false);
+  }
 
   // ////////////////////////////////////////////////////////////////////
   AirportPairKey::AirportPairKey (const AirportCode_T& iBoardingPoint,
@@ -18,7 +26,8 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   AirportPairKey::AirportPairKey (const AirportPairKey& iKey)
-    : _boardingPoint (iKey._boardingPoint), _offPoint (iKey._offPoint) {
+    : _boardingPoint (iKey._boardingPoint),
+      _offPoint (iKey._offPoint) {
   }
 
   // ////////////////////////////////////////////////////////////////////

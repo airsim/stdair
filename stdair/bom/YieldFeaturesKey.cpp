@@ -5,14 +5,15 @@
 #include <ostream>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_Request.hpp>
 #include <stdair/bom/YieldFeaturesKey.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  // TODO (gsabatier): replace the hard-coded constants by BasConst ones.
   YieldFeaturesKey::YieldFeaturesKey()
-    : _tripType ("RT"), _cabinCode ("Y") {
+    : _tripType (TRIP_TYPE_ONE_WAY),
+      _cabinCode (DEFAULT_PREFERRED_CABIN) {
     assert (false);
   }
 

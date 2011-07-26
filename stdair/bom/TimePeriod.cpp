@@ -12,6 +12,19 @@
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
+  TimePeriod::TimePeriod()
+    : _key (DEFAULT_EPSILON_DURATION, DEFAULT_EPSILON_DURATION),
+      _parent (NULL)  {
+    // That constructor is used by the serialisation process
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  TimePeriod::TimePeriod (const TimePeriod& iTimePeriod)
+    : _key (iTimePeriod.getKey()), _parent (NULL)  {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   TimePeriod::TimePeriod (const Key_T& iKey)
     : _key (iKey), _parent (NULL)  {
   }

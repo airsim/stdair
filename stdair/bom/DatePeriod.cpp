@@ -5,11 +5,24 @@
 #include <cassert>
 #include <sstream>
 // StdAir
-#include <stdair/basic/BasConst_General.hpp>
+#include <stdair/basic/BasConst_Period_BOM.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/bom/DatePeriod.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  DatePeriod::DatePeriod()
+    : _key (BOOST_DEFAULT_DATE_PERIOD),
+      _parent (NULL)  {
+    // That constructor is used by the serialisation process
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  DatePeriod::DatePeriod (const DatePeriod& iDatePeriod)
+    : _key (iDatePeriod.getKey()), _parent (NULL)  {
+    assert (false);
+  }
 
   // ////////////////////////////////////////////////////////////////////
   DatePeriod::DatePeriod (const Key_T& iKey)
@@ -19,7 +32,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   DatePeriod::~DatePeriod () {
   }
-  
+
   // ////////////////////////////////////////////////////////////////////
   std::string DatePeriod::toString() const {
     std::ostringstream oStr;
