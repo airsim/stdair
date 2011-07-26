@@ -34,8 +34,6 @@ do
   fi
 done
 
-#cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-0.35.0 -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE:STRING=Debug
-
 #
 VERSION_MAJOR=0
 VERSION_MINOR=36
