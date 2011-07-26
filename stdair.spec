@@ -121,7 +121,10 @@ find $RPM_BUILD_ROOT%{_libexecdir}/%{name} -type f -name '*.sh' -exec chmod 755 
 
 
 %changelog
-* Thu Jul 21 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 99.99.99-1
+* Sat Aug 06 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 99.99.99-1
+- Upstream update 
+
+* Tue Jul 26 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.36.0-1
 - Upstream update 
 
 * Thu Jul 07 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.35.0-1
