@@ -5,16 +5,17 @@
 #include <cassert>
 #include <sstream>
 // StdAir
-#include <stdair/basic/BasConst_General.hpp>
+#include <stdair/basic/BasConst_Request.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/bom/YieldFeatures.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  // TODO (gsabatier): replace the hard-coded constants by BasConst ones.
   YieldFeatures::YieldFeatures()
-    : _key ("RT", "Y"), _parent (NULL)  {
+    : _key (TRIP_TYPE_ONE_WAY,
+            DEFAULT_PREFERRED_CABIN),
+      _parent (NULL)  {
     // That constructor is used by the serialisation process
   }
 
@@ -53,9 +54,10 @@ namespace stdair {
       return oIsTripTypeValidFlag;
     }
 
-    if (iBookingRequestTripType == "RI" || iBookingRequestTripType == "RO") {
+    if (iBookingRequestTripType == TRIP_TYPE_INBOUND ||
+        iBookingRequestTripType == TRIP_TYPE_OUTBOUND) {
       // Round trip case.
-      if (lYieldTripType == "RT") {
+      if (lYieldTripType == TRIP_TYPE_ROUND_TRIP) {
         return oIsTripTypeValidFlag;
       }
     }

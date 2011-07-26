@@ -5,14 +5,23 @@
 #include <ostream>
 #include <sstream>
 // STDAIR
+#include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/TimePeriodKey.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
+  TimePeriodKey::TimePeriodKey ()
+    : _timeRangeStart (DEFAULT_EPSILON_DURATION), 
+      _timeRangeEnd (DEFAULT_EPSILON_DURATION) {
+    assert (false);
+  }   
+
+  // ////////////////////////////////////////////////////////////////////
   TimePeriodKey::TimePeriodKey (const Time_T& iTimeRangeStart,
                                 const Time_T& iTimeRangeEnd)
-    : _timeRangeStart(iTimeRangeStart), _timeRangeEnd(iTimeRangeEnd) {
+    : _timeRangeStart(iTimeRangeStart),
+      _timeRangeEnd(iTimeRangeEnd) {
   }
 
   // ////////////////////////////////////////////////////////////////////

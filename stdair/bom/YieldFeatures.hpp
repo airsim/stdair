@@ -137,12 +137,12 @@ namespace stdair {
     Key_T _key;
 
     /**
-     * Pointer on the parent class (Inventory).
+     * Pointer on the parent class.
      */
     BomAbstract* _parent;
 
     /**
-     * Map holding the children (SegmentDate and LegDate objects).
+     * Map holding the children.
      */
     HolderMap_T _holderMap;
   };

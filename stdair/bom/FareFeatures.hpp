@@ -61,7 +61,7 @@ namespace stdair {
   public:
     // ////////// Getters ////////////
     /**
-     * Get the primary key (trip type, cabin code).
+     * Get the primary key (trip type, advance purchase,... ,cabin code).
      */
     const Key_T& getKey() const {
       return _key;
@@ -155,18 +155,17 @@ namespace stdair {
     /**
      * Destructor.
      */
-    virtual ~FareFeatures();
+    virtual ~FareFeatures ();
 
   private:
     /**
      * Default constructor.
      */
-    FareFeatures();
+    FareFeatures ();
     /**
      * Copy constructor.
      */
     FareFeatures (const FareFeatures&);
-
 
   protected:
     // ///////////// Attributes /////////////
@@ -176,12 +175,12 @@ namespace stdair {
     Key_T _key;
 
     /**
-     * Pointer on the parent class (Inventory).
+     * Pointer on the parent class.
      */
     BomAbstract* _parent;
 
     /**
-     * Map holding the children (SegmentDate and LegDate objects).
+     * Map holding the children.
      */
     HolderMap_T _holderMap;
   };

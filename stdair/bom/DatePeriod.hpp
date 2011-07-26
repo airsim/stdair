@@ -12,58 +12,126 @@
 // Forward declaration
 namespace stdair {
 
-  /** Class representing the actual attributes for a fare date-period. */
+  /**
+   * @brief Class representing the actual attributes for a fare date-period.
+   */
   class DatePeriod : public BomAbstract {
     template <typename BOM> friend class FacBom;
     friend class FacBomManager;
 
   public:
-    // Type definitions.
-    /** Definition allowing to retrieve the associated BOM key type. */
+    // //////////// Type definitions //////////////
+    /**
+     * Definition allowing to retrieve the associated BOM key type.
+     */
     typedef DatePeriodKey Key_T;
   
   public:
     // /////////// Display support methods /////////
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
-    void toStream (std::ostream& ioOut) const { ioOut << toString(); }
+    /**
+     * Dump a Business Object into an output stream.
+     *
+     * @param ostream& the output stream.
+     */
+    void toStream (std::ostream& ioOut) const {
+      ioOut << toString();
+    }
 
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
-    void fromStream (std::istream& ioIn) { }
+    /**
+     * Read a Business Object from an input stream.
+     *
+     * @param istream& the input stream.
+     */
+    void fromStream (std::istream& ioIn) {
+    }
 
-   /** Get the serialised version of the Business Object. */
+   /**
+    * Get the serialised version of the Business Object.
+    */
     std::string toString() const;
     
-    /** Get a string describing the  key. */
-    const std::string describeKey() const { return _key.toString(); }
+    /**
+     * Get a string describing the  key.
+     */
+    const std::string describeKey() const {
+      return _key.toString();
+    }
 
-  public:
+  public: 
     // ////////// Getters ////////////
-    const Key_T& getKey() const { return _key; }
+    /**
+     * Get the primary key (date period).
+     */
+    const Key_T& getKey() const {
+      return _key;
+    }
+
+    /**
+     * Get a reference on the parent object instance.
+     */
+    BomAbstract* const getParent() const {
+      return _parent;
+    }
+
+    /**
+     * Get a reference on the children holder.
+     */
+    const  HolderMap_T& getHolderMap() const {
+      return _holderMap;
+    }
+    
+    /**
+     * Get the date period.
+     */
     const DatePeriod_T& getDatePeriod() const {
       return _key.getDatePeriod();
     }
-    BomAbstract* const getParent() const { return _parent; }
-    const  HolderMap_T& getHolderMap() const { return _holderMap; }
+
 
   public:
     // ////////////// Business methods ///////////////
-    /** Check if the given departure date is included in the departure period
-        of the segment path. */
+    /**
+     * Check if the given departure date is included in the departure
+     * period of the segment path.
+     */
     bool isDepartureDateValid (const Date_T&) const;
     
   protected:
-    /** Default constructors. */
+    // ////////// Constructors and destructors /////////
+    /**
+     * Main constructor.
+     */
     DatePeriod (const Key_T&);
+    /**
+     * Destructor.
+     */
+    virtual ~DatePeriod ();
+
+  private:
+    /**
+     * Default constructor.
+     */
+    DatePeriod ();
+    /**
+     * Copy constructor.
+     */
     DatePeriod (const DatePeriod&);
-    /** Destructor. */
-    ~DatePeriod();
 
   protected:
-    // Attributes
+    // ///////////// Attributes /////////////
+    /**
+     * Primary key (date period).
+     */
     Key_T _key;
+
+    /**
+     * Pointer on the parent class.
+     */
     BomAbstract* _parent;
+
+    /**
+     * Map holding the children.
+     */
     HolderMap_T _holderMap;
 
   };

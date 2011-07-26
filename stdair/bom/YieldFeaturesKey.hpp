@@ -34,7 +34,7 @@ namespace stdair  {
     /**
      * Default constructor.
      */
-    YieldFeaturesKey();
+    YieldFeaturesKey ();
 
   public:
     // /////////// Getters //////////

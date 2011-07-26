@@ -5,19 +5,20 @@
 #include <ostream>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_DefaultObject.hpp>
+#include <stdair/basic/BasConst_Request.hpp>
 #include <stdair/bom/FareFeaturesKey.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  // TODO (gsabatier): replace the hard-coded constants by BasConst ones.
   FareFeaturesKey::FareFeaturesKey()
-    : _tripType ("RT"),
-      _advancePurchase (7), 
-      _saturdayStay (true),
-      _changeFees (true), 
-      _nonRefundable (true),
-      _minimumStay (3) {
+    : _tripType (TRIP_TYPE_ONE_WAY),
+      _advancePurchase (NO_ADVANCE_PURCHASE), 
+      _saturdayStay (SATURDAY_STAY),
+      _changeFees (CHANGE_FEES), 
+      _nonRefundable (NON_REFUNDABLE),
+      _minimumStay (NO_STAY_DURATION) {
     assert (false);
   }
 

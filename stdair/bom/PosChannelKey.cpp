@@ -5,9 +5,17 @@
 #include <ostream>
 #include <sstream>
 // STDAIR
+#include <stdair/basic/BasConst_Request.hpp>
 #include <stdair/bom/PosChannelKey.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  PosChannelKey::PosChannelKey()
+    : _pos (DEFAULT_POS),
+      _channel (DEFAULT_CHANNEL) {
+    assert (false);
+  }
 
   // ////////////////////////////////////////////////////////////////////
   PosChannelKey::PosChannelKey (const CityCode_T& iPos,
