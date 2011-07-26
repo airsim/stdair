@@ -5,6 +5,7 @@ stdair_bas_h_sources = \
 	$(top_srcdir)/stdair/basic/BasParserTypes.hpp \
 	$(top_srcdir)/stdair/basic/BasParserHelperTypes.hpp \
 	$(top_srcdir)/stdair/basic/BasConst_General.hpp \
+	$(top_srcdir)/stdair/basic/BasConst_DefaultObject.hpp \
 	$(top_srcdir)/stdair/basic/BasConst_Event.hpp \
 	$(top_srcdir)/stdair/basic/BasConst_Request.hpp \
 	$(top_srcdir)/stdair/basic/BasConst_Inventory.hpp \
