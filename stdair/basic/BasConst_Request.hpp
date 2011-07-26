@@ -47,8 +47,23 @@ namespace stdair {
   /** Default channel (e.g., direct on-line). */
   extern const ChannelLabel_T DEFAULT_CHANNEL;
 
-  /** Default trip type (e.g., one-way). */
-  extern const TripType_T DEFAULT_TRIP_TYPE;
+  /** DN channel (e.g., direct on-line). */
+  extern const ChannelLabel_T CHANNEL_DN;
+
+  /** IN channel (e.g., indirect on-line). */
+  extern const ChannelLabel_T CHANNEL_IN;
+
+  /** Trip type one-way (e.g., "OW"). */
+  extern const TripType_T TRIP_TYPE_ONE_WAY;
+
+  /** Trip type round-trip (e.g., "RT"). */
+  extern const TripType_T TRIP_TYPE_ROUND_TRIP;
+
+  /** Trip type inbound (e.g., "RI"). */
+  extern const TripType_T TRIP_TYPE_INBOUND;
+
+  /** Trip type outbound (e.g., "RO"). */
+  extern const TripType_T TRIP_TYPE_OUTBOUND;
 
   /** Default frequent flyer tier (e.g., non member). */
   extern const FrequentFlyer_T DEFAULT_FF_TIER;

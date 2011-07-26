@@ -9,6 +9,7 @@
 #include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/basic/BasConst_BookingClass.hpp>
 #include <stdair/basic/BasConst_Yield.hpp>
+#include <stdair/basic/BasConst_DefaultObject.hpp>
 #include <stdair/basic/BasConst_Period_BOM.hpp>
 #include <stdair/basic/BasConst_TravelSolution.hpp>
 
@@ -72,17 +73,77 @@ namespace stdair {
   /** Default random seed. */
   const RandomSeed_T DEFAULT_RANDOM_SEED (120765987);
 
+  // //////// Default BOM tree objects /////// ///////
+  /** Default origin airport (e.g., "LHR"). */
+  const AirportCode_T AIRPORT_LHR ("LHR");
+  
+  /** Default destination airport (e.g., "SYD"). */
+  const AirportCode_T AIRPORT_SYD ("SYD");
 
-  // //////// Fare Rules ///////
+  /** Date. */
+  const Date_T DATE_20110115 (2011, boost::gregorian::Jan, 15);
+  const Date_T DATE_20111231 (2011, boost::gregorian::Dec, 31);
+  
+  /** Advance purchase 0 day. */
+  const DayDuration_T NO_ADVANCE_PURCHASE (0);
+  
+  /** Default saturdayStay value (true). */
+  const SaturdayStay_T SATURDAY_STAY (true);
+
   /** Default saturdayStay value (false). */
-  const SaturdayStay_T DEFAULT_SATURDAY_STAY (false);
+  const SaturdayStay_T NO_SATURDAY_STAY (false);
+  
+  /** Default change fees value (true). */
+  const ChangeFees_T CHANGE_FEES (true);
   
   /** Default change fees value (false). */
-  const ChangeFees_T DEFAULT_CHANGE_FEES (false);
+  const ChangeFees_T NO_CHANGE_FEES (false);
   
-  /** Default non refundable value (false). */
-  const NonRefundable_T DEFAULT_NON_REFUNDABLE (false);
+  /** Default non refundable value (true). */
+  const NonRefundable_T NON_REFUNDABLE (true);
+
+  /** Default refundable value (false). */
+  const NonRefundable_T No_NON_REFUNDABLE (false);
+
+  /** Default saturdayStay value (true). */
+  const SaturdayStay_T DEFAULT_BOM_TREE_SATURDAY_STAY (true);
   
+  /** Default change fees value (true). */
+  const ChangeFees_T DEFAULT_BOM_TREE_CHANGE_FEES (true);
+  
+  /** Default non refundable value (true). */
+  const NonRefundable_T DEFAULT_BOM_TREE_NON_REFUNDABLE (true);
+
+  /** Stay duration 0 day. */
+  const DayDuration_T NO_STAY_DURATION (0);
+  
+  /** Airline code "BA". */
+  const AirlineCode_T AIRLINE_CODE_BA ("BA");
+
+  /** Cabin 'Y'. */
+  const CabinCode_T  CABIN_Y ("Y");
+
+  /** Class code 'Y'. */
+  const ClassCode_T  CLASS_CODE_Y ("Y");
+  
+  // //////// Travel solutions related objects///////
+  /** Class code 'Q'. */
+  const ClassCode_T CLASS_CODE_Q ("Q");
+  
+  // //////// Booking request related objects///////
+  /** Singapour airport (e.g., "SIN"). */
+  const AirportCode_T AIRPORT_SIN ("SIN");
+
+  /** Bangkok airport (e.g., "BKK"). */
+  const AirportCode_T AIRPORT_BKK ("BKK");
+
+  /** Economic cabin (e.g., "Eco"). */
+  const CabinCode_T CABIN_ECO ("Eco");
+
+  /** Frequent flyer tier (e.g., "M" meaning member). */
+  const FrequentFlyer_T FREQUENT_FLYER_MEMBER ("M");
+
+  // //////// Default ///////
   /** Default family code value ("X"). */
   const ClassCode_T DEFAULT_FAMILY_CODE ("0");
 
@@ -91,7 +152,6 @@ namespace stdair {
 
   /** Default flight-path code value (""). */
   const FlightPathCode_T DEFAULT_FLIGHTPATH_CODE ("");
-
 
   // //////// Booking-class-related BOM ///////
   /** Default distance value (kilometers). */
@@ -274,11 +334,26 @@ namespace stdair {
   /** Default point-of-sale. */
   const AirportCode_T DEFAULT_POS ("ALL");
 
-  /** Default channel. */
+  /** Default channel (e.g., "DC" meaning Different Channels). */
   const ChannelLabel_T DEFAULT_CHANNEL ("DC");
 
-  /** Default trip type (one-way). */
-  const TripType_T DEFAULT_TRIP_TYPE ("OW");
+  /** DN channel (e.g., direct on-line). */
+  const ChannelLabel_T CHANNEL_DN ("DN");
+
+  /** IN channel (e.g., indirect on-line). */
+  const ChannelLabel_T CHANNEL_IN ("IN");
+
+  /** Trip type one-way (e.g., "OW"). */
+  const TripType_T TRIP_TYPE_ONE_WAY ("OW");
+
+  /** Trip type round-trip (e.g., "RT"). */
+  const TripType_T TRIP_TYPE_ROUND_TRIP ("RT");
+
+  /** Trip type inbound (e.g., "RI"). */
+  const TripType_T TRIP_TYPE_INBOUND ("RI");
+
+  /** Trip type outbound (e.g., "RO"). */
+  const TripType_T TRIP_TYPE_OUTBOUND ("RO");
 
   /** Default frequent flyer tier (non member). */
   const FrequentFlyer_T DEFAULT_FF_TIER ("N");
@@ -302,7 +377,9 @@ namespace stdair {
 
   /** Default availability status for a travel solution. */
   const AvailabilityStatus_T DEFAULT_AVAILABILITY_STATUS (false);
-
+  
+  /** Default DICO studied date. */
+  const Date_T DEFAULT_DICO_STUDIED_DATE;
 
   // //////// Inventory-related BOM ///////
   /** Default airline code value ("XX"). */
