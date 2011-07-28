@@ -627,7 +627,7 @@ namespace stdair {
     FacBomManager::linkWithParent (lAirportPair, lFareDatePeriod);    
 
     // Set the point-of-sale-channel primary key.
-    const PosChannelKey lPosChannelKey (AIRPORT_LHR,
+    const PosChannelKey lPosChannelKey (POS_LHR,
                                         CHANNEL_DN);  
     
     // Create the PositionKey object and link it to the AirportPair object.
@@ -703,7 +703,7 @@ namespace stdair {
     FacBomManager::linkWithParent (lAirportPair, lYieldDatePeriod);    
 
     // Set the point-of-sale-channel primary key.
-    const PosChannelKey lPosChannelKey (AIRPORT_LHR,
+    const PosChannelKey lPosChannelKey (POS_LHR,
                                         CHANNEL_DN);   
     
     // Create the PositionKey object and link it to the AirportPair object.
@@ -817,7 +817,7 @@ namespace stdair {
     const AirportCode_T lDestination (AIRPORT_SYD);
 
     // Point of Sale (POS)
-    const AirportCode_T lPOS (AIRPORT_LHR);
+    const CityCode_T lPOS (POS_LHR);
 
     // Preferred departure date (10-JUN-2011)
     const Date_T lPreferredDepartureDate (2011, boost::gregorian::Jun, 10);
@@ -882,7 +882,7 @@ namespace stdair {
     const AirportCode_T lDestination (AIRPORT_BKK);
 
     // Point of Sale (POS)
-    const AirportCode_T lPOS (AIRPORT_SIN);
+    const CityCode_T lPOS (POS_SIN);
 
     // Preferred departure date (30-JAN-2010)
     const Date_T lPreferredDepartureDate (2010, boost::gregorian::Jan, 30);

@@ -37,7 +37,7 @@ namespace stdair {
     }
 
     /** Get the point-of-sale. */
-    const AirportCode_T& getPOS() const {
+    const CityCode_T& getPOS() const {
       return _pos;
     }
 
@@ -177,7 +177,7 @@ namespace stdair {
     BookingRequestStruct (const DemandGeneratorKey_T& iGeneratorKey,
                           const AirportCode_T& iOrigin,
                           const AirportCode_T& iDestination,
-                          const AirportCode_T& iPOS,
+                          const CityCode_T& iPOS,
                           const Date_T& iDepartureDate,
                           const DateTime_T& iRequestDateTime,
                           const CabinCode_T& iPreferredCabin,
@@ -195,7 +195,7 @@ namespace stdair {
      */
     BookingRequestStruct (const AirportCode_T& iOrigin,
                           const AirportCode_T& iDestination,
-                          const AirportCode_T& iPOS,
+                          const CityCode_T& iPOS,
                           const Date_T& iDepartureDate,
                           const DateTime_T& iRequestDateTime,
                           const CabinCode_T& iPreferredCabin,
@@ -239,7 +239,7 @@ namespace stdair {
     const AirportCode_T _destination;
 
     /** Point-Of-Sale. */
-    const AirportCode_T _pos;
+    const CityCode_T _pos;
     
     /** Departure date. */
     const Date_T _preferredDepartureDate;

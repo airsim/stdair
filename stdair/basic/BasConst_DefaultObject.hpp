@@ -16,6 +16,9 @@ namespace stdair {
   /** Sydney airport (e.g., "SYD"). */
   extern const AirportCode_T AIRPORT_SYD;
 
+  /** London city code (e.g., "LHR"). */
+  extern const CityCode_T POS_LHR;
+
   /** Advance purchase 0 day. */ 
   extern const DayDuration_T NO_ADVANCE_PURCHASE;
   
@@ -59,6 +62,9 @@ namespace stdair {
 
   /** Bangkok airport (e.g., "BKK"). */
   extern const AirportCode_T AIRPORT_BKK;
+
+  /** Singapour city code (e.g., "SIN"). */
+  extern const CityCode_T POS_SIN;
 
   /** Economic cabin (e.g., "Eco"). */
   extern const CabinCode_T CABIN_ECO;

@@ -21,7 +21,7 @@ namespace stdair {
   extern const WTP_T DEFAULT_WTP;
 
   /** Default Point-Of-Sale (POS, e.g., "WORLD"). */
-  extern const AirportCode_T DEFAULT_POS;
+  extern const CityCode_T DEFAULT_POS;
     
   /** Default departure date (e.g., 01-Jan-2011). */
   extern const Date_T DEFAULT_PREFERRED_DEPARTURE_DATE;
