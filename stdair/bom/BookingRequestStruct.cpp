@@ -57,7 +57,7 @@ namespace stdair {
   BookingRequestStruct (const DemandGeneratorKey_T& iGeneratorKey,
                         const AirportCode_T& iOrigin,
                         const AirportCode_T& iDestination,
-                        const AirportCode_T& iPOS,
+                        const CityCode_T& iPOS,
                         const Date_T& iDepartureDate,
                         const DateTime_T& iRequestDateTime,
                         const CabinCode_T& iPreferredCabin,
@@ -84,7 +84,7 @@ namespace stdair {
   BookingRequestStruct::
   BookingRequestStruct (const AirportCode_T& iOrigin,
                         const AirportCode_T& iDestination,
-                        const AirportCode_T& iPOS,
+                        const CityCode_T& iPOS,
                         const Date_T& iDepartureDate,
                         const DateTime_T& iRequestDateTime,
                         const CabinCode_T& iPreferredCabin,

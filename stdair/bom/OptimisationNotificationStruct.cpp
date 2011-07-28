@@ -38,7 +38,7 @@ namespace stdair {
   OptimisationNotificationStruct::
   OptimisationNotificationStruct (const AirportCode_T& iOrigin,
                         const AirportCode_T& iDestination,
-                        const AirportCode_T& iPOS,
+                        const CityCode_T& iPOS,
                         const Date_T& iDepartureDate,
                         const DateTime_T& iNotificationDateTime,
                         const CabinCode_T& iPreferredCabin,
