@@ -27,7 +27,7 @@ set (db_admin_sh_in_SOURCES "")
 #
 foreach (db_admin_sh ${db_admin_sh_SOURCES})
   set (db_admin_sh_in ${db_admin_DIR}/${db_admin_sh}.in)
-  configure_file (${db_admin_sh_in} admin/${db_admin_sh} @ONLY)
+  configure_file (${db_admin_sh_in} ${CMAKE_CURRENT_BINARY_DIR}/${db_admin_DIR}/${db_admin_sh} @ONLY)
   # Add the non converted script name to the dedicated list
   set (db_admin_sh_in_SOURCES ${db_admin_sh_in_SOURCES} ${db_admin_sh_in})
 endforeach()
