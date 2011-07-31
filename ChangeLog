@@ -1,3 +1,7 @@
-* Fri Jul  9 2010 Anh Quan Nguyen <quannaus at users dot sourceforge dot net> 0.1.0
-- First release. Air-Sched and AirInv are both working on top of it.
 
+
+	* Sun Jul 31 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.1.0
+	- CMake-based build.
+
+	* Fri Jul 9 2010 Anh Quan Nguyen <quannaus at users dot	sourceforge dot net> 0.1.0
+	- First release. Air-Sched and AirInv are both working on top of it.

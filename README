@@ -1,30 +1,44 @@
 
-Building the library and test binary from Subversion repository:
+Building the library and test binary from Git repository:
 ----------------------------------------------------------------
 The Sourceforge Subversion repository is to be found here:
-svn co https://travelccm.svn.sourceforge.net/svnroot/travelccm/trunk/travelccm travelccmsvn
+git clone ssh://stdair.git.sourceforge.net/gitroot/stdair/stdair stdairgit
+cd stdairgit
+git checkout trunk
 
-Then, you need the following packages (Fedora Core 6 names here, 
+Then, you need the following packages (Fedora/RedHat/CentOS names here, 
 but names may vary according to distributions):
-  * libtool, autoconf, automake
-  * gettext-devel
+  * cmake
   * gcc-c++
   * boost-devel
+  * readline-devel
+  * soci-mysql-devel
+  * zeromq-devel
+  * python-devel
+  * gettext-devel
   * doxygen
   * tetex-latex (optional)
   * rpm-build (optional)
 
 Building the library and test binary from the tarball:
 ------------------------------------------------------
-The latest stable source tarball (travelccm*.tar.gz or .bz2) can be found here:
-http://sourceforge.net/project/showfiles.php?group_id=261639
+The latest stable source tarball (stdair*.tar.gz or .bz2) can be found here:
+http://sourceforge.net/project/showfiles.php?group_id=267760
 
-Then, as usual, you can just type the following sequence:
-"./configure --prefix=/home/travelccm/dev/deliveries/travelccm-0.1.0 && make && make check"
-Of course, if you want to install the library (libtravelccm*.so*), 
-just type: "make install".
+Then, as usual:
+* To configure the project, type something like:
+  mkdir build && cd build
+  cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-99.99.99 \
+   -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=ON ..
+* To build the project, type:
+  make
+* To test the project, type:
+  make check
+* To install the library (libstdair*.so*) and the binary (stdair), just type:
+  make install
+* To package the source files, type:
+  make dist
+* To package the binary and the documentation:
+  make package
 
-See the INSTALL file for more details.
-
-Denis Arnaud (May 2009)
-
+Denis Arnaud (July 2011)
