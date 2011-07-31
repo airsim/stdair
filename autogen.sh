@@ -71,7 +71,7 @@ cat > configure << _EOF
 # Parsing of options
 # Note: the build server:
 #  * builds StdAir with the following option:
-#    ./configure --prefix=/opt/stdair-0.36.0
+#    ./configure --prefix=/opt/stdair-99.99.99
 #  * builds other simulator-related projects with the following option:
 #    ./configure --with-stdair=/opt/stdair
 #
