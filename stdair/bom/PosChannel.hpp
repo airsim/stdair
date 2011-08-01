@@ -11,16 +11,14 @@
 
 // Forward declaration
 namespace stdair {
-  template <typename BOM> class FacBom;
-  class FacBomManager;
 
   /**
    * @brief Class representing the actual attributes for a fare point of
    * sale.
    */
-  class PosChannel : public stdair::BomAbstract {
-    template <typename BOM> friend class stdair::FacBom;
-    friend class stdair::FacBomManager;
+  class PosChannel : public BomAbstract {
+    template <typename BOM> friend class FacBom;
+    friend class FacBomManager;
 
   public:
     // /////// Type definitions
