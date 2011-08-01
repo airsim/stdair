@@ -44,7 +44,7 @@ done
 #
 VERSION_MAJOR=0
 VERSION_MINOR=36
-VERSION_PATCH=1
+VERSION_PATCH=2
 VERSION_TMP_STRING=`grep "set_project_versions" CMakeLists.txt | sed -e "s/set_project_versions.*\([0-9]\+.\+[0-9]\+.\+[0-9]\+\).\+/\1/"`
 VERSION_STRING=`echo "${VERSION_TMP_STRING}" | grep "^[0-9]\+.[0-9]\+.[0-9]\+$"`
 
@@ -71,7 +71,7 @@ cat > configure << _EOF
 # Parsing of options
 # Note: the build server:
 #  * builds StdAir with the following option:
-#    ./configure --prefix=/opt/stdair-0.36.1
+#    ./configure --prefix=/opt/stdair-0.36.2
 #  * builds other simulator-related projects with the following option:
 #    ./configure --with-stdair=/opt/stdair
 #
