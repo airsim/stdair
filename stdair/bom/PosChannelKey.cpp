@@ -5,6 +5,7 @@
 #include <ostream>
 #include <sstream>
 // STDAIR
+#include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/basic/BasConst_Request.hpp>
 #include <stdair/bom/PosChannelKey.hpp>
 
@@ -44,7 +45,8 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string PosChannelKey::toString() const {
     std::ostringstream oStr;
-    oStr << _pos << "," << _channel; 
+    oStr << _pos << DEFAULT_KEY_SUB_FLD_DELIMITER
+         << " " << _channel; 
     return oStr.str();
   }
 
