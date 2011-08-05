@@ -35,8 +35,10 @@ namespace stdair {
      *     
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
+     * @param const SampleType& The type of component for which the BOM tree
+     *        should be built.
      */
-    static void buildSampleBom (BomRoot&);
+    static void buildSampleBom (BomRoot&, const SampleType& iSampleType = 'A');
 
     /**
      * Build a sample bom tree for RMOL.

@@ -40,7 +40,8 @@
 namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
-  void CmdBomManager::buildSampleBom (BomRoot& ioBomRoot) {
+  void CmdBomManager::buildSampleBom (BomRoot& ioBomRoot,
+                                      const SampleType& iSampletype) {
 
     // DEBUG
     STDAIR_LOG_DEBUG ("StdAir will build the BOM tree from built-in "
