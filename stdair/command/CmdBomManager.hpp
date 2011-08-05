@@ -8,6 +8,7 @@
 #include <iosfwd>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
+#include <stdair/basic/SampleType.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
 #include <stdair/command/CmdAbstract.hpp>
 
@@ -35,9 +36,28 @@ namespace stdair {
      *     
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
+     * @param const SampleType& The type of component for which the BOM tree
+     *        should be built.
      */
-    static void buildSampleBom (BomRoot&);
+    static void buildSampleBom (BomRoot&, const SampleType& iSampleType = 'A');
 
+  private:
+    /**
+     * Build a sample BOM tree for all the components,
+     * and attach it to the given reference.
+     *
+     * As for now, two inventories (one for BA, another for AF) are
+     * built, each containing one flight. One of those flights has two
+     * legs (and therefore three segments).
+     *     
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     * @param const SampleType& The type of component for which the BOM tree
+     *        should be built.
+     */
+    static void buildSampleBomForAll (BomRoot&);
+
+  public:
     /**
      * Build a sample bom tree for RMOL.
      *

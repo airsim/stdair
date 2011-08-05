@@ -40,7 +40,18 @@
 namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
-  void CmdBomManager::buildSampleBom (BomRoot& ioBomRoot) {
+  void CmdBomManager::buildSampleBom (BomRoot& ioBomRoot,
+                                      const SampleType& iSampleType) {
+    const SampleType::EN_SampleType lSampleType = iSampleType.getType();
+    switch (lSampleType) {
+    case SampleType::ALL:
+    default:
+      buildSampleBomForAll (ioBomRoot);
+    }
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void CmdBomManager::buildSampleBomForAll (BomRoot& ioBomRoot) {
 
     // DEBUG
     STDAIR_LOG_DEBUG ("StdAir will build the BOM tree from built-in "
