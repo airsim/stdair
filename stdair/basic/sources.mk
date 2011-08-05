@@ -24,7 +24,8 @@ stdair_bas_h_sources = \
 	$(top_srcdir)/stdair/basic/ForecastingMethod.hpp \
 	$(top_srcdir)/stdair/basic/RandomGeneration.hpp \
 	$(top_srcdir)/stdair/basic/ProgressStatus.hpp \
-	$(top_srcdir)/stdair/basic/ProgressStatusSet.hpp
+	$(top_srcdir)/stdair/basic/ProgressStatusSet.hpp \
+	$(top_srcdir)/stdair/basic/DateGenerationMethod.hpp
 stdair_bas_cc_sources = \
 	$(top_srcdir)/stdair/basic/BasConst.cpp \
 	$(top_srcdir)/stdair/basic/BasChronometer.cpp \
@@ -37,5 +38,5 @@ stdair_bas_cc_sources = \
 	$(top_srcdir)/stdair/basic/ForecastingMethod.cpp \
 	$(top_srcdir)/stdair/basic/RandomGeneration.cpp \
 	$(top_srcdir)/stdair/basic/ProgressStatus.cpp \
-	$(top_srcdir)/stdair/basic/ProgressStatusSet.cpp
-
+	$(top_srcdir)/stdair/basic/ProgressStatusSet.cpp \
+	$(top_srcdir)/stdair/basic/DateGenerationMethod.cpp
