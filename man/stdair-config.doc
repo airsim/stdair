@@ -17,11 +17,14 @@ macros, that are included with \e StdAir, for GNU autoconf.
 
 \e stdair-config accepts the following options:
 
+ \b --help<br>
+    Display this help and exit
+
+ \b --prefix<br>
+    Show the StdAir installation prefix.
+
  \b --version<br>
     Print the currently installed version of StdAir on the standard output.
-
- \b --sampledir<br>
-    Show where the (CSV) sample files are located.
 
  \b --libs<br>
     Print the linker flags that are necessary to link with the StdAir library.
@@ -30,11 +33,26 @@ macros, that are included with \e StdAir, for GNU autoconf.
     Print the compiler flags that are necessary to compile with the
     StdAir library.
 
- \b --prefix<br>
-    Show the StdAir installation prefix.
+ \b --sampledir<br>
+    Show where the (StdAir CSV) sample files are located.
+
+ \b --mandir<br>
+    Show where the manual pages are located.
+
+ \b --infodir<br>
+    Show where the information pages are located.
+
+ \b --docdir<br>
+    Show the documentation base directory.
+
+ \b --htmldocpath<br>
+    Show where the HTML documentation is located.
+
+ \b --refmanpath<br>
+    Show where the PDF documentation is located.
 
 \section sec_see_also SEE ALSO
- \b stdair(1), \b stdair-config(1), \b boost-config(1)
+ \b stdair(1), \b boost-config(1), \b stdair-library(3)
 
 \section sec_copyright COPYRIGHT
 
