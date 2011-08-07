@@ -41,7 +41,7 @@ Summary:        HTML documentation for the %{name} library
 Group:          Documentation
 %{?fedora:BuildArch:      noarch}
 BuildRequires:  tex(latex)
-BuildRequires:  doxygen, ghostscript
+BuildRequires:  doxygen, ghostscript, graphviz
 
 %description doc
 This package contains the documentation in the HTML format of the %{name}

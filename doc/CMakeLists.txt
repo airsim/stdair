@@ -16,6 +16,9 @@ set (DOXYGEN_CFG ${CMAKE_CURRENT_BINARY_DIR}/doxygen_html.cfg)
 configure_file (${DOXYGEN_CFG_SRC} ${DOXYGEN_CFG} @ONLY)
 
 ## Documentation sources
+# (CSS) Style sheets
+set (docstyles_DIR ${CMAKE_CURRENT_SOURCE_DIR}/styles)
+set (style_SOURCES ${CPACK_PACKAGE_NAME}.css)
 # Images
 set (docimages_DIR ${CMAKE_CURRENT_SOURCE_DIR}/images)
 set (image_SOURCES ${CPACK_PACKAGE_NAME}_logo.png sfx_logo.png favicon.ico)
@@ -43,9 +46,24 @@ add_custom_command (OUTPUT ${DOXYGEN_OUTPUT} ${REFMAN_TEX_FULL}
 # Add the 'doc' target, depending on the generated HTML documentation
 add_custom_target (doc ALL DEPENDS ${DOXYGEN_OUTPUT})
 
-# Copy the needed images into the generated HTML directory
+##
+# Copy the needed files into the generated HTML directory
 set (htmldoc_DIR ${CMAKE_CURRENT_BINARY_DIR}/html)
 set (pdfdoc_DIR ${CMAKE_CURRENT_BINARY_DIR}/latex)
+
+# (CSS) Style sheets 
+foreach (style_SRC ${style_SOURCES})
+  set (CSS_SRC_FULL_DIR ${docstyles_DIR}/${style_SRC})
+  set (CSS_GEN_FULL_DIR ${htmldoc_DIR}/${style_SRC})
+  add_custom_command (OUTPUT ${CSS_GEN_FULL_DIR}
+	COMMAND ${CMAKE_COMMAND} 
+	ARGS -E copy ${CSS_SRC_FULL_DIR} ${CSS_GEN_FULL_DIR}
+	DEPENDS ${DOXYGEN_OUTPUT} ${CSS_SRC_FULL_DIR}
+	COMMENT "Copying style '${CSS_SRC_FULL_DIR}' into '${htmldoc_DIR}'...")
+  add_custom_target (css_${style_SRC} ALL DEPENDS ${CSS_GEN_FULL_DIR})
+endforeach (style_SRC)
+
+# Images
 foreach (image_SRC ${image_SOURCES})
   set (IMG_SRC_FULL_DIR ${docimages_DIR}/${image_SRC})
   set (IMG_GEN_FULL_DIR ${htmldoc_DIR}/${image_SRC})
