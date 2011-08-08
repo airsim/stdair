@@ -88,44 +88,35 @@ namespace stdair {
     /**
      * Build a sample BOM tree, and attach it to the BomRoot instance.
      *
-     * As for now, two sample BOM trees can be built.
+     * As for now, a single sample BOM tree is built, with objects
+     * for all the simulator-related components, i.e.:
      * <ul>
-     *   <li>One BOM tree is based on two actual inventories (one for BA,
-     *     another for AF). Each inventory contains one flight. One of
-     *     those flights has two legs (and therefore three segments).</li>
-     *   <li>The other BOM tree is fake, as a hook for RMOL to work.</li>
+     *   <li>schedule (e.g., AirSched),</li>
+     *   <li>inventory (e.g., AirInv),</li>
+     *   <li>revenue management (e.g., RMOL),</li>
+     *   <li>pricing (e.g., SimFQT),</li>
+     *   <li>revenue accounting (e.g., AirRAC),</li>
+     *   <li>demand generation (e.g., TraDemGen),</li>
+     *   <li>customer choice (e.g., TravelCCM),</li>
+     *   <li>event manager (e.g., SEvMgr)</li>
      * </ul>
      *
-     * @param const bool isForRMOL Whether the sample BOM tree is for RMOL.
-     * @param const CabinCapacity_T Capacity of the cabin for RMOL optimisation.
+     * Most of the inventories just contain one flight. One of those flights
+     * has two legs (and therefore three segments).
+     *
+     * The revenue management component (RMOL) needs very basic set up
+     * in order to perform optimisation at leg-level. Hence, there is a
+     * dedicated inventory ('XX'), the corresponding flight-date (#9999,
+     * departing 01/01/1900), leg-date (departing from 'XXX' arriving to
+     * the same 'XXX' airport) and leg-cabin ('X') for RMOL. Most of the
+     * data is dummy because RMOL uses only the cabin capacity from that
+     * part of the BOM tree.
+     *
+     * @param const CabinCapacity_T& Cabin capacity for revenue management
+     *        optimisation.
      */
-    void buildSampleBom (const bool isForRMOL = false,
-                         const CabinCapacity_T iCabinCapacity = 0);
+    void buildSampleBom (const CabinCapacity_T& iCabinCapacity = 0);
     
-    /**
-     * Build a sample BOM tree, and attach it to the BomRoot instance.
-     *
-     * As for now, two sample BOM trees can be built.
-     * <ul>
-     *   <li>
-     *   <li></li>
-     * </ul>
-     *
-     */
-    void buildSampleBomForFareQuoter ();
-
-    /**
-     * Build a sample BOM tree, and attach it to the BomRoot instance.
-     *
-     * As for now, two sample BOM trees can be built.
-     * <ul>
-     *   <li>
-     *   <li></li>
-     * </ul>
-     *
-     */
-    void buildSampleBomForAirRAC ();
-
     /**
      * Build a sample list of travel solutions.
      *
