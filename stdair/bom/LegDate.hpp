@@ -15,6 +15,10 @@
 
 namespace stdair {
 
+  /// Forward declarations
+  struct LegCabinKey;
+  class LegCabin;
+
   /**
    * Class representing the actual attributes for an airline leg-date.
    */
@@ -45,10 +49,45 @@ namespace stdair {
       return _key.getBoardingPoint();
     }
 
-    /** Get the map of children holders. */
+    /**
+     * Get the airline code (key of the parent object).
+     *
+     * \note That method assumes that the parent object derives from
+     *       the Inventory class, as it needs to have access to the
+     *       getAirlineCode() method.
+     */
+    const AirlineCode_T& getAirlineCode() const;
+
+    /**
+     * Get the map of children holders.
+     */
     const HolderMap_T& getHolderMap() const {
       return _holderMap;
     }
+    
+    /**
+     * Get a pointer on the LegCabin object corresponding to the
+     * given key.
+     *
+     * \note The LegCabin object can be inherited from, if needed.
+     *       In that case, a dynamic_cast<> may be needed.
+     *
+     * @param const std::string& The leg-cabin key.
+     * @return LegCabin* Found LegCabin object. NULL if not found.
+     */
+    LegCabin* getLegCabin (const std::string& iLegCabinKeyStr) const;
+
+    /**
+     * Get a pointer on the LegCabin object corresponding to the
+     * given key.
+     *
+     * \note The LegCabin object can be inherited from, if needed.
+     *       In that case, a dynamic_cast<> may be needed.
+     *
+     * @param const LegCabinKey& The leg-cabin key
+     * @return LegCabin* Found LegCabin object. NULL if not found.
+     */
+    LegCabin* getLegCabin (const LegCabinKey&) const;
 
     /** Get the off point. */
     const AirportCode_T& getOffPoint() const {
