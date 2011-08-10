@@ -6,39 +6,39 @@
 #include <sstream>
 // StdAir
 #include <stdair/stdair_exceptions.hpp>
-#include <stdair/basic/DateGenerationMethod.hpp>
+#include <stdair/basic/DemandGenerationMethod.hpp>
 
 namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
-  const std::string DateGenerationMethod::_labels[LAST_VALUE] =
+  const std::string DemandGenerationMethod::_labels[LAST_VALUE] =
     { "PoissonProcess", "SatisticsOrder" };
 
   // //////////////////////////////////////////////////////////////////////
-  const char DateGenerationMethod::
+  const char DemandGenerationMethod::
   _methodLabels[LAST_VALUE] = { 'P', 'S' };
 
   
   // //////////////////////////////////////////////////////////////////////
-  DateGenerationMethod::DateGenerationMethod()
+  DemandGenerationMethod::DemandGenerationMethod()
     : _method (LAST_VALUE) {
     assert (false);
   }
 
   // //////////////////////////////////////////////////////////////////////
-  DateGenerationMethod::
-  DateGenerationMethod (const DateGenerationMethod& iDateGenerationMethod)
-    : _method (iDateGenerationMethod._method) {
+  DemandGenerationMethod::
+  DemandGenerationMethod (const DemandGenerationMethod& iDemandGenerationMethod)
+    : _method (iDemandGenerationMethod._method) {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  DateGenerationMethod::
-  DateGenerationMethod (const EN_DateGenerationMethod& iDateGenerationMethod)
-    : _method (iDateGenerationMethod) {
+  DemandGenerationMethod::
+  DemandGenerationMethod (const EN_DemandGenerationMethod& iDemandGenerationMethod)
+    : _method (iDemandGenerationMethod) {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  DateGenerationMethod::DateGenerationMethod (const char iMethod) {
+  DemandGenerationMethod::DemandGenerationMethod (const char iMethod) {
     switch (iMethod) {
     case 'P': _method = POI_PRO; break;
     case 'S': _method = STA_ORD; break;
@@ -56,26 +56,26 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  const std::string& DateGenerationMethod::
-  getLabel (const EN_DateGenerationMethod& iMethod) {
+  const std::string& DemandGenerationMethod::
+  getLabel (const EN_DemandGenerationMethod& iMethod) {
     return _labels[iMethod];
   }
   
   // //////////////////////////////////////////////////////////////////////
-  char DateGenerationMethod::getMethodLabel (const EN_DateGenerationMethod& iMethod) {
+  char DemandGenerationMethod::getMethodLabel (const EN_DemandGenerationMethod& iMethod) {
     return _methodLabels[iMethod];
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string DateGenerationMethod::
-  getMethodLabelAsString (const EN_DateGenerationMethod& iMethod) {
+  std::string DemandGenerationMethod::
+  getMethodLabelAsString (const EN_DemandGenerationMethod& iMethod) {
     std::ostringstream oStr;
     oStr << _methodLabels[iMethod];
     return oStr.str();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string DateGenerationMethod::describeLabels() {
+  std::string DemandGenerationMethod::describeLabels() {
     std::ostringstream ostr;
     for (unsigned short idx = 0; idx != LAST_VALUE; ++idx) {
       if (idx != 0) {
@@ -87,27 +87,27 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  DateGenerationMethod::EN_DateGenerationMethod DateGenerationMethod::getMethod() const {
+  DemandGenerationMethod::EN_DemandGenerationMethod DemandGenerationMethod::getMethod() const {
     return _method;
   }
   
   // //////////////////////////////////////////////////////////////////////
-  std::string DateGenerationMethod::getMethodAsString() const {
+  std::string DemandGenerationMethod::getMethodAsString() const {
     std::ostringstream oStr;
     oStr << _methodLabels[_method];
     return oStr.str();
   }
   
   // //////////////////////////////////////////////////////////////////////
-  const std::string DateGenerationMethod::describe() const {
+  const std::string DemandGenerationMethod::describe() const {
     std::ostringstream ostr;
     ostr << _labels[_method];
     return ostr.str();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  bool DateGenerationMethod::
-  operator== (const EN_DateGenerationMethod& iMethod) const {
+  bool DemandGenerationMethod::
+  operator== (const EN_DemandGenerationMethod& iMethod) const {
     return (_method == iMethod);
   }
   

@@ -1,5 +1,5 @@
-#ifndef __STDAIR_BAS_DATEGENERATIONMETHOD_HPP
-#define __STDAIR_BAS_DATEGENERATIONMETHOD_HPP
+#ifndef __STDAIR_BAS_DEMANDGENERATIONMETHOD_HPP
+#define __STDAIR_BAS_DEMANDGENERATIONMETHOD_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -11,30 +11,30 @@
 
 namespace stdair {
 
-  /** Enumeration of Date-time booking request generation methods. */
-  struct DateGenerationMethod : public StructAbstract {
+  /** Enumeration of date-time booking request generation methods. */
+  struct DemandGenerationMethod : public StructAbstract {
   public:
     typedef enum {
       POI_PRO = 0,
       STA_ORD,
       LAST_VALUE
-    } EN_DateGenerationMethod;
+    } EN_DemandGenerationMethod;
 
     /** Get the label as a string (e.g., "PoissonProcess" or
         "SatisticsOrder"). */
-    static const std::string& getLabel (const EN_DateGenerationMethod&);
+    static const std::string& getLabel (const EN_DemandGenerationMethod&);
 
     /** Get the label as a single char (e.g., 'P' or 'S'). */
-    static char getMethodLabel (const EN_DateGenerationMethod&);
+    static char getMethodLabel (const EN_DemandGenerationMethod&);
 
     /** Get the label as a string of a single char (e.g., "P" or "S"). */
-    static std::string getMethodLabelAsString (const EN_DateGenerationMethod&);
+    static std::string getMethodLabelAsString (const EN_DemandGenerationMethod&);
 
     /** List the labels. */
     static std::string describeLabels();
 
     /** Get the enumerated value. */
-    EN_DateGenerationMethod getMethod() const;
+    EN_DemandGenerationMethod getMethod() const;
 
     /** Get the enumerated value as a short string (e.g., "P" or "S"). */
     std::string getMethodAsString() const;
@@ -45,19 +45,19 @@ namespace stdair {
 
   public:
     /** Comparison operator. */
-    bool operator== (const EN_DateGenerationMethod&) const;
+    bool operator== (const EN_DemandGenerationMethod&) const;
     
   public:
     /** Constructor. */
-    DateGenerationMethod (const EN_DateGenerationMethod&);
+    DemandGenerationMethod (const EN_DemandGenerationMethod&);
     /** Constructor. */
-    DateGenerationMethod (const char iMethod);
+    DemandGenerationMethod (const char iMethod);
     /** Default copy constructor. */
-    DateGenerationMethod (const DateGenerationMethod&);
+    DemandGenerationMethod (const DemandGenerationMethod&);
 
   private:
     /** Default constructor. */
-    DateGenerationMethod();
+    DemandGenerationMethod();
   
 
   private:
@@ -69,9 +69,9 @@ namespace stdair {
 
   private:
     // //////// Attributes /////////
-    /** DateGeneration method. */
-    EN_DateGenerationMethod _method;
+    /** DemandGeneration method. */
+    EN_DemandGenerationMethod _method;
   };
 
 }
-#endif // __STDAIR_BAS_DATEGENERATIONMETHOD_HPP
+#endif // __STDAIR_BAS_DEMANDGENERATIONMETHOD_HPP
