@@ -15,7 +15,7 @@ PACKAGE_PRETTY_NAME="StdAir"
 AC_SUBST(PACKAGE_PRETTY_NAME)
 
 # Shared library versioning
-GENERIC_LIBRARY_VERSION="1:37:0"
+GENERIC_LIBRARY_VERSION="0:37:0"
 #                        | | |
 #                 +------+ | +---+
 #                 |        |     |
