@@ -1,6 +1,10 @@
 // Fares: fare ID; OriginCity; DestinationCity; TripType; DateRangeStart; DateRangeEnd; DepartureTimeRangeStart; DepartureTimeRangeEnd; POS; Channel; Price;
 // Segment: AirlineCode; Class;
-1; SIN; BKK; OW; 2011-01-01; 2011-03-01; 00:00; 23:59; ALL; Y; DC; 300.0; SQ; Y;
-2; SIN; BKK; OW; 2011-01-01; 2011-03-01; 00:00; 23:59; ALL; Y; DC; 200.0; SQ; M;
-3; SIN; BKK; RT; 2011-01-01; 2011-03-01; 00:00; 23:59; ALL; Y; DC; 320.0; SQ; Y;
-4; SIN; BKK; RT; 2011-01-01; 2011-03-01; 00:00; 23:59; ALL; Y; DC; 160.0; SQ; M;
+1; SIN; BKK; OW; 2010-06-01; 2011-03-01; 00:00; 23:59; ALL; Y; DC; 300.0; SQ; Y;
+2; SIN; BKK; OW; 2010-06-01; 2011-03-01; 00:00; 23:59; ALL; Y; DC; 200.0; SQ; M;
+3; SIN; BKK; RT; 2010-06-01; 2011-03-01; 00:00; 23:59; ALL; Y; DC; 320.0; SQ; Y;
+4; SIN; BKK; RT; 2010-06-01; 2011-03-01; 00:00; 23:59; ALL; Y; DC; 160.0; SQ; M;
+1; SIN; BKK; OW; 2012-04-27; 2012-05-03; 00:00; 23:59; ALL; Y; DC; 300.0; SQ; Y;
+2; SIN; BKK; OW; 2012-04-27; 2012-05-03; 00:00; 23:59; ALL; Y; DC; 200.0; SQ; M;
+3; SIN; BKK; RT; 2012-04-27; 2012-05-03; 00:00; 23:59; ALL; Y; DC; 320.0; SQ; Y;
+4; SIN; BKK; RT; 2012-04-27; 2012-05-03; 00:00; 23:59; ALL; Y; DC; 160.0; SQ; M;

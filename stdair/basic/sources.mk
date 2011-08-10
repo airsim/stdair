@@ -21,7 +21,7 @@ stdair_bas_h_sources = \
 	$(top_srcdir)/stdair/basic/BasDBParams.hpp \
 	$(top_srcdir)/stdair/basic/PassengerType.hpp \
 	$(top_srcdir)/stdair/basic/EventType.hpp \
-	$(top_srcdir)/stdair/basic/SampletType.hpp \
+	$(top_srcdir)/stdair/basic/SampleType.hpp \
 	$(top_srcdir)/stdair/basic/ForecastingMethod.hpp \
 	$(top_srcdir)/stdair/basic/RandomGeneration.hpp \
 	$(top_srcdir)/stdair/basic/ProgressStatus.hpp \

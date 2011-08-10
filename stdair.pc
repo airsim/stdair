@@ -1,0 +1,27 @@
+prefix=/usr
+exec_prefix=${prefix}
+bindir=${exec_prefix}/bin
+libdir=${exec_prefix}/lib
+libexecdir=${exec_prefix}/libexec
+sbindir=${exec_prefix}/sbin
+sysconfdir=${prefix}/etc
+includedir=${prefix}/include
+datarootdir=${prefix}/share
+datadir=${datarootdir}
+pkgdatadir=${datarootdir}/stdair
+sampledir=${datarootdir}/stdair/samples
+docdir=${datarootdir}/doc/stdair-99.99.99
+mandir=${datarootdir}/man
+infodir=${datarootdir}/info
+htmldir=${docdir}/html
+pdfdir=${docdir}/html
+pkgincludedir=${includedir}/stdair
+pkglibdir=${libdir}/stdair
+pkglibexecdir=${libexecdir}/stdair
+
+Name: StdAir
+Description: C++ Standard Airline IT Object Library
+Version: 99.99.99
+URL: http://sourceforge.net/projects/stdair/
+Libs: -L${libdir} -lstdair  
+Cflags: -I${includedir}

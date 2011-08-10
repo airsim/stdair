@@ -1,0 +1,16 @@
+/home/localoriuser/dev/sim/stdair/stdairgit/test/stdair/CMakeFiles/StdAirTesttst.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/CMakeFiles/check.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/test/stdair/CMakeFiles/check_stdairtst.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/db/CMakeFiles/dbadmin.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/CMakeFiles/devhelpers.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/CMakeFiles/dist.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/doc/CMakeFiles/doc.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/stdair/CMakeFiles/hdr_cfg_stdair.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/doc/CMakeFiles/img_favicon.ico.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/doc/CMakeFiles/img_sfx_logo.png.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/doc/CMakeFiles/img_stdair_logo.png.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/man/CMakeFiles/man.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/doc/CMakeFiles/pdf.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/stdair/CMakeFiles/stdairbin.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/stdair/CMakeFiles/stdairlib.dir
+/home/localoriuser/dev/sim/stdair/stdairgit/stdair/CMakeFiles/stdairuicllib.dir
