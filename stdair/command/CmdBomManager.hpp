@@ -26,7 +26,6 @@ namespace stdair {
   class CmdBomManager : public CmdAbstract {
     //
     friend class STDAIR_Service;
-    friend class RMOL_Service;
   private:
 
     // //////////////// BOM initialisation support methods /////////////////
@@ -35,16 +34,13 @@ namespace stdair {
      * and attach it to the given reference.
      *
      * That method calls in sequence the corresponding specific methods for
-     * all the main components: Schedule, Inventory and Revenue Management,
-     * Pricing, Revenue Accounting, Demand Generation and Customer Choice.
+     * all the main components: Schedule, Inventory, Pricing,
+     * Revenue Accounting, Demand Generation and Customer Choice.
      *
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
-     * @param const CabinCapacity_T& Capacity of the single
-     *        leg-cabin on which the optimisation should be performed.
      */
-    static void buildSampleBom (BomRoot&,
-                                const CabinCapacity_T& iCapacity = 300);
+    static void buildSampleBom (BomRoot&);
 
     /**
      * Build a sample BOM tree, with mainly Inventory-related objects,
@@ -62,14 +58,18 @@ namespace stdair {
     static void buildSampleInventory (BomRoot&);
 
     /**
-     * Build a sample bom tree for RMOL.
+     * Build a dummy inventory, containing a dummy flight-date with a single
+     * leg-cabin and some virtual booking classes. That structure is the bare
+     * minimum required to perform an optimisation on a leg-cabin.
+     *
+     * As for now, that method is only called by RMOL.
      *
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
      * @param const CabinCapacity_T& Capacity of the single
      *        leg-cabin on which the optimisation should be performed.
      */
-    static void buildSampleRevenueManagement (BomRoot&, const CabinCapacity_T&);
+    static void buildDummyInventory (BomRoot&, const CabinCapacity_T&);
 
     /**
      * Build a sample BOM tree, with mainly Pricing-related objects,

@@ -40,13 +40,9 @@
 namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
-  void CmdBomManager::buildSampleBom (BomRoot& ioBomRoot,
-                                      const CabinCapacity_T& iCapacity) {
+  void CmdBomManager::buildSampleBom (BomRoot& ioBomRoot) {
     // Build the inventory part (flight-dates)
     buildSampleInventory (ioBomRoot);
-
-    // Build the revenue management part (buckets)
-    buildSampleRevenueManagement (ioBomRoot, iCapacity);
 
     // Build the pricing (fare rules) and revenue accounting (yields) parts
     buildSamplePricing (ioBomRoot);
@@ -521,9 +517,8 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void CmdBomManager::
-  buildSampleRevenueManagement (BomRoot& ioBomRoot,
-                                const CabinCapacity_T& iCapacity) {
+  void CmdBomManager::buildDummyInventory (BomRoot& ioBomRoot,
+                                           const CabinCapacity_T& iCapacity) {
     // Inventory
     const InventoryKey lInventoryKey (DEFAULT_AIRLINE_CODE);
     Inventory& lInv = FacBom<Inventory>::instance().create (lInventoryKey);
