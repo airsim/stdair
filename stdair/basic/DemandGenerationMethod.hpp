@@ -11,7 +11,9 @@
 
 namespace stdair {
 
-  /** Enumeration of date-time booking request generation methods. */
+  /**
+   * @brief Enumeration of date-time booking request generation methods.
+   */
   struct DemandGenerationMethod : public StructAbstract {
   public:
     typedef enum {
@@ -20,56 +22,98 @@ namespace stdair {
       LAST_VALUE
     } EN_DemandGenerationMethod;
 
-    /** Get the label as a string (e.g., "PoissonProcess" or
-        "SatisticsOrder"). */
+    /**
+     * Get the label as a string (e.g., "PoissonProcess" or "SatisticsOrder").
+     */
     static const std::string& getLabel (const EN_DemandGenerationMethod&);
 
-    /** Get the label as a single char (e.g., 'P' or 'S'). */
+    /**
+     * Get the method value from parsing a single char (e.g., 'P' or 'S').
+     */
+    static EN_DemandGenerationMethod getMethod (const char);
+
+    /**
+     * Get the label as a single char (e.g., 'P' or 'S').
+     */
     static char getMethodLabel (const EN_DemandGenerationMethod&);
 
-    /** Get the label as a string of a single char (e.g., "P" or "S"). */
+    /**
+     * Get the label as a string of a single char (e.g., "P" or "S").
+     */
     static std::string getMethodLabelAsString (const EN_DemandGenerationMethod&);
 
-    /** List the labels. */
+    /**
+     * List the labels.
+     */
     static std::string describeLabels();
 
-    /** Get the enumerated value. */
+    /**
+     * Get the enumerated value.
+     */
     EN_DemandGenerationMethod getMethod() const;
 
-    /** Get the enumerated value as a short string (e.g., "P" or "S"). */
+    /**
+     * Get the enumerated value as a short string (e.g., 'P' or 'S').
+     */
+    char getMethodAsChar() const;
+    
+    /**
+     * Get the enumerated value as a short string (e.g., "P" or "S").
+     */
     std::string getMethodAsString() const;
     
-    /** Give a description of the structure (e.g., "PoissonProcess" or
-        "SatisticsOrder"). */
+    /**
+     * Give a description of the structure (e.g., "PoissonProcess" or
+     * "SatisticsOrder").
+     */
     const std::string describe() const;
 
   public:
-    /** Comparison operator. */
+    /**
+     * Comparison operator.
+     */
     bool operator== (const EN_DemandGenerationMethod&) const;
     
   public:
-    /** Constructor. */
+    /**
+     * Main constructor.
+     */
     DemandGenerationMethod (const EN_DemandGenerationMethod&);
-    /** Constructor. */
+    /**
+     * Alternative constructor.
+     */
     DemandGenerationMethod (const char iMethod);
-    /** Default copy constructor. */
+    /**
+     * Alternative constructor.
+     */
+    DemandGenerationMethod (const std::string& iMethod);
+    /**
+     * Default copy constructor.
+     */
     DemandGenerationMethod (const DemandGenerationMethod&);
 
   private:
-    /** Default constructor. */
+    /**
+     * Default constructor.
+     */
     DemandGenerationMethod();
-  
+
 
   private:
-    /** String version of the enumeration. */    
+    /**
+     * String version of the enumeration.
+     */
     static const std::string _labels[LAST_VALUE];
-    /** Method version of the enumeration. */    
+    /**
+     * Method version of the enumeration.
+     */
     static const char _methodLabels[LAST_VALUE];
-
 
   private:
     // //////// Attributes /////////
-    /** DemandGeneration method. */
+    /**
+     * DemandGeneration method.
+     */
     EN_DemandGenerationMethod _method;
   };
 
