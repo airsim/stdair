@@ -26,6 +26,7 @@ namespace stdair {
   class CmdBomManager : public CmdAbstract {
     //
     friend class STDAIR_Service;
+    friend class RMOL_Service;
   private:
 
     // //////////////// BOM initialisation support methods /////////////////
