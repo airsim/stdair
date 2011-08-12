@@ -103,19 +103,31 @@ namespace stdair {
      *
      * Most of the inventories just contain one flight. One of those flights
      * has two legs (and therefore three segments).
+     */
+    void buildSampleBom();
+    
+    /**
+     * Build a dummy inventory, containing a dummy flight-date with a single
+     * leg-cabin and some virtual booking classes. That structure is the bare
+     * minimum required to perform an optimisation on a leg-cabin.
      *
-     * The revenue management component (RMOL) needs very basic set up
-     * in order to perform optimisation at leg-level. Hence, there is a
-     * dedicated inventory ('XX'), the corresponding flight-date (#9999,
-     * departing 01/01/1900), leg-date (departing from 'XXX' arriving to
-     * the same 'XXX' airport) and leg-cabin ('X') for RMOL. Most of the
-     * data is dummy because RMOL uses only the cabin capacity from that
-     * part of the BOM tree.
+     * As for now, that method is called only by RMOL. Indeed, the
+     * revenue management component (RMOL) needs very basic set up in
+     * order to perform optimisation at leg-level. Hence, there are:
+     * <ul>
+     *    <li>a dedicated inventory ('XX'),</li>
+     *    <li>the corresponding flight-date (#9999, departing 01/01/1900),</li>
+     *    <li>a leg-date (departing and arriving from/to 'XXX' airport),<li>
+     *    <li>a leg-cabin ('X').<li>
+     * </ul>
+     *
+     * Most of the data is dummy because RMOL uses only the cabin capacity
+     * from that part of the BOM tree.
      *
      * @param const CabinCapacity_T& Cabin capacity for revenue management
      *        optimisation.
      */
-    void buildSampleBom (const CabinCapacity_T& iCabinCapacity = 0);
+    void buildDummyInventory (const CabinCapacity_T& iCabinCapacity);
     
     /**
      * Build a sample list of travel solutions.

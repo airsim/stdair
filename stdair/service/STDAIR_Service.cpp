@@ -144,7 +144,7 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void STDAIR_Service::buildSampleBom (const CabinCapacity_T& iCabinCapacity) {
+  void STDAIR_Service::buildSampleBom() {
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
@@ -153,7 +153,21 @@ namespace stdair {
     BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
     
     // Delegate the building process to the dedicated command
-    CmdBomManager::buildSampleBom (lBomRoot, iCabinCapacity);
+    CmdBomManager::buildSampleBom (lBomRoot);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void STDAIR_Service::
+  buildDummyInventory (const CabinCapacity_T& iCabinCapacity) {
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    
+    // Delegate the building process to the dedicated command
+    CmdBomManager::buildDummyInventory (lBomRoot, iCabinCapacity);
   }
 
   // //////////////////////////////////////////////////////////////////////
