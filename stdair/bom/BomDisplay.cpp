@@ -669,12 +669,12 @@ namespace stdair {
         const CabinCode_T& lCabinCode = lSC_ptr->getCabinCode();
         
         // Build the leading string to be displayed
-        std::ostringstream oLeadingStr;
-        oLeadingStr << lAirlineCode << lFlightNumber << " "
-                    << lFlightDateDate << ", "
-                    << lBoardPoint << "-" << lOffPoint << " "
-                    << lSegmentDateDate << ", "
-                    << lCabinCode << ", ";
+        std::ostringstream oSCLeadingStr;
+        oSCLeadingStr << lAirlineCode << lFlightNumber << " "
+                      << lFlightDateDate << ", "
+                      << lBoardPoint << "-" << lOffPoint << " "
+                      << lSegmentDateDate << ", "
+                      << lCabinCode << ", ";
 
         // Default Fare Family code, when there are no FF
         FamilyCode_T lFamilyCode ("NoFF");
@@ -694,7 +694,8 @@ namespace stdair {
             lFamilyCode = lFF_ptr->getFamilyCode();
 
             // Complete the leading string to be displayed
-            oLeadingStr << lFamilyCode << ", ";
+            std::ostringstream oFFLeadingStr;
+            oFFLeadingStr << oSCLeadingStr.str() << lFamilyCode << ", ";
 
             // Browse the booking-classes
             const BookingClassList_T& lBookingClassList =
@@ -706,17 +707,19 @@ namespace stdair {
               assert (lBC_ptr != NULL);
 
               //
-              csvBookingClassDisplay (oStream, *lBC_ptr, oLeadingStr.str());
+              csvBookingClassDisplay (oStream, *lBC_ptr, oFFLeadingStr.str());
             }
           }
 
-          return;
+          // Go on to the next segment-cabin
+          continue;
         }
         assert (BomManager::hasList<FareFamily> (*lSC_ptr) == false);
 
         // The fare family code is a fake one ('NoFF'), and therefore
         // does not vary
-        oLeadingStr << lFamilyCode << ", ";
+        std::ostringstream oFFLeadingStr;
+        oFFLeadingStr << oSCLeadingStr.str() << lFamilyCode << ", ";
 
         // Browse the booking-classes, directly from the segment-cabin object
         const BookingClassList_T& lBookingClassList =
@@ -728,7 +731,7 @@ namespace stdair {
           assert (lBC_ptr != NULL);
 
           //
-          csvBookingClassDisplay (oStream, *lBC_ptr, oLeadingStr.str());
+          csvBookingClassDisplay (oStream, *lBC_ptr, oFFLeadingStr.str());
         }
       }
     }
