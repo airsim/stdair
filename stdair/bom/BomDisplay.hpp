@@ -49,6 +49,41 @@ namespace stdair {
     static std::string csvDisplay (const EventQueue&);
 
     /**
+     * Display (dump in the underlying output log stream) the list of
+     * flight-dates contained within the given BOM tree.
+     *
+     * @param std::ostream& Output stream in which the flight-date keys
+     *        should be logged/dumped.
+     * @param const BomRoot& Root of the BOM tree to be displayed.
+     * @param const AirlineCode& Airline for which the flight-dates should be
+     *        displayed. If set to "all" (default), all the inventories will
+     *        be displayed.
+     * @param const FlightNumber_T& Flight number for which all the departure
+     *        dates should be displayed. If set to 0 (the default),
+     *        all the flight numbers will be displayed.
+     */
+    static void list (std::ostream&, const BomRoot&,
+                      const AirlineCode_T& iAirlineCode = "all",
+                      const FlightNumber_T& iFlightNumber = 0);
+
+    /**
+     * Display (dump in the underlying output log stream) the list of
+     * flight-dates contained within the given BOM tree.
+     *
+     * @param std::ostream& Output stream in which the flight-date keys
+     *        should be logged/dumped.
+     * @param const Inventory& Root of the BOM tree to be displayed.
+     * @param const unsigned short Index, within the list, of the inventory.
+     *        It is 0 when that inventory is displayed alone.
+     * @param const FlightNumber_T& Flight number for which all the departure
+     *        dates should be displayed. If set to 0 (the default),
+     *        all the flight numbers will be displayed.
+     */
+    static void list (std::ostream&, const Inventory&,
+                      const unsigned short iInventoryIndex = 0,
+                      const FlightNumber_T& iFlightNumber = 0);
+
+    /**
      * Recursively display (dump in the underlying output log stream)
      * the objects of the BOM tree.
      *

@@ -78,6 +78,95 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::list (std::ostream& oStream, const BomRoot& iBomRoot,
+                         const AirlineCode_T& iAirlineCode,
+                         const FlightNumber_T& iFlightNumber) {
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    // Check whether there are Inventory objects
+    if (BomManager::hasList<Inventory> (iBomRoot) == false) {
+      return;
+    }
+    
+    // Browse the inventories
+    unsigned short invIdx = 1;
+    const InventoryList_T& lInventoryList =
+      BomManager::getList<Inventory> (iBomRoot);
+    for (InventoryList_T::const_iterator itInv = lInventoryList.begin();
+         itInv != lInventoryList.end(); ++itInv, ++invIdx) {
+      const Inventory* lInv_ptr = *itInv;
+      assert (lInv_ptr != NULL);
+
+      // Retrieve the inventory key (airline code)
+      const AirlineCode_T& lAirlineCode = lInv_ptr->getAirlineCode();
+
+      // Display only the requested inventories
+      if (iAirlineCode == "all" || iAirlineCode == lAirlineCode) {
+        // Get the list of flight-dates for that inventory
+        list (oStream, *lInv_ptr, invIdx, iFlightNumber);
+      }
+    }
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::list (std::ostream& oStream, const Inventory& iInventory,
+                         const unsigned short iInventoryIndex,
+                         const FlightNumber_T& iFlightNumber) {
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    // Check whether there are FlightDate objects
+    if (BomManager::hasMap<FlightDate> (iInventory) == false) {
+      return;
+    }
+    
+    /**
+     * \note It is assumed in this method that the flight-date key is made of
+     *       a mere string, concatenating the flight number and the departure
+     *       date. Hence, all the departure dates of a given flight number
+     *       are assumed to be grouped in the flight-date map held by the
+     *       inventory.
+     */
+    
+    //
+    const AirlineCode_T& lAirlineCode = iInventory.getAirlineCode();
+    oStream << iInventoryIndex << ". " << lAirlineCode << std::endl;
+
+    // Browse the flight-dates
+    unsigned short lCurrentFlightNumber = 0;
+    unsigned short flightNumberIdx = 0;
+    unsigned short departureDateIdx = 1;
+    const FlightDateMap_T& lFlightDateList =
+      BomManager::getMap<FlightDate> (iInventory);
+    for (FlightDateMap_T::const_iterator itFD = lFlightDateList.begin();
+         itFD != lFlightDateList.end(); ++itFD, ++departureDateIdx) {
+      const FlightDate* lFD_ptr = itFD->second;
+      assert (lFD_ptr != NULL);
+      
+      // Retrieve the key of the flight-date
+      const FlightNumber_T& lFlightNumber = lFD_ptr->getFlightNumber();
+      const Date_T& lFlightDateDate = lFD_ptr->getDepartureDate();
+
+      // Display only the requested flight number
+      if (iFlightNumber == 0 || iFlightNumber == lFlightNumber) {
+        //
+        if (lCurrentFlightNumber != lFlightNumber) {
+          lCurrentFlightNumber = lFlightNumber;
+          ++flightNumberIdx; departureDateIdx = 1;
+          oStream << "  " << iInventoryIndex << "." << flightNumberIdx << ". "
+                  << lAirlineCode << lFlightNumber << std::endl;
+        }
+      
+        oStream << "    " << iInventoryIndex << "." << flightNumberIdx
+                << "." << departureDateIdx << ". "
+                << lAirlineCode << lFlightNumber << " / " << lFlightDateDate
+                << std::endl;
+      }
+    }   
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
   void BomDisplay::csvDisplay (std::ostream& oStream,
                                const BomRoot& iBomRoot) {
     // Save the formatting flags for the given STL output stream

@@ -243,6 +243,46 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::list (const AirlineCode_T& iAirlineCode,
+                                    const FlightNumber_T& iFlightNumber) const {
+    std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    
+    // Dump the content of the whole BOM tree into the string
+    BomDisplay::list (oStr, lBomRoot, iAirlineCode, iFlightNumber);
+    
+    return oStr.str();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  bool STDAIR_Service::check (const AirlineCode_T& iAirlineCode,
+                              const FlightNumber_T& iFlightNumber,
+                              const stdair::Date_T& iDepartureDate) const {
+    std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    
+    // Dump the content of the whole BOM tree into the string
+    const FlightDate* lFlightDate_ptr =
+      BomRetriever::retrieveFlightDateFromKeySet (lBomRoot, iAirlineCode,
+                                                  iFlightNumber,
+                                                  iDepartureDate);    
+    
+    return (lFlightDate_ptr != NULL);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   std::string STDAIR_Service::csvDisplay() const {
     std::ostringstream oStr;
 
