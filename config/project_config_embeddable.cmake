@@ -663,8 +663,6 @@ macro (module_generate_config_helpers)
     configure_file (config.h.in config.h @ONLY)
   endif (EXISTS config.h.in)
 
-  message ("DEBUG -- STDAIR_SAMPLE_DIR = ${STDAIR_SAMPLE_DIR}")
-
   # Specific module configuration header
   set (PROJ_PATH_CFG_SRC 
     ${CMAKE_CURRENT_SOURCE_DIR}/config/${MODULE_NAME}-paths.hpp.in)

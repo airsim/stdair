@@ -1,4 +1,10 @@
 
+* 2011-08-15:
+- Version 0.38.0
+- A list() method has been added to the API (STDAIR_Service), in order
+  to retrieve the list of flight-dates for given parameters (optionally,
+  airline code and/or flight number).
+
 * 2011-07-31:
 - Version 0.36.1
 - Release of RPMs for Fedora 15.
