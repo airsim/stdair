@@ -309,6 +309,34 @@ namespace stdair {
   public:
     // //////////////// Display support methods /////////////////
     /**
+     * Display the list of flight-dates (contained within the BOM tree)
+     * corresponding to the parameters given as input.
+     *
+     * @param const AirlineCode& Airline for which the flight-dates should be
+     *        displayed. If set to "all" (the default), all the inventories
+     *        will be displayed.
+     * @param const FlightNumber_T& Flight number for which all the departure
+     *        dates should be displayed. If set to 0 (the default),
+     *        all the flight numbers will be displayed.
+     * @return std::string Output string in which the BOM tree is
+     *        logged/dumped.
+     */
+    std::string list (const AirlineCode_T& iAirlineCode = "all",
+                      const FlightNumber_T& iFlightNumber = 0) const;
+
+    /**
+     * Check whether the given flight-date is a valid one.
+     *
+     * @param const stdair::AirlineCode_T& Airline code of the flight to check.
+     * @param const stdair::FlightNumber_T& Flight number of the
+     *        flight to check.
+     * @param const stdair::Date_T& Departure date of the flight to check.
+     * @return bool Whether or not the given flight date is valid.
+     */
+    bool check (const AirlineCode_T&, const FlightNumber_T&,
+                const Date_T& iDepartureDate) const;
+
+    /**
      * Recursively display (dump in the returned string) the objects
      * of the BOM tree.
      *

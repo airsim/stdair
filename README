@@ -40,5 +40,12 @@ Then, as usual:
   make dist
 * To package the binary and the documentation:
   make package
+* To run the local binary version:
+  ./stdair/stdair -b
+* To run the installed version (the first following line must be done once
+  per session):
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/user/dev/deliveries/stdair-99.99.99/lib
+  /home/user/dev/deliveries/stdair-99.99.99/bin/stdair -b
 
-Denis Arnaud (July 2011)
+Denis Arnaud (August 2011)
+
