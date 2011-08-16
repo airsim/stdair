@@ -144,6 +144,15 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
+  const ServiceInitialisationType& STDAIR_Service::
+  getServiceInitialisationType() const {
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    return lSTDAIR_ServiceContext.getServiceInitialisationType();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   void STDAIR_Service::buildSampleBom() {
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);

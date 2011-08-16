@@ -22,6 +22,7 @@
 #include <stdair/stdair_service_types.hpp>
 #include <stdair/basic/BasLogParams.hpp>
 #include <stdair/basic/BasDBParams.hpp>
+#include <stdair/basic/ServiceInitialisationType.hpp>
 #include <stdair/basic/EventType.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
 
@@ -388,7 +389,7 @@ namespace stdair {
      * If the service context has not been initialised, that
      * method throws an exception (failing assertion).
      *
-     * @param[out] BomRoot& Reference on the BomRoot.
+     * @return BomRoot& Reference on the BomRoot.
      */
     BomRoot& getBomRoot() const;
     
@@ -398,19 +399,34 @@ namespace stdair {
      * If the service context has not been initialised, that
      * method throws an exception (failing assertion).
      *
-     * @param[out] EventQueue& Reference on the EventQueue.
+     * @return EventQueue& Reference on the EventQueue.
      */
     EventQueue& getEventQueue() const;
     
     /**
      * Get the log parameters.
+     *
+     * @return BasLogParams Copy of the structure holding the log parameters.
      */
     BasLogParams getLogParams() const;
 
     /**
      * Get the database parameters.
+     *
+     * @return const BasDBParams& Reference on the structure holding
+     *         the database parameters.
      */
     const BasDBParams& getDBParams() const;
+
+    /**
+     * Get the type of initialisation (e.g., not yet, file parsing,
+     * sample BOM) which the component (owner of the current
+     * STDAIR_Service instance) has gone through.
+     *
+     * @return const ServiceInitialisationType& Reference on the type of
+     *         initialisation (enumeration structure).
+     */
+    const ServiceInitialisationType& getServiceInitialisationType() const;
 
 
   private:
