@@ -47,6 +47,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/SnapshotTypes.hpp \
 		$(top_srcdir)/stdair/bom/RMEventTypes.hpp \
 		$(top_srcdir)/stdair/bom/EventQueueTypes.hpp \
+		$(top_srcdir)/stdair/bom/CancellationTypes.hpp \
 		$(top_srcdir)/stdair/bom/EventTypes.hpp \
 		$(top_srcdir)/stdair/bom/YieldStoreTypes.hpp \
 		$(top_srcdir)/stdair/bom/GuillotineBlockTypes.hpp \
@@ -69,6 +70,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/DoWStruct.hpp \
 		$(top_srcdir)/stdair/bom/PeriodStruct.hpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionStruct.hpp \
+		$(top_srcdir)/stdair/bom/CancellationStruct.hpp \
 		$(top_srcdir)/stdair/bom/VirtualClassStruct.hpp \
 		$(top_srcdir)/stdair/bom/FareOptionStruct.hpp \
 		$(top_srcdir)/stdair/bom/BookingRequestStruct.hpp \
@@ -142,6 +144,7 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/DoWStruct.cpp \
 		$(top_srcdir)/stdair/bom/PeriodStruct.cpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionStruct.cpp \
+		$(top_srcdir)/stdair/bom/CancellationStruct.cpp \
 		$(top_srcdir)/stdair/bom/VirtualClassStruct.cpp \
 		$(top_srcdir)/stdair/bom/FareOptionStruct.cpp \
 		$(top_srcdir)/stdair/bom/BookingRequestStruct.cpp \

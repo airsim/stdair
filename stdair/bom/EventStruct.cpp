@@ -11,6 +11,7 @@
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/OptimisationNotificationStruct.hpp>
 #include <stdair/bom/SnapshotStruct.hpp>
+#include <stdair/bom/CancellationStruct.hpp>
 #include <stdair/bom/RMEventStruct.hpp>
 #include <stdair/bom/EventStruct.hpp>
 
@@ -38,6 +39,26 @@ namespace stdair {
      */
     const Duration_T lDuration =
       _bookingRequest->getRequestDateTime() - DEFAULT_EVENT_OLDEST_DATETIME;
+    _eventTimeStamp = lDuration.total_milliseconds();
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
+                            CancellationPtr_T ioCancellationPtr)
+    : _eventType (iEventType) {
+
+    //
+    assert (ioCancellationPtr != NULL);
+    _cancellation = boost::make_shared<CancellationStruct> (*ioCancellationPtr);
+    assert (_cancellation != NULL);
+    
+    /**
+     * Compute and store the number of milliseconds between the
+     * date-time of the cancellation and DEFAULT_EVENT_OLDEST_DATETIME
+     * (as of Feb. 2011, that date is set to Jan. 1, 2010).
+     */
+    const Duration_T lDuration =
+      _cancellation->getCancellationDateTime() - DEFAULT_EVENT_OLDEST_DATETIME;
     _eventTimeStamp = lDuration.total_milliseconds();
   }
 
@@ -114,6 +135,12 @@ namespace stdair {
     }
 
     //
+    if (iEventStruct._cancellation != NULL) {
+      _cancellation =
+        boost::make_shared<CancellationStruct>(*iEventStruct._cancellation);
+    }
+
+    //
     if (iEventStruct._optimisationNotification != NULL) {
       _optimisationNotification =
         boost::make_shared<OptimisationNotificationStruct> (*iEventStruct._optimisationNotification);
@@ -156,6 +183,11 @@ namespace stdair {
     case EventType::BKG_REQ: {
       assert (_bookingRequest != NULL);
       oStr << ", " << _eventType << ", " << _bookingRequest->describe();
+      break;
+    }
+    case EventType::CX: {
+      assert (_cancellation != NULL);
+      oStr << ", " << _eventType << ", " << _cancellation->describe();
       break;
     }
     case EventType::OPT_NOT_4_FD: {
