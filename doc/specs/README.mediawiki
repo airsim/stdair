@@ -1,12 +1,10 @@
 == A Rule Engine for the Airline Market Simulator ==
 
-=== Abstract ===
-
 Some components of the Airline Market Simulator project ()
 Specifications for a rule engine for the simulation-related components
 (e.g., Pricing, Yield Calculation/Retrieval and Customer Choice Model)
 
-=== Implementation ===
+== Implementation ==
 
 A hash key is defined as:
 
@@ -37,6 +35,8 @@ pricing component (SimFQT) defines FareRuleStruct:
   };
 
 
+== Indexing ==
+
 Two template classes are defined in order to implement the two-stage
 indexing mechanism.
 
@@ -53,7 +53,13 @@ indexing mechanism.
     AirlineCodeList_T _airlineCodeList;
     AirportCode_T _origin;
     AirportCode_T _destination; 
-    // ...
+    AirlineCodeList _airlineCodeList;
+    POS_T _pos;
+    Channel_T _channel;
+    TripType_T _tripType;
+    bool _satStay;
+    bool _changeable;
+    bool refundable;
   };
 
 
@@ -70,25 +76,51 @@ indexing mechanism.
     Period_T _departurePeriod;
     Duration_T _advancePurchase;
     Duration_T _minimumStay;
-    // ...
+    CabinCode_T _cabin;
+    ClassList _classList;
   };
 
 
-=== BOM Tree ===
+== BOM Tree ==
 
-The RuleManager is directly attached to the BomRoot instance, and defined as:
+The main (C++) class, organising the indexing and retrieval of the first-stage
+rules (i.e., the "base rules") for all the components, is named the RuleManager.
+It is a BOM class and is directly attached to the BomRoot instance,
+and defined as:
 
+  /** List of Fare-related RuleBucket objects. */
+  typedef std::map<HashKey_T, 
+                   RuleBucket<FareRuleStruct> > FareRuleBucketList_T;
+
+  /** List of Yield-related RuleBucket objects. */
+  typedef std::map<HashKey_T, 
+                   RuleBucket<YieldRuleStruct> > YieldRuleBucketList_T;
+
+  /** List of Customer Choice-related RuleBucket objects. */
+  typedef std::map<HashKey_T, 
+                   RuleBucket<CCRuleStruct> > CCRuleBucketList_T;
+
+  /**
+   * @brief Class handling the indexing and retrieval of the first-stage rules.
+   */
   class RuleManager {
     //
-    std::multimap<HashKey_T, RuleBucket<FareRuleStruct> > _fareRuleBucket;
-    std::multimap<HashKey_T, RuleBucket<YieldRuleStruct> > _yieldRuleBucket;
-    std::multimap<HashKey_T, RuleBucket<CCRuleStruct> > _ccRuleBucket;
+    FareRuleBucketList_T _fareRuleBucketList;
+    YieldRuleBucketList_T _yieldRuleBucketList;
+    CCRuleBucketList_T _ccRuleBucketList;
+
+    //
+    template <RULE_TYPE>
+    getBucket (const HashKey_T& iKey) const {
+      // Return the RuleBucket<RULE_TYPE> object matching the hash key
+    }
+
     //
     BomRoot* _parent;
   };
 
-
-The RuleBucket structures are defined as:
+The second-stage rules are aggregated/listed within BOM structures named
+RuleBucket. That structure is defined as:
 
   template <RULE_TYPE>
   struct RuleBucket {
@@ -97,4 +129,53 @@ The RuleBucket structures are defined as:
     //
     std::list<ExtraRuleStruct<RULE_TYPE> > _extraRuleList;
   };
+
+
+== Rule Retrieval ==
+
+=== Pricing Example ===
+
+# From the booking request and travel solution, the following input is
+  retrieved for the first-stage retrieval. From those criteria, a hash
+  key can easily be computed thanks to the <tt>BomKeyManager::makeKey()</tt>
+  utility:
+#* AirlineCodeList
+#* Origin
+#* Destination
+#* POS
+#* Channel
+#* TripType
+#* SaturdayNightStay
+#* Changeable
+#* Refundable
+# That first-stage hash key is used to retrieve the corresponding
+  RuleBucket structures, thanks to the RuleManager::getBucketList<RULE_TYPE>()
+  method.
+# Thanks to the RuleBucket<RULE_TYPE> object retrieved just above in
+  the first-stage retrieval process, all the ExtraRule<RULE_TYPE> structures
+  are browsed in order to check whether they match the remaining crieteria.
+  The remaining criteria are those held by ExtraRule<RULE_TYPE>, i.e.:
+#* DepartureDate
+#* AdvancePurchase
+#* MinimumStay
+# For the best matching ExtraRule<RULE_TYPE>, prices/yields/cc should
+  be defined for every cabin and class present in the travel solutions.
+
+== Notes ==
+
+=== (First-Stage) BaseRule ===
+
+In order to allow default base rules such as "world-to-world" in the input
+files, the rule parser/generator may instantiate those base rules for every
+origin and destination of the world. A RuleBucket will therefore be
+defined/instantiated for each of those base rules.
+
+
+=== (Second-Stage) Extra Rule ===
+
+First, there will be only one extra rule matching for the remaining criteria.
+To allow for more matches (for instance, to allow defining default rules such
+as one-year-of-departure-date), binary weights may be defined in front of each 
+criteria. Then, by construction, there will alwasy be a best matching extra 
+rule.
 
