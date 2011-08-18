@@ -13,15 +13,17 @@ Specifications for a rule engine for the simulation-related components
 (e.g., Pricing, Yield Calculation/Retrieval and Customer Choice Model)
 
 
-:: c++
+<blockquote>
   typedef std::string HashKey_T;
+</blockquote>
 
-::
+<blockquote>
   class BomKeyManager {
     static HashKey_T makeKey (...);
   };
+</blockquote>
 
-::
+<blockquote>
   struct FareRuleStruct {
     //
     HashKey_T describeKey (...) {
@@ -34,8 +36,9 @@ Specifications for a rule engine for the simulation-related components
     AirportCode_T _destination;
     // ...
   };
+</blockquote>
 
-::
+<blockquote>
   template <RULE_TYPE>
   struct BaseRuleStruct {
     //
@@ -49,8 +52,9 @@ Specifications for a rule engine for the simulation-related components
     AirportCode_T _destination; 
     // ...
   };
+</blockquote>
 
-::
+<blockquote>
   template <RULE_TYPE>
   struct ExtraRuleStruct {
     //
@@ -64,8 +68,9 @@ Specifications for a rule engine for the simulation-related components
     Duration_T _minimumStay;
     // ...
   };
+</blockquote>
 
-::
+<blockquote>
   class RuleManager {
     //
     std::multimap<HashKey_T, RuleBucket<FareRuleStruct> > _fareRuleBucket;
@@ -74,8 +79,9 @@ Specifications for a rule engine for the simulation-related components
     //
     BomRoot* _parent;
   };
+</blockquote>
 
-::
+<blockquote>
   template <RULE_TYPE>
   struct RuleBucket {
     //
@@ -83,4 +89,5 @@ Specifications for a rule engine for the simulation-related components
     //
     std::list<ExtraRuleStruct<RULE_TYPE> > _extraRuleList;
   };
+</blockquote>
 
