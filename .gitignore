@@ -1,13 +1,14 @@
-tmp
+/tmp/
+/build/
 INSTALL
 Makefile.in
 aclocal.m4
 autom4te.cache
-batches
-config
+/batches/
+/config/
 configure
-doc
-man
-stdair
-test
+/doc/
+/man/
+/stdair/
+/test/
 
