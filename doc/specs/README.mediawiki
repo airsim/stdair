@@ -21,18 +21,20 @@ The BomKeyManager class gathers key-related utilities:
 Each component defines specific rule structures. For instance, the
 pricing component (SimFQT) defines FareRuleStruct:
 
+<pre>
   struct FareRuleStruct {
     //
     HashKey_T describeKey (...) {
       return BomKeyManager::makeKey (...);
     }
-    //
+
     // ////// Attributes /////
     AirlineCodeList_T _airlineCodeList;
     AirportCode_T _origin;
     AirportCode_T _destination;
     // ...
   };
+</pre>
 
 
 == Indexing ==
@@ -42,13 +44,14 @@ indexing mechanism.
 
 === First Stage Indexing ===
 
+</pre>
   template <RULE_TYPE>
   struct BaseRuleStruct {
     //
     HashKey_T describeKey (...) {
       return BomKeyManager::makeKey (...);
     }
-    //
+
     // ////// Attributes /////
     AirlineCodeList_T _airlineCodeList;
     AirportCode_T _origin;
@@ -61,17 +64,19 @@ indexing mechanism.
     bool _changeable;
     bool refundable;
   };
+</pre>
 
 
 === Second Stage Indexing ===
 
+<pre>
   template <RULE_TYPE>
   struct ExtraRuleStruct {
     //
     HashKey_T describeKey (...) {
       return BomKeyManager::makeKey (...);
     }
-    //
+
     // ////// Attributes /////
     Period_T _departurePeriod;
     Duration_T _advancePurchase;
@@ -79,6 +84,7 @@ indexing mechanism.
     CabinCode_T _cabin;
     ClassList _classList;
   };
+</pre>
 
 
 == BOM Tree ==
@@ -88,6 +94,7 @@ rules (i.e., the "base rules") for all the components, is named the RuleManager.
 It is a BOM class and is directly attached to the BomRoot instance,
 and defined as:
 
+<pre>
   /** List of Fare-related RuleBucket objects. */
   typedef std::map<HashKey_T, 
                    RuleBucket<FareRuleStruct> > FareRuleBucketList_T;
@@ -104,7 +111,7 @@ and defined as:
    * @brief Class handling the indexing and retrieval of the first-stage rules.
    */
   class RuleManager {
-    //
+    /** List of RuleBucket objects (for the first-stage process). */
     FareRuleBucketList_T _fareRuleBucketList;
     YieldRuleBucketList_T _yieldRuleBucketList;
     CCRuleBucketList_T _ccRuleBucketList;
@@ -118,27 +125,31 @@ and defined as:
     //
     BomRoot* _parent;
   };
+</pre>
+
 
 The second-stage rules are aggregated/listed within BOM structures named
 RuleBucket. That structure is defined as:
 
+<pre>
   template <RULE_TYPE>
   struct RuleBucket {
     //
     HashKey_T _key;
-    //
+
+    /** List of extra rules (for the second-stage process). */
     std::list<ExtraRuleStruct<RULE_TYPE> > _extraRuleList;
   };
+</pre>
 
 
 == Rule Retrieval ==
 
 === Pricing Example ===
 
-# From the booking request and travel solution, the following input is
-  retrieved for the first-stage retrieval. From those criteria, a hash
-  key can easily be computed thanks to the <tt>BomKeyManager::makeKey()</tt>
-  utility:
+# From the booking request and travel solution, the following input is retrieved
+for the first-stage retrieval. From those criteria, a hash key can easily be
+computed thanks to the <tt>BomKeyManager::makeKey()</tt> utility:
 #* AirlineCodeList
 #* Origin
 #* Destination
@@ -148,18 +159,17 @@ RuleBucket. That structure is defined as:
 #* SaturdayNightStay
 #* Changeable
 #* Refundable
-# That first-stage hash key is used to retrieve the corresponding
-  RuleBucket structures, thanks to the RuleManager::getBucketList<RULE_TYPE>()
-  method.
-# Thanks to the RuleBucket<RULE_TYPE> object retrieved just above in
-  the first-stage retrieval process, all the ExtraRule<RULE_TYPE> structures
-  are browsed in order to check whether they match the remaining crieteria.
-  The remaining criteria are those held by ExtraRule<RULE_TYPE>, i.e.:
+# That first-stage hash key is used to retrieve the corresponding RuleBucket
+structures, thanks to the RuleManager::getBucketList<RULE_TYPE>() method.
+# Thanks to the RuleBucket<RULE_TYPE> object retrieved just above in the
+first-stage retrieval process, all the ExtraRule<RULE_TYPE> structures are
+browsed in order to check whether they match the remaining crieteria.
+The remaining criteria are those held by ExtraRule<RULE_TYPE>, i.e.:
 #* DepartureDate
 #* AdvancePurchase
 #* MinimumStay
-# For the best matching ExtraRule<RULE_TYPE>, prices/yields/cc should
-  be defined for every cabin and class present in the travel solutions.
+# For the best matching ExtraRule<RULE_TYPE>, prices/yields/cc should be defined
+for every cabin and class present in the travel solutions.
 
 == Notes ==
 
