@@ -1,29 +1,23 @@
-:Author: Denis Arnaud <denis dot arnaud_fedora at m4x dot org>
-:Creation Date: Aug. 18, 2011
-:Version: Aug. 18, 2011 -- First release
+== A Rule Engine for the Airline Market Simulator ==
 
-A Rule Engine for the Airline Market Simulator
-==============================================
-
-Abstract
---------
+=== Abstract ===
 
 Some components of the Airline Market Simulator project ()
 Specifications for a rule engine for the simulation-related components
 (e.g., Pricing, Yield Calculation/Retrieval and Customer Choice Model)
 
+=== Implementation ===
 
-<blockquote>
+A hash key is defined as:
   typedef std::string HashKey_T;
-</blockquote>
 
-<blockquote>
+The BomKeyManager class gathers key-related utilities:
   class BomKeyManager {
     static HashKey_T makeKey (...);
   };
-</blockquote>
 
-<blockquote>
+Each component defines specific rule structures. For instance, the
+pricing component (SimFQT) defines FareRuleStruct:
   struct FareRuleStruct {
     //
     HashKey_T describeKey (...) {
@@ -36,9 +30,12 @@ Specifications for a rule engine for the simulation-related components
     AirportCode_T _destination;
     // ...
   };
-</blockquote>
 
-<blockquote>
+Two template classes are defined in order to implement the two-stage
+indexing mechanism.
+
+=== First Stage Indexing ===
+
   template <RULE_TYPE>
   struct BaseRuleStruct {
     //
@@ -52,9 +49,10 @@ Specifications for a rule engine for the simulation-related components
     AirportCode_T _destination; 
     // ...
   };
-</blockquote>
 
-<blockquote>
+
+=== Second Stage Indexing ===
+
   template <RULE_TYPE>
   struct ExtraRuleStruct {
     //
@@ -68,9 +66,12 @@ Specifications for a rule engine for the simulation-related components
     Duration_T _minimumStay;
     // ...
   };
-</blockquote>
 
-<blockquote>
+
+=== BOM Tree ===
+
+The RuleManager is directly attached to the BomRoot instance, and defined as:
+
   class RuleManager {
     //
     std::multimap<HashKey_T, RuleBucket<FareRuleStruct> > _fareRuleBucket;
@@ -79,9 +80,10 @@ Specifications for a rule engine for the simulation-related components
     //
     BomRoot* _parent;
   };
-</blockquote>
 
-<blockquote>
+
+The RuleBucket structures are defined as:
+
   template <RULE_TYPE>
   struct RuleBucket {
     //
@@ -89,5 +91,4 @@ Specifications for a rule engine for the simulation-related components
     //
     std::list<ExtraRuleStruct<RULE_TYPE> > _extraRuleList;
   };
-</blockquote>
 
