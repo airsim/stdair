@@ -44,7 +44,7 @@ indexing mechanism.
 
 === First Stage Indexing ===
 
-</pre>
+<pre>
   template <RULE_TYPE>
   struct BaseRuleStruct {
     //
