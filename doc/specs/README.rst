@@ -1,3 +1,10 @@
+:Author:
+  Denis Arnaud <denis dot arnaud_fedora at m4x dot org>
+:Creation Date:
+  Aug. 18, 2011
+:Version:
+  Aug. 18, 2011 -- First release
+
 A Rule Engine for the Airline Market Simulator
 ==============================================
 
@@ -9,17 +16,15 @@ Specifications for a rule engine for the simulation-related components
 (e.g., Pricing, Yield Calculation/Retrieval and Customer Choice Model)
 
 
-```c++
+.. code-block:: c++
 typedef std::string HashKey_T;
-```
 
-```c++
+.. code-block:: c++
 class BomKeyManager {
   static HashKey_T makeKey (...);
 };
-```
 
-```c++
+.. code-block:: c++
 struct FareRuleStruct {
   //
   HashKey_T describeKey (...) {
@@ -32,9 +37,8 @@ struct FareRuleStruct {
   AirportCode_T _destination;
   // ...
 };
-```
 
-```c++
+.. code-block:: c++
 template <RULE_TYPE>
 struct BaseRuleStruct {
   //
@@ -48,9 +52,8 @@ struct BaseRuleStruct {
   AirportCode_T _destination; 
   // ...
 };
-```
 
-```c++
+.. code-block:: c++
 template <RULE_TYPE>
 struct ExtraRuleStruct {
   //
@@ -64,9 +67,8 @@ struct ExtraRuleStruct {
   Duration_T _minimumStay;
   // ...
 };
-```
 
-```c++
+.. code-block:: c++
 class RuleManager {
   //
   std::multimap<HashKey_T, RuleBucket<FareRuleStruct> > _fareRuleBucket;
@@ -75,9 +77,8 @@ class RuleManager {
   //
   BomRoot* _parent;
 };
-```
 
-```c++
+.. code-block:: c++
 template <RULE_TYPE>
 struct RuleBucket {
   //
@@ -85,5 +86,4 @@ struct RuleBucket {
   //
   std::list<ExtraRuleStruct<RULE_TYPE> > _extraRuleList;
 };
-```
 
