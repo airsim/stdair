@@ -9,96 +9,92 @@ Specifications for a rule engine for the simulation-related components
 === Implementation ===
 
 A hash key is defined as:
-<blockquote>
-typedef std::string HashKey_T;
-</blockquote>
+
+  typedef std::string HashKey_T;
+
 
 The BomKeyManager class gathers key-related utilities:
-<blockquote>
-class BomKeyManager {
-  static HashKey_T makeKey (...);
-};
-</blockquote>
+
+  class BomKeyManager {
+    static HashKey_T makeKey (...);
+  };
+
 
 Each component defines specific rule structures. For instance, the
 pricing component (SimFQT) defines FareRuleStruct:
-<blockquote>
-struct FareRuleStruct {
-  //
-  HashKey_T describeKey (...) {
-    return BomKeyManager::makeKey (...);
-  }
-  //
-  // ////// Attributes /////
-  AirlineCodeList_T _airlineCodeList;
-  AirportCode_T _origin;
-  AirportCode_T _destination;
-  // ...
-};
-</blockquote>
+
+  struct FareRuleStruct {
+    //
+    HashKey_T describeKey (...) {
+      return BomKeyManager::makeKey (...);
+    }
+    //
+    // ////// Attributes /////
+    AirlineCodeList_T _airlineCodeList;
+    AirportCode_T _origin;
+    AirportCode_T _destination;
+    // ...
+  };
+
 
 Two template classes are defined in order to implement the two-stage
 indexing mechanism.
 
 === First Stage Indexing ===
-<blockquote>
-template <RULE_TYPE>
-struct BaseRuleStruct {
-  //
-  HashKey_T describeKey (...) {
-    return BomKeyManager::makeKey (...);
-  }
-  //
-  // ////// Attributes /////
-  AirlineCodeList_T _airlineCodeList;
-  AirportCode_T _origin;
-  AirportCode_T _destination; 
-  // ...
-};
-</blockquote>
+
+  template <RULE_TYPE>
+  struct BaseRuleStruct {
+    //
+    HashKey_T describeKey (...) {
+      return BomKeyManager::makeKey (...);
+    }
+    //
+    // ////// Attributes /////
+    AirlineCodeList_T _airlineCodeList;
+    AirportCode_T _origin;
+    AirportCode_T _destination; 
+    // ...
+  };
 
 
 === Second Stage Indexing ===
-<blockquote>
-template <RULE_TYPE>
-struct ExtraRuleStruct {
-  //
-  HashKey_T describeKey (...) {
-    return BomKeyManager::makeKey (...);
-  }
-  //
-  // ////// Attributes /////
-  Period_T _departurePeriod;
-  Duration_T _advancePurchase;
-  Duration_T _minimumStay;
-  // ...
-};
-</blockquote>
+
+  template <RULE_TYPE>
+  struct ExtraRuleStruct {
+    //
+    HashKey_T describeKey (...) {
+      return BomKeyManager::makeKey (...);
+    }
+    //
+    // ////// Attributes /////
+    Period_T _departurePeriod;
+    Duration_T _advancePurchase;
+    Duration_T _minimumStay;
+    // ...
+  };
 
 
 === BOM Tree ===
 
 The RuleManager is directly attached to the BomRoot instance, and defined as:
-<blockquote>
-class RuleManager {
-  //
-  std::multimap<HashKey_T, RuleBucket<FareRuleStruct> > _fareRuleBucket;
-  std::multimap<HashKey_T, RuleBucket<YieldRuleStruct> > _yieldRuleBucket;
-  std::multimap<HashKey_T, RuleBucket<CCRuleStruct> > _ccRuleBucket;
-  //
-  BomRoot* _parent;
-};
-</blockquote>
+
+  class RuleManager {
+    //
+    std::multimap<HashKey_T, RuleBucket<FareRuleStruct> > _fareRuleBucket;
+    std::multimap<HashKey_T, RuleBucket<YieldRuleStruct> > _yieldRuleBucket;
+    std::multimap<HashKey_T, RuleBucket<CCRuleStruct> > _ccRuleBucket;
+    //
+    BomRoot* _parent;
+  };
 
 
 The RuleBucket structures are defined as:
-<blockquote>
-template <RULE_TYPE>
-struct RuleBucket {
-  //
-  HashKey_T _key;
-  //
-  std::list<ExtraRuleStruct<RULE_TYPE> > _extraRuleList;
-};
-</blockquote>
+
+  template <RULE_TYPE>
+  struct RuleBucket {
+    //
+    HashKey_T _key;
+    //
+    std::list<ExtraRuleStruct<RULE_TYPE> > _extraRuleList;
+  };
 
