@@ -1,10 +1,3 @@
-:Author:
-  Denis Arnaud <denis dot arnaud_fedora at m4x dot org>
-:Creation Date:
-  Aug. 18, 2011
-:Version:
-  Aug. 18, 2011 -- First release
-
 A Rule Engine for the Airline Market Simulator
 ==============================================
 
