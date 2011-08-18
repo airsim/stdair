@@ -16,74 +16,74 @@ Specifications for a rule engine for the simulation-related components
 (e.g., Pricing, Yield Calculation/Retrieval and Customer Choice Model)
 
 
-.. code-block:: c++
-typedef std::string HashKey_T;
+:: c++
+  typedef std::string HashKey_T;
 
-.. code-block:: c++
-class BomKeyManager {
-  static HashKey_T makeKey (...);
-};
+::
+  class BomKeyManager {
+    static HashKey_T makeKey (...);
+  };
 
-.. code-block:: c++
-struct FareRuleStruct {
-  //
-  HashKey_T describeKey (...) {
-    return BomKeyManager::makeKey (...);
-  }
-  //
-  // ////// Attributes /////
-  AirlineCodeList_T _airlineCodeList;
-  AirportCode_T _origin;
-  AirportCode_T _destination;
-  // ...
-};
+::
+  struct FareRuleStruct {
+    //
+    HashKey_T describeKey (...) {
+      return BomKeyManager::makeKey (...);
+    }
+    //
+    // ////// Attributes /////
+    AirlineCodeList_T _airlineCodeList;
+    AirportCode_T _origin;
+    AirportCode_T _destination;
+    // ...
+  };
 
-.. code-block:: c++
-template <RULE_TYPE>
-struct BaseRuleStruct {
-  //
-  HashKey_T describeKey (...) {
-    return BomKeyManager::makeKey (...);
-  }
-  //
-  // ////// Attributes /////
-  AirlineCodeList_T _airlineCodeList;
-  AirportCode_T _origin;
-  AirportCode_T _destination; 
-  // ...
-};
+::
+  template <RULE_TYPE>
+  struct BaseRuleStruct {
+    //
+    HashKey_T describeKey (...) {
+      return BomKeyManager::makeKey (...);
+    }
+    //
+    // ////// Attributes /////
+    AirlineCodeList_T _airlineCodeList;
+    AirportCode_T _origin;
+    AirportCode_T _destination; 
+    // ...
+  };
 
-.. code-block:: c++
-template <RULE_TYPE>
-struct ExtraRuleStruct {
-  //
-  HashKey_T describeKey (...) {
-    return BomKeyManager::makeKey (...);
-  }
-  //
-  // ////// Attributes /////
-  Period_T _departurePeriod;
-  Duration_T _advancePurchase;
-  Duration_T _minimumStay;
-  // ...
-};
+::
+  template <RULE_TYPE>
+  struct ExtraRuleStruct {
+    //
+    HashKey_T describeKey (...) {
+      return BomKeyManager::makeKey (...);
+    }
+    //
+    // ////// Attributes /////
+    Period_T _departurePeriod;
+    Duration_T _advancePurchase;
+    Duration_T _minimumStay;
+    // ...
+  };
 
-.. code-block:: c++
-class RuleManager {
-  //
-  std::multimap<HashKey_T, RuleBucket<FareRuleStruct> > _fareRuleBucket;
-  std::multimap<HashKey_T, RuleBucket<YieldRuleStruct> > _yieldRuleBucket;
-  std::multimap<HashKey_T, RuleBucket<CCRuleStruct> > _ccRuleBucket;
-  //
-  BomRoot* _parent;
-};
+::
+  class RuleManager {
+    //
+    std::multimap<HashKey_T, RuleBucket<FareRuleStruct> > _fareRuleBucket;
+    std::multimap<HashKey_T, RuleBucket<YieldRuleStruct> > _yieldRuleBucket;
+    std::multimap<HashKey_T, RuleBucket<CCRuleStruct> > _ccRuleBucket;
+    //
+    BomRoot* _parent;
+  };
 
-.. code-block:: c++
-template <RULE_TYPE>
-struct RuleBucket {
-  //
-  HashKey_T _key;
-  //
-  std::list<ExtraRuleStruct<RULE_TYPE> > _extraRuleList;
-};
+::
+  template <RULE_TYPE>
+  struct RuleBucket {
+    //
+    HashKey_T _key;
+    //
+    std::list<ExtraRuleStruct<RULE_TYPE> > _extraRuleList;
+  };
 
