@@ -8,6 +8,17 @@ source projects, such as AirRAC, RMOL, AirInv, AvlCal, AirSched, SimFQT,
 SimLFS, SimCRS, TravelCCM, SEvMgr, TraDemGen, DSim, OpenTREP, etc.
 
 
+Getting and installing from the Fedora/CentOS/RedHat distribution:
+------------------------------------------------------------------
+Just use Yum:
+yum -y install stdair-devel stdair-doc
+
+You can also get the RPM packages (which may work on Linux
+distributions like Novel Suse and Mandriva) from the Fedora repository
+(e.g., for Fedora 16, 
+http://fr2.rpmfind.net/linux/fedora/releases/16/Everything/)
+
+
 Building the library and test binary from Git repository:
 ----------------------------------------------------------------
 The Sourceforge Git repository may be cloned as following:
