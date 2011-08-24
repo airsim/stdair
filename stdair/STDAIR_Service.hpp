@@ -324,6 +324,14 @@ namespace stdair {
      */
     std::string list (const AirlineCode_T& iAirlineCode = "all",
                       const FlightNumber_T& iFlightNumber = 0) const;
+    
+    /** Display the list of aiports pairs and date ranges
+     * (contained within the BOM tree)
+     *
+     * @param std::ostream& Output stream in which the airport pairs and
+     * date ranges are logged/dumped.
+     */
+    std::string listAirportPairDateRange () const;
 
     /**
      * Check whether the given flight-date is a valid one.
@@ -335,6 +343,21 @@ namespace stdair {
      * @return bool Whether or not the given flight date is valid.
      */
     bool check (const AirlineCode_T&, const FlightNumber_T&,
+                const Date_T& iDepartureDate) const;
+
+    /**
+     * Check whether the given couple airportpair-date is a valid one.
+     *
+     * @param const stdair::AirportCode_T& Origin airport of the fare
+     *        rule to check.
+     * @param const stdair::AirportCode_T& Destination airport of the
+     *        fare rule to check.
+     * @param const stdair::Date_T& Departure date of the fare rule
+     *        to check. 
+     * @return bool Whether or not the given airportpair-date couple
+     *        is a valid one.
+     */
+    bool check (const AirportCode_T&, const AirportCode_T&,
                 const Date_T& iDepartureDate) const;
 
     /**

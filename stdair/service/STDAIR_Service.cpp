@@ -270,6 +270,23 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::listAirportPairDateRange () const {
+    std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    
+    // Dump the content of the whole BOM tree into the string
+    BomDisplay::listAirportPairDateRange (oStr, lBomRoot);
+    
+    return oStr.str();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   bool STDAIR_Service::check (const AirlineCode_T& iAirlineCode,
                               const FlightNumber_T& iFlightNumber,
                               const stdair::Date_T& iDepartureDate) const {
@@ -289,6 +306,29 @@ namespace stdair {
                                                   iDepartureDate);    
     
     return (lFlightDate_ptr != NULL);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  bool STDAIR_Service::check (const stdair::AirportCode_T& ioOrigin,
+                              const stdair::AirportCode_T& ioDestination,
+                              const stdair::Date_T& ioDepartureDate) const {
+    std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    
+    // Dump the content of the whole BOM tree into the string
+    stdair::DatePeriodList_T lDatePeriodList;
+    BomRetriever::retrieveDatePeriodListFromKeySet  (lBomRoot, ioOrigin,
+                                                     ioDestination,
+                                                     ioDepartureDate,
+                                                     lDatePeriodList);    
+    
+    return (lDatePeriodList.size() != 0);
   }
 
   // //////////////////////////////////////////////////////////////////////

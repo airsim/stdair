@@ -165,6 +165,44 @@ namespace stdair {
       }
     }   
   }
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::listAirportPairDateRange (std::ostream& oStream,
+                                             const BomRoot& iBomRoot) {
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    // Check whether there are AirportPair objects
+    if (BomManager::hasList<AirportPair> (iBomRoot) == false) {
+      return;
+    }
+
+    const AirportPairList_T& lAirportPairList =
+      BomManager::getList<AirportPair> (iBomRoot);
+    for (AirportPairList_T::const_iterator itAir = lAirportPairList.begin();
+         itAir != lAirportPairList.end(); ++itAir ) {
+      const AirportPair* lAir_ptr = *itAir;      
+      assert (lAir_ptr != NULL);
+
+      // Check whether there are date-period objects
+      assert (BomManager::hasList<DatePeriod> (*lAir_ptr) == true);
+
+      // Browse the date-period objects
+      const DatePeriodList_T& lDatePeriodList =
+        BomManager::getList<DatePeriod> (*lAir_ptr);
+      
+      for (DatePeriodList_T::const_iterator itDP = lDatePeriodList.begin();
+           itDP != lDatePeriodList.end(); ++itDP) {
+        const DatePeriod* lDP_ptr = *itDP;
+        assert (lDP_ptr != NULL);
+      
+        // Display the date-period object
+        oStream << lAir_ptr->describeKey()
+                <<" / " << lDP_ptr->describeKey() << std::endl;
+      }  
+
+    }   
+  }
   
   // ////////////////////////////////////////////////////////////////////
   void BomDisplay::csvDisplay (std::ostream& oStream,

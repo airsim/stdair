@@ -84,6 +84,17 @@ namespace stdair {
                       const FlightNumber_T& iFlightNumber = 0);
 
     /**
+     * Display the list of aiports pairs and date ranges
+     * (contained within the BOM tree)
+     *
+     * @param std::ostream& Output stream in which the airport pairs and
+     * date ranges are logged/dumped.
+     * @param const BomRoot& Root of the BOM tree to be displayed. 
+     */
+    static void listAirportPairDateRange (std::ostream&,
+                                          const BomRoot&);
+
+    /**
      * Recursively display (dump in the underlying output log stream)
      * the objects of the BOM tree.
      *
