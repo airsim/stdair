@@ -48,9 +48,9 @@ namespace stdair {
     if (oMethod == LAST_VALUE) {
       const std::string& lLabels = describeLabels();
       std::ostringstream oMessage;
-      oMessage << "The date-time booking request generation method '"
+      oMessage << "The demand (booking request) generation method '"
                << iMethodChar
-               << "' is not known. Known date-time booking request generation "
+               << "' is not known. Known demand (booking request) generation "
                << "methods: " << lLabels;
       throw CodeConversionException (oMessage.str());
     }
