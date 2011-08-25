@@ -213,6 +213,9 @@ namespace stdair {
     // ////////////// Business Methods /////////////////
     /** Register a sale. */
     void sell (const NbOfBookings_T&);
+    
+    /** Register a cancellation. */
+    void cancel (const NbOfBookings_T&);
 
     /** Generate demand samples for Monte-Carlo method with the default
         random seed. */

@@ -242,10 +242,11 @@ namespace stdair {
     // given event type
     ProgressStatusMap_T::iterator itProgressStatus =
       _progressStatusMap.find (iType);
-    assert (itProgressStatus != _progressStatusMap.end());
-
-    // Update the ProgressStatus structure
-    itProgressStatus->second = iProgressStatus;
+    // assert (itProgressStatus != _progressStatusMap.end());
+    if (itProgressStatus != _progressStatusMap.end()) {
+      // Update the ProgressStatus structure
+      itProgressStatus->second = iProgressStatus;
+    }
   }
 
   // //////////////////////////////////////////////////////////////////////
