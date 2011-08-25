@@ -1,0 +1,312 @@
+#ifndef __STDAIR_BOM_ONDDATE_HPP
+#define __STDAIR_BOM_ONDDATE_HPP
+
+// //////////////////////////////////////////////////////////////////////
+// Import section
+// //////////////////////////////////////////////////////////////////////
+// STL
+#include <iosfwd>
+#include <string>
+// StdAir 
+#include <stdair/stdair_inventory_types.hpp>
+#include <stdair/stdair_maths_types.hpp>
+#include <stdair/stdair_basic_types.hpp>
+#include <stdair/bom/BomAbstract.hpp>
+#include <stdair/bom/OnDDateKey.hpp>
+#include <stdair/bom/OnDDateTypes.hpp>
+
+/// Forward declarations
+namespace boost {
+  namespace serialization {
+    class access;
+  }
+}
+
+namespace stdair {
+
+  typedef std::pair<CabinCode_T, ClassCode_T> CabinClassPair_T;
+  typedef std::list<CabinClassPair_T> CabinClassPairList_T;
+
+  /**
+   * @brief Structure containing the demand information.
+   * Mean number of expectd demand, standard deviation and the associated yield.
+   */
+  struct DemandStruct{  
+  public:
+    /** Constructors and destructors */
+    DemandStruct(const Yield_T& iY, const MeanValue_T& iM,
+                 const StdDevValue_T& iSD)
+      : _yield(iY), _mean(iM), _stdDev(iSD) {}
+    DemandStruct(const DemandStruct& iDS) {
+      _yield = iDS.getYield();
+      _mean = iDS.getDemandMean();
+      _stdDev = iDS.getDemandStdDev();
+    }
+    ~DemandStruct() {}
+  public:
+    /** Getters */
+    const Yield_T& getYield() const {return _yield;}
+    const MeanValue_T& getDemandMean() const {return _mean;}
+    const StdDevValue_T& getDemandStdDev() const {return _stdDev;}
+  public:
+    /** Setters */
+    void setYield(const Yield_T& iYield) {_yield = iYield;}
+    void setDemandMean(const MeanValue_T& iMean) {_mean = iMean;}
+    void setDemandStdDev(const StdDevValue_T& iStdDev) {_stdDev = iStdDev;}
+  private:
+    /** Attributes */
+    Yield_T _yield;
+    MeanValue_T _mean;
+    StdDevValue_T _stdDev;
+  };
+
+  typedef std::map<std::string, DemandStruct> StringDemandStructMap_T;
+
+  /**
+   * @brief Structure containing the total forecast information.
+   * Mean number of expectd demand, standard deviation
+   * and the minimal willingness to pay.
+   */
+  struct ForecastStruct{  
+  public:
+    /** Constructors and destructors */
+    ForecastStruct(const WTP_T& iY, const MeanValue_T& iM,
+                   const StdDevValue_T& iSD)
+      : _minWTP(iY), _mean(iM), _stdDev(iSD) {}
+    ForecastStruct(const ForecastStruct& iDS) {
+      _minWTP = iDS.getMinWTP();
+      _mean = iDS.getForecastMean();
+      _stdDev = iDS.getForecastStdDev();
+    }
+    ~ForecastStruct() {}
+  public:
+    /** Getters */
+    const WTP_T& getMinWTP() const {return _minWTP;}
+    const MeanValue_T& getForecastMean() const {return _mean;}
+    const StdDevValue_T& getForecastStdDev() const {return _stdDev;}
+  public:
+    /** Setters */
+    void setMinWTP(const WTP_T& iWTP) {_minWTP = iWTP;}
+    void setForecastMean(const MeanValue_T& iMean) {_mean = iMean;}
+    void setForecastStdDev(const StdDevValue_T& iStdDev) {_stdDev = iStdDev;}
+  private:
+    /** Attributes */
+    WTP_T _minWTP;
+    MeanValue_T _mean;
+    StdDevValue_T _stdDev;
+  };
+
+  typedef std::map<CabinCode_T, ForecastStruct> CabinForecastMap_T;
+
+  /**
+   * @brief Class representing the actual attributes for an airline
+   * flight-date.
+   */
+  class OnDDate : public BomAbstract {
+    template <typename BOM> friend class FacBom;
+    friend class FacBomManager;
+    friend class boost::serialization::access;
+
+  public:
+    // ////////// Type definitions ////////////
+    /**
+     * Definition allowing to retrieve the associated BOM key type.
+     */
+    typedef OnDDateKey Key_T;
+
+    
+  public:
+    // /////////// Getters ///////////////
+    /** Get the O&D date key. */
+    const Key_T& getKey() const {
+      return _key;
+    }
+
+    /** Get the parent object. */
+    BomAbstract* const getParent() const {
+      return _parent;
+    }
+
+    /**
+     * Get the airline code (key of the parent object).
+     *
+     * \note That method assumes that the parent object derives from
+     *       the Inventory class, as it needs to have access to the
+     *       getAirlineCode() method.
+     */
+    const AirlineCode_T& getAirlineCode() const;
+    
+
+    /** Get the boarding date. */
+    const stdair::Date_T getDate() const {
+      return _key.getDate();
+    }
+
+    /** Get the origin. */
+    const stdair::AirportCode_T getOrigin() const {
+      return _key.getOrigin();
+    }
+
+    /** Get the destination. */
+    const stdair::AirportCode_T getDestination() const {
+      return _key.getDestination();
+    }
+    
+    /**
+     * Get the map of children holders.
+     */
+    const HolderMap_T& getHolderMap() const {
+      return _holderMap;
+    }
+
+    /**
+     * Get the map of demand information.
+     */
+    const std::map<std::string, DemandStruct>& getDemandInfoMap () const {
+      return _classPathDemandMap;
+    }
+
+    /**
+     * Get the map of total forecast.
+     */
+    const std::map<CabinCode_T, ForecastStruct>& getTotalForecastMap () const {
+      return _cabinForecastMap;
+    }
+
+    /**
+     * Get the total forecast for a given cabin.
+     */
+    const ForecastStruct& getTotalForecast (const CabinCode_T& iCC) const {
+      assert (_cabinForecastMap.find(iCC)!=_cabinForecastMap.end());
+      return _cabinForecastMap.find(iCC)->second;
+    }
+
+    /**
+     * Get the cabin-class pair out of a string.
+     */
+    const CabinClassPairList_T& getCabinClassPairList (const std::string& iStr) {
+      assert (_stringCabinClassPairListMap.find(iStr)!=_stringCabinClassPairListMap.end());
+      return _stringCabinClassPairListMap.find(iStr)->second;
+    }
+
+    /**
+     * Get the number of segments of the O&D.
+     */
+    const short getNbOfSegments () const {
+      return _key.getNbOfSegments();
+    }
+
+  public:
+    // /////////// Setters ///////////////
+    /** Set demand information. */
+    void setDemandInformation (const CabinClassPairList_T&,
+                               const Yield_T&, const MeanValue_T&, const StdDevValue_T&);
+
+    /** Set demand information. */
+    void setTotalForecast (const CabinCode_T&,
+                           const WTP_T&, const MeanValue_T&, const StdDevValue_T&);
+
+    
+  public:
+    // /////////// Display support methods /////////
+    /**
+     * Dump a Business Object into an output stream.
+     *
+     * @param ostream& the output stream.
+     */
+    void toStream (std::ostream& ioOut) const {
+      ioOut << toString();
+    }
+
+    /**
+     * Read a Business Object from an input stream.
+     *
+     * @param istream& the input stream.
+     */
+    void fromStream (std::istream& ioIn) {
+    }
+
+    /**
+     * Get the serialised version of the Business Object.
+     */
+    std::string toString() const;
+    
+    /**
+     * Get a string describing the  key.
+     */
+    const std::string describeKey() const {
+      return _key.toString();
+    }
+    
+    
+  public:
+    // /////////// (Boost) Serialisation support methods /////////
+    /**
+     * Serialisation.
+     */
+    template<class Archive>
+    void serialize (Archive& ar, const unsigned int iFileVersion);
+
+  private:
+    /**
+     * Serialisation helper (allows to be sure the template method is
+     * instantiated).
+     */
+    void serialisationImplementation();
+
+
+  protected:
+    // ////////// Constructors and destructors /////////
+    /**
+     * Main constructor.
+     */
+    OnDDate (const Key_T&);
+
+    /**
+     * Destructor.
+     */
+    virtual ~OnDDate();
+
+  private:
+    /**
+     * Default constructor.
+     */
+    OnDDate();
+
+    /**
+     * Copy constructor.
+     */
+    OnDDate (const OnDDate&);
+    
+
+  protected:
+    // ////////// Attributes /////////
+    /**
+     * Primary key (list of full keys).
+     */
+    Key_T _key;
+
+    /**
+     * Pointer on the parent class (Inventory).
+     */
+    BomAbstract* _parent;
+
+    /**
+     * Map holding the children (SegmentDate and LegDate objects).
+     */
+    HolderMap_T _holderMap;
+
+    /**
+     * O&D demand information.
+     */
+    std::map<std::string, DemandStruct> _classPathDemandMap;
+    std::map<std::string, CabinClassPairList_T> _stringCabinClassPairListMap;
+
+    /**
+     * O&D demand total forecast.
+     */
+    std::map<CabinCode_T, ForecastStruct> _cabinForecastMap;
+  };
+
+}
+#endif // __STDAIR_BOM_ONDDATE_HPP

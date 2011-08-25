@@ -12,13 +12,13 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   const std::string SampleType::_labels[LAST_VALUE] =
-    { "All", "RevenueManagement", "Inventory", "Schedule", "RevenueAccounting",
-      "FareQuote", "CRS", "DemandGeneration", "EventManagement",
+    { "All", "AllForPartnerships", "RevenueManagement", "Inventory", "Schedule",
+      "RevenueAccounting", "FareQuote", "CRS", "DemandGeneration", "EventManagement",
       "CustomerChoice" };
 
   // //////////////////////////////////////////////////////////////////////
   const char SampleType::
-  _typeLabels[LAST_VALUE] = { 'A', 'R', 'I', 'S', 'T', 'F', 'C', 'D', 'E', 'M' };
+  _typeLabels[LAST_VALUE] = { 'A', 'P', 'R', 'I', 'S', 'T', 'F', 'C', 'D', 'E', 'M' };
 
   
   // //////////////////////////////////////////////////////////////////////
@@ -41,6 +41,7 @@ namespace stdair {
   SampleType::SampleType (const char iType) {
     switch (iType) {
     case 'A': _type = ALL; break;
+    case 'P': _type = A4P; break;
     case 'R': _type = RMS; break;
     case 'I': _type = INV; break;
     case 'S': _type = SCH; break;

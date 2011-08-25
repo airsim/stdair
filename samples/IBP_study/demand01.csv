@@ -1,0 +1,35 @@
+// Demand:
+//   Fixed:
+//     Prefered departure date (yyyy-mm-dd)
+//     Origin (3-char airport code)
+//     Destination (3-char airport code)
+//     Preferred cabin ('F' for First, 'C' for Club/Business, 'Y' for Economy)
+//   Distribution with Probability Masses:
+//     POS
+//     Channel (D=direct, I=indirect, N=oNline, F=oFfline)
+//     Trip type (RO=outbound of round-trip, RI=inbound of round-trip,OW=one way)
+//     Stay duration (number of days)
+//     Frequent flyer (P=Platinum, G=Gold, S=Silver, M=Member, N=None)
+//   Continuous cumulative distribution:
+//     Preferred departure time (hh.mm)
+//     WTP (moneraty value)
+//     Preferred arrival date (equal to prefered departure date)
+//     Preferred arrival time (equal to prefered departure time)
+//     Value of time
+//     Arrival pattern (DTD as a positive value)
+//   Distribution of number of requests (distribution and parameters)
+// The main fields are separated by ';'
+// Probability mass distributions are defined by comma-separated
+//   'value:probability' pairs
+// Continuous cumulative distribution are defined by comma-separated
+//   'value:probability' pairs, sorted in increasing order of values.
+// The meaning of probability is P(random variable <= value) = probability.
+// The distribution of number of requests is specified using comma-separated 
+//  values:
+//  distribution, parameter1, parameter2, ... 
+//  For example, normal with mean 10.0 and standard deviation 1.0 is specified as
+//  N, 10.0, 1.0
+//
+2010-02-08; 2010-04-02; 0010010; SIN; BKK; Y; SIN:1, BKK:0, row:0; DF:0, DN:0, IF:0, IN:1; RO:0, RI:0, OW:1.0; 0:0.1, 1:0.1, 2:0.15, 3:0.15, 4:0.15, 5:0.35; P:0.1, G:0.01, S:0.09, M:0.4, N:0.4; 06:0, 08:0.7, 10:0.8, 12:0.9, 14:1; 400; 15:0, 60:1; 330:0.0, 150:0.1, 92:0.2, 55:0.3, 34:0.4, 21:0.5, 12:0.6, 6:0.7, 3:0.8, 1:0.9, 0:1.0; N, 25.0, 2.0;
+2010-02-08; 2010-04-02; 0010010; BKK; HKG; Y; BKK:1, HKG:0, row:0; DF:0, DN:0, IF:0, IN:1; RO:0, RI:0, OW:1.0; 0:0.1, 1:0.1, 2:0.15, 3:0.15, 4:0.15, 5:0.35; P:0.1, G:0.01, S:0.09, M:0.4, N:0.4; 08:0, 10:0.2, 12:0.6, 14:0.8, 16:1; 400; 15:0, 60:1; 330:0.0, 150:0.1, 92:0.2, 55:0.3, 34:0.4, 21:0.5, 12:0.6, 6:0.7, 3:0.8, 1:0.9, 0:1.0; N, 25.0, 2.0;
+2010-02-08; 2010-04-02; 0010010; SIN; HKG; Y; SIN:1, BKK:0, row:0; DF:0, DN:0, IF:0, IN:1; RO:0, RI:0, OW:1.0; 0:0.1, 1:0.1, 2:0.15, 3:0.15, 4:0.15, 5:0.35; P:0.1, G:0.01, S:0.09, M:0.4, N:0.4; 06:0, 08:0.4, 10:0.6, 12:0.8, 14:1; 750; 15:0, 60:1; 330:0.0, 150:0.1, 92:0.2, 55:0.3, 34:0.4, 21:0.5, 12:0.6, 6:0.7, 3:0.8, 1:0.9, 0:1.0; N, 35.0, 3.0;

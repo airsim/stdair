@@ -121,6 +121,26 @@ namespace stdair {
     _classAvailabilityMapHolder.push_back (iMap);
   }
 
+  //MODIF
+  // ////////////////////////////////////////////////////////////////////
+  void TravelSolutionStruct::
+  addClassYieldMap (const ClassYieldMap_T& iMap) {
+    _classYieldMapHolder.push_back (iMap);
+  }
+
+  //MODIF
+  // ////////////////////////////////////////////////////////////////////
+  void TravelSolutionStruct::
+  addBidPriceVector (const BidPriceVector_T& iBpv) {
+    _bidPriceVectorHolder.push_back (iBpv);
+  }
+
+  //MODIF
+  // ////////////////////////////////////////////////////////////////////
+  void TravelSolutionStruct::
+  addClassBpvMap (const ClassBpvMap_T& iMap) {
+    _classBpvMapHolder.push_back (iMap);
+  }
   // ////////////////////////////////////////////////////////////////////
   void TravelSolutionStruct::
   addFareOption (const FareOptionStruct& iFareOption) {

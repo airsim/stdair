@@ -40,6 +40,7 @@ namespace stdair {
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
      */
+
     static void buildSampleBom (BomRoot&);
 
     /**
@@ -150,6 +151,23 @@ namespace stdair {
      * @return BookingRequestStruct& Sample booking request structure.
      */
     static BookingRequestStruct buildSampleBookingRequestForCRS();
+
+    /**
+     * Build a sample BOM tree, and attach it to the given reference.
+     *
+     * As for now, two inventories (one for SQ, another for CX) are
+     * built, each containing one flight. This sample bom provides an     
+     * example for airline partnerships.
+     *     
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    static void buildPartnershipsSampleInventoryAndRM (BomRoot&);    
+    static void buildPartnershipsSamplePricing (BomRoot&);
+
+    static void buildSampleBomForPartnershipsFareQuoter (BomRoot&);
+    static void buildSampleBomForPartnershipsAirRAC (BomRoot&);
+    
   };
 }
 #endif // ___STDAIR_CMD_CMDBOMMANAGER_HPP

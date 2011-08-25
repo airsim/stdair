@@ -25,7 +25,7 @@ namespace stdair {
   /** Default flight speed (number of kilometers per hour). */
   const unsigned int DEFAULT_FLIGHT_SPEED (900);
 
-  /** Default number of generated flight dates . */
+  /** Default number of generated flight dates. */
   const NbOfFlightDates_T DEFAULT_NB_OF_FLIGHTDATES (0.0);
 
   /** Null time duration (in boost::time_duration unit).*/
@@ -467,6 +467,7 @@ namespace stdair {
   const DCPList_T DEFAULT_DCP_LIST = DefaultDCPList::init();
   DCPList_T DefaultDCPList::init() {
     DCPList_T oDCPList;
+    //oDCPList.push_back (72);
     oDCPList.push_back (63);oDCPList.push_back (56);oDCPList.push_back (49);
     oDCPList.push_back (42);oDCPList.push_back (35);oDCPList.push_back (31);
     oDCPList.push_back (27);oDCPList.push_back (23);oDCPList.push_back (19);
@@ -479,6 +480,34 @@ namespace stdair {
     // oDCPList.push_back (5);  oDCPList.push_back (1);
     // oDCPList.push_back (0);
     return oDCPList;
+  }
+  /** Default frat5 coef map for demand to come forecaster. */
+  const DTDFratMap_T DEFAULT_DTD_FRAT5COEF_MAP =
+    DefaultDtdFratMap::init();
+  DTDFratMap_T DefaultDtdFratMap::init() {
+    DTDFratMap_T oDFCMap;
+    oDFCMap[71] = 2.50583571429; oDFCMap[63] = 2.55994571429;
+    oDFCMap[56] = 2.60841857143; oDFCMap[49] = 2.68888;
+    oDFCMap[42] = 2.78583714286; oDFCMap[35] = 2.89091428571;
+    oDFCMap[31] = 2.97871428571; oDFCMap[28] = 3.05521428571;
+    oDFCMap[24] = 3.15177142857; oDFCMap[21] = 3.22164285714;
+    oDFCMap[17] = 3.32237142857; oDFCMap[14] = 3.38697142857;
+    oDFCMap[10] = 3.44204285714; oDFCMap[7] = 3.46202857143;
+    oDFCMap[5] = 3.47177142857;  oDFCMap[3] = 3.4792;
+    oDFCMap[1] = 3.48947142857; // oDFCMap[0] = 3.49111428571;
+    return oDFCMap;
+  }
+
+  /** Default arrival pattern map. */
+  const DTDProbMap_T DEFAULT_DTD_PROB_MAP =
+    DefaultDtdProbMap::init();
+  DTDProbMap_T DefaultDtdProbMap::init() {
+    DTDProbMap_T oDPMap;
+    oDPMap[-330] = 0; oDPMap[-150] = 0.1; oDPMap[-92] = 0.2;
+    oDPMap[-55] = 0.3; oDPMap[-34] = 0.4; oDPMap[-21] = 0.5;
+    oDPMap[-12] = 0.6; oDPMap[-6] = 0.7; oDPMap[-3] = 0.8;
+    oDPMap[-1] = 0.9; oDPMap[0] = 1.0;
+    return oDPMap;
   }
 
 
@@ -493,6 +522,9 @@ namespace stdair {
 
   /** Default token for decoding a full string display. */
   const boost::char_separator<char> DEFAULT_KEY_TOKEN_DELIMITER (";, ");
+
+  /** Default list of full keys. */
+  const FullKeyList_T DEFAULT_FULL_KEY_LIST;
 
   
   // ////////// BomManager-related constants ///////////

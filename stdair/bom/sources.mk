@@ -100,7 +100,10 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/FareFeaturesTypes.hpp \
 		$(top_srcdir)/stdair/bom/YieldFeatures.hpp \
 		$(top_srcdir)/stdair/bom/YieldFeaturesKey.hpp \
-		$(top_srcdir)/stdair/bom/YieldFeaturesTypes.hpp
+		$(top_srcdir)/stdair/bom/YieldFeaturesTypes.hpp\
+		$(top_srcdir)/stdair/bom/OnDDate.hpp\
+		$(top_srcdir)/stdair/bom/OnDDateKey.hpp\
+		$(top_srcdir)/stdair/bom/OnDDateTypes.hpp
 stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/BomKeyManager.cpp \
 		$(top_srcdir)/stdair/bom/ParsedKey.cpp \
@@ -167,5 +170,6 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/FareFeatures.cpp \
 		$(top_srcdir)/stdair/bom/FareFeaturesKey.cpp \
 		$(top_srcdir)/stdair/bom/YieldFeatures.cpp \
-		$(top_srcdir)/stdair/bom/YieldFeaturesKey.cpp
-
+		$(top_srcdir)/stdair/bom/YieldFeaturesKey.cpp\
+		$(top_srcdir)/stdair/bom/OnDDate.cpp\
+		$(top_srcdir)/stdair/bom/OnDDateKey.cpp

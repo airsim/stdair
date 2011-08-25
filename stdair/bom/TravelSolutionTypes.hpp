@@ -11,6 +11,7 @@
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/bom/key_types.hpp>
+#include <stdair/stdair_inventory_types.hpp> // bid price related types.
 
 namespace stdair {
 
@@ -32,6 +33,20 @@ namespace stdair {
   /** Define list of booking class - availability maps. */
   typedef std::list<ClassAvailabilityMap_T> ClassAvailabilityMapHolder_T;
 
+  /** Define booking class - yield map. */
+  typedef std::map<const ClassCode_T, YieldValue_T> ClassYieldMap_T;
+
+  /** Define list of booking class - yield maps. */
+  typedef std::list<ClassYieldMap_T> ClassYieldMapHolder_T;
+
+  /** Define list of bid price vectors. */
+  typedef std::list<BidPriceVector_T> BidPriceVectorHolder_T;
+
+  /** Define booking class - bid price reference map. */
+  typedef std::map<const ClassCode_T, const BidPriceVector_T&> ClassBpvMap_T;
+
+  /** Define list of booking class - bid price reference maps. */
+  typedef std::list<ClassBpvMap_T> ClassBpvMapHolder_T;
 }
 #endif // __STDAIR_BOM_TRAVELSOLUTIONTYPES_HPP
 

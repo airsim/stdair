@@ -34,6 +34,21 @@ namespace stdair {
       return _classAvailabilityMapHolder;
     }
 
+    /** Get the holder of yields. */
+    const ClassYieldMapHolder_T& getClassYieldMapHolder() const {
+      return _classYieldMapHolder;
+    }
+
+    /** Get the holder of bid price vectors. */
+    const BidPriceVectorHolder_T& getBidPriceVectorHolder() const {
+      return _bidPriceVectorHolder;
+    }
+    
+    /** Get the holder of class - bid price reference. */
+    const ClassBpvMapHolder_T& getClassBpvMapHolder() const {
+      return _classBpvMapHolder;
+    }
+
     /** Get the list of fare options. */
     const FareOptionList_T& getFareOptionList() const {
       return _fareOptionList;
@@ -57,6 +72,15 @@ namespace stdair {
 
     /** Add a class availability map. */
     void addClassAvailabilityMap (const ClassAvailabilityMap_T&);
+
+    /** Add a class yield map. */
+    void addClassYieldMap (const ClassYieldMap_T&);
+
+    /** Add a bid price vector. */
+    void addBidPriceVector (const BidPriceVector_T&);
+
+    /** Add a class bpv reference map. */
+    void addClassBpvMap (const ClassBpvMap_T&);
 
     /** Add a fare option. */
     void addFareOption (const FareOptionStruct&);
@@ -117,6 +141,21 @@ namespace stdair {
      * The list of availabilities for each segment-date.
      */
     ClassAvailabilityMapHolder_T _classAvailabilityMapHolder;
+    
+    /**
+     * The list of yields for each segment-date.
+     */
+    ClassYieldMapHolder_T _classYieldMapHolder;
+    
+    /**
+     * The list of BP vectors of all cabins.
+     */
+    BidPriceVectorHolder_T _bidPriceVectorHolder;
+    
+    /**
+     * The list of BP vector references for each class.
+     */
+    ClassBpvMapHolder_T _classBpvMapHolder;
 
     /**
      * The list of fare options.

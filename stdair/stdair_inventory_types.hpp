@@ -91,6 +91,12 @@ namespace stdair {
   /** Define the type of data collection point list. */
   typedef std::list<DCP_T> DCPList_T;
 
+  /** Define the DTD (days to departure) frat5 coef map. */
+  typedef std::map<DTD_T, RealNumber_T> DTDFratMap_T;
+
+  /** Define the DTD (days to departure) probability map. */
+  typedef std::map<FloatDuration_T, float> DTDProbMap_T;
+  
   /** Define the list of censorship flags (une list per booking
       class, one censorship flag per DCP). */
   typedef std::vector<CensorshipFlag_T> CensorshipFlagList_T;
