@@ -153,7 +153,7 @@ namespace stdair {
     const GeneratedDemandVector_T& getGeneratedDemandVector () const {
       return _generatedDemandVector;
     }
-       
+  
   public:
     // /////////// Setters ////////////
     /** Cumulated protection. */
@@ -186,7 +186,8 @@ namespace stdair {
     
     /** Demand distribution. */
     void setMean (const MeanValue_T& iMean) { _mean = iMean; }
-    
+    void setStdDev (const StdDevValue_T& iStdDev) { _stdDev = iStdDev; }
+
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -223,30 +224,6 @@ namespace stdair {
     /** Generate demand samples for Monte-Carlo method with the given
         random seed. */
     void generateDemandSamples (const int&, const RandomSeed_T&);
-
-  public:
-    // ////////////// Test //////////////////
-    /** Forecaster
-     * Test if the O&D element exists already and return the index
-    */
-    unsigned int getIndex (const AirlineCodeList_T& iAirlineCodeList,
-                           const ClassCodeList_T& iClassCodeList,
-                           const AirportCodeList_T& iAirportCodeList) const {
-      unsigned int index = 0;
-      AirlineCodeListList_T::const_iterator itAL = _itineraryAirlineListList.begin();
-      ClassCodeListList_T::const_iterator itCL = _itineraryClassListList.begin();
-      AirportCodeListList_T::const_iterator itAP = _itineraryAirportListList.begin();
-      for (;itAL != _itineraryAirlineListList.end();
-           ++itAL, ++itCL, ++itAP) {
-        if (*itAL == iAirlineCodeList && *itCL == iClassCodeList &&
-            *itAP == iAirportCodeList) {
-          break;
-        }
-        index++;
-      }
-      return index;
-    }
-
 
   protected:
     // ////////// Constructors and destructors /////////
