@@ -44,17 +44,19 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void CmdBomManager::buildSampleBom (BomRoot& ioBomRoot) {
-    /*// Build the inventory part (flight-dates)
+    // Build the inventory part (flight-dates)
     buildSampleInventory (ioBomRoot);
 
     // Build the pricing (fare rules) and revenue accounting (yields) parts
-    buildSamplePricing (ioBomRoot);*/
+    buildSamplePricing (ioBomRoot);
     
-    // Build inventory.
+    /*
+    // Build inventory
     buildPartnershipsSampleInventoryAndRM (ioBomRoot);
 
     // Build the pricing (fare rules) and revenue accounting (yields) parts
     buildPartnershipsSamplePricing (ioBomRoot);
+    */
   }
 
   // //////////////////////////////////////////////////////////////////////
