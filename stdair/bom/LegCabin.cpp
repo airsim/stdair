@@ -82,5 +82,24 @@ namespace stdair {
     _availabilityPool = _offeredCapacity - _committedSpace;
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  void LegCabin::addDemandInformation (const YieldValue_T& iYield,
+                                       const MeanValue_T& iMeanValue,
+                                       const StdDevValue_T& iStdDevValue) {
+    int lYieldLevel = std::floor (iYield + 0.5);
+    std::map<int,MeanStdDevPair_T>::iterator it =
+      _yieldDemandMap.find(lYieldLevel);
+    if (it == _yieldDemandMap.end()) {
+      MeanStdDevPair_T lMeanStdDevPair (iMeanValue,iStdDevValue);
+      _yieldDemandMap.insert(std::pair<int,MeanStdDevPair_T> (lYieldLevel,lMeanStdDevPair));
+    } else {
+      MeanStdDevPair_T lMeanStdDevPair = _yieldDemandMap [lYieldLevel];
+      MeanValue_T lMeanValue = iMeanValue + lMeanStdDevPair.first;
+      StdDevValue_T lStdDevValue2 = pow(iStdDevValue,2) + pow(lMeanStdDevPair.second,2);
+      StdDevValue_T lStdDevValue = sqrt (lStdDevValue2);
+      _yieldDemandMap [lYieldLevel]= MeanStdDevPair_T (lMeanValue, lStdDevValue);
+    }
+  }  
+
 }
 

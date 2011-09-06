@@ -1,4 +1,9 @@
 
+* 2011-08-30:
+- Version 0.39.2
+- Added support for airline codeshare: links are created between
+  operating and marketing flights/segments/legs.
+
 * 2011-08-15:
 - Version 0.38.0
 - A list() method has been added to the API (STDAIR_Service), in order

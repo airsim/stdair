@@ -47,6 +47,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/SnapshotTypes.hpp \
 		$(top_srcdir)/stdair/bom/RMEventTypes.hpp \
 		$(top_srcdir)/stdair/bom/EventQueueTypes.hpp \
+		$(top_srcdir)/stdair/bom/CancellationTypes.hpp \
 		$(top_srcdir)/stdair/bom/EventTypes.hpp \
 		$(top_srcdir)/stdair/bom/YieldStoreTypes.hpp \
 		$(top_srcdir)/stdair/bom/GuillotineBlockTypes.hpp \
@@ -69,6 +70,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/DoWStruct.hpp \
 		$(top_srcdir)/stdair/bom/PeriodStruct.hpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionStruct.hpp \
+		$(top_srcdir)/stdair/bom/CancellationStruct.hpp \
 		$(top_srcdir)/stdair/bom/VirtualClassStruct.hpp \
 		$(top_srcdir)/stdair/bom/FareOptionStruct.hpp \
 		$(top_srcdir)/stdair/bom/BookingRequestStruct.hpp \
@@ -98,7 +100,10 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/FareFeaturesTypes.hpp \
 		$(top_srcdir)/stdair/bom/YieldFeatures.hpp \
 		$(top_srcdir)/stdair/bom/YieldFeaturesKey.hpp \
-		$(top_srcdir)/stdair/bom/YieldFeaturesTypes.hpp
+		$(top_srcdir)/stdair/bom/YieldFeaturesTypes.hpp\
+		$(top_srcdir)/stdair/bom/OnDDate.hpp\
+		$(top_srcdir)/stdair/bom/OnDDateKey.hpp\
+		$(top_srcdir)/stdair/bom/OnDDateTypes.hpp
 stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/BomKeyManager.cpp \
 		$(top_srcdir)/stdair/bom/ParsedKey.cpp \
@@ -142,6 +147,7 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/DoWStruct.cpp \
 		$(top_srcdir)/stdair/bom/PeriodStruct.cpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionStruct.cpp \
+		$(top_srcdir)/stdair/bom/CancellationStruct.cpp \
 		$(top_srcdir)/stdair/bom/VirtualClassStruct.cpp \
 		$(top_srcdir)/stdair/bom/FareOptionStruct.cpp \
 		$(top_srcdir)/stdair/bom/BookingRequestStruct.cpp \
@@ -164,5 +170,6 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/FareFeatures.cpp \
 		$(top_srcdir)/stdair/bom/FareFeaturesKey.cpp \
 		$(top_srcdir)/stdair/bom/YieldFeatures.cpp \
-		$(top_srcdir)/stdair/bom/YieldFeaturesKey.cpp
-
+		$(top_srcdir)/stdair/bom/YieldFeaturesKey.cpp\
+		$(top_srcdir)/stdair/bom/OnDDate.cpp\
+		$(top_srcdir)/stdair/bom/OnDDateKey.cpp

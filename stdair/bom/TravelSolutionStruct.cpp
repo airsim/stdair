@@ -30,6 +30,7 @@ namespace stdair {
   const std::string TravelSolutionStruct::describe() const {
     std::ostringstream oStr;
 
+    //
     oStr << "Segment path: ";
     unsigned short idx = 0;
     for (SegmentPath_T::const_iterator lItSegmentPath = _segmentPath.begin();
@@ -40,8 +41,17 @@ namespace stdair {
       const std::string& lSegmentKey = *lItSegmentPath;
       oStr << lSegmentKey;
     }
+    oStr << " ### ";
 
-    oStr << "; fare options: ";
+    //
+    if (_chosenFareOption != NULL) {
+      oStr << "Chosen fare option: " << _chosenFareOption->describe()
+           << " ## Among: ";
+    } else {
+      oStr << "Fare options: ";
+    }
+
+    //
     idx = 0;
     for (FareOptionList_T::const_iterator lItFareOption= _fareOptionList.begin();
          lItFareOption != _fareOptionList.end(); ++lItFareOption, ++idx) {
@@ -51,6 +61,7 @@ namespace stdair {
       const FareOptionStruct& lFareOption = *lItFareOption;
       oStr << lFareOption.describe();
     }
+
     return oStr.str();
   }
 
@@ -121,6 +132,26 @@ namespace stdair {
     _classAvailabilityMapHolder.push_back (iMap);
   }
 
+  //MODIF
+  // ////////////////////////////////////////////////////////////////////
+  void TravelSolutionStruct::
+  addClassYieldMap (const ClassYieldMap_T& iMap) {
+    _classYieldMapHolder.push_back (iMap);
+  }
+
+  //MODIF
+  // ////////////////////////////////////////////////////////////////////
+  void TravelSolutionStruct::
+  addBidPriceVector (const BidPriceVector_T& iBpv) {
+    _bidPriceVectorHolder.push_back (iBpv);
+  }
+
+  //MODIF
+  // ////////////////////////////////////////////////////////////////////
+  void TravelSolutionStruct::
+  addClassBpvMap (const ClassBpvMap_T& iMap) {
+    _classBpvMapHolder.push_back (iMap);
+  }
   // ////////////////////////////////////////////////////////////////////
   void TravelSolutionStruct::
   addFareOption (const FareOptionStruct& iFareOption) {

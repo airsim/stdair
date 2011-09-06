@@ -26,7 +26,9 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::SegmentDate (const Key_T& iKey) : _key (iKey), _parent (NULL) {
+  SegmentDate::SegmentDate (const Key_T& iKey) : _key (iKey), _parent (NULL),
+                                                 _operatingSegmentDate (NULL),
+                                                 _isOtherAirlineOperating (false) {
   }
 
   // ////////////////////////////////////////////////////////////////////

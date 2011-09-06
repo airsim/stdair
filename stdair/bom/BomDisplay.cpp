@@ -32,6 +32,7 @@
 #include <stdair/bom/TravelSolutionTypes.hpp>
 #include <stdair/bom/TravelSolutionStruct.hpp>
 #include <stdair/bom/BomDisplay.hpp>
+#include <stdair/bom/OnDDate.hpp>
 
 namespace stdair {
 
@@ -250,7 +251,7 @@ namespace stdair {
     oStream << "+++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
     oStream << "Inventory: " << iInventory.describeKey() << std::endl;
     oStream << "+++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-    
+
     // Check whether there are FlightDate objects
     if (BomManager::hasList<FlightDate> (iInventory) == false) {
       return;
@@ -266,7 +267,93 @@ namespace stdair {
       
       // Display the flight-date
       csvDisplay (oStream, *lFD_ptr);
-    }   
+    }
+
+    // Check if the inventory contains a list of partners
+
+    if (BomManager::hasList<Inventory> (iInventory)){
+    
+      // Browse the partner's inventories
+      const InventoryList_T& lPartnerInventoryList =
+        BomManager::getList<Inventory> (iInventory);
+      
+      for (InventoryList_T::const_iterator itInv = lPartnerInventoryList.begin();
+           itInv != lPartnerInventoryList.end(); ++itInv) {           
+      
+        oStream << "-------------------------------------------------" << std::endl;
+        oStream << "Partner inventory:" << std::endl;
+        oStream << "-------------------------------------------------" << std::endl;
+        const Inventory* lInv_ptr = *itInv;
+        assert (lInv_ptr != NULL);
+      
+        // Display the inventory
+        csvDisplay (oStream, *lInv_ptr);      
+      }
+      oStream << "******************************************" << std::endl;
+      oStream << std::endl;
+    }
+
+    // Check if the inventory contains a list of O&D dates
+
+    if (BomManager::hasList<OnDDate> (iInventory)){
+
+      //Browse the O&Ds
+      const OnDDateList_T& lOnDDateList =
+        BomManager::getList<OnDDate> (iInventory);
+
+      for (OnDDateList_T::const_iterator itOnD = lOnDDateList.begin();
+           itOnD != lOnDDateList.end(); ++itOnD) {
+        oStream << "******************************************" << std::endl;
+        oStream << "O&D-Date:" << std::endl;
+        oStream << "----------" << std::endl;
+        oStream << "Airline, Date, Origin-Destination, Segments, " << std::endl;
+       
+        const OnDDate* lOnDDate_ptr = *itOnD;
+        assert (lOnDDate_ptr != NULL);
+
+        // Display the O&D date
+        csvDisplay (oStream, *lOnDDate_ptr);
+      }
+      oStream << "******************************************" << std::endl;
+    }
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomDisplay::csvDisplay (std::ostream& oStream,
+                               const OnDDate& iOnDDate) {
+    // Save the formatting flags for the given STL output stream
+    FlagSaver flagSaver (oStream);
+
+    /**
+     * O&D-date level (only)
+     */
+    const AirlineCode_T& lAirlineCode = iOnDDate.getAirlineCode();
+    const Date_T& lDate = iOnDDate.getDate();
+    const AirportCode_T& lOrigin = iOnDDate.getOrigin();
+    const AirportCode_T& lDestination = iOnDDate.getDestination();
+    
+    
+    oStream << lAirlineCode <<", " << lDate << ", "<< lOrigin << "-"
+            << lDestination << ", " << iOnDDate.describeKey() << ", "
+            << std::endl;
+        
+    const std::map<std::string, DemandStruct>& lDemandInfoMap =
+      iOnDDate.getDemandInfoMap();
+    if (lDemandInfoMap.empty()) { return;}
+    oStream << "----------" << std::endl;        
+    oStream << "Cabin-Class path, Demand mean, Demand std dev, Yield, " << std::endl;
+    for (std::map<std::string, DemandStruct>::const_iterator itDI = lDemandInfoMap.begin();
+         itDI != lDemandInfoMap.end(); ++itDI) {
+      const std::string& lCabinClassPath = itDI->first;
+      const Yield_T lYield = itDI->second.getYield();
+      const MeanValue_T lDemandMean = itDI->second.getDemandMean();
+      const StdDevValue_T lDemandStdDev = itDI->second.getDemandStdDev();
+
+      oStream << lCabinClassPath << ", " << lDemandMean << ", "
+              << lDemandStdDev << ", " << lYield << ", ";
+      oStream << std::endl;
+    }
+     
   }
     
   // ////////////////////////////////////////////////////////////////////
@@ -284,6 +371,8 @@ namespace stdair {
             << std::endl;
     oStream << "******************************************" << std::endl;
 
+    //
+    csvSegmentDateDisplay (oStream, iFlightDate);
     //
     csvLegDateDisplay (oStream, iFlightDate);
 
@@ -349,8 +438,7 @@ namespace stdair {
               << lLD_ptr->getDateOffset() << ", "
               << lLD_ptr->getTimeOffset() << ", "
               << lLD_ptr->getDistance() << ", "
-              << lLD_ptr->getCapacity() << ", "
-              << std::endl;
+              << lLD_ptr->getCapacity() << ", " << std::endl;
     }
     oStream << "******************************************" << std::endl;
   }
@@ -364,6 +452,59 @@ namespace stdair {
     /**
      * Segment-date level (only)
      */
+    oStream << "******************************************" << std::endl;
+    oStream << "SegmentDates:" << std::endl
+            << "----------" << std::endl;
+    oStream << "Flight, Segment, Date"
+            << std::endl;
+
+    // Retrieve the key of the flight-date
+    const AirlineCode_T& lAirlineCode = iFlightDate.getAirlineCode();
+    const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
+    const Date_T& lFlightDateDate = iFlightDate.getDepartureDate();
+
+    // Check whether there are SegmentDate objects
+    if (BomManager::hasList<SegmentDate> (iFlightDate) == false) {
+      return;
+    }
+    
+    // Browse the segment-dates
+    const SegmentDateList_T& lSegmentDateList =
+      BomManager::getList<SegmentDate> (iFlightDate);
+    for (SegmentDateList_T::const_iterator itSD = lSegmentDateList.begin();
+         itSD != lSegmentDateList.end(); ++itSD) {
+      const SegmentDate* lSD_ptr = *itSD;
+      assert (lSD_ptr != NULL);
+      
+      // Retrieve the key of the segment-date, as well as its dates
+      const Date_T& lSegmentDateDate = lSD_ptr->getBoardingDate();
+      const AirportCode_T& lBoardPoint = lSD_ptr->getBoardingPoint();
+      const AirportCode_T& lOffPoint = lSD_ptr->getOffPoint();
+
+      oStream << lAirlineCode << lFlightNumber << " " << lFlightDateDate << ", "
+              << lBoardPoint << "-" << lOffPoint << ", " << lSegmentDateDate << std::endl;
+      if (lSD_ptr->isOtherAirlineOperating()) {
+        SegmentDate* lOperatingSD_ptr = lSD_ptr->getOperatingSegmentDate ();
+        assert (lOperatingSD_ptr != NULL);
+        FlightDate* lOperatingFD_ptr = BomManager::getParentPtr<FlightDate>(*lOperatingSD_ptr);
+        Inventory* lOperatingInv_ptr = BomManager::getParentPtr<Inventory>(*lOperatingFD_ptr);
+        oStream << " *** Operated by " << lOperatingInv_ptr->toString()
+                << lOperatingFD_ptr->toString() << std::endl; 
+      }
+      if (BomManager::hasList<SegmentDate> (*lSD_ptr)) {
+        SegmentDateList_T lMktSDList = BomManager::getList<SegmentDate> (*lSD_ptr);
+        assert (!lMktSDList.empty());
+        oStream << " *** Marketed by ";
+        for (SegmentDateList_T::const_iterator itMktSD = lMktSDList.begin();
+             itMktSD != lMktSDList.end(); ++itMktSD) {
+          SegmentDate* lMarketingSD_ptr = *itMktSD;
+          FlightDate* lMarketingFD_ptr = BomManager::getParentPtr<FlightDate>(*lMarketingSD_ptr);
+          Inventory* lMarketingInv_ptr = BomManager::getParentPtr<Inventory>(*lMarketingFD_ptr);
+          oStream << lMarketingInv_ptr->toString() << lMarketingFD_ptr->toString() <<" * ";
+        }
+        oStream << std::endl;
+      }
+    }
     
   }
 
@@ -495,7 +636,7 @@ namespace stdair {
       const Date_T& lSegmentDateDate = lSD_ptr->getBoardingDate();
       const AirportCode_T& lBoardPoint = lSD_ptr->getBoardingPoint();
       const AirportCode_T& lOffPoint = lSD_ptr->getOffPoint();
-
+      
       // Browse the segment-cabins
       const SegmentCabinList_T& lSegmentCabinList =
         BomManager::getList<SegmentCabin> (*lSD_ptr);

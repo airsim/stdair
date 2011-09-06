@@ -30,6 +30,7 @@ namespace stdair {
   class FareFeatures;
   class YieldFeatures;
   class AirlineClassList;
+  class OnDDate;
 
   /**
    * @brief Utility class to display StdAir objects with a pretty
@@ -113,6 +114,15 @@ namespace stdair {
      * @param const Inventory& Root of the BOM tree to be displayed.
      */
     static void csvDisplay (std::ostream&, const Inventory&);
+
+    /**
+     * Display the O&D date object information.
+     * @param std::ostream& Output stream in which the BOM tree should be
+     *        logged/dumped.
+     * @param const OnDDate& the BOM to be displayed.
+     */
+
+    static void csvDisplay (std::ostream&, const OnDDate&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
