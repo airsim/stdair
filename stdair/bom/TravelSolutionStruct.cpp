@@ -7,6 +7,8 @@
 // StdAir
 #include <stdair/basic/BasConst_BookingClass.hpp>
 #include <stdair/bom/TravelSolutionStruct.hpp>
+#include <stdair/bom/BomKeyManager.hpp>
+#include <stdair/bom/ParsedKey.hpp>
 
 namespace stdair {
   // ////////////////////////////////////////////////////////////////////
@@ -38,7 +40,10 @@ namespace stdair {
       if (idx != 0) {
         oStr << "-";
       }
-      const std::string& lSegmentKey = *lItSegmentPath;
+      const std::string& lSegmentPathString = *lItSegmentPath;
+      const stdair::ParsedKey& lSegmentParsedKey =
+        stdair::BomKeyManager::extractKeys (lSegmentPathString);
+      const std::string& lSegmentKey = lSegmentParsedKey.toString();
       oStr << lSegmentKey;
     }
     oStr << " ### ";
@@ -76,7 +81,10 @@ namespace stdair {
       if (idx != 0) {
         oStr << " ; ";
       }
-      const std::string& lSegmentKey = *itSegPath;
+      const std::string& lSegmentPathString = *itSegPath;
+      const stdair::ParsedKey& lSegmentParsedKey =
+        stdair::BomKeyManager::extractKeys (lSegmentPathString);
+      const std::string& lSegmentKey = lSegmentParsedKey.toString();
       oStr << "[" << idx << "] " << lSegmentKey;
     }
 
