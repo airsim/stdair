@@ -1,4 +1,11 @@
 
+	* Tue Sep 20 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.41.0
+	- Added a root object for file path definition.
+	- Changed the travel solution display.
+	
+	* Tue Sep 06 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.40.0
+	- Added support for SimFQT command line binary.
+
 	* Tue Aug 30 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.39.2
 	- Added support for airline codeshare: links are created between
 	operating and marketing flights/segments/legs.
