@@ -9,7 +9,7 @@ include (config/project_config_embeddable.cmake)
 # Project info
 set_project_names (stdair StdAir)
 set_project_brief ("C++ Standard Airline IT Library")
-set_project_versions (99 99 99)
+set_project_versions (0 41 0)
 
 ##
 # Project options

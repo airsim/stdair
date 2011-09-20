@@ -1,3 +1,10 @@
+* 2011-09-20:
+- Version 0.41.0
+- Added support for file path object definition.
+
+* 2011-09-06:
+- Version 0.40.0
+- Added support for SimFQT command line binary. 
 
 * 2011-08-30:
 - Version 0.39.2
