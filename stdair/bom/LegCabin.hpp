@@ -9,6 +9,7 @@
 #include <string>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
+#include <stdair/stdair_maths_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/LegCabinKey.hpp>
 #include <stdair/bom/LegCabinTypes.hpp>
@@ -16,9 +17,6 @@
 #include <stdair/bom/VirtualClassTypes.hpp>
 
 namespace stdair {
-
-  typedef std::pair<MeanValue_T, StdDevValue_T> MeanStdDevPair_T;
-  typedef std::map<int, MeanStdDevPair_T> YieldDemandMap_T;
 
   /**
    * @brief Class representing the actual attributes for an airline
@@ -176,7 +174,8 @@ namespace stdair {
 
     /** Reset the bid price vector and return it. */
     BidPriceVector_T& getEmptyBidPriceVector() {
-      _bidPriceVector.clear(); return _bidPriceVector;
+      _bidPriceVector.clear();
+      return _bidPriceVector;
     }
 
     /** Get the yield-demand map. */

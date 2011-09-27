@@ -84,9 +84,14 @@ namespace stdair {
   typedef double StdDevValue_T;
 
   /**
+   * Define a couple (mean, standart deviation) (e.g., (20.2,1.5)).
+   */
+  typedef std::pair<MeanValue_T, StdDevValue_T> MeanStdDevPair_T;
+
+  /**
    * Probability.
    */
-  typedef float Probability_T;
+  typedef float Probability_T; 
   
 }
 #endif // __STDAIR_STDAIR_MATHS_TYPES_HPP

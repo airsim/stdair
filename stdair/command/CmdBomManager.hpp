@@ -18,7 +18,6 @@ namespace stdair {
   class BomRoot;
   struct BookingRequestStruct;
 
-
   /**
    * Class wrapping utility functions for handling the BOM tree
    * objects.
@@ -162,11 +161,16 @@ namespace stdair {
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
      */
-    static void buildPartnershipsSampleInventoryAndRM (BomRoot&);    
-    static void buildPartnershipsSamplePricing (BomRoot&);
+    static void buildPartnershipsSampleInventoryAndRM (BomRoot&);
 
-    static void buildSampleBomForPartnershipsFareQuoter (BomRoot&);
-    static void buildSampleBomForPartnershipsAirRAC (BomRoot&);
+     /**
+     * Build a sample BOM tree, and attach it to the given reference.
+     *
+     *     
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    static void buildPartnershipsSamplePricing (BomRoot&);
     
   };
 }

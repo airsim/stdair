@@ -13,16 +13,23 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string PartnershipTechnique::_labels[LAST_VALUE] =
     { "None",
-      "RevenueAvailabilityExchangeDemandAggregation", "RevenueAvailabilityExchangeYieldProration",
-      "InterlineBidPriceDemandAggregation", "InterlineBidPriceYieldProration",
+      "RevenueAvailabilityExchangeDemandAggregation",
+      "RevenueAvailabilityExchangeYieldProration",
+      "InterlineBidPriceDemandAggregation",
+      "InterlineBidPriceYieldProration",
       "NonProtectionistInterlineBidPriceYieldProration",
-      "RevenueManagementCooperation", "AdvancedRevenueManagementCooperation"};
+      "RevenueManagementCooperation",
+      "AdvancedRevenueManagementCooperation"};
 
   // //////////////////////////////////////////////////////////////////////
   const char PartnershipTechnique::_techniqueLabels[LAST_VALUE] = { 'N',
-                                                                    'r', 'R',
-                                                                    'i', 'I', 'U',
-                                                                    'C', 'A'};
+                                                                    'r',
+                                                                    'R',
+                                                                    'i',
+                                                                    'I',
+                                                                    'U',
+                                                                    'C',
+                                                                    'A'};
 
   
   // //////////////////////////////////////////////////////////////////////

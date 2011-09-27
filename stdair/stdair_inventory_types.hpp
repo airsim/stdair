@@ -13,6 +13,7 @@
 #include <boost/multi_array.hpp>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_maths_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
 
 namespace stdair {
@@ -107,6 +108,9 @@ namespace stdair {
 
   /** Define the yield of a virtual class. */
   typedef double Yield_T;
+
+  /** Define the yield demand map. */
+  typedef std::map<int, MeanStdDevPair_T> YieldDemandMap_T;
 
   /** Define the Bid-Price. */
   typedef double BidPrice_T;

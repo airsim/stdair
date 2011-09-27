@@ -18,6 +18,9 @@
 #include <boost/tuple/tuple.hpp>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_maths_types.hpp>
+#include <stdair/stdair_inventory_types.hpp>
+
 
 namespace stdair {
 
@@ -96,6 +99,24 @@ namespace stdair {
 
   /** Define a map between a BookingID and a TravelSolutionID. */
   typedef std::map<Identity_T, Identity_T> BookingTSIDMap_T;
+
+  /** Define a pair (cabin code, class code) e.g., (economy, K). */
+  typedef std::pair<CabinCode_T, ClassCode_T> CabinClassPair_T;
+
+  /** Define a list of pair (cabin code, class code). */
+  typedef std::list<CabinClassPair_T> CabinClassPairList_T;
+
+  /** Define the forecast booking requests proportion. */
+  typedef double ProportionFactor_T;
+
+  /** Define the list of forecast booking requests proportions. */
+  typedef std::list<ProportionFactor_T> ProportionFactorList_T;
+
+  /** O&D key
+   * Define the list of strings.
+   */
+  typedef std::string FullKey_T;
+  typedef std::list<FullKey_T> FullKeyList_T;
 
 }
 #endif // __STDAIR_STDAIR_DEMAND_TYPES_HPP
