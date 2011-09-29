@@ -1,8 +1,11 @@
+	* Thu Sep 29 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.41.0
+	- Added flight periods and OnDs to the basic bom tree.
+	- Re-structured a few things in partnership development.
 
 	* Tue Sep 20 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.41.0
 	- Added a root object for file path definition.
 	- Changed the travel solution display.
-	
+
 	* Tue Sep 06 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.40.0
 	- Added support for SimFQT command line binary.
 
