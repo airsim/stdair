@@ -49,26 +49,26 @@ namespace stdair {
     STDAIR_LOG_DEBUG ("StdAir is building the BOM tree from built-in "
                       << "specifications.");
 
-    // Build the inventory part (flight-dates)
-    buildSampleInventory (ioBomRoot);
+    // ////// Basic Bom Tree ///////    
+    // Build the inventory (flight-dates) and the schedule (flight period) parts.
+    buildSampleInventorySchedule (ioBomRoot);
 
-    // Build the pricing (fare rules) and revenue accounting (yields) parts
+    // Build the pricing (fare rules) and revenue accounting (yields) parts.
     buildSamplePricing (ioBomRoot);
-      
-    // Build the inventory part for partnerships
+
+    // ////// Partnership Bom Tree ///////    
+    // Build the inventory (flight-dates) and the schedule (flight period) parts.
     buildPartnershipsSampleInventoryAndRM (ioBomRoot);
 
-    // Build the pricing (fare rules) and revenue accounting (yields) parts for partnerships
+    // Build the pricing (fare rules) and revenue accounting (yields) parts.
     buildPartnershipsSamplePricing (ioBomRoot);
       
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void CmdBomManager::buildSampleInventory (BomRoot& ioBomRoot) {
-    // DEBUG
-    STDAIR_LOG_DEBUG ("StdAir will build the BOM tree from built-in "
-                      << "specifications.");
+  void CmdBomManager::buildSampleInventorySchedule (BomRoot& ioBomRoot) {
 
+    // Inventory
     // Step 0.1: Inventory level
     // Create an Inventory for BA
     const InventoryKey lBAKey ("BA");
@@ -82,7 +82,7 @@ namespace stdair {
     FacBomManager::addToListAndMap (ioBomRoot, lAFInv);
     FacBomManager::linkWithParent (ioBomRoot, lAFInv);
 
-    // ////// BA ///////    
+    // BA
     // Step 0.2: Flight-date level
     // Create a FlightDate (BA9/10-JUN-2011) for BA's Inventory
     FlightNumber_T lFlightNumber = 9;
@@ -145,7 +145,6 @@ namespace stdair {
   
     // Display the segment-date
     // STDAIR_LOG_DEBUG ("SegmentDate: " << lLHRBKKSegment);
-
 
     // Create a third SegmentDate (BKK-SYD) for BA's Inventory
     // See http://www.britishairways.com/travel/flightinformation/public/fr_fr?&Carrier=BA&FlightNumber=0009&from=BKK&to=SYD&depDate=110611&SellingClass=O
@@ -265,7 +264,6 @@ namespace stdair {
       FacBom<LegCabin>::instance().create (lYLegCabinKey);
     FacBomManager::addToListAndMap (lBKKLeg, lBKKLegYCabin);
     FacBomManager::linkWithParent (lBKKLeg, lBKKLegYCabin);
-
     // Display the leg-cabin
     // STDAIR_LOG_DEBUG ("LegCabin: " << lBKKLegYCabin.toString());
 
@@ -286,7 +284,7 @@ namespace stdair {
     FacBomManager::addToListAndMap (lBKKLegYCabin, lLHRSYDSegmentYCabin,
                                     lLHRSYDSegmentYCabin.getFullerKey());
     FacBomManager::addToListAndMap (lBKKLegYCabin, lBKKSYDSegmentYCabin,
-                                    lBKKSYDSegmentYCabin.getFullerKey());
+    lBKKSYDSegmentYCabin.getFullerKey());
 
     /**
      * Add the leg-cabin to the segment-cabin routing.
@@ -529,6 +527,120 @@ namespace stdair {
     // Display the booking class
     // STDAIR_LOG_DEBUG ("BookingClass: "
     //                   << lCDGSFOSegmentYCabin1FamilyQClass.toString());
+
+    /*================================================================================
+      ================================================================================
+      ================================================================================*/
+    // Schedule:
+    // BA:
+    // Step 1: flight period level
+    // Create a flight period for BA9:
+    const DoWStruct lDoWSrtuct ("1111111");
+    const Date_T lBA9DateRangeStart (2010, boost::gregorian::Jun, 6);
+    const Date_T lBA9DateRangeEnd (2010, boost::gregorian::Jun, 7);
+    const DatePeriod_T lBA9DatePeriod (lBA9DateRangeStart, lBA9DateRangeEnd);
+    const PeriodStruct lBA9PeriodStruct (lBA9DatePeriod, lDoWSrtuct);
+
+    lFlightNumber = FlightNumber_T (9);
+
+    FlightPeriodKey lBA9FlightPeriodKey (lFlightNumber, lBA9PeriodStruct);
+
+    FlightPeriod& lBA9FlightPeriod =
+      FacBom<FlightPeriod>::instance().create (lBA9FlightPeriodKey);
+    FacBomManager::addToListAndMap (lBAInv, lBA9FlightPeriod);
+    FacBomManager::linkWithParent (lBAInv, lBA9FlightPeriod);
+
+    // Step 2: segment period level
+    // Create a segment period for SIN-BKK:
+
+    SegmentPeriodKey lLHRSYDSegmentPeriodKey (lLHR, lSYD);
+
+    SegmentPeriod& lLHRSYDSegmentPeriod =
+      FacBom<SegmentPeriod>::instance().create (lLHRSYDSegmentPeriodKey);
+    FacBomManager::addToListAndMap (lBA9FlightPeriod, lLHRSYDSegmentPeriod);
+    FacBomManager::linkWithParent (lBA9FlightPeriod, lLHRSYDSegmentPeriod);
+
+    lLHRSYDSegmentPeriod.setBoardingTime (l2135);
+    lLHRSYDSegmentPeriod.setOffTime (l1540);
+    lLHRSYDSegmentPeriod.setElapsedTime (l1105);
+    ClassList_String_T lYM ("YM");
+    lLHRSYDSegmentPeriod.addCabinBookingClassList (lY,lYM);
+
+    // AF:
+    // Step 1: flight period level
+    // Create a flight period for AF84:
+    const Date_T lAF84DateRangeStart (2011, boost::gregorian::Mar, 20);
+    const Date_T lAF84DateRangeEnd (2011, boost::gregorian::Mar, 21);
+    const DatePeriod_T lAF84DatePeriod (lAF84DateRangeStart, lAF84DateRangeEnd);
+    const PeriodStruct lAF84PeriodStruct (lAF84DatePeriod, lDoWSrtuct);
+
+    lFlightNumber = FlightNumber_T (84);
+
+    FlightPeriodKey lAF84FlightPeriodKey (lFlightNumber, lAF84PeriodStruct);
+
+    FlightPeriod& lAF84FlightPeriod =
+      FacBom<FlightPeriod>::instance().create (lAF84FlightPeriodKey);
+    FacBomManager::addToListAndMap (lAFInv, lAF84FlightPeriod);
+    FacBomManager::linkWithParent (lAFInv, lAF84FlightPeriod);
+
+    // Step 2: segment period level
+    // Create a segment period for SIN-BKK:
+
+    SegmentPeriodKey lCDGSFOSegmentPeriodKey (lCDG, lSFO);
+
+    SegmentPeriod& lCDGSFOSegmentPeriod =
+      FacBom<SegmentPeriod>::instance().create (lCDGSFOSegmentPeriodKey);
+    FacBomManager::addToListAndMap (lAF84FlightPeriod, lCDGSFOSegmentPeriod);
+    FacBomManager::linkWithParent (lAF84FlightPeriod, lCDGSFOSegmentPeriod);
+
+    lCDGSFOSegmentPeriod.setBoardingTime (l1040);
+    lCDGSFOSegmentPeriod.setOffTime (l1250);
+    lCDGSFOSegmentPeriod.setElapsedTime (l1110);
+    lCDGSFOSegmentPeriod.addCabinBookingClassList (lY,lYM);
+
+    /*================================================================================
+      ================================================================================
+      ================================================================================*/
+    // O&D 
+    // Create an O&D Date (BA;9,2010-Jun-06;LHR,SYD) for BA's Inventory
+    FullKey_T lBALHRSYDFullKeyStr = "BA;9,2010-Jun-06;LHR,SYD";
+    FullKeyList_T lBAFullKeyList;
+    lBAFullKeyList.push_back (lBALHRSYDFullKeyStr);
+
+    OnDDateKey lBAOnDDateKey (lBAFullKeyList);
+    OnDDate& lBA_LHRSYD_OnDDate =
+      FacBom<OnDDate>::instance().create (lBAOnDDateKey);
+    // Link to the inventory
+    FacBomManager::addToListAndMap (lBAInv, lBA_LHRSYD_OnDDate);
+    FacBomManager::linkWithParent (lBAInv, lBA_LHRSYD_OnDDate);
+
+    // Add the segment
+    FacBomManager::addToListAndMap (lBA_LHRSYD_OnDDate, lLHRSYDSegment);
+
+    // Add total forecast info for cabin Y.
+    const MeanStdDevPair_T lMean60StdDev6 (60.0, 6.0);
+    const WTP_T lWTP750 = 750.0;
+    const ForecastCharacteristics_T lForecastCharWTP750Mean60StdDev6 (lWTP750, lMean60StdDev6);
+    lBA_LHRSYD_OnDDate.setTotalForecast (lY, lForecastCharWTP750Mean60StdDev6);
+
+    // Create an O&D Date (AF;84,2011-Mar-21;CDG,SFO) for AF's Inventory
+    FullKey_T lAFLHRSYDFullKeyStr = "AF;9,2011-Mar-20;CDG,SFO";
+    FullKeyList_T lAFFullKeyList;
+    lAFFullKeyList.push_back (lAFLHRSYDFullKeyStr);
+
+    OnDDateKey lAFOnDDateKey (lAFFullKeyList);
+    OnDDate& lAF_LHRSYD_OnDDate =
+      FacBom<OnDDate>::instance().create (lAFOnDDateKey);
+    // Link to the inventory
+    FacBomManager::addToListAndMap (lAFInv, lAF_LHRSYD_OnDDate);
+    FacBomManager::linkWithParent (lAFInv, lAF_LHRSYD_OnDDate);
+
+    // Add the segment
+    FacBomManager::addToListAndMap (lAF_LHRSYD_OnDDate, lLHRSYDSegment);
+
+    // Add total forecast info for cabin Y. 
+    lAF_LHRSYD_OnDDate.setTotalForecast (lY, lForecastCharWTP750Mean60StdDev6);
+  
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -1010,7 +1122,7 @@ namespace stdair {
 
     
     // Link the segment-dates with the leg-dates
-    FacBomManager::addToListAndMap (lSINLeg, lSINBKKSegment);
+    FacBomManager::addToListAndMap (lSINLeg, lSINBKKSegment);  
     FacBomManager::addToListAndMap (lSINBKKSegment, lSINLeg);
 
     // Step 0.5: segment-cabin level

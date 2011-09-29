@@ -43,8 +43,8 @@ namespace stdair {
     static void buildSampleBom (BomRoot&);
 
     /**
-     * Build a sample BOM tree, with mainly Inventory-related objects,
-     * and attach it to the given reference.
+     * Build a sample BOM tree, with mainly Inventory-related and
+     * Schedule-related objects and attach it to the given reference.
      *
      * As for now, two inventories (one for BA, another for AF) are
      * built, each containing one flight. One of those flights has two
@@ -52,10 +52,8 @@ namespace stdair {
      *     
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
-     * @param const SampleType& The type of component for which the BOM tree
-     *        should be built.
      */
-    static void buildSampleInventory (BomRoot&);
+    static void buildSampleInventorySchedule (BomRoot&);
 
     /**
      * Build a dummy inventory, containing a dummy flight-date with a single
@@ -164,9 +162,9 @@ namespace stdair {
     static void buildPartnershipsSampleInventoryAndRM (BomRoot&);
 
      /**
-     * Build a sample BOM tree, and attach it to the given reference.
-     *
-     *     
+     * Build a sample BOM tree with mainly Fare-related and
+     * Yield-related objects and attach it to the given reference.
+     *    
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
      */
