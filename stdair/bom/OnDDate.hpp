@@ -211,7 +211,7 @@ namespace stdair {
   protected:
     // ////////// Attributes /////////
     /**
-     * Primary key (list of full keys).
+     * Primary key (list of OnD string keys).
      */
     Key_T _key;
 

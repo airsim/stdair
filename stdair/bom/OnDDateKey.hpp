@@ -16,9 +16,9 @@
 namespace stdair {
 
   /**
-   * @brief Key of a given O&D-date, made of a list of full keys.
-   * a full key is a string containing the airline code, flight number,
-   * date and segment (origin and destination).
+   * @brief Key of a given O&D-date, made of a list of OnD strings.
+   * a OnD string contains the airline code, the flight number,
+   * the date and the segment (origin and destination).
    */
   struct OnDDateKey : public KeyAbstract {
     friend class boost::serialization::access;
@@ -34,7 +34,7 @@ namespace stdair {
     /**
      * Constructor.
      */
-    OnDDateKey (const FullKeyList_T&);
+    OnDDateKey (const OnDStringList_T&);
 
     /**
      * Copy constructor.
@@ -68,7 +68,7 @@ namespace stdair {
      * Get the number of segments.
      */
     const short getNbOfSegments () const {
-      return _fullKeyList.size();
+      return _OnDStringList.size();
     }
         
   public:
@@ -117,7 +117,7 @@ namespace stdair {
 
   private:
     // ///////////////// Attributes ///////////////
-    FullKeyList_T _fullKeyList;
+    OnDStringList_T _OnDStringList;
     
   };
 

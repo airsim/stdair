@@ -15,7 +15,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   OnDDate::OnDDate()
-    : _key (DEFAULT_FULL_KEY_LIST), _parent (NULL) {
+    : _key (DEFAULT_OND_STRING_LIST), _parent (NULL) {
     assert (false);
   }
   

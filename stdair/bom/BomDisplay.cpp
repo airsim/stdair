@@ -495,20 +495,25 @@ namespace stdair {
       const Date_T& lSegmentDateDate = lSD_ptr->getBoardingDate();
       const AirportCode_T& lBoardPoint = lSD_ptr->getBoardingPoint();
       const AirportCode_T& lOffPoint = lSD_ptr->getOffPoint();
-
       oStream << lAirlineCode << lFlightNumber << " " << lFlightDateDate << ", "
               << lBoardPoint << "-" << lOffPoint << ", " << lSegmentDateDate << std::endl;
-      if (lSD_ptr->isOtherAirlineOperating()) {
+
+      //
+      if (lSD_ptr->isOtherAirlineOperating() == true) {
         SegmentDate* lOperatingSD_ptr = lSD_ptr->getOperatingSegmentDate ();
         assert (lOperatingSD_ptr != NULL);
+
         FlightDate* lOperatingFD_ptr = BomManager::getParentPtr<FlightDate>(*lOperatingSD_ptr);
         Inventory* lOperatingInv_ptr = BomManager::getParentPtr<Inventory>(*lOperatingFD_ptr);
         oStream << " *** Operated by " << lOperatingInv_ptr->toString()
                 << lOperatingFD_ptr->toString() << std::endl; 
       }
-      if (BomManager::hasList<SegmentDate> (*lSD_ptr)) {
-        SegmentDateList_T lMktSDList = BomManager::getList<SegmentDate> (*lSD_ptr);
-        assert (!lMktSDList.empty());
+
+      //
+      if (BomManager::hasList<SegmentDate> (*lSD_ptr) == true) {
+        const SegmentDateList_T& lMktSDList = BomManager::getList<SegmentDate> (*lSD_ptr);
+        assert (lMktSDList.empty() == false);
+
         oStream << " *** Marketed by ";
         for (SegmentDateList_T::const_iterator itMktSD = lMktSDList.begin();
              itMktSD != lMktSDList.end(); ++itMktSD) {
@@ -517,6 +522,7 @@ namespace stdair {
           Inventory* lMarketingInv_ptr = BomManager::getParentPtr<Inventory>(*lMarketingFD_ptr);
           oStream << lMarketingInv_ptr->toString() << lMarketingFD_ptr->toString() <<" * ";
         }
+
         oStream << std::endl;
       }
     }

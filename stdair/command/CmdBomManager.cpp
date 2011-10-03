@@ -603,11 +603,11 @@ namespace stdair {
       ================================================================================*/
     // O&D 
     // Create an O&D Date (BA;9,2010-Jun-06;LHR,SYD) for BA's Inventory
-    FullKey_T lBALHRSYDFullKeyStr = "BA;9,2010-Jun-06;LHR,SYD";
-    FullKeyList_T lBAFullKeyList;
-    lBAFullKeyList.push_back (lBALHRSYDFullKeyStr);
+    OnDString_T  lBALHRSYDOnDStr = "BA;9,2010-Jun-06;LHR,SYD";
+    OnDStringList_T lBAOnDStrList;
+    lBAOnDStrList.push_back (lBALHRSYDOnDStr);
 
-    OnDDateKey lBAOnDDateKey (lBAFullKeyList);
+    OnDDateKey lBAOnDDateKey (lBAOnDStrList);
     OnDDate& lBA_LHRSYD_OnDDate =
       FacBom<OnDDate>::instance().create (lBAOnDDateKey);
     // Link to the inventory
@@ -624,11 +624,11 @@ namespace stdair {
     lBA_LHRSYD_OnDDate.setTotalForecast (lY, lForecastCharWTP750Mean60StdDev6);
 
     // Create an O&D Date (AF;84,2011-Mar-21;CDG,SFO) for AF's Inventory
-    FullKey_T lAFLHRSYDFullKeyStr = "AF;9,2011-Mar-20;CDG,SFO";
-    FullKeyList_T lAFFullKeyList;
-    lAFFullKeyList.push_back (lAFLHRSYDFullKeyStr);
+    OnDString_T lAFLHRSYDOnDStr = "AF;9,2011-Mar-20;CDG,SFO";
+    OnDStringList_T lAFOnDStrList;
+    lAFOnDStrList.push_back (lAFLHRSYDOnDStr);
 
-    OnDDateKey lAFOnDDateKey (lAFFullKeyList);
+    OnDDateKey lAFOnDDateKey (lAFOnDStrList);
     OnDDate& lAF_LHRSYD_OnDDate =
       FacBom<OnDDate>::instance().create (lAFOnDDateKey);
     // Link to the inventory
@@ -1452,13 +1452,13 @@ namespace stdair {
 
     // Step 1.0: O&D level
     // Create an O&D Date (SQ11/08-FEB-2010/SIN-BKK-SQ1200/08-FEB-2010/BKK-HKG) for SQ's Inventory
-    FullKey_T lSQSINBKKFullKeyStr = "SQ;11,2010-Feb-08;SIN,BKK";
-    FullKey_T lMktSQBKKHKGFullKeyStr = "SQ;1200,2010-Feb-08;BKK,HKG";
-    FullKeyList_T lFullKeyList;
-    lFullKeyList.push_back (lSQSINBKKFullKeyStr);
-    lFullKeyList.push_back (lMktSQBKKHKGFullKeyStr);
+    OnDString_T lSQSINBKKOnDStr = "SQ;11,2010-Feb-08;SIN,BKK";
+    OnDString_T lMktSQBKKHKGOnDStr = "SQ;1200,2010-Feb-08;BKK,HKG";
+    OnDStringList_T lOnDStringList;
+    lOnDStringList.push_back (lSQSINBKKOnDStr);
+    lOnDStringList.push_back (lMktSQBKKHKGOnDStr);
 
-    OnDDateKey lOnDDateKey (lFullKeyList);
+    OnDDateKey lOnDDateKey (lOnDStringList);
     OnDDate& lSQ_SINHKG_OnDDate =
       FacBom<OnDDate>::instance().create (lOnDDateKey);
     // Link to the inventory
@@ -1497,10 +1497,10 @@ namespace stdair {
     lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield1200Mean10StdDev1);
 
     // Create an O&D Date (SQ11/08-FEB-2010/SIN-BKK) for SQ's Inventory
-    lFullKeyList.clear();
-    lFullKeyList.push_back (lSQSINBKKFullKeyStr);
+    lOnDStringList.clear();
+    lOnDStringList.push_back (lSQSINBKKOnDStr);
 
-    lOnDDateKey = OnDDateKey(lFullKeyList);
+    lOnDDateKey = OnDDateKey(lOnDStringList);
     OnDDate& lSQ_SINBKK_OnDDate =
       FacBom<OnDDate>::instance().create (lOnDDateKey);
     // Link to the inventory
@@ -1924,13 +1924,13 @@ namespace stdair {
 
     // Step 1.0: O&D level
     // Create an O&D Date (CX1100/08-FEB-2010/SIN-BKK-CX12/08-FEB-2010/BKK-HKG) for CX's Inventory
-    FullKey_T lMktCXSINBKKFullKeyStr = "CX;1100,2010-Feb-08;SIN,BKK";
-    FullKey_T lCXBKKHKGFullKeyStr = "CX;12,2010-Feb-08;BKK,HKG";
-    lFullKeyList.clear();
-    lFullKeyList.push_back (lMktCXSINBKKFullKeyStr);
-    lFullKeyList.push_back (lCXBKKHKGFullKeyStr);
+    OnDString_T lMktCXSINBKKOnDStr = "CX;1100,2010-Feb-08;SIN,BKK";
+    OnDString_T lCXBKKHKGOnDStr = "CX;12,2010-Feb-08;BKK,HKG";
+    lOnDStringList.clear();
+    lOnDStringList.push_back (lMktCXSINBKKOnDStr);
+    lOnDStringList.push_back (lCXBKKHKGOnDStr);
 
-    lOnDDateKey = OnDDateKey(lFullKeyList);
+    lOnDDateKey = OnDDateKey(lOnDStringList);
     OnDDate& lCX_SINHKG_OnDDate =
       FacBom<OnDDate>::instance().create (lOnDDateKey);
     // Link to the inventory
@@ -1978,10 +1978,10 @@ namespace stdair {
     *************************************************************************************/
     
     // Create an O&D Date (CX12/08-FEB-2010/BKK-HKG) for CX's Inventory
-    lFullKeyList.clear();
-    lFullKeyList.push_back (lCXBKKHKGFullKeyStr);
+    lOnDStringList.clear();
+    lOnDStringList.push_back (lCXBKKHKGOnDStr);
 
-    lOnDDateKey = OnDDateKey(lFullKeyList);
+    lOnDDateKey = OnDDateKey(lOnDStringList);
     OnDDate& lCX_BKKHKG_OnDDate =
       FacBom<OnDDate>::instance().create (lOnDDateKey);
     // Link to the inventory

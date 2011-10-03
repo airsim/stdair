@@ -81,10 +81,10 @@ namespace stdair {
   extern const ChannelLabel_T DEFAULT_CHANNEL;
 
   /** Default list of full keys. */
-  extern const FullKeyList_T DEFAULT_FULL_KEY_LIST;
+  extern const OnDStringList_T DEFAULT_OND_STRING_LIST;
 
   /** Higher value per thousand */
-  extern const unsigned int HIGHER_VALUE_PER_THOUSAND;
+  extern const unsigned int DEFAULT_NUMBER_OF_SUBDIVISIONS;
   
 }
 #endif // __STDAIR_BAS_BASCONST_GENERAL_HPP

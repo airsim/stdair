@@ -12,6 +12,7 @@
 #include <stdair/bom/LegDate.hpp>
 #include <stdair/bom/LegCabin.hpp>
 
+
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
@@ -86,18 +87,26 @@ namespace stdair {
   void LegCabin::addDemandInformation (const YieldValue_T& iYield,
                                        const MeanValue_T& iMeanValue,
                                        const StdDevValue_T& iStdDevValue) {
-    int lYieldLevel = std::floor (iYield + 0.5);
-    std::map<int,MeanStdDevPair_T>::iterator it =
-      _yieldDemandMap.find(lYieldLevel);
-    if (it == _yieldDemandMap.end()) {
+    //
+    const int lYieldLevel = std::floor (iYield + 0.5);
+
+    //
+    YieldDemandMap_T::iterator itDemand = _yieldDemandMap.find (lYieldLevel);
+    if (itDemand == _yieldDemandMap.end()) {
       MeanStdDevPair_T lMeanStdDevPair (iMeanValue,iStdDevValue);
-      _yieldDemandMap.insert(std::pair<int,MeanStdDevPair_T> (lYieldLevel,lMeanStdDevPair));
+      const bool hasInsertBeenSuccessful =
+        _yieldDemandMap.insert(YieldDemandMap_T::value_type (lYieldLevel,lMeanStdDevPair)).second;
+      assert (hasInsertBeenSuccessful == true);
+      
     } else {
-      MeanStdDevPair_T lMeanStdDevPair = _yieldDemandMap [lYieldLevel];
+      //
+      MeanStdDevPair_T& lMeanStdDevPair = itDemand->second;
       MeanValue_T lMeanValue = iMeanValue + lMeanStdDevPair.first;
-      StdDevValue_T lStdDevValue2 = pow(iStdDevValue,2) + pow(lMeanStdDevPair.second,2);
-      StdDevValue_T lStdDevValue = sqrt (lStdDevValue2);
-      _yieldDemandMap [lYieldLevel]= MeanStdDevPair_T (lMeanValue, lStdDevValue);
+      StdDevValue_T lStdDevValue2 = iStdDevValue * iStdDevValue + lMeanStdDevPair.second * lMeanStdDevPair.second;
+      StdDevValue_T lStdDevValue = std::sqrt (lStdDevValue2);
+
+      //
+      lMeanStdDevPair = MeanStdDevPair_T (lMeanValue, lStdDevValue);
     }
   }  
 

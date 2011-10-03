@@ -112,11 +112,11 @@ namespace stdair {
   /** Define the list of forecast booking requests proportions. */
   typedef std::list<ProportionFactor_T> ProportionFactorList_T;
 
-  /** O&D key
+  /** O&D string key
    * Define the list of strings.
    */
-  typedef std::string FullKey_T;
-  typedef std::list<FullKey_T> FullKeyList_T;
+  typedef std::string OnDString_T;
+  typedef std::list<OnDString_T> OnDStringList_T;
 
 }
 #endif // __STDAIR_STDAIR_DEMAND_TYPES_HPP

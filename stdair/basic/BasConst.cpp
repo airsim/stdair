@@ -35,7 +35,7 @@ namespace stdair {
   const unsigned int DEFAULT_NB_OF_DAYS_IN_A_YEAR (365);
 
   /** Higher value per thousand */
-  const unsigned int HIGHER_VALUE_PER_THOUSAND (1000);
+  const unsigned int DEFAULT_NUMBER_OF_SUBDIVISIONS (1000);
 
   // //////// (Flight-)Period-related BOM ///////
   /** Default number of duration days. */
@@ -526,7 +526,7 @@ namespace stdair {
   const boost::char_separator<char> DEFAULT_KEY_TOKEN_DELIMITER (";, ");
 
   /** Default list of full keys. */
-  const FullKeyList_T DEFAULT_FULL_KEY_LIST;
+  const OnDStringList_T DEFAULT_OND_STRING_LIST;
 
   
   // ////////// BomManager-related constants ///////////
