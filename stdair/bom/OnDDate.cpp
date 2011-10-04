@@ -52,7 +52,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   void OnDDate::
   setDemandInformation (const CabinClassPairList_T& iCabinClassPairList,
-                        const DemandCharacteristics_T& iDemandCharacteristics) {    
+                        const YieldDemandPair_T& iYieldDemandPair) {    
     std::ostringstream oStr;
     for(CabinClassPairList_T::const_iterator itCCP = iCabinClassPairList.begin();
         itCCP != iCabinClassPairList.end(); ++itCCP) {
@@ -63,25 +63,25 @@ namespace stdair {
       _classPathDemandMap.find(lCabinClassPath);
     if (it == _classPathDemandMap.end()) {
       const StringDemandStructPair_T lPairStringDemandChar (lCabinClassPath,
-                                                            iDemandCharacteristics);
+                                                            iYieldDemandPair);
       _classPathDemandMap.insert (lPairStringDemandChar);
       const StringCabinClassPair_T lStringCabinClassPair (lCabinClassPath,
                                                           iCabinClassPairList);
       _stringCabinClassPairListMap.insert (lStringCabinClassPair);
     } else {
-        it->second = iDemandCharacteristics;
+        it->second = iYieldDemandPair;
     }
   }
 
   // ////////////////////////////////////////////////////////////////////
   void OnDDate::setTotalForecast (const CabinCode_T& iCabinCode,
-                                  const ForecastCharacteristics_T& iForecastCharacteristics) {
+                                  const WTPDemandPair_T& iWTPDemandPair) {
 
     CabinForecastMap_T::iterator it =
       _cabinForecastMap.find (iCabinCode);
     if (it == _cabinForecastMap.end()) {
       const CabinForecastPair_T lPairCabinForecastChar (iCabinCode,
-                                                        iForecastCharacteristics);
+                                                        iWTPDemandPair);
       _cabinForecastMap.insert (lPairCabinForecastChar);
     } else {
       assert (false);

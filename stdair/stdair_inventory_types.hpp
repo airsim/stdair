@@ -109,8 +109,14 @@ namespace stdair {
   /** Define the yield of a virtual class. */
   typedef double Yield_T;
 
-  /** Define the yield demand map. */
-  typedef std::map<int, MeanStdDevPair_T> YieldDemandMap_T;
+  /** Define the yield level (yield as an integer). */
+  typedef unsigned int YieldLevel_T;
+
+  /** Define the <YieldLevel, demand> demand map. */
+  typedef std::map<YieldLevel_T, MeanStdDevPair_T> YieldLevelDemandMap_T;
+
+  /** Define the <Yield, demand> pair type.*/
+  typedef std::pair<Yield_T, MeanStdDevPair_T> YieldDemandPair_T;
 
   /** Define the Bid-Price. */
   typedef double BidPrice_T;

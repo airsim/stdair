@@ -336,7 +336,7 @@ namespace stdair {
             << lDestination << ", " << iOnDDate.describeKey() << ", "
             << std::endl;
         
-    const std::map<std::string, DemandCharacteristics_T>& lDemandInfoMap =
+    const StringDemandStructMap_T& lDemandInfoMap =
       iOnDDate.getDemandInfoMap();
 
     // Check if the map contains information.
@@ -350,15 +350,15 @@ namespace stdair {
     oStream << "Cabin-Class path, Demand mean, Demand std dev, Yield, "
             << std::endl;
     
-    for (std::map<std::string, DemandCharacteristics_T>::const_iterator itDI = lDemandInfoMap.begin();
+    for (StringDemandStructMap_T::const_iterator itDI = lDemandInfoMap.begin();
          itDI != lDemandInfoMap.end(); ++itDI) {
       
       const std::string& lCabinClassPath = itDI->first;
-      const DemandCharacteristics_T lDemandCharacteristics =
+      const YieldDemandPair_T lYieldDemandPair =
         itDI->second;
-      const Yield_T lYield = lDemandCharacteristics.first;
+      const Yield_T lYield = lYieldDemandPair.first;
       const MeanStdDevPair_T lMeanStdDevPair =
-        lDemandCharacteristics.second;
+        lYieldDemandPair.second;
       const MeanValue_T lDemandMean = lMeanStdDevPair.first;
       const StdDevValue_T lDemandStdDev = lMeanStdDevPair.second;
 

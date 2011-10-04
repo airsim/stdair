@@ -1,6 +1,5 @@
 #ifndef __STDAIR_BOM_LEGCABIN_HPP
 #define __STDAIR_BOM_LEGCABIN_HPP
-
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
@@ -172,15 +171,15 @@ namespace stdair {
       return _virtualClassList;
     }
 
-    /** Reset the bid price vector and return it. */
-    BidPriceVector_T& getEmptyBidPriceVector() {
-      _bidPriceVector.clear();
+     /** Reset the bid price vector and return it. */
+    BidPriceVector_T& getBidPriceVector() {
       return _bidPriceVector;
     }
 
+
     /** Get the yield-demand map. */
-    const YieldDemandMap_T& getYieldDemandMap() {
-      return _yieldDemandMap;
+    const YieldLevelDemandMap_T getYieldLevelDemandMap() {
+      return _yieldLevelDemandMap;
     }
 
 
@@ -280,11 +279,13 @@ namespace stdair {
 
     /** Update the bid price (from bid price vector if not empty). */
     void updateCurrentBidPrice () {
-      if (_bidPriceVector.size() >= _availabilityPool) {
-        _currentBidPrice = _bidPriceVector.at(_availabilityPool-1);
+      if (_availabilityPool >= 1) {
+        unsigned int lBidPriceVectorSize = _bidPriceVector.size();
+        if (lBidPriceVectorSize >= _availabilityPool) {
+        _currentBidPrice = _bidPriceVector.at(_availabilityPool - 1);
+        }
       }
     }
-    
 
   public:
     // /////////// Display support methods /////////
@@ -321,18 +322,24 @@ namespace stdair {
       _virtualClassList.push_back (iVC);
     }
 
-    /** Reset the virtual class list. */
-    void resetVirtualClassList() {
+    /** Empty the virtual class list. */
+    void emptyVirtualClassList() {
       _virtualClassList.clear();
+    }
+
+    /** Empty the bid price vector. */
+    void emptyBidPriceVector() {
+      _bidPriceVector.clear();
     }
 
     /** Add demand information. */
     void addDemandInformation (const YieldValue_T&,
-                               const MeanValue_T&, const StdDevValue_T&);
+                               const MeanValue_T&,
+                               const StdDevValue_T&);
 
-    /** Reset the (yield,demand) map. */
-    void resetYieldDemandMap() {
-      _yieldDemandMap.clear();
+    /** Reset the (yield level,demand) map. */
+    void emptyYieldLevelDemandMap() {
+      _yieldLevelDemandMap.clear();
     }
 
   protected:
@@ -391,7 +398,7 @@ namespace stdair {
     VirtualClassList_T _virtualClassList;
 
     /** Map holding the demand information indexed by yield. */
-    YieldDemandMap_T _yieldDemandMap;
+    YieldLevelDemandMap_T _yieldLevelDemandMap;
 
   public:
     /** Capacity adjustment of the cabin, due to check-in (DCS) regrade. */

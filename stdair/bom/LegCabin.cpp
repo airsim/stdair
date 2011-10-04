@@ -91,11 +91,11 @@ namespace stdair {
     const int lYieldLevel = std::floor (iYield + 0.5);
 
     //
-    YieldDemandMap_T::iterator itDemand = _yieldDemandMap.find (lYieldLevel);
-    if (itDemand == _yieldDemandMap.end()) {
+    YieldLevelDemandMap_T::iterator itDemand = _yieldLevelDemandMap.find (lYieldLevel);
+    if (itDemand == _yieldLevelDemandMap.end()) {
       MeanStdDevPair_T lMeanStdDevPair (iMeanValue,iStdDevValue);
       const bool hasInsertBeenSuccessful =
-        _yieldDemandMap.insert(YieldDemandMap_T::value_type (lYieldLevel,lMeanStdDevPair)).second;
+        _yieldLevelDemandMap.insert(YieldLevelDemandMap_T::value_type (lYieldLevel,lMeanStdDevPair)).second;
       assert (hasInsertBeenSuccessful == true);
       
     } else {

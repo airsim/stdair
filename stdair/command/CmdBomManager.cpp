@@ -620,8 +620,8 @@ namespace stdair {
     // Add total forecast info for cabin Y.
     const MeanStdDevPair_T lMean60StdDev6 (60.0, 6.0);
     const WTP_T lWTP750 = 750.0;
-    const ForecastCharacteristics_T lForecastCharWTP750Mean60StdDev6 (lWTP750, lMean60StdDev6);
-    lBA_LHRSYD_OnDDate.setTotalForecast (lY, lForecastCharWTP750Mean60StdDev6);
+    const WTPDemandPair_T lWTP750Mean60StdDev6 (lWTP750, lMean60StdDev6);
+    lBA_LHRSYD_OnDDate.setTotalForecast (lY, lWTP750Mean60StdDev6);
 
     // Create an O&D Date (AF;84,2011-Mar-21;CDG,SFO) for AF's Inventory
     OnDString_T lAFLHRSYDOnDStr = "AF;9,2011-Mar-20;CDG,SFO";
@@ -639,7 +639,7 @@ namespace stdair {
     FacBomManager::addToListAndMap (lAF_LHRSYD_OnDDate, lLHRSYDSegment);
 
     // Add total forecast info for cabin Y. 
-    lAF_LHRSYD_OnDDate.setTotalForecast (lY, lForecastCharWTP750Mean60StdDev6);
+    lAF_LHRSYD_OnDDate.setTotalForecast (lY, lWTP750Mean60StdDev6);
   
   }
   
@@ -1472,8 +1472,8 @@ namespace stdair {
     // Add total forecast info for cabin Y.
     const MeanStdDevPair_T lMean60StdDev6 (60.0, 6.0);
     const WTP_T lWTP750 = 750.0;
-    const ForecastCharacteristics_T lForecastCharWTP750Mean60StdDev6 (lWTP750, lMean60StdDev6);
-    lSQ_SINHKG_OnDDate.setTotalForecast (lY, lForecastCharWTP750Mean60StdDev6);
+    const WTPDemandPair_T lWTP750Mean60StdDev6 (lWTP750, lMean60StdDev6);
+    lSQ_SINHKG_OnDDate.setTotalForecast (lY, lWTP750Mean60StdDev6);
 
     // Add demand info (optional).
     CabinClassPair_T lCC_YM1 (lY,lM);
@@ -1483,8 +1483,8 @@ namespace stdair {
     lCabinClassPairList.push_back(lCC_YM2);
     const MeanStdDevPair_T lMean20StdDev2 (20.0, 2.0);
     const Yield_T lYield850 = 850.0;
-    const DemandCharacteristics_T lDemandCharYield850Mean20StdDev2 (lYield850, lMean20StdDev2);
-    lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield850Mean20StdDev2);
+    const YieldDemandPair_T lYield850Mean20StdDev2 (lYield850, lMean20StdDev2);
+    lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield850Mean20StdDev2);
     
     CabinClassPair_T lCC_YY1 (lY,lY);
     CabinClassPair_T lCC_YY2 (lY,lY);
@@ -1493,8 +1493,8 @@ namespace stdair {
     lCabinClassPairList.push_back(lCC_YY2);
     const MeanStdDevPair_T lMean10StdDev1 (10.0, 1.0);
     const Yield_T lYield1200 = 1200.0;
-    const DemandCharacteristics_T lDemandCharYield1200Mean10StdDev1 (lYield1200, lMean10StdDev1);
-    lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield1200Mean10StdDev1);
+    const YieldDemandPair_T lYield1200Mean10StdDev1 (lYield1200, lMean10StdDev1);
+    lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield1200Mean10StdDev1);
 
     // Create an O&D Date (SQ11/08-FEB-2010/SIN-BKK) for SQ's Inventory
     lOnDStringList.clear();
@@ -1512,22 +1512,22 @@ namespace stdair {
 
     // Add total forecast info for cabin Y.
     const WTP_T lWTP400 = 400.0;
-    const ForecastCharacteristics_T lForecastCharWTP400Mean60StdDev6 (lWTP400, lMean60StdDev6);
-    lSQ_SINBKK_OnDDate.setTotalForecast (lY, lForecastCharWTP400Mean60StdDev6);
+    const WTPDemandPair_T lWTP400Mean60StdDev6 (lWTP400, lMean60StdDev6);
+    lSQ_SINBKK_OnDDate.setTotalForecast (lY, lWTP400Mean60StdDev6);
 
     // Add demand info (optional).
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YM1);
     const MeanStdDevPair_T lMean20StdDev1 (20.0, 1.0);
     const Yield_T lYield500 = 500.0;
-    const DemandCharacteristics_T lDemandCharYield500Mean20StdDev1 (lYield500, lMean20StdDev1);
-    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield500Mean20StdDev1);
+    const YieldDemandPair_T lYield500Mean20StdDev1 (lYield500, lMean20StdDev1);
+    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, lYield500Mean20StdDev1);
 
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YY1);
     const Yield_T lYield700 = 700.0;
-    const DemandCharacteristics_T lDemandCharYield700Mean20StdDev1 (lYield700, lMean10StdDev1 );
-    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield700Mean20StdDev1);
+    const YieldDemandPair_T lYield700Mean20StdDev1 (lYield700, lMean10StdDev1 );
+    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, lYield700Mean20StdDev1);
 
     /*******************************************************************************
     // Create an O&D Date (SQ1200/08-FEB-2010/BKK-HKG) for SQ's Inventory
@@ -1942,18 +1942,18 @@ namespace stdair {
     FacBomManager::addToListAndMap (lCX_SINHKG_OnDDate, lBKKHKGSegment);
 
     // Add total forecast info for cabin Y.
-    lCX_SINHKG_OnDDate.setTotalForecast (lY, lForecastCharWTP750Mean60StdDev6);
+    lCX_SINHKG_OnDDate.setTotalForecast (lY, lWTP750Mean60StdDev6);
     
     // Add demand info
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YM1);
     lCabinClassPairList.push_back(lCC_YM2);
-    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield850Mean20StdDev2);
+    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield850Mean20StdDev2);
 
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YY1);
     lCabinClassPairList.push_back(lCC_YY2);
-    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield1200Mean10StdDev1);
+    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield1200Mean10StdDev1);
 
     /***********************************************************************************
     // Create an O&D Date (CX1100/08-FEB-2010/SIN-BKK) for CX's Inventory
@@ -1992,17 +1992,17 @@ namespace stdair {
     FacBomManager::addToListAndMap (lCX_BKKHKG_OnDDate, lBKKHKGSegment);
 
     // Add total forecast info for cabin Y.
-    lCX_BKKHKG_OnDDate.setTotalForecast (lY, lForecastCharWTP400Mean60StdDev6);
+    lCX_BKKHKG_OnDDate.setTotalForecast (lY, lWTP400Mean60StdDev6);
 
     // Add demand info
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YM2);
-    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield500Mean20StdDev1);
+    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield500Mean20StdDev1);
 
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YY2);
-    const DemandCharacteristics_T lDemandCharYield700Mean10StdDev1 (lYield700, lMean10StdDev1 );
-    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield700Mean10StdDev1);
+    const YieldDemandPair_T lYield700Mean10StdDev1 (lYield700, lMean10StdDev1 );
+    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield700Mean10StdDev1);
 
     /*================================================================================
       ================================================================================
