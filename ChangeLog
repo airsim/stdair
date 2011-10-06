@@ -1,4 +1,8 @@
-	* Thu Sep 29 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.41.0
+	* Thu Oct 06 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.0
+	- Removed stored operating segment date in segment date object.
+	- Removed useless object. 
+
+	* Thu Sep 29 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.42.0
 	- Added flight periods and OnDs to the basic bom tree.
 	- Re-structured a few things in partnership development.
 
