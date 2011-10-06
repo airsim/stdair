@@ -56,6 +56,13 @@ namespace stdair {
     BomAbstract* const getParent() const {
       return _parent;
     }
+
+    /**
+     * Get the map of children holders.
+     */
+    const HolderMap_T& getHolderMap() const {
+      return _holderMap;
+    }
     
     /**
      * Get the cabin code (primary key).
@@ -73,13 +80,6 @@ namespace stdair {
      *       describeKey() method.
      */
     const MapKey_T getFullerKey() const;
-
-    /**
-     * Get the map of children holders.
-     */
-    const HolderMap_T& getHolderMap() const {
-      return _holderMap;
-    }
 
     /** Get the guilltine block. */
     const GuillotineBlock& getGuillotineBlock() const {
@@ -137,20 +137,6 @@ namespace stdair {
       return _fareFamilyActivation;
     }
 
-    /**
-     * Get the "operating" segment cabin.
-     */
-    SegmentCabin* getOperatingSegmentCabin () const {
-      return _operatingSegmentCabin;
-    }
-
-    /**
-     * Check if an other airline is operating.
-     */
-    bool isOtherAirlineOperating () const {
-      return _isOtherAirlineOperating;
-    }
-
   public:
     // ///////// Setters //////////
     /** Set the guillotine block. */
@@ -202,14 +188,7 @@ namespace stdair {
     void activateFareFamily () {
       _fareFamilyActivation = true;
     }
-
-    /** Set operating segment cabin. */
-    void linkWithOperating (SegmentCabin& iSegmentCabin) {
-      _operatingSegmentCabin = &iSegmentCabin;
-      _isOtherAirlineOperating = true;
-    }
-
-
+    
   public:
     // /////////// Business methods //////////
     /** Register a sale. */
@@ -299,20 +278,6 @@ namespace stdair {
      * Pointer on the parent class (SegmentDate).
      */
     BomAbstract* _parent;
-
-    /**
-     * Pointer on the operating SegmentCabin.
-     * Nota:
-     * 1. "operating" refers to the codeshare contract seller.
-     * 2. the segment cabin it points to can be a "marketing" cabin as well.
-     * 3. the pointer will be NULL if the segment cabin is itself the "operating" one.
-     */
-    SegmentCabin* _operatingSegmentCabin;
-
-    /**
-     * Flag saying if the "operating" segment is a different one.
-     */
-    bool _isOtherAirlineOperating;
     
     /**
      * Map holding the children (FareFamily or BookingClass objects).

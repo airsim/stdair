@@ -28,8 +28,6 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   SegmentCabin::SegmentCabin (const Key_T& iKey)
     : _key (iKey), _parent (NULL),
-      _operatingSegmentCabin (NULL),
-      _isOtherAirlineOperating (false),
       _capacity (DEFAULT_CABIN_CAPACITY),
       _blockSpace (DEFAULT_BLOCK_SPACE),
       _bookingCounter (DEFAULT_CLASS_NB_OF_BOOKINGS),
