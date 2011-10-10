@@ -186,11 +186,7 @@ namespace stdair {
   public:
     // ///////////// Setters ///////////////
     /** Set the offered and physical capacities. */
-    void setCapacities (const CabinCapacity_T& iCapacity) {
-      _offeredCapacity = iCapacity;
-      _physicalCapacity = iCapacity;
-      setAvailabilityPool (iCapacity - _committedSpace);
-    }
+    void setCapacities (const CabinCapacity_T& iCapacity);
     
     /** Set the number of sold seat. */
     void setSoldSeat (const NbOfSeats_T& iSoldSeat) {
