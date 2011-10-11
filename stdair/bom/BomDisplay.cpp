@@ -505,10 +505,8 @@ namespace stdair {
       if (hasListSegmentDate == true) {
         
         if (isAnotherAirlineOperating == true) {
-          const SegmentDateList_T& lOperatingSDList = BomManager::getList<SegmentDate> (*lSD_ptr);
-          assert (lOperatingSDList.size() == 1);
-          SegmentDateList_T::const_iterator itSD = lSegmentDateList.begin();
-          const SegmentDate* lOperatingSD_ptr = *itSD;
+          const SegmentDate* lOperatingSD_ptr = lSD_ptr->getOperatingSegmentDate ();
+          assert (lOperatingSD_ptr != NULL);
           const FlightDate* lOperatingFD_ptr = BomManager::getParentPtr<FlightDate>(*lOperatingSD_ptr);
           const Inventory* lOperatingInv_ptr = BomManager::getParentPtr<Inventory>(*lOperatingFD_ptr);
           oStream << " *** Operated by " << lOperatingInv_ptr->toString()

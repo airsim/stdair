@@ -122,6 +122,13 @@ namespace stdair {
       return _isOtherAirlineOperating;
     }
 
+    /**
+     * Get the "operating" segment date.
+     */
+    SegmentDate* getOperatingSegmentDate () const {
+      return _operatingSegmentDate;
+    }
+
   public:
     // ///////// Setters //////////
     /** Set the boarding date. */
@@ -152,6 +159,11 @@ namespace stdair {
     /** Set the distance. */
     void setDistance (const Distance_T& iDistance) {
       _distance = iDistance;
+    }
+    
+    /** Set operating segment date. */
+    void linkWithOperating (SegmentDate& iSegmentDate) {
+      _operatingSegmentDate = &iSegmentDate;
     }
 
     /** Set the boolean saying if another airline is operating. */
@@ -247,6 +259,14 @@ namespace stdair {
      * Map holding the children (SegmentCabin objects).
      */
     HolderMap_T _holderMap;
+
+    /**
+     * Pointer on the operating SegmentDate.
+     * Nota:
+     * 1. "operating" refers to the codeshare contract seller.
+     * 2. the pointer will be NULL if the segment date is itself the "operating" one.
+     */
+    SegmentDate* _operatingSegmentDate;
 
     /**
      * Flag saying if the "operating" segment is a different one. 
