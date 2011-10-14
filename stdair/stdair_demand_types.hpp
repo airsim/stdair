@@ -115,7 +115,7 @@ namespace stdair {
   /** Define the list of forecast booking requests proportions. */
   typedef std::list<ProportionFactor_T> ProportionFactorList_T;
 
-  /** Define the O&D string key. */
+  /** Define the O&D string key (e.g. "SQ;11,2010-Feb-08;SIN,BKK"). */
   typedef std::string OnDString_T;
 
   /** Define the list of O&D string key. */

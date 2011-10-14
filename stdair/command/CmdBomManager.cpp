@@ -1439,12 +1439,10 @@ namespace stdair {
 
     // Step 9.0.9: link SQ inventory objects to Partner CX inventory objects
 
-    FacBomManager::addToListAndMap (lSINBKKSegment, lPartnerMktSINBKKSegment);
-    
-    lMktBKKHKGSegment.setIsOtherAirlineOperating(true);
-    lMktBKKHKGSegment.linkWithOperating(lPartnerBKKHKGSegment);
-    FacBomManager::addToListAndMap (lMktBKKHKGSegment, lPartnerBKKHKGSegment);
+    FacBomManager::addToMap (lSINBKKSegment, lPartnerMktSINBKKSegment);
 
+    FacBomManager::addToList (lMktBKKHKGSegment, lPartnerBKKHKGSegment);
+    
     /* =================================================================================== */
 
     // Step 1.0: O&D level
@@ -1907,11 +1905,9 @@ namespace stdair {
                                     lPartnerMktBKKHKGSegmentYCabin1FamilyMClass);
 
     // Step 9.0.9: link CX inventory objects to Partner SQ inventory objects
-    FacBomManager::addToListAndMap (lBKKHKGSegment, lPartnerMktBKKHKGSegment);
+    FacBomManager::addToMap (lBKKHKGSegment, lPartnerMktBKKHKGSegment);
 
-    lMktSINBKKSegment.setIsOtherAirlineOperating(true);
-    lMktSINBKKSegment.linkWithOperating(lPartnerSINBKKSegment);
-    FacBomManager::addToListAndMap (lMktSINBKKSegment, lPartnerSINBKKSegment);
+    FacBomManager::addToList (lMktSINBKKSegment, lPartnerSINBKKSegment); 
 
     /* =================================================================================== */
 

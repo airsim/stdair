@@ -114,13 +114,6 @@ namespace stdair {
      *              - ElapsedTime.
      */
     const Duration_T getTimeOffset() const;
-    
-    /**
-     * Check if an other airline is operating.
-     */
-    const bool isOtherAirlineOperating () const {
-      return _isOtherAirlineOperating;
-    }
 
     /**
      * Get the "operating" segment date.
@@ -128,6 +121,23 @@ namespace stdair {
     SegmentDate* getOperatingSegmentDate () const {
       return _operatingSegmentDate;
     }
+
+    /**
+     * Get the map of demand information.
+     */
+    const SegmentDateMap_T& getMarketingSegmentDateMap () const {
+      return _marketingSegmentDateMap;
+    }
+    
+    /**
+     * Get the map of demand information.
+     */
+    const bool isMarketingSegmentDateMapEmpty () const {
+      const bool isMarketingSDMapEmpty =
+        _marketingSegmentDateMap.empty();
+      return isMarketingSDMapEmpty;
+    }
+
 
   public:
     // ///////// Setters //////////
@@ -164,11 +174,6 @@ namespace stdair {
     /** Set operating segment date. */
     void linkWithOperating (SegmentDate& iSegmentDate) {
       _operatingSegmentDate = &iSegmentDate;
-    }
-
-    /** Set the boolean saying if another airline is operating. */
-    void setIsOtherAirlineOperating (const bool iBool) {
-      _isOtherAirlineOperating = iBool;
     }
 
   public:
@@ -269,9 +274,12 @@ namespace stdair {
     SegmentDate* _operatingSegmentDate;
 
     /**
-     * Flag saying if the "operating" segment is a different one. 
+     * Map holding the marketing segment dates.
+     * Nota:
+     * 1. "marketing" refers to the codeshare contract seller.
+     * 2. the map will be empty if the segment date is itself the "marketing" one.
      */
-    bool _isOtherAirlineOperating;
+    SegmentDateMap_T _marketingSegmentDateMap;
 
     /**
      * Boarding date.

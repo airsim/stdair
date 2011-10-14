@@ -13,6 +13,9 @@
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/factory/FacAbstract.hpp>
 #include <stdair/factory/FacBom.hpp>
+// Stdair BOM Objects
+#include <stdair/bom/SegmentDate.hpp>
+
 
 namespace stdair {
 
@@ -329,7 +332,6 @@ namespace stdair {
   template <typename OBJECT1, typename OBJECT2>
   void FacBomManager::addToListAndMap (OBJECT1& ioObject1, OBJECT2& ioObject2,
                                        const MapKey_T& iKey) {
-
     BomHolder<OBJECT2>& lBomHolder = getBomHolder<OBJECT2> (ioObject1);
 
     addToList<OBJECT1, OBJECT2> (lBomHolder, ioObject1, ioObject2);
@@ -360,7 +362,43 @@ namespace stdair {
     lDestHolder._bomList = lOriginHolder._bomList;
     lDestHolder._bomMap = lOriginHolder._bomMap;
   }
-  
+
+  // ////////////////////////////////////////////////////////////////////
+  //
+  // Specialization of template methods above for a segment date and its
+  // corresponding operating segment date and marketing segment dates.
+  //
+  // TODO:
+  // This specialization is needed for all the objects in the current
+  // BOM tree.
+  // (An inventory is the parent of flight dates, a flight date is the
+  // parent of segment dates and leg dates, ...)
+  //
+  // ////////////////////////////////////////////////////////////////////
+
+  // ////////////////////////////////////////////////////////////////////
+  template<>
+  inline void FacBomManager::
+  addToList <SegmentDate, SegmentDate> (SegmentDate& ioSegmentDate,
+                                        SegmentDate& ioOperatingSegmentDate) {
+    ioSegmentDate.linkWithOperating(ioOperatingSegmentDate);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  template<>
+  inline void FacBomManager::
+  addToMap <SegmentDate, SegmentDate> (SegmentDate& ioSegmentDate,
+                                       SegmentDate& ioOperatingSegmentDate) {
+    const MapKey_T& lKey = ioOperatingSegmentDate.describeKey();
+    const bool insertionSucceeded =
+      ioSegmentDate._marketingSegmentDateMap.insert(typename SegmentDateMap_T::
+                                                    value_type (lKey, &ioOperatingSegmentDate)).second;
+
+    assert (insertionSucceeded == true);
+  }
+
 }
+
+// ////////////////////////////////////////////////////////////////////
 
 #endif // __STDAIR_FAC_FACBOMMANAGER_HPP
