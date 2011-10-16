@@ -57,7 +57,11 @@ namespace stdair {
 
     //
     assert (ioCancellationPtr != NULL);
+#if BOOST_VERSION >= 103900
     _cancellation = boost::make_shared<CancellationStruct> (*ioCancellationPtr);
+#else  // BOOST_VERSION >= 103900
+    _cancellation = ioCancellationPtr;
+#endif // BOOST_VERSION >= 103900
     assert (_cancellation != NULL);
     
     /**
@@ -163,8 +167,12 @@ namespace stdair {
 
     //
     if (iEventStruct._cancellation != NULL) {
+#if BOOST_VERSION >= 103900
       _cancellation =
         boost::make_shared<CancellationStruct>(*iEventStruct._cancellation);
+#else  // BOOST_VERSION >= 103900
+      _cancellation = iEventStruct._cancellation;
+#endif // BOOST_VERSION >= 103900
     }
 
     //
