@@ -50,11 +50,14 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void LegCabinKey::serialisationImplementation() {
+  void LegCabinKey::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
+  }
 
+  // ////////////////////////////////////////////////////////////////////
+  void LegCabinKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;

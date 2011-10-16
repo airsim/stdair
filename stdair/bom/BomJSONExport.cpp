@@ -4,11 +4,15 @@
 // STL
 #include <cassert>
 #include <ostream>
+#if BOOST_VERSION >= 104100
 // Boost Property Tree
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#endif // BOOST_VERSION >= 104100
+#if BOOST_VERSION >= 103400
 // Boost ForEach
 #include <boost/foreach.hpp>
+#endif // BOOST_VERSION >= 103400
 // StdAir
 #include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/BomManager.hpp>
@@ -24,7 +28,13 @@
 #include <stdair/bom/Bucket.hpp>
 #include <stdair/bom/BomJSONExport.hpp>
 
+#if BOOST_VERSION >= 104100
 namespace bpt = boost::property_tree;
+#else // BOOST_VERSION >= 104100
+namespace bpt {
+  typedef char ptree;
+}
+#endif // BOOST_VERSION >= 104100
 
 namespace stdair {
 
@@ -74,6 +84,7 @@ namespace stdair {
       const LegDate* lLD_ptr = *itLD;
       assert (lLD_ptr != NULL);
       
+#if BOOST_VERSION >= 104100
       //
       bpt::ptree lLegDateArray;
 
@@ -104,6 +115,7 @@ namespace stdair {
       std::ostringstream oStream;
       oStream << "flight_date.legs";
       ioPropertyTree.put_child (oStream.str(), lLegDateArray);
+#endif // BOOST_VERSION >= 104100
     }
   }
     
@@ -143,6 +155,7 @@ namespace stdair {
         const LegCabin* lLC_ptr = *itLC;
         assert (lLC_ptr != NULL);
       
+#if BOOST_VERSION >= 104100
         // Put boarding point in property tree
         ioPropertyTree.put ("flight_date.leg.cabin.code",
                             lLC_ptr->getCabinCode());
@@ -167,6 +180,7 @@ namespace stdair {
                 << lLC_ptr->getCurrentBidPrice() << ", "
                 << std::endl;
         */
+#endif // BOOST_VERSION >= 104100
       }
     }
   }
@@ -221,6 +235,7 @@ namespace stdair {
           const FareFamily* lFF_ptr = *itFF;
           assert (lFF_ptr != NULL);
 
+#if BOOST_VERSION >= 104100
           //
           bpt::ptree lFFArray;
 
@@ -241,6 +256,7 @@ namespace stdair {
           std::ostringstream oStream;
           oStream << "flight_date.segment.cabin.fare_families";
           ioPropertyTree.put_child (oStream.str(), lFFArray);
+#endif // BOOST_VERSION >= 104100
         }
       }
     }
@@ -286,6 +302,7 @@ namespace stdair {
           const Bucket* lBucket_ptr = *itBuck;
           assert (lBucket_ptr != NULL);
 
+#if BOOST_VERSION >= 104100
           // Put yield range upper value in property tree
           ioPropertyTree.put ("flight_date.leg.cabin.bucket.yield_range_upper",
                               lBucket_ptr->getYieldRangeUpperValue());
@@ -294,6 +311,7 @@ namespace stdair {
                   << lBucket_ptr->getSoldSeats() << ", "
                   << lBucket_ptr->getAvailability() << ", ";
           */
+#endif // BOOST_VERSION >= 104100
         }
       }
     }
@@ -316,6 +334,7 @@ namespace stdair {
       oStream << iBookingClass.getSubclassCode();
     }
 
+#if BOOST_VERSION >= 104100
     // Put boarding point in property tree
     ioPropertyTree.put ("flight_date.segment.cabin.fare_family.booking_class.code",
                         oStream.str());
@@ -337,6 +356,7 @@ namespace stdair {
             << iBookingClass.getSegmentAvailability() << ", "
             << std::endl;
     */
+#endif // BOOST_VERSION >= 104100
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -434,6 +454,7 @@ namespace stdair {
     // Create an empty property tree object
     bpt::ptree pt;
 
+#if BOOST_VERSION >= 104100
     /**
      * Flight-date level (only)
      */
@@ -451,6 +472,7 @@ namespace stdair {
     const std::string& lDepartureDateStr =
       boost::gregorian::to_simple_string (lFlightDateDate);
     pt.put ("flight_date.departure_date", lDepartureDateStr);
+#endif // BOOST_VERSION >= 104100
 
     //
     jsonLegDateExport (pt, iFlightDate);
@@ -467,8 +489,10 @@ namespace stdair {
     //
     //jsonBookingClassExport (pt, iFlightDate);
 
+#if BOOST_VERSION >= 104100
     // Write the property tree into the JSON stream.
     write_json (oStream, pt);
+#endif // BOOST_VERSION >= 104100
   }
     
 }
