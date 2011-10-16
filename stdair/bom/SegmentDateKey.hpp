@@ -95,10 +95,11 @@ namespace stdair {
 
   private:
     /**
-     * Serialisation helper (allows to be sure the template method is
+     * Serialisation helpers (allows to be sure the template method is
      * instantiated).
      */
-    void serialisationImplementation();
+    void serialisationImplementationExport() const;
+    void serialisationImplementationImport();
 
 
   private:

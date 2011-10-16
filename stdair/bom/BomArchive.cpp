@@ -11,7 +11,7 @@
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/utility.hpp>
 #include <boost/serialization/list.hpp>
-#include <boost/serialization/assume_abstract.hpp>
+//#include <boost/serialization/assume_abstract.hpp>
 // StdAir
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>

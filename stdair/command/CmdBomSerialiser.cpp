@@ -115,11 +115,14 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BomRoot::serialisationImplementation() {
+  void BomRoot::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
+  }
 
+  // ////////////////////////////////////////////////////////////////////
+  void BomRoot::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;
@@ -139,11 +142,14 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void Inventory::serialisationImplementation() {
+  void Inventory::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
+  }
 
+  // ////////////////////////////////////////////////////////////////////
+  void Inventory::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;
@@ -163,11 +169,14 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void FlightDate::serialisationImplementation() {
+  void FlightDate::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
+  }
 
+  // ////////////////////////////////////////////////////////////////////
+  void FlightDate::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;
@@ -181,11 +190,14 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void SegmentDate::serialisationImplementation() {
+  void SegmentDate::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
+  }
 
+  // ////////////////////////////////////////////////////////////////////
+  void SegmentDate::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;
@@ -199,11 +211,14 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void SegmentCabin::serialisationImplementation() {
+  void SegmentCabin::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
+  }
 
+  // ////////////////////////////////////////////////////////////////////
+  void SegmentCabin::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;
