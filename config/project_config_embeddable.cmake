@@ -597,6 +597,8 @@ macro (init_build)
 	#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Werror")
 	set (CMAKE_CXX_FLAGS "-Wall -Werror")
   endif (NOT CMAKE_CXX_FLAGS)
+  # Tell the source code the version of Boost
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBOOST_VERSION=${Boost_VERSION}")
 
   #
   include_directories (BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
