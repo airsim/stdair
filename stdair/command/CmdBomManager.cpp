@@ -1471,7 +1471,10 @@ namespace stdair {
     lSQ_SINHKG_OnDDate.setTotalForecast (lY, lWTP750Mean60StdDev6);
 
     // Add demand info (optional).
+    // 2 legs here, so 2 CabinClassPair to add in the list.
+    // Fist leg: cabin Y, class M.
     CabinClassPair_T lCC_YM1 (lY,lM);
+    // Second leg: cabin Y, class M too.
     CabinClassPair_T lCC_YM2 (lY,lM);
     CabinClassPairList_T lCabinClassPairList;
     lCabinClassPairList.push_back(lCC_YM1);
