@@ -450,7 +450,7 @@ namespace stdair {
               << lLD_ptr->getOffDate() << ", "
               << lLD_ptr->getOffTime() << ", "
               << lLD_ptr->getElapsedTime() << ", "
-              << lLD_ptr->getDateOffset() << ", "
+              << lLD_ptr->getDateOffset().days() << ", "
               << lLD_ptr->getTimeOffset() << ", "
               << lLD_ptr->getDistance() << ", "
               << lLD_ptr->getCapacity() << ", " << std::endl;
