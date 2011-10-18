@@ -1,7 +1,6 @@
 /*!
 
-\page stdair-config
-	  Configuration Script for the $projectbrief
+\page stdair-config Configuration Script for the C++ Standard Airline IT Object Library
 
 \section sec_synopsis SYNOPSIS
 <b>stdair-config</b> <tt>[--prefix] [--version] [--libs] [--cflags]</tt>
