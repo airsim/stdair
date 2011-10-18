@@ -1,6 +1,5 @@
 /*!
-\page stdair-library
-	  $projectbrief
+\page stdair-library C++ Standard Airline IT Object Library
 
 \section sec_synopsis SYNOPSIS
 
@@ -10,7 +9,7 @@
 
 \section sec_description DESCRIPTION
 
-The Standard Airline IT (STDAIR) library is a collection of routines
+The Standard Airline IT (StdAir) library is a collection of routines
 for travel market simulation. The routines are written from scratch by
 the StdAir team in C++, and present a modern Applications Programming
 Interface (API) for C/C++ programmers, allowing wrappers to be written
