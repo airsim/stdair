@@ -1,3 +1,7 @@
+	* Tue Oct 18 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.1
+	- The build framework is now compatible with CMake 2.6 (the exclusive
+	dependency on CMake 2.8 has been removed).
+
 	* Thu Oct 06 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.0
 	- Removed stored operating segment date in segment date object.
 	- Removed useless object. 
