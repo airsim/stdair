@@ -43,7 +43,7 @@ namespace stdair {
   typedef std::list<BidPriceVector_T> BidPriceVectorHolder_T;
 
   /** Define booking class - bid price reference map. */
-  typedef std::map<const ClassCode_T, const BidPriceVector_T&> ClassBpvMap_T;
+  typedef std::map<const ClassCode_T, const BidPriceVector_T*> ClassBpvMap_T;
 
   /** Define list of booking class - bid price reference maps. */
   typedef std::list<ClassBpvMap_T> ClassBpvMapHolder_T;
