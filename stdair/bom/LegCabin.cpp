@@ -91,18 +91,35 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
+  void LegCabin::updateCurrentBidPrice() {
+    const unsigned short lAvailabilityPool =
+      static_cast<unsigned short> (std::floor (_availabilityPool));
+
+    if (lAvailabilityPool >= 1) {
+      const unsigned short lBidPriceVectorSize = _bidPriceVector.size();
+      if (lBidPriceVectorSize >= lAvailabilityPool) {
+        _currentBidPrice = _bidPriceVector.at (lAvailabilityPool - 1);
+      }
+    }
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   void LegCabin::addDemandInformation (const YieldValue_T& iYield,
                                        const MeanValue_T& iMeanValue,
                                        const StdDevValue_T& iStdDevValue) {
     //
-    const int lYieldLevel = std::floor (iYield + 0.5);
+    const int lYieldLevel =
+      static_cast<int> (std::floor (iYield + 0.5));
 
     //
-    YieldLevelDemandMap_T::iterator itDemand = _yieldLevelDemandMap.find (lYieldLevel);
+    YieldLevelDemandMap_T::iterator itDemand =
+      _yieldLevelDemandMap.find (lYieldLevel);
+
     if (itDemand == _yieldLevelDemandMap.end()) {
       MeanStdDevPair_T lMeanStdDevPair (iMeanValue,iStdDevValue);
-      const bool hasInsertBeenSuccessful =
-        _yieldLevelDemandMap.insert(YieldLevelDemandMap_T::value_type (lYieldLevel,lMeanStdDevPair)).second;
+      const bool hasInsertBeenSuccessful = _yieldLevelDemandMap.
+        insert (YieldLevelDemandMap_T::value_type (lYieldLevel,
+                                                   lMeanStdDevPair)).second;
       assert (hasInsertBeenSuccessful == true);
       
     } else {

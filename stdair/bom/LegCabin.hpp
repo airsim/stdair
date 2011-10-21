@@ -274,93 +274,124 @@ namespace stdair {
     }
 
     /** Update the bid price (from bid price vector if not empty). */
-    void updateCurrentBidPrice () {
-      if (_availabilityPool >= 1) {
-        unsigned int lBidPriceVectorSize = _bidPriceVector.size();
-        if (lBidPriceVectorSize >= _availabilityPool) {
-        _currentBidPrice = _bidPriceVector.at(_availabilityPool - 1);
-        }
-      }
-    }
+    void updateCurrentBidPrice();
 
+    
   public:
     // /////////// Display support methods /////////
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object into an output stream.
+     * @param ostream& the output stream.
+     */
     void toStream (std::ostream& ioOut) const {
       ioOut << toString();
     }
 
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object from an input stream.
+     * @param istream& the input stream.
+     */
     void fromStream (std::istream& ioIn) {
     }
 
-    /** Get the serialised version of the Business Object. */
+    /**
+     * Get the serialised version of the Business Object.
+     */
     std::string toString() const;
     
-    /** Get a string describing the  key. */
+    /**
+     * Get a string describing the  key.
+     */
     const std::string describeKey() const {
       return _key.toString();
     }
 
-    /** Display the virtual class list content. */
-    const std::string displayVirtualClassList () const;
+    /**
+     * Display the virtual class list content.
+     */
+    const std::string displayVirtualClassList() const;
 
 
   public:
     // /////////// Business methods //////////
-    /** Register a sale. */
+    /**
+     * Register a sale.
+     */
     void updateFromReservation (const NbOfBookings_T&);
 
-    /** Add a virtual class to the list. */
+    /**
+     * Add a virtual class to the list.
+     */
     void addVirtualClass (const VirtualClassStruct& iVC) {
       _virtualClassList.push_back (iVC);
     }
 
-    /** Empty the virtual class list. */
+    /**
+     * Empty the virtual class list.
+     */
     void emptyVirtualClassList() {
       _virtualClassList.clear();
     }
 
-    /** Empty the bid price vector. */
+    /**
+     * Empty the bid price vector.
+     */
     void emptyBidPriceVector() {
       _bidPriceVector.clear();
     }
 
-    /** Add demand information. */
-    void addDemandInformation (const YieldValue_T&,
-                               const MeanValue_T&,
+    /**
+     * Add demand information.
+     */
+    void addDemandInformation (const YieldValue_T&, const MeanValue_T&,
                                const StdDevValue_T&);
 
-    /** Reset the (yield level,demand) map. */
+    /**
+     * Reset the (yield level,demand) map.
+     */
     void emptyYieldLevelDemandMap() {
       _yieldLevelDemandMap.clear();
     }
 
+
   protected:
     // ////////// Constructors and destructors /////////
-    /** Constructor. */
+    /**
+     * Constructor.
+     */
     LegCabin (const Key_T&);
-    /** Destructor. */
+    /**
+     * Destructor.
+     */
     ~LegCabin();
 
   private:
-    /** Default constructor. */
+    /**
+     * Default constructor.
+     */
     LegCabin();
-    /** Default copy constructor. */
+    /**
+     * Default copy constructor.
+     */
     LegCabin (const LegCabin&);
+
 
 
   protected:
     // ////////// Attributes /////////
-    /** Primary key (cabin code). */
+    /**
+     * Primary key (cabin code).
+     */
     Key_T _key;
 
-    /** Pointer on the parent class (LegDate). */
+    /**
+     * Pointer on the parent class (LegDate).
+     */
     BomAbstract* _parent;
     
-    /** Map holding the children (Bucket objects). */
+    /**
+     * Map holding the children (Bucket objects).
+     */
     HolderMap_T _holderMap;
 
     /** Saleable capacity of the cabin. */
@@ -395,6 +426,7 @@ namespace stdair {
 
     /** Map holding the demand information indexed by yield. */
     YieldLevelDemandMap_T _yieldLevelDemandMap;
+
 
   public:
     /** Capacity adjustment of the cabin, due to check-in (DCS) regrade. */

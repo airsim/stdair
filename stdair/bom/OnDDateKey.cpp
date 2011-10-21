@@ -84,11 +84,14 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void OnDDateKey::serialisationImplementation() {
+  void OnDDateKey::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
-
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  void OnDDateKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;
@@ -109,9 +112,9 @@ namespace stdair {
   // Explicit template instantiation
   namespace ba = boost::archive;
   template void OnDDateKey::serialize<ba::text_oarchive> (ba::text_oarchive&,
-                                                             unsigned int);
+                                                          unsigned int);
   template void OnDDateKey::serialize<ba::text_iarchive> (ba::text_iarchive&,
-                                                             unsigned int);
+                                                          unsigned int);
   // ////////////////////////////////////////////////////////////////////
   
 }

@@ -19,7 +19,17 @@
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_MODULE StdAirTest
+#if BOOST_VERSION >= 103900
 #include <boost/test/unit_test.hpp>
+#else  // BOOST_VERSION >= 103900
+#include <boost/test/test_tools.hpp>
+#include <boost/test/results_reporter.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <boost/test/output_test_stream.hpp>
+#include <boost/test/unit_test_log.hpp>
+#include <boost/test/framework.hpp>
+#include <boost/test/detail/unit_test_parameters.hpp>
+#endif // BOOST_VERSION >= 103900
 // Boost Serialisation
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
@@ -39,6 +49,8 @@
 
 namespace boost_utf = boost::unit_test;
 
+#if BOOST_VERSION >= 103900
+
 // (Boost) Unit Test XML Report
 std::ofstream utfReportStream ("StandardAirlineITTestSuite_utfresults.xml");
 
@@ -51,7 +63,7 @@ struct UnitTestConfig {
     boost_utf::unit_test_log.set_stream (utfReportStream);
     boost_utf::unit_test_log.set_format (boost_utf::XML);
     boost_utf::unit_test_log.set_threshold_level (boost_utf::log_test_units);
-    //boost_utf::unit_test_log.set_threshold_level (boost_utf::log_successful_tests);
+    // boost_utf::unit_test_log.set_threshold_level (boost_utf::log_successful_tests);
   }
 
   /** Destructor. */
@@ -324,6 +336,13 @@ BOOST_AUTO_TEST_CASE (bom_structure_serialisation_test) {
 
 // End the test suite
 BOOST_AUTO_TEST_SUITE_END()
+
+#else // BOOST_VERSION >= 103900
+boost_utf::test_suite* init_unit_test_suite (int, char* []) {
+  boost_utf::test_suite* test = BOOST_TEST_SUITE ("Unit test example 1");
+  return test;
+}
+#endif // BOOST_VERSION >= 103900
 
 /*!
  * \endcode

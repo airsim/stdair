@@ -6,6 +6,7 @@
 #include <stdair/basic/BasConst_General.hpp>
 
 namespace stdair {
+
   // ////////////////////////////////////////////////////////////////////
   const stdair::Probability_T DictionaryManager::
   keyToValue (const DictionaryKey_T iKey) {
@@ -19,8 +20,9 @@ namespace stdair {
   const DictionaryKey_T DictionaryManager::
   valueToKey (const stdair::Probability_T iValue) {
     const unsigned short lValueMultipliedByThousand =
-      iValue * DEFAULT_NUMBER_OF_SUBDIVISIONS;
+      static_cast<unsigned short> (iValue) * DEFAULT_NUMBER_OF_SUBDIVISIONS;
     const DictionaryKey_T lDictionaryKey (lValueMultipliedByThousand);
     return lDictionaryKey;
   }
+
 }
