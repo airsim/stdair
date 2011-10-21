@@ -1439,9 +1439,9 @@ namespace stdair {
 
     // Step 9.0.9: link SQ inventory objects to Partner CX inventory objects
 
-    FacBomManager::addToMap (lSINBKKSegment, lPartnerMktSINBKKSegment);
+    FacBomManager::addToList (lSINBKKSegment, lPartnerMktSINBKKSegment);
 
-    FacBomManager::addToList (lMktBKKHKGSegment, lPartnerBKKHKGSegment);
+    lMktBKKHKGSegment.linkWithOperating (lPartnerBKKHKGSegment);
     
     /* =================================================================================== */
 
@@ -1908,9 +1908,9 @@ namespace stdair {
                                     lPartnerMktBKKHKGSegmentYCabin1FamilyMClass);
 
     // Step 9.0.9: link CX inventory objects to Partner SQ inventory objects
-    FacBomManager::addToMap (lBKKHKGSegment, lPartnerMktBKKHKGSegment);
+    FacBomManager::addToList (lBKKHKGSegment, lPartnerMktBKKHKGSegment);
 
-    FacBomManager::addToList (lMktSINBKKSegment, lPartnerSINBKKSegment); 
+    lMktSINBKKSegment.linkWithOperating (lPartnerSINBKKSegment);
 
     /* =================================================================================== */
 

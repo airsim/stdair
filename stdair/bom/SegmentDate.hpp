@@ -121,24 +121,14 @@ namespace stdair {
     SegmentDate* getOperatingSegmentDate () const {
       return _operatingSegmentDate;
     }
-
-    /**
-     * Get the map of demand information.
-     */
-    const SegmentDateMap_T& getMarketingSegmentDateMap () const {
-      return _marketingSegmentDateMap;
-    }
     
     /**
-     * Get the map of demand information.
+     * Get the list of marketing segment dates.
      */
-    const bool isMarketingSegmentDateMapEmpty () const {
-      const bool isMarketingSDMapEmpty =
-        _marketingSegmentDateMap.empty();
-      return isMarketingSDMapEmpty;
+    const SegmentDateList_T& getMarketingSegmentDateList () const {
+      return _marketingSegmentDateList;
     }
-
-
+    
   public:
     // ///////// Setters //////////
     /** Set the boarding date. */
@@ -278,12 +268,12 @@ namespace stdair {
     SegmentDate* _operatingSegmentDate;
 
     /**
-     * Map holding the marketing segment dates.
+     * List holding the marketing segment dates.
      * Nota:
      * 1. "marketing" refers to the codeshare contract seller.
-     * 2. the map will be empty if the segment date is itself the "marketing" one.
+     * 2. the list will be empty if the segment date is itself the "marketing" one.
      */
-    SegmentDateMap_T _marketingSegmentDateMap;
+    SegmentDateList_T _marketingSegmentDateList;
 
     /**
      * Boarding date.

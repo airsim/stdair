@@ -499,15 +499,15 @@ namespace stdair {
               << lBoardPoint << "-" << lOffPoint << ", " << lSegmentDateDate << std::endl;
 
       // Check if the current segment has corresponding marketing segments. 
-      const bool isMarketingSDMapEmpty = lSD_ptr->isMarketingSegmentDateMapEmpty ();
-      if (isMarketingSDMapEmpty == false) {
+      const bool isMarketingSDListEmpty = BomManager::hasList<SegmentDate>(*lSD_ptr);
+      if (isMarketingSDListEmpty == false) {
         //
-        const SegmentDateMap_T& lMarketingSDMap = lSD_ptr->getMarketingSegmentDateMap ();
+        const SegmentDateList_T& lMarketingSDList = BomManager::getList<SegmentDate>(*lSD_ptr);
           
         oStream << " *** Marketed by ";
-        for (SegmentDateMap_T::const_iterator itMarketingSD = lMarketingSDMap.begin();
-             itMarketingSD != lMarketingSDMap.end(); ++itMarketingSD) {
-          SegmentDate* lMarketingSD_ptr = itMarketingSD->second;
+        for (SegmentDateList_T::const_iterator itMarketingSD = lMarketingSDList.begin();
+             itMarketingSD != lMarketingSDList.end(); ++itMarketingSD) {
+          SegmentDate* lMarketingSD_ptr = *itMarketingSD;
           FlightDate* lMarketingFD_ptr = BomManager::getParentPtr<FlightDate>(*lMarketingSD_ptr);
           Inventory* lMarketingInv_ptr = BomManager::getParentPtr<Inventory>(*lMarketingFD_ptr);
           oStream << lMarketingInv_ptr->toString() << lMarketingFD_ptr->toString() <<" * ";

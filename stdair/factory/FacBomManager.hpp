@@ -8,6 +8,9 @@
 #include <iosfwd>
 #include <list>
 #include <map>
+// Boost
+#include <boost/static_assert.hpp>
+#include <boost/type_traits/is_same.hpp>
 // StdAir
 #include <stdair/bom/BomHolder.hpp>
 #include <stdair/bom/BomManager.hpp>
@@ -203,10 +206,19 @@ namespace stdair {
     ~FacBomManager() { }
   };
 
-
   // ////////////////////////////////////////////////////////////////////
+  // Public business method.
+  // Compile time assertation to check OBJECT1 and OBJECT2 types.
   template <typename OBJECT2, typename OBJECT1> 
   BomHolder<OBJECT2>& FacBomManager::addBomHolder (OBJECT1& ioObject1) {
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <SegmentDate, SegmentDate>
+    //
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));    
 
     BomHolder<OBJECT2>* lBomHolder_ptr =
       &FacBom<BomHolder<OBJECT2> >::instance().create();
@@ -219,10 +231,20 @@ namespace stdair {
 
     return *lBomHolder_ptr;
   }
-
+  
   // ////////////////////////////////////////////////////////////////////
+  // Public business method.
+  // Compile time assertation to check OBJECT1 and OBJECT2 types.
   template <typename OBJECT2, typename OBJECT1> 
   BomHolder<OBJECT2>* FacBomManager::getBomHolderPtr (OBJECT1& ioObject1) {
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <SegmentDate, SegmentDate>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));            
 
     BomHolder<OBJECT2>* lBomHolder_ptr = NULL;
 
@@ -238,6 +260,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
+  // Private method.
   template <typename OBJECT2, typename OBJECT1> 
   BomHolder<OBJECT2>& FacBomManager::getBomHolder (OBJECT1& ioObject1) {
 
@@ -259,15 +282,19 @@ namespace stdair {
 
     return *lBomHolder_ptr;
   }
-
+  
   // ////////////////////////////////////////////////////////////////////
+  // Private method.
   template <typename OBJECT1, typename OBJECT2>
   void FacBomManager::addToList (BomHolder<OBJECT2>& ioBomHolder,
                                  OBJECT1& ioObject1, OBJECT2& ioObject2) {
     ioBomHolder._bomList.push_back (&ioObject2);
   }
-
+  
   // ////////////////////////////////////////////////////////////////////
+  // Public business method.
+  // This method is specialized for the following couple types:
+  // <SegmentDate, SegmentDate>
   template <typename OBJECT1, typename OBJECT2>
   void FacBomManager::addToList (OBJECT1& ioObject1, OBJECT2& ioObject2) {
 
@@ -275,8 +302,9 @@ namespace stdair {
 
     addToList<OBJECT1, OBJECT2> (lBomHolder, ioObject1, ioObject2);
   }
-
+  
   // ////////////////////////////////////////////////////////////////////
+  // Private method.
   template <typename OBJECT1, typename OBJECT2>
   void FacBomManager::addToMap (BomHolder<OBJECT2>& ioBomHolder,
                                 OBJECT1& ioObject1, OBJECT2& ioObject2,
@@ -311,47 +339,93 @@ namespace stdair {
       throw ObjectLinkingException (oStr.str());
     }    
   }
-
+  
   // ////////////////////////////////////////////////////////////////////
+  // Public business method.
+  // Compile time assertation to check OBJECT1 and OBJECT2 types.
   template <typename OBJECT1, typename OBJECT2> void FacBomManager::
   addToMap (OBJECT1& ioObject1, OBJECT2& ioObject2, const MapKey_T& iKey) {
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <SegmentDate, SegmentDate>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));          
 
     BomHolder<OBJECT2>& lBomHolder = getBomHolder<OBJECT2> (ioObject1);
 
     addToMap<OBJECT1, OBJECT2> (lBomHolder, ioObject1, ioObject2, iKey);
   }
-
+  
+  // Public business method.
+  // Compile time assertation to check OBJECT1 and OBJECT2 types.
   // ////////////////////////////////////////////////////////////////////
   template <typename OBJECT1, typename OBJECT2>
   void FacBomManager::addToMap (OBJECT1& ioObject1, OBJECT2& ioObject2) {
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <SegmentDate, SegmentDate>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    
     const MapKey_T& lKey = ioObject2.describeKey();
     addToMap (ioObject1, ioObject2, lKey);
   }
-
+  
   // ////////////////////////////////////////////////////////////////////
+  // Public business method.
+  // Compile time assertation to check OBJECT1 and OBJECT2 types.
   template <typename OBJECT1, typename OBJECT2>
   void FacBomManager::addToListAndMap (OBJECT1& ioObject1, OBJECT2& ioObject2,
                                        const MapKey_T& iKey) {
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <SegmentDate, SegmentDate>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));              
+    
     BomHolder<OBJECT2>& lBomHolder = getBomHolder<OBJECT2> (ioObject1);
 
     addToList<OBJECT1, OBJECT2> (lBomHolder, ioObject1, ioObject2);
     addToMap<OBJECT1, OBJECT2> (lBomHolder, ioObject1, ioObject2, iKey);
   }
-
+  
   // ////////////////////////////////////////////////////////////////////
+  // Public business method.
+  // Compile time assertation to check OBJECT1 and OBJECT2 types.
   template <typename OBJECT1, typename OBJECT2> void FacBomManager::
   addToListAndMap (OBJECT1& ioObject1, OBJECT2& ioObject2) {
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <SegmentDate, SegmentDate>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));            
+    
     const MapKey_T& lKey = ioObject2.describeKey();
     addToListAndMap<OBJECT1, OBJECT2> (ioObject1, ioObject2, lKey);
   }
 
+  // Public business method valid for all PARENT and CHILD types.
+  // (No compile time assertation to check PARENT and CHILD types.)
   // ////////////////////////////////////////////////////////////////////
   template <typename PARENT, typename CHILD> void FacBomManager::
   linkWithParent (PARENT& ioParent,  CHILD& ioChild) {
     ioChild._parent = &ioParent;
   }
-
+  
   // ////////////////////////////////////////////////////////////////////
+  // Public business method valid for all PARENT and CHILD types.
+  // (No compile time assertation to check PARENT and CHILD types.)
   template <typename OBJECT2, typename OBJECT1> void FacBomManager::
   cloneHolder (OBJECT1& ioDest, const OBJECT1& iOri) {
 
@@ -365,8 +439,21 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   //
-  // Specialization of template methods above for a segment date and its
-  // corresponding operating segment date and marketing segment dates.
+  // Specialization of the template method addToList above for the types
+  // <SegmentDate, SegmentDate>.
+  // Add an element to the marketing segment date list of a segment date.
+  //
+  // ////////////////////////////////////////////////////////////////////
+
+  template<>
+  inline void FacBomManager::addToList <SegmentDate,SegmentDate>
+  (SegmentDate& ioSegmentDate,
+   SegmentDate& ioMarketingSegmentDate) {
+    
+    ioSegmentDate._marketingSegmentDateList.push_back(&ioMarketingSegmentDate);
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
   //
   // TODO:
   // This specialization is needed for all the objects in the current
@@ -376,26 +463,6 @@ namespace stdair {
   //
   // ////////////////////////////////////////////////////////////////////
 
-  // ////////////////////////////////////////////////////////////////////
-  template<>
-  inline void FacBomManager::
-  addToList <SegmentDate, SegmentDate> (SegmentDate& ioSegmentDate,
-                                        SegmentDate& ioOperatingSegmentDate) {
-    ioSegmentDate.linkWithOperating(ioOperatingSegmentDate);
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  template<>
-  inline void FacBomManager::
-  addToMap <SegmentDate, SegmentDate> (SegmentDate& ioSegmentDate,
-                                       SegmentDate& ioOperatingSegmentDate) {
-    const MapKey_T& lKey = ioOperatingSegmentDate.describeKey();
-    const bool insertionSucceeded =
-      ioSegmentDate._marketingSegmentDateMap.insert(typename SegmentDateMap_T::
-                                                    value_type (lKey, &ioOperatingSegmentDate)).second;
-
-    assert (insertionSucceeded == true);
-  }
 
 }
 
