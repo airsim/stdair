@@ -36,9 +36,15 @@ namespace stdair {
     
     // Check if the departure time is within the time range.
     if (lTimeRangeStart >= iFlightTime) {
+      // DEBUG
+      STDAIR_LOG_DEBUG ("Time range begin: " << lTimeRangeStart << ", "
+                        << "time: " << iFlightTime);
       return false;
     }
     if (lTimeRangeEnd <= iFlightTime) {
+      // DEBUG
+      STDAIR_LOG_DEBUG ("Time range end: " << lTimeRangeEnd << ", "
+                        << "time: " << iFlightTime);
       return false;
     }
 

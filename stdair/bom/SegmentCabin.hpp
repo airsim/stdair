@@ -13,39 +13,68 @@
 #include <stdair/bom/SegmentCabinKey.hpp>
 #include <stdair/bom/SegmentCabinTypes.hpp>
 
+/// Forward declarations
+namespace boost {
+  namespace serialization {
+    class access;
+  }
+}
+
 namespace stdair {
 
   /**
-   * Class representing the actual attributes for an airline segment-cabin.
+   * @brief Class representing the actual attributes for an airline
+   * segment-cabin.
    */
   class SegmentCabin : public BomAbstract {
     template <typename BOM> friend class FacBom;
     friend class FacBomManager;
+    friend class boost::serialization::access;
     
   public:
     // ////////// Type definitions ////////////
-    /** Definition allowing to retrieve the associated BOM key type. */
+    /**
+     * Definition allowing to retrieve the associated BOM key type.
+     */
     typedef SegmentCabinKey Key_T;
 
 
   public:
     // /////////// Getters ///////////// 
-    /** Get the segment-cabin key. */
+    /**
+     * Get the segment-cabin key (cabin code).
+     */
     const Key_T& getKey() const {
       return _key;
     }
 
-    /** Get the parent object. */
+    /**
+     * Get the parent object.
+     */
     BomAbstract* const getParent() const {
       return _parent;
     }
     
-    /** Get the cabin code (primary key). */
+    /**
+     * Get the cabin code (primary key).
+     */
     const CabinCode_T& getCabinCode() const {
       return _key.getCabinCode();
     }
     
-    /** Get the map of children holders. */
+    /**
+     * Get the (segment-date, segment-cabin) key (board point, off
+     * point and cabin code).
+     *
+     * \note That method assumes that the parent object derives from
+     *       the SegmentDate class, as it needs to have access to the
+     *       describeKey() method.
+     */
+    const MapKey_T getFullerKey() const;
+
+    /**
+     * Get the map of children holders.
+     */
     const HolderMap_T& getHolderMap() const {
       return _holderMap;
     }
@@ -135,56 +164,98 @@ namespace stdair {
 
 
   public:
-    // /////////// Display support methods /////////
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
-    void toStream (std::ostream& ioOut) const {
-      ioOut << toString();
-    }
-
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
-    void fromStream (std::istream& ioIn) {
-    }
-
-    /** Get the serialised version of the Business Object. */
-    std::string toString() const;
-    
-    /** Get a string describing the  key. */
-    const std::string describeKey() const {
-      return _key.toString();
-    }
-
-
-  public:
     // /////////// Business methods //////////
     /** Register a sale. */
     void updateFromReservation (const NbOfBookings_T&);
 
     
+  public:
+    // /////////// Display support methods /////////
+    /**
+     * Dump a Business Object into an output stream.
+     *
+     * @param ostream& the output stream.
+     */
+    void toStream (std::ostream& ioOut) const {
+      ioOut << toString();
+    }
+
+    /**
+     * Read a Business Object from an input stream.
+     *
+     * @param istream& the input stream.
+     */
+    void fromStream (std::istream& ioIn) {
+    }
+
+    /**
+     * Get the serialised version of the Business Object.
+     */
+    std::string toString() const;
+    
+    /**
+     * Get a string describing the  key.
+     */
+    const std::string describeKey() const {
+      return _key.toString();
+    }
+
+    
+  public:
+    // /////////// (Boost) Serialisation support methods /////////
+    /**
+     * Serialisation.
+     */
+    template<class Archive>
+    void serialize (Archive& ar, const unsigned int iFileVersion);
+
+  private:
+    /**
+     * Serialisation helper (allows to be sure the template method is
+     * instantiated).
+     */
+    void serialisationImplementation();
+
+
   protected:
     // ////////// Constructors and destructors /////////
-    /** Constructor. */
+    /**
+     * Constructor.
+     */
     SegmentCabin (const Key_T&);
-    /** Destructor. */
+
+    /**
+     * Destructor.
+     */
     virtual ~SegmentCabin();
 
   private:
-    /** Default constructor. */
+    /**
+     * Default constructor.
+     */
     SegmentCabin();
-    /** Default copy constructor. */
+
+    /**
+     * Copy constructor.
+     */
     SegmentCabin (const SegmentCabin&);
 
 
   protected:
     // ////////// Attributes /////////
-    /** Primary key (cabin code). */
+    /**
+     * Primary key (cabin code).
+     */
     Key_T _key;
 
-    /** Pointer on the parent class (SegmentDate). */
+    /**
+     * Pointer on the parent class (SegmentDate).
+     */
     BomAbstract* _parent;
     
-    /** Map holding the children (FareFamily or BookingClass objects). */
+    /**
+     * Map holding the children (FareFamily or BookingClass objects).
+     */
     HolderMap_T _holderMap;
 
     /** Capacity of the cabin. */

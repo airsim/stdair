@@ -10,6 +10,7 @@
 #include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/basic/BasConst_Inventory.hpp>
+#include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/SegmentDateKey.hpp>
 
 namespace stdair {
@@ -47,7 +48,8 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string SegmentDateKey::toString() const {
     std::ostringstream oStr;
-    oStr << _boardingPoint << "." << _offPoint;
+    oStr << _boardingPoint
+         << DEFAULT_KEY_SUB_FLD_DELIMITER << " " << _offPoint;
     return oStr.str();
   }
 
@@ -65,7 +67,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   template<class Archive>
   void SegmentDateKey::serialize (Archive& ioArchive,
-                                 const unsigned int iFileVersion) {
+                                  const unsigned int iFileVersion) {
     ioArchive & _boardingPoint & _offPoint;
   }
 

@@ -9,7 +9,7 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/serialization/access.hpp>
 // StdAir
-#include <stdair/basic/BasConst_General.hpp>
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
@@ -45,8 +45,8 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   FlightDate* Inventory::
   getFlightDate (const std::string& iFlightDateKeyStr) const {
-    FlightDate* oFlightDate_ptr = NULL;
-    BomManager::getObjectPtr<FlightDate> (*this, iFlightDateKeyStr);
+    FlightDate* oFlightDate_ptr =
+      BomManager::getObjectPtr<FlightDate> (*this, iFlightDateKeyStr);
     return oFlightDate_ptr;
   }
 

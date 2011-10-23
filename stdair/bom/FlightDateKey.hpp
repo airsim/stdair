@@ -4,6 +4,9 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STL
+#include <iosfwd>
+#include <string>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
@@ -37,16 +40,19 @@ namespace stdair {
      * Constructor.
      */
     FlightDateKey (const FlightNumber_T&, const Date_T&);
+
     /**
      * Copy constructor.
      */
     FlightDateKey (const FlightDateKey&);
+
     /**
      * Destructor.
      */
     ~FlightDateKey();
 
 
+  public:
     // /////////// Getters //////////
     /** Get the flight number. */
     const FlightNumber_T& getFlightNumber() const {
@@ -54,11 +60,12 @@ namespace stdair {
     }
 
     /** Get the departure date of the (first leg of the) flight. */
-    const Date_T& getFlightDate() const {
-      return _flightDate;
+    const Date_T& getDepartureDate() const {
+      return _departureDate;
     }
 
 
+  public:
     // /////////// Display support methods /////////
     /**
      * Dump a Business Object Key into an output stream.
@@ -112,7 +119,7 @@ namespace stdair {
     /**
      * Departure date of the (first leg of the) flight.
      */
-    Date_T _flightDate;
+    Date_T _departureDate;
   };
 
 }

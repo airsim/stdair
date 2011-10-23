@@ -6,6 +6,7 @@
 #include <sstream>
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/basic/RandomGeneration.hpp>
 #include <stdair/bom/BookingClass.hpp>
 

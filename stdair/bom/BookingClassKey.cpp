@@ -5,7 +5,7 @@
 #include <cassert>
 #include <sstream>
 // StdAir
-#include <stdair/basic/BasConst_General.hpp>
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/BookingClassKey.hpp>
 
 namespace stdair {

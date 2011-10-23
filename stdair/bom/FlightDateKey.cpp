@@ -12,25 +12,27 @@
 #include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/basic/BasConst_Inventory.hpp>
+#include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/FlightDateKey.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   FlightDateKey::FlightDateKey()
-    : _flightNumber (DEFAULT_FLIGHT_NUMBER), _flightDate (DEFAULT_FLIGHT_DATE) {
+    : _flightNumber (DEFAULT_FLIGHT_NUMBER),
+      _departureDate (DEFAULT_DEPARTURE_DATE) {
     assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////
   FlightDateKey::FlightDateKey (const FlightNumber_T& iFlightNumber,
                                 const Date_T& iFlightDate)
-    : _flightNumber (iFlightNumber), _flightDate (iFlightDate) {
+    : _flightNumber (iFlightNumber), _departureDate (iFlightDate) {
   }
 
   // ////////////////////////////////////////////////////////////////////
   FlightDateKey::FlightDateKey (const FlightDateKey& iKey)
-    : _flightNumber (iKey._flightNumber), _flightDate (iKey._flightDate) {
+    : _flightNumber (iKey._flightNumber), _departureDate (iKey._departureDate) {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -49,9 +51,10 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string FlightDateKey::toString() const {
     std::ostringstream oStr;
-    const std::string& lFlightDateStr =
-      boost::gregorian::to_simple_string (_flightDate);
-    oStr << _flightNumber << ", " << lFlightDateStr;
+    const std::string& lDepartureDateStr =
+      boost::gregorian::to_simple_string (_departureDate);
+    oStr << _flightNumber
+         << DEFAULT_KEY_SUB_FLD_DELIMITER << " " << lDepartureDateStr;
     return oStr.str();
   }
 
@@ -70,9 +73,13 @@ namespace stdair {
   template<class Archive>
   void FlightDateKey::serialize (Archive& ioArchive,
                                  const unsigned int iFileVersion) {
-    std::string lFlightDateStr =
-      boost::gregorian::to_simple_string (_flightDate);
-    ioArchive & _flightNumber & lFlightDateStr;
+    /**
+     * \note The serialised member should not be const (as, as far as
+     *       I understand, they are tracked by Boost.Serialisation).
+     */
+    std::string lDepartureDateStr =
+      boost::gregorian::to_simple_string (_departureDate);
+    ioArchive & _flightNumber & lDepartureDateStr;
   }
 
 }

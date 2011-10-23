@@ -56,7 +56,7 @@ namespace stdair {
     }
     
     /** Get the boarding point (part of the primary key). */
-    const AirportCode_T& getBoardingPoint () const {
+    const AirportCode_T& getBoardingPoint() const {
       return _key.getBoardingPoint();
     }
 
@@ -231,7 +231,7 @@ namespace stdair {
     /**
      * Destructor.
      */
-    ~SegmentDate();
+    virtual ~SegmentDate();
 
   private:
     /**
@@ -253,7 +253,7 @@ namespace stdair {
     Key_T _key;
 
     /**
-     * Pointer on the parent class (Inventory).
+     * Pointer on the parent class (FlightDate).
      */
     BomAbstract* _parent;
     

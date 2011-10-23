@@ -5,6 +5,7 @@
 #include <ostream>
 #include <sstream>
 // STDAIR
+#include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/AirportPairKey.hpp>
 
 namespace stdair {
@@ -36,7 +37,8 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string AirportPairKey::toString() const {
     std::ostringstream oStr;
-    oStr << _boardingPoint << "-" << _offPoint << std::endl; 
+    oStr << _boardingPoint << DEFAULT_KEY_SUB_FLD_DELIMITER
+         << " " << _offPoint << std::endl; 
     return oStr.str();
   }
 
