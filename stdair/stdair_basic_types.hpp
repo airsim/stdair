@@ -11,9 +11,6 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   // Basic types
-  /** Event type */
-  typedef std::string EventType_T;
-  
   /** Location code (3-letter-code, e.g., LON). */
   typedef std::string LocationCode_T;
   
@@ -121,5 +118,9 @@ namespace stdair {
       <br>NOTE: That type should be deprecated. */
   typedef std::string FileAddress_T;
 
+  /** Progress status (usually, a percentage expressed as a floating
+      point number). */
+  typedef float ProgressPercentage_T;
+  
 }
 #endif // __STDAIR_STDAIR_BASIC_TYPES_HPP

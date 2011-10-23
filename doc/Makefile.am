@@ -11,7 +11,6 @@ include $(top_srcdir)/stdair/service/sources.mk
 include $(top_srcdir)/stdair/sources.mk
 include $(top_srcdir)/batches/sources.mk
 include $(top_srcdir)/test/stdair/sources.mk
-include $(top_srcdir)/test/architecture/sources.mk
 
 SUBDIRS = images tutorial local
 
@@ -40,8 +39,7 @@ html/index.html: doxygen_html.cfg \
 	$(stdair_svc_h_sources) $(stdair_svc_cc_sources) \
 	$(stdair_batches_h_sources) $(stdair_batches_cc_sources) \
 	$(stdair_test_lib_h_sources) $(stdair_test_lib_cc_sources) \
-	$(stdair_test_bin_h_sources) $(stdair_test_bin_cc_sources) \
-	$(stdair_archi_h_sources) $(stdair_archi_cc_sources)
+	$(stdair_test_bin_h_sources) $(stdair_test_bin_cc_sources)
 	doxygen $<; \
 	if test -d html; then \
 		cp $(srcdir)/images/stdair_logo.png html; \

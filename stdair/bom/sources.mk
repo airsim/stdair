@@ -18,6 +18,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/FlightPeriodKey.hpp \
 		$(top_srcdir)/stdair/bom/SegmentPeriodKey.hpp \
 		$(top_srcdir)/stdair/bom/AirlineFeatureKey.hpp \
+		$(top_srcdir)/stdair/bom/EventQueueKey.hpp \
 		$(top_srcdir)/stdair/bom/InventoryTypes.hpp \
 		$(top_srcdir)/stdair/bom/FlightDateTypes.hpp \
 		$(top_srcdir)/stdair/bom/SegmentDateTypes.hpp \
@@ -32,6 +33,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/AirlineFeatureTypes.hpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionTypes.hpp \
 		$(top_srcdir)/stdair/bom/BookingRequestTypes.hpp \
+		$(top_srcdir)/stdair/bom/EventQueueTypes.hpp \
 		$(top_srcdir)/stdair/bom/EventTypes.hpp \
 		$(top_srcdir)/stdair/bom/YieldStoreTypes.hpp \
 		$(top_srcdir)/stdair/bom/BomHolder.hpp \
@@ -74,6 +76,7 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/FlightPeriodKey.cpp \
 		$(top_srcdir)/stdair/bom/SegmentPeriodKey.cpp \
 		$(top_srcdir)/stdair/bom/AirlineFeatureKey.cpp \
+		$(top_srcdir)/stdair/bom/EventQueueKey.cpp \
 		$(top_srcdir)/stdair/bom/BomRoot.cpp \
 		$(top_srcdir)/stdair/bom/Inventory.cpp \
 		$(top_srcdir)/stdair/bom/FlightDate.cpp \

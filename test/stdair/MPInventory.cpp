@@ -9,8 +9,8 @@
 #include <cassert>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
-// Local
-#include <test/architecture/MPInventory.hpp>
+// StdAir Test
+#include <test/stdair/MPInventory.hpp>
 
 namespace myprovider {
   

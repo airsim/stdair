@@ -6,54 +6,43 @@
 // //////////////////////////////////////////////////////////////////////
 
 /**
- * Class wrapping test functions
+ * Namespace gathering classes and structures for test purposes
  */
-class StdairTestLib {
-public:
-
-  /**
-   * Test the initialisation of the Standard Airline IT base library.
-   */
-  static void testServiceInitialisation();
-
-  /**
-   * Test MPL-based type handling, just as a proof-of-concept. It does
-   * not use StdAir BOM.
-   */
-  static void testMPLStructure();
-
-  /**
-   * Test the initialisation of Standard Airline IT BOM objects.
-   */
-  static void testBomStructureInstantiation();
+namespace stdair_test {
   
-  /**
-   * Test some error detection functionalities.
-   */
-  static bool testErrorCase();
-
-private:
-  /**
-   * Default constructor.
-   *
-   * It should not be used, as all the methods
-   * are defined as static.
-   */
-  StdairTestLib() {}
-
-  /**
-   * Default copy constructor.
-   *
-   * It should not be used, as all the methods
-   * are defined as static.
-   */
-  StdairTestLib (const StdairTestLib&) {}
+  /** BookingClass */
+  struct BookingClass {
+    std::string _classCode;
+    /** Constructor. */
+    BookingClass (const std::string& iClassCode)
+      : _classCode (iClassCode) {
+    }
+    
+    /** Display .*/
+    std::string toString() const {
+      std::ostringstream oStr;
+      oStr << _classCode;
+      return oStr.str();
+    }
+  };
   
-  /**
-   * Default copy constructor.
-   *
-   */  
-  ~StdairTestLib() {}
-};
+  /** Cabin */
+  struct Cabin {
+    BookingClass _bookingClass;
+    Cabin (const BookingClass& iBkgClass)
+      : _bookingClass (iBkgClass) {
+    }
+    
+    /** Display .*/
+    std::string toString() const {
+      std::ostringstream oStr;
+      oStr << _bookingClass._classCode;
+      return oStr.str();
+    }
+    
+    /** Child type. */
+    typedef BookingClass child;
+  };
+}
 
 #endif // __STDAIR_TST_STDAIR_TEST_LIB_HPP

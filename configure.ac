@@ -1,8 +1,8 @@
 # Process this file with autoconf to produce a configure script
 #-------------------------------------------------------------------
 AC_PREREQ(2.59)
-AC_COPYRIGHT([Copyright (C) 2007-2011  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
-AC_INIT([STDAIR],[0.11.0],[denis_arnaud@users.sourceforge.net],[stdair])
+AC_COPYRIGHT([Copyright (C) 2007-2010  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
+AC_INIT([STDAIR],[0.12.0],[denis_arnaud@users.sourceforge.net],[stdair])
 AC_CONFIG_HEADER([stdair/config.h])
 AC_CONFIG_SRCDIR([stdair/bom/BomRoot.hpp])
 AC_CONFIG_AUX_DIR([config])
@@ -15,7 +15,7 @@ PACKAGE_PRETTY_NAME="StdAir"
 AC_SUBST(PACKAGE_PRETTY_NAME)
 
 # Shared library versioning
-GENERIC_LIBRARY_VERSION="0:11:0"
+GENERIC_LIBRARY_VERSION="0:12:0"
 #                        | | |
 #                 +------+ | +---+
 #                 |        |     |
@@ -111,24 +111,10 @@ if test -z "${CXXFLAGS}"; then
    CXXFLAGS="-g -Wall"
 fi
 
-# -----------------------------------------------------------------------------
-# Support for ExtraCC (Extra-CruiseControl): http://sf.net/projects/extracc
-# -----------------------------------------------------------------------------
-AM_PATH_EXTRACC
-AC_SUBST(EXTRACC_VERSION)
-AC_SUBST(EXTRACC_CFLAGS)
-AC_SUBST(EXTRACC_LIBS)
-
 # --------------------------------------------------------
 # Boost (STL Extensions: http://www.boost.org)
 # --------------------------------------------------------
 AX_BOOST([1.33])
-AC_SUBST(BOOST_VERSION)
-AC_SUBST(BOOST_CFLAGS)
-AC_SUBST(BOOST_LIBS)
-AC_SUBST(BOOST_DATE_TIME_LIB)
-AC_SUBST(BOOST_PROGRAM_OPTIONS_LIB)
-AC_SUBST(BOOST_FILESYSTEM_LIB)
 
 # --------------------------------------------------------------------
 # Support for MySQL (C client API): http://www.mysql.org
@@ -233,7 +219,6 @@ AC_CONFIG_FILES(
 	samples/Makefile
 	test/Makefile
 	test/inheritance/Makefile
-	test/architecture/Makefile
 	test/archi_intru/Makefile
 	test/archi_static_cast/Makefile
 	test/mpl/Makefile
@@ -293,9 +278,17 @@ External libraries:
     o BOOST_VERSION ........ : ${BOOST_VERSION}
     o BOOST_CFLAGS ......... : ${BOOST_CFLAGS}
     o BOOST_LIBS ........... : ${BOOST_LIBS}
+    o BOOST_UTF_LIB ........ : ${BOOST_UNIT_TEST_FRAMEWORK_LIB}
     o BOOST_DATE_TIME_LIB .. : ${BOOST_DATE_TIME_LIB}
     o BOOST_PO_LIB ......... : ${BOOST_PROGRAM_OPTIONS_LIB}
     o BOOST_FILESYSTEM_LIB . : ${BOOST_FILESYSTEM_LIB}
+    o BOOST_THREAD_LIB ..... : ${BOOST_THREAD_LIB}
+    o BOOST_PYTHON_LIB ..... : ${BOOST_PYTHON_LIB}
+    o BOOST_ASIO_LIB ....... : ${BOOST_ASIO_LIB}
+    o BOOST_MPI_LIB ........ : ${BOOST_MPI_LIB}
+    o BOOST_MPI_PYTHON_LIB . : ${BOOST_MPI_PYTHON_LIB}
+    o BOOST_IOSTREAMS_LIB .. : ${BOOST_IOSTREAMS_LIB}
+    o BOOST_SIGNALS_LIB .... : ${BOOST_SIGNALS_LIB}
 
   - MySQL .................. :
     o MYSQL_VERSION ........ : ${MYSQL_VERSION}
@@ -306,16 +299,6 @@ External libraries:
     o SOCI_VERSION ......... : ${SOCI_VERSION}
     o SOCI_CFLAGS .......... : ${SOCI_CFLAGS}
     o SOCI_LIBS ............ : ${SOCI_LIBS}
-
-  - ExtraCC ................ :
-    o EXTRACC_VERSION ...... : ${EXTRACC_VERSION}
-    o EXTRACC_CFLAGS ....... : ${EXTRACC_CFLAGS}
-    o EXTRACC_LIBS ......... : ${EXTRACC_LIBS}
-
-  - CPPUNIT ................ :
-    o CPPUNIT_VERSION ...... : ${CPPUNIT_VERSION}
-    o CPPUNIT_CFLAGS ....... : ${CPPUNIT_CFLAGS}
-    o CPPUNIT_LIBS ......... : ${CPPUNIT_LIBS}
 
 ------------------------------------------------------------------------------
 Now type 'make && make install' to build and install $PACKAGE-$VERSION library

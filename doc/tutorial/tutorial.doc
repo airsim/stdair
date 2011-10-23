@@ -25,7 +25,7 @@ Model (BOM).
 \subsection tut_intro_configuration Preparing the StdAir Project for Development
 
 The source code for these examples can be found in the
-<tt>batches</tt> and <tt>test/architecture</tt> directories. They are
+<tt>batches</tt> and <tt>test/stdair</tt> directories. They are
 compiled along with the rest of the \c StdAir project. See the User
 Guide (\ref users_guide) for more details on how to build the \c StdAir
 project.
@@ -120,7 +120,7 @@ class:
 \skipline namespace
 \skipline class Inventory
 
-The STL containers have to defined accordingly too:
+The STL containers have to be defined accordingly too:
 
 \skipline InventoryList_T
 
@@ -129,7 +129,7 @@ implementation (\ref test_archi_inv_cpp) for more details.
 
 \subsection tut_extend_build Build the Specific BOM Objects
 
-\dontinclude architecture.cpp
+\dontinclude StandardAirlineITTestSuite.cpp
 
 The BOM root object (<tt>stdair::BomRoot</tt>) is instantiated the
 classical way:
@@ -172,9 +172,9 @@ instance, the list of specific airline inventories (of type
 
 When this program is run, the output should look like:
 
-\include architecture.ref
+\include StandardAirlineITTestSuite.ref
 
-See the corresponding full program (\ref test_architecture_cpp) for
+See the corresponding full program (\ref StandardAirlineITTestSuite_cpp) for
 more details.
 
 */

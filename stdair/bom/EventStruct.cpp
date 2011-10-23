@@ -1,38 +1,89 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STL
+#include <cassert>
+// Boost
+#include <boost/make_shared.hpp>
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/EventStruct.hpp>
 
 namespace stdair {
+
+  // //////////////////////////////////////////////////////////////////////
+  EventStruct::EventStruct()
+    : _eventType (EventType::BKG_REQ), _eventTimeStamp (0),
+      _demandStreamKeyStr (""), _specificProgressStatus (0.0, 1e-3),
+      _overallProgressStatus (0.0, 1e-3) {
+    assert (false);
+  }
   
   // //////////////////////////////////////////////////////////////////////
-  EventStruct::
-  EventStruct (const EventType_T& iEventType,
-               const DemandStreamKeyStr_T& iDemandStreamKey,
-               BookingRequestPtr_T ioRequestPtr)
-    : _eventType (iEventType), _demandStreamKey (iDemandStreamKey) {
-    _request = ioRequestPtr;
+  EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
+                            const DemandStreamKeyStr_T& iDemandStreamKey,
+                            BookingRequestPtr_T ioRequestPtr)
+    : _eventType (iEventType), _demandStreamKeyStr (iDemandStreamKey),
+      _specificProgressStatus (0.0, 1e-3), _overallProgressStatus (0.0, 1e-3) {
 
-    // Compute the number of seconds between iDateTime and DEFAULT_DATETIME.
+    //
     assert (ioRequestPtr != NULL);
-    Duration_T lDuration = ioRequestPtr->getRequestDateTime() - DEFAULT_DATETIME;
-    _eventTimestamp = lDuration.total_milliseconds();
+    _request = boost::make_shared<BookingRequestStruct> (*ioRequestPtr);
+    assert (_request != NULL);
+    
+    // Compute and store the number of seconds between iDateTime and
+    // DEFAULT_DATETIME.
+    const Duration_T lDuration =
+      _request->getRequestDateTime() - DEFAULT_DATETIME;
+    _eventTimeStamp = lDuration.total_milliseconds();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  EventStruct::
-  EventStruct (const EventStruct& iEventStruct)
+  EventStruct::EventStruct (const EventStruct& iEventStruct)
     : _eventType (iEventStruct._eventType),
-      _eventTimestamp (iEventStruct._eventTimestamp),
-      _demandStreamKey (iEventStruct._demandStreamKey) {
-    _request = iEventStruct._request;
+      _eventTimeStamp (iEventStruct._eventTimeStamp),
+      _demandStreamKeyStr (iEventStruct._demandStreamKeyStr),
+      _specificProgressStatus (iEventStruct._specificProgressStatus.first,
+                               iEventStruct._specificProgressStatus.second),
+      _overallProgressStatus (iEventStruct._overallProgressStatus.first,
+                              iEventStruct._overallProgressStatus.second) {
+
+    //
+    if (iEventStruct._request != NULL) {
+      _request =
+        boost::make_shared<BookingRequestStruct> (*iEventStruct._request);
+    }
   }
   
   // //////////////////////////////////////////////////////////////////////
   EventStruct::~EventStruct () {
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void EventStruct::fromStream (std::istream& ioIn) {
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  const std::string EventStruct::describe() const {
+    std::ostringstream oStr;
+    oStr << "[" << _eventType
+         << "][" << _overallProgressStatus.first
+         << "/" << _overallProgressStatus.second
+         << "][" << _specificProgressStatus.first
+         << "/" << _specificProgressStatus.second
+         << "] " << _eventTimeStamp;
+    
+    switch (_eventType) {
+    case EventType::BKG_REQ: {
+      assert (_request != NULL);
+      oStr << ", " << _demandStreamKeyStr << ", " << _request->describe();
+    }
+    default: {
+    }
+    }
+    
+    return oStr.str();
   }
 
 }
