@@ -86,6 +86,29 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   FlightDate* BomRetriever::
+  retrieveFlightDateFromKeySet (const BomRoot& iBomRoot,
+                                const AirlineCode_T& iAirlineCode,
+                                const FlightNumber_T& iFlightNumber,
+                                const Date_T& iFlightDateDate) {
+    FlightDate* oFlightDate_ptr = NULL;
+
+    // Retrieve the inventory
+    Inventory* oInventory_ptr =
+      BomRetriever::retrieveInventoryFromKey (iBomRoot, iAirlineCode);
+    if (oInventory_ptr == NULL) {
+      return oFlightDate_ptr;
+    }
+    assert (oInventory_ptr != NULL);
+
+    //
+    oFlightDate_ptr = retrieveFlightDateFromKey (*oInventory_ptr,
+                                                 iFlightNumber, iFlightDateDate);
+
+    return oFlightDate_ptr;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  FlightDate* BomRetriever::
   retrieveFlightDateFromLongKey (const Inventory& iInventory,
                                  const std::string& iFullKeyStr) {
     FlightDate* oFlightDate_ptr = NULL;

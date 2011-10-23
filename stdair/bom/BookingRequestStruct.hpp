@@ -11,6 +11,7 @@
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/stdair_demand_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
+#include <stdair/bom/BookingRequestTypes.hpp>
 
 namespace stdair {
 
@@ -20,6 +21,11 @@ namespace stdair {
   struct BookingRequestStruct : public StructAbstract {
   public:
     // /////////////// Getters /////////////////
+    /** Get the demand generator key. */
+    const DemandGeneratorKey_T& getDemandGeneratorKey () const {
+      return _generatorKey;
+    }
+    
     /** Get the requested origin. */
     const AirportCode_T& getOrigin() const {
       return _origin;
@@ -166,7 +172,26 @@ namespace stdair {
   public:
     // /////////////// Constructors and Destructors /////////////////
     /**
-     * Constructor.
+     * Default constructor.
+     */
+    BookingRequestStruct (const DemandGeneratorKey_T& iGeneratorKey,
+                          const AirportCode_T& iOrigin,
+                          const AirportCode_T& iDestination,
+                          const AirportCode_T& iPOS,
+                          const Date_T& iDepartureDate,
+                          const DateTime_T& iRequestDateTime,
+                          const CabinCode_T& iPreferredCabin,
+                          const NbOfSeats_T& iPartySize,
+                          const ChannelLabel_T& iChannel,
+                          const TripType_T& iTripType,
+                          const DayDuration_T& iStayDuration,
+                          const FrequentFlyer_T& iFrequentFlyerType,
+                          const Duration_T& iPreferredDepartureTime,
+                          const WTP_T& iWTP,
+                          const PriceValue_T& iValueOfTime);
+
+    /**
+     * Constructor without the demand generator key, used for batches.
      */
     BookingRequestStruct (const AirportCode_T& iOrigin,
                           const AirportCode_T& iDestination,
@@ -182,7 +207,6 @@ namespace stdair {
                           const Duration_T& iPreferredDepartureTime,
                           const WTP_T& iWTP,
                           const PriceValue_T& iValueOfTime);
-
     /**
      * Copy constructor.
      */
@@ -205,6 +229,9 @@ namespace stdair {
 
   private:
     // /////////////// Attributes /////////////////
+    /** Demand generator key. */
+    const DemandGeneratorKey_T _generatorKey;
+    
     /** Origin. */
     const AirportCode_T _origin;
 

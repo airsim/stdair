@@ -37,20 +37,19 @@ namespace stdair {
   const boost::char_separator<char> TokeniserTimeSeparator (":");
 
   // ////////////////////////////////////////////////////////////////////
-  ParsedKey::ParsedKey () : _fullKey (""), _airlineCode (""), _flightNumber (""),
+  ParsedKey::ParsedKey() : _fullKey (""), _airlineCode (""), _flightNumber (""),
                             _departureDate (""), _boardingPoint (""),
                             _offPoint (""), _boardingTime ("") {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  ParsedKey::~ParsedKey () {
+  ParsedKey::~ParsedKey() {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  InventoryKey ParsedKey:: getInventoryKey () const {
+  InventoryKey ParsedKey::getInventoryKey() const {
     if (_airlineCode.size() < 2 || _airlineCode.size() > 3) {
-      STDAIR_LOG_ERROR ("No airline code can be found in '" << _fullKey
-                        << "'");
+      STDAIR_LOG_ERROR ("No airline code can be found in '" << _fullKey << "'");
       STDAIR_LOG_DEBUG ("Parsed key: " << toString());
       throw KeyNotFoundException ("No airline code can be found in '"
                                   + _fullKey + "'");
@@ -59,15 +58,14 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDateKey ParsedKey:: getFlightDateKey () const {
-    // Verify if the departure date has been parsed correctly.
+  FlightDateKey ParsedKey::getFlightDateKey() const {
+    // Check whether the departure date has been parsed correctly.
     Tokeniser_T lDateTokens (_departureDate, TokeniserDashSeparator);
+
     if (lDateTokens.begin() == lDateTokens.end()) {
-      STDAIR_LOG_ERROR ("No date can be found in '"
-                        << _fullKey << "'");
+      STDAIR_LOG_ERROR ("No date can be found in '" << _fullKey << "'");
       STDAIR_LOG_DEBUG ("Parsed key: " << toString());
-      throw KeyNotFoundException ("No date can be found in '"
-                                  + _fullKey + "'");
+      throw KeyNotFoundException ("No date can be found in '" + _fullKey + "'");
     }
 
     const FlightNumber_T lFlightNumber =
@@ -82,10 +80,9 @@ namespace stdair {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  SegmentDateKey ParsedKey:: getSegmentKey () const {
+  SegmentDateKey ParsedKey::getSegmentKey() const {
     if (_boardingPoint.size() != 3 || _offPoint.size() != 3) {
-      STDAIR_LOG_ERROR ("No airport code can be found in '" << _fullKey
-                        << "'");
+      STDAIR_LOG_ERROR ("No airport code can be found in '" << _fullKey << "'");
       STDAIR_LOG_DEBUG ("Parsed key: " << toString());
       throw KeyNotFoundException ("No airport code can be found in '"
                                   + _fullKey + "'");
@@ -97,18 +94,19 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  const Duration_T ParsedKey::getBoardingTime () const {
-    // Verify if the boarding time has been parsed correctly.
+  const Duration_T ParsedKey::getBoardingTime() const {
+    // Check whether the boarding time has been parsed correctly.
     Tokeniser_T lTimeTokens (_boardingTime, TokeniserTimeSeparator);
+
     if (lTimeTokens.begin() == lTimeTokens.end()) {
-      STDAIR_LOG_ERROR ("No boarding time can be found in '"
-                        << _fullKey << "'");
+      STDAIR_LOG_ERROR ("No boarding time can be found in '" << _fullKey << "'");
       STDAIR_LOG_DEBUG ("Parsed key: " << toString());
       throw KeyNotFoundException ("No boarding time can be found in '"
                                   + _fullKey + "'");
     }
 
-    const Duration_T oBoardingTime (boost::posix_time::duration_from_string (_boardingTime));
+    const Duration_T oBoardingTime (boost::posix_time::
+                                    duration_from_string (_boardingTime));
 
     return oBoardingTime;
   }

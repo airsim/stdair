@@ -823,7 +823,6 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   BookingRequestStruct CmdBomManager::buildSampleBookingRequest() {
-
     // Origin
     const AirportCode_T lOrigin ("LHR");
 
@@ -889,7 +888,6 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   BookingRequestStruct CmdBomManager::buildSampleBookingRequestForCRS() {
-
     // Origin
     const AirportCode_T lOrigin ("SIN");
 

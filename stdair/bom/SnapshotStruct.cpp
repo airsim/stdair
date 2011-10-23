@@ -1,0 +1,51 @@
+// //////////////////////////////////////////////////////////////////////
+// Import section
+// //////////////////////////////////////////////////////////////////////
+// STL
+#include <cassert>
+#include <sstream>
+// StdAir
+#include <stdair/bom/SnapshotStruct.hpp>
+
+namespace stdair {
+  
+  // //////////////////////////////////////////////////////////////////////
+  SnapshotStruct::SnapshotStruct() {
+    assert (false);
+  }
+    
+  // //////////////////////////////////////////////////////////////////////
+  SnapshotStruct::
+  SnapshotStruct (const SnapshotStruct& iSnapshot)
+    : _airlineCode (iSnapshot._airlineCode),
+      _snapshotTime (iSnapshot._snapshotTime) {
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  SnapshotStruct::
+  SnapshotStruct (const AirlineCode_T& iAirlineCode,
+                  const DateTime_T& iSnapshotTime)
+    : _airlineCode (iAirlineCode), _snapshotTime (iSnapshotTime) {
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  SnapshotStruct::~SnapshotStruct() {
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  void SnapshotStruct::toStream (std::ostream& ioOut) const {
+    ioOut << describe();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void SnapshotStruct::fromStream (std::istream& ioIn) {
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  const std::string SnapshotStruct::describe() const {
+    std::ostringstream oStr;
+    oStr << _airlineCode << ", " << _snapshotTime;
+    return oStr.str();
+  }
+
+}

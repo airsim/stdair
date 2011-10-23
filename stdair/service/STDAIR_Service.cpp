@@ -8,6 +8,7 @@
 #include <stdair/stdair_types.hpp>
 #include <stdair/basic/BasChronometer.hpp>
 #include <stdair/bom/BomManager.hpp>
+#include <stdair/bom/BomRetriever.hpp>
 #include <stdair/bom/BomDisplay.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/EventQueue.hpp>
@@ -226,6 +227,37 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   std::string STDAIR_Service::
+  csvDisplay (const stdair::AirlineCode_T& iAirlineCode,
+              const stdair::FlightNumber_T& iFlightNumber,
+              const stdair::Date_T& iDepartureDate) const {
+    std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+
+    // Retrieve the flight-date object corresponding to the key
+    FlightDate* lFlightDate_ptr = 
+      BomRetriever::retrieveFlightDateFromKeySet (lBomRoot, iAirlineCode,
+                                                  iFlightNumber, iDepartureDate);
+
+    // Dump the content of the whole BOM tree into the string
+    if (lFlightDate_ptr != NULL) {
+      BomDisplay::csvDisplay (oStr, *lFlightDate_ptr);
+      
+    } else {
+      oStr << "   No flight-date found for the given key: '"
+           << iAirlineCode << iFlightNumber << " - " << iDepartureDate << "'";
+    }
+    
+    return oStr.str();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::
   csvDisplay (const TravelSolutionList_T& iTravelSolutionList) const {
 
     // Dump the content of the whole list of travel solutions into the string
@@ -318,7 +350,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  EventStruct STDAIR_Service::popEvent() const {
+  ProgressStatusSet STDAIR_Service::popEvent (EventStruct& ioEventStruct) const {
 
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
@@ -328,10 +360,7 @@ namespace stdair {
     EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
     
     // Extract the next event from the queue
-    const EventStruct& oEventStruct = lQueue.popEvent();
-
-    //
-    return oEventStruct;
+    return lQueue.popEvent (ioEventStruct);
   }
 
   // ////////////////////////////////////////////////////////////////////

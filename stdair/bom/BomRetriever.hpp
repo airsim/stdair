@@ -69,7 +69,7 @@ namespace stdair {
                                                 const AirlineCode_T&);
 
     /**
-     * Retrieve an FlightDate object from a (full) key string.
+     * Retrieve a FlightDate object from a (full) key string.
      *
      * The full key string gathers airline code, flight number, origin
      * and destination, cabin and booking class. It corresponds to the
@@ -85,7 +85,21 @@ namespace stdair {
                                    const std::string& iFullKeyStr);
 
     /**
-     * Retrieve an FlightDate object from a (full) key string.
+     * Retrieve a FlightDate object from a set of keys.
+     *
+     * @param const BomRoot& The root of the BOM tree.
+     * @param const AirlineCode_T& The key.
+     * @param const FlightNumber_T& Part of the key.
+     * @param const Date_T& Part of the key.
+     * @return FlightDate* The just retrieved FlightDate object.
+     */
+    static FlightDate*
+    retrieveFlightDateFromKeySet (const BomRoot&,
+                                  const AirlineCode_T&, const FlightNumber_T&,
+                                  const Date_T& iFlightDateDate);
+
+    /**
+     * Retrieve a FlightDate object from a (full) key string.
      *
      * The full key string gathers airline code, flight number, origin
      * and destination, cabin and booking class. It corresponds to the
@@ -101,7 +115,7 @@ namespace stdair {
                                    const std::string& iFullKeyStr);
 
     /**
-     * Retrieve an FlightDate object from an FlightDateKey structure.
+     * Retrieve a FlightDate object from an FlightDateKey structure.
      *
      * @param const Inventory& The root of the BOM tree.
      * @param const FlightDateKey& The key.
@@ -111,7 +125,7 @@ namespace stdair {
                                                   const FlightDateKey&);
 
     /**
-     * Retrieve an FlightDate object from an FlightDateKey structure.
+     * Retrieve a FlightDate object from an FlightDateKey structure.
      *
      * @param const Inventory& The root of the BOM tree.
      * @param const FlightNumber_T& Part of the key.
@@ -123,7 +137,7 @@ namespace stdair {
                                                   const Date_T& iFlightDateDate);
 
     /**
-     * Retrieve an SegmentDate object from a (full) key string.
+     * Retrieve a SegmentDate object from a (full) key string.
      *
      * The full key string gathers airline code, segment number, origin
      * and destination, cabin and booking class. It corresponds to the
@@ -139,7 +153,7 @@ namespace stdair {
                                     const std::string& iFullKeyStr);
 
     /**
-     * Retrieve an SegmentDate object from a (full) key string.
+     * Retrieve a SegmentDate object from a (full) key string.
      *
      * The full key string gathers airline code, segment number, origin
      * and destination, cabin and booking class. It corresponds to the
@@ -155,7 +169,7 @@ namespace stdair {
                                     const std::string& iFullKeyStr);
 
     /**
-     * Retrieve an SegmentDate object from a (full) key string.
+     * Retrieve a SegmentDate object from a (full) key string.
      *
      * The full key string gathers airline code, segment number, origin
      * and destination, cabin and booking class. It corresponds to the
@@ -171,7 +185,7 @@ namespace stdair {
                                     const std::string& iFullKeyStr);
 
     /**
-     * Retrieve an SegmentDate object from an SegmentDateKey structure.
+     * Retrieve a SegmentDate object from an SegmentDateKey structure.
      *
      * @param const FlightDate& The root of the BOM tree.
      * @param const SegmentDateKey& The key.
@@ -181,7 +195,7 @@ namespace stdair {
                                                     const SegmentDateKey&);
 
     /**
-     * Retrieve an SegmentDate object from an SegmentDateKey structure.
+     * Retrieve a SegmentDate object from an SegmentDateKey structure.
      *
      * @param const FlightDate& The root of the BOM tree.
      * @param const AirportCode_T& Origin, part of the key.

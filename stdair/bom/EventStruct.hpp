@@ -16,6 +16,7 @@
 #include <stdair/bom/EventTypes.hpp>
 #include <stdair/bom/BookingRequestTypes.hpp>
 #include <stdair/bom/OptimisationNotificationTypes.hpp>
+#include <stdair/bom/SnapshotTypes.hpp>
 
 namespace stdair {
 
@@ -38,11 +39,6 @@ namespace stdair {
     /** Get the event type */
     const EventType::EN_EventType& getEventType() const {
       return _eventType;
-    }
-    
-    /** Get the key of the content of the event. */
-    const EventContentKey_T& getEventContentKey() const {
-      return _eventContentKey;
     }
 
     /**
@@ -68,156 +64,18 @@ namespace stdair {
       assert (_optimisationNotification != NULL);
       return *_optimisationNotification;
     }
-
-    /**
-     * Get the progress status specific to that event type.
-     *
-     * Note that that progress status may not be up-to-date. That
-     * attribute is up-to-date only after a call to the
-     * EventQueue::popEvent() method.
-     */
-    const ProgressStatus& getTypeSpecificStatus() const {
-      return _typeSpecificProgressStatus;
-    }
-    /** Get the current number of events. See the getTypeSpecificStatus()
-        method for details. */
-    const Count_T& getTypeSpecificCurrentNbOfEvents() const {
-      return _typeSpecificProgressStatus.getCurrentNb();
-    }
-    /** Get the expected total number of events. See the
-        getTypeSpecificStatus() method for details. */
-    const Count_T& getTypeSpecificExpectedTotalNbOfEvents() const {
-      return _typeSpecificProgressStatus.getExpectedNb();
-    }
-    /** Get the actual total number of events. See the
-        getTypeSpecificStatus() method for details. */
-    const Count_T& getTypeSpecificActualTotalNbOfEvents() const {
-      return _typeSpecificProgressStatus.getActualNb();
-    }
-
-    /**
-     * Get the progress status specific to the content key for
-     * that event.
-     *
-     * Note that that progress status may not be up-to-date. That
-     * attribute is up-to-date only after a call to the
-     * EventQueue::popEvent() method.
-     */
-    const ProgressStatus& getKeySpecificStatus() const {
-      return _keySpecificProgressStatus;
-    }
-    /** Get the current number of events. See the getKeySpecificStatus()
-        method for details. */
-    const Count_T& getKeySpecificCurrentNbOfEvents() const {
-      return _keySpecificProgressStatus.getCurrentNb();
-    }
-    /** Get the expected total number of events. See the
-        getKeySpecificStatus() method for details. */
-    const Count_T& getKeySpecificExpectedTotalNbOfEvents() const {
-      return _keySpecificProgressStatus.getExpectedNb();
-    }
-    /** Get the actual total number of events. See the
-        getKeySpecificStatus() method for details. */
-    const Count_T& getKeySpecificActualTotalNbOfEvents() const {
-      return _keySpecificProgressStatus.getActualNb();
-    }
-
-    /**
-     * Get the overall progress status (absolute, for all the events).
-     *
-     * Note that that progress status may not be up-to-date. That
-     * attribute is up-to-date only after a call to the
-     * EventQueue::popEvent() method.
-     */
-    const ProgressStatus& getOverallStatus() const {
-      return _overallProgressStatus;
-    }
-    /** Get the current number of events. See the getOverallStatus()
-        method for details. */
-    const Count_T& getOverallCurrentNbOfEvents() const {
-      return _overallProgressStatus.getCurrentNb();
-    }
-    /** Get the expected total number of events. See the
-        getOverallStatus() method for details. */
-    const Count_T& getOverallExpectedTotalNbOfEvents() const {
-      return _overallProgressStatus.getExpectedNb();
-    }
-    /** Get the expected total number of events. See the
-        getOverallStatus() method for details. */
-    const Count_T& getOverallActualTotalNbOfEvents() const {
-      return _overallProgressStatus.getActualNb();
-    }
-
     
-    // ///////////// Setters ///////////
-  public:
-    /** Set/update the progress status specific to that event type. */
-    void setTypeSpecificStatus (const ProgressStatus& iProgressStatus) {
-      _typeSpecificProgressStatus = iProgressStatus;
+    /**
+     * Get a reference on the snapshot referred to by event.
+     *
+     * \note When that event is not of type snapshot 
+     * for snapshot (EventType::OPT_NOT_4_FD), an
+     * assertion fails.
+     */
+    const SnapshotStruct& getSnapshotStruct() const {
+      assert (_snapshot != NULL);
+      return *_snapshot;
     }
-    /** Set/update the progress status specific to that event type. */
-    void setTypeSpecificStatus (const Count_T& iCurrentNbOfEvents,
-                                const Count_T& iExpectedTotalNbOfEvents,
-                                const Count_T& iActualTotalNbOfEvents) {
-      _typeSpecificProgressStatus.setCurrentNb (iCurrentNbOfEvents);
-      _typeSpecificProgressStatus.setExpectedNb (iExpectedTotalNbOfEvents);
-      _typeSpecificProgressStatus.setActualNb (iActualTotalNbOfEvents);
-    }
-    /** Set/update the progress status specific to that event type. */
-    void setTypeSpecificStatus (const Count_T& iCurrentNbOfEvents,
-                                const Count_T& iActualTotalNbOfEvents) {
-      _typeSpecificProgressStatus.setCurrentNb (iCurrentNbOfEvents);
-      _typeSpecificProgressStatus.setExpectedNb (iActualTotalNbOfEvents);
-      _typeSpecificProgressStatus.setActualNb (iActualTotalNbOfEvents);
-    }
-
-    /** Set/update the progress status specific to the content key
-        for that event. */
-    void setKeySpecificStatus (const ProgressStatus& iProgressStatus) {
-      _keySpecificProgressStatus = iProgressStatus;
-    }
-    /** Set/update the progress status specific to the content key
-        for that event. */
-    void setKeySpecificStatus (const Count_T& iCurrentNbOfEvents,
-                               const Count_T& iExpectedTotalNbOfEvents,
-                               const Count_T& iActualTotalNbOfEvents) {
-      _keySpecificProgressStatus.setCurrentNb (iCurrentNbOfEvents);
-      _keySpecificProgressStatus.setExpectedNb (iExpectedTotalNbOfEvents);
-      _keySpecificProgressStatus.setActualNb (iActualTotalNbOfEvents);
-    }
-    /** Set/update the progress status specific to the demand stream
-        for that event. */
-    void setKeySpecificStatus (const Count_T& iCurrentNbOfEvents,
-                               const Count_T& iActualTotalNbOfEvents) {
-      _keySpecificProgressStatus.setCurrentNb (iCurrentNbOfEvents);
-      _keySpecificProgressStatus.setExpectedNb (iActualTotalNbOfEvents);
-      _keySpecificProgressStatus.setActualNb (iActualTotalNbOfEvents);
-    }
-
-
-    /** Set/update the overall progress status (absolute, for all the
-        events). */
-    void setOverallStatus (const ProgressStatus& iProgressStatus) {
-      _overallProgressStatus = iProgressStatus;
-    }
-    /** Set/update the overall progress status (absolute, for all the
-        events). */
-    void setOverallStatus (const Count_T& iCurrentNbOfEvents,
-                           const Count_T& iExpectedTotalNbOfEvents,
-                           const Count_T& iActualTotalNbOfEvents) {
-      _overallProgressStatus.setCurrentNb (iCurrentNbOfEvents);
-      _overallProgressStatus.setExpectedNb (iExpectedTotalNbOfEvents);
-      _overallProgressStatus.setActualNb (iActualTotalNbOfEvents);
-    }
-    /** Set/update the overall progress status (absolute, for all the
-        events). */
-    void setOverallStatus (const Count_T& iCurrentNbOfEvents,
-                           const Count_T& iActualTotalNbOfEvents) {
-      _overallProgressStatus.setCurrentNb (iCurrentNbOfEvents);
-      _overallProgressStatus.setExpectedNb (iActualTotalNbOfEvents);
-      _overallProgressStatus.setActualNb (iActualTotalNbOfEvents);
-    }
-
 
     // ////////// Display methods //////////
   public:
@@ -231,22 +89,20 @@ namespace stdair {
     
     // ////////// Constructors and destructors /////////
   public:
+    /** Default constructor. */
+    EventStruct();
     /** Constructor for events corresponding to booking requests. */
-    EventStruct (const EventType::EN_EventType&, const EventContentKey_T&, 
-                 BookingRequestPtr_T);
+    EventStruct (const EventType::EN_EventType&, BookingRequestPtr_T);
     /** Constructor for events corresponding to optimisation requests. */
-    EventStruct (const EventType::EN_EventType&, const EventContentKey_T&,
-                 const DateTime_T& iDCPDate,
-                 OptimisationNotificationStructPtr_T);
+    EventStruct (const EventType::EN_EventType&, const DateTime_T& iDCPDate,
+                 OptimisationNotificationPtr_T);
+    /** Constructor for events corresponding to snapshot requests. */
+    EventStruct (const EventType::EN_EventType&, SnapshotPtr_T);
     /** Copy constructor. */
     EventStruct (const EventStruct&);
 
     /** Destructor. */
     ~EventStruct();
-    
-  private:
-    /** Default constructor. */
-    EventStruct();
 
     
     // ////////////////// Attributes //////////////////
@@ -264,11 +120,6 @@ namespace stdair {
     LongDuration_T _eventTimeStamp;
     
     /**
-     * Key of the content referred to by the event.
-     */
-    EventContentKey_T _eventContentKey;
-    
-    /**
      * Pointer to the booking request referred to by the event.
      */
     BookingRequestPtr_T _bookingRequest;
@@ -276,49 +127,12 @@ namespace stdair {
     /**
      * Pointer to the optimisation notification referred to by the event.
      */
-    OptimisationNotificationStructPtr_T _optimisationNotification;
+    OptimisationNotificationPtr_T _optimisationNotification;
 
     /**
-     * Counters holding the progress status.
-     *
-     * That attribute is altered only for the EventStruct instance
-     * returned by the popEvent() method. For all the EventStruct
-     * instances held by the EventQueue object, that attribute is not
-     * set (and not up-to-date).
-     *
-     * Indeed, the progress statuses are kept up-to-date in parallel
-     * (i.e., independently) of the EventStruct instances. They are
-     * kept in a dedicated map, stored within the EventQueue object.
+     * Pointer to the snapshot referred to by the event.
      */
-    ProgressStatus _typeSpecificProgressStatus;
-
-    /**
-     * Counters holding the progress status.
-     *
-     * That attribute is altered only for the EventStruct instance
-     * returned by the popEvent() method. For all the EventStruct
-     * instances held by the EventQueue object, that attribute is not
-     * set (and not up-to-date).
-     *
-     * Indeed, the progress statuses are kept up-to-date in parallel
-     * (i.e., independently) of the EventStruct instances. They are
-     * kept in a dedicated map, stored within the EventQueue object.
-     */
-    ProgressStatus _keySpecificProgressStatus;
-
-    /**
-     * Counters holding the progress status.
-     *
-     * That attribute is altered only for the EventStruct instance
-     * returned by the popEvent() method. For all the EventStruct
-     * instances held by the EventQueue object, that attribute is not
-     * set (and not up-to-date).
-     *
-     * Indeed, the progress statuses are kept up-to-date in parallel
-     * (i.e., independently) of the EventStruct instances. They are
-     * kept in a dedicated map, stored within the EventQueue object.
-     */
-    ProgressStatus _overallProgressStatus;
+    SnapshotPtr_T _snapshot;
   };
 
 }
