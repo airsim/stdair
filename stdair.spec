@@ -2,7 +2,7 @@
 %global mydocs __tmp_docdir
 #
 Name:           stdair
-Version:        0.37.1
+Version:        0.38.0
 Release:        1%{?dist}
 
 Summary:        C++ Standard Airline IT Object Library
@@ -41,7 +41,7 @@ Summary:        HTML documentation for the %{name} library
 Group:          Documentation
 %{?fedora:BuildArch:      noarch}
 BuildRequires:  tex(latex)
-BuildRequires:  doxygen, ghostscript, graphviz
+BuildRequires:  doxygen, ghostscript
 
 %description doc
 This package contains the documentation in the HTML format of the %{name}
@@ -118,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Aug 15 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.38.0-1
+- Upstream update
+
 * Wed Aug 10 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.37.1-1
 - Upstream update
 

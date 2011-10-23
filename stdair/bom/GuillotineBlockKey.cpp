@@ -53,11 +53,14 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void GuillotineBlockKey::serialisationImplementation() {
+  void GuillotineBlockKey::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
+  }
 
+  // ////////////////////////////////////////////////////////////////////
+  void GuillotineBlockKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;
