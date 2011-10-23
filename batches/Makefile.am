@@ -1,15 +1,17 @@
-# stdair/batches
+# StdAir project batches
 include $(top_srcdir)/Makefile.common
 include $(srcdir)/sources.mk
 
-## Source directory
-
-MAINTAINERCLEANFILES = Makefile.in
-
-
+##
 # Binaries (batches)
 bin_PROGRAMS = stdair
 
+##
+MAINTAINERCLEANFILES = Makefile.in
+CLEANFILES = ${bin_PROGRAMS:%=%.log}
+
+##
+#
 stdair_SOURCES = $(stdair_batches_h_sources) $(stdair_batches_cc_sources)
 stdair_CXXFLAGS = $(BOOST_CFLAGS)
 stdair_LDADD = 

@@ -100,6 +100,34 @@ namespace stdair {
      */
     void buildSampleBom (const bool isForRMOL = false,
                          const CabinCapacity_T iCabinCapacity = 0);
+    
+    /**
+     * Build a sample BOM tree, and attach it to the BomRoot instance.
+     *
+     * As for now, two sample BOM trees can be built.
+     * <ul>
+     *   <li>
+     *   <li></li>
+     * </ul>
+     *
+     */
+    void buildSampleBomForFareQuoter ();
+
+    /**
+     * Build a sample list of travel solutions.
+     *
+     * As of now (March 2011), that list is made of the following
+     * travel solutions:
+     * <ul>
+     *  <li>BA9</li>
+     *  <li>LHR-SYD</li>
+     *  <li>2011-06-10</li>
+     * </ul>
+     *
+     * @param TravelSolutionList_T& Sample list of travel solution structures.
+     *        It should be given empty. It is altered with the returned sample.
+     */
+    void buildSampleTravelSolutionForPricing (TravelSolutionList_T&);
 
     /**
      * Build a sample list of travel solutions.

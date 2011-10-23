@@ -47,6 +47,30 @@ namespace stdair {
     static void buildSampleBomForRMOL (BomRoot&, const CabinCapacity_T&);
 
     /**
+     * Build a sample bom tree for SimFQT.
+     *
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    static void buildSampleBomForFareQuoter (BomRoot&);
+
+    /**
+     * Build a sample list of travel solutions.
+     *
+     * As of now (March 2011), that list is made of the following
+     * travel solutions:
+     * <ul>
+     *  <li>BA9</li>
+     *  <li>LHR-SYD</li>
+     *  <li>2011-06-10</li>
+     * </ul>
+     *
+     * @param TravelSolutionList_T& Sample list of travel solution structures.
+     *        It should be given empty. It is altered with the returned sample.
+     */
+    static void buildSampleTravelSolutionForPricing (TravelSolutionList_T&);
+
+    /**
      * Build a sample list of travel solutions.
      *
      * As of now (March 2011), that list is made of the following

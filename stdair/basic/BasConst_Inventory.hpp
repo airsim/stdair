@@ -22,6 +22,9 @@ namespace stdair {
 
   /** Default flight number (9999). */
   extern const FlightNumber_T DEFAULT_FLIGHT_NUMBER;
+
+  /** Default guillotine number (9999). */
+  extern const GuillotineNumber_T DEFAULT_GUILLOTINE_NUMBER;
   
   /** Default flight departure date (01/01/1900). */
   extern const Date_T DEFAULT_DEPARTURE_DATE;
@@ -76,6 +79,12 @@ namespace stdair {
 
   /** Default seat index (for a bucket and/or Bid-Price Vector slot)(e.g., 1). */
   extern const SeatIndex_T DEFAULT_SEAT_INDEX;
+
+  /** Default value type (within a guillotine block) for fare family. */
+  extern const std::string DEFAULT_FARE_FAMILY_VALUE_TYPE;
+
+  /** Default value type (within a guillotine block) for segment-cabin. */
+  extern const std::string DEFAULT_SEGMENT_CABIN_VALUE_TYPE;
 
 }
 #endif // __STDAIR_BAS_BASCONST_INVENTORY_HPP

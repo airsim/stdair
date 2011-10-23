@@ -10,54 +10,50 @@
 #include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/basic/BasConst_Inventory.hpp>
-#include <stdair/bom/BomManager.hpp>
-#include <stdair/bom/Inventory.hpp>
-#include <stdair/bom/FlightDate.hpp>
+#include <stdair/basic/BasConst_BomDisplay.hpp>
+#include <stdair/bom/GuillotineBlockKey.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory::Inventory() : _key (DEFAULT_AIRLINE_CODE), _parent (NULL) {
-    //assert (false);
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  Inventory::Inventory (const Inventory&)
-    : _key (DEFAULT_AIRLINE_CODE), _parent (NULL) {
+  GuillotineBlockKey::GuillotineBlockKey()
+    : _guillotineNumber (DEFAULT_GUILLOTINE_NUMBER) {
     assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory::Inventory (const Key_T& iKey) : _key (iKey), _parent (NULL) {
+  GuillotineBlockKey::
+  GuillotineBlockKey (const GuillotineNumber_T& iGuillotineNumber)
+    : _guillotineNumber (iGuillotineNumber) {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory::~Inventory() {
+  GuillotineBlockKey::GuillotineBlockKey (const GuillotineBlockKey& iKey)
+    : _guillotineNumber (iKey._guillotineNumber) {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  std::string Inventory::toString() const {
+  GuillotineBlockKey::~GuillotineBlockKey() {
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void GuillotineBlockKey::toStream (std::ostream& ioOut) const {
+    ioOut << "GuillotineBlockKey: " << toString();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void GuillotineBlockKey::fromStream (std::istream& ioIn) {
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  const std::string GuillotineBlockKey::toString() const {
     std::ostringstream oStr;
-    oStr << describeKey();
+    oStr << _guillotineNumber;
     return oStr.str();
   }
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate* Inventory::
-  getFlightDate (const std::string& iFlightDateKeyStr) const {
-    FlightDate* oFlightDate_ptr =
-      BomManager::getObjectPtr<FlightDate> (*this, iFlightDateKeyStr);
-    return oFlightDate_ptr;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  FlightDate* Inventory::
-  getFlightDate (const FlightDateKey& iFlightDateKey) const {
-    return getFlightDate (iFlightDateKey.toString());
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  void Inventory::serialisationImplementation() {
+  void GuillotineBlockKey::serialisationImplementation() {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
@@ -69,10 +65,13 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   template<class Archive>
-  void Inventory::serialize (Archive& ioArchive,
-                             const unsigned int iFileVersion) {
-    ioArchive & _key;
+  void GuillotineBlockKey::serialize (Archive& ioArchive,
+                                 const unsigned int iFileVersion) {
+    /**
+     * \note The serialised member should not be const (as, as far as
+     *       I understand, they are tracked by Boost.Serialisation).
+     */
+    ioArchive & _guillotineNumber;
   }
 
 }
-

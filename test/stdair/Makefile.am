@@ -27,7 +27,7 @@ fail_PRG =
 #
 MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = ${nofail_PRG:%=%_utfresults.xml} ${nofail_PRG:%=%.log} \
-	testServiceInitialisation.log
+	StandardAirlineITTestSuite_*.log StandardAirlineITTestSuite_serial.txt
 
 #
 check_PROGRAMS = $(nofail_PRG) $(fail_PRG)

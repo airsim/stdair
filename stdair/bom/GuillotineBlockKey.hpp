@@ -1,5 +1,5 @@
-#ifndef __STDAIR_BOM_BOMROOTKEY_HPP
-#define __STDAIR_BOM_BOMROOTKEY_HPP
+#ifndef __STDAIR_BOM_GUILLOTINEBLOCKKEY_HPP
+#define __STDAIR_BOM_GUILLOTINEBLOCKKEY_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -8,6 +8,7 @@
 #include <iosfwd>
 #include <string>
 // StdAir
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/bom/KeyAbstract.hpp>
 
 /// Forward declarations
@@ -20,41 +21,40 @@ namespace boost {
 namespace stdair {
 
   /**
-   * @brief Key of the BOM structure root.
+   * @brief Key of a given guillotine block, made of a guillotine number.
    */
-  struct BomRootKey : public KeyAbstract {
+  struct GuillotineBlockKey : public KeyAbstract {
     friend class boost::serialization::access;
 
     // /////////// Constructors and destructors ///////////
-  public:
+  private:
     /**
      * Default constructor.
      */
-    BomRootKey ();
+    GuillotineBlockKey();
 
+  public:
     /**
      * Constructor.
      */
-    BomRootKey (const std::string& iIdentification);
+    GuillotineBlockKey (const GuillotineNumber_T&);
 
     /**
      * Copy constructor.
      */
-    BomRootKey (const BomRootKey&);
+    GuillotineBlockKey (const GuillotineBlockKey&);
 
     /**
      * Destructor.
      */
-    ~BomRootKey();
+    ~GuillotineBlockKey();
 
 
   public:
     // /////////// Getters //////////
-    /**
-     * Get the identification.
-     */
-    const std::string& getID() const {
-      return _id;
+    /** Get the guillotine number. */
+    const GuillotineNumber_T& getGuillotineNumber() const {
+      return _guillotineNumber;
     }
 
 
@@ -81,7 +81,7 @@ namespace stdair {
      * when among children of a given parent Business Object.
      *
      * For instance, "H" and "K" allow to differentiate among two
-     * marketing classes for the same segment-date.
+     * marketing classes for the same segment-block.
      */
     const std::string toString() const;
 
@@ -105,10 +105,11 @@ namespace stdair {
   private:
     // ///////////////// Attributes ///////////////
     /**
-     * Identification.
+     * Guillotine number.
      */
-    std::string _id;
+    GuillotineNumber_T _guillotineNumber;
+
   };
 
 }
-#endif // __STDAIR_BOM_BOMROOTKEY_HPP
+#endif // __STDAIR_BOM_GUILLOTINEBLOCKKEY_HPP

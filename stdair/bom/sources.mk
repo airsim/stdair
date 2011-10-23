@@ -23,6 +23,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/FlightPeriodKey.hpp \
 		$(top_srcdir)/stdair/bom/SegmentPeriodKey.hpp \
 		$(top_srcdir)/stdair/bom/AirlineFeatureKey.hpp \
+		$(top_srcdir)/stdair/bom/GuillotineBlockKey.hpp \
 		$(top_srcdir)/stdair/bom/EventQueueKey.hpp \
 		$(top_srcdir)/stdair/bom/InventoryTypes.hpp \
 		$(top_srcdir)/stdair/bom/FlightDateTypes.hpp \
@@ -44,6 +45,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/EventQueueTypes.hpp \
 		$(top_srcdir)/stdair/bom/EventTypes.hpp \
 		$(top_srcdir)/stdair/bom/YieldStoreTypes.hpp \
+		$(top_srcdir)/stdair/bom/GuillotineBlockTypes.hpp \
 		$(top_srcdir)/stdair/bom/BomHolder.hpp \
 		$(top_srcdir)/stdair/bom/BomRoot.hpp \
 		$(top_srcdir)/stdair/bom/Inventory.hpp \
@@ -59,6 +61,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/SegmentPeriod.hpp \
 		$(top_srcdir)/stdair/bom/AirlineFeature.hpp \
 		$(top_srcdir)/stdair/bom/YieldStore.hpp \
+		$(top_srcdir)/stdair/bom/GuillotineBlock.hpp \
 		$(top_srcdir)/stdair/bom/DoWStruct.hpp \
 		$(top_srcdir)/stdair/bom/PeriodStruct.hpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionStruct.hpp \
@@ -83,7 +86,10 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/DatePeriodTypes.hpp \
 		$(top_srcdir)/stdair/bom/TimePeriod.hpp \
 		$(top_srcdir)/stdair/bom/TimePeriodKey.hpp \
-		$(top_srcdir)/stdair/bom/TimePeriodTypes.hpp
+		$(top_srcdir)/stdair/bom/TimePeriodTypes.hpp \
+		$(top_srcdir)/stdair/bom/FareFeatures.hpp \
+		$(top_srcdir)/stdair/bom/FareFeaturesKey.hpp \
+		$(top_srcdir)/stdair/bom/FareFeaturesTypes.hpp
 stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/BomKeyManager.cpp \
 		$(top_srcdir)/stdair/bom/ParsedKey.cpp \
@@ -105,6 +111,7 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/FlightPeriodKey.cpp \
 		$(top_srcdir)/stdair/bom/SegmentPeriodKey.cpp \
 		$(top_srcdir)/stdair/bom/AirlineFeatureKey.cpp \
+		$(top_srcdir)/stdair/bom/GuillotineBlockKey.cpp \
 		$(top_srcdir)/stdair/bom/EventQueueKey.cpp \
 		$(top_srcdir)/stdair/bom/BomRoot.cpp \
 		$(top_srcdir)/stdair/bom/Inventory.cpp \
@@ -120,6 +127,7 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/SegmentPeriod.cpp \
 		$(top_srcdir)/stdair/bom/AirlineFeature.cpp \
 		$(top_srcdir)/stdair/bom/YieldStore.cpp \
+		$(top_srcdir)/stdair/bom/GuillotineBlock.cpp \
 		$(top_srcdir)/stdair/bom/DoWStruct.cpp \
 		$(top_srcdir)/stdair/bom/PeriodStruct.cpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionStruct.cpp \
@@ -139,5 +147,7 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/DatePeriod.cpp \
 		$(top_srcdir)/stdair/bom/DatePeriodKey.cpp \
 		$(top_srcdir)/stdair/bom/TimePeriod.cpp \
-		$(top_srcdir)/stdair/bom/TimePeriodKey.cpp
+		$(top_srcdir)/stdair/bom/TimePeriodKey.cpp \
+		$(top_srcdir)/stdair/bom/FareFeatures.cpp \
+		$(top_srcdir)/stdair/bom/FareFeaturesKey.cpp
 
