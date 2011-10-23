@@ -47,6 +47,24 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
+  const std::string LegCabin::displayVirtualClassList () const {
+    std::ostringstream oStr;
+    
+    for (VirtualClassList_T::const_iterator itVC = _virtualClassList.begin();
+         itVC != _virtualClassList.end(); ++itVC) {
+      const VirtualClassStruct& lVC = *itVC;
+      oStr << std::endl << "Yield: " << std::fixed << std::setprecision (2)
+           << lVC.getYield()
+           << ", Protection: " << std::fixed << std::setprecision (2)
+           << lVC.getCumulatedProtection()
+           << ", Booking limit: " << std::fixed << std::setprecision (2)
+           << lVC.getCumulatedBookingLimit();
+    }
+    
+    return oStr.str();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   void LegCabin::updateFromReservation (const NbOfBookings_T& iNbOfBookings) {
     _committedSpace += iNbOfBookings;
     _availabilityPool = _offeredCapacity - _committedSpace;

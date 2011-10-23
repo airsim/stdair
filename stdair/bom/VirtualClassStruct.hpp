@@ -37,7 +37,16 @@ namespace stdair {
       return _stdDev;
     }
 
+    /** Get the booking limit of the class. */
+    const BookingLimit_T& getCumulatedBookingLimit () const {
+      return _cumulatedBookingLimit;
+    }
 
+    /** Get the protection level of the class. */
+    const ProtectionLevel_T& getCumulatedProtection () const {
+      return _cumulatedProtection;
+    }
+    
   public:
     // /////////// Setters ///////////////
     /** Set the yield (average price paid for that virtual class). */
@@ -54,8 +63,17 @@ namespace stdair {
     void setStdDev (const StdDevValue_T& iStdDev) {
       _stdDev = iStdDev;
     }
-
-
+    
+    /** Set the booking limit of the class. */
+    void setCumulatedBookingLimit (const BookingLimit_T& iBL) {
+      _cumulatedBookingLimit = iBL;
+    }
+    
+    /** Set the protection level of the class. */
+    void setCumulatedProtection (const ProtectionLevel_T& iP) {
+      _cumulatedProtection = iP;
+    }
+    
   public:
     // /////////// Display support method /////////////
     /** Dump a Business Object into an output stream.
@@ -97,6 +115,12 @@ namespace stdair {
 
     /** Standard deviation of the demand distribution. */
     StdDevValue_T _stdDev;
+
+    /** Booking limit. */
+    BookingLimit_T _cumulatedBookingLimit;
+
+    /** Protection level. */
+    ProtectionLevel_T _cumulatedProtection;
   };
 
 }

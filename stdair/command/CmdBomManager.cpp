@@ -422,14 +422,12 @@ namespace stdair {
 
     // Flight-date
     FlightDateKey lFlightDateKey (DEFAULT_FLIGHT_NUMBER, DEFAULT_FLIGHT_DATE);
-
     FlightDate& lFlightDate =
       FacBom<FlightDate>::instance().create (lFlightDateKey);
     FacBomManager::instance().addToList (lInv, lFlightDate);
 
     // Leg-date
     LegDateKey lLegDateKey (DEFAULT_ORIGIN);
-
     LegDate& lLeg = FacBom<LegDate>::instance().create (lLegDateKey);
     FacBomManager::instance().addToList (lFlightDate, lLeg);
 
@@ -443,7 +441,6 @@ namespace stdair {
 
     // Leg-cabin
     LegCabinKey lLegCabinKey (DEFAULT_CABIN_CODE);
-
     LegCabin& lLegCabin =
       FacBom<LegCabin>::instance().create (lLegCabinKey);
     FacBomManager::instance().addToList (lLeg, lLegCabin);
@@ -452,7 +449,6 @@ namespace stdair {
 
     // Segment-date
     SegmentDateKey lSegmentDateKey (DEFAULT_ORIGIN, DEFAULT_DESTINATION);
-
     SegmentDate& lSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
     FacBomManager::instance().addToList (lFlightDate, lSegment);
@@ -470,7 +466,6 @@ namespace stdair {
 
     // Segment-cabin
     SegmentCabinKey lSegmentCabinKey (DEFAULT_CABIN_CODE);
-
     SegmentCabin& lSegmentCabin =
       FacBom<SegmentCabin>::instance().create (lSegmentCabinKey);
     FacBomManager::instance().addToList (lSegment, lSegmentCabin);
