@@ -16,6 +16,12 @@
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
+#include <stdair/bom/SegmentDate.hpp>
+#include <stdair/bom/SegmentCabin.hpp>
+#include <stdair/bom/FareFamily.hpp>
+#include <stdair/bom/LegDate.hpp>
+#include <stdair/bom/LegCabin.hpp>
+#include <stdair/bom/Bucket.hpp>
 #include <stdair/factory/FacBomManager.hpp>
 #include <stdair/factory/FacBom.hpp>
 #include <stdair/command/CmdBomSerialiser.hpp>
@@ -155,5 +161,84 @@ namespace stdair {
     stdair::serialiseHelper<Archive, Inventory, FlightDate> (*this, ioArchive,
                                                              iFileVersion);
   }
+
+  // ////////////////////////////////////////////////////////////////////
+  void FlightDate::serialisationImplementation() {
+    std::ostringstream oStr;
+    boost::archive::text_oarchive oa (oStr);
+    oa << *this;
+
+    std::istringstream iStr;
+    boost::archive::text_iarchive ia (iStr);
+    ia >> *this;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  template<class Archive>
+  void FlightDate::serialize (Archive& ioArchive,
+                             const unsigned int iFileVersion) {
+    ioArchive & _key;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void SegmentDate::serialisationImplementation() {
+    std::ostringstream oStr;
+    boost::archive::text_oarchive oa (oStr);
+    oa << *this;
+
+    std::istringstream iStr;
+    boost::archive::text_iarchive ia (iStr);
+    ia >> *this;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  template<class Archive>
+  void SegmentDate::serialize (Archive& ioArchive,
+                             const unsigned int iFileVersion) {
+    ioArchive & _key;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void SegmentCabin::serialisationImplementation() {
+    std::ostringstream oStr;
+    boost::archive::text_oarchive oa (oStr);
+    oa << *this;
+
+    std::istringstream iStr;
+    boost::archive::text_iarchive ia (iStr);
+    ia >> *this;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  template<class Archive>
+  void SegmentCabin::serialize (Archive& ioArchive,
+                                const unsigned int iFileVersion) {
+    ioArchive & _key & _guillotineNumber;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  // Explicit template instantiations
+  namespace ba = boost::archive;
+  template void BomRoot::serialize<ba::text_oarchive> (ba::text_oarchive&,
+                                                       unsigned int);
+  template void BomRoot::serialize<ba::text_iarchive> (ba::text_iarchive&,
+                                                       unsigned int);
+  template void Inventory::serialize<ba::text_oarchive> (ba::text_oarchive&,
+                                                         unsigned int);
+  template void Inventory::serialize<ba::text_iarchive> (ba::text_iarchive&,
+                                                         unsigned int);
+  template void FlightDate::serialize<ba::text_oarchive> (ba::text_oarchive&,
+                                                          unsigned int);
+  template void FlightDate::serialize<ba::text_iarchive> (ba::text_iarchive&,
+                                                          unsigned int);
+  template void SegmentDate::serialize<ba::text_oarchive> (ba::text_oarchive&,
+                                                           unsigned int);
+  template void SegmentDate::serialize<ba::text_iarchive> (ba::text_iarchive&,
+                                                           unsigned int);
+  template void SegmentCabin::serialize<ba::text_oarchive> (ba::text_oarchive&,
+                                                            unsigned int);
+  template void SegmentCabin::serialize<ba::text_iarchive> (ba::text_iarchive&,
+                                                            unsigned int);
+  // ////////////////////////////////////////////////////////////////////
 
 }

@@ -4,10 +4,6 @@
 // STL
 #include <cassert>
 #include <sstream>
-// Boost.Serialization
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/basic/BasConst_BookingClass.hpp>
 #include <stdair/basic/BasConst_Inventory.hpp>
@@ -47,7 +43,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   const MapKey_T SegmentCabin::getFullerKey() const {
-    const SegmentDate& lSegmentDate = BomManager::getParent<SegmentDate> (*this);
+    const SegmentDate& lSegmentDate = BomManager::getParent<SegmentDate>(*this);
 
     const MapKey_T oFullKey =
       lSegmentDate.describeKey() + DEFAULT_KEY_FLD_DELIMITER + getCabinCode();
@@ -59,24 +55,6 @@ namespace stdair {
     std::ostringstream oStr;
     oStr << describeKey();
     return oStr.str();
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  void SegmentCabin::serialisationImplementation() {
-    std::ostringstream oStr;
-    boost::archive::text_oarchive oa (oStr);
-    oa << *this;
-
-    std::istringstream iStr;
-    boost::archive::text_iarchive ia (iStr);
-    ia >> *this;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  template<class Archive>
-  void SegmentCabin::serialize (Archive& ioArchive,
-                                const unsigned int iFileVersion) {
-    ioArchive & _key & _guillotineNumber;
   }
 
   // ////////////////////////////////////////////////////////////////////

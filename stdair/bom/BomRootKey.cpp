@@ -67,4 +67,13 @@ namespace stdair {
     ioArchive & _id;
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  // Explicit template instantiation
+  namespace ba = boost::archive;
+  template void BomRootKey::serialize<ba::text_oarchive> (ba::text_oarchive&,
+                                                          unsigned int);
+  template void BomRootKey::serialize<ba::text_iarchive> (ba::text_iarchive&,
+                                                          unsigned int);
+  // ////////////////////////////////////////////////////////////////////
+
 }

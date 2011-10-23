@@ -1,5 +1,5 @@
-#ifndef __STDAIR_BOM_FAREFEATURESKEY_HPP
-#define __STDAIR_BOM_FAREFEATURESKEY_HPP
+#ifndef __STDAIR_BOM_YIELDFEATURESKEY_HPP
+#define __STDAIR_BOM_YIELDFEATURESKEY_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section

@@ -81,6 +81,9 @@ namespace stdair {
   /** Define availibility of booking limit. */
   typedef bool CensorshipFlag_T;
 
+  /** Define the type of day-to-departure. */
+  typedef short DTD_T;
+
   /** Define the list of censorship flags (une list per booking
       class, one censorship flag per DCP). */
   typedef std::vector<CensorshipFlag_T> CensorshipFlagList_T;
@@ -128,6 +131,21 @@ namespace stdair {
 
   /** Define a snapshot block. */
   typedef boost::multi_array<double, 2> SnapshotBlock_T;
+
+  /** Define a range for array view. */
+  typedef SnapshotBlock_T::index_range SnapshotBlockRange_T;
+
+  /** Define a view for a given DTD. */
+  typedef SnapshotBlock_T::array_view<1>::type SegmentCabinDTDSnapshotView_T;
+
+  /** Define a view for a given range of DTD. */
+  typedef SnapshotBlock_T::array_view<2>::type SegmentCabinDTDRangeSnapshotView_T;
+  
+  /** Define a const view for a given DTD. */
+  typedef SnapshotBlock_T::const_array_view<1>::type ConstSegmentCabinDTDSnapshotView_T;
+
+  /** Define a const view for a given range of DTD. */
+  typedef SnapshotBlock_T::const_array_view<2>::type ConstSegmentCabinDTDRangeSnapshotView_T;
   
   /** Define the snapshot block number. */
   typedef unsigned short BlockNumber_T;

@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------
 AC_PREREQ(2.59)
 AC_COPYRIGHT([Copyright (C) 2007-2011  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
-AC_INIT([STDAIR],[0.29.0],[denis_arnaud@users.sourceforge.net],[stdair])
+AC_INIT([STDAIR],[0.30.0],[denis_arnaud@users.sourceforge.net],[stdair])
 AC_CONFIG_HEADER([stdair/config.h])
 AC_CONFIG_SRCDIR([stdair/bom/BomRoot.hpp])
 AC_CONFIG_AUX_DIR([config])
@@ -15,7 +15,7 @@ PACKAGE_PRETTY_NAME="StdAir"
 AC_SUBST(PACKAGE_PRETTY_NAME)
 
 # Shared library versioning
-GENERIC_LIBRARY_VERSION="0:29:0"
+GENERIC_LIBRARY_VERSION="0:30:0"
 #                        | | |
 #                 +------+ | +---+
 #                 |        |     |
@@ -110,6 +110,24 @@ fi
 if test -z "${CXXFLAGS}"; then
    CXXFLAGS="-g -Wall"
 fi
+
+# -----------------------------------------------------------------
+# Readline: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
+# -----------------------------------------------------------------
+AM_PATH_READLINE([6.0])
+AC_SUBST(READLINE_VERSION)
+AC_SUBST(READLINE_CFLAGS)
+AC_SUBST(READLINE_LIBS)
+
+# -----------------------------------------------------------
+# Python: http://www.python.org
+# -----------------------------------------------------------
+PGAC_CHECK_PYTHON_EMBED_SETUP
+AC_SUBST(PYTHON_VERSION)
+AC_SUBST(PYTHON_LIBS)
+AC_SUBST(PYTHON_CFLAGS)
+AC_SUBST(PYTHON_ADD_LIBS)
+
 
 # --------------------------------------------------------
 # Boost (STL Extensions: http://www.boost.org)
@@ -206,7 +224,10 @@ AC_CONFIG_FILES(
 	stdair/factory/Makefile
 	stdair/command/Makefile
 	stdair/config/Makefile
-	stdair/service/Makefile
+	stdair/service/Makefile	
+	stdair/core/Makefile
+	stdair/ui/Makefile
+	stdair/ui/cmdline/Makefile
 	batches/Makefile
 	man/Makefile
 	man/doxygen_man1.cfg
@@ -277,6 +298,17 @@ Compiler/linker flags/libs/defs:
   - LIBS ................... : ${LIBS}
 
 External libraries:
+  - Readline ............... :
+    o READLINE_VERSION ..... : ${READLINE_VERSION}
+    o READLINE_CFLAGS ...... : ${READLINE_CFLAGS}
+    o READLINE_LIBS ........ : ${READLINE_LIBS} 
+
+  - Python ................. :
+    o PYTHON_VERSION ....... : ${PYTHON_VERSION}
+    o PYTHON_CFLAGS ........ : ${PYTHON_CFLAGS}
+    o PYTHON_LIBS .......... : ${PYTHON_LIBS} 
+    o PYTHON_ADD_LIBS ...... : ${PYTHON_ADD_LIBS} 
+
   - Boost .................. :
     o BOOST_VERSION ........ : ${BOOST_VERSION}
     o BOOST_CFLAGS ......... : ${BOOST_CFLAGS}

@@ -57,8 +57,58 @@ namespace stdair {
 
     // Initialise the snapshot blocks
     _bookingSnapshotBlock.
-      resize (boost::extents[lNumberOfSegmentCabins*lNumberOfValueTypes][366]);
+      resize (boost::extents[lNumberOfSegmentCabins*lNumberOfValueTypes]
+              [DEFAULT_MAX_DTD + 1]);
 
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  ConstSegmentCabinDTDSnapshotView_T GuillotineBlock::
+  getConstSegmentCabinDTDBookingSnapshotView (const BlockNumber_T iSCIdxBegin,
+                                              const BlockNumber_T iSCIdxEnd,
+                                              const DTD_T iDTD) const {
+    const unsigned int lNbOfValueTypes = _valueTypesIndexMap.size();
+    const unsigned int lValueIdxBegin = iSCIdxBegin * lNbOfValueTypes;
+    const unsigned int lValueIdxEnd = (iSCIdxEnd + 1) * lNbOfValueTypes;
+
+    return _bookingSnapshotBlock [ boost::indices[SnapshotBlockRange_T(lValueIdxBegin, lValueIdxEnd)][iDTD] ];
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  ConstSegmentCabinDTDRangeSnapshotView_T GuillotineBlock::
+  getConstSegmentCabinDTDRangeBookingSnapshotView
+  (const BlockNumber_T iSCIdxBegin, const BlockNumber_T iSCIdxEnd,
+   const DTD_T iDTDBegin, const DTD_T iDTDEnd) const {
+    const unsigned int lNbOfValueTypes = _valueTypesIndexMap.size();
+    const unsigned int lValueIdxBegin = iSCIdxBegin * lNbOfValueTypes;
+    const unsigned int lValueIdxEnd = (iSCIdxEnd +1) * lNbOfValueTypes;
+
+    return _bookingSnapshotBlock [ boost::indices[SnapshotBlockRange_T(lValueIdxBegin, lValueIdxEnd)][SnapshotBlockRange_T(iDTDBegin, iDTDEnd + 1)] ];
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  SegmentCabinDTDSnapshotView_T GuillotineBlock::
+  getSegmentCabinDTDBookingSnapshotView (const BlockNumber_T iSCIdxBegin,
+                                         const BlockNumber_T iSCIdxEnd,
+                                         const DTD_T iDTD) {
+    const unsigned int lNbOfValueTypes = _valueTypesIndexMap.size();
+    const unsigned int lValueIdxBegin = iSCIdxBegin * lNbOfValueTypes;
+    const unsigned int lValueIdxEnd = (iSCIdxEnd + 1) * lNbOfValueTypes;
+
+    return _bookingSnapshotBlock [ boost::indices[SnapshotBlockRange_T(lValueIdxBegin, lValueIdxEnd)][iDTD] ];
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  SegmentCabinDTDRangeSnapshotView_T GuillotineBlock::
+  getSegmentCabinDTDRangeBookingSnapshotView (const BlockNumber_T iSCIdxBegin,
+                                              const BlockNumber_T iSCIdxEnd,
+                                              const DTD_T iDTDBegin,
+                                              const DTD_T iDTDEnd) {
+    const unsigned int lNbOfValueTypes = _valueTypesIndexMap.size();
+    const unsigned int lValueIdxBegin = iSCIdxBegin * lNbOfValueTypes;
+    const unsigned int lValueIdxEnd = (iSCIdxEnd + 1) * lNbOfValueTypes;
+
+    return _bookingSnapshotBlock [ boost::indices[SnapshotBlockRange_T(lValueIdxBegin, lValueIdxEnd)][SnapshotBlockRange_T(iDTDBegin, iDTDEnd + 1)] ];
   }
 
   // ////////////////////////////////////////////////////////////////////

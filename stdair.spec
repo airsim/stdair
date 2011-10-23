@@ -2,7 +2,7 @@
 %global mydocs __tmp_docdir
 #
 Name:           stdair
-Version:        0.29.0
+Version:        0.30.0
 Release:        1%{?dist}
 
 Summary:        C++ Standard Airline IT Object Library
@@ -15,13 +15,12 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.
 
 BuildRequires:  boost-devel
 BuildRequires:  soci-mysql-devel
-BuildRequires:  extracc-devel
 
 
 %description
 %{name} aims at providing a clean API, and the corresponding C++
 implementation, for the basis of Airline IT Business Object Model (BOM),
-that is, to be used by several other Open Source projects, such as RMOL, 
+that is, to be used by several other open source projects, such as RMOL, 
 Air-Sched, Travel-CCM, OpenTREP, etc.
 
 Install the %{name} package if you need a library for Airline IT Standard 
@@ -65,22 +64,17 @@ find . -type f -name '*.[hc]pp' -exec chmod 644 {} \;
 make %{?_smp_mflags}
 
 %install
-# On Fedora, the BuildRoot is automatically cleaned. Which is not the case for
-# RedHat. See: https://fedoraproject.org/wiki/Packaging/Guidelines#BuildRoot_tag
-%{?rhel:rm -rf $RPM_BUILD_ROOT}
-
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
 
 # Remove unpackaged files from the buildroot
-rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{name}.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.la
 
 mkdir -p %{mydocs}
 mv $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/html %{mydocs}
 
-%if 0%{?rhel}
 %clean
 rm -rf $RPM_BUILD_ROOT
-%endif
 
 %post -p /sbin/ldconfig
 
@@ -95,12 +89,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/%{name}.1.*
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/samples/*.csv
+%{_datadir}/%{name}/samples/rds01/*.csv
 
 %files devel
 %defattr(-,root,root,-)
 %{_includedir}/%{name}
 %{_bindir}/%{name}-config
 %{_libdir}/lib%{name}.so
+%{_libdir}/lib%{name}uicl.so
 %{_libdir}/pkgconfig/%{name}.pc
 %{_datadir}/aclocal/%{name}.m4
 %{_mandir}/man1/%{name}-config.1.*
@@ -113,61 +109,64 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Apr 20 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.29.0-1
+* Fri Apr 29 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.30.0-1
 - Upstream update
 
-* Sun Apr 17 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.28.0-1
+* Wed Apr 20 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.29.0-1
 - Upstream update
 
-* Tue Apr 12 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.27.0-1
+* Sun Apr 17 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.28.0-1
 - Upstream update
 
-* Fri Apr 08 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.26.0-1
+* Tue Apr 12 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.27.0-1
 - Upstream update
 
-* Tue Apr 05 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.25.0-1
+* Fri Apr 08 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.26.0-1
 - Upstream update
 
-* Fri Apr 01 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.24.0-1
+* Tue Apr 05 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.25.0-1
 - Upstream update
 
-* Thu Mar 24 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.23.0-1
+* Fri Apr 01 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.24.0-1
 - Upstream update
 
-* Thu Mar 17 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.22.0-1
+* Thu Mar 24 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.23.0-1
 - Upstream update
 
-* Sun Mar 13 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.21.0-1
+* Thu Mar 17 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.22.0-1
 - Upstream update
 
-* Fri Mar  4 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.20.0-1
+* Sun Mar 13 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.21.0-1
 - Upstream update
 
-* Thu Mar  3 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.19.0-1
+* Fri Mar  4 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.20.0-1
 - Upstream update
 
-* Thu Mar  3 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.18.0-1
+* Thu Mar  3 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.19.0-1
 - Upstream update
 
-* Wed Mar  2 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.17.0-1
+* Thu Mar  3 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.18.0-1
 - Upstream update
 
-* Fri Feb 25 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.16.0-1
+* Wed Mar  2 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.17.0-1
 - Upstream update
 
-* Tue Feb 22 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.15.0-1
+* Fri Feb 25 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.16.0-1
 - Upstream update
 
-* Sat Feb 19 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.14.0-1
+* Tue Feb 22 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.15.0-1
 - Upstream update
 
-* Wed Feb 16 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.13.0-1
+* Sat Feb 19 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.14.0-1
 - Upstream update
 
-* Sat Feb 12 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.12.0-1
+* Wed Feb 16 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.13.0-1
 - Upstream update
 
-* Tue Jan 18 2011 Son Nguyen Kim <nguyenkims@gmail.com> 0.11.0-1
+* Sat Feb 12 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.12.0-1
+- Upstream update
+
+* Tue Jan 18 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.11.0-1
 - Upstream update
 
 * Thu Dec 29 2010 Son Nguyen Kim <nguyenkims@gmail.com> 0.10.0-1

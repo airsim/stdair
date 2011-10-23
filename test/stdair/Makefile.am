@@ -15,7 +15,7 @@ libstdairtest_la_SOURCES = \
 	$(stdair_test_lib_h_sources) $(stdair_test_lib_cc_sources)
 libstdairtest_la_CXXFLAGS =
 libstdairtest_la_LDFLAGS = \
-	$(top_builddir)/stdair/libstdair.la
+	$(top_builddir)/stdair/core/libstdair.la
 
 
 ##
@@ -39,7 +39,7 @@ StandardAirlineITTestSuite_SOURCES = \
 	$(stdair_test_bin_h_sources) $(stdair_test_bin_cc_sources)
 StandardAirlineITTestSuite_CXXFLAGS = $(BOOST_CFLAGS)
 StandardAirlineITTestSuite_LDADD = 
-StandardAirlineITTestSuite_LDFLAGS = $(BOOST_LIBS) \
-	$(BOOST_UNIT_TEST_FRAMEWORK_LIB) \
-	$(top_builddir)/test/stdair/libstdairtest.la \
-	$(top_builddir)/stdair/libstdair.la
+StandardAirlineITTestSuite_LDFLAGS = \
+	$(BOOST_LIBS) $(BOOST_UNIT_TEST_FRAMEWORK_LIB) \
+	$(top_builddir)/stdair/core/libstdair.la \
+	$(top_builddir)/test/stdair/libstdairtest.la
