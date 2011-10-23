@@ -113,6 +113,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Jul  13 2010 Son Nguyen Kim <nguyenkims@gmail.com> 0.1.0-1
+* Sun Jul 25 2010 Denis Arnaud <nguyenkims@gmail.com> 0.2.0-1
+- Upstream update
+
+* Wed Jul 13 2010 Son Nguyen Kim <nguyenkims@gmail.com> 0.1.0-1
 - First RPM release
 
