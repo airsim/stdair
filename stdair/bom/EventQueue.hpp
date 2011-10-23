@@ -9,6 +9,7 @@
 #include <string>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
+#include <stdair/basic/ProgressStatus.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/EventQueueKey.hpp>
 #include <stdair/bom/EventQueueTypes.hpp>
@@ -49,36 +50,52 @@ namespace stdair {
     }
     
     /** Get the overall progress status (for the whole event queue). */
-    const NbOfEventsPair_T& getStatus() const {
+    const ProgressStatus& getStatus() const {
       return _progressStatus;
     }
     /** Get the current number of events (for the whole event queue). */
     const Count_T& getCurrentNbOfEvents() const {
-      return _progressStatus.first;
+      return _progressStatus.getCurrentNb();
     }
     /** Get the expected total number of events (for the whole event queue). */
     const Count_T& getExpectedTotalNbOfEvents() const {
-      return _progressStatus.second;
+      return _progressStatus.getExpectedNb();
+    }
+    /** Get the actual total number of events (for the whole event queue). */
+    const Count_T& getActualTotalNbOfEvents() const {
+      return _progressStatus.getActualNb();
     }
 
     // /////////// Setters ///////////////
     /** Set/update the progress status. */
-    void setStatus (const NbOfEventsPair_T& iNbOfEventsPair) {
-      _progressStatus = iNbOfEventsPair;
+    void setStatus (const ProgressStatus& iProgressStatus) {
+      _progressStatus = iProgressStatus;
     }
     /** Set/update the progress status. */
     void setStatus (const Count_T& iCurrentNbOfEvents,
-                    const Count_T& iExpectedTotalNbOfEvents) {
-      _progressStatus.first = iCurrentNbOfEvents;
-      _progressStatus.second = iExpectedTotalNbOfEvents;
+                    const Count_T& iExpectedTotalNbOfEvents,
+                    const Count_T& iActualTotalNbOfEvents) {
+      _progressStatus.setCurrentNb (iCurrentNbOfEvents);
+      _progressStatus.setExpectedNb (iExpectedTotalNbOfEvents);
+      _progressStatus.setActualNb (iActualTotalNbOfEvents);
+    }
+    /** Set/update the progress status. */
+    void setStatus (const Count_T& iCurrentNbOfEvents,
+                    const Count_T& iActualTotalNbOfEvents) {
+      _progressStatus.setCurrentNb (iCurrentNbOfEvents);
+      _progressStatus.setActualNb (iActualTotalNbOfEvents);
     }
     /** Set the current number of events (for the whole event queue). */
     void setCurrentNbOfEvents (const Count_T& iCurrentNbOfEvents) {
-      _progressStatus.first = iCurrentNbOfEvents;
+      _progressStatus.setCurrentNb (iCurrentNbOfEvents);
     }
     /** Set the expected total number of events (for the whole event queue). */
     void setExpectedTotalNbOfEvents (const Count_T& iExpectedTotalNbOfEvents) {
-      _progressStatus.second = iExpectedTotalNbOfEvents;
+      _progressStatus.setExpectedNb (iExpectedTotalNbOfEvents);
+    }
+    /** Set the actual total number of events (for the whole event queue). */
+    void setActualTotalNbOfEvents (const Count_T& iActualTotalNbOfEvents) {
+      _progressStatus.setActualNb (iActualTotalNbOfEvents);
     }
 
     
@@ -179,13 +196,6 @@ namespace stdair {
                     const NbOfRequests_T& iExpectedTotalNbOfEvents);
 
     /**
-     * Initialise the (Boost) progress display objects, passed as parameter.
-     * <br>The maximum, for each progress display object, is set to
-     * be the expected total number of events.
-     */
-    void initProgressDisplays (ProgressDisplayMap_T&);
-
-    /**
      * Calculate the progress status.
      * <br>The progress is status is the ratio of:
      * <ul>
@@ -196,7 +206,7 @@ namespace stdair {
      * </ul>
      */
     ProgressPercentage_T calculateProgress() const {
-      return (_progressStatus.first / _progressStatus.second);
+      return _progressStatus.progress();
     }
 
     /**
@@ -210,7 +220,7 @@ namespace stdair {
      * EventStruct::getStatus() gives the same information, just after
      * a call to EventQueue::popEvent().
      */
-    NbOfEventsPair_T getStatus (const DemandStreamKeyStr_T&) const;
+    ProgressStatus getStatus (const DemandStreamKeyStr_T&) const;
 
 
   public:
@@ -250,15 +260,15 @@ namespace stdair {
     EventList_T _eventList;
 
     /**
-     * Status (current number of events, total number of events) for
-     * each demand stream.
+     * Status (current number of events, total expected and actual
+     * number of events) for each demand stream.
      */
     NbOfEventsByDemandStreamMap_T _nbOfEvents;
     
     /**
-     * Pair of counters holding the overall progress status.
+     * Counters holding the overall progress status.
      */
-    NbOfEventsPair_T _progressStatus;
+    ProgressStatus _progressStatus;
   };
 
 }

@@ -7,6 +7,7 @@
 #include <boost/make_shared.hpp>
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
+#include <stdair/basic/BasConst_Event.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/EventStruct.hpp>
 
@@ -15,8 +16,8 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct()
     : _eventType (EventType::BKG_REQ), _eventTimeStamp (0),
-      _demandStreamKeyStr (""), _specificProgressStatus (0.0, 1e-3),
-      _overallProgressStatus (0.0, 1e-3) {
+      _demandStreamKeyStr(), _specificProgressStatus(),
+      _overallProgressStatus() {
     assert (false);
   }
   
@@ -25,7 +26,7 @@ namespace stdair {
                             const DemandStreamKeyStr_T& iDemandStreamKey,
                             BookingRequestPtr_T ioRequestPtr)
     : _eventType (iEventType), _demandStreamKeyStr (iDemandStreamKey),
-      _specificProgressStatus (0.0, 1e-3), _overallProgressStatus (0.0, 1e-3) {
+      _specificProgressStatus(), _overallProgressStatus() {
 
     //
     assert (ioRequestPtr != NULL);
@@ -44,10 +45,8 @@ namespace stdair {
     : _eventType (iEventStruct._eventType),
       _eventTimeStamp (iEventStruct._eventTimeStamp),
       _demandStreamKeyStr (iEventStruct._demandStreamKeyStr),
-      _specificProgressStatus (iEventStruct._specificProgressStatus.first,
-                               iEventStruct._specificProgressStatus.second),
-      _overallProgressStatus (iEventStruct._overallProgressStatus.first,
-                              iEventStruct._overallProgressStatus.second) {
+      _specificProgressStatus (iEventStruct._specificProgressStatus),
+      _overallProgressStatus (iEventStruct._overallProgressStatus) {
 
     //
     if (iEventStruct._request != NULL) {
@@ -57,7 +56,7 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  EventStruct::~EventStruct () {
+  EventStruct::~EventStruct() {
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -67,12 +66,14 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string EventStruct::describe() const {
     std::ostringstream oStr;
-    oStr << "[" << _eventType
-         << "][" << _overallProgressStatus.first
-         << "/" << _overallProgressStatus.second
-         << "][" << _specificProgressStatus.first
-         << "/" << _specificProgressStatus.second
-         << "] " << _eventTimeStamp;
+    oStr << "[" << EventType (_eventType)
+         << "][" << _overallProgressStatus.getCurrentNb()
+         << "/{" << _overallProgressStatus.getExpectedNb()
+         << "," << _overallProgressStatus.getActualNb()
+         << "}][" << _specificProgressStatus.getCurrentNb()
+         << "/{" << _specificProgressStatus.getExpectedNb()
+         << "," << _specificProgressStatus.getActualNb()
+         << "}] " << _eventTimeStamp;
     
     switch (_eventType) {
     case EventType::BKG_REQ: {

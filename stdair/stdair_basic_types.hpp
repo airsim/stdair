@@ -78,7 +78,7 @@ namespace stdair {
   // typedef unsigned short NbOfSeats_T;
 
   /** Count */
-  typedef int Count_T;
+  typedef unsigned int Count_T;
   
   /** Number of passengers (in a group) for a booking. */
   typedef unsigned short PartySize_T;
@@ -103,7 +103,7 @@ namespace stdair {
   typedef unsigned short NbOfAirlines_T;
 
   /** Define an availability. */
-  typedef double Availability_T;
+  typedef short Availability_T;
 
   /** Define the price of a travel solution. */
   typedef double Fare_T;

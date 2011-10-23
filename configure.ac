@@ -1,8 +1,8 @@
 # Process this file with autoconf to produce a configure script
 #-------------------------------------------------------------------
 AC_PREREQ(2.59)
-AC_COPYRIGHT([Copyright (C) 2007-2010  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
-AC_INIT([STDAIR],[0.12.0],[denis_arnaud@users.sourceforge.net],[stdair])
+AC_COPYRIGHT([Copyright (C) 2007-2011  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
+AC_INIT([STDAIR],[0.13.0],[denis_arnaud@users.sourceforge.net],[stdair])
 AC_CONFIG_HEADER([stdair/config.h])
 AC_CONFIG_SRCDIR([stdair/bom/BomRoot.hpp])
 AC_CONFIG_AUX_DIR([config])
@@ -15,7 +15,7 @@ PACKAGE_PRETTY_NAME="StdAir"
 AC_SUBST(PACKAGE_PRETTY_NAME)
 
 # Shared library versioning
-GENERIC_LIBRARY_VERSION="0:12:0"
+GENERIC_LIBRARY_VERSION="0:13:0"
 #                        | | |
 #                 +------+ | +---+
 #                 |        |     |

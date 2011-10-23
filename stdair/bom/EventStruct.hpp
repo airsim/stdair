@@ -42,43 +42,56 @@ namespace stdair {
     }
 
     /**
-     * Get the progress status specific to the demand stream for that event.
-     * <br>Note that that progress status may not be up-to-date. That
+     * Get the progress status specific to the demand stream for that
+     * event.
+     *
+     * Note that that progress status may not be up-to-date. That
      * attribute is up-to-date only after a call to the
      * EventQueue::popEvent() method.
      */
-    const NbOfEventsPair_T& getSpecificStatus() const {
+    const ProgressStatus& getSpecificStatus() const {
       return _specificProgressStatus;
     }
     /** Get the current number of events. See the getSpecificStatus()
         method for details. */
     const Count_T& getSpecificCurrentNbOfEvents() const {
-      return _specificProgressStatus.first;
+      return _specificProgressStatus.getCurrentNb();
     }
     /** Get the expected total number of events. See the
         getSpecificStatus() method for details. */
     const Count_T& getSpecificExpectedTotalNbOfEvents() const {
-      return _specificProgressStatus.second;
+      return _specificProgressStatus.getExpectedNb();
+    }
+    /** Get the actual total number of events. See the
+        getSpecificStatus() method for details. */
+    const Count_T& getSpecificActualTotalNbOfEvents() const {
+      return _specificProgressStatus.getActualNb();
     }
 
     /**
      * Get the overall progress status (absolute, for all the events).
-     * <br>Note that that progress status may not be up-to-date. That
+     *
+     * Note that that progress status may not be up-to-date. That
      * attribute is up-to-date only after a call to the
      * EventQueue::popEvent() method.
      */
-    const NbOfEventsPair_T& getOverallStatus() const {
+    const ProgressStatus& getOverallStatus() const {
       return _overallProgressStatus;
     }
     /** Get the current number of events. See the getOverallStatus()
         method for details. */
     const Count_T& getOverallCurrentNbOfEvents() const {
-      return _overallProgressStatus.first;
+      return _overallProgressStatus.getCurrentNb();
     }
     /** Get the expected total number of events. See the
         getOverallStatus() method for details. */
     const Count_T& getOverallExpectedTotalNbOfEvents() const {
-      return _overallProgressStatus.second;
+      return _overallProgressStatus.getExpectedNb();
+    }
+    /** Get the expected total number of events. See the
+        getOverallStatus() method for details. */
+    const Count_T& getOverallActualTotalNbOfEvents() const {
+      return _overallProgressStatus.getActualNb();
     }
 
     
@@ -86,28 +99,49 @@ namespace stdair {
   public:
     /** Set/update the progress status specific to the demand stream
         for that event. */
-    void setSpecificStatus (const NbOfEventsPair_T& iNbOfEventsPair) {
-      _specificProgressStatus = iNbOfEventsPair;
+    void setSpecificStatus (const ProgressStatus& iProgressStatus) {
+      _specificProgressStatus = iProgressStatus;
     }
     /** Set/update the progress status specific to the demand stream
         for that event. */
     void setSpecificStatus (const Count_T& iCurrentNbOfEvents,
-                            const Count_T& iExpectedTotalNbOfEvents) {
-      _specificProgressStatus.first = iCurrentNbOfEvents;
-      _specificProgressStatus.second = iExpectedTotalNbOfEvents;
+                            const Count_T& iExpectedTotalNbOfEvents,
+                            const Count_T& iActualTotalNbOfEvents) {
+      _specificProgressStatus.setCurrentNb (iCurrentNbOfEvents);
+      _specificProgressStatus.setExpectedNb (iExpectedTotalNbOfEvents);
+      _specificProgressStatus.setActualNb (iActualTotalNbOfEvents);
     }
+    /** Set/update the progress status specific to the demand stream
+        for that event. */
+    void setSpecificStatus (const Count_T& iCurrentNbOfEvents,
+                            const Count_T& iActualTotalNbOfEvents) {
+      _specificProgressStatus.setCurrentNb (iCurrentNbOfEvents);
+      _specificProgressStatus.setExpectedNb (iActualTotalNbOfEvents);
+      _specificProgressStatus.setActualNb (iActualTotalNbOfEvents);
+    }
+
 
     /** Set/update the overall progress status (absolute, for all the
         events). */
-    void setOverallStatus (const NbOfEventsPair_T& iNbOfEventsPair) {
-      _overallProgressStatus = iNbOfEventsPair;
+    void setOverallStatus (const ProgressStatus& iProgressStatus) {
+      _overallProgressStatus = iProgressStatus;
     }
     /** Set/update the overall progress status (absolute, for all the
         events). */
     void setOverallStatus (const Count_T& iCurrentNbOfEvents,
-                           const Count_T& iExpectedTotalNbOfEvents) {
-      _overallProgressStatus.first = iCurrentNbOfEvents;
-      _overallProgressStatus.second = iExpectedTotalNbOfEvents;
+                           const Count_T& iExpectedTotalNbOfEvents,
+                           const Count_T& iActualTotalNbOfEvents) {
+      _overallProgressStatus.setCurrentNb (iCurrentNbOfEvents);
+      _overallProgressStatus.setExpectedNb (iExpectedTotalNbOfEvents);
+      _overallProgressStatus.setActualNb (iActualTotalNbOfEvents);
+    }
+    /** Set/update the overall progress status (absolute, for all the
+        events). */
+    void setOverallStatus (const Count_T& iCurrentNbOfEvents,
+                           const Count_T& iActualTotalNbOfEvents) {
+      _overallProgressStatus.setCurrentNb (iCurrentNbOfEvents);
+      _overallProgressStatus.setExpectedNb (iActualTotalNbOfEvents);
+      _overallProgressStatus.setActualNb (iActualTotalNbOfEvents);
     }
 
 
@@ -133,52 +167,62 @@ namespace stdair {
     ~EventStruct ();
     
   private:
-    /** Default constructors. */
+    /** Default constructor. */
     EventStruct ();
 
     
-    // ////////// Attributes //////////
+    // ////////////////// Attributes //////////////////
   private:
-    /** Event type */
+    /**
+     * Event type.
+     */
     EventType::EN_EventType _eventType;
 
-    /** Reprentative timestamp of the event, which is the number of
-        milliseconds between the event date-time and the default
-        date-time (2010-01-01 00:00:00) */
+    /**
+     * Reprentative timestamp of the event, which is the number of
+     * milliseconds between the event date-time and the default
+     * date-time (2010-01-01 00:00:00).
+     */
     LongDuration_T _eventTimeStamp;
     
-    /** When the event is a booking request, the following attribute
-        contains the key of the corresponding demand stream. */
+    /**
+     * When the event is a booking request, the following attribute
+     * contains the key of the corresponding demand stream.
+     */
     DemandStreamKeyStr_T _demandStreamKeyStr;
     
-    /** Pointer to the booking request event */
+    /**
+     * Pointer to the booking request event.
+     */
     BookingRequestPtr_T _request;
 
     /**
-     * Pair of counters holding the progress status.
-     * <br>That attribute is altered only for the EventStruct instance
+     * Counters holding the progress status.
+     *
+     * That attribute is altered only for the EventStruct instance
      * returned by the popEvent() method. For all the EventStruct
      * instances held by the EventQueue object, that attribute is not
      * set (and not up-to-date).
-     * <br>Indeed, the progress statuses are kept up-to-date in
-     * parallel (i.e., independently) of the EventStruct
-     * instances. They are kept in a dedicated map, stored within the
-     * EventQueue object.
+     *
+     * Indeed, the progress statuses are kept up-to-date in parallel
+     * (i.e., independently) of the EventStruct instances. They are
+     * kept in a dedicated map, stored within the EventQueue object.
      */
-    NbOfEventsPair_T _specificProgressStatus;
+    ProgressStatus _specificProgressStatus;
 
     /**
-     * Pair of counters holding the progress status.
-     * <br>That attribute is altered only for the EventStruct instance
+     * Counters holding the progress status.
+     *
+     * That attribute is altered only for the EventStruct instance
      * returned by the popEvent() method. For all the EventStruct
      * instances held by the EventQueue object, that attribute is not
      * set (and not up-to-date).
-     * <br>Indeed, the progress statuses are kept up-to-date in
-     * parallel (i.e., independently) of the EventStruct
-     * instances. They are kept in a dedicated map, stored within the
-     * EventQueue object.
+     *
+     * Indeed, the progress statuses are kept up-to-date in parallel
+     * (i.e., independently) of the EventStruct instances. They are
+     * kept in a dedicated map, stored within the EventQueue object.
      */
-    NbOfEventsPair_T _overallProgressStatus;
+    ProgressStatus _overallProgressStatus;
   };
 
 }

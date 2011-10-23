@@ -43,8 +43,8 @@ namespace stdair {
   /** Time duration in (integer) number of seconds */
   typedef long int IntDuration_T;
 
-  /** Time duration in (long long integer) number of milliseconds */
-  typedef long long int LongDuration_T;
+  /** Time duration in (unsigned long long integer) number of milliseconds */
+  typedef unsigned long long int LongDuration_T;
   
   /** Duration in (float) number of time units */
   typedef float FloatDuration_T;
