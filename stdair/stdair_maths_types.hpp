@@ -87,6 +87,6 @@ namespace stdair {
    * Probability.
    */
   typedef float Probability_T;
-
+  
 }
 #endif // __STDAIR_STDAIR_MATHS_TYPES_HPP

@@ -1,0 +1,8 @@
+// Fares: fare ID; OriginCity; DestinationCity; Trip type; DateRangeStart; DateRangeEnd; DepartureTimeRangeStart; DepartureTimeRangeEnd; POS; Channel; AdvancePurchase; SaturdayNight; ChangeFees; NonRefundable; MinimumStay; Price; nb Segments
+// Segment: AirlineCode; Class; 
+1; SIN; BKK; OW; 2010-01-15; 2010-12-31; 00:00; 23:59; ALL; Y; DC; 700.0; SQ; Y;
+2; SIN; BKK; OW; 2010-01-15; 2010-12-31; 00:00; 23:59; ALL; Y; DC; 500.0; SQ; M;
+3; BKK; HKG; OW; 2010-01-15; 2010-12-31; 00:00; 23:59; ALL; Y; DC; 700.0; CX; Y;
+4; BKK; HKG; OW; 2010-01-15; 2010-12-31; 00:00; 23:59; ALL; Y; DC; 500.0; CX; M;
+5; SIN; HKG; OW; 2010-01-15; 2010-12-31; 00:00; 23:59; ALL; Y; DC; 1350.0; SQ; Y; CX; Y;
+6; SIN; HKG; OW; 2010-01-15; 2010-12-31; 00:00; 23:59; ALL; Y; DC; 850.0; SQ; M; CX; M;

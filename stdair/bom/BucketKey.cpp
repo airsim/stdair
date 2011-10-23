@@ -49,14 +49,11 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BucketKey::serialisationImplementationExport() const {
+  void BucketKey::serialisationImplementation() {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
-  }
 
-  // ////////////////////////////////////////////////////////////////////
-  void BucketKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;

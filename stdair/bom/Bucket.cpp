@@ -36,14 +36,11 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void Bucket::serialisationImplementationExport() const {
+  void Bucket::serialisationImplementation() {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
-  }
 
-  // ////////////////////////////////////////////////////////////////////
-  void Bucket::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;

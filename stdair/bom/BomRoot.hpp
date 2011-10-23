@@ -125,14 +125,13 @@ namespace stdair {
 
   private:
     /**
-     * Serialisation helpers (allows to be sure the template method is
+     * Serialisation helper (allows to be sure the template method is
      * instantiated).
      *
-     * \note The implementation of these methods is to be found in the
+     * \note The implementation of that method is to be found in the
      *       CmdBomSerialiser command.
      */
-    void serialisationImplementationExport() const;
-    void serialisationImplementationImport();
+    void serialisationImplementation();
 
 
   protected:

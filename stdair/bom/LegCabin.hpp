@@ -17,6 +17,9 @@
 
 namespace stdair {
 
+  typedef std::pair<MeanValue_T, StdDevValue_T> MeanStdDevPair_T;
+  typedef std::map<int, MeanStdDevPair_T> YieldDemandMap_T;
+
   /**
    * @brief Class representing the actual attributes for an airline
    * leg-cabin.
@@ -31,7 +34,6 @@ namespace stdair {
      * Definition allowing to retrieve the associated BOM key type.
      */
     typedef LegCabinKey Key_T;
-
 
   public:
     // /////////// Getters ////////////
@@ -106,6 +108,11 @@ namespace stdair {
     const BidPrice_T& getCurrentBidPrice() const {
       return _currentBidPrice;
     }
+
+    /** Get the previous Bid-Price. */
+    const BidPrice_T& getPreviousBidPrice() const {
+      return _previousBidPrice;
+    }
     
     /** Get the Bid-Price Vector. */
     const BidPriceVector_T& getBidPriceVector() const {
@@ -172,6 +179,11 @@ namespace stdair {
       _bidPriceVector.clear(); return _bidPriceVector;
     }
 
+    /** Get the yield-demand map. */
+    const YieldDemandMap_T& getYieldDemandMap() {
+      return _yieldDemandMap;
+    }
+
 
   public:
     // ///////////// Setters ///////////////
@@ -206,6 +218,16 @@ namespace stdair {
     void setCurrentBidPrice (const BidPrice_T& iBidPrice) {
       _currentBidPrice = iBidPrice;
     }
+
+    /** Set the previous Bid-Price. */
+    void setPreviousBidPrice (const BidPrice_T& iBidPrice) {
+      _previousBidPrice = iBidPrice;
+    }
+
+    /** Update the previous bid price value with the current one. */
+    void updatePreviousBidPrice () {
+      _previousBidPrice = _currentBidPrice;
+    }   
 
     /** Get the capacity adjustment due to check-in (DCS) regrade. */
     void setRegradeAdjustment (const CapacityAdjustment_T& iRegradeAdjustment) {
@@ -257,6 +279,14 @@ namespace stdair {
       _groupNbOfBookings = iGroupSeats;
     }
 
+    /** Update the bid price (from bid price vector if not empty). */
+    void updateCurrentBidPrice () {
+      if (_bidPriceVector.size() >= _availabilityPool) {
+        _currentBidPrice = _bidPriceVector.at(_availabilityPool-1);
+      }
+    }
+    
+
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -297,6 +327,14 @@ namespace stdair {
       _virtualClassList.clear();
     }
 
+    /** Add demand information. */
+    void addDemandInformation (const YieldValue_T&,
+                               const MeanValue_T&, const StdDevValue_T&);
+
+    /** Reset the (yield,demand) map. */
+    void resetYieldDemandMap() {
+      _yieldDemandMap.clear();
+    }
 
   protected:
     // ////////// Constructors and destructors /////////
@@ -343,12 +381,18 @@ namespace stdair {
 
     /** Current Bid-Price (BP). */
     BidPrice_T _currentBidPrice;
+
+    /** Previous Bid-Price (BP). */
+    BidPrice_T _previousBidPrice;
     
     /** Bid-Price Vector (BPV). */
     BidPriceVector_T _bidPriceVector;
 
     /** List of virtual classes (for revenue management optimisation). */
     VirtualClassList_T _virtualClassList;
+
+    /** Map holding the demand information indexed by yield. */
+    YieldDemandMap_T _yieldDemandMap;
 
   public:
     /** Capacity adjustment of the cabin, due to check-in (DCS) regrade. */

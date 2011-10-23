@@ -12,7 +12,7 @@
 namespace stdair {
 
   /**
-   * @brief Enumeration of date-time booking request generation methods.
+   * @brief Enumeration of demand (booking request) generation methods.
    */
   struct DemandGenerationMethod : public StructAbstract {
   public:

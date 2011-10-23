@@ -1,4 +1,4 @@
-tmp
+tmp/
 /build
 Makefile.in
 /INSTALL

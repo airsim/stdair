@@ -9,7 +9,7 @@ include (config/project_config_embeddable.cmake)
 # Project info
 set_project_names (stdair StdAir)
 set_project_brief ("C++ Standard Airline IT Library")
-set_project_versions (0 38 0)
+set_project_versions (0 39 2)
 
 ##
 # Project options
@@ -23,7 +23,11 @@ set_project_options (on)
 #####################################
 #
 packaging_init (${PROJECT_NAME})
-packaging_set_summary ("${PROJECT_NAME} aims at providing a clean API, and the corresponding C++ implementation, for the basis of Airline IT Business Object Model (BOM), that is, to be used by several other open source projects, such as RMOL, Air-Sched, Travel-CCM, OpenTREP, etc.")
+packaging_set_summary (
+"${PROJECT_NAME} aims at providing a clean API, and the corresponding
+C++ implementation, for the basis of Airline IT Business Object Model
+(BOM), that is, to be used by several other open source projects, such
+as RMOL, Air-Sched, Travel-CCM, OpenTREP, etc.")
 packaging_set_contact ("Denis Arnaud <denis_arnaud - at - users dot sourceforge dot net>")
 packaging_set_vendor ("Denis Arnaud")
 
@@ -35,8 +39,8 @@ packaging_set_other_options (TBZ2 "TBZ2;TGZ")
 ##            Dependencies            ##
 ########################################
 #
-get_external_libs (git "python 2.4" "boost 1.33" "zeromq 2.0" "mysql 5.0"
-  "soci 3.0" "doxygen 1.4")
+get_external_libs (git "python 2.7" "boost 1.41" "zeromq 2.0" "mysql 5.1"
+  "soci 3.0" "doxygen 1.7")
 
 
 ##############################################

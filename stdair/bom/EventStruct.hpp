@@ -17,6 +17,7 @@
 #include <stdair/bom/BookingRequestTypes.hpp>
 #include <stdair/bom/OptimisationNotificationTypes.hpp>
 #include <stdair/bom/SnapshotTypes.hpp>
+#include <stdair/bom/CancellationTypes.hpp>
 #include <stdair/bom/RMEventTypes.hpp>
 
 namespace stdair {
@@ -51,6 +52,17 @@ namespace stdair {
     const BookingRequestStruct& getBookingRequest() const {
       assert (_bookingRequest != NULL);
       return *_bookingRequest;
+    }
+
+    /**
+     * Get a reference on the cancellation referred to by event.
+     *
+     * \note When that event is not of type cancellation
+     *       (EventType::CX), an assertion fails.
+     */
+    const CancellationStruct& getCancellation() const {
+      assert (_cancellation != NULL);
+      return *_cancellation;
     }
 
     /**
@@ -106,6 +118,8 @@ namespace stdair {
     EventStruct();
     /** Constructor for events corresponding to booking requests. */
     EventStruct (const EventType::EN_EventType&, BookingRequestPtr_T);
+    /** Constructor for events corresponding to cancellations. */
+    EventStruct (const EventType::EN_EventType&, CancellationPtr_T);
     /** Constructor for events corresponding to optimisation requests. */
     EventStruct (const EventType::EN_EventType&, const DateTime_T& iDCPDate,
                  OptimisationNotificationPtr_T);
@@ -138,6 +152,11 @@ namespace stdair {
      * Pointer to the booking request referred to by the event.
      */
     BookingRequestPtr_T _bookingRequest;
+    
+    /**
+     * Pointer to the cancellation referred to by the event.
+     */
+    CancellationPtr_T _cancellation;
 
     /**
      * Pointer to the optimisation notification referred to by the event.

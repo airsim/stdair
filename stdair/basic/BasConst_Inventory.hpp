@@ -93,5 +93,14 @@ namespace stdair {
   extern const DCPList_T DEFAULT_DCP_LIST;
   struct DefaultDCPList { static DCPList_T init(); };
 
+  /** Default frat5 coef map. */
+  extern const DTDFratMap_T DEFAULT_DTD_FRAT5COEF_MAP;
+  struct DefaultDtdFratMap { static DTDFratMap_T init();};
+
+  /** Default arrival pattern map. */
+  extern const DTDProbMap_T DEFAULT_DTD_PROB_MAP;
+  struct DefaultDtdProbMap { static DTDProbMap_T init();};
+
+
 }
 #endif // __STDAIR_BAS_BASCONST_INVENTORY_HPP

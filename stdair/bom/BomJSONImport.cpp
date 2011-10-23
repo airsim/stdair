@@ -4,21 +4,13 @@
 // STL
 #include <cassert>
 #include <sstream>
-#if BOOST_VERSION >= 104100
 // Boost Property Tree
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#endif // BOOST_VERSION >= 104100
 // StdAir
 #include <stdair/bom/BomJSONImport.hpp>
 
-#if BOOST_VERSION >= 104100
 namespace bpt = boost::property_tree;
-#else // BOOST_VERSION >= 104100
-namespace bpt {
-  typedef char ptree;
-}
-#endif // BOOST_VERSION >= 104100
 
 namespace stdair {
 
@@ -27,7 +19,6 @@ namespace stdair {
                                               AirlineCode_T& ioAirlineCode) {
     bool hasKeyBeenSuccessfullyRetrieved = true;
 
-#if BOOST_VERSION >= 104100
     // Create an empty property tree object
     bpt::ptree pt;
 
@@ -47,7 +38,6 @@ namespace stdair {
     } catch (bpt::ptree_error& bptException) {
       hasKeyBeenSuccessfullyRetrieved = false;
     }
-#endif // BOOST_VERSION >= 104100
 
     return hasKeyBeenSuccessfullyRetrieved;
   }
@@ -58,7 +48,6 @@ namespace stdair {
                                                Date_T& ioDepartureDate) {
     bool hasKeyBeenSuccessfullyRetrieved = false;
 
-#if BOOST_VERSION >= 104100
     // Create an empty property tree object
     bpt::ptree pt;
 
@@ -81,7 +70,6 @@ namespace stdair {
     } catch (bpt::ptree_error& bptException) {
       hasKeyBeenSuccessfullyRetrieved = false;
     }
-#endif // BOOST_VERSION >= 104100
 
     return hasKeyBeenSuccessfullyRetrieved;
   }

@@ -45,14 +45,11 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void AirlineClassList::serialisationImplementationExport() const {
+  void AirlineClassList::serialisationImplementation() {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
-  }
 
-  // ////////////////////////////////////////////////////////////////////
-  void AirlineClassList::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;

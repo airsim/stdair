@@ -3,7 +3,6 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-#include <sstream>
 // Boost
 #include <boost/version.hpp>
 #if BOOST_VERSION >= 103500

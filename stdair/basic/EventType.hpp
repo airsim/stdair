@@ -16,6 +16,7 @@ namespace stdair {
   public:
     typedef enum { 
       BKG_REQ = 0,
+      CX,
       OPT_NOT_4_FD,
       OPT_NOT_4_NET,
       SKD_CHG,

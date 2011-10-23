@@ -6,6 +6,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <string>
+#include <list>
 
 namespace stdair {
 
@@ -134,6 +135,17 @@ namespace stdair {
   /** Progress status (usually, a percentage expressed as a floating
       point number). */
   typedef float ProgressPercentage_T;
-  
+
+  /** Forecaster
+   * Define the list of forecast booking requests proportions
+   */
+  typedef double ProportionFactor_T;
+  typedef std::list<ProportionFactor_T> ProportionFactorList_T;
+
+  /** O&D key
+   * Define the list of strings.
+   */
+  typedef std::string FullKey_T;
+  typedef std::list<FullKey_T> FullKeyList_T;
 }
 #endif // __STDAIR_STDAIR_BASIC_TYPES_HPP

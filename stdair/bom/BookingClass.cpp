@@ -52,6 +52,12 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
+  void BookingClass::cancel (const NbOfBookings_T& iNbOfCancellations) {
+    _nbOfBookings -= iNbOfCancellations;
+    _nbOfCancellations += iNbOfCancellations;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   void BookingClass::generateDemandSamples (const int& K) {
     _generatedDemandVector.clear();
     if (_stdDev > 0) {

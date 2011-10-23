@@ -50,14 +50,11 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void FareFamilyKey::serialisationImplementationExport() const {
+  void FareFamilyKey::serialisationImplementation() {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
-  }
 
-  // ////////////////////////////////////////////////////////////////////
-  void FareFamilyKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;

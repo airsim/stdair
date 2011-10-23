@@ -26,6 +26,7 @@ namespace stdair {
   public:
     typedef enum { 
       ALL = 0,
+      A4P,
       RMS,
       INV,
       SCH,

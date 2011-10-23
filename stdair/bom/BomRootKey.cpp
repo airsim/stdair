@@ -50,14 +50,11 @@ namespace stdair {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  void BomRootKey::serialisationImplementationExport() const {
+  void BomRootKey::serialisationImplementation() {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
-  }
 
-  // ////////////////////////////////////////////////////////////////////
-  void BomRootKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;

@@ -3,6 +3,8 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
+// Boost
+#include <boost/make_shared.hpp>
 // StdAir
 #include <stdair/stdair_exceptions.hpp>
 #include <stdair/basic/BasConst_Event.hpp>
@@ -199,22 +201,18 @@ namespace stdair {
     
     // Initialise the progress status object
     const Count_T lExpectedTotalNbOfEventsInt =
-      static_cast<const Count_T> (std::floor (iExpectedTotalNbOfEvents));
+      std::floor (iExpectedTotalNbOfEvents);
     const ProgressStatus lProgressStatus (lExpectedTotalNbOfEventsInt);
       
     // Update the progress status for the given event type
     updateStatus (iType, lProgressStatus);
     
     // Update the overall progress status
-    const Count_T lExpectedNb = 
-      static_cast<const Count_T> (_progressStatus.getExpectedNb()
-				  + iExpectedTotalNbOfEvents);
-    _progressStatus.setExpectedNb (lExpectedNb);
+    _progressStatus.setExpectedNb (_progressStatus.getExpectedNb()
+                                   + iExpectedTotalNbOfEvents);
 
-    const Count_T lActualNb = 
-      static_cast<const Count_T> (_progressStatus.getActualNb()
-				  + iExpectedTotalNbOfEvents);
-    _progressStatus.setActualNb (lActualNb);
+    _progressStatus.setActualNb (_progressStatus.getActualNb()
+                                 + iExpectedTotalNbOfEvents);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -222,8 +220,7 @@ namespace stdair {
                                  const NbOfEvents_T& iActualNbOfEvents) {
 
     // Initialise the progress status object for the type key
-    Count_T lActualNbOfEventsInt =
-      static_cast<const Count_T> (std::floor (iActualNbOfEvents));
+    Count_T lActualNbOfEventsInt = std::floor (iActualNbOfEvents);
       
     // Update the progress status for the corresponding content type key
     ProgressStatusMap_T::iterator itProgressStatus =
@@ -245,10 +242,11 @@ namespace stdair {
     // given event type
     ProgressStatusMap_T::iterator itProgressStatus =
       _progressStatusMap.find (iType);
-    assert (itProgressStatus != _progressStatusMap.end());
-
-    // Update the ProgressStatus structure
-    itProgressStatus->second = iProgressStatus;
+    // assert (itProgressStatus != _progressStatusMap.end());
+    if (itProgressStatus != _progressStatusMap.end()) {
+      // Update the ProgressStatus structure
+      itProgressStatus->second = iProgressStatus;
+    }
   }
 
   // //////////////////////////////////////////////////////////////////////

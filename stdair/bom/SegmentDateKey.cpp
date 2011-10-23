@@ -54,14 +54,11 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void SegmentDateKey::serialisationImplementationExport() const {
+  void SegmentDateKey::serialisationImplementation() {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
-  }
 
-  // ////////////////////////////////////////////////////////////////////
-  void SegmentDateKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;

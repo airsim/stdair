@@ -139,6 +139,19 @@ namespace stdair {
      */
     SegmentCabin* getSegmentCabin (const SegmentCabinKey&) const;
 
+    /**
+     * Get the "operating" segment date.
+     */
+    SegmentDate* getOperatingSegmentDate () const {
+      return _operatingSegmentDate;
+    }
+
+    /**
+     * Check if an other airline is operating.
+     */
+    bool isOtherAirlineOperating () const {
+      return _isOtherAirlineOperating;
+    }
 
   public:
     // ///////// Setters //////////
@@ -170,6 +183,12 @@ namespace stdair {
     /** Set the distance. */
     void setDistance (const Distance_T& iDistance) {
       _distance = iDistance;
+    }
+
+    /** Set operating segment date. */
+    void linkWithOperating (SegmentDate& iSegmentDate) {
+      _operatingSegmentDate = &iSegmentDate;
+      _isOtherAirlineOperating = true;
     }
 
 
@@ -215,14 +234,10 @@ namespace stdair {
 
   private:
     /**
-     * Serialisation helpers (allows to be sure the template method is
+     * Serialisation helper (allows to be sure the template method is
      * instantiated).
-     *
-     * \note The implementation of these methods is to be found in the
-     *       CmdBomSerialiser command.
      */
-    void serialisationImplementationExport() const;
-    void serialisationImplementationImport();
+    void serialisationImplementation();
 
 
   protected:
@@ -260,6 +275,20 @@ namespace stdair {
      * Pointer on the parent class (FlightDate).
      */
     BomAbstract* _parent;
+
+    /**
+     * Pointer on the operating SegmentDate.
+     * Nota:
+     * 1. "operating" refers to the codeshare contract seller.
+     * 2. the segment date it points to can be a "marketing" segment as well.
+     * 3. the pointer will be NULL if the segment date is itself the "operating" one.
+     */
+    SegmentDate* _operatingSegmentDate;
+
+    /**
+     * Flag saying if the "operating" segment is a different one.
+     */
+    bool _isOtherAirlineOperating;
     
     /**
      * Map holding the children (SegmentCabin objects).

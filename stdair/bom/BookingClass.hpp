@@ -153,7 +153,7 @@ namespace stdair {
     const GeneratedDemandVector_T& getGeneratedDemandVector () const {
       return _generatedDemandVector;
     }
-
+  
   public:
     // /////////// Setters ////////////
     /** Cumulated protection. */
@@ -186,8 +186,8 @@ namespace stdair {
     
     /** Demand distribution. */
     void setMean (const MeanValue_T& iMean) { _mean = iMean; }
-    void setStdDev (const StdDevValue_T& iStdDev) { _stdDev = iStdDev; }    
-    
+    void setStdDev (const StdDevValue_T& iStdDev) { _stdDev = iStdDev; }
+
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -213,6 +213,9 @@ namespace stdair {
     // ////////////// Business Methods /////////////////
     /** Register a sale. */
     void sell (const NbOfBookings_T&);
+    
+    /** Register a cancellation. */
+    void cancel (const NbOfBookings_T&);
 
     /** Generate demand samples for Monte-Carlo method with the default
         random seed. */
@@ -221,7 +224,6 @@ namespace stdair {
     /** Generate demand samples for Monte-Carlo method with the given
         random seed. */
     void generateDemandSamples (const int&, const RandomSeed_T&);
-
 
   protected:
     // ////////// Constructors and destructors /////////
@@ -315,4 +317,3 @@ namespace stdair {
 
 }
 #endif // __STDAIR_BOM_BOOKINGCLASS_HPP
-

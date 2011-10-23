@@ -79,5 +79,8 @@ namespace stdair {
 
   /** Default channel. */
   extern const ChannelLabel_T DEFAULT_CHANNEL;
+
+  /** Default list of full keys. */
+  extern const FullKeyList_T DEFAULT_FULL_KEY_LIST;
 }
 #endif // __STDAIR_BAS_BASCONST_GENERAL_HPP
