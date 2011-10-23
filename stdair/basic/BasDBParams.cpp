@@ -3,14 +3,23 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-#include <istream>
-#include <ostream>
 #include <sstream>
 // StdAir
 #include <stdair/basic/BasDBParams.hpp>
 
 namespace stdair {  
 
+  // //////////////////////////////////////////////////////////////////////
+  BasDBParams::BasDBParams() {
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  BasDBParams::BasDBParams (const BasDBParams& iDBParams)
+    : _user (iDBParams._user), _passwd (iDBParams._passwd),
+      _host (iDBParams._host), _port (iDBParams._port),
+      _dbname (iDBParams._dbname) {
+  }
+  
   // //////////////////////////////////////////////////////////////////////
   BasDBParams::BasDBParams (const std::string& iDBUser,
                             const std::string& iDBPasswd,
@@ -26,14 +35,10 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void BasDBParams::toStream (std::ostream& ioOut) const {
-    ioOut << toString();
+  const std::string BasDBParams::describe() const {
+    return toString();
   }
-
-  // //////////////////////////////////////////////////////////////////////
-  void BasDBParams::fromStream (std::istream&) {
-  }
-
+  
   // //////////////////////////////////////////////////////////////////////
   std::string BasDBParams::toShortString() const {
     std::ostringstream oStr;
@@ -49,7 +54,7 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  bool BasDBParams::check () const {
+  bool BasDBParams::check() const {
     if (_user.empty() == true || _passwd.empty() == true
         || _host.empty() == true || _port.empty()
         || _dbname.empty() == true) {

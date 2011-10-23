@@ -55,13 +55,6 @@ namespace stdair {
     // Create an EventQueue object instance
     EventQueue& lEventQueue = FacBom<EventQueue>::instance().create (lKey);
 
-    // Link the EventQueue to its parent (BomRoot)
-    // assert (_bomRoot != NULL);
-    //FacBomManager::instance().linkWithParent (*_bomRoot, lEventQueue);
-    
-    // Add the EventQueue to the dedicated list
-    //FacBomManager::instance().addToList (*_bomRoot, lEventQueue);
-
     // Store the event queue object
     _eventQueue = &lEventQueue;
   }
@@ -69,9 +62,9 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string STDAIR_ServiceContext::shortDisplay() const {
     std::ostringstream oStr;
-    oStr << "STDAIR_ServiceContext ";
+    oStr << "STDAIR_ServiceContext -- DB: " << _dbParams;
     if (_eventQueue != NULL) {
-      oStr << " - Queue: " << _eventQueue->toString();
+      oStr << " -- Queue: " << _eventQueue->toString();
     }
     return oStr.str();
   }
@@ -81,6 +74,11 @@ namespace stdair {
     std::ostringstream oStr;
     oStr << shortDisplay();
     return oStr.str();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  const std::string STDAIR_ServiceContext::describe() const {
+    return shortDisplay();
   }
 
   // //////////////////////////////////////////////////////////////////////

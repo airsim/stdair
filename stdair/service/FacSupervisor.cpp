@@ -49,7 +49,7 @@ namespace stdair {
       delete (currentFactory_ptr); currentFactory_ptr = NULL;
     }
 
-    // Empty the pool of factories
+    // Empty the pool of BOM factories
     _bomPool.clear();
   }
 
@@ -75,17 +75,12 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::cleanDBSessionManager() {
-    // Clean the static instance of the database session manager
+    // Clean the static instance of the database service
     DBSessionManager::clean();
   }
   
   // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::cleanAll() {
-
-    // Clean the service layer
-    if (_instance != NULL) {
-      _instance->cleanServiceLayer();
-    }
 
     // Clean the static instance of the database session manager
     cleanDBSessionManager();
@@ -95,7 +90,7 @@ namespace stdair {
 
     // Clean the static instance of the FacSupervisor.
     // This in turn will invoke the destructor (~FacSupervisor() method)
-    // of the static instance.
+    // of the static instance, thus cleaning both the BOM and service layers.
     delete _instance; _instance = NULL;
   }
 

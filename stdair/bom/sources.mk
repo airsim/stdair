@@ -3,6 +3,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/key_types.hpp \
 		$(top_srcdir)/stdair/bom/KeyAbstract.hpp \
 		$(top_srcdir)/stdair/bom/BomManager.hpp \
+		$(top_srcdir)/stdair/bom/BomArchive.hpp \
 		$(top_srcdir)/stdair/bom/BomDisplay.hpp \
 		$(top_srcdir)/stdair/bom/BomHolderKey.hpp \
 		$(top_srcdir)/stdair/bom/BomRootKey.hpp \
@@ -64,9 +65,25 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/OptimisationNotificationStruct.hpp \
 		$(top_srcdir)/stdair/bom/AirlineStruct.hpp \
 		$(top_srcdir)/stdair/bom/EventStruct.hpp \
-		$(top_srcdir)/stdair/bom/EventQueue.hpp
+		$(top_srcdir)/stdair/bom/EventQueue.hpp \
+		$(top_srcdir)/stdair/bom/AirportPair.hpp \
+		$(top_srcdir)/stdair/bom/AirportPairKey.hpp \
+		$(top_srcdir)/stdair/bom/AirportPairTypes.hpp \
+		$(top_srcdir)/stdair/bom/PosChannel.hpp \
+		$(top_srcdir)/stdair/bom/PosChannelKey.hpp \
+		$(top_srcdir)/stdair/bom/PosChannelTypes.hpp \
+		$(top_srcdir)/stdair/bom/AirlineClassList.hpp \
+		$(top_srcdir)/stdair/bom/AirlineClassListKey.hpp \
+		$(top_srcdir)/stdair/bom/AirlineClassListTypes.hpp \
+		$(top_srcdir)/stdair/bom/DatePeriod.hpp \
+		$(top_srcdir)/stdair/bom/DatePeriodKey.hpp \
+		$(top_srcdir)/stdair/bom/DatePeriodTypes.hpp \
+		$(top_srcdir)/stdair/bom/TimePeriod.hpp \
+		$(top_srcdir)/stdair/bom/TimePeriodKey.hpp \
+		$(top_srcdir)/stdair/bom/TimePeriodTypes.hpp
 stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/BomManager.cpp \
+		$(top_srcdir)/stdair/bom/BomArchive.cpp \
 		$(top_srcdir)/stdair/bom/BomDisplay.cpp \
 		$(top_srcdir)/stdair/bom/BomHolderKey.cpp \
 		$(top_srcdir)/stdair/bom/BomRootKey.cpp \
@@ -107,4 +124,15 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/OptimisationNotificationStruct.cpp \
 		$(top_srcdir)/stdair/bom/AirlineStruct.cpp \
 		$(top_srcdir)/stdair/bom/EventStruct.cpp \
-		$(top_srcdir)/stdair/bom/EventQueue.cpp
+		$(top_srcdir)/stdair/bom/EventQueue.cpp \
+		$(top_srcdir)/stdair/bom/AirportPair.cpp \
+		$(top_srcdir)/stdair/bom/AirportPairKey.cpp \
+		$(top_srcdir)/stdair/bom/PosChannel.cpp \
+		$(top_srcdir)/stdair/bom/PosChannelKey.cpp \
+		$(top_srcdir)/stdair/bom/AirlineClassList.cpp \
+		$(top_srcdir)/stdair/bom/AirlineClassListKey.cpp \
+		$(top_srcdir)/stdair/bom/DatePeriod.cpp \
+		$(top_srcdir)/stdair/bom/DatePeriodKey.cpp \
+		$(top_srcdir)/stdair/bom/TimePeriod.cpp \
+		$(top_srcdir)/stdair/bom/TimePeriodKey.cpp
+

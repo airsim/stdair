@@ -39,16 +39,22 @@
 
 namespace stdair {
 
-  /** Class holding the stream for logs. 
-      <br>Note that the error logs are seen as standard output logs, 
-      but with a higher level of visibility. */
+  /**
+   * Class holding the stream for logs.
+   *
+   * Note that the error logs are seen as standard output logs, 
+   * but with a higher level of visibility.
+   */
   class Logger {
-    // Friend classes
+    /// Friend classes
     friend class FacSupervisor;
     friend class STDAIR_Service;
+
   public:
     
-    /** Main log entry. */
+    /**
+     * Main log entry.
+     */
     template <typename T>
     void log (const LOG::EN_LogLevel iLevel, const int iLineNumber,
               const std::string& iFileName, const T& iToBeLogged) {
@@ -58,39 +64,67 @@ namespace stdair {
       }
     }
     
-    /** Return the static Logger instance. */
+    /**
+     * Return the static Logger instance.
+     */
     static Logger& instance();
     
-    
-  private:
-    /** Default constructors are private so that only the required 
-        constructor can be used. */
-    Logger (const BasLogParams&);
-    /** Default constructor. It must not be used. */
-    Logger ();
-    /** Default copy constructor. It must not be used. */
-    Logger (const Logger&);
-    /** Destructor. */
-    ~Logger ();
 
-    // TODO: migrate all the XXXXXX_Service to the new way to initialise
-    //       Logger, and get rid of that 'public:' interface
-  public:
-    /** Initialise the static Logger instance. */
+  private:
+    // /////////////////// Initialisation and finalisation ////////////////
+    /**
+     * Default constructors are private so that only the required 
+     * constructor can be used.
+     */
+    Logger (const BasLogParams&);
+    /**
+     * Default constructor. It must not be used.
+     */
+    Logger();
+    /**
+     * Default copy constructor. It must not be used.
+     */
+    Logger (const Logger&);
+    /**
+     * Destructor.
+     */
+    ~Logger();
+
+    /**
+     * Initialise the static Logger instance.
+     *
+     * @param const BasLogParams&
+     */
     static void init (const BasLogParams&);
 
-  private:
-    /** Delete the static Logger instance.*/
+    /**
+     * Get the log parameters.
+     */
+    static BasLogParams getLogParams() {
+      return BasLogParams (instance()._level, instance()._logStream);
+    }
+
+    /**
+     * Delete the static Logger instance.
+     */
     static void clean();
-    
+
+
   private:
-    /** Instance object.*/
+    // /////////////////// Attributes ////////////////
+    /**
+     * Instance object.
+     */
     static Logger* _instance;
 
-    /** Log level. */
+    /**
+     * Log level.
+     */
     LOG::EN_LogLevel _level;
     
-    /** Stream dedicated to the logs. */
+    /**
+     * Stream dedicated to the logs.
+     */
     std::ostream& _logStream;
   };
   

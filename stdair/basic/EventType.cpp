@@ -13,10 +13,10 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string EventType::_labels[LAST_VALUE] =
     { "BookingRequest", "OptimisationNotificationForFlightDate",
-      "OptimisationNotificationForNetwork", "ScheduleChange" };
+      "OptimisationNotificationForNetwork", "ScheduleChange", "BreakPoint" };
 
   // //////////////////////////////////////////////////////////////////////
-  const char EventType::_typeLabels[LAST_VALUE] = { 'B', 'F', 'N', 'S' };
+  const char EventType::_typeLabels[LAST_VALUE] = { 'B', 'F', 'N', 'S', 'P' };
 
   
   // //////////////////////////////////////////////////////////////////////
@@ -42,6 +42,7 @@ namespace stdair {
     case 'F': _type = OPT_NOT_4_FD; break;
     case 'N': _type = OPT_NOT_4_NET; break;
     case 'S': _type = SKD_CHG; break;
+    case 'P': _type = BRK_PT; break;
     default: _type = LAST_VALUE; break;
     }
 

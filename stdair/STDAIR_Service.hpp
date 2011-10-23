@@ -230,6 +230,16 @@ namespace stdair {
      */
     EventQueue& getEventQueue() const;
     
+    /**
+     * Get the log parameters.
+     */
+    BasLogParams getLogParams() const;
+
+    /**
+     * Get the database parameters.
+     */
+    const BasDBParams& getDBParams() const;
+
 
   private:
     // /////// Construction and Destruction helper methods ///////
@@ -249,6 +259,18 @@ namespace stdair {
 
     /**
      * @brief Initialise the log.
+     *
+     * The log service must not be initialised twice, unless explicitly
+     * forced to.
+     *
+     * As of March 2011, the only known case is when AIRINV_Service is
+     * invoked from AIRINV_Master_Service. Indeed, those two should live
+     * in two different processes, connected through the network (MPI).
+     *
+     * But, for test reason, it is easier to deploy those two services
+     * within the same process. So, when testing, the same static instance
+     * of the Logger service is initialised twice, once for
+     * AIRINV_Master_Service, and the other one for AIRINV_Service.
      *
      * @param[in] const BasLogParams& Parameters for the output log stream.
      */

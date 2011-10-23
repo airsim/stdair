@@ -12,7 +12,7 @@ namespace stdair {
   Logger* Logger::_instance = NULL;
   
   // //////////////////////////////////////////////////////////////////////
-  Logger::Logger () : _level (LOG::DEBUG), _logStream (std::cout) {
+  Logger::Logger() : _level (LOG::DEBUG), _logStream (std::cout) {
     assert (false);
   }
 
@@ -27,20 +27,23 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  Logger::~Logger () {
+  Logger::~Logger() {
     // std::cout << "In Logger destructor" << std::endl;
   }
 
   // //////////////////////////////////////////////////////////////////////
   void Logger::init (const BasLogParams& iLogParams) {
-    // Sanity check
-    if (_instance != NULL) {
+
+    //
+    if (_instance != NULL && iLogParams.getForcedInitialisationFlag() == false) {
       STDAIR_LOG_ERROR ("Error: the log stream has already been initialised");
       assert (false);
     }
-    assert (_instance == NULL);
 
-    _instance = new Logger (iLogParams);
+    //
+    if (_instance == NULL) {
+      _instance = new Logger (iLogParams);
+    }
   }
 
   // //////////////////////////////////////////////////////////////////////
