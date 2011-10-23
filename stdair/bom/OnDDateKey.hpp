@@ -9,6 +9,7 @@
 #include <string>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_demand_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
 #include <stdair/bom/KeyAbstract.hpp>
 
@@ -48,13 +49,24 @@ namespace stdair {
 
   public:
     // /////////// Getters //////////
-    /** Get the boarding date. */
+    /**
+     * Get the boarding date.
+     */
     const Date_T getDate() const;
-    /** Get the origin. */
+    
+    /**
+     * Get the origin.
+     */
     const AirportCode_T getOrigin() const;
-    /** Get the destination. */
+    
+    /**
+     * Get the destination.
+     */
     const AirportCode_T getDestination() const;
-    /** Get the number of segments. */
+    
+    /**
+     * Get the number of segments.
+     */
     const short getNbOfSegments () const {
       return _fullKeyList.size();
     }

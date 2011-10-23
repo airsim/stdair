@@ -332,26 +332,41 @@ namespace stdair {
     const AirportCode_T& lOrigin = iOnDDate.getOrigin();
     const AirportCode_T& lDestination = iOnDDate.getDestination();
     
-    
     oStream << lAirlineCode <<", " << lDate << ", "<< lOrigin << "-"
             << lDestination << ", " << iOnDDate.describeKey() << ", "
             << std::endl;
         
-    const std::map<std::string, DemandStruct>& lDemandInfoMap =
+    const std::map<std::string, DemandCharacteristics_T>& lDemandInfoMap =
       iOnDDate.getDemandInfoMap();
-    if (lDemandInfoMap.empty()) { return;}
-    oStream << "----------" << std::endl;        
-    oStream << "Cabin-Class path, Demand mean, Demand std dev, Yield, " << std::endl;
-    for (std::map<std::string, DemandStruct>::const_iterator itDI = lDemandInfoMap.begin();
-         itDI != lDemandInfoMap.end(); ++itDI) {
-      const std::string& lCabinClassPath = itDI->first;
-      const Yield_T lYield = itDI->second.getYield();
-      const MeanValue_T lDemandMean = itDI->second.getDemandMean();
-      const StdDevValue_T lDemandStdDev = itDI->second.getDemandStdDev();
 
-      oStream << lCabinClassPath << ", " << lDemandMean << ", "
-              << lDemandStdDev << ", " << lYield << ", ";
-      oStream << std::endl;
+    // Check if the map contains information.
+    const bool isInfoMapEmpty = lDemandInfoMap.empty();
+    if (isInfoMapEmpty) {
+      return;
+    }
+    assert (lDemandInfoMap.empty() ==false);
+    
+    oStream << "----------" << std::endl;        
+    oStream << "Cabin-Class path, Demand mean, Demand std dev, Yield, "
+            << std::endl;
+    
+    for (std::map<std::string, DemandCharacteristics_T>::const_iterator itDI = lDemandInfoMap.begin();
+         itDI != lDemandInfoMap.end(); ++itDI) {
+      
+      const std::string& lCabinClassPath = itDI->first;
+      const DemandCharacteristics_T lDemandCharacteristics =
+        itDI->second;
+      const Yield_T lYield = lDemandCharacteristics.first;
+      const MeanStdDevPair_T lMeanStdDevPair =
+        lDemandCharacteristics.second;
+      const MeanValue_T lDemandMean = lMeanStdDevPair.first;
+      const StdDevValue_T lDemandStdDev = lMeanStdDevPair.second;
+
+      oStream << lCabinClassPath << ", "
+              << lDemandMean << ", "
+              << lDemandStdDev << ", "
+              << lYield << ", "
+              << std::endl;
     }
      
   }

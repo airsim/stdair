@@ -11,6 +11,8 @@
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/stdair_maths_types.hpp>
 #include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_demand_types.hpp>
+#include <stdair/stdair_rm_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/OnDDateKey.hpp>
 #include <stdair/bom/OnDDateTypes.hpp>
@@ -23,80 +25,6 @@ namespace boost {
 }
 
 namespace stdair {
-
-  typedef std::pair<CabinCode_T, ClassCode_T> CabinClassPair_T;
-  typedef std::list<CabinClassPair_T> CabinClassPairList_T;
-
-  /**
-   * @brief Structure containing the demand information.
-   * Mean number of expectd demand, standard deviation and the associated yield.
-   */
-  struct DemandStruct{  
-  public:
-    /** Constructors and destructors */
-    DemandStruct(const Yield_T& iY, const MeanValue_T& iM,
-                 const StdDevValue_T& iSD)
-      : _yield(iY), _mean(iM), _stdDev(iSD) {}
-    DemandStruct(const DemandStruct& iDS) {
-      _yield = iDS.getYield();
-      _mean = iDS.getDemandMean();
-      _stdDev = iDS.getDemandStdDev();
-    }
-    ~DemandStruct() {}
-  public:
-    /** Getters */
-    const Yield_T& getYield() const {return _yield;}
-    const MeanValue_T& getDemandMean() const {return _mean;}
-    const StdDevValue_T& getDemandStdDev() const {return _stdDev;}
-  public:
-    /** Setters */
-    void setYield(const Yield_T& iYield) {_yield = iYield;}
-    void setDemandMean(const MeanValue_T& iMean) {_mean = iMean;}
-    void setDemandStdDev(const StdDevValue_T& iStdDev) {_stdDev = iStdDev;}
-  private:
-    /** Attributes */
-    Yield_T _yield;
-    MeanValue_T _mean;
-    StdDevValue_T _stdDev;
-  };
-
-  typedef std::map<std::string, DemandStruct> StringDemandStructMap_T;
-
-  /**
-   * @brief Structure containing the total forecast information.
-   * Mean number of expectd demand, standard deviation
-   * and the minimal willingness to pay.
-   */
-  struct ForecastStruct{  
-  public:
-    /** Constructors and destructors */
-    ForecastStruct(const WTP_T& iY, const MeanValue_T& iM,
-                   const StdDevValue_T& iSD)
-      : _minWTP(iY), _mean(iM), _stdDev(iSD) {}
-    ForecastStruct(const ForecastStruct& iDS) {
-      _minWTP = iDS.getMinWTP();
-      _mean = iDS.getForecastMean();
-      _stdDev = iDS.getForecastStdDev();
-    }
-    ~ForecastStruct() {}
-  public:
-    /** Getters */
-    const WTP_T& getMinWTP() const {return _minWTP;}
-    const MeanValue_T& getForecastMean() const {return _mean;}
-    const StdDevValue_T& getForecastStdDev() const {return _stdDev;}
-  public:
-    /** Setters */
-    void setMinWTP(const WTP_T& iWTP) {_minWTP = iWTP;}
-    void setForecastMean(const MeanValue_T& iMean) {_mean = iMean;}
-    void setForecastStdDev(const StdDevValue_T& iStdDev) {_stdDev = iStdDev;}
-  private:
-    /** Attributes */
-    WTP_T _minWTP;
-    MeanValue_T _mean;
-    StdDevValue_T _stdDev;
-  };
-
-  typedef std::map<CabinCode_T, ForecastStruct> CabinForecastMap_T;
 
   /**
    * @brief Class representing the actual attributes for an airline
@@ -162,21 +90,21 @@ namespace stdair {
     /**
      * Get the map of demand information.
      */
-    const std::map<std::string, DemandStruct>& getDemandInfoMap () const {
+    const StringDemandStructMap_T& getDemandInfoMap () const {
       return _classPathDemandMap;
     }
 
     /**
      * Get the map of total forecast.
      */
-    const std::map<CabinCode_T, ForecastStruct>& getTotalForecastMap () const {
+    const CabinForecastMap_T& getTotalForecastMap () const {
       return _cabinForecastMap;
     }
 
     /**
      * Get the total forecast for a given cabin.
      */
-    const ForecastStruct& getTotalForecast (const CabinCode_T& iCC) const {
+    const ForecastCharacteristics_T& getTotalForecast (const CabinCode_T& iCC) const {
       assert (_cabinForecastMap.find(iCC)!=_cabinForecastMap.end());
       return _cabinForecastMap.find(iCC)->second;
     }
@@ -200,11 +128,12 @@ namespace stdair {
     // /////////// Setters ///////////////
     /** Set demand information. */
     void setDemandInformation (const CabinClassPairList_T&,
-                               const Yield_T&, const MeanValue_T&, const StdDevValue_T&);
+                               const DemandCharacteristics_T&);
+                              
 
-    /** Set demand information. */
+    /** Set forecast information per cabin. */
     void setTotalForecast (const CabinCode_T&,
-                           const WTP_T&, const MeanValue_T&, const StdDevValue_T&);
+                           const ForecastCharacteristics_T&);
 
     
   public:
@@ -299,13 +228,17 @@ namespace stdair {
     /**
      * O&D demand information.
      */
-    std::map<std::string, DemandStruct> _classPathDemandMap;
-    std::map<std::string, CabinClassPairList_T> _stringCabinClassPairListMap;
+    StringDemandStructMap_T _classPathDemandMap;
+
+     /**
+     * O&D cabin and associated class map.
+     */
+    StringCabinClassPairListMap_T _stringCabinClassPairListMap;
 
     /**
      * O&D demand total forecast.
      */
-    std::map<CabinCode_T, ForecastStruct> _cabinForecastMap;
+    CabinForecastMap_T _cabinForecastMap;
   };
 
 }

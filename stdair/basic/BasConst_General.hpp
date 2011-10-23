@@ -82,5 +82,9 @@ namespace stdair {
 
   /** Default list of full keys. */
   extern const FullKeyList_T DEFAULT_FULL_KEY_LIST;
+
+  /** Higher value per thousand */
+  extern const unsigned int HIGHER_VALUE_PER_THOUSAND;
+  
 }
 #endif // __STDAIR_BAS_BASCONST_GENERAL_HPP

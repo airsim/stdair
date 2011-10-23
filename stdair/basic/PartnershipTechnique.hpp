@@ -118,7 +118,7 @@ namespace stdair {
   private:
     // //////// Attributes /////////
     /**
-     * DemandGeneration technique.
+     * Partnership techniques.
      */
     EN_PartnershipTechnique _technique;
   };

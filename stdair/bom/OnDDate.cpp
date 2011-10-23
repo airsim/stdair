@@ -16,17 +16,18 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   OnDDate::OnDDate()
     : _key (DEFAULT_FULL_KEY_LIST), _parent (NULL) {
-    // That constructor is used by the serialisation process
-  }
-  
-  // ////////////////////////////////////////////////////////////////////
-  OnDDate::OnDDate (const OnDDate&)
-    : _key (DEFAULT_FULL_KEY_LIST), _parent (NULL) {
     assert (false);
   }
   
   // ////////////////////////////////////////////////////////////////////
-  OnDDate::OnDDate (const Key_T& iKey) : _key (iKey), _parent (NULL) {
+  OnDDate::OnDDate (const OnDDate& iOnDDate)
+    : _key (iOnDDate.getKey()), _parent (NULL) {
+    assert (false);
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  OnDDate::OnDDate (const Key_T& iKey)
+  : _key (iKey), _parent (NULL) {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -51,40 +52,37 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   void OnDDate::
   setDemandInformation (const CabinClassPairList_T& iCabinClassPairList,
-                        const Yield_T& iYield,
-                        const MeanValue_T& iMean,
-                        const StdDevValue_T& iStdDev) {    
+                        const DemandCharacteristics_T& iDemandCharacteristics) {    
     std::ostringstream oStr;
     for(CabinClassPairList_T::const_iterator itCCP = iCabinClassPairList.begin();
         itCCP != iCabinClassPairList.end(); ++itCCP) {
       oStr << itCCP->first << ":" << itCCP->second << ";";
     }
     std::string lCabinClassPath = oStr.str();
-    std::map<std::string, DemandStruct>::iterator it =
+    StringDemandStructMap_T::iterator it =
       _classPathDemandMap.find(lCabinClassPath);
     if (it == _classPathDemandMap.end()) {
-      const DemandStruct lDemandStruct (iYield, iMean, iStdDev);
-      _classPathDemandMap.insert (std::pair<std::string,DemandStruct> (lCabinClassPath, lDemandStruct));
-      _stringCabinClassPairListMap.insert (std::pair<std::string, CabinClassPairList_T> (lCabinClassPath,
-                                                                                         iCabinClassPairList));
+      const StringDemandStructPair_T lPairStringDemandChar (lCabinClassPath,
+                                                            iDemandCharacteristics);
+      _classPathDemandMap.insert (lPairStringDemandChar);
+      const StringCabinClassPair_T lStringCabinClassPair (lCabinClassPath,
+                                                          iCabinClassPairList);
+      _stringCabinClassPairListMap.insert (lStringCabinClassPair);
     } else {
-      it->second.setYield (iYield);
-      it->second.setDemandMean (iMean);
-      it->second.setDemandStdDev (iStdDev);
+        it->second = iDemandCharacteristics;
     }
   }
 
   // ////////////////////////////////////////////////////////////////////
   void OnDDate::setTotalForecast (const CabinCode_T& iCabinCode,
-                                  const WTP_T& iMinWTP,
-                                  const MeanValue_T& iMean,
-                                  const StdDevValue_T& iStdDev){
+                                  const ForecastCharacteristics_T& iForecastCharacteristics) {
 
     CabinForecastMap_T::iterator it =
       _cabinForecastMap.find (iCabinCode);
     if (it == _cabinForecastMap.end()) {
-      const ForecastStruct lForecastStruct (iMinWTP, iMean, iStdDev);
-      _cabinForecastMap.insert (std::pair<CabinCode_T,ForecastStruct> (iCabinCode,lForecastStruct));
+      const CabinForecastPair_T lPairCabinForecastChar (iCabinCode,
+                                                        iForecastCharacteristics);
+      _cabinForecastMap.insert (lPairCabinForecastChar);
     } else {
       assert (false);
     }

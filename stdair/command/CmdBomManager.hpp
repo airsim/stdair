@@ -18,7 +18,6 @@ namespace stdair {
   class BomRoot;
   struct BookingRequestStruct;
 
-
   /**
    * Class wrapping utility functions for handling the BOM tree
    * objects.
@@ -44,8 +43,8 @@ namespace stdair {
     static void buildSampleBom (BomRoot&);
 
     /**
-     * Build a sample BOM tree, with mainly Inventory-related objects,
-     * and attach it to the given reference.
+     * Build a sample BOM tree, with mainly Inventory-related and
+     * Schedule-related objects and attach it to the given reference.
      *
      * As for now, two inventories (one for BA, another for AF) are
      * built, each containing one flight. One of those flights has two
@@ -53,10 +52,8 @@ namespace stdair {
      *     
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
-     * @param const SampleType& The type of component for which the BOM tree
-     *        should be built.
      */
-    static void buildSampleInventory (BomRoot&);
+    static void buildSampleInventorySchedule (BomRoot&);
 
     /**
      * Build a dummy inventory, containing a dummy flight-date with a single
@@ -162,11 +159,16 @@ namespace stdair {
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
      */
-    static void buildPartnershipsSampleInventoryAndRM (BomRoot&);    
-    static void buildPartnershipsSamplePricing (BomRoot&);
+    static void buildPartnershipsSampleInventoryAndRM (BomRoot&);
 
-    static void buildSampleBomForPartnershipsFareQuoter (BomRoot&);
-    static void buildSampleBomForPartnershipsAirRAC (BomRoot&);
+     /**
+     * Build a sample BOM tree with mainly Fare-related and
+     * Yield-related objects and attach it to the given reference.
+     *    
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    static void buildPartnershipsSamplePricing (BomRoot&);
     
   };
 }

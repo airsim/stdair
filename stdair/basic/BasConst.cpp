@@ -34,6 +34,8 @@ namespace stdair {
   /** Default number of days in a year. */
   const unsigned int DEFAULT_NB_OF_DAYS_IN_A_YEAR (365);
 
+  /** Higher value per thousand */
+  const unsigned int HIGHER_VALUE_PER_THOUSAND (1000);
 
   // //////// (Flight-)Period-related BOM ///////
   /** Default number of duration days. */
