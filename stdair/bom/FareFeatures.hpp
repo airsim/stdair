@@ -44,6 +44,11 @@ namespace stdair {
     stdair::BomAbstract* const getParent() const { return _parent; }
     const  stdair::HolderMap_T& getHolderMap() const { return _holderMap; }
 
+    /** Get the trip type. */
+    const stdair::TripType_T& getTripType() const {
+      return _key.getTripType();
+    }
+
     /** Get the fare day duration. */
     const stdair::DayDuration_T& getAdvancePurchase() const {
       return _key.getAdvancePurchase();
@@ -71,6 +76,11 @@ namespace stdair {
 
   public:
     // ////////////// Business methods ///////////////
+
+    /** Check if the fare rule trip type corresponds to the booking
+        request trip type. */
+    bool IsTripTypeValid (const TripType_T&) const;
+    
     /** Check if a given stay duration is greater or equal to
         the minimum stay of the fare rule. */
     bool IsStayDurationValid (const DayDuration_T&) const;

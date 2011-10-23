@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------
 AC_PREREQ(2.59)
 AC_COPYRIGHT([Copyright (C) 2007-2011  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
-AC_INIT([STDAIR],[0.33.0],[denis_arnaud@users.sourceforge.net],[stdair])
+AC_INIT([STDAIR],[0.34.0],[denis_arnaud@users.sourceforge.net],[stdair])
 AC_CONFIG_HEADER([stdair/config.h])
 AC_CONFIG_SRCDIR([stdair/bom/BomRoot.hpp])
 AC_CONFIG_AUX_DIR([config])
@@ -15,7 +15,7 @@ PACKAGE_PRETTY_NAME="StdAir"
 AC_SUBST(PACKAGE_PRETTY_NAME)
 
 # Shared library versioning
-GENERIC_LIBRARY_VERSION="33:0:0"
+GENERIC_LIBRARY_VERSION="0:34:0"
 #                        | | |
 #                 +------+ | +---+
 #                 |        |     |
@@ -43,6 +43,10 @@ case $host in
     ;;
 esac
 
+# Set default language to C++
+AC_LANG([C++])
+AC_LANG_CPLUSPLUS
+
 # Checks for programs
 save_CFLAGS="$CFLAGS"
 save_CXXFLAGS="$CXXFLAGS"
@@ -57,9 +61,6 @@ AC_PROG_LIBTOOL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
-# Set default language to C++
-AC_LANG([C++])
-
 # Check for exceptions switch
 AC_ARG_ENABLE(exceptions,
               [AS_HELP_STRING([--enable-exceptions],
@@ -67,6 +68,15 @@ AC_ARG_ENABLE(exceptions,
               [AC_DEFINE([STDAIR_EXCEPTIONS], [1],
                          [Define if you want exceptions handling])])
 test "x$enable_exceptions" != "xno" && enable_exceptions=yes
+
+# Set the LIB_SUFFIX variable, depending on the x86 architecture
+# (either 32 or 64 bits)
+#if test -d /usr/lib64; then
+#  LIB_SUFFIX="64"
+#else
+  LIB_SUFFIX=""
+#fi
+AC_SUBST(LIB_SUFFIX)
 
 # Set the data directory for StdAir
 pkgdatadir="${datadir}/stdair"

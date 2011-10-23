@@ -1,0 +1,21 @@
+#
+# Config file for the StdAir package. It defines the following variables:
+#  STDAIR_BINARY_DIRS  - binary directories for StdAir
+#  STDAIR_INCLUDE_DIRS - include directories for StdAir
+#  STDAIR_LIBRARY_DIRS - library directories for StdAir (normally not used!)
+#  STDAIR_LIBRARIES    - libraries to link against
+#  STDAIR_EXECUTABLE   - the stdair executable
+#  STDAIR_SAMPLE_DIR   - the stdair (CSV) sample files
+
+# Tell the user project where to find the headers, libraries and sample files
+set (STDAIR_BINARY_DIRS "@STDAIR_BIN_DIR@")
+set (STDAIR_INCLUDE_DIRS "@STDAIR_INCLUDE_DIRS@")
+set (STDAIR_LIBRARY_DIRS "@STDAIR_LIB_DIR@")
+set (STDAIR_SAMPLE_DIR "@sampledir@")
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+include ("@STDAIR_CMAKE_DIR@/StdAirLibraryDepends.cmake")
+
+# These are IMPORTED targets created by StdAirLibraryDepends.cmake
+set (STDAIR_LIBRARIES stdairlib stdairuicllib)
+set (STDAIR_EXECUTABLE stdair)

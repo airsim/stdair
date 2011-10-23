@@ -10,19 +10,21 @@
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  FareFeaturesKey::FareFeaturesKey (const stdair::DayDuration_T& iAdvancePurchase,
+  FareFeaturesKey::FareFeaturesKey (const stdair::TripType_T& iTripType,
+                                    const stdair::DayDuration_T& iAdvancePurchase,
                                     const stdair::SaturdayStay_T& iSaturdayStay,
                                     const stdair::ChangeFees_T& iChangeFees,
                                     const stdair::NonRefundable_T& iNonRefundable,
                                     const stdair::DayDuration_T& iMinimumStay)
-    : _advancePurchase(iAdvancePurchase),_saturdayStay(iSaturdayStay),
-      _changeFees(iChangeFees), _nonRefundable(iNonRefundable),
-      _minimumStay(iMinimumStay) {
+    : _tripType(iTripType), _advancePurchase(iAdvancePurchase),
+      _saturdayStay(iSaturdayStay), _changeFees(iChangeFees),
+      _nonRefundable(iNonRefundable), _minimumStay(iMinimumStay) {
   }
 
   // ////////////////////////////////////////////////////////////////////
   FareFeaturesKey::FareFeaturesKey (const FareFeaturesKey& iKey)
-    : _advancePurchase(iKey.getAdvancePurchase()), 
+    : _tripType(iKey.getTripType()),
+      _advancePurchase(iKey.getAdvancePurchase()), 
       _saturdayStay(iKey.getSaturdayStay()),
       _changeFees(iKey.getChangeFees()), 
       _nonRefundable(iKey.getRefundableOption()),
@@ -45,9 +47,9 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string FareFeaturesKey::toString() const {
     std::ostringstream oStr;
-    oStr << _advancePurchase << "-"<< _saturdayStay << "-"
-         << _changeFees << "-" << _nonRefundable << "-"
-         << _minimumStay;
+    oStr << _tripType << " -- " << _advancePurchase << "-"
+         << _saturdayStay << "-" << _changeFees << "-"
+         << _nonRefundable << "-" << _minimumStay;
     return oStr.str();
   }
 

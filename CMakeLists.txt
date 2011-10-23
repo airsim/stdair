@@ -17,7 +17,7 @@ set (PACKAGE_NAME "${PACKAGE_NAME_TMP}" CACHE INTERNAL "Description")
 ##
 # Version
 set (stdair_VERSION_MAJOR 0)
-set (stdair_VERSION_MINOR 33)
+set (stdair_VERSION_MINOR 34)
 set (stdair_VERSION_PATCH 0)
 set (stdair_VERSION "${stdair_VERSION_MAJOR}.${stdair_VERSION_MINOR}.${stdair_VERSION_PATCH}")
 set (PACKAGE_VERSION "${stdair_VERSION}")
@@ -36,10 +36,28 @@ option (INSTALL_DOC "Set to OFF to skip build/install Documentation" ON)
 if (NOT CMAKE_BUILD_TYPE)
   set (CMAKE_BUILD_TYPE "Debug")
 endif()
+
 # Set default install prefix to project root directory
 if (CMAKE_INSTALL_PREFIX STREQUAL "/usr/local")
-  set (CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}")
+  set (CMAKE_INSTALL_PREFIX "/usr")
 endif()
+
+# Offer the user the choice of overriding the installation directories
+set (INSTALL_LIB_DIR ${LIBDIR} CACHE
+  PATH "Installation directory for libraries")
+set (INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
+set (INSTALL_INCLUDE_DIR include CACHE PATH
+  "Installation directory for header files")
+set (INSTALL_DATA_DIR share CACHE PATH
+  "Installation directory for data files")
+
+# Make relative paths absolute (needed later on)
+foreach (p LIB BIN INCLUDE DATA)
+  set (var INSTALL_${p}_DIR)
+  if (NOT IS_ABSOLUTE "${${var}}")
+    set (${var} "${CMAKE_INSTALL_PREFIX}/${${var}}")
+  endif()
+endforeach()
 
 ##
 # Library target. It is specified here because both the stair (for the library
@@ -99,15 +117,65 @@ set (CPACK_SOURCE_IGNORE_FILES
 #set (CPACK_SOURCE_IGNORE_DIRECTORY ${CPACK_SOURCE_IGNORE_FILES} .git)
 
 ##
+# Dependencies
+#
+# CMake scripts, to find some dependencies (e.g., Boost, MySQL, SOCI)
+set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/config/)
+
+# ~~~~~~~~~~ BOOST ~~~~~~~~~~
+#
+# Note: ${Boost_DATE_TIME_LIBRARY} and ${Boost_PROGRAM_OPTIONS_LIBRARY}
+# are already set by ${SOCIMYSQL_LIBRARIES} and/or ${SOCI_LIBRARIES}.
+#
+find_package (Boost 1.44 REQUIRED COMPONENTS program_options date_time 
+  iostreams serialization filesystem unit_test_framework)
+if (Boost_FOUND)
+  include_directories (${Boost_INCLUDE_DIRS})
+  set (BOOST_LIBS_FOR_LIB 
+	${Boost_IOSTREAMS_LIBRARY} ${Boost_SERIALIZATION_LIBRARY}
+	${Boost_FILESYSTEM_LIBRARY})
+##
+# See https://bugzilla.redhat.com/show_bug.cgi?id=718504
+# For now, SOCI is linked with the single-threaded version of boost-date-time
+# (and of boost-program-options). So, we do not add the multi-threaded versions
+# of those libraries to the dependencies, otherwise we would end up with
+# some strange behaviour of the generated binaries and libraries.
+# For instance, when a program exits and the static variables are garbaged
+# collected, two versions of the same library means two garbage collections
+# for the same objects...
+# When SOCI will be delivered with the multi-threaded Boost as dependency,
+# just uncomment the following line:
+# set (BOOST_LIBS_FOR_LIB ${BOOST_LIBS_FOR_LIB} ${Boost_DATE_TIME_LIBRARY})
+  set (BOOST_LIBS_FOR_BIN ${Boost_PROGRAM_OPTIONS_LIBRARY})
+  set (BOOST_LIBS_FOR_TEST ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+endif (Boost_FOUND)
+
+# ~~~~~~~~~~ MySQL ~~~~~~~~~
+find_package (MySQL)
+if (MYSQL_FOUND)
+  include_directories (${MYSQL_INCLUDE_DIR})
+endif (MYSQL_FOUND)
+
+# ~~~~~~~~~~ SOCI ~~~~~~~~~~
+find_package (SOCI)
+if (SOCI_FOUND)
+  include_directories (${SOCI_INCLUDE_DIR})
+endif (SOCI_FOUND)
+find_package (SOCIMySQL)
+if (SOCIMYSQL_FOUND)
+  include_directories (${SOCIMYSQL_INCLUDE_DIR})
+endif (SOCIMYSQL_FOUND)
+
+# ~~~~~~~~~~ Doxygen ~~~~~~~~~
+find_package (Doxygen REQUIRED)
+
+##
 # Set all the directory pathes for the project (e.g., prefix, libdir, bindir)
 include (config/project_config.cmake)
 
 ##
 # For the other developers to use that project
 include (config/devhelpers.cmake)
-
-# CMake scripts path
-set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/config/)
 
 # Compilation
 # Note: the debug flag (-g) is set (or not) by giving the
@@ -116,34 +184,6 @@ set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/config/)
 #set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Werror")
 set (CMAKE_CXX_FLAGS "-Wall -Werror")
 include_directories (BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}) 
-
-##
-# Dependencies
-# ~~~~~~~~~~ BOOST ~~~~~~~~~~
-find_package (Boost 1.44 REQUIRED COMPONENTS program_options date_time 
-  iostreams serialization filesystem unit_test_framework)
-if (Boost_FOUND)
-  include_directories (${Boost_INCLUDE_DIRS})
-endif()
-
-# ~~~~~~~~~~ MySQL ~~~~~~~~~
-find_package (MySQL)
-if (MYSQL_FOUND)
-  include_directories (${MYSQL_INCLUDE_DIR})
-endif()
-
-# ~~~~~~~~~~ SOCI ~~~~~~~~~~
-find_package (SOCI)
-if (SOCI_FOUND)
-  include_directories (${SOCI_INCLUDE_DIR})
-endif()
-find_package (SOCIMySQL)
-if (SOCIMYSQL_FOUND)
-  include_directories (${SOCIMYSQL_INCLUDE_DIR})
-endif()
-
-# ~~~~~~~~~~ MySQL ~~~~~~~~~
-find_package (Doxygen REQUIRED)
 
 ##
 # Subdirs
@@ -156,6 +196,34 @@ add_subdirectory (man)
 add_subdirectory (doc)
 add_subdirectory (test)
 
+# Add all targets to the build-tree export set
+export (TARGETS ${PROJECT_NAME} ${STDAIR_LIB_TARGET} ${STDAIR_UICL_LIB_TARGET}
+  FILE "${PROJECT_BINARY_DIR}/StdAirLibraryDepends.cmake")
+
+# Export the package for use from the build-tree
+# (this registers the build-tree with a global CMake-registry)
+export (PACKAGE stdair)
+
+# Install the export set for use with the install-tree
+install (EXPORT StdAirLibraryDepends DESTINATION
+  "${INSTALL_DATA_DIR}/${PACKAGE}/CMake" COMPONENT dev)
+
+# Create a StdAirConfig.cmake file for the use from the install tree
+# and install it
+set (STDAIR_INCLUDE_DIRS "${INSTALL_INCLUDE_DIR}")
+set (STDAIR_BIN_DIR "${INSTALL_BIN_DIR}")
+set (STDAIR_LIB_DIR "${INSTALL_LIB_DIR}")
+set (STDAIR_CMAKE_DIR "${INSTALL_DATA_DIR}/${PACKAGE}/CMake")
+configure_file (StdAirConfig.cmake.in
+  "${PROJECT_BINARY_DIR}/InstallFiles/StdAirConfig.cmake" @ONLY)
+configure_file (StdAirConfigVersion.cmake.in
+  "${PROJECT_BINARY_DIR}/InstallFiles/StdAirConfigVersion.cmake" @ONLY)
+install (FILES
+  "${PROJECT_BINARY_DIR}/InstallFiles/StdAirConfig.cmake"
+  "${PROJECT_BINARY_DIR}/InstallFiles/StdAirConfigVersion.cmake"
+  DESTINATION "${STDAIR_CMAKE_DIR}" COMPONENT dev)
+
+
 ##
 # Packaging
 include (CPack)
@@ -165,13 +233,20 @@ add_custom_target (dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 
 # Display status message for important variables
 message (STATUS)
-message (STATUS "-------------------------------------------------------------")
+message (STATUS "=============================================================")
 message (STATUS "BUILD_SHARED_LIBS = ${BUILD_SHARED_LIBS}" )
 message (STATUS "CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX}" )
 message (STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}" )
 message (STATUS "CMAKE_MODULE_PATH = ${CMAKE_MODULE_PATH}" )
+message (STATUS)
+message (STATUS "---")
+message (STATUS "INSTALL_LIB_DIR = ${INSTALL_LIB_DIR}")
+message (STATUS "INSTALL_BIN_DIR = ${INSTALL_BIN_DIR}")
+message (STATUS "INSTALL_INCLUDE_DIR = ${INSTALL_INCLUDE_DIR}")
+message (STATUS "INSTALL_DATA_DIR = ${INSTALL_DATA_DIR}")
 message (STATUS "INSTALL_DOC = ${INSTALL_DOC}" )
 message (STATUS)
+message (STATUS "---")
 message (STATUS "CPACK_PACKAGE_CONTACT = ${CPACK_PACKAGE_CONTACT}")
 message (STATUS "CPACK_PACKAGE_VENDOR = ${CPACK_PACKAGE_VENDOR}")
 message (STATUS "CPACK_PACKAGE_VERSION = ${CPACK_PACKAGE_VERSION}")
@@ -182,8 +257,26 @@ message (STATUS "CPACK_DEBIAN_PACKAGE_DEPENDS = ${CPACK_DEBIAN_PACKAGE_DEPENDS}"
 message (STATUS "CPACK_SOURCE_GENERATOR = ${CPACK_SOURCE_GENERATOR}")
 message (STATUS "CPACK_SOURCE_PACKAGE_FILE_NAME = ${CPACK_SOURCE_PACKAGE_FILE_NAME}")
 message (STATUS)
+message (STATUS "External libraries:")
+message (STATUS "-------------------")
+message (STATUS "* Boost:")
+message (STATUS "  - Boost_INCLUDE_DIRS ........ : ${Boost_INCLUDE_DIRS}")
+message (STATUS "  - BOOST_LIBS_FOR_LIB ........ : ${BOOST_LIBS_FOR_LIB}")
+message (STATUS "  - BOOST_LIBS_FOR_BIN ........ : ${BOOST_LIBS_FOR_BIN}")
+message (STATUS "  - BOOST_LIBS_FOR_TEST ....... : ${BOOST_LIBS_FOR_TEST}")
+message (STATUS)
+message (STATUS "* MySQL:")
+message (STATUS "  - MYSQL_INCLUDE_DIR ......... : ${MYSQL_INCLUDE_DIR}")
+message (STATUS "  - MYSQL_LIBRARIES ........... : ${MYSQL_LIBRARIES}")
+message (STATUS)
+message (STATUS "* SOCI:")
+message (STATUS "  - SOCI_INCLUDE_DIR .......... : ${SOCI_INCLUDE_DIR}")
+message (STATUS "  - SOCIMYSQL_INCLUDE_DIR ..... : ${SOCIMYSQL_INCLUDE_DIR}")
+message (STATUS "  - SOCI_LIBRARIES ............ : ${SOCI_LIBRARIES}")
+message (STATUS "  - SOCIMYSQL_LIBRARIES ....... : ${SOCIMYSQL_LIBRARIES}")
+message (STATUS)
 message (STATUS "Change a value with: cmake -D<Variable>=<Value>" )
-message (STATUS "-------------------------------------------------------------")
+message (STATUS "=============================================================")
 message (STATUS)
 
 # Force some variables that could be defined in the command line to be
