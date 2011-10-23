@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------
 AC_PREREQ(2.59)
 AC_COPYRIGHT([Copyright (C) 2007-2010  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
-AC_INIT([STDAIR],[0.3.0],[denis_arnaud@users.sourceforge.net],[stdair])
+AC_INIT([STDAIR],[0.4.0],[denis_arnaud@users.sourceforge.net],[stdair])
 AC_CONFIG_HEADER([stdair/config.h])
 AC_CONFIG_SRCDIR([stdair/bom/BomRoot.hpp])
 AC_CONFIG_AUX_DIR([config])
@@ -11,7 +11,7 @@ AM_PATH_CPPUNIT(1.10)
 AM_CONDITIONAL([HAVE_CPPUNIT], [test "x$CPPUNIT_LIBS" != x])
 
 # Shared library versioning
-GENERIC_LIBRARY_VERSION="0:3:0"
+GENERIC_LIBRARY_VERSION="0:4:0"
 #                        | | |
 #                 +------+ | +---+
 #                 |        |     |
@@ -104,14 +104,10 @@ fi
 # -----------------------------------------------------------------------------
 # Support for ExtraCC (Extra-CruiseControl): http://sf.net/projects/extracc
 # -----------------------------------------------------------------------------
-# Note: the ExtraCC is now imported as a Subversion external reference,
-#       thus directly accessible within the extracppunit directory.
-#       When that library will be widely avaible on Linux distributions,
-#       the external reference can be removed and the following line uncommented.
-#AM_PATH_EXTRACC
-#AC_SUBST(EXTRACC_VERSION)
-#AC_SUBST(EXTRACC_CFLAGS)
-#AC_SUBST(EXTRACC_LIBS)
+AM_PATH_EXTRACC
+AC_SUBST(EXTRACC_VERSION)
+AC_SUBST(EXTRACC_CFLAGS)
+AC_SUBST(EXTRACC_LIBS)
 
 # --------------------------------------------------------
 # Boost (STL Extensions: http://www.boost.org)
@@ -215,8 +211,7 @@ AC_CONFIG_FILES(
 	stdair/command/Makefile
 	stdair/config/Makefile
 	stdair/service/Makefile
-	stdair/core/Makefile
-	stdair/batches/Makefile
+	batches/Makefile
 	man/Makefile
 	doc/Makefile
 	doc/images/Makefile
@@ -224,7 +219,6 @@ AC_CONFIG_FILES(
 	doc/tutorial/src/Makefile
 	doc/local/Makefile
 	doc/doxygen_html.cfg
-	extracppunit/Makefile
 	test/Makefile
 	test/samples/Makefile
 	test/inheritance/Makefile
