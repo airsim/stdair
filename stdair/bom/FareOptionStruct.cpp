@@ -9,12 +9,24 @@
 #include <stdair/bom/FareOptionStruct.hpp>
 
 namespace stdair {
+
   // ////////////////////////////////////////////////////////////////////
-  FareOptionStruct::FareOptionStruct () {
+  FareOptionStruct::FareOptionStruct() : _fare (DEFAULT_FARE_VALUE) {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  FareOptionStruct::~FareOptionStruct () {
+  FareOptionStruct::FareOptionStruct (const std::string& iClassPath,
+                                      const Fare_T& iFare,
+                                      const ChangeFees_T& iChangeFee,
+                                      const NonRefundable_T& iNonRefundable,
+                                      const SaturdayStay_T& iSaturdayNightStay)
+    : _fare (iFare), _changeFee (iChangeFee), _nonRefundable (iNonRefundable),
+      _saturdayStay (iSaturdayNightStay) {
+    _classPath.push_back (iClassPath);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  FareOptionStruct::~FareOptionStruct() {
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -29,17 +41,42 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string FareOptionStruct::describe() const {
     std::ostringstream oStr;
-    oStr  << "\n    Class path: ";
+
+    oStr  << "Class path: ";
+    unsigned short idx = 0;
     for (ClassList_StringList_T::const_iterator itClassPath =
-           _classPath.begin(); itClassPath != _classPath.end(); ++itClassPath) {
-      oStr << *itClassPath << " ";
+           _classPath.begin(); itClassPath != _classPath.end();
+         ++itClassPath, ++idx) {
+      if (idx != 0) {
+        oStr << "-";
+      }
+      const std::string& lClassPath = *itClassPath;
+      oStr << lClassPath;
     }
-    oStr << "\n    Fare:       ";
-    oStr << _fare
-         << "\n    Conditions: "
-         << _changeFee  << " "
-         << _nonRefundable << " "
-         << _saturdayStay;
+
+    oStr << "; " << _fare << " EUR";
+    oStr << "; conditions: " << _changeFee  << " " << _nonRefundable
+         << " " << _saturdayStay;
+    return oStr.str();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  const std::string FareOptionStruct::display() const {
+    std::ostringstream oStr;
+
+    unsigned short idx = 0;
+    for (ClassList_StringList_T::const_iterator itClassPath =
+           _classPath.begin(); itClassPath != _classPath.end();
+         ++itClassPath, ++idx) {
+      if (idx != 0) {
+        oStr << "-";
+      }
+      const std::string& lClassPath = *itClassPath;
+      oStr << lClassPath;
+    }
+
+    oStr << ", " << _fare << ", " << _changeFee  << " " << _nonRefundable
+         << " " << _saturdayStay;
     return oStr.str();
   }
 

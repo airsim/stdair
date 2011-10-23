@@ -6,6 +6,7 @@
 #include <ostream>
 // StdAir
 #include <stdair/basic/BasConst_BomDisplay.hpp>
+#include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
@@ -15,8 +16,9 @@
 #include <stdair/bom/SegmentCabin.hpp>
 #include <stdair/bom/FareFamily.hpp>
 #include <stdair/bom/BookingClass.hpp>
-#include <stdair/bom/BookingRequestStruct.hpp>
-#include <stdair/bom/BomManager.hpp>
+#include <stdair/bom/Bucket.hpp>
+#include <stdair/bom/TravelSolutionTypes.hpp>
+#include <stdair/bom/TravelSolutionStruct.hpp>
 #include <stdair/bom/BomDisplay.hpp>
 
 namespace stdair {
@@ -131,7 +133,7 @@ namespace stdair {
     csvLegCabinDisplay (oStream, iFlightDate);
 
     //
-    // csvBucketDisplay (oStream, iFlightDate);
+    csvBucketDisplay (oStream, iFlightDate);
 
     //
     csvFareFamilyDisplay (oStream, iFlightDate);
@@ -338,9 +340,9 @@ namespace stdair {
         // Retrieve the key of the segment-cabin
         const CabinCode_T& lCabinCode = lSC_ptr->getCabinCode();
 
-        // Check whether there are SegmentDate objects
+        // Check whether there are fare family objects
         if (BomManager::hasList<FareFamily> (*lSC_ptr) == false) {
-          return;
+          continue;
         }
     
         // Browse the fare families
@@ -379,7 +381,7 @@ namespace stdair {
     oStream << "******************************************" << std::endl;
     oStream << "Buckets:" << std::endl
             << "--------" << std::endl;
-    oStream << "Leg, Cabin, Yield, AU, SS, AV, "
+    oStream << "Leg, Cabin, Yield, AU/SI, SS, AV, "
             << std::endl;
 
     // Retrieve the key of the flight-date
@@ -410,16 +412,31 @@ namespace stdair {
            itLC != lLegCabinList.end(); ++itLC) {
         const LegCabin* lLC_ptr = *itLC;
         assert (lLC_ptr != NULL);
-      
-        oStream << lBoardPoint << "-" << lOffPoint << ", ";
-        oStream << lLC_ptr->getCabinCode() << ", ";
-        /*
+
+        // Check whether there are bucket objects
+        if (BomManager::hasList<Bucket> (*lLC_ptr) == false) {
+          continue;
+        }
+
+        // Retrieve the key of the leg-cabin
+        const CabinCode_T& lCabinCode = lLC_ptr->getCabinCode();      
+
+        // Browse the buckets
+        const BucketList_T& lBucketList = BomManager::getList<Bucket> (*lLC_ptr);
+        for (BucketList_T::const_iterator itBuck = lBucketList.begin();
+             itBuck != lBucketList.end(); ++itBuck) {
+          const Bucket* lBucket_ptr = *itBuck;
+          assert (lBucket_ptr != NULL);
+
+          oStream << lBoardPoint << "-" << lOffPoint << ", "
+                  << lCabinCode << ", ";
+
           oStream << lBucket_ptr->getYieldRangeUpperValue() << ", "
-          << lBucket_ptr->getAU() << ", "
-          << lBucket_ptr->getSoldSeats() << ", "
-          << lBucket_ptr->getAvailability() << ", ";
-        */
-        oStream << std::endl;
+                  << lBucket_ptr->getSeatIndex() << ", "
+                  << lBucket_ptr->getSoldSeats() << ", "
+                  << lBucket_ptr->getAvailability() << ", ";
+          oStream << std::endl;
+        }
       }
     }
     oStream << "******************************************" << std::endl;
@@ -533,114 +550,25 @@ namespace stdair {
     }
     oStream << "******************************************" << std::endl;
   }
-    
 
   // ////////////////////////////////////////////////////////////////////
-  void BomDisplay::intDisplay (std::ostream& oStream, const int& iInt) {
-    const int dInt = iInt - static_cast<int>(iInt/100)*100;
-    if (dInt < 10) {
-      oStream << "0" << dInt;
-    } else {
-      oStream << dInt;
-    }
-  }
-  
-  // ////////////////////////////////////////////////////////////////////
-  void BomDisplay::csvDisplay (std::ostream& oStream,
-                               const BookingRequestStruct& iBookingRequest) {
+  void BomDisplay::
+  csvDisplay (std::ostream& oStream,
+              const TravelSolutionList_T& iTravelSolutionList) {
 
     // Save the formatting flags for the given STL output stream
     FlagSaver flagSaver (oStream);
 
-    /**
-      #id, request_date (YYMMDD), request_time (HHMMSS), POS (three-letter code),
-       origin (three-letter code), destination (three-letter code),
-       preferred departure date (YYMMDD), preferred departure time (HHMM),
-       min departure time (HHMM), max departure time (HHMM),
-       preferred cabin (F/C/M), trip type (OW/RO/RI), duration of stay (days),
-       frequent flyer tier (G/S/K/N), willingness-to-pay (SGD),
-       disutility per stop (SGD), preferred arrival date (YYMMDD),
-       preferred arrival time (HHMM), value of time (SGD per hour)
+    oStream << "Travel solutions:";
+    unsigned short idx = 0;
+    for (TravelSolutionList_T::const_iterator itTS =
+           iTravelSolutionList.begin();
+         itTS != iTravelSolutionList.end(); ++itTS, ++idx) {
+      const TravelSolutionStruct& lTS = *itTS;
 
-      #Preferred cabin: F=First, C=Business M=Economy
-      #Trip type: OW=One-way, RO=Round-trip outbound portion,
-        RI=Round-trip inbound portion
-      #Duration of stay: irrelevant in case of one-way, but set to 0
-      #Frequent-flyer tier: G=Gold, S=Silver, K=Basic (Krisflyer), N=None
-    */
-
-    // Request date&time
-    const stdair::DateTime_T& lRequestDateTime =
-      iBookingRequest.getRequestDateTime();
-    intDisplay (oStream, lRequestDateTime.date().year());
-    intDisplay (oStream, lRequestDateTime.date().month());
-    intDisplay (oStream, lRequestDateTime.date().day());
-    oStream << ", ";
-    intDisplay (oStream, lRequestDateTime.time_of_day().hours());
-    intDisplay (oStream, lRequestDateTime.time_of_day().minutes());
-    intDisplay (oStream, lRequestDateTime.time_of_day().seconds());
-    oStream << ", ";
-
-    // POS
-    oStream << iBookingRequest.getPOS() << ", ";
-
-    // Origin
-    oStream << iBookingRequest.getOrigin() << ", ";
-
-    // Destination
-    oStream << iBookingRequest.getDestination() << ", ";
-
-    // Preferred departure date
-    const stdair::Date_T& lPreferredDepartureDate =
-      iBookingRequest.getPreferedDepartureDate();
-    intDisplay (oStream, lPreferredDepartureDate.year());
-    intDisplay (oStream, lPreferredDepartureDate.month());
-    intDisplay (oStream, lPreferredDepartureDate.day());
-    oStream << ", ";
-
-    // Preferred departure time
-    const stdair::Duration_T& lPreferredDepartureTime =
-      iBookingRequest.getPreferredDepartureTime();
-    intDisplay (oStream, lPreferredDepartureTime.hours());
-    intDisplay (oStream, lPreferredDepartureTime.minutes());
-    oStream << ", ";
-
-    // MIN & MAX preferred departure time (hardcode)
-    oStream << "0000, 2359, ";
-
-    // Preferred cabin
-    oStream << iBookingRequest.getPreferredCabin() << ", ";
-
-    // Trip type
-    oStream << iBookingRequest.getTripType() << ", ";
-
-    // Duration of stay
-    if (iBookingRequest.getTripType() == "OW") {
-      oStream << "0, ";
-    } else {
-      oStream << iBookingRequest.getStayDuration() << ", ";
+      oStream << std::endl;
+      oStream << "    [" << idx << "] " << lTS.display();
     }
-
-    // Frequent flyer tier
-    oStream << iBookingRequest.getFrequentFlyerType() << ", ";
-
-    // Willingness-to-pay
-    oStream << iBookingRequest.getWTP() << ", ";
-
-    // Disutility per stop (hardcode to 100)
-    oStream << "100, ";
-
-    // Preferred arrival date (hardcode to the preferred departure date)
-    intDisplay (oStream, lPreferredDepartureDate.year());
-    intDisplay (oStream, lPreferredDepartureDate.month());
-    intDisplay (oStream, lPreferredDepartureDate.day());
-    oStream << ", ";
-
-    // Preferred arrival time (hardcode to 23:55
-    oStream << "2355, ";
-
-    // Value of time
-    oStream <<iBookingRequest.getValueOfTime() << std::endl;
   }
 
 }

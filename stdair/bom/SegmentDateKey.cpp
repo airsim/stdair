@@ -4,6 +4,10 @@
 // STL
 #include <cassert>
 #include <sstream>
+// Boost.Serialization
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/SegmentDateKey.hpp>
@@ -28,7 +32,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDateKey::~SegmentDateKey () {
+  SegmentDateKey::~SegmentDateKey() {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -43,8 +47,26 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string SegmentDateKey::toString() const {
     std::ostringstream oStr;
-    oStr << _boardingPoint << "-" << _offPoint;
+    oStr << _boardingPoint << "." << _offPoint;
     return oStr.str();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void SegmentDateKey::serialisationImplementation() {
+    std::ostringstream oStr;
+    boost::archive::text_oarchive oa (oStr);
+    oa << *this;
+
+    std::istringstream iStr;
+    boost::archive::text_iarchive ia (iStr);
+    ia >> *this;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  template<class Archive>
+  void SegmentDateKey::serialize (Archive& ioArchive,
+                                 const unsigned int iFileVersion) {
+    ioArchive & _boardingPoint & _offPoint;
   }
 
 }

@@ -16,10 +16,10 @@ namespace stdair {
   // Forward declarations
   class Bucket;
 
-  /** Define the Inventory list. */
+  /** Define the bucket list. */
   typedef std::list<Bucket*> BucketList_T;
   
-  /** Define the Inventory map. */
+  /** Define the bucket map. */
   typedef std::map<const MapKey_T, Bucket*> BucketMap_T;
   
 }

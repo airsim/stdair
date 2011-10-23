@@ -23,6 +23,7 @@
 #include <stdair/basic/BasLogParams.hpp>
 #include <stdair/basic/BasDBParams.hpp>
 #include <stdair/basic/EventType.hpp>
+#include <stdair/bom/TravelSolutionTypes.hpp>
 
 namespace stdair {
 
@@ -30,6 +31,7 @@ namespace stdair {
   class BomRoot;
   class EventQueue;
   class EventStruct;
+  struct BookingRequestStruct;
   class STDAIR_ServiceContext;
   
 
@@ -98,6 +100,55 @@ namespace stdair {
      */
     void buildSampleBom (const bool isForRMOL = false,
                          const CabinCapacity_T iCabinCapacity = 0);
+
+    /**
+     * Build a sample list of travel solutions.
+     *
+     * As of now (March 2011), that list is made of the following
+     * travel solutions:
+     * <ul>
+     *  <li>BA9</li>
+     *  <li>LHR-SYD</li>
+     *  <li>2011-06-10</li>
+     *  <li>Q</li>
+     *  <li>WTP: 900</li>
+     *  <li>Change fee: 20; Non refundable; Saturday night stay</li>
+     * </ul>
+     *
+     * @param TravelSolutionList_T& Sample list of travel solution structures.
+     *        It should be given empty. It is altered with the returned sample.
+     */
+    void buildSampleTravelSolutions (TravelSolutionList_T&);
+
+    /**
+     * Build a sample booking request structure.
+     *
+     * As of now (March 2011), the sample booking request is made of the
+     * following parameters:
+     * <ul>
+     *  <li>Return trip (inbound): LHR-SYD (POS: LHR, Channel: DN), </li>
+     *  <li>Departing 10-JUN-2011 around 8:00, staying 7 days</li>
+     *  <li>Requested on 15-MAY-2011 at 10:00</li>
+     *  <li>Economy cabin, 3 persons, FF member</li>
+     *  <li>WTP: 1000.0 EUR</li>
+     *  <li>Dis-utility: 100.0 EUR/hour</li>
+     * </ul>
+     *
+     * As of now (March 2011), the CRS-related booking request is made
+     * of the following parameters:
+     * <ul>
+     *  <li>Return trip (inbound): SIN-BKK (POS: SIN, Channel: IN), </li>
+     *  <li>Departing 30-JAN-2010 around 10:00, staying 7 days</li>
+     *  <li>Requested on 22-JAN-2010 at 10:00</li>
+     *  <li>Economy cabin, 3 persons, FF member</li>
+     *  <li>WTP: 1000.0 EUR</li>
+     *  <li>Dis-utility: 100.0 EUR/hour</li>
+     * </ul>
+     *
+     * @param const bool isForCRS Whether the sample booking request is for CRS.
+     * @return BookingRequestStruct& Sample booking request structure.
+     */
+    BookingRequestStruct buildSampleBookingRequest (const bool isForCRS = false);
 
     /**
      * Get the expected number of events to be generated.
@@ -206,6 +257,15 @@ namespace stdair {
      *        logged/dumped.
      */
     std::string csvDisplay() const;
+
+    /**
+     * Display (dump in the returned string) the full list of travel
+     * solution structures.
+     *
+     * @return std::string Output string in which the list of travel
+     *        solutions is logged/dumped.
+     */
+    std::string csvDisplay (const TravelSolutionList_T&) const;
 
 
   public:

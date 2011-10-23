@@ -4,9 +4,15 @@
 // STL
 #include <cassert>
 #include <sstream>
+// Boost.Serialization
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
+#include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/Inventory.hpp>
+#include <stdair/bom/FlightDate.hpp>
 
 namespace stdair {
 
@@ -34,6 +40,38 @@ namespace stdair {
     std::ostringstream oStr;
     oStr << describeKey();
     return oStr.str();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  FlightDate* Inventory::
+  getFlightDate (const std::string& iFlightDateKeyStr) const {
+    FlightDate* oFlightDate_ptr = NULL;
+    BomManager::getObjectPtr<FlightDate> (*this, iFlightDateKeyStr);
+    return oFlightDate_ptr;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  FlightDate* Inventory::
+  getFlightDate (const FlightDateKey& iFlightDateKey) const {
+    return getFlightDate (iFlightDateKey.toString());
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void Inventory::serialisationImplementation() {
+    std::ostringstream oStr;
+    boost::archive::text_oarchive oa (oStr);
+    oa << *this;
+
+    std::istringstream iStr;
+    boost::archive::text_iarchive ia (iStr);
+    ia >> *this;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  template<class Archive>
+  void Inventory::serialize (Archive& ioArchive,
+                             const unsigned int iFileVersion) {
+    ioArchive & _key;
   }
 
 }

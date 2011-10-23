@@ -17,29 +17,48 @@
 // StdAir
 #include <stdair/stdair_types.hpp>
 #include <stdair/bom/BomArchive.hpp>
+#include <stdair/bom/BookingRequestStruct.hpp>
+#include <stdair/bom/TravelSolutionStruct.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/STDAIR_Service.hpp>
 #include <stdair/config/stdair-paths.hpp>
 
 // //////// Constants //////
-/** Default name and location for the log file. */
+/**
+ * Default name and location for the log file.
+ */
 const std::string K_STDAIR_DEFAULT_LOG_FILENAME ("stdair.log");
 
-/** Default name and location for the (CSV) input file. */
+/**
+ * Default name and location for the (CSV) input file.
+ */
 const std::string K_STDAIR_DEFAULT_INPUT_FILENAME (STDAIR_SAMPLE_DIR
                                                    "/schedule01.csv");
 
-/** Default for the input type. It can be either built-in or provided by an
-    input file. That latter must then be given with the -i option. */
+/**
+ * Default for the input type. It can be either built-in or provided by an
+ * input file. That latter must then be given with the -i option.
+ */
 const bool K_STDAIR_DEFAULT_BUILT_IN_INPUT = false;
 
-/** Default for the RMOL sample BOM tree. If that sample BOM tree is
-    chosen to be built, no other BOM tree (either built-in or parsed
-    from an input file) will be built. */
+/**
+ * Default for the RMOL sample BOM tree. If that sample BOM tree is
+ * chosen to be built, no other BOM tree (either built-in or parsed
+ * from an input file) will be built.
+ */
 const bool K_STDAIR_DEFAULT_BUILT_FOR_RMOL = false;
 
-/** Early return status (so that it can be differentiated from an
-    error). */
+/**
+ * Default for the CRS sample BOM tree. If that sample BOM tree is
+ * chosen to be built, no other BOM tree (either built-in or parsed
+ * from an input file) will be built.
+ */
+const bool K_STDAIR_DEFAULT_BUILT_FOR_CRS = false;
+
+/**
+ * Early return status (so that it can be differentiated from an
+ * error).
+ */
 const int K_STDAIR_EARLY_RETURN_STATUS = 99;
 
 // ///////// Parsing of Options & Configuration /////////
@@ -52,7 +71,7 @@ template<class T> std::ostream& operator<< (std::ostream& os,
 
 /** Read and parse the command line options. */
 int readConfiguration (int argc, char* argv[], bool& ioIsBuiltin,
-                       bool& ioIsForRMOL,
+                       bool& ioIsForRMOL, bool& ioIsForCRS,
                        stdair::Filename_T& ioInputFilename,
                        std::string& ioLogFilename) {
   // Default for the built-in input
@@ -60,6 +79,9 @@ int readConfiguration (int argc, char* argv[], bool& ioIsBuiltin,
 
   // Default for the RMOL input
   ioIsForRMOL = K_STDAIR_DEFAULT_BUILT_FOR_RMOL;
+  
+  // Default for the CRS input
+  ioIsForCRS = K_STDAIR_DEFAULT_BUILT_FOR_CRS;
   
   // Declare a group of options that will be allowed only on command line
   boost::program_options::options_description generic ("Generic options");
@@ -77,6 +99,8 @@ int readConfiguration (int argc, char* argv[], bool& ioIsBuiltin,
      "The sample BOM tree can be either built-in or parsed from an input file. That latter must then be given with the -i/--input option")
     ("rmol,r",
      "Build a sample BOM tree for RMOL")
+    ("crs,c",
+     "Build a sample BOM tree for CRS")
     ("input,i",
      boost::program_options::value< std::string >(&ioInputFilename)->default_value(K_STDAIR_DEFAULT_INPUT_FILENAME),
      "(CVS) input file for the demand distributions")
@@ -139,6 +163,14 @@ int readConfiguration (int argc, char* argv[], bool& ioIsBuiltin,
     // The RMOL sample tree takes precedence over the default built-in BOM tree
     ioIsBuiltin = false;
   }
+
+  if (vm.count ("crs")) {
+    ioIsForCRS = true;
+
+    // The RMOL sample tree takes precedence over the default built-in BOM tree
+    ioIsBuiltin = false;
+  }
+
   const std::string isBuiltinStr = (ioIsBuiltin == true)?"yes":"no";
   std::cout << "The BOM should be built-in? " << isBuiltinStr << std::endl;
 
@@ -146,14 +178,18 @@ int readConfiguration (int argc, char* argv[], bool& ioIsBuiltin,
   std::cout << "The BOM should be built-in for RMOL? " << isForRMOLStr
             << std::endl;
 
-  if (ioIsBuiltin == false && ioIsForRMOL == false) {
+  const std::string isForCRSStr = (ioIsForCRS == true)?"yes":"no";
+  std::cout << "The BOM should be built-in for CRS? " << isForCRSStr
+            << std::endl;
+
+  if (ioIsBuiltin == false && ioIsForRMOL == false && ioIsForCRS == false) {
     if (vm.count ("input")) {
       ioInputFilename = vm["input"].as< std::string >();
       std::cout << "Input filename is: " << ioInputFilename << std::endl;
 
     } else {
-      std::cerr << "Either one among the -b/--builtin, -r/--rmol or -i/--input "
-                << "options must be specified" << std::endl;
+      std::cerr << "Either one among the -b/--builtin, -r/--rmol, -c/--crs "
+                << "or -i/--input options must be specified" << std::endl;
     }
   }
 
@@ -176,6 +212,9 @@ int main (int argc, char* argv[]) {
   // State whether a sample BOM tree should be built for RMOL.
   bool isForRMOL;
     
+  // State whether a sample BOM tree should be built for the CRS.
+  bool isForCRS;
+    
   // Input file name
   stdair::Filename_T lInputFilename;
 
@@ -184,8 +223,8 @@ int main (int argc, char* argv[]) {
     
   // Call the command-line option parser
   const int lOptionParserStatus =
-    readConfiguration (argc, argv, isBuiltin, isForRMOL, lInputFilename,
-                       lLogFilename);
+    readConfiguration (argc, argv, isBuiltin, isForRMOL, isForCRS,
+                       lInputFilename, lLogFilename);
 
   if (lOptionParserStatus == K_STDAIR_EARLY_RETURN_STATUS) {
     return 0;
@@ -204,11 +243,27 @@ int main (int argc, char* argv[]) {
   STDAIR_LOG_DEBUG ("Welcome to stdair");
 
   // Check wether or not a (CSV) input file should be read
-  if (isBuiltin == true || isForRMOL == true) {
+  if (isBuiltin == true || isForRMOL == true || isForCRS == true) {
 
     if (isForRMOL == true) {
       // Build the sample BOM tree for RMOL
       stdairService.buildSampleBom (true);
+
+    } else if (isForCRS == true) {
+      //
+      stdair::TravelSolutionList_T lTravelSolutionList;
+      stdairService.buildSampleTravelSolutions (lTravelSolutionList);
+
+      // Build the sample BOM tree for CRS
+      const stdair::BookingRequestStruct& lBookingRequest =
+        stdairService.buildSampleBookingRequest();
+
+      // DEBUG: Display the travel solution and booking request
+      STDAIR_LOG_DEBUG ("Booking request: " << lBookingRequest.display());
+
+      const std::string& lCSVDump =
+        stdairService.csvDisplay (lTravelSolutionList);
+      STDAIR_LOG_DEBUG (lCSVDump);
 
     } else {
       assert (isBuiltin == true);

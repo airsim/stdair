@@ -17,6 +17,8 @@
 #include <stdair/bom/FareFamily.hpp>
 #include <stdair/bom/BookingClass.hpp>
 #include <stdair/bom/BomManager.hpp>
+#include <stdair/bom/TravelSolutionStruct.hpp>
+#include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/factory/FacBomManager.hpp>
 #include <stdair/factory/FacBom.hpp>
 #include <stdair/command/CmdBomManager.hpp>
@@ -494,4 +496,176 @@ namespace stdair {
 
   }
   
+  // //////////////////////////////////////////////////////////////////////
+  void CmdBomManager::
+  buildSampleTravelSolutions (TravelSolutionList_T& ioTravelSolutionList) {
+
+    // Clean the list
+    ioTravelSolutionList.clear();
+
+    //
+    const std::string lBA9_SegmentDateKey ("BA, 9, LHR, SYD, 2011-06-10");
+
+    // Add the segment date key to the travel solution
+    TravelSolutionStruct lTS;
+    lTS.addSegment (lBA9_SegmentDateKey);
+
+    // Fare option
+    const std::string lClassPath ("Q");
+    const Fare_T lFare (900.0);
+    const ChangeFees_T lChangeFee (20.0);
+    const NonRefundable_T isRefundable (true);
+    const SaturdayStay_T lSaturdayStay (true);
+    const FareOptionStruct lFareOption (lClassPath, lFare, lChangeFee,
+                                        isRefundable, lSaturdayStay);
+
+    // Add (a copy of) the fare option
+    lTS.addFareOption (lFareOption);
+
+    // Map of class availabilities: set the availability for the Q
+    // booking class (the one corresponding to the fare option) to 8.
+    ClassAvailabilityMap_T lClassAvailabilityMap;
+    const Availability_T lAvl (8);
+    const bool hasInsertBeenSuccessful = lClassAvailabilityMap.
+      insert (ClassAvailabilityMap_T::value_type (lClassPath, lAvl)).second;
+
+    // Add the map to the dedicated list held by the travel solution
+    lTS.addClassAvailabilityMap (lClassAvailabilityMap);
+
+    // Add the travel solution to the list
+    ioTravelSolutionList.push_back (lTS);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  BookingRequestStruct CmdBomManager::buildSampleBookingRequest() {
+
+    // Origin
+    const AirportCode_T lOrigin ("LHR");
+
+    // Destination
+    const AirportCode_T lDestination ("SYD");
+
+    // Point of Sale (POS)
+    const AirportCode_T lPOS ("LHR");
+
+    // Preferred departure date (10-JUN-2011)
+    const Date_T lPreferredDepartureDate (2011, boost::gregorian::Jun, 10);
+
+    // Preferred departure time (08:00)
+    const Duration_T lPreferredDepartureTime (8, 0, 0);
+
+    // Date of the request (15-MAY-2011)
+    const Date_T lRequestDate (2011, boost::gregorian::May, 15);
+
+    // Time of the request (10:00)
+    const Duration_T lRequestTime (10, 0, 0);
+
+    // Date-time of the request (made of the date and time above)
+    const DateTime_T lRequestDateTime (lRequestDate, lRequestTime);
+
+    // Preferred cabin (also named class of service sometimes)
+    const CabinCode_T lPreferredCabin ("Eco");
+
+    // Number of persons in the party
+    const PartySize_T lPartySize (3);
+
+    // Channel (direct/indirect, on-line/off-line)
+    const ChannelLabel_T lChannel ("DN");
+
+    // Type of the trip (one-way, inbound/outbound of a return trip)
+    const TripType_T lTripType ("RI");
+
+    // Duration of the stay (expressed as a number of days)
+    const DayDuration_T lStayDuration (7);
+
+    // Frequent flyer tier (member, silver, gold, platinum, senator, etc)
+    const FrequentFlyer_T lFrequentFlyerType ("M");
+
+    // Maximum willing-to-pay (WTP, expressed in monetary unit, e.g., EUR)
+    const WTP_T lWTP (1000.0);
+
+    // Value of time, for the customer (expressed in monetary unit per
+    // unit of time, e.g., EUR/hour)
+    const PriceValue_T lValueOfTime (100.0);
+
+    // Creation of the booking request structure
+    BookingRequestStruct oBookingRequest (lOrigin, lDestination, lPOS,
+                                          lPreferredDepartureDate,
+                                          lRequestDateTime,
+                                          lPreferredCabin,
+                                          lPartySize, lChannel,
+                                          lTripType, lStayDuration,
+                                          lFrequentFlyerType,
+                                          lPreferredDepartureTime,
+                                          lWTP, lValueOfTime);
+
+    return oBookingRequest;
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  BookingRequestStruct CmdBomManager::buildSampleBookingRequestForCRS() {
+
+    // Origin
+    const AirportCode_T lOrigin ("SIN");
+
+    // Destination
+    const AirportCode_T lDestination ("BKK");
+
+    // Point of Sale (POS)
+    const AirportCode_T lPOS ("SIN");
+
+    // Preferred departure date (30-JAN-2010)
+    const Date_T lPreferredDepartureDate (2010, boost::gregorian::Jan, 30);
+
+    // Preferred departure time (10:00)
+    const Duration_T lPreferredDepartureTime (10, 0, 0);
+
+    // Date of the request (22-JAN-2010)
+    const Date_T lRequestDate (2010, boost::gregorian::Jan, 22);
+
+    // Time of the request (10:00)
+    const Duration_T lRequestTime (10, 0, 0);
+
+    // Date-time of the request (made of the date and time above)
+    const DateTime_T lRequestDateTime (lRequestDate, lRequestTime);
+
+    // Preferred cabin (also named class of service sometimes)
+    const CabinCode_T lPreferredCabin ("Eco");
+
+    // Number of persons in the party
+    const PartySize_T lPartySize (3);
+
+    // Channel (direct/indirect, on-line/off-line)
+    const ChannelLabel_T lChannel ("IN");
+
+    // Type of the trip (one-way, inbound/outbound of a return trip)
+    const TripType_T lTripType ("RI");
+
+    // Duration of the stay (expressed as a number of days)
+    const DayDuration_T lStayDuration (7);
+
+    // Frequent flyer tier (member, silver, gold, platinum, senator, etc)
+    const FrequentFlyer_T lFrequentFlyerType ("M");
+
+    // Maximum willing-to-pay (WTP, expressed in monetary unit, e.g., EUR)
+    const WTP_T lWTP (1000.0);
+
+    // Value of time, for the customer (expressed in monetary unit per
+    // unit of time, e.g., EUR/hour)
+    const PriceValue_T lValueOfTime (100.0);
+
+    // Creation of the booking request structure
+    BookingRequestStruct oBookingRequest (lOrigin, lDestination, lPOS,
+                                          lPreferredDepartureDate,
+                                          lRequestDateTime,
+                                          lPreferredCabin,
+                                          lPartySize, lChannel,
+                                          lTripType, lStayDuration,
+                                          lFrequentFlyerType,
+                                          lPreferredDepartureTime,
+                                          lWTP, lValueOfTime);
+
+    return oBookingRequest;
+  }
+
 }

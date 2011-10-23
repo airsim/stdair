@@ -13,11 +13,20 @@
 #include <stdair/bom/InventoryKey.hpp>
 #include <stdair/bom/InventoryTypes.hpp>
 
+/// Forward declarations
+namespace boost {
+  namespace serialization {
+    class access;
+  }
+}
+
 namespace stdair {
   
-  // Forward declarations
+  /// Forward declarations
   class AirlineFeature;
-  
+  struct FlightDateKey;
+  class FlightDate;
+
   /**
    * @brief Class representing the actual attributes for an airline inventory
    */
@@ -28,8 +37,11 @@ namespace stdair {
 
   public :
     // ////////// Type definitions ////////////
-    /** Definition allowing to retrieve the associated BOM key type. */
+    /**
+     * Definition allowing to retrieve the associated BOM key type.
+     */
     typedef InventoryKey Key_T;
+
 
   public:
     // ////////// Getters ////////////
@@ -48,11 +60,35 @@ namespace stdair {
       return _parent;
     }
 
-    /** Get the map of children holders. */
+    /** Get the map of children. */
     const HolderMap_T& getHolderMap() const {
       return _holderMap;
     }
     
+    /**
+     * Get a pointer on the FlightDate object corresponding to the
+     * given key.
+     *
+     * \note The FlightDate object can be inherited from, if needed.
+     *       In that case, a dynamic_cast<> may be needed.
+     *
+     * @param const std::string& The flight-date key.
+     * @return FlightDate* Found FlightDate object. NULL if not found.
+     */
+    FlightDate* getFlightDate (const std::string& iFlightDateKeyStr) const;
+
+    /**
+     * Get a pointer on the FlightDate object corresponding to the
+     * given key.
+     *
+     * \note The FlightDate object can be inherited from, if needed.
+     *       In that case, a dynamic_cast<> may be needed.
+     *
+     * @param const FlightDateKey& The flight-date key
+     * @return FlightDate* Found FlightDate object. NULL if not found.
+     */
+    FlightDate* getFlightDate (const FlightDateKey&) const;
+
 
   public:
     // /////////// Setters ////////////
@@ -64,21 +100,31 @@ namespace stdair {
 
   public:
     // /////////// Display support methods /////////
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object into an output stream.
+     *
+     * @param ostream& the output stream.
+     */
     void toStream (std::ostream& ioOut) const {
       ioOut << toString();
     }
 
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object from an input stream.
+     *
+     * @param istream& the input stream.
+     */
     void fromStream (std::istream& ioIn) {
     }
 
-    /** Get the serialised version of the Business Object. */
+    /**
+     * Get the serialised version of the Business Object.
+     */
     std::string toString() const;
     
-    /** Get a string describing the  key. */
+    /**
+     * Get a string describing the  key.
+     */
     const std::string describeKey() const {
       return _key.toString();
     }
@@ -86,38 +132,62 @@ namespace stdair {
 
   public:
     // /////////// (Boost) Serialisation support methods /////////
-    /** Serialisation. */
+    /**
+     * Serialisation.
+     */
     template<class Archive>
-    void serialize (Archive& ar, const unsigned int iFileVersion) {
-      ar & _key;
-    }
+    void serialize (Archive& ar, const unsigned int iFileVersion);
+
+  private:
+    /**
+     * Serialisation helper (allows to be sure the template method is
+     * instantiated).
+     */
+    void serialisationImplementation();
 
 
   protected:
     // ////////// Constructors and destructors /////////
-    /** Constructor. */
+    /**
+     * Constructor.
+     */
     Inventory (const Key_T&);
-    /** Destructor. */
+    /**
+     * Destructor.
+     */
     ~Inventory();
+
   private:
-    /** Default constructor. */
+    /**
+     * Default constructor.
+     */
     Inventory();
-    /** Default copy constructor. */
+    /**
+     * Default copy constructor.
+     */
     Inventory (const Inventory&);
 
     
   protected:
     // ////////// Attributes /////////
-    /** Primary key (airline code). */
+    /**
+     * Primary key (airline code).
+     */
     Key_T _key;
 
-    /** Pointer on the parent class (BomRoot). */
+    /**
+     * Pointer on the parent class (BomRoot).
+     */
     BomAbstract* _parent;
 
-    /** Features specific to the airline. */
+    /**
+     * Features specific to the airline.
+     */
     const AirlineFeature* _airlineFeature;
 
-    /** Map holding the children (FlightDate objects). */
+    /**
+     * Map holding the children (FlightDate objects).
+     */
     HolderMap_T _holderMap;
   };
 

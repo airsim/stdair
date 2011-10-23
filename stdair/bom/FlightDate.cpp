@@ -4,9 +4,16 @@
 // STL
 #include <cassert>
 #include <sstream>
+// Boost.Serialization
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/access.hpp>
 // StdAir
 #include <stdair/basic/BasConst_Inventory.hpp>
+#include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/FlightDate.hpp>
+#include <stdair/bom/LegDate.hpp>
+#include <stdair/bom/SegmentDate.hpp>
 
 namespace stdair {
 
@@ -23,12 +30,11 @@ namespace stdair {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (const Key_T& iKey)
-    : _key (iKey), _parent (NULL) {
+  FlightDate::FlightDate (const Key_T& iKey) : _key (iKey), _parent (NULL) {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::~FlightDate () {
+  FlightDate::~FlightDate() {
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -36,6 +42,50 @@ namespace stdair {
     std::ostringstream oStr;
     oStr << describeKey();
     return oStr.str();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  LegDate* FlightDate::getLegDate (const std::string& iLegDateKeyStr) const {
+    LegDate* oLegDate_ptr = NULL;
+    BomManager::getObjectPtr<LegDate> (*this, iLegDateKeyStr);
+    return oLegDate_ptr;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  LegDate* FlightDate::getLegDate (const LegDateKey& iLegDateKey) const {
+    return getLegDate (iLegDateKey.toString());
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  SegmentDate* FlightDate::
+  getSegmentDate (const std::string& iSegmentDateKeyStr) const {
+    SegmentDate* oSegmentDate_ptr = NULL;
+    BomManager::getObjectPtr<SegmentDate> (*this, iSegmentDateKeyStr);
+    return oSegmentDate_ptr;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  SegmentDate* FlightDate::
+  getSegmentDate (const SegmentDateKey& iSegmentDateKey) const {
+    return getSegmentDate (iSegmentDateKey.toString());
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void FlightDate::serialisationImplementation() {
+    std::ostringstream oStr;
+    boost::archive::text_oarchive oa (oStr);
+    oa << *this;
+
+    std::istringstream iStr;
+    boost::archive::text_iarchive ia (iStr);
+    ia >> *this;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  template<class Archive>
+  void FlightDate::serialize (Archive& ioArchive,
+                             const unsigned int iFileVersion) {
+    ioArchive & _key;
   }
 
 }

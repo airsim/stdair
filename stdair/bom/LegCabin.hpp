@@ -18,7 +18,8 @@
 namespace stdair {
 
   /**
-   * Class representing the actual attributes for an airline leg-cabin.
+   * @brief Class representing the actual attributes for an airline
+   * leg-cabin.
    */
   class LegCabin : public BomAbstract {
     template <typename BOM> friend class FacBom;
@@ -295,7 +296,7 @@ namespace stdair {
     /** Pointer on the parent class (LegDate). */
     BomAbstract* _parent;
     
-    /** Map holding the children (empty for now). */
+    /** Map holding the children (Bucket objects). */
     HolderMap_T _holderMap;
 
     /** Saleable capacity of the cabin. */

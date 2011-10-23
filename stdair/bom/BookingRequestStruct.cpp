@@ -4,17 +4,34 @@
 // STL
 #include <cassert>
 #include <sstream>
+// Boost
+#include <boost/date_time/gregorian/formatters.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 // StdAir
+#include <stdair/basic/BasConst_Inventory.hpp>
+#include <stdair/basic/BasConst_Request.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 
 namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
   BookingRequestStruct::BookingRequestStruct()
-    :  _partySize (0), _stayDuration (0), _wtp (0.0), _valueOfTime (0.0) {
+    : _origin (DEFAULT_ORIGIN), _destination (DEFAULT_DESTINATION), 
+      _pos (DEFAULT_POS),
+      _preferredDepartureDate (DEFAULT_PREFERRED_DEPARTURE_DATE),
+      _preferredDepartureTime (DEFAULT_PREFERRED_DEPARTURE_TIME),
+      _requestDateTime (DEFAULT_REQUEST_DATE_TIME),
+      _preferredCabin (DEFAULT_PREFERRED_CABIN),
+      _partySize (DEFAULT_PARTY_SIZE),
+      _channel (DEFAULT_CHANNEL),
+      _tripType (DEFAULT_TRIP_TYPE),
+      _stayDuration (DEFAULT_STAY_DURATION),
+      _frequentFlyerType (DEFAULT_FF_TIER),
+      _wtp (DEFAULT_WTP),
+      _valueOfTime (DEFAULT_VALUE_OF_TIME) {
     assert (false);
   }
-    
+
   // //////////////////////////////////////////////////////////////////////
   BookingRequestStruct::
   BookingRequestStruct (const BookingRequestStruct& iBookingRequest)
@@ -22,6 +39,7 @@ namespace stdair {
       _destination (iBookingRequest._destination),
       _pos (iBookingRequest._pos),
       _preferredDepartureDate (iBookingRequest._preferredDepartureDate), 
+      _preferredDepartureTime (iBookingRequest._preferredDepartureTime),
       _requestDateTime (iBookingRequest._requestDateTime),
       _preferredCabin (iBookingRequest._preferredCabin),
       _partySize (iBookingRequest._partySize),
@@ -29,7 +47,6 @@ namespace stdair {
       _tripType (iBookingRequest._tripType),
       _stayDuration (iBookingRequest._stayDuration),
       _frequentFlyerType (iBookingRequest._frequentFlyerType),
-      _preferredDepartureTime (iBookingRequest._preferredDepartureTime),
       _wtp (iBookingRequest._wtp),
       _valueOfTime (iBookingRequest._valueOfTime) {
   }
@@ -52,12 +69,12 @@ namespace stdair {
                         const PriceValue_T& iValueOfTime)
     : _origin (iOrigin), _destination (iDestination),
       _pos (iPOS), _preferredDepartureDate (iDepartureDate), 
+      _preferredDepartureTime (iPreferredDepartureTime),
       _requestDateTime (iRequestDateTime),
       _preferredCabin (iPreferredCabin), _partySize (iPartySize),
       _channel (iChannel), _tripType (iTripType),
       _stayDuration (iStayDuration), _frequentFlyerType (iFrequentFlyerType),
-      _preferredDepartureTime (iPreferredDepartureTime), _wtp (iWTP),
-      _valueOfTime (iValueOfTime) {
+      _wtp (iWTP), _valueOfTime (iValueOfTime) {
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -77,12 +94,93 @@ namespace stdair {
   const std::string BookingRequestStruct::describe() const {
     std::ostringstream oStr;
     oStr << "At " << _requestDateTime
-         << ", for (" << _pos << ") " << _origin << "-" << _destination
-         << " " << _preferredDepartureDate << " " << _preferredCabin
-         << " " << _partySize << " " << _channel << " " << _tripType 
-         << " " << _stayDuration << " " << _frequentFlyerType
-         << " " << _preferredDepartureTime << " " << _wtp
-         << " " << _valueOfTime;
+         << ", for (" << _pos << ", " << _channel << ")"
+         << " " << _origin << "-" << _destination << " (" << _tripType << ")"
+         << " " << _preferredDepartureDate << " (" << _stayDuration << " days)"
+         << " " << _preferredDepartureTime
+         << " " << _preferredCabin << " " << _partySize
+         << " " << _frequentFlyerType << " " << _wtp << " " << _valueOfTime;
+    return oStr.str();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void intDisplay (std::ostream& oStream, const int& iInt) {
+    const int dInt = iInt - static_cast<int> (iInt / 100) * 100;
+    if (dInt < 10) {
+      oStream << "0" << dInt;
+    } else {
+      oStream << dInt;
+    }
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  const std::string BookingRequestStruct::display() const {
+    std::ostringstream oStr;
+
+    // Request date and time
+    const Date_T& lRequestDate = _requestDateTime.date();
+    oStr << boost::gregorian::to_iso_extended_string (lRequestDate);
+
+    const Duration_T& lRequestTime = _requestDateTime.time_of_day();
+    oStr << ", " << boost::posix_time::to_simple_string (lRequestTime);
+
+    // POS
+    oStr << ", " << _pos;
+
+    // Channel
+    oStr << ", " << _channel;
+
+    // Origin
+    oStr << ", " << _origin;
+
+    // Destination
+    oStr << ", " << _destination;
+
+    // Preferred departure date
+    oStr << ", "
+         << boost::gregorian::to_iso_extended_string (_preferredDepartureDate);
+
+    // Preferred departure time
+    oStr << ", "
+         << boost::posix_time::to_simple_string (_preferredDepartureTime);
+
+    // MIN & MAX preferred departure time (hardcode)
+    oStr << ", " << "00:00-23:59";
+
+    // Preferred arrival date (hardcode to the preferred departure date)
+    oStr << ", "
+         << boost::gregorian::to_iso_extended_string (_preferredDepartureDate);
+
+    // Preferred arrival time (hard-coded to 23:55)
+    oStr << ", " << "23:55";
+
+    // Preferred cabin
+    oStr << ", " << _preferredCabin;
+
+    // Trip type
+    oStr << ", " << _tripType;
+
+    // Duration of stay
+    oStr << ", ";
+    if (_tripType == "OW") {
+      oStr << "0";
+    } else {
+      oStr << _stayDuration;
+    }
+
+    // Frequent flyer tier
+    oStr << ", " << _frequentFlyerType;
+
+    // Willingness-to-pay
+    oStr << ", " << _wtp;
+
+    // Disutility per stop (hardcode to 100, expressed as a monetary
+    // unit per hour)
+    oStr << ", " << "100";
+
+    // Value of time
+    oStr << ", " << _valueOfTime;
+
     return oStr.str();
   }
 

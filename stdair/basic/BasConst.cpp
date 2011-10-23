@@ -27,9 +27,7 @@ namespace stdair {
   const NbOfFlightDates_T DEFAULT_NB_OF_FLIGHTDATES (0.0);
 
   /** Null time duration (in boost::time_duration unit).*/
-  const Duration_T NULL_BOOST_TIME_DURATION (
-    boost::posix_time::hours(0)+ boost::posix_time::minutes (0)
-    + boost::posix_time::seconds (0));
+  const Duration_T NULL_BOOST_TIME_DURATION (0, 0, 0);
 
   /** Default number of days in a year. */
   const unsigned int DEFAULT_NB_OF_DAYS_IN_A_YEAR (365);
@@ -60,7 +58,7 @@ namespace stdair {
   const DateTime_T DEFAULT_DATETIME (DEFAULT_DATE, NULL_BOOST_TIME_DURATION);
 
   /** Default epsilon duration (1 nanosecond). */
-  const Duration_T DEFAULT_EPSILON_DURATION (Duration_T (0, 0, 0, 1));
+  const Duration_T DEFAULT_EPSILON_DURATION (0, 0, 0, 1);
 
   /** Number of seconds in one day */
   const Count_T SECONDS_IN_ONE_DAY (86000);
@@ -107,7 +105,7 @@ namespace stdair {
   const FlightPathCode_T DEFAULT_FLIGHTPATH_CODE ("");
 
 
-  // //////// (Segment-)Class-related BOM ///////
+  // //////// Inventory-related BOM ///////
   /** Default distance value (kilometers). */
   const Distance_T DEFAULT_DISTANCE_VALUE (0);
 
@@ -149,13 +147,19 @@ namespace stdair {
   /** Maximal offered capacity in a cabin. */
   const Availability_T MAXIMAL_AVAILABILITY (9999.0);
 
+  /** Default seat index (for a bucket and/or Bid-Price Vector slot). */
+  const SeatIndex_T DEFAULT_SEAT_INDEX (1);
+
+
+  // //////// (Segment-)Class-related BOM ///////
   /** Default boolean for censorship flag given the status of
       availability for BookingClass. */
   const CensorshipFlag_T DEFAULT_CLASS_CENSORSHIPFLAG (false);
 
   /** Default list of censorship flag given the status of 
       availability for BookingClass. */
-  const CensorshipFlagList_T DEFAULT_CLASS_CENSORSHIPFLAG_LIST = std::vector<CensorshipFlag_T>();
+  const CensorshipFlagList_T DEFAULT_CLASS_CENSORSHIPFLAG_LIST =
+    std::vector<CensorshipFlag_T>();
 
   /** Default booking limit value for BookingClass. */
   const BookingLimit_T DEFAULT_CLASS_BOOKING_LIMIT (9999.0);
@@ -250,7 +254,51 @@ namespace stdair {
   /** Default party size in a request. */
   const PartySize_T DEFAULT_PARTY_SIZE (1);
 
+  /** Default duration for a stay. */
+  const DayDuration_T DEFAULT_STAY_DURATION (7);
+
+  /** Default Willingness-to-Pay (WTP, as expressed as a monetary unit). */
+  const WTP_T DEFAULT_WTP (1000.0);
+
+  /** Default Point-Of-Sale (POS). */
+  const AirportCode_T DEFAULT_POS ("ROW");
     
+  /** Default departure date. */
+  const Date_T DEFAULT_PREFERRED_DEPARTURE_DATE (DEFAULT_FLIGHT_DATE);
+
+  /** Default preferred departure time (08:00). */
+  const Duration_T DEFAULT_PREFERRED_DEPARTURE_TIME (8, 0, 0);
+    
+  /** Default advance purchase. */
+  const DateOffset_T DEFAULT_ADVANCE_PURCHASE (22);
+
+  /** Default request date. */
+  const Date_T DEFAULT_REQUEST_DATE (DEFAULT_PREFERRED_DEPARTURE_DATE
+                                     - DEFAULT_ADVANCE_PURCHASE);
+
+  /** Default preferred departure time (08:00). */
+  const Duration_T DEFAULT_REQUEST_TIME (8, 0, 0);
+    
+  /** Default request date-time. */
+  const DateTime_T DEFAULT_REQUEST_DATE_TIME (DEFAULT_REQUEST_DATE,
+                                              DEFAULT_REQUEST_TIME);
+
+  /** Default preferred cabin. */
+  const CabinCode_T DEFAULT_PREFERRED_CABIN ("M");
+
+  /** Default channel (direct on-line). */
+  const ChannelLabel_T DEFAULT_CHANNEL ("DN");
+
+  /** Default trip type (one-way). */
+  const TripType_T DEFAULT_TRIP_TYPE ("OW");
+
+  /** Default frequent flyer tier (non member). */
+  const FrequentFlyer_T DEFAULT_FF_TIER ("N");
+
+  /** Default value of time (expressed as a monetary unit per hour). */
+  const PriceValue_T DEFAULT_VALUE_OF_TIME (100.0);
+    
+
   // //////// Travel Solutions ///////
   /** Default Minimal connection time. */
   const Duration_T DEFAULT_MINIMAL_CONNECTION_TIME (0, 30, 0);

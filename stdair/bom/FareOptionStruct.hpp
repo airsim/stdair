@@ -7,7 +7,6 @@
 // STL
 #include <iosfwd>
 #include <string>
-#include <vector>
 // StdAir
 #include <stdair/stdair_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
@@ -15,57 +14,136 @@
 
 namespace stdair {
 
-  /** Structure holding the elements of a fare option. */
+  /**
+   * @brief Structure holding the elements of a fare option.
+   */
   struct FareOptionStruct : public StructAbstract {
   public:
     // /////////// Getters ///////////////
-    /** Get attributes. */
-    const ClassList_StringList_T& getClassPath () const { return _classPath; }
-    const Fare_T& getFare () const { return _fare; }
-    const ChangeFees_T getChangeFees () const { return _changeFee; }
-    const NonRefundable_T getNonRefundable () const {return _nonRefundable; }
-    const SaturdayStay_T getSaturdayStay () const {return _saturdayStay; }
+    /** Get the class-path. */
+    const ClassList_StringList_T& getClassPath() const {
+      return _classPath;
+    }
+
+    /** Get the fare value. */
+    const Fare_T& getFare() const {
+      return _fare;
+    }
+
+    /** Get the change fees. */
+    const ChangeFees_T getChangeFees() const {
+      return _changeFee;
+    }
+
+    /** State whether the ticket is refundable. */
+    const NonRefundable_T getNonRefundable() const {
+      return _nonRefundable;
+    }
+
+    /** State whether there is a condition on the saturday night stay. */
+    const SaturdayStay_T getSaturdayStay() const {
+      return _saturdayStay;
+    }
+
 
   public:
     // /////////// Setters ///////////////
-    /** Set attributes. */
+    /** Set the class-path. */
     void addClassList (const std::string);
-    void setFare (const Fare_T& iFare) { _fare = iFare; }
-    void setChangeFees (const ChangeFees_T iRes) { _changeFee = iRes; }
-    void setNonRefundable (const NonRefundable_T iRes) { _nonRefundable = iRes;}
-    void setSaturdayStay (const SaturdayStay_T iRes) { _saturdayStay = iRes; }
+
+    /** Set the fare value. */
+    void setFare (const Fare_T& iFare) {
+      _fare = iFare;
+    }
+
+    /** Set the change fees. */
+    void setChangeFees (const ChangeFees_T iRes) {
+      _changeFee = iRes;
+    }
+
+    /** Set the flag for the ticket refundability. */
+    void setNonRefundable (const NonRefundable_T iRes) {
+      _nonRefundable = iRes;
+    }
+
+    /** Set the flag for the saturday night stay condition. */
+    void setSaturdayStay (const SaturdayStay_T iRes) {
+      _saturdayStay = iRes;
+    }
         
+
   public:
     // /////////// Display support method /////////////
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object into an output stream.
+     *
+     * @param ostream& the output stream.
+     */
     void toStream (std::ostream& ioOut) const;
 
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object from an input stream.
+     *
+     * @param istream& the input stream.
+     */
     void fromStream (std::istream& ioIn);
 
-    /** Display of the structure. */
+    /**
+     * Display of the structure.
+     */
     const std::string describe() const;
   
+    /**
+     * Display of the structure.
+     */
+    const std::string display() const;
+  
+
   public:
     // //////////// Constructors & Destructor ///////////////
-    /** Main constructor. */
-    FareOptionStruct ();
-    /** Destructor. */
-    ~FareOptionStruct ();
+    /**
+     * Default constructor.
+     */
+    FareOptionStruct();
+
+    /**
+     * Main constructor.
+     */
+    FareOptionStruct (const std::string& iClassPath,
+                      const Fare_T&, const ChangeFees_T&,
+                      const NonRefundable_T&, const SaturdayStay_T&);
+
+    /**
+     * Destructor.
+     */
+    ~FareOptionStruct();
     
+
   private:
     // ///////////////////// Attributes //////////////////////
-    /** The class path. */
+    /**
+     * The class path.
+     */
     ClassList_StringList_T _classPath;
 
-    /** Fare. */
+    /**
+     * Fare.
+     */
     Fare_T _fare;
 
-    /** Restrictions. */
+    /**
+     * Change fees.
+     */
     ChangeFees_T _changeFee;
+
+    /**
+     * State whether the ticket is refundable.
+     */
     NonRefundable_T _nonRefundable;
+
+    /**
+     * State whether there is a condition on the saturday night stay.
+     */
     SaturdayStay_T _saturdayStay;
   };
 

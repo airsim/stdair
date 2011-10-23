@@ -36,7 +36,7 @@ autoreconf -fvi                 && \
 echo "" && \
 echo "Now, the configuration script has to be run. For instance:" && \
 echo "mkdir -p tmp && cd tmp && \\" && \
-echo " ../configure --prefix=/home/user/dev/deliveries/stdair-0.20.0 --srcdir=.." && \
+echo " ../configure --prefix=/home/user/dev/deliveries/stdair-0.21.0 --srcdir=.." && \
 echo "" && exit 0
 
 #echo "- configure."     && ./configure "$@" && exit 0

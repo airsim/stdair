@@ -87,10 +87,6 @@ namespace stdair {
   /** Type of booking channel (D=direct, I=indirect, N=oNline, F=oFfline). */
   typedef std::string ChannelLabel_T;
 
-  /** Type of trip type (RO=outbound of round-trip, RI=inbound of round-trip, 
-      OW=one way). */
-  typedef std::string TripType_T;
-
   /** Type of frequent flyer (P=Platinum, G=Gold, S=Silver, M=Member, N=None).*/
   typedef std::string FrequentFlyer_T;
 
