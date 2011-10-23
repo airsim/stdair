@@ -30,6 +30,11 @@ namespace stdair {
       return _fare;
     }
 
+    /** Get the availability. */
+    const Availability_T& getAvailability() const {
+      return _avl;
+    }
+    
     /** Get the change fees. */
     const ChangeFees_T getChangeFees() const {
       return _changeFee;
@@ -54,6 +59,11 @@ namespace stdair {
     /** Set the fare value. */
     void setFare (const Fare_T& iFare) {
       _fare = iFare;
+    }
+
+    /** Set the availability. */
+    void setAvailability (const Availability_T& iAvl) {
+      _avl = iAvl;
     }
 
     /** Set the change fees. */
@@ -114,6 +124,11 @@ namespace stdair {
                       const NonRefundable_T&, const SaturdayStay_T&);
 
     /**
+     * Copy constructor.
+     */
+    FareOptionStruct (const FareOptionStruct&);
+
+    /**
      * Destructor.
      */
     ~FareOptionStruct();
@@ -130,6 +145,11 @@ namespace stdair {
      * Fare.
      */
     Fare_T _fare;
+
+    /**
+     * Avalability.
+     */
+    Availability_T _avl;
 
     /**
      * Change fees.
