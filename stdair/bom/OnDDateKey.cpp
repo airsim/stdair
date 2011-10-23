@@ -25,18 +25,18 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   OnDDateKey::OnDDateKey()
-    : _fullKeyList (DEFAULT_FULL_KEY_LIST) {
+    : _OnDStringList (DEFAULT_OND_STRING_LIST) {
     assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////
-  OnDDateKey::OnDDateKey (const FullKeyList_T& iFullKeyList)
-    : _fullKeyList (iFullKeyList) {
+  OnDDateKey::OnDDateKey (const OnDStringList_T& iOnDStringList)
+    : _OnDStringList (iOnDStringList) {
   }
 
   // ////////////////////////////////////////////////////////////////////
   OnDDateKey::OnDDateKey (const OnDDateKey& iKey)
-    : _fullKeyList (iKey._fullKeyList) {
+    : _OnDStringList (iKey._OnDStringList) {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -45,23 +45,23 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   const Date_T OnDDateKey::getDate() const {
-    assert(!_fullKeyList.empty());
-    FullKey_T lFK = _fullKeyList.front();
-    return BomKeyManager::extractFlightDateKey (lFK).getDepartureDate();
+    assert(!_OnDStringList.empty());
+    OnDString_T lFrontOnDString = _OnDStringList.front();
+    return BomKeyManager::extractFlightDateKey (lFrontOnDString).getDepartureDate();
   }
   
   // ////////////////////////////////////////////////////////////////////
   const AirportCode_T OnDDateKey::getOrigin() const {
-    assert(!_fullKeyList.empty());
-    FullKey_T lFK = _fullKeyList.front();
-    return BomKeyManager::extractSegmentDateKey (lFK).getBoardingPoint();
+    assert(!_OnDStringList.empty());
+    OnDString_T lFrontOnDString = _OnDStringList.front();
+    return BomKeyManager::extractSegmentDateKey (lFrontOnDString).getBoardingPoint();
   }
 
   // ////////////////////////////////////////////////////////////////////
   const AirportCode_T OnDDateKey::getDestination() const {
-    assert(!_fullKeyList.empty());
-    FullKey_T lLK = _fullKeyList.back();
-    return BomKeyManager::extractSegmentDateKey (lLK).getOffPoint();
+    assert(!_OnDStringList.empty());
+    OnDString_T lLastOnDString = _OnDStringList.back();
+    return BomKeyManager::extractSegmentDateKey (lLastOnDString).getOffPoint();
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -76,19 +76,22 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string OnDDateKey::toString() const {
     std::ostringstream oStr;
-    for (FullKeyList_T::const_iterator itKL = _fullKeyList.begin();
-         itKL != _fullKeyList.end(); ++itKL){
-      oStr << *itKL << " ";
+    for (OnDStringList_T::const_iterator itOnDString = _OnDStringList.begin();
+         itOnDString != _OnDStringList.end(); ++itOnDString){
+      oStr << *itOnDString << " ";
     }
     return oStr.str();
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void OnDDateKey::serialisationImplementation() {
+  void OnDDateKey::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
-
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  void OnDDateKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;
@@ -109,9 +112,9 @@ namespace stdair {
   // Explicit template instantiation
   namespace ba = boost::archive;
   template void OnDDateKey::serialize<ba::text_oarchive> (ba::text_oarchive&,
-                                                             unsigned int);
+                                                          unsigned int);
   template void OnDDateKey::serialize<ba::text_iarchive> (ba::text_iarchive&,
-                                                             unsigned int);
+                                                          unsigned int);
   // ////////////////////////////////////////////////////////////////////
   
 }

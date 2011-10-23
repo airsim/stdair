@@ -59,11 +59,14 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void FlightDateKey::serialisationImplementation() {
+  void FlightDateKey::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
+  }
 
+  // ////////////////////////////////////////////////////////////////////
+  void FlightDateKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;

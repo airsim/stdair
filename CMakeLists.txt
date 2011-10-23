@@ -8,8 +8,8 @@ include (config/project_config_embeddable.cmake)
 ##
 # Project info
 set_project_names (stdair StdAir)
-set_project_brief ("C++ Standard Airline IT Library")
-set_project_versions (0 42 0)
+set_project_brief ("C++ Standard Airline IT Object Library")
+set_project_versions (0 43 2)
 
 ##
 # Project options
@@ -39,8 +39,8 @@ packaging_set_other_options (TBZ2 "TBZ2;TGZ")
 ##            Dependencies            ##
 ########################################
 #
-get_external_libs (git "python 2.7" "boost 1.41" "zeromq 2.0" "mysql 5.1"
-  "soci 3.0" "doxygen 1.7")
+get_external_libs (git "python 2.4" "boost 1.33" "zeromq 2.0" "mysql 5.0"
+  "soci 3.0" "doxygen 1.4")
 
 
 ##############################################

@@ -603,11 +603,11 @@ namespace stdair {
       ================================================================================*/
     // O&D 
     // Create an O&D Date (BA;9,2010-Jun-06;LHR,SYD) for BA's Inventory
-    FullKey_T lBALHRSYDFullKeyStr = "BA;9,2010-Jun-06;LHR,SYD";
-    FullKeyList_T lBAFullKeyList;
-    lBAFullKeyList.push_back (lBALHRSYDFullKeyStr);
+    OnDString_T  lBALHRSYDOnDStr = "BA;9,2010-Jun-06;LHR,SYD";
+    OnDStringList_T lBAOnDStrList;
+    lBAOnDStrList.push_back (lBALHRSYDOnDStr);
 
-    OnDDateKey lBAOnDDateKey (lBAFullKeyList);
+    OnDDateKey lBAOnDDateKey (lBAOnDStrList);
     OnDDate& lBA_LHRSYD_OnDDate =
       FacBom<OnDDate>::instance().create (lBAOnDDateKey);
     // Link to the inventory
@@ -620,15 +620,15 @@ namespace stdair {
     // Add total forecast info for cabin Y.
     const MeanStdDevPair_T lMean60StdDev6 (60.0, 6.0);
     const WTP_T lWTP750 = 750.0;
-    const ForecastCharacteristics_T lForecastCharWTP750Mean60StdDev6 (lWTP750, lMean60StdDev6);
-    lBA_LHRSYD_OnDDate.setTotalForecast (lY, lForecastCharWTP750Mean60StdDev6);
+    const WTPDemandPair_T lWTP750Mean60StdDev6 (lWTP750, lMean60StdDev6);
+    lBA_LHRSYD_OnDDate.setTotalForecast (lY, lWTP750Mean60StdDev6);
 
     // Create an O&D Date (AF;84,2011-Mar-21;CDG,SFO) for AF's Inventory
-    FullKey_T lAFLHRSYDFullKeyStr = "AF;9,2011-Mar-20;CDG,SFO";
-    FullKeyList_T lAFFullKeyList;
-    lAFFullKeyList.push_back (lAFLHRSYDFullKeyStr);
+    OnDString_T lAFLHRSYDOnDStr = "AF;9,2011-Mar-20;CDG,SFO";
+    OnDStringList_T lAFOnDStrList;
+    lAFOnDStrList.push_back (lAFLHRSYDOnDStr);
 
-    OnDDateKey lAFOnDDateKey (lAFFullKeyList);
+    OnDDateKey lAFOnDDateKey (lAFOnDStrList);
     OnDDate& lAF_LHRSYD_OnDDate =
       FacBom<OnDDate>::instance().create (lAFOnDDateKey);
     // Link to the inventory
@@ -639,7 +639,7 @@ namespace stdair {
     FacBomManager::addToListAndMap (lAF_LHRSYD_OnDDate, lLHRSYDSegment);
 
     // Add total forecast info for cabin Y. 
-    lAF_LHRSYD_OnDDate.setTotalForecast (lY, lForecastCharWTP750Mean60StdDev6);
+    lAF_LHRSYD_OnDDate.setTotalForecast (lY, lWTP750Mean60StdDev6);
   
   }
   
@@ -1440,25 +1440,20 @@ namespace stdair {
     // Step 9.0.9: link SQ inventory objects to Partner CX inventory objects
 
     FacBomManager::addToListAndMap (lSINBKKSegment, lPartnerMktSINBKKSegment);
+    lMktBKKHKGSegment.setIsOtherAirlineOperating(true);
+    FacBomManager::addToListAndMap (lMktBKKHKGSegment, lPartnerBKKHKGSegment);
 
-    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin, lPartnerMktSINBKKSegmentYCabin,
-                                    lPartnerMktSINBKKSegmentYCabin.getFullerKey());
-
-    lMktBKKHKGSegment.linkWithOperating (lPartnerBKKHKGSegment);
-
-    lMktBKKHKGSegmentYCabin.linkWithOperating (lPartnerBKKHKGSegmentYCabin);
-    
     /* =================================================================================== */
 
     // Step 1.0: O&D level
     // Create an O&D Date (SQ11/08-FEB-2010/SIN-BKK-SQ1200/08-FEB-2010/BKK-HKG) for SQ's Inventory
-    FullKey_T lSQSINBKKFullKeyStr = "SQ;11,2010-Feb-08;SIN,BKK";
-    FullKey_T lMktSQBKKHKGFullKeyStr = "SQ;1200,2010-Feb-08;BKK,HKG";
-    FullKeyList_T lFullKeyList;
-    lFullKeyList.push_back (lSQSINBKKFullKeyStr);
-    lFullKeyList.push_back (lMktSQBKKHKGFullKeyStr);
+    OnDString_T lSQSINBKKOnDStr = "SQ;11,2010-Feb-08;SIN,BKK";
+    OnDString_T lMktSQBKKHKGOnDStr = "SQ;1200,2010-Feb-08;BKK,HKG";
+    OnDStringList_T lOnDStringList;
+    lOnDStringList.push_back (lSQSINBKKOnDStr);
+    lOnDStringList.push_back (lMktSQBKKHKGOnDStr);
 
-    OnDDateKey lOnDDateKey (lFullKeyList);
+    OnDDateKey lOnDDateKey (lOnDStringList);
     OnDDate& lSQ_SINHKG_OnDDate =
       FacBom<OnDDate>::instance().create (lOnDDateKey);
     // Link to the inventory
@@ -1472,8 +1467,8 @@ namespace stdair {
     // Add total forecast info for cabin Y.
     const MeanStdDevPair_T lMean60StdDev6 (60.0, 6.0);
     const WTP_T lWTP750 = 750.0;
-    const ForecastCharacteristics_T lForecastCharWTP750Mean60StdDev6 (lWTP750, lMean60StdDev6);
-    lSQ_SINHKG_OnDDate.setTotalForecast (lY, lForecastCharWTP750Mean60StdDev6);
+    const WTPDemandPair_T lWTP750Mean60StdDev6 (lWTP750, lMean60StdDev6);
+    lSQ_SINHKG_OnDDate.setTotalForecast (lY, lWTP750Mean60StdDev6);
 
     // Add demand info (optional).
     CabinClassPair_T lCC_YM1 (lY,lM);
@@ -1483,8 +1478,8 @@ namespace stdair {
     lCabinClassPairList.push_back(lCC_YM2);
     const MeanStdDevPair_T lMean20StdDev2 (20.0, 2.0);
     const Yield_T lYield850 = 850.0;
-    const DemandCharacteristics_T lDemandCharYield850Mean20StdDev2 (lYield850, lMean20StdDev2);
-    lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield850Mean20StdDev2);
+    const YieldDemandPair_T lYield850Mean20StdDev2 (lYield850, lMean20StdDev2);
+    lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield850Mean20StdDev2);
     
     CabinClassPair_T lCC_YY1 (lY,lY);
     CabinClassPair_T lCC_YY2 (lY,lY);
@@ -1493,14 +1488,14 @@ namespace stdair {
     lCabinClassPairList.push_back(lCC_YY2);
     const MeanStdDevPair_T lMean10StdDev1 (10.0, 1.0);
     const Yield_T lYield1200 = 1200.0;
-    const DemandCharacteristics_T lDemandCharYield1200Mean10StdDev1 (lYield1200, lMean10StdDev1);
-    lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield1200Mean10StdDev1);
+    const YieldDemandPair_T lYield1200Mean10StdDev1 (lYield1200, lMean10StdDev1);
+    lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield1200Mean10StdDev1);
 
     // Create an O&D Date (SQ11/08-FEB-2010/SIN-BKK) for SQ's Inventory
-    lFullKeyList.clear();
-    lFullKeyList.push_back (lSQSINBKKFullKeyStr);
+    lOnDStringList.clear();
+    lOnDStringList.push_back (lSQSINBKKOnDStr);
 
-    lOnDDateKey = OnDDateKey(lFullKeyList);
+    lOnDDateKey = OnDDateKey(lOnDStringList);
     OnDDate& lSQ_SINBKK_OnDDate =
       FacBom<OnDDate>::instance().create (lOnDDateKey);
     // Link to the inventory
@@ -1512,22 +1507,22 @@ namespace stdair {
 
     // Add total forecast info for cabin Y.
     const WTP_T lWTP400 = 400.0;
-    const ForecastCharacteristics_T lForecastCharWTP400Mean60StdDev6 (lWTP400, lMean60StdDev6);
-    lSQ_SINBKK_OnDDate.setTotalForecast (lY, lForecastCharWTP400Mean60StdDev6);
+    const WTPDemandPair_T lWTP400Mean60StdDev6 (lWTP400, lMean60StdDev6);
+    lSQ_SINBKK_OnDDate.setTotalForecast (lY, lWTP400Mean60StdDev6);
 
     // Add demand info (optional).
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YM1);
     const MeanStdDevPair_T lMean20StdDev1 (20.0, 1.0);
     const Yield_T lYield500 = 500.0;
-    const DemandCharacteristics_T lDemandCharYield500Mean20StdDev1 (lYield500, lMean20StdDev1);
-    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield500Mean20StdDev1);
+    const YieldDemandPair_T lYield500Mean20StdDev1 (lYield500, lMean20StdDev1);
+    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, lYield500Mean20StdDev1);
 
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YY1);
     const Yield_T lYield700 = 700.0;
-    const DemandCharacteristics_T lDemandCharYield700Mean20StdDev1 (lYield700, lMean10StdDev1 );
-    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield700Mean20StdDev1);
+    const YieldDemandPair_T lYield700Mean20StdDev1 (lYield700, lMean10StdDev1 );
+    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, lYield700Mean20StdDev1);
 
     /*******************************************************************************
     // Create an O&D Date (SQ1200/08-FEB-2010/BKK-HKG) for SQ's Inventory
@@ -1910,27 +1905,21 @@ namespace stdair {
                                     lPartnerMktBKKHKGSegmentYCabin1FamilyMClass);
 
     // Step 9.0.9: link CX inventory objects to Partner SQ inventory objects
-
     FacBomManager::addToListAndMap (lBKKHKGSegment, lPartnerMktBKKHKGSegment);
-
-    FacBomManager::addToListAndMap (lBKKHKGSegmentYCabin, lPartnerMktBKKHKGSegmentYCabin,
-                                    lPartnerMktBKKHKGSegmentYCabin.getFullerKey());
-
-    lMktSINBKKSegment.linkWithOperating (lPartnerSINBKKSegment);
-
-    lMktSINBKKSegmentYCabin.linkWithOperating (lPartnerSINBKKSegmentYCabin);
+    lMktSINBKKSegment.setIsOtherAirlineOperating(true);
+    FacBomManager::addToListAndMap (lMktSINBKKSegment, lPartnerSINBKKSegment);
 
     /* =================================================================================== */
 
     // Step 1.0: O&D level
     // Create an O&D Date (CX1100/08-FEB-2010/SIN-BKK-CX12/08-FEB-2010/BKK-HKG) for CX's Inventory
-    FullKey_T lMktCXSINBKKFullKeyStr = "CX;1100,2010-Feb-08;SIN,BKK";
-    FullKey_T lCXBKKHKGFullKeyStr = "CX;12,2010-Feb-08;BKK,HKG";
-    lFullKeyList.clear();
-    lFullKeyList.push_back (lMktCXSINBKKFullKeyStr);
-    lFullKeyList.push_back (lCXBKKHKGFullKeyStr);
+    OnDString_T lMktCXSINBKKOnDStr = "CX;1100,2010-Feb-08;SIN,BKK";
+    OnDString_T lCXBKKHKGOnDStr = "CX;12,2010-Feb-08;BKK,HKG";
+    lOnDStringList.clear();
+    lOnDStringList.push_back (lMktCXSINBKKOnDStr);
+    lOnDStringList.push_back (lCXBKKHKGOnDStr);
 
-    lOnDDateKey = OnDDateKey(lFullKeyList);
+    lOnDDateKey = OnDDateKey(lOnDStringList);
     OnDDate& lCX_SINHKG_OnDDate =
       FacBom<OnDDate>::instance().create (lOnDDateKey);
     // Link to the inventory
@@ -1942,18 +1931,18 @@ namespace stdair {
     FacBomManager::addToListAndMap (lCX_SINHKG_OnDDate, lBKKHKGSegment);
 
     // Add total forecast info for cabin Y.
-    lCX_SINHKG_OnDDate.setTotalForecast (lY, lForecastCharWTP750Mean60StdDev6);
+    lCX_SINHKG_OnDDate.setTotalForecast (lY, lWTP750Mean60StdDev6);
     
     // Add demand info
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YM1);
     lCabinClassPairList.push_back(lCC_YM2);
-    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield850Mean20StdDev2);
+    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield850Mean20StdDev2);
 
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YY1);
     lCabinClassPairList.push_back(lCC_YY2);
-    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield1200Mean10StdDev1);
+    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield1200Mean10StdDev1);
 
     /***********************************************************************************
     // Create an O&D Date (CX1100/08-FEB-2010/SIN-BKK) for CX's Inventory
@@ -1978,10 +1967,10 @@ namespace stdair {
     *************************************************************************************/
     
     // Create an O&D Date (CX12/08-FEB-2010/BKK-HKG) for CX's Inventory
-    lFullKeyList.clear();
-    lFullKeyList.push_back (lCXBKKHKGFullKeyStr);
+    lOnDStringList.clear();
+    lOnDStringList.push_back (lCXBKKHKGOnDStr);
 
-    lOnDDateKey = OnDDateKey(lFullKeyList);
+    lOnDDateKey = OnDDateKey(lOnDStringList);
     OnDDate& lCX_BKKHKG_OnDDate =
       FacBom<OnDDate>::instance().create (lOnDDateKey);
     // Link to the inventory
@@ -1992,17 +1981,17 @@ namespace stdair {
     FacBomManager::addToListAndMap (lCX_BKKHKG_OnDDate, lBKKHKGSegment);
 
     // Add total forecast info for cabin Y.
-    lCX_BKKHKG_OnDDate.setTotalForecast (lY, lForecastCharWTP400Mean60StdDev6);
+    lCX_BKKHKG_OnDDate.setTotalForecast (lY, lWTP400Mean60StdDev6);
 
     // Add demand info
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YM2);
-    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield500Mean20StdDev1);
+    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield500Mean20StdDev1);
 
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YY2);
-    const DemandCharacteristics_T lDemandCharYield700Mean10StdDev1 (lYield700, lMean10StdDev1 );
-    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, lDemandCharYield700Mean10StdDev1);
+    const YieldDemandPair_T lYield700Mean10StdDev1 (lYield700, lMean10StdDev1 );
+    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield700Mean10StdDev1);
 
     /*================================================================================
       ================================================================================

@@ -26,9 +26,9 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::SegmentDate (const Key_T& iKey) : _key (iKey), _parent (NULL),
-                                                 _operatingSegmentDate (NULL),
-                                                 _isOtherAirlineOperating (false) {
+  SegmentDate::SegmentDate (const Key_T& iKey)
+    : _key (iKey), _parent (NULL),
+      _isOtherAirlineOperating (false) {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -52,20 +52,5 @@ namespace stdair {
     oTimeOffset += lDateOffsetInHours - _elapsedTime;
     return oTimeOffset;
   }
-
-  // ////////////////////////////////////////////////////////////////////
-  SegmentCabin* SegmentDate::
-  getSegmentCabin (const std::string& iSegmentCabinKeyStr) const {
-    SegmentCabin* oSegmentCabin_ptr = 
-      BomManager::getObjectPtr<SegmentCabin> (*this, iSegmentCabinKeyStr);
-    return oSegmentCabin_ptr;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  SegmentCabin* SegmentDate::
-  getSegmentCabin (const SegmentCabinKey& iSegmentCabinKey) const {
-    return getSegmentCabin (iSegmentCabinKey.toString());
-  }
-
 }
 

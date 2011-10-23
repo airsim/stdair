@@ -104,7 +104,7 @@ namespace stdair {
     /**
      * Get the total forecast for a given cabin.
      */
-    const ForecastCharacteristics_T& getTotalForecast (const CabinCode_T& iCC) const {
+    const WTPDemandPair_T& getTotalForecast (const CabinCode_T& iCC) const {
       assert (_cabinForecastMap.find(iCC)!=_cabinForecastMap.end());
       return _cabinForecastMap.find(iCC)->second;
     }
@@ -128,12 +128,12 @@ namespace stdair {
     // /////////// Setters ///////////////
     /** Set demand information. */
     void setDemandInformation (const CabinClassPairList_T&,
-                               const DemandCharacteristics_T&);
+                               const YieldDemandPair_T&);
                               
 
     /** Set forecast information per cabin. */
     void setTotalForecast (const CabinCode_T&,
-                           const ForecastCharacteristics_T&);
+                           const WTPDemandPair_T&);
 
     
   public:
@@ -211,7 +211,7 @@ namespace stdair {
   protected:
     // ////////// Attributes /////////
     /**
-     * Primary key (list of full keys).
+     * Primary key (list of OnD string keys).
      */
     Key_T _key;
 

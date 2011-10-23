@@ -1,6 +1,5 @@
 #ifndef __STDAIR_BOM_LEGCABIN_HPP
 #define __STDAIR_BOM_LEGCABIN_HPP
-
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
@@ -172,15 +171,15 @@ namespace stdair {
       return _virtualClassList;
     }
 
-    /** Reset the bid price vector and return it. */
-    BidPriceVector_T& getEmptyBidPriceVector() {
-      _bidPriceVector.clear();
+     /** Reset the bid price vector and return it. */
+    BidPriceVector_T& getBidPriceVector() {
       return _bidPriceVector;
     }
 
+
     /** Get the yield-demand map. */
-    const YieldDemandMap_T& getYieldDemandMap() {
-      return _yieldDemandMap;
+    const YieldLevelDemandMap_T getYieldLevelDemandMap() {
+      return _yieldLevelDemandMap;
     }
 
 
@@ -279,85 +278,124 @@ namespace stdair {
     }
 
     /** Update the bid price (from bid price vector if not empty). */
-    void updateCurrentBidPrice () {
-      if (_bidPriceVector.size() >= _availabilityPool) {
-        _currentBidPrice = _bidPriceVector.at(_availabilityPool-1);
-      }
-    }
-    
+    void updateCurrentBidPrice();
 
+    
   public:
     // /////////// Display support methods /////////
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object into an output stream.
+     * @param ostream& the output stream.
+     */
     void toStream (std::ostream& ioOut) const {
       ioOut << toString();
     }
 
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object from an input stream.
+     * @param istream& the input stream.
+     */
     void fromStream (std::istream& ioIn) {
     }
 
-    /** Get the serialised version of the Business Object. */
+    /**
+     * Get the serialised version of the Business Object.
+     */
     std::string toString() const;
     
-    /** Get a string describing the  key. */
+    /**
+     * Get a string describing the  key.
+     */
     const std::string describeKey() const {
       return _key.toString();
     }
 
-    /** Display the virtual class list content. */
-    const std::string displayVirtualClassList () const;
+    /**
+     * Display the virtual class list content.
+     */
+    const std::string displayVirtualClassList() const;
 
 
   public:
     // /////////// Business methods //////////
-    /** Register a sale. */
+    /**
+     * Register a sale.
+     */
     void updateFromReservation (const NbOfBookings_T&);
 
-    /** Add a virtual class to the list. */
+    /**
+     * Add a virtual class to the list.
+     */
     void addVirtualClass (const VirtualClassStruct& iVC) {
       _virtualClassList.push_back (iVC);
     }
 
-    /** Reset the virtual class list. */
-    void resetVirtualClassList() {
+    /**
+     * Empty the virtual class list.
+     */
+    void emptyVirtualClassList() {
       _virtualClassList.clear();
     }
 
-    /** Add demand information. */
-    void addDemandInformation (const YieldValue_T&,
-                               const MeanValue_T&, const StdDevValue_T&);
-
-    /** Reset the (yield,demand) map. */
-    void resetYieldDemandMap() {
-      _yieldDemandMap.clear();
+    /**
+     * Empty the bid price vector.
+     */
+    void emptyBidPriceVector() {
+      _bidPriceVector.clear();
     }
+
+    /**
+     * Add demand information.
+     */
+    void addDemandInformation (const YieldValue_T&, const MeanValue_T&,
+                               const StdDevValue_T&);
+
+    /**
+     * Reset the (yield level,demand) map.
+     */
+    void emptyYieldLevelDemandMap() {
+      _yieldLevelDemandMap.clear();
+    }
+
 
   protected:
     // ////////// Constructors and destructors /////////
-    /** Constructor. */
+    /**
+     * Constructor.
+     */
     LegCabin (const Key_T&);
-    /** Destructor. */
+    /**
+     * Destructor.
+     */
     ~LegCabin();
 
   private:
-    /** Default constructor. */
+    /**
+     * Default constructor.
+     */
     LegCabin();
-    /** Default copy constructor. */
+    /**
+     * Default copy constructor.
+     */
     LegCabin (const LegCabin&);
+
 
 
   protected:
     // ////////// Attributes /////////
-    /** Primary key (cabin code). */
+    /**
+     * Primary key (cabin code).
+     */
     Key_T _key;
 
-    /** Pointer on the parent class (LegDate). */
+    /**
+     * Pointer on the parent class (LegDate).
+     */
     BomAbstract* _parent;
     
-    /** Map holding the children (Bucket objects). */
+    /**
+     * Map holding the children (Bucket objects).
+     */
     HolderMap_T _holderMap;
 
     /** Saleable capacity of the cabin. */
@@ -391,7 +429,8 @@ namespace stdair {
     VirtualClassList_T _virtualClassList;
 
     /** Map holding the demand information indexed by yield. */
-    YieldDemandMap_T _yieldDemandMap;
+    YieldLevelDemandMap_T _yieldLevelDemandMap;
+
 
   public:
     /** Capacity adjustment of the cabin, due to check-in (DCS) regrade. */

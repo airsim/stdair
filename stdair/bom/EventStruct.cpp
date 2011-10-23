@@ -4,7 +4,11 @@
 // STL
 #include <cassert>
 // Boost
+#if BOOST_VERSION >= 103900
 #include <boost/make_shared.hpp>
+#else  // BOOST_VERSION >= 103900
+#include <boost/shared_ptr.hpp>
+#endif // BOOST_VERSION >= 103900
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
 #include <stdair/basic/BasConst_Event.hpp>
@@ -29,7 +33,11 @@ namespace stdair {
 
     //
     assert (ioRequestPtr != NULL);
+#if BOOST_VERSION >= 103900
     _bookingRequest = boost::make_shared<BookingRequestStruct> (*ioRequestPtr);
+#else  // BOOST_VERSION >= 103900
+    _bookingRequest = ioRequestPtr;
+#endif // BOOST_VERSION >= 103900
     assert (_bookingRequest != NULL);
     
     /**
@@ -49,7 +57,11 @@ namespace stdair {
 
     //
     assert (ioCancellationPtr != NULL);
+#if BOOST_VERSION >= 103900
     _cancellation = boost::make_shared<CancellationStruct> (*ioCancellationPtr);
+#else  // BOOST_VERSION >= 103900
+    _cancellation = ioCancellationPtr;
+#endif // BOOST_VERSION >= 103900
     assert (_cancellation != NULL);
     
     /**
@@ -63,15 +75,20 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
-                            const DateTime_T& iDCPDate,
-                            OptimisationNotificationPtr_T ioOptimisationNotificationPtr)
+  EventStruct::
+  EventStruct (const EventType::EN_EventType& iEventType,
+	       const DateTime_T& iDCPDate,
+	       OptimisationNotificationPtr_T ioOptimisationNotificationPtr)
     : _eventType (iEventType) {
 
     //
     assert (ioOptimisationNotificationPtr != NULL);
+#if BOOST_VERSION >= 103900
     _optimisationNotification =
       boost::make_shared<OptimisationNotificationStruct> (*ioOptimisationNotificationPtr);
+#else  // BOOST_VERSION >= 103900
+    _optimisationNotification = ioOptimisationNotificationPtr;
+#endif // BOOST_VERSION >= 103900
     assert (_optimisationNotification != NULL);
     
     /**
@@ -90,7 +107,12 @@ namespace stdair {
 
     //
     assert (ioSnapshotPtr != NULL);
+
+#if BOOST_VERSION >= 103900
     _snapshot = boost::make_shared<SnapshotStruct> (*ioSnapshotPtr);
+#else  // BOOST_VERSION >= 103900
+    _snapshot = ioSnapshotPtr;
+#endif // BOOST_VERSION >= 103900
     assert (_snapshot != NULL);
     
     /**
@@ -110,7 +132,12 @@ namespace stdair {
 
     //
     assert (ioRMEventPtr != NULL);
+
+#if BOOST_VERSION >= 103900
     _rmEvent = boost::make_shared<RMEventStruct> (*ioRMEventPtr);
+#else  // BOOST_VERSION >= 103900
+    _rmEvent = ioRMEventPtr;
+#endif // BOOST_VERSION >= 103900
     assert (_rmEvent != NULL);
     
     /**
@@ -130,32 +157,50 @@ namespace stdair {
 
     //
     if (iEventStruct._bookingRequest != NULL) {
+#if BOOST_VERSION >= 103900
       _bookingRequest =
         boost::make_shared<BookingRequestStruct>(*iEventStruct._bookingRequest);
+#else  // BOOST_VERSION >= 103900
+      _bookingRequest = iEventStruct._bookingRequest;
+#endif // BOOST_VERSION >= 103900
     }
 
     //
     if (iEventStruct._cancellation != NULL) {
+#if BOOST_VERSION >= 103900
       _cancellation =
         boost::make_shared<CancellationStruct>(*iEventStruct._cancellation);
+#else  // BOOST_VERSION >= 103900
+      _cancellation = iEventStruct._cancellation;
+#endif // BOOST_VERSION >= 103900
     }
 
     //
     if (iEventStruct._optimisationNotification != NULL) {
+#if BOOST_VERSION >= 103900
       _optimisationNotification =
         boost::make_shared<OptimisationNotificationStruct> (*iEventStruct._optimisationNotification);
+#else  // BOOST_VERSION >= 103900
+      _optimisationNotification = iEventStruct._optimisationNotification;
+#endif // BOOST_VERSION >= 103900
     }
 
     //
     if (iEventStruct._snapshot != NULL) {
-      _snapshot =
-        boost::make_shared<SnapshotStruct>(*iEventStruct._snapshot);
+#if BOOST_VERSION >= 103900
+      _snapshot = boost::make_shared<SnapshotStruct> (*iEventStruct._snapshot);
+#else  // BOOST_VERSION >= 103900
+      _snapshot = iEventStruct._snapshot;
+#endif // BOOST_VERSION >= 103900
     }
 
     //
     if (iEventStruct._rmEvent != NULL) {
-      _rmEvent =
-        boost::make_shared<RMEventStruct>(*iEventStruct._rmEvent);
+#if BOOST_VERSION >= 103900
+      _rmEvent = boost::make_shared<RMEventStruct> (*iEventStruct._rmEvent);
+#else  // BOOST_VERSION >= 103900
+      _rmEvent = iEventStruct._rmEvent;
+#endif // BOOST_VERSION >= 103900
     }
   }
   

@@ -1,3 +1,17 @@
+* 2011-10-21:
+- Version 0.43.2
+- The C++ code is compatible with RedHat EL 5.x and g++-4.1.
+
+* 2011-10-18:
+- Version 0.43.1
+- The build framework is now compatible with CMake 2.6 (the exclusive
+  dependency on CMake 2.8 has been removed).
+
+* 2011-10-06:
+- Version 0.43.0
+- Removed stored operating segment date in segment date object.
+- Removed useless object. 
+
 * 2011-09-29:
 - Version 0.42.0
 - Added flight periods and OnDs to the basic bom tree.

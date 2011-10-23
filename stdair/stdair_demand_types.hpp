@@ -74,6 +74,9 @@ namespace stdair {
 
   /** Define the name of a WTP-component of characteristics pattern. */
   typedef boost::tuples::tuple<double, WTP_T> CharacteristicsWTP_tuple_T;
+  
+  /** Define the <WTP, demand> pair type.*/
+  typedef std::pair<WTP_T, MeanStdDevPair_T> WTPDemandPair_T;
 
   /** Define a number of cancellations (travellers). */
   typedef NbOfRequests_T NbOfCancellations_T;
@@ -112,11 +115,11 @@ namespace stdair {
   /** Define the list of forecast booking requests proportions. */
   typedef std::list<ProportionFactor_T> ProportionFactorList_T;
 
-  /** O&D key
-   * Define the list of strings.
-   */
-  typedef std::string FullKey_T;
-  typedef std::list<FullKey_T> FullKeyList_T;
+  /** Define the O&D string key. */
+  typedef std::string OnDString_T;
+
+  /** Define the list of O&D string key. */
+  typedef std::list<OnDString_T> OnDStringList_T;
 
 }
 #endif // __STDAIR_STDAIR_DEMAND_TYPES_HPP

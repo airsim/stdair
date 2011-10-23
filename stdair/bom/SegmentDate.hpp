@@ -116,40 +116,9 @@ namespace stdair {
     const Duration_T getTimeOffset() const;
     
     /**
-     * Get a pointer on the SegmentCabin object corresponding to the
-     * given key.
-     *
-     * \note The SegmentCabin object can be inherited from, if needed.
-     *       In that case, a dynamic_cast<> may be needed.
-     *
-     * @param const std::string& The flight-date key.
-     * @return SegmentCabin* Found SegmentCabin object. NULL if not found.
-     */
-    SegmentCabin* getSegmentCabin (const std::string& iSegmentCabinKeyStr) const;
-
-    /**
-     * Get a pointer on the SegmentCabin object corresponding to the
-     * given key.
-     *
-     * \note The SegmentCabin object can be inherited from, if needed.
-     *       In that case, a dynamic_cast<> may be needed.
-     *
-     * @param const SegmentCabinKey& The flight-date key
-     * @return SegmentCabin* Found SegmentCabin object. NULL if not found.
-     */
-    SegmentCabin* getSegmentCabin (const SegmentCabinKey&) const;
-
-    /**
-     * Get the "operating" segment date.
-     */
-    SegmentDate* getOperatingSegmentDate () const {
-      return _operatingSegmentDate;
-    }
-
-    /**
      * Check if an other airline is operating.
      */
-    bool isOtherAirlineOperating () const {
+    const bool isOtherAirlineOperating () const {
       return _isOtherAirlineOperating;
     }
 
@@ -185,12 +154,10 @@ namespace stdair {
       _distance = iDistance;
     }
 
-    /** Set operating segment date. */
-    void linkWithOperating (SegmentDate& iSegmentDate) {
-      _operatingSegmentDate = &iSegmentDate;
-      _isOtherAirlineOperating = true;
+    /** Set the boolean saying if another airline is operating. */
+    void setIsOtherAirlineOperating (const bool iBool) {
+      _isOtherAirlineOperating = iBool;
     }
-
 
   public:
     // /////////// Display support methods /////////
@@ -234,10 +201,14 @@ namespace stdair {
 
   private:
     /**
-     * Serialisation helper (allows to be sure the template method is
+     * Serialisation helpers (allows to be sure the template method is
      * instantiated).
+     *
+     * \note The implementation of these methods is to be found in the
+     *       CmdBomSerialiser command.
      */
-    void serialisationImplementation();
+    void serialisationImplementationExport() const;
+    void serialisationImplementationImport();
 
 
   protected:
@@ -275,25 +246,16 @@ namespace stdair {
      * Pointer on the parent class (FlightDate).
      */
     BomAbstract* _parent;
-
-    /**
-     * Pointer on the operating SegmentDate.
-     * Nota:
-     * 1. "operating" refers to the codeshare contract seller.
-     * 2. the segment date it points to can be a "marketing" segment as well.
-     * 3. the pointer will be NULL if the segment date is itself the "operating" one.
-     */
-    SegmentDate* _operatingSegmentDate;
-
-    /**
-     * Flag saying if the "operating" segment is a different one.
-     */
-    bool _isOtherAirlineOperating;
     
     /**
      * Map holding the children (SegmentCabin objects).
      */
     HolderMap_T _holderMap;
+
+    /**
+     * Flag saying if the "operating" segment is a different one. 
+     */
+    bool _isOtherAirlineOperating;
 
     /**
      * Boarding date.

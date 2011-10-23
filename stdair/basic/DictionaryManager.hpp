@@ -11,7 +11,9 @@
 namespace stdair {
 
   // //////////// Type definitions /////////////////
-  /** Dictionary key. */
+  /**
+   * Dictionary key.
+   */
   typedef unsigned short DictionaryKey_T;
   
   /**
