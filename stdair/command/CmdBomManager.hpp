@@ -7,6 +7,7 @@
 // STL
 #include <iosfwd>
 // StdAir
+#include <stdair/stdair_inventory_types.hpp>
 #include <stdair/command/CmdAbstract.hpp>
 
 namespace stdair {
@@ -34,6 +35,9 @@ namespace stdair {
      *        be attached.
      */
     static void buildSampleBom (BomRoot&);
+
+    /** Build a sample bom tree for RMOL. */
+    static void buildSampleBomForRMOL (BomRoot&, const CabinCapacity_T&);
 
   };
 }

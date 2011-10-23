@@ -33,28 +33,30 @@ namespace stdair {
 
   /** Default number of days in a year. */
   const unsigned int DEFAULT_NB_OF_DAYS_IN_A_YEAR (365);
-      
+
+
   // //////// (Flight-)Period-related BOM ///////
   /** Default number of duration days. */
   const DayDuration_T DEFAULT_DAY_DURATION (0);
-  
+
   /** Default date period (0-length, i.e., it lasts one day).*/
   const DatePeriod_T BOOST_DEFAULT_DATE_PERIOD (Date_T (2007, 1, 1),
                                                 Date_T (2007, 1, 1));
-  
+
   const std::string DOW_STR[] = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
-  
+
   /** Default DOW String (e.g., "0000000"). */
   const DOW_String_T DEFAULT_DOW_STRING ("0000000");
-  
+
   /** Default Date Offset (e.g., 0). */
   const DateOffset_T DEFAULT_DATE_OFFSET (0);
-  
+
+
   //  // //////// General ///////
   /** Default date for the General. */
   const Date_T DEFAULT_DATE (2010, boost::gregorian::Jan, 1);
-  
-  /** Default date&time. */
+
+  /** Default date-time. */
   const DateTime_T DEFAULT_DATETIME (DEFAULT_DATE, NULL_BOOST_TIME_DURATION);
 
   /** Default epsilon duration (1 nanosecond). */
@@ -220,7 +222,7 @@ namespace stdair {
   
   /** Default over-booking rate for YieldRangeStruct_T. */
   const OverbookingRate_T DEFAULT_YIELD_OVERBOOKING_RATE (0.0);
-  
+
 
   // //////// OnD-related BOM ///////
   /** Default value of Fare. */
@@ -233,7 +235,16 @@ namespace stdair {
 
   /** Default progress status. */
   const Count_T DEFAULT_PROGRESS_STATUS (0);
-  
+
+  /** Default reference (oldest) date for the events. No event can
+      occur before that date. */
+  const Date_T DEFAULT_EVENT_OLDEST_DATE (2010, boost::gregorian::Jan, 1);
+
+  /** Default reference (oldest) date-time for the events. No event can
+      occur before that date-time. */
+  const DateTime_T DEFAULT_EVENT_OLDEST_DATETIME (DEFAULT_EVENT_OLDEST_DATE,
+                                                  NULL_BOOST_TIME_DURATION);
+
 
   // //////// Booking Request /////////
   /** Default party size in a request. */

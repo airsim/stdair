@@ -33,6 +33,7 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/SegmentPeriodTypes.hpp \
 		$(top_srcdir)/stdair/bom/AirlineFeatureTypes.hpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionTypes.hpp \
+		$(top_srcdir)/stdair/bom/VirtualClassTypes.hpp \
 		$(top_srcdir)/stdair/bom/FareOptionTypes.hpp \
 		$(top_srcdir)/stdair/bom/BookingRequestTypes.hpp \
 		$(top_srcdir)/stdair/bom/EventQueueTypes.hpp \
@@ -53,10 +54,10 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/SegmentPeriod.hpp \
 		$(top_srcdir)/stdair/bom/AirlineFeature.hpp \
 		$(top_srcdir)/stdair/bom/YieldStore.hpp \
-		$(top_srcdir)/stdair/bom/OptimizerStruct.hpp \
 		$(top_srcdir)/stdair/bom/DoWStruct.hpp \
 		$(top_srcdir)/stdair/bom/PeriodStruct.hpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionStruct.hpp \
+		$(top_srcdir)/stdair/bom/VirtualClassStruct.hpp \
 		$(top_srcdir)/stdair/bom/FareOptionStruct.hpp \
 		$(top_srcdir)/stdair/bom/BookingRequestStruct.hpp \
 		$(top_srcdir)/stdair/bom/AirlineStruct.hpp \
@@ -95,10 +96,10 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/SegmentPeriod.cpp \
 		$(top_srcdir)/stdair/bom/AirlineFeature.cpp \
 		$(top_srcdir)/stdair/bom/YieldStore.cpp \
-		$(top_srcdir)/stdair/bom/OptimizerStruct.cpp \
 		$(top_srcdir)/stdair/bom/DoWStruct.cpp \
 		$(top_srcdir)/stdair/bom/PeriodStruct.cpp \
 		$(top_srcdir)/stdair/bom/TravelSolutionStruct.cpp \
+		$(top_srcdir)/stdair/bom/VirtualClassStruct.cpp \
 		$(top_srcdir)/stdair/bom/FareOptionStruct.cpp \
 		$(top_srcdir)/stdair/bom/BookingRequestStruct.cpp \
 		$(top_srcdir)/stdair/bom/AirlineStruct.cpp \

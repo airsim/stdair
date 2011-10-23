@@ -66,16 +66,10 @@ namespace stdair {
 
   /** Define the name of a multiplier. */
   typedef double Multiplier_T;
-
-  /** Define the rate of overbooking */
-  typedef double OverbookingRate_T;
   
   /** Define the number of seats (it can be non integer, because the
       overbooking can be applied at booking class or PNR level). */
   typedef double NbOfSeats_T;
-
-  /** Define the number of seats required by a demand. */
-  // typedef unsigned short NbOfSeats_T;
 
   /** Count */
   typedef unsigned int Count_T;

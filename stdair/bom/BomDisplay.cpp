@@ -155,8 +155,7 @@ namespace stdair {
             << "----------" << std::endl;
     oStream << "FlightNb (FlightDate), Leg, BoardDate, BoardTime, "
             << "OffDate, OffTime, Date Offset, Time Offset, Elapsed, "
-            << "Distance, Capacity, "
-            << std::endl << std::endl;
+            << "Distance, Capacity, " << std::endl;
 
     // Retrieve the key of the flight-date
     const FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
@@ -338,6 +337,11 @@ namespace stdair {
         // Retrieve the key of the segment-cabin
         const CabinCode_T& lCabinCode = lSC_ptr->getCabinCode();
 
+        // Check whether there are SegmentDate objects
+        if (BomManager::hasList<FareFamily> (*lSC_ptr) == false) {
+          return;
+        }
+    
         // Browse the fare families
         const FareFamilyList_T& lFareFamilyList =
           BomManager::getList<FareFamily> (*lSC_ptr);
@@ -474,6 +478,11 @@ namespace stdair {
         // Retrieve the key of the segment-cabin
         const CabinCode_T& lCabinCode = lSC_ptr->getCabinCode();
         
+        // Check whether there are SegmentDate objects
+        if (BomManager::hasList<FareFamily> (*lSC_ptr) == false) {
+          return;
+        }
+    
         // Browse the fare families
         const FareFamilyList_T& lFareFamilyList =
           BomManager::getList<FareFamily> (*lSC_ptr);

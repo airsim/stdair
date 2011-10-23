@@ -20,11 +20,9 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   void AirlineFeature::init (const ForecasterMode_T& iForecastMode,
                              const HistoricalDataLimit_T& iHistoricalDataLimit,
-                             const OptimizerStruct& iOptimizerStruct,
                              const ControlMode_T& iControlMode) {
     _forecasterMode = iForecastMode;
     _historicalDataLimit = iHistoricalDataLimit;
-    _optimizerStruct = iOptimizerStruct;
     _controlMode = iControlMode;
   }
 
@@ -34,7 +32,6 @@ namespace stdair {
     ostr << describeKey()
          << ", " << _forecasterMode
          << ", " << _historicalDataLimit
-         << ", " << _optimizerStruct.describe()
          << ", " << _controlMode;
     return ostr.str();
   }

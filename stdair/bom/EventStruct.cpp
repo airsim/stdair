@@ -33,11 +33,13 @@ namespace stdair {
     _request = boost::make_shared<BookingRequestStruct> (*ioRequestPtr);
     assert (_request != NULL);
     
-    // Compute and store the number of milliseconds between the
-    // date-time of the booking request and DEFAULT_DATETIME (as of
-    // Feb. 2011, that date is set to Jan. 1, 2010).
+    /**
+     * Compute and store the number of milliseconds between the
+     * date-time of the booking request and DEFAULT_EVENT_OLDEST_DATETIME
+     * (as of Feb. 2011, that date is set to Jan. 1, 2010).
+     */
     const Duration_T lDuration =
-      _request->getRequestDateTime() - DEFAULT_DATETIME;
+      _request->getRequestDateTime() - DEFAULT_EVENT_OLDEST_DATETIME;
     _eventTimeStamp = lDuration.total_milliseconds();
   }
 
@@ -78,7 +80,8 @@ namespace stdair {
 
     const Duration_T lRequestDateDelta =
       boost::posix_time::milliseconds (_eventTimeStamp);
-    const DateTime_T lRequestDate (DEFAULT_DATETIME + lRequestDateDelta);
+    const DateTime_T lRequestDate (DEFAULT_EVENT_OLDEST_DATETIME
+                                   + lRequestDateDelta);
     oStr << lRequestDate;
     
     switch (_eventType) {

@@ -9,6 +9,8 @@
 #include <string>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
+#include <stdair/stdair_maths_types.hpp>
+#include <stdair/stdair_rm_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/BookingClassKey.hpp>
 #include <stdair/bom/BookingClassTypes.hpp>
@@ -126,7 +128,27 @@ namespace stdair {
       return _netRevenueAvailability;
     }
 
+    /** Yield. */
+    const Yield_T& getYield () const { return _yield; }
+    
+    /** Demand distribution. */
+    const MeanValue_T& getMean () const { return _mean; }
+    const StdDevValue_T& getStdDev () const {return _stdDev; }
 
+    /** Generated demand vector. */
+    const GeneratedDemandVector_T& getGeneratedDemandVector () const {
+      return _generatedDemandVector;
+    }
+
+  public:
+    // /////////// Setters ////////////
+    /** Yield. */
+    void setYield (const Yield_T& iYield) { _yield = iYield; }
+    
+    /** Demand distribution. */
+    void setMean (const MeanValue_T& iMean) { _mean = iMean; }
+    void setStdDev (const StdDevValue_T& iStdDev) { _stdDev = iStdDev; }    
+    
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -148,9 +170,8 @@ namespace stdair {
       return _key.toString();
     }
 
-
   public:
-    // ////////////// Business Methodes /////////////////
+    // ////////////// Business Methods /////////////////
     /** Register a sale. */
     void sell (const NbOfBookings_T&);
 
@@ -224,6 +245,16 @@ namespace stdair {
 
     /** Net revenue availability. */
     Availability_T _netRevenueAvailability;
+
+    /** Yield. */
+    Yield_T _yield;
+
+    /** Remaining demand distribution forecast. */
+    MeanValue_T _mean;
+    StdDevValue_T _stdDev;
+
+    /** Vector of number of demand samples drawn from the demand distribution.*/
+    GeneratedDemandVector_T _generatedDemandVector;
   };
 
 }

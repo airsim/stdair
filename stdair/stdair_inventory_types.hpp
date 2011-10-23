@@ -78,7 +78,7 @@ namespace stdair {
 
   /** Define the list of censorship flags (une list per booking
       class, one censorship flag per DCP). */
-  typedef std::vector<bool> CensorshipFlagList_T;
+  typedef std::vector<CensorshipFlag_T> CensorshipFlagList_T;
 
   /** Define the bookingRatio (for instance OnD bookings
       over whole class bookings). */
@@ -98,6 +98,28 @@ namespace stdair {
   
   /** Mode of inventory control. */
   typedef std::string ControlMode_T;
+
+  /** Define the rate of overbooking */
+  typedef double OverbookingRate_T;
+
+  /** Define the Booking Limit.
+      <br>It is a double, as it allows for overbooking. */
+  typedef double BookingLimit_T;
+
+  /** Define the Protection Level.
+      <br>It is a double, as it allows for overbooking. */
+  typedef double ProtectionLevel_T;
+
+  /** Define the list of EMSR values for the EMSR algorithm. */
+  typedef std::vector<double> EmsrValueList_T;
+
+  /** Define the vector of booking limits.
+      <br> It is a vector of double. */
+  typedef std::vector<double> BookingLimitVector_T;
+
+  /** Define the vector of protection levels.
+      <br> It is a vector of double. */
+  typedef std::vector<double> ProtectionLevelVector_T;
 
 }
 #endif // __STDAIR_STDAIR_INVENTORY_TYPES_HPP

@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------
 AC_PREREQ(2.59)
 AC_COPYRIGHT([Copyright (C) 2007-2011  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
-AC_INIT([STDAIR],[0.14.0],[denis_arnaud@users.sourceforge.net],[stdair])
+AC_INIT([STDAIR],[0.15.0],[denis_arnaud@users.sourceforge.net],[stdair])
 AC_CONFIG_HEADER([stdair/config.h])
 AC_CONFIG_SRCDIR([stdair/bom/BomRoot.hpp])
 AC_CONFIG_AUX_DIR([config])
@@ -15,7 +15,7 @@ PACKAGE_PRETTY_NAME="StdAir"
 AC_SUBST(PACKAGE_PRETTY_NAME)
 
 # Shared library versioning
-GENERIC_LIBRARY_VERSION="0:14:0"
+GENERIC_LIBRARY_VERSION="0:15:0"
 #                        | | |
 #                 +------+ | +---+
 #                 |        |     |
@@ -281,6 +281,7 @@ External libraries:
     o BOOST_UTF_LIB ........ : ${BOOST_UNIT_TEST_FRAMEWORK_LIB}
     o BOOST_DATE_TIME_LIB .. : ${BOOST_DATE_TIME_LIB}
     o BOOST_PO_LIB ......... : ${BOOST_PROGRAM_OPTIONS_LIB}
+    o BOOST_SYSTEM_LIB ..... : ${BOOST_SYSTEM_LIB}
     o BOOST_FILESYSTEM_LIB . : ${BOOST_FILESYSTEM_LIB}
     o BOOST_THREAD_LIB ..... : ${BOOST_THREAD_LIB}
     o BOOST_PYTHON_LIB ..... : ${BOOST_PYTHON_LIB}
@@ -289,6 +290,9 @@ External libraries:
     o BOOST_MPI_PYTHON_LIB . : ${BOOST_MPI_PYTHON_LIB}
     o BOOST_IOSTREAMS_LIB .. : ${BOOST_IOSTREAMS_LIB}
     o BOOST_SIGNALS_LIB .... : ${BOOST_SIGNALS_LIB}
+    o BOOST_SERIAL_LIB ..... : ${BOOST_SERIALIZATION_LIB}
+    o BOOST_WSERIAL_LIB .... : ${BOOST_WSERIALIZATION_LIB}
+    o BOOST_REGEX_LIB ...... : ${BOOST_REGEX_LIB}
 
   - MySQL .................. :
     o MYSQL_VERSION ........ : ${MYSQL_VERSION}

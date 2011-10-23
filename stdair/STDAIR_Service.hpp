@@ -18,9 +18,10 @@
 // STL
 #include <string>
 // StdAir
+#include <stdair/stdair_inventory_types.hpp>
+#include <stdair/stdair_service_types.hpp>
 #include <stdair/basic/BasLogParams.hpp>
 #include <stdair/basic/BasDBParams.hpp>
-#include <stdair/stdair_service_types.hpp>
 
 namespace stdair {
 
@@ -76,11 +77,19 @@ namespace stdair {
     /**
      * Build a sample BOM tree, and attach it to the BomRoot instance.
      *
-     * As for now, two inventories (one for BA, another for AF) are
-     * built, each containing one flight. One of those flights has two
-     * legs (and therefore three segments).
+     * As for now, two sample BOM trees can be built.
+     * <ul>
+     *   <li>One BOM tree is based on two actual inventories (one for BA,
+     *     another for AF). Each inventory contains one flight. One of
+     *     those flights has two legs (and therefore three segments).</li>
+     *   <li>The other BOM tree is fake, as a hook for RMOL to work.</li>
+     * </ul>
+     *
+     * @param const bool isForRMOL Whether the sample BOM tree is for RMOL.
+     * @param const CabinCapacity_T Capacity of the cabin for RMOL optimisation.
      */
-    void buildSampleBom();
+    void buildSampleBom (const bool isForRMOL = false,
+                         const CabinCapacity_T iCabinCapacity = 0);
 
 
   public:
