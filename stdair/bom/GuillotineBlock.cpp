@@ -47,17 +47,17 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   void GuillotineBlock::
-  initSnapshotBlocks (const FlightDateIndexMap_T& iFlightDateIndexMap,
+  initSnapshotBlocks (const SegmentCabinIndexMap_T& iSegmentCabinIndexMap,
                       const ValueTypeIndexMap_T& iValueTypeIndexMap) {
-    _flightDateIndexMap = iFlightDateIndexMap;
+    _segmentCabinIndexMap = iSegmentCabinIndexMap;
     _valueTypesIndexMap = iValueTypeIndexMap;
 
-    unsigned int lNumberOfFlightDates = _flightDateIndexMap.size();
+    unsigned int lNumberOfSegmentCabins = _segmentCabinIndexMap.size();
     unsigned int lNumberOfValueTypes = _valueTypesIndexMap.size();
 
     // Initialise the snapshot blocks
     _bookingSnapshotBlock.
-      resize (boost::extents[lNumberOfFlightDates*lNumberOfValueTypes][366]);
+      resize (boost::extents[lNumberOfSegmentCabins*lNumberOfValueTypes][366]);
 
   }
 

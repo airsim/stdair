@@ -79,6 +79,11 @@ namespace stdair {
       return _holderMap;
     }
 
+    /** Get the guilltine block number. */
+    const GuillotineNumber_T& getGuillotineBlockNumber() const {
+      return _guillotineNumber;
+    }
+
     /** Get the cabin capacity. */
     const CabinCapacity_T& getCapacity() const {
       return _capacity;
@@ -127,6 +132,11 @@ namespace stdair {
 
   public:
     // ///////// Setters //////////
+    /** Set the guillotine block number. */
+    void setGuillotineBlockNumber (const GuillotineNumber_T& iNumber) {
+      _guillotineNumber = iNumber;
+    }
+
     /** Set the cabin capacity. */
     void setCapacity (const CabinCapacity_T& iCapacity) {
       _capacity = iCapacity;
@@ -262,6 +272,11 @@ namespace stdair {
      * Map holding the children (FareFamily or BookingClass objects).
      */
     HolderMap_T _holderMap;
+
+    /**
+     * The guillotine block number used for Revenue Management activities.
+     */
+    GuillotineNumber_T _guillotineNumber;
 
     /** Capacity of the cabin. */
     CabinCapacity_T _capacity;

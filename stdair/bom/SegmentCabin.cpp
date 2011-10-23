@@ -76,7 +76,7 @@ namespace stdair {
   template<class Archive>
   void SegmentCabin::serialize (Archive& ioArchive,
                                 const unsigned int iFileVersion) {
-    ioArchive & _key;
+    ioArchive & _key & _guillotineNumber;
   }
 
   // ////////////////////////////////////////////////////////////////////
