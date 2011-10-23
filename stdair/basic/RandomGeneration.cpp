@@ -19,19 +19,17 @@ namespace stdair {
    *       lower than 1.44).
    */
   // //////////////////////////////////////////////////////////////////////
-  RandomGeneration::RandomGeneration() : _seed (1), _generator (1) {
+  RandomGeneration::RandomGeneration() : _generator (1) {
   }
 
   // //////////////////////////////////////////////////////////////////////
   RandomGeneration::RandomGeneration (const RandomSeed_T& iSeed)
-    : _seed (iSeed), _generator (iSeed) {
-    init();
+    : _generator (iSeed) {
   }
 
   // //////////////////////////////////////////////////////////////////////
   RandomGeneration::RandomGeneration (const RandomGeneration& iRandomGeneration)
-    : _seed (iRandomGeneration._seed),
-      _generator (iRandomGeneration._generator) {
+    : _generator (iRandomGeneration._generator) {
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -39,13 +37,14 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void RandomGeneration::init() {
+  void RandomGeneration::init (const RandomSeed_T& iSeed) {
+    _generator.seed (iSeed);
   }
 
   // //////////////////////////////////////////////////////////////////////
   const std::string RandomGeneration::describe() const {
     std::ostringstream oStr;
-    oStr << _seed << ", " << _generator;
+    oStr << _generator;
     return oStr.str();
   }
 
@@ -67,6 +66,7 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   RealNumber_T RandomGeneration::generateNormal (const RealNumber_T& mu,
                                                  const RealNumber_T& sigma) {
+    
 #if BOOST_VERSION >= 103500
     const Probability_T lVariateUnif = generateUniform01();
     const boost::math::normal lNormal (mu, sigma);
@@ -78,6 +78,7 @@ namespace stdair {
 #endif // BOOST_VERSION >= 103500
 
     return lRealNumberOfRequestsToBeGenerated;
+        
   }
 
   // //////////////////////////////////////////////////////////////////////

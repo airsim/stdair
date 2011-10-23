@@ -9,51 +9,73 @@
 #include <stdair/stdair_basic_types.hpp>
 
 namespace stdair  {
-  /** Key of airport-pair. */
+
+  /**
+   * @brief Key of airport-pair.
+   */
   struct AirportPairKey : public KeyAbstract {
 
-  private:
-    // /////////// Default constructor //////////
-    AirportPairKey () { };
   public:
     // /////////// Construction ///////////
-    /** Constructors. */
-    AirportPairKey (const stdair::AirportCode_T&, const stdair::AirportCode_T&);
+    /** Main constructor. */
+    AirportPairKey (const stdair::AirportCode_T&,
+                    const stdair::AirportCode_T&);
+    /** Copy constructor. */
     AirportPairKey (const AirportPairKey&);
     /** Destructor. */
     ~AirportPairKey ();
+  private:
+    /** Default constructor. */
+    AirportPairKey ();
     
+  public:  
     // /////////// Getters //////////
-    /** Get the boarding point. */
+    /**
+     * Get the boarding point.
+     */
     const stdair::AirportCode_T& getBoardingPoint() const {
       return _boardingPoint;
     }
 
-    /** Get the arrival point. */
+    /**
+     * Get the arrival point.
+     */
     const stdair::AirportCode_T& getOffPoint() const {
       return _offPoint;
     }
     
     // /////////// Display support methods /////////
-    /** Dump a Business Object Key into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object Key into an output stream.
+     *
+     * @param ostream& the output stream.
+     */
     void toStream (std::ostream& ioOut) const;
 
-    /** Read a Business Object Key from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object Key from an input stream.
+     *
+     * @param istream& the input stream.
+     */
     void fromStream (std::istream& ioIn);
 
-   /** Get the serialised version of the Business Object Key.
-       <br>That string is unique, at the level of a given Business Object,
-       when among children of a given parent Business Object. */
+   /**
+    * Get the serialised version of the Business Object Key.
+    * That string is unique, at the level of a given Business Object,
+    * when among children of a given parent Business Object.
+    */
     const std::string toString() const;
 
   private:
-    // Attributes
-    /** Boarding airport. */
+    // ///////////////// Attributes ///////////////////
+    /**
+     * Boarding airport.
+     */
     AirportCode_T _boardingPoint;
 
-    /** Arrival airport. */
+    /**
+     * Arrival airport.
+     */
     AirportCode_T _offPoint;
   };
 

@@ -28,6 +28,7 @@ namespace stdair {
   class DatePeriod;
   class TimePeriod;
   class FareFeatures;
+  class YieldFeatures;
   class AirlineClassList;
 
   /**
@@ -186,7 +187,7 @@ namespace stdair {
      *        logged/dumped.
      * @param const BomRoot& Root of the BOM tree to be displayed.
      */
-    static void csvSimFQTDisplay (std::ostream&, const BomRoot&);
+    static void csvSimFQTAirRACDisplay (std::ostream&, const BomRoot&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -234,13 +235,25 @@ namespace stdair {
 
     /**
      * Recursively display (dump in the underlying output log stream)
-     * the fare features objects of the BOM tree.
+     * the list of fare/yield features objects of the BOM tree.
      *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
-     * @param const FareFeatures& Root of the BOM tree to be displayed.
+     * @param const TimePeriod& Root of the BOM tree to be displayed.
      */
-    static void csvFeaturesDisplay (std::ostream&, const FareFeatures&);
+    template <typename FEATURE_TYPE>
+    static void csvFeatureListDisplay (std::ostream& oStream, const TimePeriod&);
+
+    /**
+     * Recursively display (dump in the underlying output log stream)
+     * the fare/yield features objects of the BOM tree.
+     *
+     * @param std::ostream& Output stream in which the BOM tree should be
+     *        logged/dumped.
+     * @param const FEATURE_TYPE& Root of the BOM tree to be displayed.
+     */
+    template <typename FEATURE_TYPE>
+    static void csvFeaturesDisplay (std::ostream& oStream, const FEATURE_TYPE&);
 
     /**
      * Recursively display (dump in the underlying output log stream)
@@ -251,9 +264,6 @@ namespace stdair {
      * @param const AirlineClassList& Root of the BOM tree to be displayed.
      */
     static void csvAirlineClassDisplay (std::ostream&, const AirlineClassList&);
-
-    
-
   };
   
 }

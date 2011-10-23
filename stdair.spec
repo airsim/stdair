@@ -2,7 +2,7 @@
 %global mydocs __tmp_docdir
 #
 Name:           stdair
-Version:        0.34.0
+Version:        0.35.0
 Release:        1%{?dist}
 
 Summary:        C++ Standard Airline IT Object Library
@@ -121,6 +121,9 @@ find $RPM_BUILD_ROOT%{_libexecdir}/%{name} -type f -name '*.sh' -exec chmod 755 
 
 
 %changelog
+* Thu Jul 07 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.35.0-1
+- Upstream update 
+
 * Wed Jun 15 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.34.0-1
 - Upstream update
 - The build system is now CMake (instead of the GNU Autotools)

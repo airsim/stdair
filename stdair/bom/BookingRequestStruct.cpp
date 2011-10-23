@@ -24,7 +24,7 @@ namespace stdair {
       _preferredCabin (DEFAULT_PREFERRED_CABIN),
       _partySize (DEFAULT_PARTY_SIZE),
       _channel (DEFAULT_CHANNEL),
-      _tripType (DEFAULT_TRIP_TYPE),
+      _tripType (TRIP_TYPE_ONE_WAY),
       _stayDuration (DEFAULT_STAY_DURATION),
       _frequentFlyerType (DEFAULT_FF_TIER),
       _wtp (DEFAULT_WTP),
@@ -192,7 +192,7 @@ namespace stdair {
 
     // Duration of stay
     oStr << ", ";
-    if (_tripType == "OW") {
+    if (_tripType == TRIP_TYPE_ONE_WAY) {
       oStr << "0";
     } else {
       oStr << _stayDuration;

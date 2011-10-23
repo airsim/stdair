@@ -49,6 +49,11 @@ namespace stdair {
      * specified by a mean and a lambda parameter.
      */
     RealNumber_T generateExponential (const RealNumber_T&);
+
+    /**
+     * Retrieve the base generator for initialising other random generators.
+     */
+    BaseGenerator_T& getBaseGenerator () { return _generator; }
     
 
   public:
@@ -69,6 +74,8 @@ namespace stdair {
      * Default constructor.
      */
     RandomGeneration();
+
+  private:
     /**
      * Copy constructor.
      */
@@ -77,11 +84,10 @@ namespace stdair {
      * Copy operator.
      */
     RandomGeneration& operator= (const RandomGeneration& iRandomGeneration) {
-      _seed = iRandomGeneration._seed;
       _generator = iRandomGeneration._generator;
       return *this;
     }      
-
+  public:
     /**
      * Destructor.
      */
@@ -94,17 +100,9 @@ namespace stdair {
      * produces "real" values between 0 and 1 (0 inclusive, 1
      * exclusive).
      */
-    void init();
+    void init (const RandomSeed_T&);
 
     // ////////// Attributes //////////
-    /**
-     * The seed of the random generator.
-     *
-     * The seed is unsigned, otherwise the wrong overload may be
-     * selected when using mt19937 as the boost::base_generator_type.
-     */
-    RandomSeed_T _seed;
-
     /**
      * Random number generator engine.
      *
