@@ -2,6 +2,7 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // StdAir Logger
+#include <stdair/stdair_exceptions.hpp>
 #include <stdair/service/Logger.hpp>
 
 namespace stdair {
@@ -43,7 +44,7 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   Logger& Logger::instance() {
     if (_instance == NULL) {
-      throw NonInitialisedLogServiceException();
+      throw NonInitialisedLogServiceException("");
     }
     assert (_instance != NULL);
     return *_instance;

@@ -5,7 +5,7 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // StdAir
-#include <stdair/STDAIR_Types.hpp>
+#include <stdair/stdair_types.hpp>
 
 namespace stdair {
 
@@ -74,6 +74,9 @@ namespace stdair {
   
   /** Default null classCode value (''). */
   extern const ClassCode_T DEFAULT_NULL_CLASS_CODE;
+
+  /** Default number of days in a year. */
+  extern const unsigned int DEFAULT_NB_OF_DAYS_IN_A_YEAR;
   
 }
 #endif // __STDAIR_BAS_BASCONST_GENERAL_HPP

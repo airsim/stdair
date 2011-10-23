@@ -2,10 +2,10 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
-#include <string>
+#include <cassert>
 #include <sstream>
 #include <vector>
-// STDAIR
+// StdAir
 #include <stdair/bom/OptimizerStruct.hpp>
 
 namespace stdair {

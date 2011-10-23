@@ -3,7 +3,8 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-// STDAIR
+#include <sstream>
+// StdAir
 #include <stdair/bom/Bucket.hpp>
 
 namespace stdair {

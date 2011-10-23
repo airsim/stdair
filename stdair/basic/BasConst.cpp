@@ -3,8 +3,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <string>
-// STDAIR
-#include <stdair/STDAIR_Types.hpp>
+// StdAir
 #include <stdair/basic/BasConst_General.hpp>
 #include <stdair/basic/BasConst_Request.hpp>
 #include <stdair/basic/BasConst_Inventory.hpp>
@@ -29,6 +28,9 @@ namespace stdair {
   const Duration_T NULL_BOOST_TIME_DURATION =
     boost::posix_time::hours(0)+ boost::posix_time::minutes (0)
     + boost::posix_time::seconds (0);
+
+  /** Default number of days in a year. */
+  const unsigned int DEFAULT_NB_OF_DAYS_IN_A_YEAR = 365;
       
   // //////// (Flight-)Period-related BOM ///////
   /** Default number of duration days. */

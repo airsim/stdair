@@ -7,7 +7,7 @@
 // STL
 #include <iosfwd>
 // StdAir
-#include <stdair/STDAIR_Types.hpp>
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
 #include <stdair/bom/EventTypes.hpp>
 

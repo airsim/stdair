@@ -4,10 +4,12 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR
+// StdAir
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/bom/KeyAbstract.hpp>
 
 namespace stdair {
+
   /** Key of segment-cabin. */
   struct SegmentCabinKey : public KeyAbstract {
 

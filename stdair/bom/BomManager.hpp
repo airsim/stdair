@@ -6,8 +6,8 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <iosfwd>
-// STDAIR
-#include <stdair/STDAIR_Types.hpp>
+// StdAir
+#include <stdair/stdair_exceptions.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/BomHolder.hpp>
 #include <stdair/service/Logger.hpp>
@@ -62,9 +62,10 @@ namespace stdair {
     if (itHolder == lHolderMap.end()) {
       std::string lName (typeid (OBJECT2).name());
       
-      STDAIR_LOG_ERROR ("Cannot find the holder of type " << lName
-                        << " within: " << iObject1.describeKey());
-      throw NonInitialisedContainerException ();
+      std::ostringstream oMessage;
+      oMessage << "Cannot find the holder of type " << lName
+               << " within: " << iObject1.describeKey();
+      throw NonInitialisedContainerException (oMessage.str());
     } 
     
     const BomHolder<OBJECT2>* lBomHolder_ptr = 

@@ -8,7 +8,8 @@
 // STL
 #include <map>
 // STDAIR
-#include <stdair/STDAIR_Types.hpp>
+#include <stdair/stdair_date_time_types.hpp>
+#include <stdair/bom/key_types.hpp>
 
 namespace stdair {
 

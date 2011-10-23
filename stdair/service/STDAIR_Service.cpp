@@ -4,6 +4,7 @@
 // STL
 #include <cassert>
 // StdAir
+#include <stdair/stdair_types.hpp>
 #include <stdair/basic/BasChronometer.hpp>
 #include <stdair/bom/BomManager.hpp> // for display()
 #include <stdair/bom/BomRoot.hpp>

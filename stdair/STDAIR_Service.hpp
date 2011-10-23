@@ -8,17 +8,16 @@
  *         projects, such as RMOL and OpenTREP<br>
  *         Install the StdAir library for Airline IT Standard C++ fundaments.
  */
-#ifndef __STDAIR_SVC_STDAIR_SERVICE_HPP
-#define __STDAIR_SVC_STDAIR_SERVICE_HPP
+#ifndef __STDAIR_STDAIR_HPP
+#define __STDAIR_STDAIR_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// Boost
-#include <boost/shared_ptr.hpp>
 // StdAir
 #include <stdair/basic/BasLogParams.hpp>
 #include <stdair/basic/BasDBParams.hpp>
+#include <stdair/stdair_service_types.hpp>
 
 namespace stdair {
 
@@ -122,4 +121,4 @@ namespace stdair {
     BomRoot& _bomRoot;
   };
 }
-#endif // __STDAIR_SVC_STDAIR_SERVICE_HPP
+#endif // __STDAIR_STDAIR_HPP

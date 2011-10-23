@@ -5,9 +5,7 @@
 #include <cassert>
 #include <sstream>
 // StdAir
-#include <stdair/service/Logger.hpp>
-// Stdair
-#include <stdair/STDAIR_Types.hpp>
+#include <stdair/stdair_exceptions.hpp>
 #include <stdair/basic/PassengerType.hpp>
 
 namespace stdair {
@@ -35,9 +33,10 @@ namespace stdair {
 
     if (_type == LAST_VALUE) {
       const std::string& lLabels = describeLabels();
-      STDAIR_LOG_ERROR ("The passenger type '" << iType
-                        << "' is not known. Known passenger types: " << lLabels);
-      throw CodeConversionException();
+      std::ostringstream oMessage;
+      oMessage << "The passenger type '" << iType
+               << "' is not known. Known passenger types: " << lLabels;
+      throw CodeConversionException (oMessage.str());
     }
   }
   
@@ -52,7 +51,8 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string PassengerType::getTypeLabelAsString(const EN_PassengerType& iType){
+  std::string PassengerType::
+  getTypeLabelAsString (const EN_PassengerType& iType) {
     std::ostringstream oStr;
     oStr << _typeLabels[iType];
     return oStr.str();

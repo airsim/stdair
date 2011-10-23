@@ -1,3 +1,7 @@
+/*!
+ * \page batch_stdair_cpp Command-Line Utility to Demonstrate Typical StdAir Usage
+ * \code
+ */
 // STL
 #include <cassert>
 #include <iostream>
@@ -11,8 +15,8 @@
 #include <boost/tokenizer.hpp>
 #include <boost/lexical_cast.hpp>
 // StdAir
-#include <stdair/STDAIR_Types.hpp>
-#include <stdair/STDAIR_Service.hpp>
+#include <stdair/config/stdair-paths.hpp>
+#include <stdair/stdair_types.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
@@ -33,7 +37,7 @@
 #include <stdair/bom/BookingClassTypes.hpp>
 #include <stdair/factory/FacBomManager.hpp>
 #include <stdair/service/Logger.hpp>
-#include <stdair/config/stdair-paths.hpp>
+#include <stdair/STDAIR_Service.hpp>
 
 // //////// Constants //////
 /** Default name and location for the log file. */
@@ -565,7 +569,7 @@ void buildSampleBom() {
 // ///////// M A I N ////////////
 int main (int argc, char* argv[]) {
 
-  try {
+  // try {
     
     // Built-in
     bool isBuiltin;
@@ -613,6 +617,12 @@ int main (int argc, char* argv[]) {
     // Close the Log outputFile
     logOutputFile.close();
 
+    /*
+      Note: as that program is not intended to be run on a server in
+      production, it is better not to catch the exceptions, as when it
+      happens (that an exception is throwned), that way we get the
+      call stack.
+       
   } catch (const std::exception& stde) {
     std::cerr << "Standard exception: " << stde.what() << std::endl;
     return -1;
@@ -620,6 +630,11 @@ int main (int argc, char* argv[]) {
   } catch (...) {
     return -1;
   }
-  
+    */
+    
   return 0;	
 }
+
+/*!
+ * \endcode
+ */

@@ -3,17 +3,25 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
+#include <sstream>
 // Local
-#include <test/architecture/BomRoot.hpp>
+#include <test/archi_static_cast/MP2BomRoot.hpp>
 
-namespace myairline {
-  
+namespace myprovider {
+
   // ////////////////////////////////////////////////////////////////////
-  BomRoot::BomRoot (const Key_T& iKey) : stdair::BomRoot (iKey) {
+  BomRoot::BomRoot (const Key_T& iKey) : _key (iKey) {
   }
-  
+
   // ////////////////////////////////////////////////////////////////////
   BomRoot::~BomRoot () {
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  std::string BomRoot::toString() const {
+    std::ostringstream oStr;
+    oStr << _key.toString();
+    return oStr.str();
   }
 
 }

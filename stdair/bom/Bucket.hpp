@@ -4,7 +4,11 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR 
+// STL
+#include <string>
+#include <iosfwd>
+// StdAir 
+#include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/BucketKey.hpp>
 #include <stdair/bom/BucketTypes.hpp>
@@ -65,7 +69,6 @@ namespace stdair {
     stdair::CabinCapacity_T _availability;
     stdair::NbOfSeats_T _nbOfSeats;
     stdair::SeatIndex_T _seatIndex;
-
   };
 
 }

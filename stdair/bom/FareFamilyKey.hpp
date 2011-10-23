@@ -4,10 +4,12 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR
+// StdAir
+#include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/KeyAbstract.hpp>
 
 namespace stdair {
+
   /** Key of fare family. */
   struct FareFamilyKey : public KeyAbstract {
     

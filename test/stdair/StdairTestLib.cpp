@@ -12,9 +12,9 @@
 #include <boost/mpl/assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 // StdAir
-#include <stdair/STDAIR_Service.hpp>
-#include <stdair/STDAIR_Types.hpp>
+#include <stdair/stdair_inventory_types.hpp>
 #include <stdair/service/Logger.hpp>
+#include <stdair/STDAIR_Service.hpp>
 #include <test/stdair/StdairTestLib.hpp>
 
 /**

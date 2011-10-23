@@ -1,12 +1,18 @@
+/*!
+ * \page test_archi_inv_cpp Specific Implementation of an Airline Inventory
+ * \code
+ */
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
+// StdAir
+#include <stdair/stdair_inventory_types.hpp>
 // Local
-#include <test/architecture/Inventory.hpp>
+#include <test/architecture/MPInventory.hpp>
 
-namespace myairline {
+namespace myprovider {
   
   // ////////////////////////////////////////////////////////////////////
   Inventory::Inventory (const Key_T& iKey) : stdair::Inventory (iKey) {
@@ -29,3 +35,6 @@ namespace myairline {
   }
   
 }
+/*!
+ * \endcode
+ */

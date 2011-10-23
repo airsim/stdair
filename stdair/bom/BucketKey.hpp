@@ -4,10 +4,14 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR
+// STL
+#include <string>
+#include <iosfwd>
+// StdAir
 #include <stdair/bom/KeyAbstract.hpp>
 
 namespace stdair {
+  
   /** Key of booking-class. */
   struct BucketKey : public KeyAbstract {
     

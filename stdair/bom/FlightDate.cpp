@@ -3,7 +3,8 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-// STDAIR
+#include <sstream>
+// StdAir
 #include <stdair/bom/FlightDate.hpp>
 
 namespace stdair {

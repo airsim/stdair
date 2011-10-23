@@ -3,8 +3,6 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-#include <istream>
-#include <ostream>
 #include <sstream>
 // StdAir
 #include <stdair/basic/BasConst_BookingClass.hpp>
