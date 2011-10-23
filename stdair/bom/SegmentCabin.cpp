@@ -4,71 +4,39 @@
 // STL
 #include <cassert>
 // STDAIR
-#include <stdair/bom/BomSource.hpp>
+#include <stdair/basic/BasConst_BookingClass.hpp>
+#include <stdair/basic/BasConst_Inventory.hpp>
+#include <stdair/bom/SegmentCabin.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentCabin::SegmentCabin (const Key_T& iKey,
-                              Structure_T& ioSegmentStructure)
-    : SegmentCabinContent (iKey), _structure (ioSegmentStructure) {
-    init ();
+  SegmentCabin::SegmentCabin (const Key_T& iKey)
+    : _key (iKey),
+      _capacity (DEFAULT_CABIN_CAPACITY),
+      _blockSpace (DEFAULT_BLOCK_SPACE),
+      _bookingCounter (DEFAULT_CLASS_NB_OF_BOOKINGS),
+      _commitedSpace (DEFAULT_COMMITED_SPACE),
+      _availabilityPool (DEFAULT_AVAILABILITY),
+      _bidPriceVector (DEFAULT_BID_PRICE_VECTOR),
+      _currentBidPrice (DEFAULT_BID_PRICE) {
   }
-  
+
   // ////////////////////////////////////////////////////////////////////
   SegmentCabin::~SegmentCabin () {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void SegmentCabin::init () {
-    _structure.initChildrenHolder<BookingClass> ();
-    _structure.initChildrenHolder<LegCabin> ();
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  void SegmentCabin::toStream (std::ostream& ioOut) const {
-    ioOut << toString() << std::endl;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  void SegmentCabin::fromStream (std::istream& ioIn) {
-  }
-
-  // ////////////////////////////////////////////////////////////////////
   std::string SegmentCabin::toString() const {
     std::ostringstream oStr;
-
-    // First, put the key of that level
-    oStr << describeShortKey() << std::endl;
-
-    // Then, browse the children
-    // [...] (no child for now)
-    
-    return oStr.str();
-  }
-    
-  // ////////////////////////////////////////////////////////////////////
-  const std::string SegmentCabin::describeKey() const {
-    std::ostringstream oStr;
-    oStr << _structure.describeParentKey() << ", " << describeShortKey();
+    oStr << describeKey();
     return oStr.str();
   }
 
   // ////////////////////////////////////////////////////////////////////
-  BookingClassList_T SegmentCabin::getBookingClassList () const {
-    return _structure.getChildrenHolder<BookingClass>();
+  void SegmentCabin::updateFromReservation (const NbOfBookings_T& iNbOfBookings){
+    _commitedSpace += iNbOfBookings;
   }
 
-  // ////////////////////////////////////////////////////////////////////
-  BookingClassMap_T SegmentCabin::getBookingClassMap () const {
-    return _structure.getChildrenHolder<BookingClass>();
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  BookingClass* SegmentCabin::
-  getBookingClass (const ClassCode_T& iClassCode) const {
-    return _structure.getChildPtr<BookingClass> (iClassCode);
-  }
-  
 }
 
