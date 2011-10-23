@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------
 AC_PREREQ(2.59)
 AC_COPYRIGHT([Copyright (C) 2007-2010  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
-AC_INIT([STDAIR],[0.9.0],[denis_arnaud@users.sourceforge.net],[stdair])
+AC_INIT([STDAIR],[0.10.0],[denis_arnaud@users.sourceforge.net],[stdair])
 AC_CONFIG_HEADER([stdair/config.h])
 AC_CONFIG_SRCDIR([stdair/bom/BomRoot.hpp])
 AC_CONFIG_AUX_DIR([config])
@@ -10,8 +10,12 @@ AM_INIT_AUTOMAKE
 AM_PATH_CPPUNIT(1.10)
 AM_CONDITIONAL([HAVE_CPPUNIT], [test "x$CPPUNIT_LIBS" != x])
 
+# Package name
+PACKAGE_PRETTY_NAME="StdAir"
+AC_SUBST(PACKAGE_PRETTY_NAME)
+
 # Shared library versioning
-GENERIC_LIBRARY_VERSION="0:9:0"
+GENERIC_LIBRARY_VERSION="0:10:0"
 #                        | | |
 #                 +------+ | +---+
 #                 |        |     |
@@ -62,14 +66,20 @@ AC_ARG_ENABLE(exceptions,
                               [enable exceptions handling mechanism])],
               [AC_DEFINE([STDAIR_EXCEPTIONS], [1],
                          [Define if you want exceptions handling])])
-test "x$enable_exceptions" != xno && enable_exceptions=yes
+test "x$enable_exceptions" != "xno" && enable_exceptions=yes
+
+# Set the data directory for StdAir
+pkgdatadir="${datadir}/stdair"
+AC_SUBST(pkgdatadir)
+# Set the directory for data samples exported by StdAir
+sampledir="${pkgdatadir}/samples"
+AC_SUBST(sampledir)
 
 # Check for info pages
 AC_ARG_ENABLE(info-doc, 
               [AS_HELP_STRING([--disable-info-doc],
                               [do not generate Info documentation])])
 test "x$enable_info_doc" != xno && enable_info_doc=yes
-
 
 # Check for html-doc switch
 AC_ARG_ENABLE(html-doc, 
@@ -213,14 +223,15 @@ AC_CONFIG_FILES(
 	stdair/service/Makefile
 	batches/Makefile
 	man/Makefile
+	man/doxygen_man.cfg
 	doc/Makefile
 	doc/images/Makefile
 	doc/tutorial/Makefile
 	doc/tutorial/src/Makefile
 	doc/local/Makefile
 	doc/doxygen_html.cfg
+	samples/Makefile
 	test/Makefile
-	test/samples/Makefile
 	test/inheritance/Makefile
 	test/architecture/Makefile
 	test/archi_intru/Makefile
@@ -237,70 +248,74 @@ $PACKAGE-$VERSION library configuration:
 ------------------------------------------------------------------------------
 
 Directories:
-  - prefix ............ : ${prefix}
-  - exec_prefix ....... : ${exec_prefix}
-  - includedir ........ : ${includedir}
-  - libdir ............ : ${libdir}
-  - docdir ............ : ${docdir}
-  - mandir ............ : ${mandir}
-  - infodir ........... : ${infodir}
+  - prefix ................. : ${prefix}
+  - exec_prefix ............ : ${exec_prefix}
+  - includedir ............. : ${includedir}
+  - libdir ................. : ${libdir}
+  - datarootdir ............ : ${datarootdir}
+  - datadir ................ : ${datadir}
+  - pkgdatadir ............. : ${pkgdatadir}
+  - sampledir .............. : ${sampledir}
+  - docdir ................. : ${docdir}
+  - mandir ................. : ${mandir}
+  - infodir ................ : ${infodir}
 
 Switches:
-  - exceptions ........ : ${enable_exceptions}
-  - use-nls ........... : ${USE_NLS}
-  - info-doc .......... : ${enable_info_doc}
-  - html-doc .......... : ${enable_html_doc}
-  - shared ............ : ${enable_shared}
-  - static ............ : ${enable_static}
+  - exceptions ............. : ${enable_exceptions}
+  - use-nls ................ : ${USE_NLS}
+  - info-doc ............... : ${enable_info_doc}
+  - html-doc ............... : ${enable_html_doc}
+  - shared ................. : ${enable_shared}
+  - static ................. : ${enable_static}
 
 Documentation tools:
-  - texinfo ........... : ${texinfo_ok}
-  - doxygen ........... : ${doxygen_ok}
-  - latex ............. : ${latex_ok}
-  - dvips ............. : ${dvips_ok}
-  - ghostscript ....... : ${gs_ok}
+  - texinfo ................ : ${texinfo_ok}
+  - doxygen ................ : ${doxygen_ok}
+  - latex .................. : ${latex_ok}
+  - dvips .................. : ${dvips_ok}
+  - ghostscript ............ : ${gs_ok}
 
 Testing tools:
-  - diff .............. : ${diff_ok}
-  - sed ............... : ${sed_ok}
+  - diff ................... : ${diff_ok}
+  - sed .................... : ${sed_ok}
 
 Compiler/linker flags/libs/defs:
-  - CXX ............... : ${CXX}
-  - CFLAGS ............ : ${CFLAGS}
-  - CXXFLAGS .......... : ${CXXFLAGS}
-  - CPPFLAGS .......... : ${CPPFLAGS}
-  - FFLAGS ............ : ${FFLAGS}
-  - LDFLAGS ........... : ${LDFLAGS}
-  - LIBS .............. : ${LIBS}
+  - CXX .................... : ${CXX}
+  - CFLAGS ................. : ${CFLAGS}
+  - CXXFLAGS ............... : ${CXXFLAGS}
+  - CPPFLAGS ............... : ${CPPFLAGS}
+  - FFLAGS ................. : ${FFLAGS}
+  - LDFLAGS ................ : ${LDFLAGS}
+  - LIBS ................... : ${LIBS}
 
 External libraries:
-  - Boost ............. :
-    o BOOST_VERSION ... : ${BOOST_VERSION}
-    o BOOST_CFLAGS .... : ${BOOST_CFLAGS}
-    o BOOST_LIBS ...... : ${BOOST_LIBS}
-    o BOOST_DT_LIB .... : ${BOOST_DATE_TIME_LIB}
-    o BOOST_PO_LIB .... : ${BOOST_PROGRAM_OPTIONS_LIB}
-    o BOOST_FS_LIB .... : ${BOOST_FILESYSTEM_LIB}
+  - Boost .................. :
+    o BOOST_VERSION ........ : ${BOOST_VERSION}
+    o BOOST_CFLAGS ......... : ${BOOST_CFLAGS}
+    o BOOST_LIBS ........... : ${BOOST_LIBS}
+    o BOOST_DATE_TIME_LIB .. : ${BOOST_DATE_TIME_LIB}
+    o BOOST_PO_LIB ......... : ${BOOST_PROGRAM_OPTIONS_LIB}
+    o BOOST_FILESYSTEM_LIB . : ${BOOST_FILESYSTEM_LIB}
 
-  - MySQL ............. :
-    o MYSQL_version ... : ${MYSQL_VERSION}
-    o MYSQL_CFLAGS .... : ${MYSQL_CFLAGS}
-    o MYSQL_LIBS ...... : ${MYSQL_LIBS} 
+  - MySQL .................. :
+    o MYSQL_VERSION ........ : ${MYSQL_VERSION}
+    o MYSQL_CFLAGS ......... : ${MYSQL_CFLAGS}
+    o MYSQL_LIBS ........... : ${MYSQL_LIBS} 
 
-  - SOCI .............. :	
-    o SOCI_version .... : ${SOCI_VERSION}
-    o SOCI_CFLAGS ..... : ${SOCI_CFLAGS}
-    o SOCI_LIBS ....... : ${SOCI_LIBS}
+  - SOCI ................... :	
+    o SOCI_VERSION ......... : ${SOCI_VERSION}
+    o SOCI_CFLAGS .......... : ${SOCI_CFLAGS}
+    o SOCI_LIBS ............ : ${SOCI_LIBS}
 
-  - ExtraCC ........... :
-    o EXTRACC_VERSION . : ${EXTRACC_VERSION}
-    o EXTRACC_CFLAGS .. : ${EXTRACC_CFLAGS}
-    o EXTRACC_LIBS .... : ${EXTRACC_LIBS}
+  - ExtraCC ................ :
+    o EXTRACC_VERSION ...... : ${EXTRACC_VERSION}
+    o EXTRACC_CFLAGS ....... : ${EXTRACC_CFLAGS}
+    o EXTRACC_LIBS ......... : ${EXTRACC_LIBS}
 
-  - CPPUNIT ........... :
-    o CPPUNIT_VERSION . : ${CPPUNIT_VERSION}
-    o CPPUNIT_CFLAGS .. : ${CPPUNIT_CFLAGS}
-    o CPPUNIT_LIBS .... : ${CPPUNIT_LIBS}
+  - CPPUNIT ................ :
+    o CPPUNIT_VERSION ...... : ${CPPUNIT_VERSION}
+    o CPPUNIT_CFLAGS ....... : ${CPPUNIT_CFLAGS}
+    o CPPUNIT_LIBS ......... : ${CPPUNIT_LIBS}
 
 ------------------------------------------------------------------------------
 Now type 'make && make install' to build and install $PACKAGE-$VERSION library
