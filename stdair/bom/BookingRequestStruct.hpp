@@ -103,19 +103,31 @@ namespace stdair {
 
     
     // /////////////// Constructors and Destructors /////////////////
-  public :
+  public:
     /** Constructor. */
-    BookingRequestStruct (const AirportCode_T&, const AirportCode_T&,
-                          const AirportCode_T&, const Date_T&, const DateTime_T&,
-                          const CabinCode_T&, const NbOfSeats_T&,
-                          const ChannelLabel_T&, const TripType_T&,
-                          const DayDuration_T&, const FrequentFlyer_T&,
-                          const Duration_T&, const WTP_T&, const PriceValue_T&);
-  public :
-    /** Default constructor. */
-    BookingRequestStruct ();
+    BookingRequestStruct (const AirportCode_T& iOrigin,
+                          const AirportCode_T& iDestination,
+                          const AirportCode_T& iPOS,
+                          const Date_T& iDepartureDate,
+                          const DateTime_T& iRequestDateTime,
+                          const CabinCode_T& iPreferredCabin,
+                          const NbOfSeats_T& iPartySize,
+                          const ChannelLabel_T& iChannel,
+                          const TripType_T& iTripType,
+                          const DayDuration_T& iStayDuration,
+                          const FrequentFlyer_T& iFrequentFlyerType,
+                          const Duration_T& iPreferredDepartureTime,
+                          const WTP_T& iWTP,
+                          const PriceValue_T& iValueOfTime);
+
     /** Copy constructor. */
     BookingRequestStruct (const BookingRequestStruct&);
+    
+  private:
+    /** Default constructor.
+        <br>It is private so that it can not be used. */
+    BookingRequestStruct ();
+
   public:
     /** Destructor. */
     ~BookingRequestStruct();

@@ -6,7 +6,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <string>
-#include <vector>
+#include <list>
 
 namespace stdair {
 
@@ -15,8 +15,7 @@ namespace stdair {
   typedef std::string MapKey_T;
 
   /** List of keys. */
-  typedef std::vector<std::string> KeyList_T;
-
+  typedef std::list<std::string> KeyList_T;
 
 }
 #endif // __STDAIR_BOM_KEY_TYPES_HPP
