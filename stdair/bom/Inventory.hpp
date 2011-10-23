@@ -6,6 +6,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <iosfwd>
+#include <string>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
@@ -86,23 +87,26 @@ namespace stdair {
     // ////////// Constructors and destructors /////////
     /** Constructor. */
     Inventory (const Key_T&);
-    /** Default copy constructor. */
-    Inventory (const Inventory&);
     /** Destructor. */
     ~Inventory();
   private:
     /** Default constructor. */
-    Inventory ();
+    Inventory();
+    /** Default copy constructor. */
+    Inventory (const Inventory&);
 
     
   protected:
     // ////////// Attributes /////////
     /** Primary key (airline code). */
     Key_T _key;
+
     /** Pointer on the parent class (BomRoot). */
     BomAbstract* _parent;
+
     /** Features specific to the airline. */
     const AirlineFeature* _airlineFeature;
+
     /** Map holding the children (FlightDate objects). */
     HolderMap_T _holderMap;
   };

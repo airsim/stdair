@@ -12,19 +12,30 @@
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
+  SegmentCabin::SegmentCabin() : _key (DEFAULT_CABIN_CODE), _parent (NULL) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  SegmentCabin::SegmentCabin (const SegmentCabin&)
+    : _key (DEFAULT_CABIN_CODE), _parent (NULL) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   SegmentCabin::SegmentCabin (const Key_T& iKey)
     : _key (iKey), _parent (NULL),
       _capacity (DEFAULT_CABIN_CAPACITY),
       _blockSpace (DEFAULT_BLOCK_SPACE),
       _bookingCounter (DEFAULT_CLASS_NB_OF_BOOKINGS),
-      _commitedSpace (DEFAULT_COMMITED_SPACE),
+      _committedSpace (DEFAULT_COMMITTED_SPACE),
       _availabilityPool (DEFAULT_AVAILABILITY),
       _bidPriceVector (DEFAULT_BID_PRICE_VECTOR),
       _currentBidPrice (DEFAULT_BID_PRICE) {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentCabin::~SegmentCabin () {
+  SegmentCabin::~SegmentCabin() {
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -35,8 +46,9 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void SegmentCabin::updateFromReservation (const NbOfBookings_T& iNbOfBookings){
-    _commitedSpace += iNbOfBookings;
+  void SegmentCabin::
+  updateFromReservation (const NbOfBookings_T& iNbOfBookings) {
+    _committedSpace += iNbOfBookings;
   }
 
 }

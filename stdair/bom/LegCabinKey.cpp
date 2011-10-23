@@ -2,11 +2,18 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
+#include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/LegCabinKey.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  LegCabinKey::LegCabinKey() : _cabinCode (DEFAULT_CABIN_CODE) {
+    assert (false);
+  }
 
   // ////////////////////////////////////////////////////////////////////
   LegCabinKey::LegCabinKey (const CabinCode_T& iCabinCode)

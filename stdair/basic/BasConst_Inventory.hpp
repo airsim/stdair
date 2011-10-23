@@ -10,6 +10,24 @@
 namespace stdair {
 
   // //////// Inventory-related BOM ///////
+  /** Default Flight Number. */
+  extern const FlightNumber_T DEFAULT_FLIGHT_NUMBER;
+  
+  /** Default Flight Date. */
+  extern const Date_T DEFAULT_FLIGHT_DATE;
+  
+  /** Default Origin. */
+  extern const AirportCode_T DEFAULT_ORIGIN;
+  
+  /** Default Destination. */
+  extern const AirportCode_T DEFAULT_DESTINATION;
+  
+  /** Default Cabin Code. */
+  extern const CabinCode_T DEFAULT_CABIN_CODE;
+
+  /** Default Fare Family Code. */
+  extern const FamilyCode_T DEFAULT_FARE_FAMILY_CODE;
+
   /** Default Bid-Price. */
   extern const BidPrice_T DEFAULT_BID_PRICE;
 

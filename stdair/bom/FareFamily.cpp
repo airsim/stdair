@@ -3,19 +3,30 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-// STDAIR
-#include <stdair/basic/BasConst_Yield.hpp>
+#include <sstream>
+// StdAir
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/FareFamily.hpp>
 
 namespace stdair {
 
+  // ////////////////////////////////////////////////////////////////////
+  FareFamily::FareFamily() : _key (DEFAULT_FARE_FAMILY_CODE), _parent (NULL) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  FareFamily::FareFamily (const FareFamily&)
+    : _key (DEFAULT_FARE_FAMILY_CODE), _parent (NULL) {
+    assert (false);
+  }
 
   // ////////////////////////////////////////////////////////////////////
   FareFamily::FareFamily (const Key_T& iKey) : _key (iKey), _parent (NULL) {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  FareFamily::~FareFamily () {
+  FareFamily::~FareFamily() {
   }
 
   // ////////////////////////////////////////////////////////////////////

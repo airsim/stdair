@@ -4,18 +4,36 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STL
+#include <iosfwd>
 // StdAir
-#include <stdair/factory/FacBom.hpp>
 #include <stdair/command/CmdAbstract.hpp>
-#include <stdair/service/Logger.hpp>
 
 namespace stdair {
 
   // Forward declarations
+  class BomRoot;
 
-  /** Class wrapping utility functions for handling the BOM tree objects. */
+
+  /**
+   * Class wrapping utility functions for handling the BOM tree
+   * objects.
+   */
   class CmdBomManager : public CmdAbstract {
   public:
+
+    // //////////////// BOM initialisation support methods /////////////////
+    /**
+     * Build a sample BOM tree, and attach it to the given reference.
+     *
+     * As for now, two inventories (one for BA, another for AF) are
+     * built, each containing one flight. One of those flights has two
+     * legs (and therefore three segments).
+     *     
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    static void buildSampleBom (BomRoot&);
 
   };
 }

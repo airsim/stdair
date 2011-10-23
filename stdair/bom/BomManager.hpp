@@ -6,6 +6,9 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <iosfwd>
+#include <string>
+#include <list>
+#include <map>
 // StdAir
 #include <stdair/stdair_exceptions.hpp>
 #include <stdair/bom/BomAbstract.hpp>
@@ -60,12 +63,10 @@ namespace stdair {
     HolderMap_T::const_iterator itHolder = lHolderMap.find (&typeid (OBJECT2));
     
     if (itHolder == lHolderMap.end()) {
-      std::string lName (typeid (OBJECT2).name());
-      
-      std::ostringstream oMessage;
-      oMessage << "Cannot find the holder of type " << lName
-               << " within: " << iObject1.describeKey();
-      throw NonInitialisedContainerException (oMessage.str());
+      const std::string lName (typeid (OBJECT2).name());
+      throw NonInitialisedContainerException ("Cannot find the holder of type "
+                                              + lName + " within: "
+                                              + iObject1.describeKey());
     } 
     
     const BomHolder<OBJECT2>* lBomHolder_ptr = 
@@ -103,7 +104,7 @@ namespace stdair {
       static_cast<const BomHolder<OBJECT2>*> (itHolder->second);
     assert (lBomHolder_ptr != NULL);
 
-    return !lBomHolder_ptr._bomList.empty();
+    return !lBomHolder_ptr->_bomList.empty();
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -119,7 +120,7 @@ namespace stdair {
       static_cast<const BomHolder<OBJECT2>*> (itHolder->second);
     assert (lBomHolder_ptr != NULL);
 
-    return !lBomHolder_ptr._bomMap.empty();
+    return !lBomHolder_ptr->_bomMap.empty();
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -134,7 +135,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   template <typename OBJECT2, typename OBJECT1>
-  OBJECT2* BomManager::getObjectPtr (const OBJECT1& iObject1, 
+  OBJECT2* BomManager::getObjectPtr (const OBJECT1& iObject1,
                                      const MapKey_T& iKey) {
     OBJECT2* oBom_ptr = NULL;
     
@@ -165,7 +166,9 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   template <typename OBJECT2, typename OBJECT1>
-  OBJECT2& BomManager::getObject (const OBJECT1& iObject1, const MapKey_T& iKey){
+  OBJECT2& BomManager::getObject (const OBJECT1& iObject1,
+                                  const MapKey_T& iKey) {
+    OBJECT2* oBom_ptr = NULL;
     
     typedef std::map<const MapKey_T, OBJECT2*> BomMap_T;
     const BomMap_T& lBomMap = getMap<OBJECT2> (iObject1);
@@ -173,7 +176,7 @@ namespace stdair {
     typename BomMap_T::const_iterator itBom = lBomMap.find (iKey);
 
     if (itBom == lBomMap.end()) {
-      std::string lName (typeid (OBJECT2).name());
+      const std::string lName (typeid (OBJECT2).name());
       
       STDAIR_LOG_ERROR ("Cannot find the objet of type " << lName
                         << " with key " << iKey << " within: " 
@@ -181,12 +184,11 @@ namespace stdair {
       assert (false);
     }
     
-    OBJECT2* oBom_ptr = itBom->second;
+    oBom_ptr = itBom->second;
     assert (oBom_ptr != NULL);
 
     return *oBom_ptr;
   }
   
 }
-
 #endif // __STDAIR_BOM_BOMMANAGER_HPP

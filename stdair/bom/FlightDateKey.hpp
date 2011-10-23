@@ -11,20 +11,26 @@
 
 namespace stdair {
 
-  /** Key of flight-date. */
+  /**
+   * Key of a given flight-date, made of a flight number and a
+   * departure date.
+   */
   struct FlightDateKey : public KeyAbstract {
-    
+
+    // /////////// Constructors and destructors ///////////
   private:
-    // /////////// Default constructor //////////
-    FlightDateKey () { };
+    /** Default constructor. */
+    FlightDateKey();
+
   public:
-    // /////////// Construction ///////////
-    /** Constructors. */
+    /** Constructor. */
     FlightDateKey (const FlightNumber_T&, const Date_T&);
+    /** Default copy constructor. */
     FlightDateKey (const FlightDateKey&);
     /** Destructor. */
-    ~FlightDateKey ();
-    
+    ~FlightDateKey();
+
+
     // /////////// Getters //////////
     /** Get the flight number. */
     const FlightNumber_T& getFlightNumber() const {
@@ -35,7 +41,8 @@ namespace stdair {
     const Date_T& getFlightDate() const {
       return _flightDate;
     }
-    
+
+
     // /////////// Display support methods /////////
     /** Dump a Business Object Key into an output stream.
         @param ostream& the output stream. */
@@ -51,9 +58,10 @@ namespace stdair {
        <br>For instance, "H" and "K" allow to differentiate among two
        marketing classes for the same segment-date. */
     const std::string toString() const;
-    
+  
+
   private:
-    // Attributes
+    // ///////////////// Attributes ///////////////
     /** Flight number. */
     FlightNumber_T _flightNumber;
 

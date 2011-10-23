@@ -2,28 +2,36 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
+#include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/InventoryKey.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
+  InventoryKey::InventoryKey() : _airlineCode (DEFAULT_AIRLINE_CODE) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   InventoryKey::InventoryKey (const AirlineCode_T& iAirlineCode)
     : _airlineCode (iAirlineCode) {
   }
+
   // ////////////////////////////////////////////////////////////////////
   InventoryKey::InventoryKey (const InventoryKey& iKey)
     : _airlineCode (iKey._airlineCode) {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  InventoryKey::~InventoryKey () {
+  InventoryKey::~InventoryKey() {
   }
 
   // ////////////////////////////////////////////////////////////////////
   void InventoryKey::toStream (std::ostream& ioOut) const {
-    ioOut << "InventoryKey: " << toString() << std::endl;
+    ioOut << "InventoryKey: " << toString();
   }
 
   // ////////////////////////////////////////////////////////////////////

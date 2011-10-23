@@ -10,26 +10,32 @@
 
 namespace stdair {
 
-  /** Key of leg-cabin. */
+  /**
+   * Key of a given leg-cabin, made of a cabin code.
+   */
   struct LegCabinKey : public KeyAbstract {
 
+    // /////////// Constructors and destructors ///////////
   private:
-    // /////////// Default constructor //////////
-    LegCabinKey () { };
+    /** Default constructor. */
+    LegCabinKey();
+
   public:
-    // /////////// Construction ///////////
-    /** Constructors. */
+    /** Constructor. */
     LegCabinKey (const CabinCode_T& iCabinCode);
+    /** Default copy constructor. */
     LegCabinKey (const LegCabinKey&);
     /** Destructor. */
-    ~LegCabinKey ();
+    ~LegCabinKey();
     
+
     // /////////// Getters //////////
     /** Get the cabin code. */
     const CabinCode_T& getCabinCode () const {
       return _cabinCode;
     }
     
+
     // /////////// Display support methods /////////
     /** Dump a Business Object Key into an output stream.
         @param ostream& the output stream. */
@@ -46,8 +52,9 @@ namespace stdair {
        marketing classes for the same leg-cabin. */
     const std::string toString() const;
     
+
   private:
-    // Attributes
+    // ///////////////// Attributes ///////////////
     /** Cabin code. */
     CabinCode_T _cabinCode;
   };

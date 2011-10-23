@@ -3,14 +3,26 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-// STDAIR
+#include <sstream>
+// StdAir
 #include <stdair/basic/BasConst_General.hpp>
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/LegDate.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  LegDate::LegDate (const Key_T& iKey) \
+  LegDate::LegDate() : _key (DEFAULT_ORIGIN), _parent (NULL) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  LegDate::LegDate (const LegDate&) : _key (DEFAULT_ORIGIN), _parent (NULL) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  LegDate::LegDate (const Key_T& iKey) 
     : _key (iKey), _parent (NULL), _distance (DEFAULT_DISTANCE_VALUE),
       _capacity (DEFAULT_CABIN_CAPACITY) {
   }
@@ -31,26 +43,35 @@ namespace stdair {
     // TimeOffset = (OffTime - BoardingTime) + (OffDate - BoardingDate) * 24
     //              - ElapsedTime
     Duration_T oTimeOffset = (_offTime - _boardingTime);
+
     const DateOffset_T& lDateOffset = getDateOffset();
+
     const Duration_T lDateOffsetInHours (lDateOffset.days() * 24, 0, 0);
+
     oTimeOffset += lDateOffsetInHours - _elapsedTime;
+
     return oTimeOffset;
   }
   
   // ////////////////////////////////////////////////////////////////////
-  void LegDate::setElapsedTime(const Duration_T& iElapsedTime) {
+  void LegDate::setElapsedTime (const Duration_T& iElapsedTime) {
     // Set Elapsed time
     _elapsedTime = iElapsedTime;
+
     // Update distance according to the mean plane speed
-    updateDistanceFromElapsedTime ();
+    updateDistanceFromElapsedTime();
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void LegDate::updateDistanceFromElapsedTime () {
+  void LegDate::updateDistanceFromElapsedTime() {
+    //
     const double lElapseInHours =
-      static_cast<const double>(_elapsedTime.hours());
-    const long int lDistance =
-      static_cast<const long int>(DEFAULT_FLIGHT_SPEED*lElapseInHours);
+      static_cast<const double> (_elapsedTime.hours());
+
+    // Normally, Distance_T is an unsigned long int
+    const Distance_T lDistance =
+      static_cast<const Distance_T> (DEFAULT_FLIGHT_SPEED * lElapseInHours);
+    
     _distance = lDistance;
   }
   

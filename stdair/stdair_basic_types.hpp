@@ -15,7 +15,7 @@ namespace stdair {
   typedef std::string LocationCode_T;
   
   /** Define a distance (kilometers). */
-  typedef long int Distance_T;
+  typedef unsigned long int Distance_T;
 
   /** Define the Airport Code type (3-letter-code, e.g., LHR). */
   typedef LocationCode_T AirportCode_T;

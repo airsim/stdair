@@ -46,7 +46,7 @@ namespace stdair {
   extern const CabinCapacity_T DEFAULT_CABIN_CAPACITY;
 
   /** Default commited space value for Leg cabins. */
-  extern const CommitedSpace_T DEFAULT_COMMITED_SPACE;
+  extern const CommittedSpace_T DEFAULT_COMMITTED_SPACE;
 
   /** Default commited space value for Leg cabins. */
   extern const BlockSpace_T DEFAULT_BLOCK_SPACE;

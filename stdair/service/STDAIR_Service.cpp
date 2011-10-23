@@ -3,13 +3,13 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
+#include <sstream>
 // StdAir
 #include <stdair/stdair_types.hpp>
 #include <stdair/basic/BasChronometer.hpp>
-#include <stdair/bom/BomManager.hpp> // for display()
+#include <stdair/bom/BomManager.hpp>
+#include <stdair/bom/BomDisplay.hpp>
 #include <stdair/bom/BomRoot.hpp>
-#include <stdair/bom/Inventory.hpp>
-#include <stdair/bom/YieldStore.hpp>
 #include <stdair/factory/FacBom.hpp>
 #include <stdair/command/CmdBomManager.hpp>
 #include <stdair/service/FacSupervisor.hpp>
@@ -20,7 +20,7 @@
 namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
-  STDAIR_Service::STDAIR_Service ()
+  STDAIR_Service::STDAIR_Service()
     : _bomRoot (FacBom<BomRoot>::instance().create()) {
   }
 
@@ -40,7 +40,7 @@ namespace stdair {
     logInit (iLogParams);
 
     // Initialise the (remaining of the) context
-    init ();
+    init();
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -57,11 +57,11 @@ namespace stdair {
     dbInit (iDBParams);
 
     // Initialise the (remaining of the) context
-    init ();
+    init();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  STDAIR_Service::~STDAIR_Service () {
+  STDAIR_Service::~STDAIR_Service() {
     // Delete/Clean all the objects from memory
     finalise();
   }
@@ -77,14 +77,28 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void STDAIR_Service::init () {
+  void STDAIR_Service::init() {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void STDAIR_Service::finalise () {
-    //std::cout << "In STDAIR_Service destructor, before cleaning" << std::endl;
+  void STDAIR_Service::buildSampleBom() {
+    // Build a sample BOM tree
+    CmdBomManager::buildSampleBom (_bomRoot);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::csvDisplay() const {
+    std::ostringstream oStr;
+    
+    // Dump the content of the whole BOM tree into the string
+    BomDisplay::csvDisplay (oStr, _bomRoot);
+    
+    return oStr.str();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void STDAIR_Service::finalise() {
     FacSupervisor::cleanAll();
-    //std::cout << "In STDAIR_Service destructor, after cleaning" << std::endl;
   }
 
 }

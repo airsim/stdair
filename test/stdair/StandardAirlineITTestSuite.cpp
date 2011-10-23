@@ -111,10 +111,11 @@ BOOST_AUTO_TEST_CASE (stdair_service_initialisation_test) {
   const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
   stdair::STDAIR_Service stdairService (lLogParams);
 
-  // Get the BOM Root
-  const stdair::BomRoot& lBomRoot = stdairService.getBomRoot();
-  const std::string& lBomRootKeyStr = lBomRoot.describeKey();
+  // Retrieve (a reference on) the top of the BOM tree
+  stdair::BomRoot& lBomRoot = stdairService.getBomRoot();
 
+  // Retrieve the BomRoot key, and compare it to the one expected
+  const std::string& lBomRootKeyStr = lBomRoot.describeKey();
   const std::string lBomRootString (" -- ROOT -- ");
 
   // DEBUG
@@ -126,6 +127,13 @@ BOOST_AUTO_TEST_CASE (stdair_service_initialisation_test) {
                        "The BOM root key, '" << lBomRootKeyStr
                        << "', should be equal to '" << lBomRootString
                        << "', but is not.");
+
+  // Build a sample BOM tree
+  stdairService.buildSampleBom();
+
+  // DEBUG: Display the whole BOM tree
+  const std::string& lCSVDump = stdairService.csvDisplay();
+  STDAIR_LOG_DEBUG (lCSVDump);
 
   // Close the Log outputFile
   logOutputFile.close();

@@ -10,26 +10,32 @@
 
 namespace stdair {
   
-  /** Key of inventory. */
+  /**
+   * Key of a given inventory, made of the airline code.
+   */
   struct InventoryKey : public KeyAbstract {
     
+    // /////////// Constructors and destructors ///////////
   private:
-    // /////////// Default constructor //////////
-    InventoryKey () { };
+    /** Default constructor. */
+    InventoryKey();
     
   public:
     // /////////// Construction ///////////
-    /** Constructors. */
+    /** Constructor. */
     InventoryKey (const AirlineCode_T& iAirlineCode);
+    /** Default copy constructor. */
     InventoryKey (const InventoryKey&);
     /** Destructor. */
     ~InventoryKey ();
     
+
     // /////////// Getters //////////
     /** Get the airline code. */
     const AirlineCode_T& getAirlineCode() const {
       return _airlineCode;
     }
+
 
     // /////////// Display support methods /////////
     /** Dump a Business Object Key into an output stream.
@@ -47,8 +53,9 @@ namespace stdair {
        marketing classes for the same segment-date. */
     const std::string toString() const;
 
+
   private:
-    // Attributes
+    // ///////////////// Attributes ///////////////
     /** Airline code. */
     AirlineCode_T _airlineCode;
   };

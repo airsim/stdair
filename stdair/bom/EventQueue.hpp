@@ -179,21 +179,32 @@ namespace stdair {
     bool isQueueDone() const;
 
     /**
-     * Initialise the progress statuses for each demand stream.
-     * <br>For each demand stream, the progress status is actually
-     * a pair of counters:
+     * Initialise the progress statuses for the given demand stream.
+     * <br>The progress status is actually a pair of counters:
      * <ul>
-     *   <li>The current number of (already generated) events, summed
-     *       over all the demand streams. That number is initialised
-     *       to 0 (no event has been generated yet) for each demand
-     *       stream.</li>
-     *   <li>The total number of events (to be generated), also summed
-     *       over all the demand streams. That number is calculated
-     *       for each demand stream.</li>
+     *   <li>The current number of (already generated) events, for the
+     *       given demand stream. That number is initialised
+     *       to 0 (no event has been generated yet).</li>
+     *   <li>The total number of events (to be generated), also for the
+     *       given demand stream.</li>
      * </ul>
      */
     void addStatus (const DemandStreamKeyStr_T&,
                     const NbOfRequests_T& iExpectedTotalNbOfEvents);
+
+    /**
+     * Update the progress statuses for the given demand stream.
+     * <br>The progress status is actually a pair of counters:
+     * <ul>
+     *   <li>The current number of (already generated) events, for the
+     *       given demand stream. That number is initialised
+     *       to 0 (no event has been generated yet).</li>
+     *   <li>The total number of events (to be generated), also for the
+     *       given demand stream.</li>
+     * </ul>
+     */
+    void updateStatus (const DemandStreamKeyStr_T&,
+                       const NbOfRequests_T& iActualTotalNbOfEvents);
 
     /**
      * Calculate the progress status.

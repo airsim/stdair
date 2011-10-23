@@ -3,6 +3,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
+#include <sstream>
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/Inventory.hpp>
@@ -10,7 +11,14 @@
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory::Inventory () : _key (DEFAULT_AIRLINE_CODE), _parent (NULL) {
+  Inventory::Inventory() : _key (DEFAULT_AIRLINE_CODE), _parent (NULL) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  Inventory::Inventory (const Inventory&)
+    : _key (DEFAULT_AIRLINE_CODE), _parent (NULL) {
+    assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////

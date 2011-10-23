@@ -2,11 +2,23 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
+#include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/BookingClassKey.hpp>
 
 namespace stdair {
+
+  // ////////////////////////////////////////////////////////////////////
+  BookingClassKey::BookingClassKey() : _classCode (DEFAULT_CLASS_CODE) {
+    assert (false);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  BookingClassKey::BookingClassKey (const BookingClassKey& iKey)
+    : _classCode (iKey._classCode) {
+  }
 
   // ////////////////////////////////////////////////////////////////////
   BookingClassKey::BookingClassKey (const ClassCode_T& iClassCode)
@@ -19,7 +31,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   void BookingClassKey::toStream (std::ostream& ioOut) const {
-    ioOut << "BookingClassKey: " << toString() << std::endl;
+    ioOut << "BookingClassKey: " << toString();
   }
 
   // ////////////////////////////////////////////////////////////////////

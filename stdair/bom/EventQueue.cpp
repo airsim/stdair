@@ -15,7 +15,7 @@
 namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
-  EventQueue::EventQueue ()
+  EventQueue::EventQueue()
     : _key (DEFAULT_EVENT_QUEUE_ID), _parent (NULL),
       _progressStatus (stdair::DEFAULT_PROGRESS_STATUS,
                        stdair::DEFAULT_PROGRESS_STATUS) {
@@ -37,7 +37,7 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  EventQueue::~EventQueue () {
+  EventQueue::~EventQueue() {
     _eventList.clear();
     _nbOfEvents.clear();
   }
@@ -97,12 +97,18 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   void EventQueue::reset() {
     // Reset only the current number of events, not the expected one
-    _progressStatus.setCurrentNb (DEFAULT_PROGRESS_STATUS);
+    _progressStatus.reset();
     
-    //
-    _holderMap.clear();
+    // Empty the list of events
     _eventList.clear();
-    _nbOfEvents.clear();
+
+    // Reset the progress statuses for all the demand streams
+    for (NbOfEventsByDemandStreamMap_T::iterator itNbOfEvents =
+           _nbOfEvents.begin();
+         itNbOfEvents != _nbOfEvents.end(); ++itNbOfEvents) {
+      ProgressStatus& lProgressStatus = itNbOfEvents->second;
+      lProgressStatus.reset();
+    }
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -111,18 +117,17 @@ namespace stdair {
              const NbOfRequests_T& iExpectedTotalNbOfEvents) {
 
     /**
-     * \note After the initialisation of the event queue (e.g., by a
-     * call to the TRADEMGEN_Service::generateFirstRequests() method),
-     * there are, by construction, exactly as many events as distinct
-     * demand streams. Indeed, the event queue contains a single event
+     * \note After the initialisation of the DemandStream objects
+     * attached to the event queue, there are, by construction,
+     * exactly as many events as there are distinct demand
+     * streams. Indeed, the event queue contains a single event
      * structure for every demand stream.
      */
-    
+
     // Initialise the progress status object for the current demand stream
     const Count_T lExpectedTotalNbOfEventsInt =
       std::floor (iExpectedTotalNbOfEvents);
-    const ProgressStatus lProgressStatus (1, lExpectedTotalNbOfEventsInt,
-                                          lExpectedTotalNbOfEventsInt);
+    const ProgressStatus lProgressStatus (lExpectedTotalNbOfEventsInt);
       
     // Insert the (Boost) progress display object into the dedicated map
     const bool hasInsertBeenSuccessful =
@@ -146,6 +151,24 @@ namespace stdair {
 
     _progressStatus.setActualNb (_progressStatus.getActualNb()
                                    + iExpectedTotalNbOfEvents);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void EventQueue::
+  updateStatus (const DemandStreamKeyStr_T& iDemandStreamKeyStr,
+                const NbOfRequests_T& iExpectedTotalNbOfEvents) {
+
+    // Initialise the progress status object for the current demand stream
+    const Count_T lExpectedTotalNbOfEventsInt =
+      std::floor (iExpectedTotalNbOfEvents);
+      
+    // Update the progress status for the corresponding demand stream
+    NbOfEventsByDemandStreamMap_T::iterator itNbOfEvents =
+      _nbOfEvents.find (iDemandStreamKeyStr);
+    if (itNbOfEvents != _nbOfEvents.end()) {
+      ProgressStatus& lProgressStatus = itNbOfEvents->second;
+      lProgressStatus.setActualNb (lExpectedTotalNbOfEventsInt);
+    }
   }
 
   // //////////////////////////////////////////////////////////////////////

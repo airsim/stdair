@@ -10,22 +10,32 @@
 
 namespace stdair {
   
-  /** Key of booking-class. */
+  /**
+   * Key of a given leg-cabin, made of a cabin code.
+   */
   struct BookingClassKey : public KeyAbstract {
     
+    // /////////// Constructors and destructors ///////////
+  private:
+    /** Default constructor. */
+    BookingClassKey();
+
   public:
-    // /////////// Construction ///////////
     /** Constructor. */
     BookingClassKey (const ClassCode_T& iClassCode);
+    /** Default copy constructor. */
+    BookingClassKey (const BookingClassKey&);
     /** Destructor. */
-    ~BookingClassKey ();
+    ~BookingClassKey();
     
+
     // /////////// Getters //////////
     /** Get the class code. */
     const ClassCode_T& getClassCode () const {
       return _classCode;
     }
     
+
     // /////////// Display support methods /////////
     /** Dump a Business Object Key into an output stream.
         @param ostream& the output stream. */
@@ -42,8 +52,9 @@ namespace stdair {
        marketing classes for the same segment-cabin. */
     const std::string toString() const;
     
+
   private:
-    // Attributes
+    // ///////////////// Attributes ///////////////
     /** Cabin code. */
     ClassCode_T _classCode;
   };
