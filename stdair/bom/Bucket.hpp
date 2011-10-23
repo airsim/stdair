@@ -14,6 +14,7 @@ namespace stdair {
   /** Class representing the actual attributes for an airline booking class. */
   class Bucket : public BomAbstract {
     template <typename BOM> friend class FacBom;
+    friend class FacBomManager;
     
   public:
     // Type definitions.
@@ -23,9 +24,13 @@ namespace stdair {
   public:
     // /////////// Getters ////////////
     /** Get the booking class key. */
-    const Key_T& getKey() const {
-      return _key;
-    }
+    const Key_T& getKey() const { return _key; }
+
+    /** Get the parent object. */
+    BomAbstract* const getParent() const { return _parent; }
+
+    /** Get the map of children holders. */
+    const HolderMap_T& getHolderMap() const { return _holderMap; }
 
   public:
     // /////////// Display support methods /////////
@@ -52,8 +57,9 @@ namespace stdair {
 
   public:
     // Attributes
-    /** The key of both structure and  objects. */
     Key_T _key;
+    BomAbstract* _parent;
+    HolderMap_T _holderMap;
     // test AIRINV
     stdair::Yield_T _yieldRangeUpperValue;
     stdair::CabinCapacity_T _availability;

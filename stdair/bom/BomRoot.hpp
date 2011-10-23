@@ -12,6 +12,7 @@ namespace stdair {
   /** Class representing the actual attributes for the Bom root. */
   class BomRoot : public BomAbstract {
     template <typename BOM> friend class FacBom;
+    friend class FacBomManager;
     
   public:
     /** Definition allowing to retrieve the associated BOM key type. */
@@ -19,10 +20,8 @@ namespace stdair {
 
   public:
     // /////////// Getters //////////////
-    /** Get the BomRoot key. */
-    const Key_T& getKey() const {
-      return _key;
-    }
+    const Key_T& getKey() const { return _key; }
+    const HolderMap_T& getHolderMap() const { return _holderMap; }
 
   public:
     // /////////// Display support methods /////////
@@ -50,8 +49,8 @@ namespace stdair {
 
   protected:
     // Attributes
-    /** The key of both structure and  objects. */
-    Key_T _key; 
+    Key_T _key;
+    HolderMap_T _holderMap;
   };
 
 }

@@ -18,6 +18,7 @@ namespace stdair {
    */
   class Inventory : public BomAbstract {
     template <typename BOM> friend class FacBom;
+    friend class FacBomManager;
 
   public :
     // Type definitions
@@ -42,15 +43,10 @@ namespace stdair {
 
   public:
     // ////////// Getters ////////////
-    /** Get the inventory key. */
-    const Key_T& getKey() const {
-      return _key;
-    }
-    
-    /** Get the airline code. */
-    const AirlineCode_T& getAirlineCode () const {
-      return _key.getAirlineCode();
-    }
+    const Key_T& getKey() const { return _key; }
+    const AirlineCode_T& getAirlineCode() const { return _key.getAirlineCode();}
+    BomAbstract* const getParent() const { return _parent; }
+    const HolderMap_T& getHolderMap() const { return _holderMap; }
     
   public:
     // /////////// Setters ////////////
@@ -68,11 +64,10 @@ namespace stdair {
 
   protected:
     // Attributes
-    /** The key of both structure and  objects. */
     Key_T _key;
-    
-    /** The feature set of the correspondent airline. */
+    BomAbstract* _parent;
     const AirlineFeature* _airlineFeature;
+    HolderMap_T _holderMap;
   };
 
 }

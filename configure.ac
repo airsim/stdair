@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------
 AC_PREREQ(2.59)
 AC_COPYRIGHT([Copyright (C) 2007-2010  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
-AC_INIT([STDAIR],[0.4.0],[denis_arnaud@users.sourceforge.net],[stdair])
+AC_INIT([STDAIR],[0.5.0],[denis_arnaud@users.sourceforge.net],[stdair])
 AC_CONFIG_HEADER([stdair/config.h])
 AC_CONFIG_SRCDIR([stdair/bom/BomRoot.hpp])
 AC_CONFIG_AUX_DIR([config])
@@ -11,7 +11,7 @@ AM_PATH_CPPUNIT(1.10)
 AM_CONDITIONAL([HAVE_CPPUNIT], [test "x$CPPUNIT_LIBS" != x])
 
 # Shared library versioning
-GENERIC_LIBRARY_VERSION="0:4:0"
+GENERIC_LIBRARY_VERSION="0:5:0"
 #                        | | |
 #                 +------+ | +---+
 #                 |        |     |
@@ -223,6 +223,8 @@ AC_CONFIG_FILES(
 	test/samples/Makefile
 	test/inheritance/Makefile
 	test/architecture/Makefile
+	test/archi_intru/Makefile
+	test/archi_static_cast/Makefile
 	test/mpl/Makefile
 	test/mpl/contrib/Makefile
 	test/stdair/Makefile
