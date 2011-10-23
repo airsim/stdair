@@ -298,7 +298,7 @@ namespace stdair {
     /** Price & product oriented booking block. */
     SnapshotBlock_T _productAndPriceOrientedBookingSnapshotBlock;
 
-    /** Price & product oriented booking block. */
+    /** Availability block. */
     SnapshotBlock_T _availabilitySnapshotBlock;
   };
 

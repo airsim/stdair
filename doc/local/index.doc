@@ -4,7 +4,7 @@
 \htmlonly
 <!-- start of main block -->
 <div style="width: 100%;">
-<!-- start of left margin -->
+<!-- start of right margin -->
 <div style="float:right; width:200px; background-color: #eeeeff; 
      border: 1px solid #b0b0b0; margin: 0 0 10px 20px; padding: 10px; 
      font-size: 90%;">
@@ -43,13 +43,31 @@
 
 \section external_libs External Libraries
 - <a href="http://www.boost.org">Boost (C++ STL extensions)</a>
+- <a href="http://www.zeromq.org/">ZeroMQ (networking made easy)</a>
+- <a href="http://www.python.org/">Python</a>
 - <a href="http://dev.mysql.com/">MySQL client</a>
 - <a href="http://soci.sourceforge.net/">SOCI (C++ DB API)</a>
 
+\section social_sponsorship Support StdAir
+\htmlonly
+<table width="100%">
+ <tr>
+  <td align="center" valign="middle" style="padding-left:10px">
+   <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="denis_arnaud">Tweet</a>
+   <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><g:plusone></g:plusone> 
+  </td>
+ </tr>
+ <tr>
+  <td valign="middle">
+   <a href="http://sourceforge.net/projects/stdair" title="StdAir" rel="nofollow"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=267760&type=12&format=.png" alt="C++ Standard Airline IT Object Library" title="StdAir"/></a> 
+  </td>
+ </tr>
+</table>
+\endhtmlonly
 
 \htmlonly
 </div>
-<!-- end of left margin -->
+<!-- end of right margin -->
 \endhtmlonly
 
 \section about About StdAir
@@ -68,8 +86,8 @@ The StdAir library originates from the department of Operational
 Research and Innovation at <a
 href="http://www.amadeus.com">Amadeus</a>, Sophia Antipolis,
 France. StdAir is released under the terms of the <a
-href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public
-License</a> (LGPL) for you to enjoy.
+href="http://www.gnu.org/licenses/lgpl-2.1.html">GNU Lesser General Public
+License</a> (LGPLv2.1) for you to enjoy.
 
 StdAir should work on
 <a href="http://en.wikipedia.org/wiki/GNU/Linux">GNU/Linux</a>,

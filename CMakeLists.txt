@@ -1,5 +1,5 @@
 #
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 2.6)
 
 ##
 # CMake macros for the project
@@ -8,7 +8,7 @@ include (config/project_config_embeddable.cmake)
 ##
 # Project info
 set_project_names (stdair StdAir)
-set_project_versions (0 35 0)
+set_project_versions (0 36 2)
 
 ##
 # Project options
@@ -35,7 +35,7 @@ packaging_set_other_options (TBZ2 "TBZ2;TGZ")
 ##            Dependencies            ##
 ########################################
 #
-get_external_libs (git "python 2.7" "boost 1.41" "zeromq 2.0" "mysql 5.4"
+get_external_libs (git "python 2.7" "boost 1.41" "zeromq 2.0" "mysql 5.1"
   "soci 3.0" "doxygen 1.7")
 
 
@@ -63,9 +63,7 @@ install_basic_documentation ()
 ##########################################
 ##            Documentation             ##
 ##########################################
-if (${INSTALL_DOC} STREQUAL "ON")
-  add_subdirectory (doc)
-endif (${INSTALL_DOC} STREQUAL "ON")
+handle_html_doc ()
 
 ##
 # Subdirs

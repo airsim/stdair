@@ -80,6 +80,9 @@ namespace stdair {
   /** Default destination airport (e.g., "SYD"). */
   const AirportCode_T AIRPORT_SYD ("SYD");
 
+  /** London city code (e.g., "LHR"). */
+  const CityCode_T POS_LHR ("LHR");
+
   /** Date. */
   const Date_T DATE_20110115 (2011, boost::gregorian::Jan, 15);
   const Date_T DATE_20111231 (2011, boost::gregorian::Dec, 31);
@@ -136,6 +139,9 @@ namespace stdair {
 
   /** Bangkok airport (e.g., "BKK"). */
   const AirportCode_T AIRPORT_BKK ("BKK");
+
+  /** Singapour city code (e.g., "SIN"). */
+  const CityCode_T POS_SIN ("SIN");
 
   /** Economic cabin (e.g., "Eco"). */
   const CabinCode_T CABIN_ECO ("Eco");
@@ -332,7 +338,7 @@ namespace stdair {
   const CabinCode_T DEFAULT_PREFERRED_CABIN ("M");
 
   /** Default point-of-sale. */
-  const AirportCode_T DEFAULT_POS ("ALL");
+  const CityCode_T DEFAULT_POS ("ALL");
 
   /** Default channel (e.g., "DC" meaning Different Channels). */
   const ChannelLabel_T DEFAULT_CHANNEL ("DC");

@@ -19,7 +19,7 @@ namespace stdair  {
     /**
      * Main constructor.
      */
-    PosChannelKey (const CityCode_T&, const ChannelLabel_T&);
+    PosChannelKey (const stdair::CityCode_T&, const stdair::ChannelLabel_T&);
     /**
      * Copy constructor.
      */
@@ -40,14 +40,14 @@ namespace stdair  {
     /**
      * Get the point of sale.
      */
-    const CityCode_T& getPos() const {
+    const stdair::CityCode_T& getPos() const {
       return _pos;
     }
    
     /**
      * Get the channel.
      */
-    const ChannelLabel_T& getChannel() const {
+    const stdair::ChannelLabel_T& getChannel() const {
       return _channel;
     }
     

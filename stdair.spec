@@ -2,7 +2,7 @@
 %global mydocs __tmp_docdir
 #
 Name:           stdair
-Version:        0.35.0
+Version:        0.36.2
 Release:        1%{?dist}
 
 Summary:        C++ Standard Airline IT Object Library
@@ -11,10 +11,10 @@ Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            http://sourceforge.net/projects/%{name}/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
-%{?el5:BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)}
+BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires:  cmake
-BuildRequires:  boost-devel, soci-mysql-devel, zeromq-devel
+BuildRequires:  cmake python-devel
+BuildRequires:  boost-devel, soci-mysql-devel, zeromq-devel,readline-devel
 
 
 %description
@@ -28,11 +28,8 @@ Install the %{name} package if you need a Standard Airline IT C++ objects.
 %package        devel
 Summary:        Header files, libraries and development documentation for %{name}
 Group:          Development/Libraries
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       pkgconfig
-# for %%_datadir/cmake ownership, can consider making cmake-filesystem
-# if this dep is a problem
-Requires: cmake
 
 %description    devel
 This package contains the header files, static libraries and
@@ -54,8 +51,8 @@ library. The documentation is the same as at the %{name} web page.
 %prep
 %setup -q
 # Fix some permissions and formats
-%{__chmod} -x AUTHORS ChangeLog COPYING NEWS README
-find . -type f -name '*.[hc]pp' -exec chmod 644 {} \;
+chmod -x AUTHORS ChangeLog COPYING NEWS README
+find . -type f -name '*.[hc]pp' -exec chmod -x {} \;
 
 
 %build
@@ -63,25 +60,21 @@ find . -type f -name '*.[hc]pp' -exec chmod 644 {} \;
 make %{?_smp_mflags}
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
+
+# Fix some permissions
+find $RPM_BUILD_ROOT%{_libexecdir}/%{name} -type f -name '*.sh' -exec chmod +x {} \;
+
+mkdir -p %{mydocs}
+mv $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/html %{mydocs}
+rm -f %{mydocs}/html/installdox
 
 %check
 ctest
 
-# The INSTALL package is not relevant for RPM package users
-# (e.g., see https://bugzilla.redhat.com/show_bug.cgi?id=489233#c4)
-%{__rm} -f $RPM_BUILD_ROOT/INSTALL
-
-# Fix some permissions
-find $RPM_BUILD_ROOT%{_libexecdir}/%{name} -type f -name '*.sh' -exec chmod 755 {} \;
-
-%{__mkdir_p} %{mydocs}
-%{__mv} $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/html %{mydocs}
-%{__rm} -f %{mydocs}/html/installdox
-
 %clean
-%{__rm} -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %post -p /sbin/ldconfig
 
@@ -97,6 +90,10 @@ find $RPM_BUILD_ROOT%{_libexecdir}/%{name} -type f -name '*.sh' -exec chmod 755 
 %dir %{_libexecdir}/%{name}
 %{_libexecdir}/%{name}/*.sh
 %dir %{_datadir}/%{name}
+%dir %{_datadir}/%{name}/db
+%dir %{_datadir}/%{name}/db/data
+%dir %{_datadir}/%{name}/samples
+%dir %{_datadir}/%{name}/samples/rds01
 %{_datadir}/%{name}/db/data/*.sql
 %{_datadir}/%{name}/db/data/*.csv
 %{_datadir}/%{name}/samples/*.csv
@@ -121,8 +118,20 @@ find $RPM_BUILD_ROOT%{_libexecdir}/%{name} -type f -name '*.sh' -exec chmod 755 
 
 
 %changelog
+* Mon Aug 01 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.36.2-1
+- The CMake framework now takes into account compilation flags
+
+* Sun Jul 31 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.36.1-1
+- Upstream update
+
+* Sun Jul 31 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.36.0-2
+- Took into account review elements (#702987)
+
+* Tue Jul 26 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.36.0-1
+- Upstream update
+
 * Thu Jul 07 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.35.0-1
-- Upstream update 
+- Upstream update
 
 * Wed Jun 15 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.34.0-1
 - Upstream update
