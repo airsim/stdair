@@ -8,7 +8,8 @@ include (config/project_config_embeddable.cmake)
 ##
 # Project info
 set_project_names (stdair StdAir)
-set_project_versions (0 36 2)
+set_project_brief ("C++ Standard Airline IT Library")
+set_project_versions (0 37 1)
 
 ##
 # Project options
@@ -22,7 +23,6 @@ set_project_options (on)
 #####################################
 #
 packaging_init (${PROJECT_NAME})
-packaging_set_description ("C++ Standard Airline IT Library")
 packaging_set_summary ("${PROJECT_NAME} aims at providing a clean API, and the corresponding C++ implementation, for the basis of Airline IT Business Object Model (BOM), that is, to be used by several other open source projects, such as RMOL, Air-Sched, Travel-CCM, OpenTREP, etc.")
 packaging_set_contact ("Denis Arnaud <denis_arnaud - at - users dot sourceforge dot net>")
 packaging_set_vendor ("Denis Arnaud")

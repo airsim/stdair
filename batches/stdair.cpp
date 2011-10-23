@@ -98,7 +98,7 @@ int readConfiguration (int argc, char* argv[], bool& ioIsBuiltin,
     ("builtin,b",
      "The sample BOM tree can be either built-in or parsed from an input file. That latter must then be given with the -i/--input option")
     ("rmol,r",
-     "Build a sample BOM tree for RMOL")
+     "Build a sample BOM tree for RMOL (i.e., a dummy flight-date with a single leg-cabin)")
     ("crs,c",
      "Build a sample BOM tree for CRS")
     ("input,i",
@@ -247,7 +247,7 @@ int main (int argc, char* argv[]) {
 
     if (isForRMOL == true) {
       // Build the sample BOM tree for RMOL
-      stdairService.buildSampleBom (true);
+      stdairService.buildDummyInventory (300);
 
     } else if (isForCRS == true) {
       //

@@ -17,7 +17,6 @@
 - \ref linking
 - \ref users_guide
 - \ref tutorials
-- \ref verification
 - \ref copyright
 - \ref help_wanted
 - \ref howto_release
@@ -52,14 +51,12 @@
 \htmlonly
 <table width="100%">
  <tr>
-  <td align="center" valign="middle" style="padding-left:10px">
+  <td align="left" valign="middle">
    <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="denis_arnaud">Tweet</a>
-   <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><g:plusone></g:plusone> 
+   <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
   </td>
- </tr>
- <tr>
-  <td valign="middle">
-   <a href="http://sourceforge.net/projects/stdair" title="StdAir" rel="nofollow"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=267760&type=12&format=.png" alt="C++ Standard Airline IT Object Library" title="StdAir"/></a> 
+  <td align="right" valign="middle">
+   <g:plusone></g:plusone> 
   </td>
  </tr>
 </table>

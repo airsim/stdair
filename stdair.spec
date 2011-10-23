@@ -2,7 +2,7 @@
 %global mydocs __tmp_docdir
 #
 Name:           stdair
-Version:        0.36.2
+Version:        0.37.1
 Release:        1%{?dist}
 
 Summary:        C++ Standard Airline IT Object Library
@@ -41,7 +41,7 @@ Summary:        HTML documentation for the %{name} library
 Group:          Documentation
 %{?fedora:BuildArch:      noarch}
 BuildRequires:  tex(latex)
-BuildRequires:  doxygen, ghostscript
+BuildRequires:  doxygen, ghostscript, graphviz
 
 %description doc
 This package contains the documentation in the HTML format of the %{name}
@@ -118,8 +118,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Mon Aug 01 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.36.2-1
-- The CMake framework now takes into account compilation flags
+* Wed Aug 10 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.37.1-1
+- Upstream update
+
+* Mon Aug 08 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.37.0-1
+- Upstream update
 
 * Sun Jul 31 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.36.1-1
 - Upstream update

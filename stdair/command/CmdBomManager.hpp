@@ -8,6 +8,7 @@
 #include <iosfwd>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
+#include <stdair/basic/SampleType.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
 #include <stdair/command/CmdAbstract.hpp>
 
@@ -23,11 +24,27 @@ namespace stdair {
    * objects.
    */
   class CmdBomManager : public CmdAbstract {
-  public:
+    //
+    friend class STDAIR_Service;
+  private:
 
     // //////////////// BOM initialisation support methods /////////////////
     /**
-     * Build a sample BOM tree, and attach it to the given reference.
+     * Build a full sample BOM tree (i.e., with objects for all the components)
+     * and attach it to the given reference.
+     *
+     * That method calls in sequence the corresponding specific methods for
+     * all the main components: Schedule, Inventory, Pricing,
+     * Revenue Accounting, Demand Generation and Customer Choice.
+     *
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    static void buildSampleBom (BomRoot&);
+
+    /**
+     * Build a sample BOM tree, with mainly Inventory-related objects,
+     * and attach it to the given reference.
      *
      * As for now, two inventories (one for BA, another for AF) are
      * built, each containing one flight. One of those flights has two
@@ -35,32 +52,33 @@ namespace stdair {
      *     
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
+     * @param const SampleType& The type of component for which the BOM tree
+     *        should be built.
      */
-    static void buildSampleBom (BomRoot&);
+    static void buildSampleInventory (BomRoot&);
 
     /**
-     * Build a sample bom tree for RMOL.
+     * Build a dummy inventory, containing a dummy flight-date with a single
+     * leg-cabin and some virtual booking classes. That structure is the bare
+     * minimum required to perform an optimisation on a leg-cabin.
+     *
+     * As for now, that method is only called by RMOL.
+     *
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     * @param const CabinCapacity_T& Capacity of the single
+     *        leg-cabin on which the optimisation should be performed.
+     */
+    static void buildDummyInventory (BomRoot&, const CabinCapacity_T&);
+
+    /**
+     * Build a sample BOM tree, with mainly Pricing-related objects,
+     * and attach it to the given reference.
      *
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
      */
-    static void buildSampleBomForRMOL (BomRoot&, const CabinCapacity_T&);
-
-    /**
-     * Build a sample bom tree for SimFQT.
-     *
-     * @param BomRoot& Top of the BOM tree, to which the sample should
-     *        be attached.
-     */
-    static void buildSampleBomForFareQuoter (BomRoot&);
-
-    /**
-     * Build a sample bom tree for AirRAC.
-     *
-     * @param BomRoot& Top of the BOM tree, to which the sample should
-     *        be attached.
-     */
-    static void buildSampleBomForAirRAC (BomRoot&);
+    static void buildSamplePricing (BomRoot&);
 
     /**
      * Build a sample list of travel solutions.

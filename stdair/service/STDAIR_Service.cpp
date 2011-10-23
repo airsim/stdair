@@ -144,8 +144,7 @@ namespace stdair {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void STDAIR_Service::buildSampleBom (const bool isForRMOL,
-                                       const CabinCapacity_T iCabinCapacity ) {
+  void STDAIR_Service::buildSampleBom() {
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
@@ -153,17 +152,13 @@ namespace stdair {
     // Retrieve the BOM tree root
     BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
     
-    // Build a sample BOM tree
-    if (isForRMOL == true) {
-      CmdBomManager::buildSampleBomForRMOL (lBomRoot, iCabinCapacity);
-    } else {
-      CmdBomManager::buildSampleBom (lBomRoot);
-    }
+    // Delegate the building process to the dedicated command
+    CmdBomManager::buildSampleBom (lBomRoot);
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void STDAIR_Service::buildSampleBomForFareQuoter () {
-    
+  void STDAIR_Service::
+  buildDummyInventory (const CabinCapacity_T& iCabinCapacity) {
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
@@ -171,22 +166,8 @@ namespace stdair {
     // Retrieve the BOM tree root
     BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
     
-    // Build a sample BOM tree
-    CmdBomManager::buildSampleBomForFareQuoter (lBomRoot);
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  void STDAIR_Service::buildSampleBomForAirRAC () {
-    
-    // Retrieve the StdAir service context
-    assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
-
-    // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
-    
-    // Build a sample BOM tree
-    CmdBomManager::buildSampleBomForAirRAC (lBomRoot);
+    // Delegate the building process to the dedicated command
+    CmdBomManager::buildDummyInventory (lBomRoot, iCabinCapacity);
   }
 
   // //////////////////////////////////////////////////////////////////////
