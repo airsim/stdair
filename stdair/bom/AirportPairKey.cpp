@@ -38,7 +38,7 @@ namespace stdair {
   const std::string AirportPairKey::toString() const {
     std::ostringstream oStr;
     oStr << _boardingPoint << DEFAULT_KEY_SUB_FLD_DELIMITER
-         << " " << _offPoint << std::endl; 
+         << " " << _offPoint; 
     return oStr.str();
   }
 
