@@ -17,6 +17,7 @@
 #include <stdair/bom/BookingRequestTypes.hpp>
 #include <stdair/bom/OptimisationNotificationTypes.hpp>
 #include <stdair/bom/SnapshotTypes.hpp>
+#include <stdair/bom/RMEventTypes.hpp>
 
 namespace stdair {
 
@@ -76,6 +77,18 @@ namespace stdair {
       assert (_snapshot != NULL);
       return *_snapshot;
     }
+    
+    /**
+     * Get a reference on the RM event referred to by the generic event.
+     *
+     * \note When that event is not of type RM event
+     * for snapshot (EventType::OPT_NOT_4_FD), an
+     * assertion fails.
+     */
+    const RMEventStruct& getRMEvent() const {
+      assert (_rmEvent != NULL);
+      return *_rmEvent;
+    }
 
     // ////////// Display methods //////////
   public:
@@ -98,6 +111,8 @@ namespace stdair {
                  OptimisationNotificationPtr_T);
     /** Constructor for events corresponding to snapshot requests. */
     EventStruct (const EventType::EN_EventType&, SnapshotPtr_T);
+    /** Constructor for events corresponding to RM events. */
+    EventStruct (const EventType::EN_EventType&, RMEventPtr_T);
     /** Copy constructor. */
     EventStruct (const EventStruct&);
 
@@ -133,6 +148,11 @@ namespace stdair {
      * Pointer to the snapshot referred to by the event.
      */
     SnapshotPtr_T _snapshot;
+
+    /**
+     * Pointer to the RM event referred to by the event.
+     */
+    RMEventPtr_T _rmEvent;
   };
 
 }

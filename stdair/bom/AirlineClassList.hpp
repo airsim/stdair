@@ -63,7 +63,26 @@ namespace stdair {
     const  HolderMap_T& getHolderMap() const {
       return _holderMap;
     }
+    
+    /** Get the yield. */
+    const stdair::Yield_T& getYield() const {
+      return _yield;
+    }
 
+    /** Get the fare. */
+    const stdair::Fare_T& getFare() const {
+      return _fare;
+    }
+
+  public:
+    // /////////// Setters //////////////
+    void setYield (const Yield_T& iYield) {
+      _yield = iYield;
+    }
+    
+    void setFare (const Fare_T& iFare) {
+      _fare = iFare;
+    }
 
   public:
     // /////////// Display support methods /////////
@@ -152,6 +171,16 @@ namespace stdair {
      * Map holding the children (SegmentDate and LegDate objects).
      */
     HolderMap_T _holderMap;
+ 
+    /*
+     * Yield value.
+     */
+    Yield_T _yield;
+
+    /*
+     * Fare value.
+     */
+    Fare_T _fare;
   };
 
 }

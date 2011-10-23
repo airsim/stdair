@@ -11,6 +11,7 @@
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/OptimisationNotificationStruct.hpp>
 #include <stdair/bom/SnapshotStruct.hpp>
+#include <stdair/bom/RMEventStruct.hpp>
 #include <stdair/bom/EventStruct.hpp>
 
 namespace stdair {
@@ -80,6 +81,26 @@ namespace stdair {
       _snapshot->getSnapshotTime() - DEFAULT_EVENT_OLDEST_DATETIME;
     _eventTimeStamp = lDuration.total_milliseconds();
   }
+  
+  // //////////////////////////////////////////////////////////////////////
+  EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
+                            RMEventPtr_T ioRMEventPtr)
+    : _eventType (iEventType) {
+
+    //
+    assert (ioRMEventPtr != NULL);
+    _rmEvent = boost::make_shared<RMEventStruct> (*ioRMEventPtr);
+    assert (_rmEvent != NULL);
+    
+    /**
+     * Compute and store the number of milliseconds between the
+     * date-time of the RM event and DEFAULT_EVENT_OLDEST_DATETIME
+     * (as of Feb. 2011, that date is set to Jan. 1, 2010).
+     */
+    const Duration_T lDuration =
+      _rmEvent->getRMEventTime() - DEFAULT_EVENT_OLDEST_DATETIME;
+    _eventTimeStamp = lDuration.total_milliseconds();
+  }
 
   // //////////////////////////////////////////////////////////////////////
   EventStruct::EventStruct (const EventStruct& iEventStruct)
@@ -102,6 +123,12 @@ namespace stdair {
     if (iEventStruct._snapshot != NULL) {
       _snapshot =
         boost::make_shared<SnapshotStruct>(*iEventStruct._snapshot);
+    }
+
+    //
+    if (iEventStruct._rmEvent != NULL) {
+      _rmEvent =
+        boost::make_shared<RMEventStruct>(*iEventStruct._rmEvent);
     }
   }
   
@@ -141,6 +168,12 @@ namespace stdair {
       assert (_snapshot != NULL);
       oStr << ", " << _eventType
            << ", " << _snapshot->describe();
+      break;
+    }
+    case EventType::RM: {
+      assert (_rmEvent != NULL);
+      oStr << ", " << _eventType
+           << ", " << _rmEvent->describe();
       break;
     }
     default: {

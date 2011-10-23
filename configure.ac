@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------
 AC_PREREQ(2.59)
 AC_COPYRIGHT([Copyright (C) 2007-2011  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
-AC_INIT([STDAIR],[0.30.0],[denis_arnaud@users.sourceforge.net],[stdair])
+AC_INIT([STDAIR],[0.31.0],[denis_arnaud@users.sourceforge.net],[stdair])
 AC_CONFIG_HEADER([stdair/config.h])
 AC_CONFIG_SRCDIR([stdair/bom/BomRoot.hpp])
 AC_CONFIG_AUX_DIR([config])
@@ -15,7 +15,7 @@ PACKAGE_PRETTY_NAME="StdAir"
 AC_SUBST(PACKAGE_PRETTY_NAME)
 
 # Shared library versioning
-GENERIC_LIBRARY_VERSION="0:30:0"
+GENERIC_LIBRARY_VERSION="0:31:0"
 #                        | | |
 #                 +------+ | +---+
 #                 |        |     |
@@ -115,6 +115,14 @@ fi
 # Readline: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 # -----------------------------------------------------------------
 AM_PATH_READLINE([6.0])
+AC_SUBST(READLINE_VERSION)
+AC_SUBST(READLINE_CFLAGS)
+AC_SUBST(READLINE_LIBS)
+
+# -----------------------------------------------------------------
+# ZeroMQ: http://zeromq.org
+# -----------------------------------------------------------------
+AM_PATH_ZEROMQ([2.0])
 AC_SUBST(READLINE_VERSION)
 AC_SUBST(READLINE_CFLAGS)
 AC_SUBST(READLINE_LIBS)
@@ -302,6 +310,11 @@ External libraries:
     o READLINE_VERSION ..... : ${READLINE_VERSION}
     o READLINE_CFLAGS ...... : ${READLINE_CFLAGS}
     o READLINE_LIBS ........ : ${READLINE_LIBS} 
+
+  - ZeroMQ ................. :
+    o ZEROMQ_VERSION ....... : ${ZEROMQ_VERSION}
+    o ZEROMQ_CFLAGS ........ : ${ZEROMQ_CFLAGS}
+    o ZEROMQ_LIBS .......... : ${ZEROMQ_LIBS} 
 
   - Python ................. :
     o PYTHON_VERSION ....... : ${PYTHON_VERSION}

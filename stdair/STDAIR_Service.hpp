@@ -321,6 +321,21 @@ namespace stdair {
      *        solutions is logged/dumped.
      */
     std::string csvDisplay (const TravelSolutionList_T&) const;
+    
+    /**
+     * Recursively display (dump in the returned string) the fare-rules
+     * corresponding to the parameters given as input.
+     *
+     * @param const stdair::AirportCode_T& Origin airport of the fare-rules
+     *        to display
+     * @param const stdair::AirportCode_T& Destination airport of the fare-
+     *        rules to display.
+     * @param const stdair::Date_T& Departure date of the fare-rules to display.
+     * @return std::string Output string in which the BOM tree is
+     *        logged/dumped.
+     */
+    std::string csvDisplay (const AirportCode_T&, const AirportCode_T&,
+                            const Date_T& iDepartureDate) const;
 
 
   public:

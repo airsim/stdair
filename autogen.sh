@@ -36,10 +36,10 @@ autoreconf -fvi                 && \
 echo "" && \
 echo "Now, the configuration script has to be run. For instance:" && \
 echo "mkdir -p tmp && cd tmp && \\" && \
-echo " ../configure --prefix=/home/user/dev/deliveries/stdair-0.30.0 --srcdir=.." && \
+echo " ../configure --prefix=/home/user/dev/deliveries/stdair-99.99.99 --srcdir=.." && \
 echo "" && \
 echo "Alternatively" && \
-echo "mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-0.30.0 .."
+echo "mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-0.31.0 .."
 echo "" && \
 exit 0
 

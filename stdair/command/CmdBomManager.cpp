@@ -507,8 +507,7 @@ namespace stdair {
                                              const CabinCapacity_T& iCapacity) {
     // Inventory
     const InventoryKey lInventoryKey (DEFAULT_AIRLINE_CODE);
-    Inventory& lInv =
-      FacBom<Inventory>::instance().create (lInventoryKey);
+    Inventory& lInv = FacBom<Inventory>::instance().create (lInventoryKey);
     FacBomManager::addToListAndMap (ioBomRoot, lInv);
     FacBomManager::linkWithParent (ioBomRoot, lInv);
 
@@ -535,8 +534,7 @@ namespace stdair {
 
     // Leg-cabin
     LegCabinKey lLegCabinKey (DEFAULT_CABIN_CODE);
-    LegCabin& lLegCabin =
-      FacBom<LegCabin>::instance().create (lLegCabinKey);
+    LegCabin& lLegCabin = FacBom<LegCabin>::instance().create (lLegCabinKey);
     FacBomManager::addToListAndMap (lLeg, lLegCabin);
     FacBomManager::linkWithParent (lLeg, lLegCabin);
 
@@ -612,17 +610,6 @@ namespace stdair {
     FacBomManager::addToListAndMap (ioBomRoot, lLHRSYDAirportPair);
     FacBomManager::linkWithParent (ioBomRoot, lLHRSYDAirportPair);
 
-    // Set the point-of-sale-channel primary key.
-    const CityCode_T& lPosLHR("LHR");
-    const ChannelLabel_T& lChannelDN("DN");
-    const PosChannelKey lPosLHRChannelDNKey (lPosLHR, lChannelDN);  
-
-    // Create the PositionKey object and link it to the AirportPair object.
-    PosChannel& lPosLHRChannelDN =
-      FacBom<PosChannel>::instance().create (lPosLHRChannelDNKey);
-    FacBomManager::addToListAndMap (lLHRSYDAirportPair, lPosLHRChannelDN);
-    FacBomManager::linkWithParent (lLHRSYDAirportPair, lPosLHRChannelDN);
-
     // Set the fare date-period primary key.
     const Date_T lDateRangeStart (2011, 1, 15);
     const Date_T lDateRangeEnd (2011, 12, 31);
@@ -632,33 +619,42 @@ namespace stdair {
     // Create the DatePeriodKey object and link it to the PosChannel object.
     DatePeriod& lFareDatePeriod =
       FacBom<DatePeriod>::instance().create (lFareDatePeriodKey);
-    FacBomManager::addToListAndMap (lPosLHRChannelDN, lFareDatePeriod);
-    FacBomManager::linkWithParent (lPosLHRChannelDN, lFareDatePeriod);    
+    FacBomManager::addToListAndMap (lLHRSYDAirportPair, lFareDatePeriod);
+    FacBomManager::linkWithParent (lLHRSYDAirportPair, lFareDatePeriod);    
+
+    // Set the point-of-sale-channel primary key.
+    const CityCode_T& lPosLHR("LHR");
+    const ChannelLabel_T& lChannelDN("DN");
+    const PosChannelKey lPosLHRChannelDNKey (lPosLHR, lChannelDN);  
+
+    // Create the PositionKey object and link it to the AirportPair object.
+    PosChannel& lPosLHRChannelDN =
+      FacBom<PosChannel>::instance().create (lPosLHRChannelDNKey);
+    FacBomManager::addToListAndMap (lFareDatePeriod, lPosLHRChannelDN);
+    FacBomManager::linkWithParent (lFareDatePeriod, lPosLHRChannelDN);
    
     // Set the fare time-period primary key.
     const Duration_T l0000 (00, 00, 0);
     const Duration_T l2300 (23, 00, 0);
-    const Time_T lTimeRangeStart(l0000);
-    const Time_T lTimeRangeEnd(l2300);
-    const TimePeriodKey lFareTimePeriodKey (lTimeRangeStart,
-                                            lTimeRangeEnd);
+    const Time_T lTimeRangeStart (l0000);
+    const Time_T lTimeRangeEnd (l2300);
+    const TimePeriodKey lFareTimePeriodKey (lTimeRangeStart, lTimeRangeEnd);
 
     // Create the TimePeriodKey and link it to the DatePeriod object.
     TimePeriod& lFareTimePeriod =
       FacBom<TimePeriod>::instance().create (lFareTimePeriodKey);
-    FacBomManager::addToListAndMap (lFareDatePeriod, lFareTimePeriod);
-    FacBomManager::linkWithParent (lFareDatePeriod, lFareTimePeriod);        
+    FacBomManager::addToListAndMap (lPosLHRChannelDN, lFareTimePeriod);
+    FacBomManager::linkWithParent (lPosLHRChannelDN, lFareTimePeriod);        
 
     // Generate the FareRule
-    const DayDuration_T& lAdvancePurchase(0);
-    const SaturdayStay_T& lSaturdayStay(true); 
-    const ChangeFees_T& lChangeFees(20.0);
-    const NonRefundable_T& lNonRefundable(true);
-    const DayDuration_T& lMinimumStay(0); 
-    const Fare_T& lFare (900.0);
+    const DayDuration_T lAdvancePurchase (0);
+    const SaturdayStay_T lSaturdayStay (true); 
+    const ChangeFees_T lChangeFees (20.0);
+    const NonRefundable_T lNonRefundable (true);
+    const DayDuration_T lMinimumStay (0); 
     const FareFeaturesKey lFareFeaturesKey (lAdvancePurchase, lSaturdayStay,
                                             lChangeFees, lNonRefundable,
-                                            lMinimumStay, lFare);
+                                            lMinimumStay);
 
     // Create the FareFeaturesKey and link it to the TimePeriod object.
     FareFeatures& lFareFeatures =
@@ -668,15 +664,17 @@ namespace stdair {
 
     // Generate Segment Features and link them to their FareRule.
     AirlineCodeList_T lAirlineCodeList;
-    lAirlineCodeList.push_back("BA");
+    lAirlineCodeList.push_back ("BA");
     ClassList_StringList_T lClassCodeList;
-    lClassCodeList.push_back("Y");
+    lClassCodeList.push_back ("Y");
     const AirlineClassListKey lAirlineClassListKey (lAirlineCodeList,
                                                     lClassCodeList);
 
     // Create the AirlineClassListKey and link it to the FareFeatures object.
+    const Fare_T& lFare (900.0);
     AirlineClassList& lAirlineClassList =
       stdair::FacBom<AirlineClassList>::instance().create (lAirlineClassListKey);
+    lAirlineClassList.setFare(900.0);
     FacBomManager::addToListAndMap (lFareFeatures, lAirlineClassList);
     FacBomManager::linkWithParent (lFareFeatures, lAirlineClassList);
   }
@@ -721,10 +719,9 @@ namespace stdair {
     // Set the yield time-period primary key.
     const Duration_T l0000 (00, 00, 0);
     const Duration_T l2300 (23, 00, 0);
-    const Time_T lTimeRangeStart(l0000);
-    const Time_T lTimeRangeEnd(l2300);
-    const TimePeriodKey lYieldTimePeriodKey (lTimeRangeStart,
-                                            lTimeRangeEnd);
+    const Time_T lTimeRangeStart (l0000);
+    const Time_T lTimeRangeEnd (l2300);
+    const TimePeriodKey lYieldTimePeriodKey (lTimeRangeStart, lTimeRangeEnd);
 
     // Create the TimePeriodKey and link it to the DatePeriod object.
     TimePeriod& lYieldTimePeriod =
@@ -733,29 +730,30 @@ namespace stdair {
     FacBomManager::linkWithParent (lYieldDatePeriod, lYieldTimePeriod);        
 
     // Generate the YieldRule
-    const CabinCode_T& lCabinCode ("Y");
-    const Yield_T& lYield (900.0);
-    const YieldFeaturesKey lYieldFeaturesKey (lCabinCode, lYield);
+    const CabinCode_T lCabinCode ("Y");
+    const Yield_T lYield (900.0);
+    const YieldFeaturesKey lYieldFeaturesKey (lCabinCode);
 
     // Create the YieldFeaturesKey and link it to the TimePeriod object.
     YieldFeatures& lYieldFeatures =
       FacBom<YieldFeatures>::instance().create (lYieldFeaturesKey);
     FacBomManager::addToListAndMap (lYieldTimePeriod, lYieldFeatures);
-    FacBomManager::linkWithParent (lYieldTimePeriod, lYieldFeatures);        
-
+    FacBomManager::linkWithParent (lYieldTimePeriod, lYieldFeatures);     
+                                              
     // Generate Segment Features and link them to their YieldRule.
     AirlineCodeList_T lAirlineCodeList;
-    lAirlineCodeList.push_back("BA");
+    lAirlineCodeList.push_back ("BA");
     ClassList_StringList_T lClassCodeList;
-    lClassCodeList.push_back("Y");
+    lClassCodeList.push_back ("Y");
     const AirlineClassListKey lAirlineClassListKey (lAirlineCodeList,
                                                     lClassCodeList);
 
     // Create the AirlineClassListKey and link it to the YieldFeatures object.
     AirlineClassList& lAirlineClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lAirlineClassListKey);
+      stdair::FacBom<AirlineClassList>::instance().create(lAirlineClassListKey);
     FacBomManager::addToListAndMap (lYieldFeatures, lAirlineClassList);
     FacBomManager::linkWithParent (lYieldFeatures, lAirlineClassList);
+    lAirlineClassList.setYield (lYield);
   }
 
   // //////////////////////////////////////////////////////////////////////
