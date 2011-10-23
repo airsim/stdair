@@ -23,13 +23,11 @@ namespace stdair {
     /** Generate a randomized number following a uniform distribution
         between a minimum (included) and a maximum (excluded)
         value. */
-    RealNumber_T generateUniform (const RealNumber_T&,
-                                          const RealNumber_T&);
+    RealNumber_T generateUniform (const RealNumber_T&, const RealNumber_T&);
     
     /** Generate a randomized number following a normal distribution
         specified by a mean and a standard deviation. */
-    RealNumber_T generateNormal (const RealNumber_T&,
-                                         const RealNumber_T&);
+    RealNumber_T generateNormal (const RealNumber_T&, const RealNumber_T&);
     
     // ////////// Constructors and destructors /////////
     /** Constructor. */

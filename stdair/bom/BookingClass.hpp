@@ -175,6 +175,14 @@ namespace stdair {
     /** Register a sale. */
     void sell (const NbOfBookings_T&);
 
+    /** Generate demand samples for Monte-Carlo method with the default
+        random seed. */
+    void generateDemandSamples (const int&);
+
+    /** Generate demand samples for Monte-Carlo method with the given
+        random seed. */
+    void generateDemandSamples (const int&, const RandomSeed_T&);
+
 
   protected:
     // ////////// Constructors and destructors /////////

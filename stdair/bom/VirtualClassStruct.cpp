@@ -6,6 +6,7 @@
 #include <sstream>
 // StdAir
 #include <stdair/bom/VirtualClassStruct.hpp>
+#include <stdair/bom/BookingClass.hpp>
 
 namespace stdair {
 
@@ -47,4 +48,10 @@ namespace stdair {
     return oStr.str();
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  const GeneratedDemandVector_T& VirtualClassStruct::
+  getGeneratedDemandVector() const  {
+      assert (_bookingClass != NULL);
+      return _bookingClass->getGeneratedDemandVector();
+  }
 }

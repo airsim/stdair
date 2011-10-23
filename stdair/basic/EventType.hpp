@@ -16,7 +16,8 @@ namespace stdair {
   public:
     typedef enum { 
       BKG_REQ = 0,
-      OPT_NOT,
+      OPT_NOT_4_FD,
+      OPT_NOT_4_NET,
       SKD_CHG,
       LAST_VALUE
     } EN_EventType;
@@ -53,8 +54,14 @@ namespace stdair {
     EventType (const EN_EventType&);
     /** Constructor. */
     EventType (const char iType);
+    /** Default copy constructor. */
+    EventType (const EventType&);
 
-    
+  private:
+    /** Default constructor. */
+    EventType();
+  
+
   private:
     /** String version of the enumeration. */    
     static const std::string _labels[LAST_VALUE];

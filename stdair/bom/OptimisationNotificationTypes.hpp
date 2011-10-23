@@ -1,6 +1,6 @@
 // //////////////////////////////////////////////////////////////////////
-#ifndef __STDAIR_BOM_BOOKINGREQUESTTYPES_HPP
-#define __STDAIR_BOM_BOOKINGREQUESTTYPES_HPP
+#ifndef __STDAIR_BOM_OPTIMISATIONNOTIFICATIONTYPES_HPP
+#define __STDAIR_BOM_OPTIMISATIONNOTIFICATIONTYPES_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -11,12 +11,13 @@
 namespace stdair {
 
   // Forward declarations
-  struct BookingRequestStruct;
+  struct OptimisationNotificationStruct;
   
   // ///////////// Type definitions //////////////
-  /** Define the smart pointer to a booking request. */
-  typedef boost::shared_ptr<BookingRequestStruct> BookingRequestPtr_T;
+  /** Define the smart pointer to a optimisation notification. */
+  typedef boost::
+  shared_ptr<OptimisationNotificationStruct> OptimisationNotificationStructPtr_T;
   
 }
-#endif // __STDAIR_BOM_BOOKINGREQUESTTYPES_HPP
+#endif // __STDAIR_BOM_OPTIMISATIONNOTIFICATIONTYPES_HPP
 

@@ -10,6 +10,9 @@
 namespace stdair {
 
   // //////// Type definitions /////////
+  /** Type definition for the hashed key of the content of an event. */
+  typedef std::string EventContentKey_T;
+
   /** Define the name of an event. */
   typedef std::string EventName_T;
 
