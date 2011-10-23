@@ -55,6 +55,14 @@ namespace stdair {
     static void buildSampleBomForFareQuoter (BomRoot&);
 
     /**
+     * Build a sample bom tree for AirRAC.
+     *
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    static void buildSampleBomForAirRAC (BomRoot&);
+
+    /**
      * Build a sample list of travel solutions.
      *
      * As of now (March 2011), that list is made of the following

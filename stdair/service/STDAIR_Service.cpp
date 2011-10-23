@@ -167,6 +167,19 @@ namespace stdair {
     CmdBomManager::buildSampleBomForFareQuoter (lBomRoot);
   }
 
+  // //////////////////////////////////////////////////////////////////////
+  void STDAIR_Service::buildSampleBomForAirRAC () {
+    
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    
+    // Build a sample BOM tree
+    CmdBomManager::buildSampleBomForAirRAC (lBomRoot);
+  }
 
   // //////////////////////////////////////////////////////////////////////
   void STDAIR_Service::

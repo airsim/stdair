@@ -681,6 +681,89 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  void CmdBomManager::buildSampleBomForAirRAC (BomRoot& ioBomRoot) {
+
+    // Set the airport-pair primary key.
+    const AirportCode_T lLHR ("LHR");
+    const AirportCode_T lSYD ("SYD");
+    const AirportPairKey lAirportPairLHRSYDKey (lLHR, lSYD);
+    
+    // Create the AirportPairKey object and link it to the ioBomRoot object.
+    AirportPair& lLHRSYDAirportPair =
+      FacBom<AirportPair>::instance().create (lAirportPairLHRSYDKey);
+    FacBomManager::addToListAndMap (ioBomRoot, lLHRSYDAirportPair);
+    FacBomManager::linkWithParent (ioBomRoot, lLHRSYDAirportPair);
+
+    // Set the point-of-sale-channel primary key.
+    const CityCode_T& lPosLHR("LHR");
+    const ChannelLabel_T& lChannelDN("DN");
+    const PosChannelKey lPosLHRChannelDNKey (lPosLHR, lChannelDN);  
+
+    // Create the PositionKey object and link it to the AirportPair object.
+    PosChannel& lPosLHRChannelDN =
+      FacBom<PosChannel>::instance().create (lPosLHRChannelDNKey);
+    FacBomManager::addToListAndMap (lLHRSYDAirportPair, lPosLHRChannelDN);
+    FacBomManager::linkWithParent (lLHRSYDAirportPair, lPosLHRChannelDN);
+
+    // Set the fare date-period primary key.
+    const Date_T lDateRangeStart (2011, 1, 15);
+    const Date_T lDateRangeEnd (2011, 12, 31);
+    const DatePeriod_T lDatePeriod (lDateRangeStart, lDateRangeEnd); 
+    const DatePeriodKey lFareDatePeriodKey (lDatePeriod);
+
+    // Create the DatePeriodKey object and link it to the PosChannel object.
+    DatePeriod& lFareDatePeriod =
+      FacBom<DatePeriod>::instance().create (lFareDatePeriodKey);
+    FacBomManager::addToListAndMap (lPosLHRChannelDN, lFareDatePeriod);
+    FacBomManager::linkWithParent (lPosLHRChannelDN, lFareDatePeriod);    
+   
+    // Set the fare time-period primary key.
+    const Duration_T l0000 (00, 00, 0);
+    const Duration_T l2300 (23, 00, 0);
+    const Time_T lTimeRangeStart(l0000);
+    const Time_T lTimeRangeEnd(l2300);
+    const TimePeriodKey lFareTimePeriodKey (lTimeRangeStart,
+                                            lTimeRangeEnd);
+
+    // Create the TimePeriodKey and link it to the DatePeriod object.
+    TimePeriod& lFareTimePeriod =
+      FacBom<TimePeriod>::instance().create (lFareTimePeriodKey);
+    FacBomManager::addToListAndMap (lFareDatePeriod, lFareTimePeriod);
+    FacBomManager::linkWithParent (lFareDatePeriod, lFareTimePeriod);        
+
+    // Generate the FareRule
+    const DayDuration_T& lAdvancePurchase(0);
+    const SaturdayStay_T& lSaturdayStay(true); 
+    const ChangeFees_T& lChangeFees(20.0);
+    const NonRefundable_T& lNonRefundable(true);
+    const DayDuration_T& lMinimumStay(0); 
+    const Fare_T& lFare (900.0);
+    const FareFeaturesKey lFareFeaturesKey (lAdvancePurchase, lSaturdayStay,
+                                            lChangeFees, lNonRefundable,
+                                            lMinimumStay, lFare);
+
+    // Create the FareFeaturesKey and link it to the TimePeriod object.
+    FareFeatures& lFareFeatures =
+      FacBom<FareFeatures>::instance().create (lFareFeaturesKey);
+    FacBomManager::addToListAndMap (lFareTimePeriod, lFareFeatures);
+    FacBomManager::linkWithParent (lFareTimePeriod, lFareFeatures);        
+
+    // Generate Segment Features and link them to their FareRule.
+    AirlineCodeList_T lAirlineCodeList;
+    lAirlineCodeList.push_back("BA");
+    ClassList_StringList_T lClassCodeList;
+    lClassCodeList.push_back("Y");
+    const AirlineClassListKey lAirlineClassListKey (lAirlineCodeList,
+                                                    lClassCodeList);
+
+    // Create the AirlineClassListKey and link it to the FareFeatures object.
+    AirlineClassList& lAirlineClassList =
+      stdair::FacBom<AirlineClassList>::instance().create (lAirlineClassListKey);
+    FacBomManager::addToListAndMap (lFareFeatures, lAirlineClassList);
+    FacBomManager::linkWithParent (lFareFeatures, lAirlineClassList);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   void CmdBomManager::
   buildSampleTravelSolutionForPricing (TravelSolutionList_T& ioTravelSolutionList) {
 
