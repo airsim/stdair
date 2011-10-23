@@ -4,11 +4,15 @@
 // STL
 #include <cassert>
 #include <sstream>
+// Boost Property Tree
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 // StdAir
 #include <stdair/stdair_types.hpp>
 #include <stdair/basic/BasChronometer.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRetriever.hpp>
+#include <stdair/bom/BomJSONExport.hpp>
 #include <stdair/bom/BomDisplay.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/EventQueue.hpp>
@@ -22,6 +26,8 @@
 #include <stdair/service/Logger.hpp>
 #include <stdair/service/DBSessionManager.hpp>
 #include <stdair/STDAIR_Service.hpp>
+
+namespace bpt = boost::property_tree;
 
 namespace stdair {
 
@@ -207,6 +213,52 @@ namespace stdair {
     }
 
     return CmdBomManager::buildSampleBookingRequest();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::
+  jsonExport (const stdair::AirlineCode_T& iAirlineCode,
+              const stdair::FlightNumber_T& iFlightNumber,
+              const stdair::Date_T& iDepartureDate) const {
+    std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+
+    // Retrieve the flight-date object corresponding to the key
+    FlightDate* lFlightDate_ptr = 
+      BomRetriever::retrieveFlightDateFromKeySet (lBomRoot, iAirlineCode,
+                                                  iFlightNumber, iDepartureDate);
+
+    // Dump the content of the whole BOM tree into the string
+    if (lFlightDate_ptr != NULL) {
+      BomJSONExport::jsonExport (oStr, *lFlightDate_ptr);
+      
+    } else {
+      //
+      bpt::ptree lPropertyTree;
+      
+      // Build the appropriate message, so that the client may know that
+      // no flight-date can be found for that given key.
+      std::ostringstream oNoFlightDateStream;
+      oNoFlightDateStream << "No flight-date found for the given key: '"
+                          << iAirlineCode << iFlightNumber
+                          << " - " << iDepartureDate << "'";
+      const std::string oNoFlightDateString (oNoFlightDateStream.str());
+
+      // Put in the property tree the fact that no flight-date has been found.
+      // \note That is not (necessary) an error.
+      lPropertyTree.put ("error", oNoFlightDateString.c_str());
+
+      // Write the property tree into the JSON stream.
+      write_json (oStr, lPropertyTree);
+    }
+    
+    return oStr.str();
   }
 
   // //////////////////////////////////////////////////////////////////////

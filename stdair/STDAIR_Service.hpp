@@ -289,6 +289,21 @@ namespace stdair {
 
 
   public:
+    // //////////////// Export support methods /////////////////
+    /**
+     * Recursively dump, in the returned string and in JSON format,
+     * the flight-date corresponding to the parameters given as input.
+     *
+     * @param const AirlineCode_T& Airline code of the flight to dump.
+     * @param const FlightNumber_T& Flight number of the flight to dump.
+     * @param const Date_T& Departure date of the flight to dump.
+     * @return std::string Output string in which the BOM tree is JSON-ified.
+     */
+    std::string jsonExport (const AirlineCode_T&, const FlightNumber_T&,
+                            const Date_T& iDepartureDate) const;
+
+
+  public:
     // //////////////// Display support methods /////////////////
     /**
      * Recursively display (dump in the returned string) the objects
@@ -303,12 +318,10 @@ namespace stdair {
      * Recursively display (dump in the returned string) the flight-date
      * corresponding to the parameters given as input.
      *
-     * @param const stdair::AirlineCode_T& Airline code of the flight to display.
-     * @param const stdair::FlightNumber_T& Flight number of the
-     *        flight to display.
-     * @param const stdair::Date_T& Departure date of the flight to display.
-     * @return std::string Output string in which the BOM tree is
-     *        logged/dumped.
+     * @param const AirlineCode_T& Airline code of the flight to display.
+     * @param const FlightNumber_T& Flight number of the flight to display.
+     * @param const Date_T& Departure date of the flight to display.
+     * @return std::string Output string in which the BOM tree is logged/dumped.
      */
     std::string csvDisplay (const AirlineCode_T&, const FlightNumber_T&,
                             const Date_T& iDepartureDate) const;
@@ -326,13 +339,11 @@ namespace stdair {
      * Recursively display (dump in the returned string) the fare-rules
      * corresponding to the parameters given as input.
      *
-     * @param const stdair::AirportCode_T& Origin airport of the fare-rules
-     *        to display
-     * @param const stdair::AirportCode_T& Destination airport of the fare-
-     *        rules to display.
-     * @param const stdair::Date_T& Departure date of the fare-rules to display.
-     * @return std::string Output string in which the BOM tree is
-     *        logged/dumped.
+     * @param const AirportCode_T& Origin airport of the fare-rules to display
+     * @param const AirportCode_T& Destination airport of the fare-rules
+     *        to display.
+     * @param const Date_T& Departure date of the fare-rules to display.
+     * @return std::string Output string in which the BOM tree is logged/dumped.
      */
     std::string csvDisplay (const AirportCode_T&, const AirportCode_T&,
                             const Date_T& iDepartureDate) const;

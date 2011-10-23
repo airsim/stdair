@@ -94,4 +94,9 @@ namespace stdair {
     _classPath.push_back (iClassCodeList);
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  void FareOptionStruct::emptyClassList () {
+    _classPath.clear();
+  }
+
 }

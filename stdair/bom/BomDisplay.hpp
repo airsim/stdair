@@ -31,7 +31,7 @@ namespace stdair {
   class AirlineClassList;
 
   /**
-   * @brief Utility class to display TraDemGen objects with a pretty
+   * @brief Utility class to display StdAir objects with a pretty
    * format.
    */
   class BomDisplay {

@@ -7,6 +7,8 @@ stdair_bom_h_sources = \
 		$(top_srcdir)/stdair/bom/BomManager.hpp \
 		$(top_srcdir)/stdair/bom/BomRetriever.hpp \
 		$(top_srcdir)/stdair/bom/BomArchive.hpp \
+		$(top_srcdir)/stdair/bom/BomJSONImport.hpp \
+		$(top_srcdir)/stdair/bom/BomJSONExport.hpp \
 		$(top_srcdir)/stdair/bom/BomDisplay.hpp \
 		$(top_srcdir)/stdair/bom/BomHolderKey.hpp \
 		$(top_srcdir)/stdair/bom/BomRootKey.hpp \
@@ -102,6 +104,8 @@ stdair_bom_cc_sources = \
 		$(top_srcdir)/stdair/bom/ParsedKey.cpp \
 		$(top_srcdir)/stdair/bom/BomRetriever.cpp \
 		$(top_srcdir)/stdair/bom/BomArchive.cpp \
+		$(top_srcdir)/stdair/bom/BomJSONImport.cpp \
+		$(top_srcdir)/stdair/bom/BomJSONExport.cpp \
 		$(top_srcdir)/stdair/bom/BomDisplay.cpp \
 		$(top_srcdir)/stdair/bom/BomHolderKey.cpp \
 		$(top_srcdir)/stdair/bom/BomRootKey.cpp \
