@@ -21,7 +21,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   FlightDate::FlightDate()
     : _key (DEFAULT_FLIGHT_NUMBER, DEFAULT_DEPARTURE_DATE), _parent (NULL) {
-    assert (false);
+    // That constructor is used by the serialisation process
   }
   
   // ////////////////////////////////////////////////////////////////////
