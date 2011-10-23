@@ -515,7 +515,7 @@ namespace stdair {
             << iBookingClass.getProtection() << "), "
             << iBookingClass.getNegotiatedSpace() << ", "
             << iBookingClass.getNoShowPercentage() << ", "
-            << iBookingClass.getOverbookingPercentage() << ", "
+            << iBookingClass.getCancellationPercentage() << ", "
             << iBookingClass.getNbOfBookings() << ", "
             << iBookingClass.getNbOfGroupBookings() << " ("
             << iBookingClass.getNbOfPendingGroupBookings() << "), "

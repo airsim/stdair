@@ -85,13 +85,16 @@ namespace stdair {
   typedef unsigned int Count_T;
   
   /** Number of passengers (in a group) for a booking. */
-  typedef unsigned short PartySize_T;
+  typedef short PartySize_T;
 
   /** Define a number of requests. */
   typedef double NbOfRequests_T;
 
   /** Define a number of bookings. */
   typedef NbOfRequests_T NbOfBookings_T;
+
+  /** Define a number of cancellations. */
+  typedef NbOfRequests_T NbOfCancellations_T;
 
   /** Define a number of travel solutions
       (in a travel solution block). */
@@ -107,10 +110,13 @@ namespace stdair {
   typedef unsigned short NbOfAirlines_T;
 
   /** Define an availability. */
-  typedef short Availability_T;
+  typedef double Availability_T;
 
   /** Define the price of a travel solution. */
   typedef double Fare_T;
+
+  /** Define the censorship flag. */
+  typedef bool Flag_T;
 
   /** Define the unsigned index type. */
   typedef unsigned int UnsignedIndex_T;

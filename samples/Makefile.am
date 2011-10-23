@@ -3,7 +3,7 @@ include $(top_srcdir)/Makefile.common
 include $(srcdir)/sources.mk
 
 ##
-SUBDIRS = RDS01
+SUBDIRS = rds01
 
 MAINTAINERCLEANFILES = Makefile.in Makefile
 
@@ -15,7 +15,7 @@ sampledir = @sampledir@
 #
 noinst_DATA = $(sample_csv_sources) 
 
-EXTRA_DIST = $(noinst_DATA)
+EXTRA_DIST = $(noinst_DATA) README_airinv.txt
 
 # Targets
 install-data-local:

@@ -384,7 +384,12 @@ namespace stdair {
   const DCPList_T DEFAULT_DCP_LIST = DefaultDCPList::init();
   DCPList_T DefaultDCPList::init() {
     DCPList_T oDCPList;
-    oDCPList.push_back (3); oDCPList.push_back (1); oDCPList.push_back (0);
+    oDCPList.push_back (63); oDCPList.push_back (56); oDCPList.push_back (49);
+    oDCPList.push_back (42); oDCPList.push_back (35); oDCPList.push_back (31);
+    oDCPList.push_back (28); oDCPList.push_back (24); oDCPList.push_back (21);
+    oDCPList.push_back (17); oDCPList.push_back (14); oDCPList.push_back (10);
+    oDCPList.push_back (7);  oDCPList.push_back (5);  oDCPList.push_back (3);
+    oDCPList.push_back (1);  oDCPList.push_back (0);
     return oDCPList;
   }
 

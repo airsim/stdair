@@ -24,7 +24,15 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  BookingClass::BookingClass (const Key_T& iKey) : _key (iKey), _parent (NULL) {
+  BookingClass::BookingClass (const Key_T& iKey)
+    : _key (iKey), _parent (NULL), _cumulatedProtection (0.0),
+      _protection (0.0), _cumulatedBookingLimit (0.0), _au (0.0), _nego (0.0),
+      _noShowPercentage (0.0), _cancellationPercentage (0.0),
+      _nbOfBookings (0.0), _groupNbOfBookings (0.0),
+      _groupPendingNbOfBookings (0.0), _staffNbOfBookings (0.0),
+      _wlNbOfBookings (0.0), _nbOfCancellations (0.), _etb (0.0),
+      _netClassAvailability (0.0), _segmentAvailability (0.0),
+      _netRevenueAvailability (0.0), _yield (0.0), _mean (0.0), _stdDev (0.0) {
   }
 
   // ////////////////////////////////////////////////////////////////////

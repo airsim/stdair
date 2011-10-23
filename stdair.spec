@@ -2,7 +2,7 @@
 %global mydocs __tmp_docdir
 #
 Name:           stdair
-Version:        0.32.0
+Version:        0.33.0
 Release:        1%{?dist}
 
 Summary:        C++ Standard Airline IT Object Library
@@ -69,6 +69,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 # Remove unpackaged files from the buildroot
 rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.la
 
+# Fix some permissions
+find $RPM_BUILD_ROOT%{_libexecdir}/%{name} -type f -name '*.sh' -exec chmod 755 {} \;
+
 mkdir -p %{mydocs}
 mv $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/html %{mydocs}
 
@@ -86,7 +89,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/%{name}
 %{_libdir}/lib*.so.*
 %{_mandir}/man1/%{name}.1.*
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/*.sh
 %dir %{_datadir}/%{name}
+%{_datadir}/%{name}/db/data/*.sql
+%{_datadir}/%{name}/db/data/*.csv
 %{_datadir}/%{name}/samples/*.csv
 %{_datadir}/%{name}/samples/rds01/*.csv
 
@@ -108,6 +115,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jun  7 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.33.0-1
+- Upstream update
+
 * Sun May 22 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.32.0-1
 - Upstream update
 
@@ -126,13 +136,13 @@ rm -rf $RPM_BUILD_ROOT
 * Tue Apr 12 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.27.0-1
 - Upstream update
 
-* Fri Apr 08 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.26.0-1
+* Fri Apr  8 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.26.0-1
 - Upstream update
 
-* Tue Apr 05 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.25.0-1
+* Tue Apr  5 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.25.0-1
 - Upstream update
 
-* Fri Apr 01 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.24.0-1
+* Fri Apr  1 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.24.0-1
 - Upstream update
 
 * Thu Mar 24 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.23.0-1

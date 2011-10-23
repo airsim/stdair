@@ -35,7 +35,7 @@
 
 
 \section development StdAir Development
-- <a href="http://stdair.svn.sourceforge.net/viewvc/stdair/">SVN Repository</a>
+- <a href="http://stdair.git.sourceforge.net/git/gitweb.cgi?p=stdair/stdair;a=tree;h=refs/heads/trunk;hb=trunk">Git Repository</a> (Subversion is deprecated)
 - \ref coding_rules
 - \ref documentation
 - \ref test

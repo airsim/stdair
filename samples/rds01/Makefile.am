@@ -1,4 +1,4 @@
-## RDS01 sub-directory of the StdAir sample files
+## rds01 sub-directory of the StdAir sample files
 include $(top_srcdir)/Makefile.common
 include $(srcdir)/sources.mk
 

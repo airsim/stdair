@@ -7,7 +7,7 @@ MAINTAINERCLEANFILES = Makefile.in
 ##
 SUBDIRS =
 
-EXTRA_DIST =
+EXTRA_DIST = intrusive.cpp
 ##
 
 ##
