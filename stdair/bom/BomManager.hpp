@@ -315,7 +315,7 @@ namespace stdair {
   // Return a boolean saying if the marketing segment date list is empty
   // or not. 
   template<> 
-  inline const typename BomHolder<SegmentDate>::BomList_T&
+  inline const BomHolder<SegmentDate>::BomList_T&
   BomManager::getList<SegmentDate,SegmentDate> (const SegmentDate& ioSegmentDate) {
     
     const SegmentDateList_T& lMarketingSegmentDateList =
