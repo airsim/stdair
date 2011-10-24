@@ -112,7 +112,7 @@ namespace stdair {
     /**
      * Get the cabin-class pair out of a string.
      */
-    const CabinClassPairList_T& getCabinClassPairList (const std::string& iStr) {
+    const CabinClassPairList_T& getCabinClassPairList (const std::string& iStr) const {
       assert (_stringCabinClassPairListMap.find(iStr)!=_stringCabinClassPairListMap.end());
       return _stringCabinClassPairListMap.find(iStr)->second;
     }

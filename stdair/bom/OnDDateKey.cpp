@@ -45,22 +45,22 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   const Date_T OnDDateKey::getDate() const {
-    assert(!_OnDStringList.empty());
-    OnDString_T lFrontOnDString = _OnDStringList.front();
+    assert(_OnDStringList.empty() == false);
+    const OnDString_T& lFrontOnDString = _OnDStringList.front();
     return BomKeyManager::extractFlightDateKey (lFrontOnDString).getDepartureDate();
   }
   
   // ////////////////////////////////////////////////////////////////////
   const AirportCode_T OnDDateKey::getOrigin() const {
-    assert(!_OnDStringList.empty());
-    OnDString_T lFrontOnDString = _OnDStringList.front();
+    assert(_OnDStringList.empty() == false);
+    const OnDString_T& lFrontOnDString = _OnDStringList.front();
     return BomKeyManager::extractSegmentDateKey (lFrontOnDString).getBoardingPoint();
   }
 
   // ////////////////////////////////////////////////////////////////////
   const AirportCode_T OnDDateKey::getDestination() const {
-    assert(!_OnDStringList.empty());
-    OnDString_T lLastOnDString = _OnDStringList.back();
+    assert(_OnDStringList.empty() == false);
+    const OnDString_T& lLastOnDString = _OnDStringList.back();
     return BomKeyManager::extractSegmentDateKey (lLastOnDString).getOffPoint();
   }
   

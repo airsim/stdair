@@ -1439,10 +1439,10 @@ namespace stdair {
 
     // Step 9.0.9: link SQ inventory objects to Partner CX inventory objects
 
-    FacBomManager::addToListAndMap (lSINBKKSegment, lPartnerMktSINBKKSegment);
-    lMktBKKHKGSegment.setIsOtherAirlineOperating(true);
-    FacBomManager::addToListAndMap (lMktBKKHKGSegment, lPartnerBKKHKGSegment);
+    FacBomManager::addToList (lSINBKKSegment, lPartnerMktSINBKKSegment);
 
+    lMktBKKHKGSegment.linkWithOperating (lPartnerBKKHKGSegment);
+    
     /* =================================================================================== */
 
     // Step 1.0: O&D level
@@ -1471,7 +1471,10 @@ namespace stdair {
     lSQ_SINHKG_OnDDate.setTotalForecast (lY, lWTP750Mean60StdDev6);
 
     // Add demand info (optional).
+    // 2 legs here, so 2 CabinClassPair to add in the list.
+    // Fist leg: cabin Y, class M.
     CabinClassPair_T lCC_YM1 (lY,lM);
+    // Second leg: cabin Y, class M too.
     CabinClassPair_T lCC_YM2 (lY,lM);
     CabinClassPairList_T lCabinClassPairList;
     lCabinClassPairList.push_back(lCC_YM1);
@@ -1905,9 +1908,9 @@ namespace stdair {
                                     lPartnerMktBKKHKGSegmentYCabin1FamilyMClass);
 
     // Step 9.0.9: link CX inventory objects to Partner SQ inventory objects
-    FacBomManager::addToListAndMap (lBKKHKGSegment, lPartnerMktBKKHKGSegment);
-    lMktSINBKKSegment.setIsOtherAirlineOperating(true);
-    FacBomManager::addToListAndMap (lMktSINBKKSegment, lPartnerSINBKKSegment);
+    FacBomManager::addToList (lBKKHKGSegment, lPartnerMktBKKHKGSegment);
+
+    lMktSINBKKSegment.linkWithOperating (lPartnerSINBKKSegment);
 
     /* =================================================================================== */
 
