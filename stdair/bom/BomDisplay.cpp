@@ -498,40 +498,33 @@ namespace stdair {
       oStream << lAirlineCode << lFlightNumber << " " << lFlightDateDate << ", "
               << lBoardPoint << "-" << lOffPoint << ", " << lSegmentDateDate << std::endl;
 
-      //
-      const bool isAnotherAirlineOperating = lSD_ptr->isOtherAirlineOperating();
-      const bool hasListSegmentDate = BomManager::hasList<SegmentDate> (*lSD_ptr);
-      
-      if (hasListSegmentDate == true) {
-        
-        if (isAnotherAirlineOperating == true) {
-          const SegmentDateList_T& lOperatingSDList = BomManager::getList<SegmentDate> (*lSD_ptr);
-          assert (lOperatingSDList.size() == 1);
-          SegmentDateList_T::const_iterator itSD = lSegmentDateList.begin();
-          const SegmentDate* lOperatingSD_ptr = *itSD;
-          const FlightDate* lOperatingFD_ptr = BomManager::getParentPtr<FlightDate>(*lOperatingSD_ptr);
-          const Inventory* lOperatingInv_ptr = BomManager::getParentPtr<Inventory>(*lOperatingFD_ptr);
-          oStream << " *** Operated by " << lOperatingInv_ptr->toString()
-                  << lOperatingFD_ptr->toString() << std::endl;
+      // Check if the current segment has corresponding marketing segments. 
+      const bool isMarketingSDListEmpty = BomManager::hasList<SegmentDate>(*lSD_ptr);
+      if (isMarketingSDListEmpty == false) {
+        //
+        const SegmentDateList_T& lMarketingSDList = BomManager::getList<SegmentDate>(*lSD_ptr);
           
-        } else {
-
-          //
-          const SegmentDateList_T& lMarketingSDList = BomManager::getList<SegmentDate> (*lSD_ptr);
-          assert (lMarketingSDList.empty() == false);
-          
-          oStream << " *** Marketed by ";
-          for (SegmentDateList_T::const_iterator itMarketingSD = lMarketingSDList.begin();
-               itMarketingSD != lMarketingSDList.end(); ++itMarketingSD) {
-            SegmentDate* lMarketingSD_ptr = *itMarketingSD;
-            FlightDate* lMarketingFD_ptr = BomManager::getParentPtr<FlightDate>(*lMarketingSD_ptr);
-            Inventory* lMarketingInv_ptr = BomManager::getParentPtr<Inventory>(*lMarketingFD_ptr);
-            oStream << lMarketingInv_ptr->toString() << lMarketingFD_ptr->toString() <<" * ";
-          }
-
-          oStream << std::endl;
+        oStream << " *** Marketed by ";
+        for (SegmentDateList_T::const_iterator itMarketingSD = lMarketingSDList.begin();
+             itMarketingSD != lMarketingSDList.end(); ++itMarketingSD) {
+          SegmentDate* lMarketingSD_ptr = *itMarketingSD;
+          FlightDate* lMarketingFD_ptr = BomManager::getParentPtr<FlightDate>(*lMarketingSD_ptr);
+          Inventory* lMarketingInv_ptr = BomManager::getParentPtr<Inventory>(*lMarketingFD_ptr);
+          oStream << lMarketingInv_ptr->toString() << lMarketingFD_ptr->toString() <<" * ";
         }
       }
+
+      // Check if the current segment is operated by another segment date. 
+      const SegmentDate* lOperatingSD_ptr = lSD_ptr->getOperatingSegmentDate ();
+      if (lOperatingSD_ptr != NULL) {
+
+        const FlightDate* lOperatingFD_ptr = BomManager::getParentPtr<FlightDate>(*lOperatingSD_ptr);
+        const Inventory* lOperatingInv_ptr = BomManager::getParentPtr<Inventory>(*lOperatingFD_ptr);
+        oStream << " *** Operated by " << lOperatingInv_ptr->toString()
+                << lOperatingFD_ptr->toString() << std::endl;
+      }
+      
+      oStream << std::endl;
     }
   }
 

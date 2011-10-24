@@ -15,20 +15,22 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   SegmentDate::SegmentDate()
-    : _key (DEFAULT_ORIGIN, DEFAULT_DESTINATION), _parent (NULL) {
+    : _key (DEFAULT_ORIGIN, DEFAULT_DESTINATION), _parent (NULL),
+      _operatingSegmentDate (NULL) {
     assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////
   SegmentDate::SegmentDate (const SegmentDate&)
-    : _key (DEFAULT_ORIGIN, DEFAULT_DESTINATION), _parent (NULL) {
+    : _key (DEFAULT_ORIGIN, DEFAULT_DESTINATION), _parent (NULL),
+      _operatingSegmentDate (NULL) {
     assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////
   SegmentDate::SegmentDate (const Key_T& iKey)
-    : _key (iKey), _parent (NULL),
-      _isOtherAirlineOperating (false) {
+    : _key (iKey), _parent (NULL) ,
+      _operatingSegmentDate (NULL) {
   }
 
   // ////////////////////////////////////////////////////////////////////

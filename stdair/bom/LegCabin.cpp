@@ -42,6 +42,13 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   LegCabin::~LegCabin() {
   }
+  
+  // ////////////////////////////////////////////////////////////////////
+  void LegCabin::setCapacities (const CabinCapacity_T& iCapacity) {
+    _offeredCapacity = iCapacity;
+    _physicalCapacity = iCapacity;
+    setAvailabilityPool (iCapacity - _committedSpace);
+  }
 
   // ////////////////////////////////////////////////////////////////////
   const MapKey_T LegCabin::getFullerKey() const {
@@ -119,9 +126,8 @@ namespace stdair {
       //
       MeanStdDevPair_T& lMeanStdDevPair = itDemand->second;
       MeanValue_T lMeanValue = iMeanValue + lMeanStdDevPair.first;
-      StdDevValue_T lStdDevValue2 = iStdDevValue * iStdDevValue
-        + lMeanStdDevPair.second * lMeanStdDevPair.second;
-      StdDevValue_T lStdDevValue = std::sqrt (lStdDevValue2);
+      StdDevValue_T lStdDevValue = iStdDevValue * iStdDevValue + lMeanStdDevPair.second * lMeanStdDevPair.second;
+      lStdDevValue = std::sqrt (lStdDevValue);
 
       //
       lMeanStdDevPair = MeanStdDevPair_T (lMeanValue, lStdDevValue);
