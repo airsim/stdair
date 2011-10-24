@@ -1,3 +1,7 @@
+	* Mon Oct 24 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.3
+	- Specified Bom Manager methods for a segment date and its 
+	corresponding marketing segment dates.
+
 	* Fri Oct 21 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.2
 	- The C++ code is compatible with RedHat EL 5.x and g++-4.1.
 
