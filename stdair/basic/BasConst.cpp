@@ -192,7 +192,7 @@ namespace stdair {
   const NbOfNoShows_T DEFAULT_CLASS_NB_OF_NOSHOWS (0);
 
   /** Default cabin capacity for Leg cabins. */
-  const CabinCapacity_T DEFAULT_CABIN_CAPACITY (0.0);
+  const CabinCapacity_T DEFAULT_CABIN_CAPACITY (100.0);
 
   /** Default committed space value for Leg cabins. */
   const CommittedSpace_T DEFAULT_COMMITTED_SPACE (0.0);

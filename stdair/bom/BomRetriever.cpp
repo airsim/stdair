@@ -5,6 +5,7 @@
 #include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/BomKeyManager.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRoot.hpp>
@@ -337,6 +338,123 @@ namespace stdair {
     BomRetriever::retrieveDatePeriodListFromKey (*oAirportPair_ptr, iDepartureDate,
                                                  ioDatePeriodList);
    
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  LegCabin& BomRetriever::
+  retrieveDummyLegCabin (stdair::BomRoot& iBomRoot) {
+
+    LegCabin* oLegCabin_ptr = NULL;
+
+    // Retrieve the Inventory
+    const Inventory* lInventory_ptr = BomRetriever::
+      retrieveInventoryFromKey (iBomRoot, DEFAULT_AIRLINE_CODE);
+
+    if (lInventory_ptr == NULL) {
+      std::ostringstream oStr;
+      oStr << "The inventory corresponding to the '"
+           << DEFAULT_AIRLINE_CODE << "' airline can not be found";
+      throw ObjectNotFoundException (oStr.str());
+    }
+    
+    // Retrieve the FlightDate
+    const FlightDate* lFlightDate_ptr = BomRetriever::
+      retrieveFlightDateFromKey (*lInventory_ptr, DEFAULT_FLIGHT_NUMBER,
+                                 DEFAULT_DEPARTURE_DATE);
+    
+    if (lFlightDate_ptr == NULL) {
+      std::ostringstream oStr;
+      oStr << "The flight-date corresponding to ("
+           << DEFAULT_FLIGHT_NUMBER << ", "
+           << DEFAULT_DEPARTURE_DATE << ") can not be found";
+      throw ObjectNotFoundException (oStr.str());
+    }
+
+    // Retrieve the LegDate
+    const LegDateKey lLegDateKey (DEFAULT_ORIGIN);
+    const LegDate* lLegDate_ptr =
+      lFlightDate_ptr->getLegDate (lLegDateKey);
+
+    if (lLegDate_ptr == NULL) {
+      std::ostringstream oStr;
+      oStr << "The leg-date corresponding to the '"
+           << DEFAULT_ORIGIN << "' origin can not be found";
+      throw ObjectNotFoundException (oStr.str());
+    }
+    
+    // Retrieve the LegCabin
+    const LegCabinKey lLegCabinKey (DEFAULT_CABIN_CODE);
+    oLegCabin_ptr = lLegDate_ptr->getLegCabin (lLegCabinKey);
+
+    if (oLegCabin_ptr == NULL) {
+      std::ostringstream oStr;
+      oStr << "The leg-cabin corresponding to the '"
+           << DEFAULT_CABIN_CODE << "' cabin code can not be found";
+      throw ObjectNotFoundException (oStr.str());
+    }
+    
+    assert (oLegCabin_ptr != NULL);
+    return *oLegCabin_ptr;
+
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  SegmentCabin& BomRetriever::
+  retrieveDummySegmentCabin (stdair::BomRoot& iBomRoot) {
+
+    SegmentCabin* oSegmentCabin_ptr = NULL;
+
+    // Retrieve the Inventory
+    const Inventory* lInventory_ptr = BomRetriever::
+      retrieveInventoryFromKey (iBomRoot, DEFAULT_AIRLINE_CODE);
+
+    if (lInventory_ptr == NULL) {
+      std::ostringstream oStr;
+      oStr << "The inventory corresponding to the '"
+           << DEFAULT_AIRLINE_CODE << "' airline can not be found";
+      throw ObjectNotFoundException (oStr.str());
+    }
+    
+    // Retrieve the FlightDate
+    const FlightDate* lFlightDate_ptr = BomRetriever::
+      retrieveFlightDateFromKey (*lInventory_ptr, DEFAULT_FLIGHT_NUMBER,
+                                 DEFAULT_DEPARTURE_DATE);
+    
+    if (lFlightDate_ptr == NULL) {
+      std::ostringstream oStr;
+      oStr << "The flight-date corresponding to ("
+           << DEFAULT_FLIGHT_NUMBER << ", "
+           << DEFAULT_DEPARTURE_DATE << ") can not be found";
+      throw ObjectNotFoundException (oStr.str());
+    }
+    
+    // Retrieve the SegmentDate
+    const SegmentDateKey lSegmentDateKey (DEFAULT_ORIGIN, DEFAULT_DESTINATION);
+    const SegmentDate* lSegmentDate_ptr =
+      lFlightDate_ptr->getSegmentDate (lSegmentDateKey);
+
+    if (lSegmentDate_ptr == NULL) {
+      std::ostringstream oStr;
+      oStr << "The segment-date corresponding to the '"
+           << DEFAULT_ORIGIN << "' origin and '"
+           << DEFAULT_DESTINATION << "' destination can not be found";
+      throw ObjectNotFoundException (oStr.str());
+    }
+    
+    // Retrieve the SegmentCabin
+    const SegmentCabinKey lSegmentCabinKey (DEFAULT_CABIN_CODE);
+    oSegmentCabin_ptr =
+      BomManager::getObjectPtr<SegmentCabin> (*lSegmentDate_ptr, lSegmentCabinKey.toString());
+
+    if (oSegmentCabin_ptr == NULL) {
+      std::ostringstream oStr;
+      oStr << "The segment-cabin corresponding to the '"
+           << DEFAULT_CABIN_CODE << "' cabin code can not be found";
+      throw ObjectNotFoundException (oStr.str());
+    }
+
+    assert (oSegmentCabin_ptr != NULL);
+    return *oSegmentCabin_ptr;
   }
 
 }

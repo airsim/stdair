@@ -56,11 +56,31 @@ namespace stdair {
     static void buildSampleInventorySchedule (BomRoot&);
 
     /**
-     * Build a dummy inventory, containing a dummy flight-date with a single
-     * leg-cabin and some virtual booking classes. That structure is the bare
-     * minimum required to perform an optimisation on a leg-cabin.
+     * Build a dummy inventory, containing a dummy flight-date with a
+     * single segment cabin, a single leg-cabin, three booking classes
+     * and three virtual classes.
+     * That structure is the bare minimum required to perform an
+     * optimisation on a leg-cabin.
      *
-     * As for now, that method is only called by RMOL.
+     * As for now, that method is only called by RMOL when a default
+     * BOM tree is built.
+     *
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    static void buildCompleteDummyInventory (BomRoot&);
+
+    /**
+     * Build a dummy inventory, containing a dummy flight-date with a
+     * single segment cabin and a single leg-cabin.
+     * That structure is the bare minimum required to perform an
+     * optimisation on a leg-cabin.
+     * The booking classes and virtual classes are not built here:
+     * there are built when parsing the RMOL input file containing yield,
+     * mean and standard deviation information.
+     *
+     * As for now, that method is only called by RMOL when an input file
+     * is parsed.
      *
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
