@@ -1,3 +1,7 @@
+	* Wed Nov 02 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.44.0
+	- Added the dummy inventory construction needed by RMOL in the default sample BOM 
+	construction.
+	
 	* Mon Oct 24 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.3
 	- Specified Bom Manager methods for a segment date and its 
 	corresponding marketing segment dates.

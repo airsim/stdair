@@ -1,3 +1,8 @@
+* 2011-11-02:
+- Version 0.44.0	
+- Added the dummy inventory construction needed by RMOL in the default sample 
+  BOM construction.
+
 * 2011-10-24:
 - Version 0.43.3	
 - Specified Bom Manager methods for a segment date and its 
