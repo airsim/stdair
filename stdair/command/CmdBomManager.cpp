@@ -13,6 +13,7 @@
 #include <stdair/basic/BasConst_DefaultObject.hpp>
 #include <stdair/basic/BasConst_Request.hpp>
 #include <stdair/basic/BasConst_Inventory.hpp>
+#include <stdair/bom/BomRetriever.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
@@ -49,7 +50,7 @@ namespace stdair {
     STDAIR_LOG_DEBUG ("StdAir is building the BOM tree from built-in "
                       << "specifications.");
 
-    // ////// Basic Bom Tree ///////    
+    // ////// Basic Bom Tree ///////
     // Build the inventory (flight-dates) and the schedule (flight period) parts.
     buildSampleInventorySchedule (ioBomRoot);
 
@@ -62,7 +63,9 @@ namespace stdair {
 
     // Build the pricing (fare rules) and revenue accounting (yields) parts.
     buildPartnershipsSamplePricing (ioBomRoot);
-      
+
+    // Build a dummy inventory, needed by RMOL.
+    buildCompleteDummyInventory (ioBomRoot);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -640,7 +643,79 @@ namespace stdair {
 
     // Add total forecast info for cabin Y. 
     lAF_LHRSYD_OnDDate.setTotalForecast (lY, lWTP750Mean60StdDev6);
-  
+    
+  }
+  // //////////////////////////////////////////////////////////////////////
+  void CmdBomManager::buildCompleteDummyInventory  (BomRoot& ioBomRoot) {
+
+    // Build a dummy inventory, containing a dummy flight-date with a
+    // single segment-cabin and a single leg-cabin.
+    const CabinCapacity_T lCapacity = DEFAULT_CABIN_CAPACITY;
+    buildDummyInventory (ioBomRoot, lCapacity);
+
+    // Retrieve the (sample) segment-cabin.
+    SegmentCabin& lDummySegmentCabin =
+      BomRetriever::retrieveDummySegmentCabin (ioBomRoot);
+    
+    // Retrieve the (sample) leg-cabin.
+    LegCabin& lDummyLegCabin =
+      BomRetriever::retrieveDummyLegCabin (ioBomRoot);
+
+    // Add some booking classes to the dummy segment-cabin and some
+    // virtual ones to the dummy leg-cabin.
+    // First booking class yield and demand information.
+    Yield_T lYield = 100;
+    MeanValue_T lMean = 20;
+    StdDevValue_T lStdDev= 9;
+    BookingClassKey lBCKey (DEFAULT_CLASS_CODE);
+
+    BookingClass& lDummyBookingClass =
+      FacBom<BookingClass>::instance().create (lBCKey);
+    lDummyBookingClass.setYield (lYield);
+    lDummyBookingClass.setMean (lMean);
+    lDummyBookingClass.setStdDev (lStdDev);
+    // Add a booking class to the segment-cabin.
+    FacBomManager::addToList (lDummySegmentCabin, lDummyBookingClass);
+
+    VirtualClassStruct lDummyVirtualClass (lDummyBookingClass);
+    lDummyVirtualClass.setYield (lYield);
+    lDummyVirtualClass.setMean (lMean);
+    lDummyVirtualClass.setStdDev (lStdDev);
+    // Add the corresponding virtual class to the leg-cabin.
+    lDummyLegCabin.addVirtualClass (lDummyVirtualClass);
+
+    // Second booking class yield and demand information.
+    lYield = 70;
+    lMean = 45;
+    lStdDev= 12;
+    lDummyBookingClass.setYield (lYield);
+    lDummyBookingClass.setMean (lMean);
+    lDummyBookingClass.setStdDev (lStdDev);
+    // Add a booking class to the segment-cabin.
+    FacBomManager::addToList (lDummySegmentCabin, lDummyBookingClass);
+
+    lDummyVirtualClass.setYield (lYield);
+    lDummyVirtualClass.setMean (lMean);
+    lDummyVirtualClass.setStdDev (lStdDev);
+    // Add the corresponding virtual class to the leg-cabin.
+    lDummyLegCabin.addVirtualClass (lDummyVirtualClass);
+    
+    // Third booking class yield and demand information.
+    lYield = 42;
+    lMean = 80;
+    lStdDev= 16;
+    lDummyBookingClass.setYield (lYield);
+    lDummyBookingClass.setMean (lMean);
+    lDummyBookingClass.setStdDev (lStdDev);
+    // Add a booking class to the segment-cabin.
+    FacBomManager::addToList (lDummySegmentCabin, lDummyBookingClass);
+
+    lDummyVirtualClass.setYield (lYield);
+    lDummyVirtualClass.setMean (lMean);
+    lDummyVirtualClass.setStdDev (lStdDev);
+    // Add the corresponding virtual class to the leg-cabin.
+    lDummyLegCabin.addVirtualClass (lDummyVirtualClass);
+    
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -735,6 +810,7 @@ namespace stdair {
     
     FacBomManager::addToListAndMap (lSegmentCabin, lSegmentYCabin1FamilyQClass);
     FacBomManager::addToListAndMap (lSegment, lSegmentYCabin1FamilyQClass);
+
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -816,7 +892,7 @@ namespace stdair {
 
     // Create the AirlineClassList
     AirlineClassList& lAirlineClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lAirlineClassListKey);
+      FacBom<AirlineClassList>::instance().create (lAirlineClassListKey);
     // Link the AirlineClassList to the FareFeatures object
     lAirlineClassList.setFare (900);
     FacBomManager::addToListAndMap (lFareFeatures, lAirlineClassList);
@@ -2142,13 +2218,13 @@ namespace stdair {
 
     // Create the AirlineClassListKey and link it to the FareFeatures object.
     AirlineClassList& lSQAirlineYClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lSQAirlineYClassListKey);
+      FacBom<AirlineClassList>::instance().create (lSQAirlineYClassListKey);
     lSQAirlineYClassList.setFare(700);
     FacBomManager::addToListAndMap (lSINBKKFareFeatures, lSQAirlineYClassList);
     FacBomManager::linkWithParent (lSINBKKFareFeatures, lSQAirlineYClassList);
 
     AirlineClassList& lSQAirlineMClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lSQAirlineMClassListKey);
+      FacBom<AirlineClassList>::instance().create (lSQAirlineMClassListKey);
     lSQAirlineMClassList.setFare(500);
     FacBomManager::addToListAndMap (lSINBKKFareFeatures, lSQAirlineMClassList);
     FacBomManager::linkWithParent (lSINBKKFareFeatures, lSQAirlineMClassList);
@@ -2212,13 +2288,13 @@ namespace stdair {
 
     // Create the AirlineClassListKey and link it to the FareFeatures object.
     AirlineClassList& lCXAirlineYClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lCXAirlineYClassListKey);
+      FacBom<AirlineClassList>::instance().create (lCXAirlineYClassListKey);
     lCXAirlineYClassList.setFare(700);
     FacBomManager::addToListAndMap (lBKKHKGFareFeatures, lCXAirlineYClassList);
     FacBomManager::linkWithParent (lBKKHKGFareFeatures, lCXAirlineYClassList);
     
     AirlineClassList& lCXAirlineMClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lCXAirlineMClassListKey);
+      FacBom<AirlineClassList>::instance().create (lCXAirlineMClassListKey);
     lCXAirlineMClassList.setFare(500);
     FacBomManager::addToListAndMap (lBKKHKGFareFeatures, lCXAirlineMClassList);
     FacBomManager::linkWithParent (lBKKHKGFareFeatures, lCXAirlineMClassList);
@@ -2289,13 +2365,13 @@ namespace stdair {
 
     // Create the AirlineClassListKey and link it to the FareFeatures object.
     AirlineClassList& lSQ_CXAirlineYClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineYClassListKey);
+      FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineYClassListKey);
     lSQ_CXAirlineYClassList.setFare(1200);
     FacBomManager::addToListAndMap (lSINHKGFareFeatures, lSQ_CXAirlineYClassList);
     FacBomManager::linkWithParent (lSINHKGFareFeatures, lSQ_CXAirlineYClassList);
     
     AirlineClassList& lSQ_CXAirlineMClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineMClassListKey);
+      FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineMClassListKey);
     lSQ_CXAirlineMClassList.setFare(850);
     FacBomManager::addToListAndMap (lSINHKGFareFeatures, lSQ_CXAirlineMClassList);
     FacBomManager::linkWithParent (lSINHKGFareFeatures, lSQ_CXAirlineMClassList);
@@ -2341,13 +2417,13 @@ namespace stdair {
 
     // Create the AirlineClassListKey and link it to the YieldFeatures object.
     AirlineClassList& lRAC_SQAirlineYClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lSQAirlineYClassListKey);
+      FacBom<AirlineClassList>::instance().create (lSQAirlineYClassListKey);
     lRAC_SQAirlineYClassList.setYield(700);
     FacBomManager::addToListAndMap (lSINBKKYieldFeatures, lRAC_SQAirlineYClassList);
     FacBomManager::linkWithParent (lSINBKKYieldFeatures, lRAC_SQAirlineYClassList);
 
     AirlineClassList& lRAC_SQAirlineMClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lSQAirlineMClassListKey);
+      FacBom<AirlineClassList>::instance().create (lSQAirlineMClassListKey);
     lRAC_SQAirlineMClassList.setYield(500);
     FacBomManager::addToListAndMap (lSINBKKYieldFeatures, lRAC_SQAirlineMClassList);
     FacBomManager::linkWithParent (lSINBKKYieldFeatures, lRAC_SQAirlineMClassList);
@@ -2388,13 +2464,13 @@ namespace stdair {
 
     // Create the AirlineClassListKey and link it to the YieldFeatures object.
     AirlineClassList& lRAC_CXAirlineYClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lCXAirlineYClassListKey);
+      FacBom<AirlineClassList>::instance().create (lCXAirlineYClassListKey);
     lRAC_CXAirlineYClassList.setYield(700);
     FacBomManager::addToListAndMap (lBKKHKGYieldFeatures, lRAC_CXAirlineYClassList);
     FacBomManager::linkWithParent (lBKKHKGYieldFeatures, lRAC_CXAirlineYClassList);
     
     AirlineClassList& lRAC_CXAirlineMClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lCXAirlineMClassListKey);
+      FacBom<AirlineClassList>::instance().create (lCXAirlineMClassListKey);
     lRAC_CXAirlineMClassList.setYield(500);
     FacBomManager::addToListAndMap (lBKKHKGYieldFeatures, lRAC_CXAirlineMClassList);
     FacBomManager::linkWithParent (lBKKHKGYieldFeatures, lRAC_CXAirlineMClassList);
@@ -2435,13 +2511,13 @@ namespace stdair {
     
     // Create the AirlineClassListKey and link it to the YieldFeatures object.
     AirlineClassList& lRAC_SQ_CXAirlineYClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineYClassListKey);
+      FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineYClassListKey);
     lRAC_SQ_CXAirlineYClassList.setYield(1200);
     FacBomManager::addToListAndMap (lSINHKGYieldFeatures, lRAC_SQ_CXAirlineYClassList);
     FacBomManager::linkWithParent (lSINHKGYieldFeatures, lRAC_SQ_CXAirlineYClassList);
     
     AirlineClassList& lRAC_SQ_CXAirlineMClassList =
-      stdair::FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineMClassListKey);
+      FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineMClassListKey);
     lRAC_SQ_CXAirlineMClassList.setYield(850);
     FacBomManager::addToListAndMap (lSINHKGYieldFeatures, lRAC_SQ_CXAirlineMClassList);
     FacBomManager::linkWithParent (lSINHKGYieldFeatures, lRAC_SQ_CXAirlineMClassList);

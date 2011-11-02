@@ -285,6 +285,20 @@ namespace stdair {
                                       const stdair::Date_T&,
                                       stdair::DatePeriodList_T&);
 
+    /**
+     * Retrieve the sample leg-cabin of the dummy inventory of "XX".
+     *
+     * @param stdair::BomRoot& The BOM tree.
+     */
+    static stdair::LegCabin& retrieveDummyLegCabin (stdair::BomRoot&);
+
+    /**
+     * Retrieve the sample segment-cabin of the dummy inventory of "XX".
+     *
+     * @param stdair::BomRoot& The BOM tree.
+     */
+    static stdair::SegmentCabin& retrieveDummySegmentCabin (stdair::BomRoot&);
+
   };
   
 }
