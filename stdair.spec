@@ -2,14 +2,14 @@
 %global mydocs __tmp_docdir
 #
 Name:           stdair
-Version:        0.43.1
+Version:        0.44.0
 Release:        1%{?dist}
 
 Summary:        C++ Standard Airline IT Object Library
 
 Group:          System Environment/Libraries 
 License:        LGPLv2+
-URL:            http://sourceforge.net/projects/%{name}/
+URL:            http://%{name}.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
@@ -43,7 +43,9 @@ programs using %{name}, you will need to install %{name}-devel.
 %package        doc
 Summary:        HTML documentation for the %{name} library
 Group:          Documentation
-%{?fedora:BuildArch:      noarch}
+%if 0%{?fedora} || 0%{?rhel} > 5
+BuildArch:      noarch
+%endif
 BuildRequires:  tex(latex)
 BuildRequires:  doxygen, ghostscript
 
@@ -122,33 +124,27 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Nov 02 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.44.0-1
+- Upstream update
+
 * Tue Oct 18 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.43.1-1
 - The build framework is now compatible with CMake 2.6 (the exclusive
   dependency on CMake 2.8 has been removed).
 
-* Thu Oct 06 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.43.0-1
-- Upstream update
+* Sat Oct 15 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.43.0-2
+- Improved a little the package descriptions
 
-* Thu Sep 29 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.42.0-1
-- Upstream update
-
-* Tue Sep 20 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.41.0-1
-- Upstream update
-
-* Tue Sep 06 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.40.0-1
-- Upstream update
-
-* Tue Aug 30 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.39.2-1
+* Sat Oct 15 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.43.0-1
 - Upstream update
 
 * Mon Aug 15 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.38.0-1
 - Upstream update
 
-* Wed Aug 10 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.37.1-1
-- Upstream update
-
-* Mon Aug 08 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.37.0-1
-- Upstream update
+* Fri Aug 12 2011 Adam Jackson <ajax@redhat.com> 0.36.2-2
+- Rebuild for new boost
+ 
+* Mon Aug 01 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.36.2-1
+- The CMake framework now takes into account compilation flags
 
 * Sun Jul 31 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.36.1-1
 - Upstream update
