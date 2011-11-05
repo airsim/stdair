@@ -2,7 +2,7 @@
 %global mydocs __tmp_docdir
 #
 Name:           stdair
-Version:        0.44.0
+Version:        0.44.1
 Release:        1%{?dist}
 
 Summary:        C++ Standard Airline IT Object Library
@@ -124,6 +124,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Nov 05 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.44.1-1
+- Upstream update
+
 * Tue Nov 02 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.44.0-1
 - Upstream update
 

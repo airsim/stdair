@@ -1,7 +1,15 @@
+* 2011-11-05:
+- Version 0.44.1
+- Improved the support for the CMake-based build process
+  on older systems (e.g., RedHat/CentOS 5.x)
+- A third generation of the PDF reference manual is performed
+- SOCI-3.1.0 is now fully supported (and the version
+  correctly retrieved)
+
 * 2011-11-02:
 - Version 0.44.0	
-- Added the dummy inventory construction needed by RMOL in the default sample 
-  BOM construction.
+- Added the dummy inventory construction needed by RMOL in 
+  the default sample BOM construction.
 
 * 2011-10-24:
 - Version 0.43.3	
@@ -14,8 +22,8 @@
 
 * 2011-10-18:
 - Version 0.43.1
-- The build framework is now compatible with CMake 2.6 (the exclusive
-  dependency on CMake 2.8 has been removed).
+- The build framework is now compatible with CMake 2.6 (the 
+  exclusive dependency on CMake 2.8 has been removed).
 
 * 2011-10-06:
 - Version 0.43.0

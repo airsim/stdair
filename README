@@ -48,7 +48,7 @@ http://sourceforge.net/project/showfiles.php?group_id=267760
 Then, as usual:
 * To configure the project, type something like:
   mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-0.44.0 \
+  cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-0.44.1 \
    -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=ON ..
 * To build the project, type:
   make
@@ -56,6 +56,9 @@ Then, as usual:
   make check
 * To install the library (libstdair*.so*) and the binary (stdair), just type:
   make install
+  cd /home/user/dev/deliveries
+  rm -f stdair-stable && ln -s stdair-0.44.1 stdair-stable
+  cd -
 * To package the source files, type:
   make dist
 * To package the binary and the documentation:
@@ -64,8 +67,8 @@ Then, as usual:
   ./stdair/stdair -b
 * To run the installed version (the first following line must be done once
   per session):
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/user/dev/deliveries/stdair-0.44.0/lib
-  /home/user/dev/deliveries/stdair-0.44.0/bin/stdair -b
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/user/dev/deliveries/stdair-stable/lib
+  /home/user/dev/deliveries/stdair-stable/bin/stdair -b
 
-Denis Arnaud (August 2011)
+Denis Arnaud (November 2011)
 
