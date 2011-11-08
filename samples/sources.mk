@@ -29,4 +29,6 @@ sample_csv_sources = \
 	$(top_srcdir)/samples/schedule05.csv \
 	$(top_srcdir)/samples/schedule06.csv \
 	$(top_srcdir)/samples/schedule07.csv \
+	$(top_srcdir)/samples/scheduleError01.csv \
+	$(top_srcdir)/samples/scheduleError02.csv \
 	$(top_srcdir)/samples/yieldstore01.csv
