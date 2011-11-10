@@ -1,25 +1,27 @@
 
+	* Thu Nov 10 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.44.2
+	- Added schedule error input files for error tests.
+	 
 	* Sat Nov 05 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.44.1
 	- Improved the support for the CMake-based build process
 	on older systems (e.g., RedHat/CentOS 5.x)
 	- A third generation of the PDF reference manual is performed
-	- SOCI-3.1.0 is now fully supported (and the version correctly
-	retrieved)
+	- SOCI-3.1.0 is now fully supported (and the version correctly retrieved)
 
 	* Wed Nov 02 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.44.0
-	- Added the dummy inventory construction needed by RMOL in
-	the default sample BOM construction.
+	- Added the dummy inventory construction needed by RMOL in the default
+	sample BOM construction.
 	
 	* Mon Oct 24 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.3
-	- Specified Bom Manager methods for a segment date and its 
-	corresponding marketing segment dates.
+	- Specified Bom Manager methods for a segment date and its corresponding
+	marketing segment dates.
 
 	* Fri Oct 21 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.2
 	- The C++ code is compatible with RedHat EL 5.x and g++-4.1.
 
 	* Tue Oct 18 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.1
-	- The build framework is now compatible with CMake 2.6
-	(the exclusive dependency on CMake 2.8 has been removed).
+	- The build framework is now compatible with CMake 2.6 (the exclusive
+	dependency on CMake 2.8 has been removed).
 
 	* Thu Oct 06 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.0
 	- Removed stored operating segment date in segment date object.
@@ -37,13 +39,13 @@
 	- Added support for SimFQT command line binary.
 
 	* Tue Aug 30 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.39.2
-	- Added support for airline codeshare: links are created between
-	operating and marketing flights/segments/legs.
+	- Added support for airline codeshare: links are created between operating
+	and marketing flights/segments/legs.
 
 	* Mon Aug 15 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.38.0
-	- A list() method has been added to the API (STDAIR_Service),
-	in order to retrieve the list of flight-dates for given parameters
-	(optionally, airline code and/or flight number).
+	- A list() method has been added to the API (STDAIR_Service), in order
+	to retrieve the list of flight-dates for given parameters (optionally,
+	airline code and/or flight number).
 
 	* Wed Jun 15 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.34.0
 	- CMake-based build.
