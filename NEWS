@@ -1,3 +1,7 @@
+* 2011-11-10:
+- Version 0.44.1	
+- Added schedule error input files for error tests.
+
 * 2011-11-02:
 - Version 0.44.0	
 - Added the dummy inventory construction needed by RMOL in the default sample 

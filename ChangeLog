@@ -1,3 +1,6 @@
+	* Thu Nov 10 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.44.0
+	- Added schedule error input files for error tests.
+
 	* Wed Nov 02 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.44.0
 	- Added the dummy inventory construction needed by RMOL in the default sample BOM 
 	construction.
