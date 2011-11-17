@@ -1,6 +1,6 @@
 
-	* Thu Nov 10 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.44.2
-	- Added schedule error input files for error tests.
+	* Thu Nov 17 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot	net> 0.44.3
+	- Added a schedule error input files for error tests.
 	 
 	* Sat Nov 05 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.44.1
 	- Improved the support for the CMake-based build process
