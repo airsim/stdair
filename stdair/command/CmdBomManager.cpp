@@ -811,6 +811,44 @@ namespace stdair {
     FacBomManager::addToListAndMap (lSegmentCabin, lSegmentYCabin1FamilyQClass);
     FacBomManager::addToListAndMap (lSegment, lSegmentYCabin1FamilyQClass);
 
+    /*================================================================================
+      ================================================================================
+      ================================================================================*/
+    // Schedule:
+    // XX:
+    // Step 1: flight period level
+    // Create a flight period for XX:
+    const DoWStruct lDoWSrtuct ("1111111");
+    const Date_T lXXDateRangeStart (DEFAULT_DEPARTURE_DATE);
+    const Date_T lXXDateRangeEnd (DEFAULT_DEPARTURE_DATE);
+    const DatePeriod_T lXXDatePeriod (lXXDateRangeStart, lXXDateRangeEnd);
+    const PeriodStruct lXXPeriodStruct (lXXDatePeriod, lDoWSrtuct);
+
+    FlightPeriodKey lXXFlightPeriodKey (DEFAULT_FLIGHT_NUMBER, lXXPeriodStruct);
+
+    FlightPeriod& lXXFlightPeriod =
+      FacBom<FlightPeriod>::instance().create (lXXFlightPeriodKey);
+    FacBomManager::addToListAndMap (lInv, lXXFlightPeriod);
+    FacBomManager::linkWithParent (lInv, lXXFlightPeriod);
+
+    // Step 2: segment period level
+    // Create a segment period 
+
+    SegmentPeriodKey lXXSegmentPeriodKey (DEFAULT_ORIGIN, DEFAULT_DESTINATION);
+
+    SegmentPeriod& lXXSegmentPeriod =
+      FacBom<SegmentPeriod>::instance().create (lXXSegmentPeriodKey);
+    FacBomManager::addToListAndMap (lXXFlightPeriod, lXXSegmentPeriod);
+    FacBomManager::linkWithParent (lXXFlightPeriod, lXXSegmentPeriod);
+
+    lXXSegmentPeriod.setBoardingTime (Duration_T (14, 0, 0));
+    lXXSegmentPeriod.setOffTime (Duration_T (16, 0, 0));
+    lXXSegmentPeriod.setElapsedTime (Duration_T (8, 0, 0));
+    const CabinCode_T lY ("Y");
+    const ClassList_String_T lYQ ("YQ");
+    lXXSegmentPeriod.addCabinBookingClassList (lY,lYQ);
+
+
   }
 
   // //////////////////////////////////////////////////////////////////////
