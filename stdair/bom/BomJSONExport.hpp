@@ -6,6 +6,21 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <iosfwd>
+// Boost Property Tree
+#if BOOST_VERSION >= 104100
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#endif // BOOST_VERSION >= 104100
+// StdAir
+#include <stdair/bom/BookingClass.hpp>
+
+#if BOOST_VERSION >= 104100
+  namespace bpt = boost::property_tree;
+#else // BOOST_VERSION >= 104100
+  namespace bpt {
+    typedef char ptree;
+  }
+#endif // BOOST_VERSION >= 104100
 
 namespace stdair {
 
@@ -15,6 +30,7 @@ namespace stdair {
   /**
    * @brief Utility class to export StdAir objects in a JSON format.
    */
+  
   class BomJSONExport {
   public:
     // //////////////// Export support methods /////////////////
@@ -24,9 +40,30 @@ namespace stdair {
      *
      * @param std::ostream& Output stream in which the BOM tree should be
      *        logged/dumped.
-     * @param const FlightDate& Root of the BOM tree to be exported.
+     * @param const FlightDate& Root of the BOM tree to be exported.   
      */
     static void jsonExport (std::ostream&, const FlightDate&);
+
+  private:
+    
+    static void jsonLegDateExport (bpt::ptree&, const FlightDate&);
+    
+    static void jsonLegCabinExport (bpt::ptree&, const FlightDate&);
+
+    static void jsonBucketExport (bpt::ptree&, const FlightDate&);
+
+    static void jsonSegmentDateExport (bpt::ptree&, const FlightDate&);
+
+    static void jsonSegmentCabinExport (bpt::ptree&, const FlightDate&);
+
+    static void jsonFareFamilyExport (bpt::ptree&, const FlightDate&);
+    
+    static void jsonBookingClassExport (bpt::ptree&,
+                                        const BookingClass&,
+                                        const std::string&);
+
+    static void jsonBookingClassExport (bpt::ptree&, const FlightDate&);
+    
   };
 
 }
