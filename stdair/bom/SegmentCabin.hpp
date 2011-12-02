@@ -133,7 +133,7 @@ namespace stdair {
     }
 
     /** Retrieve the status of fare family. */
-    const bool getFareFamalyStatus() const {
+    const bool getFareFamilyStatus() const {
       return _fareFamilyActivation;
     }
 
