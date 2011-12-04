@@ -1,6 +1,16 @@
+* 2011-12-04:
+- Version 0.45.0
+- Began to improved the JSON import/export API
+- Added a dummy schedule-related BOM tree, so that the simulator works seamlessly
+  when selecting the sample BOM option
+- Updating LD_LIBRARY_PATH is no longer necessary thanks to the run-path feature
+- The package version is now part of the CMake cache, and can be read from there
+  by third party utilities.
+- The new MetaSim wrapper project is now fully supported
+
 * 2011-11-17:
 - Version 0.44.3
-- Added a schedule error input files for error tests.
+- Added a schedule error input files for error tests
 
 * 2011-11-05:
 - Version 0.44.1
