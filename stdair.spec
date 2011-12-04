@@ -151,7 +151,7 @@ rm -rf $RPM_BUILD_ROOT
 
 * Fri Aug 12 2011 Adam Jackson <ajax@redhat.com> 0.36.2-2
 - Rebuild for new boost
- 
+
 * Mon Aug 01 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.36.2-1
 - The CMake framework now takes into account compilation flags
 
