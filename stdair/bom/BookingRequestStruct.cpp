@@ -28,7 +28,8 @@ namespace stdair {
       _stayDuration (DEFAULT_STAY_DURATION),
       _frequentFlyerType (DEFAULT_FF_TIER),
       _wtp (DEFAULT_WTP),
-      _valueOfTime (DEFAULT_VALUE_OF_TIME) {
+      _valueOfTime (DEFAULT_VALUE_OF_TIME),
+      _changeFees (false), _nonRefundable (false) {
     assert (false);
   }
 
@@ -49,7 +50,9 @@ namespace stdair {
       _stayDuration (iBookingRequest._stayDuration),
       _frequentFlyerType (iBookingRequest._frequentFlyerType),
       _wtp (iBookingRequest._wtp),
-      _valueOfTime (iBookingRequest._valueOfTime) {
+      _valueOfTime (iBookingRequest._valueOfTime),
+      _changeFees (iBookingRequest._changeFees),
+      _nonRefundable (iBookingRequest._nonRefundable) {
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -68,7 +71,9 @@ namespace stdair {
                         const FrequentFlyer_T& iFrequentFlyerType,
                         const Duration_T& iPreferredDepartureTime,
                         const WTP_T& iWTP,
-                        const PriceValue_T& iValueOfTime)
+                        const PriceValue_T& iValueOfTime,
+                        const ChangeFees_T& iChangeFees,
+                        const NonRefundable_T& iNonRefundable)
     : _generatorKey (iGeneratorKey), _origin (iOrigin),
       _destination (iDestination), _pos (iPOS), 
       _preferredDepartureDate (iDepartureDate), 
@@ -77,7 +82,8 @@ namespace stdair {
       _preferredCabin (iPreferredCabin), _partySize (iPartySize),
       _channel (iChannel), _tripType (iTripType),
       _stayDuration (iStayDuration), _frequentFlyerType (iFrequentFlyerType),
-      _wtp (iWTP), _valueOfTime (iValueOfTime) {
+      _wtp (iWTP), _valueOfTime (iValueOfTime),
+      _changeFees (iChangeFees), _nonRefundable (iNonRefundable) {
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -95,7 +101,9 @@ namespace stdair {
                         const FrequentFlyer_T& iFrequentFlyerType,
                         const Duration_T& iPreferredDepartureTime,
                         const WTP_T& iWTP,
-                        const PriceValue_T& iValueOfTime)
+                        const PriceValue_T& iValueOfTime,
+                        const ChangeFees_T& iChangeFees,
+                        const NonRefundable_T& iNonRefundable)
     : _generatorKey (""), _origin (iOrigin),
       _destination (iDestination), _pos (iPOS), 
       _preferredDepartureDate (iDepartureDate), 
@@ -104,7 +112,8 @@ namespace stdair {
       _preferredCabin (iPreferredCabin), _partySize (iPartySize),
       _channel (iChannel), _tripType (iTripType),
       _stayDuration (iStayDuration), _frequentFlyerType (iFrequentFlyerType),
-      _wtp (iWTP), _valueOfTime (iValueOfTime) {
+      _wtp (iWTP), _valueOfTime (iValueOfTime),
+      _changeFees (iChangeFees), _nonRefundable (iNonRefundable) {
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -129,7 +138,8 @@ namespace stdair {
          << " " << _preferredDepartureDate << " (" << _stayDuration << " days)"
          << " " << _preferredDepartureTime
          << " " << _preferredCabin << " " << _partySize
-         << " " << _frequentFlyerType << " " << _wtp << " " << _valueOfTime;
+         << " " << _frequentFlyerType << " " << _wtp << " " << _valueOfTime
+         << " " << _changeFees << " " << _nonRefundable;
     return oStr.str();
   }
 
@@ -210,6 +220,12 @@ namespace stdair {
 
     // Value of time
     oStr << ", " << _valueOfTime;
+
+    // Change fees
+    oStr << ", " << _changeFees;
+
+    // Non refundable
+    oStr << ", " << _nonRefundable;
 
     return oStr.str();
   }

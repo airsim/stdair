@@ -95,6 +95,16 @@ namespace stdair {
     const PriceValue_T& getValueOfTime () const {
       return _valueOfTime;
     }
+
+    /** Get the change fee acceptation. */
+    const ChangeFees_T& getChangeFees () const {
+      return _changeFees;
+    }
+
+    /** Get the non refundable acceptation. */
+    const NonRefundable_T& getNonRefundable () const {
+      return _nonRefundable;
+    }
       
 
   public:
@@ -188,7 +198,9 @@ namespace stdair {
                           const FrequentFlyer_T& iFrequentFlyerType,
                           const Duration_T& iPreferredDepartureTime,
                           const WTP_T& iWTP,
-                          const PriceValue_T& iValueOfTime);
+                          const PriceValue_T& iValueOfTime,
+                          const ChangeFees_T& iChangeFees,
+                          const NonRefundable_T& iNonRefundable);
 
     /**
      * Constructor without the demand generator key, used for batches.
@@ -206,7 +218,9 @@ namespace stdair {
                           const FrequentFlyer_T& iFrequentFlyerType,
                           const Duration_T& iPreferredDepartureTime,
                           const WTP_T& iWTP,
-                          const PriceValue_T& iValueOfTime);
+                          const PriceValue_T& iValueOfTime,
+                          const ChangeFees_T& iChangeFees,
+                          const NonRefundable_T& iNonRefundable);
     /**
      * Copy constructor.
      */
@@ -274,6 +288,12 @@ namespace stdair {
 
     /** Value of time. */
     const PriceValue_T _valueOfTime;
+
+    /** Change fee restriction acceptation. */
+    const ChangeFees_T _changeFees;
+
+    /** Non refundable restriction acceptation. */
+    const NonRefundable_T _nonRefundable;
   };
 
 }
