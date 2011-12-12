@@ -1053,6 +1053,10 @@ namespace stdair {
     // unit of time, e.g., EUR/hour)
     const PriceValue_T lValueOfTime (DEFAULT_VALUE_OF_TIME);
 
+    // Restrictions
+    const ChangeFees_T lChangeFees = true;
+    const NonRefundable_T lNonRefundable = true;
+
     // Creation of the booking request structure
     BookingRequestStruct oBookingRequest (lOrigin, lDestination, lPOS,
                                           lPreferredDepartureDate,
@@ -1062,7 +1066,8 @@ namespace stdair {
                                           lTripType, lStayDuration,
                                           lFrequentFlyerType,
                                           lPreferredDepartureTime,
-                                          lWTP, lValueOfTime);
+                                          lWTP, lValueOfTime,
+                                          lChangeFees, lNonRefundable);
 
     return oBookingRequest;
   }
@@ -1118,6 +1123,10 @@ namespace stdair {
     // unit of time, e.g., EUR/hour)
     const PriceValue_T lValueOfTime (DEFAULT_VALUE_OF_TIME);
 
+    // Restrictions
+    const ChangeFees_T lChangeFees = true;
+    const NonRefundable_T lNonRefundable = true;
+    
     // Creation of the booking request structure
     BookingRequestStruct oBookingRequest (lOrigin,
                                           lDestination,
@@ -1129,7 +1138,8 @@ namespace stdair {
                                           lTripType, lStayDuration,
                                           lFrequentFlyerType,
                                           lPreferredDepartureTime,
-                                          lWTP, lValueOfTime);
+                                          lWTP, lValueOfTime,
+                                          lChangeFees, lNonRefundable);
 
     return oBookingRequest;
   }

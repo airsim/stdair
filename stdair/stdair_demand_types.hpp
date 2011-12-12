@@ -34,17 +34,17 @@ namespace stdair {
   /** Define the saturday stay of a tickets. */
   typedef bool SaturdayStay_T;
 
-  /** Define the average ratio (between 0 and 100) of demand with
+  /** Define the average ratio (between 0 and 100 percent) of demand with
       a saturday stay status equal to TRUE. */
-  typedef unsigned int SaturdayStayRatio_T;
+  typedef double SaturdayStayRatio_T;
 
   /** Define the average ratio of demand with change fee
       availability. */
-  typedef unsigned int ChangeFeesRatio_T;
+  typedef double ChangeFeesRatio_T;
 
   /** Define the average ratio of demand with non-refundable
       availability. */
-  typedef unsigned int NonRefundableRatio_T;
+  typedef double NonRefundableRatio_T;
 
   /** Define the passenger characteristics, leisure or business
       for instance (1-letter-code, e.g., L or B). */
