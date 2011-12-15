@@ -292,11 +292,28 @@ namespace stdair {
     void reset() const;
 
 
-  public:
+  public:  
+
     // //////////////// Export support methods /////////////////
     /**
      * Recursively dump, in the returned string and in JSON format,
-     * the flight-date corresponding to the parameters given as input.
+     * the flight-date list corresponding to the parameters given as 
+     * input.
+     *
+     * @param const AirlineCode& Airline for which the flight-dates should be
+     *        displayed. If set to "all" (default), all the inventories will
+     *        be displayed. 
+     * @param const FlightNumber_T& Flight number for which all the departure
+     *        dates should be displayed. If set to 0 (the default),
+     *        all the flight numbers will be displayed.
+     */
+    std::string jsonExport (const AirlineCode_T& iAirlineCode = "all",
+			    const FlightNumber_T& iFlightNumber = 0) const;
+
+    /**
+     * Recursively dump, in the returned string and in JSON format,
+     * the detailed flight-date (leg, segments, cabins, classes, ...) 
+     * corresponding to the parameters given as input.
      *
      * @param const AirlineCode_T& Airline code of the flight to dump.
      * @param const FlightNumber_T& Flight number of the flight to dump.
