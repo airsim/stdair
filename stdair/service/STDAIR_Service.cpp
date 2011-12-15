@@ -259,6 +259,24 @@ namespace stdair {
     }
     
     return oStr.str();
+  } 
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::
+  jsonExport (const AirlineCode_T& iAirlineCode,
+	      const FlightNumber_T& iFlightNumber) const {
+    std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+
+    BomJSONExport::jsonExport (oStr, lBomRoot, iAirlineCode, iFlightNumber);
+    
+    return oStr.str();
   }
 
   // //////////////////////////////////////////////////////////////////////
