@@ -122,12 +122,12 @@ BOOST_AUTO_TEST_CASE (mpl_structure_test) {
   
   if (boost::is_same<stdair_test::BookingClass,
                      stdair_test::Cabin::child>::value == false) {
-    BOOST_REQUIRE ("The two types mut be equal, but are not");
+    BOOST_ERROR ("The two types mut be equal, but are not");
   }
   
   if (boost::is_same<boost::mpl::at_c<types, 1>::type,
                      stdair_test::Cabin>::value == false) {
-    BOOST_REQUIRE ("The type must be stdair_test::Cabin, but is not");
+    BOOST_ERROR ("The type must be stdair_test::Cabin, but is not");
   }
 }
 
