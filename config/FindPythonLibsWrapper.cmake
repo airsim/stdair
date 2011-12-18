@@ -1,9 +1,9 @@
 # That file is just a wrapper around the standard Fedora/RedHat
-# FindPythonLibs.cmake script. Indeed, that latter does not work well on EPEL 5,
-# when Python-2.6 is not installed, because only the Python (2.4) static library
-# is found. In that latter case, the following CMake code searches for the
-# Python dynamic library is searched, and the PYTHON_LIBRARIES variable re-set
-# accordingly.
+# FindPythonLibs.cmake script. Indeed, that latter does not work well on
+# EPEL 5, when Python-2.6 is not installed, because only the Python (2.4) 
+# static library is found. In that latter case, the following CMake code
+# searches for the Python dynamic library, and the PYTHON_LIBRARIES variable
+# is re-set accordingly.
 #
 # Moreover, on EPEL 5 and 6, only PYTHON_INCLUDE_PATH is defined, where as
 # PYTHON_INCLUDE_DIRS is expected to be set.
