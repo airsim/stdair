@@ -1,4 +1,11 @@
 
+* Sun Dec 18 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.46.0
+- Two new criteria have been added to the fare rule and to the booking
+request.
+- The CMake build system now accepts independent unit tests (not dependent on
+the core module being built). That allows, for instance, to benchmark the
+project with third-party libraries.
+
 * Sun Dec 04 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.45.0
 - Began to improved the JSON import/export API
 - Added a dummy schedule-related BOM tree, so that the simulator works

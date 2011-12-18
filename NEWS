@@ -1,3 +1,11 @@
+
+* 2011-12-18:
+- Version 0.46.0
+- Two new criteria have been added to the fare rule and to the booking request.
+- The CMake build system now accepts independent unit tests (not dependent on
+  the core module being built). That allows, for instance, to benchmark the
+  project with third-party libraries.
+
 * 2011-12-04:
 - Version 0.45.0
 - Began to improved the JSON import/export API
