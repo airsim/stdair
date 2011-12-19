@@ -31,10 +31,11 @@
 namespace stdair { 
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonExport (std::ostream& oStream, 
-				  const BomRoot& iBomRoot,
-				  const AirlineCode_T& iAirlineCode,
-				  const FlightNumber_T& iFlightNumber) {    
+  void BomJSONExport::
+  jsonExportFlightDateList (std::ostream& oStream, 
+			    const BomRoot& iBomRoot,
+			    const AirlineCode_T& iAirlineCode,
+			    const FlightNumber_T& iFlightNumber) {    
 
     // Check whether there are Inventory objects
     if (BomManager::hasList<Inventory> (iBomRoot) == false) {
@@ -69,7 +70,7 @@ namespace stdair {
 	lCurrAirlineTree.put ("airline_code", lAirlineCode);  	
 
 	// Get the list of flight-dates for that inventory
-	jsonFlightDateExport(ptFD, *lInv_ptr, iFlightNumber);  	
+	jsonExportFlightDate (ptFD, *lInv_ptr, iFlightNumber);  	
 
 	// Add the flight-dates array to the inventory tree
 	lCurrAirlineTree.add_child ("flight(s)", ptFD);  	
@@ -89,7 +90,7 @@ namespace stdair {
   } 
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonFlightDateExport (bpt::ptree& ioFDPropertyTree,
+  void BomJSONExport::jsonExportFlightDate (bpt::ptree& ioFDPropertyTree,
 					    const Inventory& iInventory,
 					    const FlightNumber_T& iFlightNumber) {  
 
@@ -136,8 +137,9 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonExport (std::ostream& oStream,
-                                  const FlightDate& iFlightDate) {
+  void BomJSONExport::
+  jsonExportFlightDateObjects (std::ostream& oStream,
+			       const FlightDate& iFlightDate) {
 
 #if BOOST_VERSION >= 104100 
 
@@ -168,7 +170,7 @@ namespace stdair {
     bpt::ptree ptLegs;    
    
     // Recursively construct the legs array
-    jsonLegDateExport (ptLegs, iFlightDate); 
+    jsonExportLegDate (ptLegs, iFlightDate); 
  
     // Add legs tree to the global property tree
     pt.add_child ("flight_date.leg(s)", ptLegs);  
@@ -180,7 +182,7 @@ namespace stdair {
     bpt::ptree ptSegments;
 
     // Recursively construct the segments array
-    jsonSegmentDateExport (ptSegments, iFlightDate);
+    jsonExportSegmentDate (ptSegments, iFlightDate);
    
     // Add segments tree to the global property tree
     pt.add_child ("flight_date.segment(s)", ptSegments); 
@@ -192,7 +194,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonLegDateExport (bpt::ptree& ioLegDateListTree,
+  void BomJSONExport::jsonExportLegDate (bpt::ptree& ioLegDateListTree,
                                          const FlightDate& iFlightDate) { 
 
     // Check whether there are LegDate objects
@@ -252,7 +254,7 @@ namespace stdair {
       bpt::ptree lLegCabinArray; 
 
       // Recursively construct the leg cabins array
-      jsonLegCabinExport (lLegCabinArray, *lLD_ptr); 
+      jsonExportLegCabin (lLegCabinArray, *lLD_ptr); 
   
       // Add the leg cabins array to the leg date tree
       lCurrLDTree.add_child ("cabin(s)", lLegCabinArray);  
@@ -265,7 +267,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonLegCabinExport (bpt::ptree& ioLegCabinListTree,
+  void BomJSONExport::jsonExportLegCabin (bpt::ptree& ioLegCabinListTree,
                                           const LegDate& iLegDate) {
 
     // Check whether there are LegCabin objects
@@ -347,7 +349,7 @@ namespace stdair {
       bpt::ptree lBucketTree;   
 
       // Recursively construct the buckets array
-      jsonBucketExport (lBucketTree, *lLC_ptr);   
+      jsonExportBucket (lBucketTree, *lLC_ptr);   
  
       // Add the buckets array to the leg cabin tree 
       lCurrLCTree.add_child ("buckets", lBucketTree);  
@@ -360,7 +362,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonBucketExport (bpt::ptree& ioBucketListTree,
+  void BomJSONExport::jsonExportBucket (bpt::ptree& ioBucketListTree,
                                         const LegCabin& iLegCabin) {
     
     /**
@@ -406,7 +408,7 @@ namespace stdair {
   }
     
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonSegmentDateExport (bpt::ptree& ioSegmentDateTree,
+  void BomJSONExport::jsonExportSegmentDate (bpt::ptree& ioSegmentDateTree,
 					     const FlightDate& iFlightDate) {
 
     // Check whether there are SegmentDate objects
@@ -435,7 +437,7 @@ namespace stdair {
       bpt::ptree lSegmentCabinTree;   
 
       // Recursively construct the segment cabin array
-      jsonSegmentCabinExport (lSegmentCabinTree, *lSD_ptr);   
+      jsonExportSegmentCabin (lSegmentCabinTree, *lSD_ptr);   
  
       // Add the segment cabin array to the tree of the current segment date
       lCurrSDTree.add_child ("sub_classe(s)", lSegmentCabinTree);  
@@ -448,7 +450,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonSegmentCabinExport (bpt::ptree& ioPropertyTree,
+  void BomJSONExport::jsonExportSegmentCabin (bpt::ptree& ioPropertyTree,
 					      const SegmentDate& iSegmentDate) {
   
     // Check whether there are SegmentCabin objects
@@ -473,7 +475,7 @@ namespace stdair {
       lSCArray.put ("cabin_code",lSC_ptr->toString()); 
 
       // Export the cabin tree to add fare-families and sub-classes details
-      jsonFareFamilyExport (ioPropertyTree, lSCArray, *lSC_ptr); 
+      jsonExportFareFamily (ioPropertyTree, lSCArray, *lSC_ptr); 
      
 #endif // BOOST_VERSION >= 104100
 
@@ -481,7 +483,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonFareFamilyExport (bpt::ptree& ioPropertyTree,
+  void BomJSONExport::jsonExportFareFamily (bpt::ptree& ioPropertyTree,
 					    bpt::ptree& ioSCTree,
                                             const SegmentCabin& iSegmentCabin) {     
 
@@ -512,7 +514,7 @@ namespace stdair {
 	  ioSCTree.put ("family_code", lFamilyCode); 
 
 	  // Export the cabin tree to add sub-classes details
-	  jsonBookingClassExport (ioPropertyTree, ioSCTree, *lBC_ptr);
+	  jsonExportBookingClass (ioPropertyTree, ioSCTree, *lBC_ptr);
 
 #endif // BOOST_VERSION >= 104100  
 
@@ -539,7 +541,7 @@ namespace stdair {
 	ioSCTree.put ("family_code", lDefaultFamilyCode); 
 
 	// Export the cabin tree to add sub-classes details
-	jsonBookingClassExport (ioPropertyTree, ioSCTree, *lBC_ptr); 
+	jsonExportBookingClass (ioPropertyTree, ioSCTree, *lBC_ptr); 
 
 #endif // BOOST_VERSION >= 104100
       }
@@ -547,7 +549,7 @@ namespace stdair {
   }
     
   // ////////////////////////////////////////////////////////////////////
-  void BomJSONExport::jsonBookingClassExport (bpt::ptree& ioPropertyTree,
+  void BomJSONExport::jsonExportBookingClass (bpt::ptree& ioPropertyTree,
 					      bpt::ptree& ioSCTree,
                                               const BookingClass& iBookingClass) {
  

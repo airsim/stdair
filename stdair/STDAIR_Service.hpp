@@ -307,8 +307,8 @@ namespace stdair {
      *        dates should be displayed. If set to 0 (the default),
      *        all the flight numbers will be displayed.
      */
-    std::string jsonExport (const AirlineCode_T& iAirlineCode = "all",
-			    const FlightNumber_T& iFlightNumber = 0) const;
+    std::string jsonExportFlightDateList (const AirlineCode_T& iAirlineCode = "all",
+					  const FlightNumber_T& iFlightNumber = 0) const;
 
     /**
      * Recursively dump, in the returned string and in JSON format,
@@ -320,8 +320,9 @@ namespace stdair {
      * @param const Date_T& Departure date of the flight to dump.
      * @return std::string Output string in which the BOM tree is JSON-ified.
      */
-    std::string jsonExport (const AirlineCode_T&, const FlightNumber_T&,
-                            const Date_T& iDepartureDate) const;  
+    std::string jsonExportFlightDateObjects (const AirlineCode_T&, 
+					     const FlightNumber_T&,
+					     const Date_T& iDepartureDate) const;  
 
     /**
      * Recursively dump, in the returned string and in JSON format,
