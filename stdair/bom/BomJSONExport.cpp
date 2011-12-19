@@ -9,6 +9,7 @@
 #include <boost/foreach.hpp>
 #endif // BOOST_VERSION >= 103400
 // StdAir
+#include <stdair/stdair_date_time_types.hpp>
 #include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRoot.hpp>
@@ -21,6 +22,10 @@
 #include <stdair/bom/FareFamily.hpp>
 #include <stdair/bom/BookingClass.hpp>
 #include <stdair/bom/Bucket.hpp>
+#include <stdair/bom/EventQueue.hpp>
+#include <stdair/bom/EventStruct.hpp>
+#include <stdair/bom/EventTypes.hpp>
+#include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/BomJSONExport.hpp>
 
 namespace stdair { 
@@ -410,11 +415,10 @@ namespace stdair {
     }
     
     // Browse the segment-dates
-    unsigned short idx = 0;
     const SegmentDateList_T& lSegmentDateList =
       BomManager::getList<SegmentDate> (iFlightDate);
     for (SegmentDateList_T::const_iterator itSD = lSegmentDateList.begin();
-         itSD != lSegmentDateList.end(); ++itSD, ++idx) {
+         itSD != lSegmentDateList.end(); ++itSD) {
       const SegmentDate* lSD_ptr = *itSD;
       assert (lSD_ptr != NULL);
       
@@ -611,5 +615,122 @@ namespace stdair {
     ioPropertyTree.push_back(std::make_pair("", ioSCTree));
       
 #endif // BOOST_VERSION >= 104100
+  }  
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomJSONExport::
+  jsonExportBookingRequestObjects (std::ostream& oStream,
+				   const EventQueue& iEventQueue) {
+
+    const EventList_T& lEventList = iEventQueue.getEventList();
+
+    // Check whether there are event objects
+    if (lEventList.empty() == true) {
+      return;
+    } 
+
+#if BOOST_VERSION >= 104100   	
+
+    // Create empty property tree objects 
+    bpt::ptree pt;  
+    bpt::ptree ptBookingRequestList; 
+
+    // Browse the events
+    for (EventList_T::const_iterator itEvent = lEventList.begin();
+	 itEvent != lEventList.end(); ++itEvent) {
+      const EventListElement_T& lEvent_ptr = (*itEvent);
+      const EventStruct& lEvent = lEvent_ptr.second;    
+      const EventType::EN_EventType& lEventType =
+        lEvent.getEventType(); 	
+
+      if (lEventType == EventType::BKG_REQ) { 	
+
+	// Get the booking request (the current event type is booking request)
+	const BookingRequestStruct& lBookingRequest = 
+	  lEvent.getBookingRequest();   
+
+	// Create an empty property tree object for the current booking request
+	bpt::ptree lptCurrBookingRequest; 
+
+	// Put request date time in property tree 
+	const DateTime_T& lRequestDateTime = 
+	  lBookingRequest.getRequestDateTime();	
+	lptCurrBookingRequest.put ("time_stamp", lRequestDateTime);	 
+	// Put origin in property tree 
+	const AirportCode_T& lOrigin = lBookingRequest.getOrigin();
+	lptCurrBookingRequest.put ("org", lOrigin);	 
+	// Put destination in property tree
+	const AirportCode_T& lDestination = lBookingRequest.getDestination();
+	lptCurrBookingRequest.put ("des", lDestination);		
+	// Put preferred cabin in property tree
+	const CabinCode_T& lCabinCode = lBookingRequest.getPreferredCabin();	
+	lptCurrBookingRequest.put ("cab", lCabinCode); 
+	// Put party size in property tree
+	const NbOfSeats_T& lNbOfSeats = lBookingRequest.getPartySize();	
+	lptCurrBookingRequest.put ("pax", lNbOfSeats); 	
+	// Put point-of-sale in property tree
+	const AirportCode_T& lPOS = lBookingRequest.getPOS();
+	lptCurrBookingRequest.put ("pos", lPOS);  	 
+	// Put channel in property tree
+	const ChannelLabel_T& lChannelLabel = 
+	  lBookingRequest.getBookingChannel();
+	lptCurrBookingRequest.put ("cha", lChannelLabel); 	
+	// Put WTP in property tree
+	const WTP_T& lWTP = lBookingRequest.getWTP();	
+	lptCurrBookingRequest.put ("wtp", lWTP); 
+	// Put request date in property tree 
+	const Date_T& lRequestDate = 
+	  lRequestDateTime.boost::posix_time::ptime::date();
+	lptCurrBookingRequest.put ("bkg_date", lRequestDate); 	
+	// Put departure date in property tree 	
+	const Date_T& lPreferedDepartureDate = 
+	  lBookingRequest.getPreferedDepartureDate();
+	lptCurrBookingRequest.put ("dep_date", lPreferedDepartureDate);  	
+	// Put advance purchase in property tree 
+	assert (lPreferedDepartureDate >= lRequestDate);
+	const DateOffset_T& lAdvancePurchase = 
+	  lPreferedDepartureDate - lRequestDate;
+	lptCurrBookingRequest.put ("adv_purchase", lAdvancePurchase); 
+	// Put stay duration in property tree 
+	const DayDuration_T& lStayDuration = 
+	  lBookingRequest.getStayDuration(); 	
+	lptCurrBookingRequest.put ("stay_duration", lStayDuration); 
+	//  Put return date in property tree	
+	const DateOffset_T lDayDuration (lStayDuration);	
+	const Date_T& lReturnDate = 
+	  lPreferedDepartureDate + lDayDuration;
+	lptCurrBookingRequest.put ("return_date", lReturnDate); 	
+	// Put cancellation date in property tree  
+	// TODO:  cancellation date
+	lptCurrBookingRequest.put ("cancel_date", "xxxx-xx-xx"); 	
+	// Put preferred departure time in property tree   
+	const Duration_T& lPreferredDepartureTime = 
+	  lBookingRequest.getPreferredDepartureTime();
+	lptCurrBookingRequest.put ("dep_time", lPreferredDepartureTime); 	
+	// Put preferred return time in property tree 	
+	// TODO: preferred return time  
+	lptCurrBookingRequest.put ("return_time", "xxPM"); 		
+	// Put preferred carriers in property tree   
+	// TODO: preferred carriers
+	lptCurrBookingRequest.put ("pref_carriers", "XX"); 	
+
+	// Put the current booking request in the booking request list
+	ptBookingRequestList.push_back(std::make_pair("", lptCurrBookingRequest));
+      
+      }
+
+    
+    }  
+
+    // Store the booking requests array tree into the global tree
+    pt.add_child ("booking_request(s)", ptBookingRequestList); 
+    
+    // Write the property tree into the JSON stream.
+    write_json (oStream, pt);
+
+ 
+
+#endif // BOOST_VERSION >= 104100
   }
+
 }

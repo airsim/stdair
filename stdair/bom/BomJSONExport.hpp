@@ -32,7 +32,8 @@ namespace stdair {
   class LegCabin; 
   class SegmentDate;
   class SegmentCabin;
-  class BookingClass;
+  class BookingClass; 
+  class EventQueue;
 
   /**
    * @brief Utility class to export StdAir objects in a JSON format.
@@ -70,7 +71,18 @@ namespace stdair {
      *        logged/dumped.
      * @param const FlightDate& Root of the BOM tree to be exported.   
      */
-    static void jsonExport (std::ostream&, const FlightDate&);
+    static void jsonExport (std::ostream&, const FlightDate&); 
+
+    /**
+     * Export (dump in the underlying output log stream and in JSON format) 
+     * the booking request objects stored into the event queue.
+     *
+     * @param std::ostream& Output stream in which the events should be
+     *        logged/dumped.
+     * @param const EventQueue& Queue in which the events are stored.
+     */
+    static void jsonExportBookingRequestObjects (std::ostream&, 
+						 const EventQueue&);
 
   private:
 

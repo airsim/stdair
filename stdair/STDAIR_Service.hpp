@@ -321,7 +321,16 @@ namespace stdair {
      * @return std::string Output string in which the BOM tree is JSON-ified.
      */
     std::string jsonExport (const AirlineCode_T&, const FlightNumber_T&,
-                            const Date_T& iDepartureDate) const;
+                            const Date_T& iDepartureDate) const;  
+
+    /**
+     * Recursively dump, in the returned string and in JSON format,
+     * the booking request events.
+     *
+     * @return std::string Output string in which the booking-requests are 
+     * JSON-ified.
+     */
+    std::string jsonExportBookingRequestObjects () const;
 
 
   public:

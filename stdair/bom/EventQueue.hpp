@@ -86,6 +86,11 @@ namespace stdair {
     /** Get the parent object. */
     BomAbstract* const getParent() const {
       return _parent;
+    } 
+
+    /** Get the list of events. */
+    const EventList_T& getEventList() const {
+      return _eventList;
     }
     
     /** Get the map of children holders. */
