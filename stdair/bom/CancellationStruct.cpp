@@ -19,6 +19,13 @@ namespace stdair {
   }
   
   // ////////////////////////////////////////////////////////////////////
+  CancellationStruct::CancellationStruct (const BookingClassIDList_T& iIDList,
+                                          const PartySize_T& iSize,
+                                          const DateTime_T& iDateTime)
+    : _classIDList (iIDList), _partySize (iSize), _datetime (iDateTime) {
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
   CancellationStruct::~CancellationStruct() {
   }
   

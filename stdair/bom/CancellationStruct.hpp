@@ -13,6 +13,7 @@
 #include <stdair/basic/StructAbstract.hpp>
 #include <stdair/bom/BookingClassTypes.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
+#include <stdair/bom/BomIDTypes.hpp>
 
 namespace stdair {
 
@@ -30,6 +31,11 @@ namespace stdair {
     /** Get the class list. */
     const ClassList_String_T& getClassList() const {
       return _classList;
+    }
+
+    /** Get the class ID list. */
+    const BookingClassIDList_T& getClassIDList() const {
+      return _classIDList;
     }
 
     /** Get the party size. */
@@ -71,9 +77,15 @@ namespace stdair {
   public:
     // //////////// Constructors & Destructor ///////////////
     /**
-     * Default constructor.
+     * Default constructor without class ID list.
      */
     CancellationStruct (const SegmentPath_T&, const ClassList_String_T&,
+                        const PartySize_T&, const DateTime_T&);
+    
+    /**
+     * Default constructor with class ID list.
+     */
+    CancellationStruct (const BookingClassIDList_T&,
                         const PartySize_T&, const DateTime_T&);
 
     /**
@@ -93,6 +105,11 @@ namespace stdair {
      * The list of availabilities for each segment-date.
      */
     ClassList_String_T _classList;
+
+    /**
+     * The list of booking class ID list.
+     */
+    BookingClassIDList_T _classIDList;
 
     /**
      * The party size of the cancellation.
