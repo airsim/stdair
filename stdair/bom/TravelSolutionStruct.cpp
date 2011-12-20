@@ -142,6 +142,12 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   void TravelSolutionStruct::
+  addClassObjectIDMap (const ClassObjectIDMap_T& iMap) {
+    _classObjectIDMapHolder.push_back (iMap);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void TravelSolutionStruct::
   addClassYieldMap (const ClassYieldMap_T& iMap) {
     _classYieldMapHolder.push_back (iMap);
   }
