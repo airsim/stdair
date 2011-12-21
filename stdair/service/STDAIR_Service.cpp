@@ -211,13 +211,32 @@ namespace stdair {
     }
 
     return CmdBomManager::buildSampleBookingRequest();
+  } 
+
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::
+  jsonExportFlightDateList (const AirlineCode_T& iAirlineCode,
+			    const FlightNumber_T& iFlightNumber) const {
+    std::ostringstream oStr;
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+
+    BomJSONExport::jsonExportFlightDateList (oStr, lBomRoot, iAirlineCode, iFlightNumber);
+    
+    return oStr.str();
   }
 
   // //////////////////////////////////////////////////////////////////////
   std::string STDAIR_Service::
-  jsonExport (const stdair::AirlineCode_T& iAirlineCode,
-              const stdair::FlightNumber_T& iFlightNumber,
-              const stdair::Date_T& iDepartureDate) const {
+  jsonExportFlightDateObjects (const stdair::AirlineCode_T& iAirlineCode,
+			       const stdair::FlightNumber_T& iFlightNumber,
+			       const stdair::Date_T& iDepartureDate) const {
     std::ostringstream oStr;
 
     // Retrieve the StdAir service context
@@ -234,7 +253,7 @@ namespace stdair {
 
     // Dump the content of the whole BOM tree into the string
     if (lFlightDate_ptr != NULL) {
-      BomJSONExport::jsonExport (oStr, *lFlightDate_ptr);
+      BomJSONExport::jsonExportFlightDateObjects (oStr, *lFlightDate_ptr);
       
     } else {
 #if BOOST_VERSION >= 104100
@@ -259,25 +278,24 @@ namespace stdair {
     }
     
     return oStr.str();
-  } 
+  }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string STDAIR_Service::
-  jsonExport (const AirlineCode_T& iAirlineCode,
-	      const FlightNumber_T& iFlightNumber) const {
-    std::ostringstream oStr;
+  std::string STDAIR_Service::jsonExportBookingRequestObjects () const {
+    std::ostringstream oStr; 
 
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
 
-    // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    // Retrieve the event queue object instance
+    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
 
-    BomJSONExport::jsonExport (oStr, lBomRoot, iAirlineCode, iFlightNumber);
+    BomJSONExport::jsonExportBookingRequestObjects (oStr, lQueue);
     
     return oStr.str();
   }
+
 
   // //////////////////////////////////////////////////////////////////////
   std::string STDAIR_Service::list (const AirlineCode_T& iAirlineCode,

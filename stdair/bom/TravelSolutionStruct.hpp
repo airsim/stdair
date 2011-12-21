@@ -34,6 +34,11 @@ namespace stdair {
       return _classAvailabilityMapHolder;
     }
 
+    /** Get the holder of object ID's. */
+    const ClassObjectIDMapHolder_T& getClassObjectIDMapHolder() const {
+      return _classObjectIDMapHolder;
+    }
+
     /** Get the holder of yields. */
     const ClassYieldMapHolder_T& getClassYieldMapHolder() const {
       return _classYieldMapHolder;
@@ -72,6 +77,9 @@ namespace stdair {
 
     /** Add a class availability map. */
     void addClassAvailabilityMap (const ClassAvailabilityMap_T&);
+
+    /** Add a class object ID map. */
+    void addClassObjectIDMap (const ClassObjectIDMap_T&);
 
     /** Add a class yield map. */
     void addClassYieldMap (const ClassYieldMap_T&);
@@ -141,6 +149,11 @@ namespace stdair {
      * The list of availabilities for each segment-date.
      */
     ClassAvailabilityMapHolder_T _classAvailabilityMapHolder;
+
+    /**
+     * The list of class ID for each segment-date.
+     */
+    ClassObjectIDMapHolder_T _classObjectIDMapHolder;
     
     /**
      * The list of yields for each segment-date.

@@ -12,6 +12,7 @@
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/bom/key_types.hpp>
 #include <stdair/stdair_inventory_types.hpp> // bid price related types.
+#include <stdair/bom/BomIDTypes.hpp>
 
 namespace stdair {
 
@@ -33,6 +34,12 @@ namespace stdair {
   /** Define list of booking class - availability maps. */
   typedef std::list<ClassAvailabilityMap_T> ClassAvailabilityMapHolder_T;
 
+  /** Define booking class - object ID map. */
+  typedef std::map<const ClassCode_T, BookingClassID_T> ClassObjectIDMap_T;
+
+  /** Define list of boking class - object ID maps.*/
+  typedef std::list<ClassObjectIDMap_T> ClassObjectIDMapHolder_T;
+  
   /** Define booking class - yield map. */
   typedef std::map<const ClassCode_T, YieldValue_T> ClassYieldMap_T;
 

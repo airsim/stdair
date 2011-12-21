@@ -32,7 +32,8 @@ namespace stdair {
   class LegCabin; 
   class SegmentDate;
   class SegmentCabin;
-  class BookingClass;
+  class BookingClass; 
+  class EventQueue;
 
   /**
    * @brief Utility class to export StdAir objects in a JSON format.
@@ -57,9 +58,9 @@ namespace stdair {
      *        dates should be displayed. If set to 0 (the default),
      *        all the flight numbers will be displayed.
      */
-    static void jsonExport (std::ostream&, const BomRoot&,
-			    const AirlineCode_T& iAirlineCode = "all",
-			    const FlightNumber_T& iFlightNumber = 0);
+    static void jsonExportFlightDateList (std::ostream&, const BomRoot&,
+					  const AirlineCode_T& iAirlineCode = "all",
+					  const FlightNumber_T& iFlightNumber = 0);
 
     /**
      * Recursively export (dump in the underlying output log stream
@@ -70,7 +71,18 @@ namespace stdair {
      *        logged/dumped.
      * @param const FlightDate& Root of the BOM tree to be exported.   
      */
-    static void jsonExport (std::ostream&, const FlightDate&);
+    static void jsonExportFlightDateObjects (std::ostream&, const FlightDate&); 
+
+    /**
+     * Export (dump in the underlying output log stream and in JSON format) 
+     * the booking request objects stored into the event queue.
+     *
+     * @param std::ostream& Output stream in which the events should be
+     *        logged/dumped.
+     * @param const EventQueue& Queue in which the events are stored.
+     */
+    static void jsonExportBookingRequestObjects (std::ostream&, 
+						 const EventQueue&);
 
   private:
 
@@ -85,7 +97,7 @@ namespace stdair {
      *        dates should be displayed. If set to 0 all the flight numbers 
      *        will be displayed.
      */
-    static void jsonFlightDateExport (bpt::ptree&,
+    static void jsonExportFlightDate (bpt::ptree&,
 				      const Inventory&,
 				      const FlightNumber_T&); 
 
@@ -97,7 +109,7 @@ namespace stdair {
      *        dumped.
      * @param const FlightDate& Root of the BOM tree to be exported.
      */
-    static void jsonLegDateExport (bpt::ptree&, const FlightDate&);
+    static void jsonExportLegDate (bpt::ptree&, const FlightDate&);
      
     /**
      * Export (dump in the property tree) the objects of the BOM tree 
@@ -107,7 +119,7 @@ namespace stdair {
      *        dumped.
      * @param const LegDate& Root of the BOM tree to be exported.
      */
-    static void jsonLegCabinExport (bpt::ptree&, const LegDate&);
+    static void jsonExportLegCabin (bpt::ptree&, const LegDate&);
  
     /**
      * Export (dump in the property tree) the objects of the BOM tree 
@@ -117,7 +129,7 @@ namespace stdair {
      *        dumped.
      * @param const LegCabin& Root of the BOM tree to be exported.
      */
-    static void jsonBucketExport (bpt::ptree&, const LegCabin&);
+    static void jsonExportBucket (bpt::ptree&, const LegCabin&);
   
     /**
      * Export (dump in the property tree) all the objects of the BOM 
@@ -128,7 +140,7 @@ namespace stdair {
      *        dumped.
      * @param const FlightDate& Root of the BOM tree to be exported.
      */
-    static void jsonSegmentDateExport (bpt::ptree&, const FlightDate&);
+    static void jsonExportSegmentDate (bpt::ptree&, const FlightDate&);
 
     /**
      * Export (dump in the property tree) all the objects of the BOM 
@@ -138,7 +150,7 @@ namespace stdair {
      *        dumped.
      * @param const SegmentDate& Root of the BOM tree to be exported.
      */
-    static void jsonSegmentCabinExport (bpt::ptree&, const SegmentDate&);
+    static void jsonExportSegmentCabin (bpt::ptree&, const SegmentDate&);
  
     /**
      * Export (dump in the property tree) all the objects of the BOM 
@@ -152,7 +164,7 @@ namespace stdair {
      * @param bpt::ptree& Input tree containing the segment cabin name.
      * @param const SegmentCabin& Root of the BOM tree to be exported.
      */
-    static void jsonFareFamilyExport (bpt::ptree&, bpt::ptree&, 
+    static void jsonExportFareFamily (bpt::ptree&, bpt::ptree&, 
 				      const SegmentCabin&);
 
     /**
@@ -164,7 +176,7 @@ namespace stdair {
      *        and the fare family code (if there is a fare family) 
      * @param const BookingClass& Booking class to be exported
      */
-    static void jsonBookingClassExport (bpt::ptree&, bpt::ptree&, 
+    static void jsonExportBookingClass (bpt::ptree&, bpt::ptree&, 
 					const BookingClass&);
     
   };
