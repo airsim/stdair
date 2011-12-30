@@ -59,7 +59,7 @@ namespace stdair {
     EN_PartnershipTechnique getTechnique() const;
 
     /**
-     * Get the enumerated value as a short string (e.g., 'r' or 'C').
+     * Get the enumerated value as a char (e.g., 'r' or 'C').
      */
     char getTechniqueAsChar() const;
     
@@ -93,6 +93,7 @@ namespace stdair {
      * Alternative constructor.
      */
     PartnershipTechnique (const std::string& iTechnique);
+    
     /**
      * Default copy constructor.
      */
