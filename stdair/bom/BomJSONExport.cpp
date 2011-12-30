@@ -73,7 +73,7 @@ namespace stdair {
 	jsonExportFlightDate (ptFD, *lInv_ptr, iFlightNumber);  	
 
 	// Add the flight-dates array to the inventory tree
-	lCurrAirlineTree.add_child ("flight(s)", ptFD);  	
+	lCurrAirlineTree.add_child ("flights", ptFD);  	
 	
 	// Put the current inventory tree in the inventory(ies) array
 	ptInventoryList.push_back(std::make_pair("", lCurrAirlineTree));
@@ -82,7 +82,7 @@ namespace stdair {
     } 	
     
     // Store the inventory(ies) array tree into the global tree
-    pt.add_child ("inventory(ies)", ptInventoryList); 
+    pt.add_child ("inventories", ptInventoryList); 
     
     // Write the property tree into the JSON stream.
     write_json (oStream, pt);
@@ -173,7 +173,7 @@ namespace stdair {
     jsonExportLegDate (ptLegs, iFlightDate); 
  
     // Add legs tree to the global property tree
-    pt.add_child ("flight_date.leg(s)", ptLegs);  
+    pt.add_child ("flight_date.legs", ptLegs);  
 
     /**
      * Segments property tree
@@ -185,7 +185,7 @@ namespace stdair {
     jsonExportSegmentDate (ptSegments, iFlightDate);
    
     // Add segments tree to the global property tree
-    pt.add_child ("flight_date.segment(s)", ptSegments); 
+    pt.add_child ("flight_date.segments", ptSegments); 
     
     // Write the property tree into the JSON stream.
     write_json (oStream, pt);
@@ -257,7 +257,7 @@ namespace stdair {
       jsonExportLegCabin (lLegCabinArray, *lLD_ptr); 
   
       // Add the leg cabins array to the leg date tree
-      lCurrLDTree.add_child ("cabin(s)", lLegCabinArray);  
+      lCurrLDTree.add_child ("cabins", lLegCabinArray);  
 
       // Put the current leg date tree in the leg date list tree
       ioLegDateListTree.push_back(std::make_pair("", lCurrLDTree));
@@ -440,7 +440,7 @@ namespace stdair {
       jsonExportSegmentCabin (lSegmentCabinTree, *lSD_ptr);   
  
       // Add the segment cabin array to the tree of the current segment date
-      lCurrSDTree.add_child ("sub_classe(s)", lSegmentCabinTree);  
+      lCurrSDTree.add_child ("sub_classes", lSegmentCabinTree);  
 
       // Put segment date array in property tree  
       ioSegmentDateTree.push_back(std::make_pair("", lCurrSDTree));
@@ -725,7 +725,7 @@ namespace stdair {
     }  
 
     // Store the booking requests array tree into the global tree
-    pt.add_child ("booking_request(s)", ptBookingRequestList); 
+    pt.add_child ("booking_requests", ptBookingRequestList); 
     
     // Write the property tree into the JSON stream.
     write_json (oStream, pt);
