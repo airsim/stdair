@@ -29,16 +29,24 @@ namespace stdair {
                                         AirlineCode_T&);
 
     /**
-     * Build a FlightDateKey from a given JSON-formatted string.
+     * Build a FlightDate from a given JSON-formatted string.
      *
      * @param std::string& JSON-formatted string.
-     * @param FlightNumber_T& Flight number extracted from the given string.
      * @param Date_T& Departure date  extracted from the given string.
      * @return bool State whether the extracting has been successful.
      */
-    static bool jsonImportFlightDateKey (const std::string& iBomKey,
-                                         FlightNumber_T&,
-                                         Date_T& ioDepartureDate);
+    static bool jsonImportFlightDate (const std::string& iBomKey,
+                                      Date_T& ioDepartureDate);
+
+    /**
+     * Build a FlightNumber from a given JSON-formatted string.
+     *
+     * @param std::string& JSON-formatted string.
+     * @param FlightNumber_T& Flight number extracted from the given string.
+     * @return bool State whether the extracting has been successful.
+     */
+    static bool jsonImportFlightNumber (const std::string& iBomKey,
+                                        FlightNumber_T&);
   };
 
 }
