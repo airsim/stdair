@@ -40,7 +40,8 @@ namespace stdair {
       read_json (iStr, pt);
 
       // Build the right path to obtain the airline code value.
-      const std::string lCommandName = (pt.front()).first;
+      bpt::ptree::const_iterator itBegin = pt.begin();
+      const std::string lCommandName = itBegin->first;
       std::ostringstream lPath;
       lPath << lCommandName << ".airline_code";
 
@@ -52,7 +53,7 @@ namespace stdair {
       hasKeyBeenSuccessfullyRetrieved = false;
     }
       
-  #endif // BOOST_VERSION >= 104100  
+#endif // BOOST_VERSION >= 104100  
     return hasKeyBeenSuccessfullyRetrieved;
   }
 
@@ -108,7 +109,8 @@ namespace stdair {
       read_json (iStr, pt);
 
       // Build the right path to obtain the flight number value.
-      const std::string lCommandName = (pt.front()).first;
+      bpt::ptree::const_iterator itBegin = pt.begin();
+      const std::string lCommandName = itBegin->first;
       std::ostringstream lPath;
       lPath << lCommandName << ".flight_number";
       
