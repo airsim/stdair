@@ -9,6 +9,8 @@
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
+#include <stdair/basic/JSonCommand.hpp>
+
 
 namespace stdair {
 
@@ -19,33 +21,42 @@ namespace stdair {
   public:
     // //////////////// Import support methods /////////////////
     /**
+     * Extract the JSON command from a given JSON-formatted string.
+     *
+     * @param std::string& JSON-formatted string.
+     * @param JSonCommand::EN_JSonCommand& JSOM command extracted from the given string.
+     * @return bool State whether the extracting has been successful.
+     */
+    static bool jsonImportCommand (const std::string&,
+                                   JSonCommand::EN_JSonCommand&);
+    /**
      * Extract the airline code from a given JSON-formatted string.
      *
      * @param std::string& JSON-formatted string.
      * @param AirlineCode_T& Airline code extracted from the given string.
      * @return bool State whether the extracting has been successful.
      */
-    static bool jsonImportInventoryKey (const std::string& iBomKey,
+    static bool jsonImportInventoryKey (const std::string&,
                                         AirlineCode_T&);
 
     /**
-     * Build a FlightDate from a given JSON-formatted string.
+     * Extract the FlightDate from a given JSON-formatted string.
      *
      * @param std::string& JSON-formatted string.
      * @param Date_T& Departure date  extracted from the given string.
      * @return bool State whether the extracting has been successful.
      */
-    static bool jsonImportFlightDate (const std::string& iBomKey,
-                                      Date_T& ioDepartureDate);
+    static bool jsonImportFlightDate (const std::string&,
+                                      Date_T&);
 
     /**
-     * Build a FlightNumber from a given JSON-formatted string.
+     * Extract the FlightNumber from a given JSON-formatted string.
      *
      * @param std::string& JSON-formatted string.
      * @param FlightNumber_T& Flight number extracted from the given string.
      * @return bool State whether the extracting has been successful.
      */
-    static bool jsonImportFlightNumber (const std::string& iBomKey,
+    static bool jsonImportFlightNumber (const std::string&,
                                         FlightNumber_T&);
   };
 
