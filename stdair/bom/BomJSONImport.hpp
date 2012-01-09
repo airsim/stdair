@@ -27,7 +27,7 @@ namespace stdair {
      * @param JSonCommand::EN_JSonCommand& JSOM command extracted from the given string.
      * @return bool State whether the extracting has been successful.
      */
-    static bool jsonImportCommand (const std::string&,
+    static bool jsonImportCommand (const std::string& iBomJSONStr,
                                    JSonCommand::EN_JSonCommand&);
     /**
      * Extract the airline code from a given JSON-formatted string.
@@ -36,7 +36,7 @@ namespace stdair {
      * @param AirlineCode_T& Airline code extracted from the given string.
      * @return bool State whether the extracting has been successful.
      */
-    static bool jsonImportInventoryKey (const std::string&,
+    static bool jsonImportInventoryKey (const std::string& iBomJSONStr,
                                         AirlineCode_T&);
 
     /**
@@ -46,7 +46,7 @@ namespace stdair {
      * @param Date_T& Departure date  extracted from the given string.
      * @return bool State whether the extracting has been successful.
      */
-    static bool jsonImportFlightDate (const std::string&,
+    static bool jsonImportFlightDate (const std::string& iBomJSONStr,
                                       Date_T&);
 
     /**
@@ -56,7 +56,7 @@ namespace stdair {
      * @param FlightNumber_T& Flight number extracted from the given string.
      * @return bool State whether the extracting has been successful.
      */
-    static bool jsonImportFlightNumber (const std::string&,
+    static bool jsonImportFlightNumber (const std::string& iBomJSONStr,
                                         FlightNumber_T&);
   };
 

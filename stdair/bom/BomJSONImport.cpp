@@ -26,7 +26,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   bool BomJSONImport::
-  jsonImportCommand (const std::string& iBomTree,
+  jsonImportCommand (const std::string& iBomJSONStr,
                      JSonCommand::EN_JSonCommand& ioEnumJSonCommand) {
 
     bool hasCommandBeenSuccessfullyRetrieved = true;
@@ -49,8 +49,8 @@ namespace stdair {
       // See the caller for the regular expression
       boost::regex lExpression (lRegEx);
 
-      std::string::const_iterator itStart = iBomTree.begin();
-      std::string::const_iterator itEnd = iBomTree.end();
+      std::string::const_iterator itStart = iBomJSONStr.begin();
+      std::string::const_iterator itEnd = iBomJSONStr.end();
 
       boost::match_results<std::string::const_iterator> lWhat;
       boost::match_flag_type lFlags = boost::match_default;
@@ -59,28 +59,29 @@ namespace stdair {
  
       // Put the matched strings in the list of tokens to be returned back
       // to the caller
-      std::vector<std::string> oTokenList;
-      const unsigned short lMatchSetSize = lWhat.size();
-      for (unsigned short matchIdx = 1; matchIdx != lMatchSetSize; ++matchIdx) {
-        const std::string lMatchedString (std::string (lWhat[matchIdx].first,
-                                                       lWhat[matchIdx].second));
+      std::vector<std::string> oTokenList;  
+      for (boost::match_results<std::string::const_iterator>::const_iterator itMatch
+             = lWhat.begin(); itMatch != lWhat.end(); ++itMatch) {
+        
+        const std::string lMatchedString (std::string (itMatch->first,
+                                                       itMatch->second));
         oTokenList.push_back (lMatchedString);
       }
 
       // If the retrieved token list is empty, the command has not been
       // retrieved
-      if (oTokenList.empty() == true) {
+      if (oTokenList.size() <= 1) {
         hasCommandBeenSuccessfullyRetrieved = false;
         return hasCommandBeenSuccessfullyRetrieved;
       }
 
-      assert (oTokenList.empty() == false);
+      assert (oTokenList.size() >= 2);
       // Retrieved the command string into the token list
-      const std::string lCommandStr = oTokenList[0];
+      const std::string lCommandStr = oTokenList.at(1);
     
       // Remember the first letter of the command string
-      const char lCommandChar (lCommandStr[0]);
-      const JSonCommand lJSonCommand (lCommandChar);
+      const std::string lCommandCharStr (lCommandStr.substr(0, 1));
+      const JSonCommand lJSonCommand (lCommandCharStr);
       ioEnumJSonCommand = lJSonCommand.getCommand();
 
     } catch (stdair::CodeConversionException& ccException) {
@@ -92,7 +93,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  bool BomJSONImport::jsonImportInventoryKey (const std::string& iBomTree,
+  bool BomJSONImport::jsonImportInventoryKey (const std::string& iBomJSONStr,
                                               AirlineCode_T& ioAirlineCode) {
     bool hasKeyBeenSuccessfullyRetrieved = true;
 
@@ -105,7 +106,7 @@ namespace stdair {
       // Load the JSON formatted string into the property tree.
       // If reading fails (cannot open stream, parse error), an
       // exception is thrown.
-      std::istringstream iStr (iBomTree);
+      std::istringstream iStr (iBomJSONStr);
       read_json (iStr, pt);
 
       // Build the right path to obtain the airline code value.
@@ -127,7 +128,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  bool BomJSONImport::jsonImportFlightDate (const std::string& iBomTree,
+  bool BomJSONImport::jsonImportFlightDate (const std::string& iBomJSONStr,
                                             Date_T& ioDepartureDate) {
     bool hasKeyBeenSuccessfullyRetrieved = true;
 
@@ -140,7 +141,7 @@ namespace stdair {
       // Load the JSON formatted string into the property tree.
       // If reading fails (cannot open stream, parse error), an
       // exception is thrown.
-      std::istringstream iStr (iBomTree);
+      std::istringstream iStr (iBomJSONStr);
       read_json (iStr, pt);
 
       // Build the right path to obtain the departure date value.
@@ -160,7 +161,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  bool BomJSONImport::jsonImportFlightNumber (const std::string& iBomTree,
+  bool BomJSONImport::jsonImportFlightNumber (const std::string& iBomJSONStr,
                                               FlightNumber_T& ioFlightNumber) {
     
     bool hasKeyBeenSuccessfullyRetrieved = true;
@@ -174,7 +175,7 @@ namespace stdair {
       // Load the JSON formatted string into the property tree.
       // If reading fails (cannot open stream, parse error), an
       // exception is thrown.
-      std::istringstream iStr (iBomTree);
+      std::istringstream iStr (iBomJSONStr);
       read_json (iStr, pt);
 
       // Build the right path to obtain the flight number value.
