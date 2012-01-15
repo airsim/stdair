@@ -1,5 +1,6 @@
 /**
- * @defgroup BomAbstract Abstract part of the Business Object Model (BOM)
+ * @page BomAbstract
+ * @brief Abstract part of the Business Object Model (BOM)
  * @author Anh Quan Nguyen <quannaus@users.sourceforge.net>
  * @date 20/01/2010
  */
@@ -23,24 +24,38 @@ namespace stdair {
   class BomAbstract {
   public:
     // /////////// Display support methods /////////
-    /** Dump a Business Object into an output stream.
-        @param ostream& the output stream. */
+    /**
+     * Dump a Business Object into an output stream.
+     *
+     * @param ostream& The input/output stream.
+     */
     virtual void toStream (std::ostream& ioOut) const = 0;
 
-    /** Read a Business Object from an input stream.
-        @param istream& the input stream. */
+    /**
+     * Read a Business Object from an input stream.
+     *
+     * @param istream& The input stream.
+     */
     virtual void fromStream (std::istream& ioIn) = 0;
 
-   /** Get the serialised version of the Business Object. */
+    /**
+     * Get the serialised version of the Business Object.
+     *
+     * @return std::string The output string
+     */
     virtual std::string toString() const = 0;
 
     
   protected:
-    /** Protected Default Constructor to ensure this class is abtract. */
+    /**
+     * Protected Default Constructor to ensure this class is abtract.
+     */
     BomAbstract() {}
     BomAbstract(const BomAbstract&) {}
   public:
-    /** Destructor. */
+    /**
+     * Destructor.
+     */
     virtual ~BomAbstract() {}
   };
 
@@ -49,9 +64,9 @@ namespace stdair {
 }
 
 /**
-   Piece of code given by Nicolai M. Josuttis, Section 13.12.1 "Implementing
-   Output Operators" (p653) of his book "The C++ Standard Library: A Tutorial
-   and Reference", published by Addison-Wesley.
+ * Piece of code given by Nicolai M. Josuttis, Section 13.12.1 "Implementing
+ * Output Operators" (p653) of his book "The C++ Standard Library: A Tutorial
+ * and Reference", published by Addison-Wesley.
  */
 template <class charT, class traits>
 inline
@@ -59,9 +74,9 @@ std::basic_ostream<charT, traits>&
 operator<< (std::basic_ostream<charT, traits>& ioOut,
             const stdair::BomAbstract& iBom) {
   /**
-     string stream:
-      - with same format
-      - without special field width
+   * string stream:
+   *  - with same format
+   *  - without special field width
    */
   std::basic_ostringstream<charT,traits> ostr;
   ostr.copyfmt (ioOut);
@@ -77,9 +92,9 @@ operator<< (std::basic_ostream<charT, traits>& ioOut,
 }
 
 /**
-   Piece of code given by Nicolai M. Josuttis, Section 13.12.1 "Implementing
-   Output Operators" (pp655-657) of his book "The C++ Standard Library:
-   A Tutorial and Reference", published by Addison-Wesley.
+ * Piece of code given by Nicolai M. Josuttis, Section 13.12.1 "Implementing
+ * Output Operators" (pp655-657) of his book "The C++ Standard Library:
+ * A Tutorial and Reference", published by Addison-Wesley.
  */
 template <class charT, class traits>
 inline

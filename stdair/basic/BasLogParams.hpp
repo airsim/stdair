@@ -82,7 +82,7 @@ namespace stdair {
      * Main Constructor.
      *
      * @param[in] const LOG::EN_LogLevel Level of the log (e.g., DEBUG)
-     * @param[inout] std::ostream& (STL) Stream to log into.
+     * @param[in,out] std::ostream& (STL) Stream to log into.
      * @param[in] const bool Whether or not multiple initialisation
      *            should be forced.
      */
