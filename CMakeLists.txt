@@ -9,13 +9,13 @@ include (config/project_config_embeddable.cmake)
 # Project info
 set_project_names (stdair StdAir)
 set_project_brief ("C++ Standard Airline IT Object Library")
-set_project_versions (0 45 0)
+set_project_versions (0 45 1)
 
 ##
 # Project options
 # The parameters are:
 #  * whether or not the documentation must be built and installed
-set_project_options (on)
+set_project_options (on on)
 
 
 #####################################
@@ -80,8 +80,12 @@ add_subdirectory (man)
 ##              Tests              ##
 #####################################
 ##
+# Initialise the unit test process
+init_test ()
+
+##
 # Test suites
-add_test_suites (${PROJECT_NAME})
+add_test_suite (${PROJECT_NAME})
 
 
 #######################################

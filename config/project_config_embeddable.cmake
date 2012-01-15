@@ -64,6 +64,7 @@ endmacro (set_project_versions)
 #  * CMAKE_INSTALL_RPATH_USE_LINK_PATH
 #                         - Whether or not to set the run-path/rpath within
 #                           the (executable and library) binaries
+#  * ENABLE_TEST         - Whether or not to build and check the unit tests
 #  * INSTALL_DOC         - Whether or not to build and install the documentation
 #  * INSTALL_LIB_DIR     - Installation directory for the libraries
 #  * INSTALL_BIN_DIR     - Installation directory for the binaries
@@ -71,7 +72,7 @@ endmacro (set_project_versions)
 #  * INSTALL_DATA_DIR    - Installation directory for the data files
 #  * INSTALL_SAMPLE_DIR  - Installation directory for the (CSV) sample files
 #
-macro (set_project_options _build_doc)
+macro (set_project_options _build_doc _enable_tests)
   # Shared libraries
   option (BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON)
 
@@ -86,9 +87,21 @@ macro (set_project_options _build_doc)
     set (CMAKE_INSTALL_PREFIX "/usr")
   endif()
 
+  # Unit tests (thanks to CMake/CTest)
+  option (ENABLE_TEST "Set to OFF to skip build/check unit tests"
+	${_enable_tests})
+
   # Documentation
   option (INSTALL_DOC "Set to OFF to skip build/install Documentation" 
     ${_build_doc})
+
+  # Initialise a few variables
+  set (DOXYGEN_OUTPUT_REL)
+  set (REFMAN_TEX)
+  set (REFMAN_PDF)
+  set (CSS_ALL_TARGETS)
+  set (IMG_ALL_TARGETS)
+  set (MAN_ALL_TARGETS)
 
   # Set the library installation directory (either 32 or 64 bits)
   set (LIBDIR "lib${LIB_SUFFIX}" CACHE PATH
@@ -175,6 +188,8 @@ macro (store_in_cache)
     "Supplementary C++ compilation flags" FORCE)
   set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" CACHE PATH
     "Path to custom CMake Modules" FORCE)
+  set (ENABLE_TEST "${ENABLE_TEST}" CACHE BOOL
+    "Set to OFF to skip build/check unit tests" FORCE)
   set (INSTALL_DOC "${INSTALL_DOC}" CACHE BOOL
     "Set to OFF to skip build/install Documentation" FORCE)
 endmacro (store_in_cache)
@@ -1077,9 +1092,9 @@ macro (init_build)
   set_install_directories ()
 
   ##
-  # Initialise the list of modules to build and those to test
+  # Initialise the list of modules to build and test suites to check
   set (PROJ_ALL_MOD_FOR_BLD "")
-  set (PROJ_ALL_MOD_FOR_TST "")
+  set (PROJ_ALL_SUITES_FOR_TST "")
 
   ##
   # Initialise the list of targets to build: libraries, binaries and tests
@@ -1483,8 +1498,15 @@ macro (module_binary_add _exec_source_dir)
 endmacro (module_binary_add)
 
 ##
-# Add a Python script to be installed
-macro (module_python_add _script_file)
+# Add a (Shell, Python, Perl, Ruby, etc) script to be installed.
+#
+# The parameter is the relative file path of the (template) script to
+# be installed. That template file must end with the '.in' suffix.
+# Indeed, the project variables (wrapped by @@ signs) of the template file
+# are evaluated and expanded thanks to the configure command.
+# The '.in' extension of the script is dropped once installed.
+#
+macro (module_script_add _script_file)
   #
   set (_full_script_src_path ${CMAKE_CURRENT_SOURCE_DIR}/${_script_file}.in)
   set (_full_script_path ${CMAKE_CURRENT_BINARY_DIR}/${_script_file})
@@ -1492,11 +1514,14 @@ macro (module_python_add _script_file)
 	#
     configure_file (${_full_script_src_path} ${_full_script_path} @ONLY)
 
-    # Add the 'scripts_${MODULE_NAME}' target, depending on the
-    # converted (Python) scripts
-    add_custom_target (scripts_${MODULE_NAME} ALL DEPENDS ${_full_script_path})
+	# Extract the file name (only) from the full file path
+	get_filename_component (_script_alone ${_script_file} NAME)
+    
+	# Add the 'scripts_${MODULE_NAME}' target, depending on the
+    # converted (Shell, Python, Perl, Ruby, etc) scripts
+    add_custom_target (${_script_alone}_script ALL DEPENDS ${_full_script_path})
 
-    # Install the (Python) script file
+    # Install the (Shell, Python, Perl, Ruby, etc) script file
     install (PROGRAMS ${_full_script_path} DESTINATION bin COMPONENT devel)
 
   else (EXISTS ${_full_script_src_path})
@@ -1505,7 +1530,6 @@ macro (module_python_add _script_file)
   endif (EXISTS ${_full_script_src_path})
 
   # Register the binary target in the project (for reporting purpose)
-  get_filename_component (_script_alone ${_script_file} NAME)
   list (APPEND PROJ_ALL_BIN_TARGETS ${_script_alone})
   set (PROJ_ALL_BIN_TARGETS ${PROJ_ALL_BIN_TARGETS} PARENT_SCOPE)
 
@@ -1514,7 +1538,7 @@ macro (module_python_add _script_file)
   list (APPEND ${MODULE_NAME}_ALL_EXECS ${_script_alone})
   set (${MODULE_NAME}_ALL_EXECS ${${MODULE_NAME}_ALL_EXECS} PARENT_SCOPE)
 
-endmacro (module_python_add)
+endmacro (module_script_add)
 
 ##
 # Installation of the CMake import helper, so that third party projects
@@ -1528,39 +1552,54 @@ endmacro (module_export_install)
 ###################################################################
 ##                            Tests                              ##
 ###################################################################
-#
-macro (add_test_suites)
-  #
-  set (_test_suite_dir_list ${ARGV})
+##
+# Initialise the CTest framework with CMake, if so enabled
+macro (init_test)
+  # Register the main test target. Every specific test will then be added
+  # as a dependency on that target. When the unit tests are disabled
+  # (i.e., the ENABLE_TEST variable is set to OFF), that target remains empty.
+  add_custom_target (check)
+  
+  if (Boost_FOUND AND ENABLE_TEST)
+	# Tell CMake/CTest that tests will be performed
+	enable_testing() 
 
-  if (Boost_FOUND)
-    # Tell CMake/CTest that tests will be performed
-    enable_testing() 
+  endif (Boost_FOUND AND ENABLE_TEST)
+endmacro (init_test)
 
+##
+# Register a specific test sub-directory/suite to be checked by CMake/CTest.
+# That macro must be called once for each test sub-directory/suite.
+# The parameter is:
+#  * The test directory path, ommitting the 'test/' prefix. Most often, it is
+#    the same as the module name. And when there is a single module (which is
+#    the most common case), it corresponds to the project name.
+macro (add_test_suite _test_suite_dir)
+  if (Boost_FOUND AND ENABLE_TEST)
     # Browse all the modules, and register test suites for each of them
-    set (_check_target_list "")
-    foreach (_module_name ${_test_suite_dir_list})
-      set (${_module_name}_ALL_TST_TARGETS "")
-      # Each individual test suite is specified within the dedicated
-      # sub-directory. The CMake file within each of those test sub-directories
-      # specifies a target named check_${_module_name}tst.
-      add_subdirectory (test/${_module_name})
+    set (_check_target check_${_test_suite_dir}tst)
 
-      # Register, for book-keeping purpose (a few lines below), 
-      # the (CMake/CTest) test target of the current module 
-      list (APPEND _check_target_list check_${_module_name}tst)
-    endforeach (_module_name)
+    # Each individual test suite is specified within the dedicated
+    # sub-directory. The CMake file within each of those test sub-directories
+    # specifies a target named check_${_module_name}tst.
+    add_subdirectory (test/${_test_suite_dir})
 
-    # Register all the module (CMake/CTest) test targets at once
-    add_custom_target (check)
-    add_dependencies (check ${_check_target_list})
+    # Register the test suite (i.e., add the test target as a dependency of
+	# the 'check' target).
+    add_dependencies (check ${_check_target})
 
-    # Register, for reporting purpose, the list of modules to be tested
-    set (PROJ_ALL_MOD_FOR_TST ${_test_suite_dir_list})
+	# Register, for book-keeping purpose (a few lines below), 
+	# the (CMake/CTest) test target of the current test suite. When the
+	# test directory corresponds to any given module, the test targets will
+	# be added to that module dependencies.
+	set (${_test_suite_dir}_ALL_TST_TARGETS "")
 
-  endif (Boost_FOUND)
+    # Register, for reporting purpose, the list of test suites to be checked
+    list (APPEND PROJ_ALL_SUITES_FOR_TST ${_test_suite_dir})
 
-endmacro (add_test_suites)
+  endif (Boost_FOUND AND ENABLE_TEST)
+
+endmacro (add_test_suite)
 
 ##
 # Register a test with CMake/CTest.
@@ -1570,8 +1609,19 @@ endmacro (add_test_suites)
 #    semi-colon (';') seperated.
 #  * A list of intermodule dependencies. That list is separated by
 #    either white space or semi-colons (';').
-macro (module_test_add_suite _test_name _test_sources)
-  if (Boost_FOUND)
+macro (module_test_add_suite _module_name _test_name _test_sources)
+  if (Boost_FOUND AND ENABLE_TEST)
+
+	# If the module is already known, the corresponding library is added to
+	# the list of dependencies.
+	set (MODULE_NAME ${_module_name})
+	set (MODULE_LIB_TARGET "")
+	foreach (_module_item ${PROJ_ALL_MOD_FOR_BLD})
+	  if ("${_module_name}" STREQUAL "${_module_item}")
+		set (MODULE_LIB_TARGET ${MODULE_NAME}lib)
+	  endif ("${_module_name}" STREQUAL "${_module_item}")
+	endforeach (_module_item ${PROJ_ALL_MOD_FOR_BLD})
+
     # Register the test binary target
     add_executable (${_test_name}tst ${_test_sources})
     set_target_properties (${_test_name}tst PROPERTIES
@@ -1582,8 +1632,9 @@ macro (module_test_add_suite _test_name _test_sources)
     # Build the list of library targets on which that test depends upon
     set (_library_list "")
     foreach (_arg_lib ${ARGV})
-      if (NOT "${_test_name};${_test_sources}" MATCHES "${_arg_lib}")
-	list (APPEND _library_list ${_arg_lib}lib)
+      if (NOT "${_module_name};${_test_name};${_test_sources}"
+		  MATCHES "${_arg_lib}")
+		list (APPEND _library_list ${_arg_lib}lib)
       endif ()
     endforeach (_arg_lib)
 
@@ -1600,7 +1651,7 @@ macro (module_test_add_suite _test_name _test_sources)
     else (WIN32)
       add_test (${_test_name}tst ${_test_name})
     endif (WIN32)
-  endif (Boost_FOUND)
+  endif (Boost_FOUND AND ENABLE_TEST)
 
   # Register the binary target in the project (for reporting purpose)
   list (APPEND PROJ_ALL_TST_TARGETS ${${MODULE_NAME}_ALL_TST_TARGETS})
@@ -1685,16 +1736,20 @@ macro (doc_add_web_pages)
   set (REFMAN refman)
   set (TEX_GEN_DIR ${CMAKE_CURRENT_BINARY_DIR}/latex)
   set (REFMAN_TEX ${REFMAN}.tex)
+  set (REFMAN_TEX ${REFMAN_TEX} PARENT_SCOPE)
   set (REFMAN_TEX_FULL ${TEX_GEN_DIR}/${REFMAN_TEX})
 
   # Add the build rule for Doxygen
-  set (DOXYGEN_OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/html/index.html)
+  set (DOXYGEN_OUTPUT_REL html/index.html)
+  set (DOXYGEN_OUTPUT_REL ${DOXYGEN_OUTPUT_REL} PARENT_SCOPE)
+  set (DOXYGEN_OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_OUTPUT_REL})
+  set (DOXYGEN_OUTPUT ${DOXYGEN_OUTPUT} PARENT_SCOPE)
   add_custom_command (OUTPUT ${DOXYGEN_OUTPUT} ${REFMAN_TEX_FULL}
 	COMMAND ${DOXYGEN_EXECUTABLE} ARGS ${DOXYGEN_CFG}
 	DEPENDS ${DOXYGEN_CFG} ${doc_SOURCES}
 	COMMENT "Generating documentation with Doxygen, from '${DOXYGEN_CFG}'...")
   # Add the 'doc' target, depending on the generated HTML documentation
-  add_custom_target (doc ALL DEPENDS ${DOXYGEN_OUTPUT})
+  add_custom_target (doc ALL DEPENDS ${DOXYGEN_OUTPUT} ${REFMAN_TEX_FULL})
 
   ##
   # Copy the needed files into the generated HTML directory
@@ -1708,10 +1763,16 @@ macro (doc_add_web_pages)
 	add_custom_command (OUTPUT ${CSS_GEN_FULL_DIR}
 	  COMMAND ${CMAKE_COMMAND}
 	  ARGS -E copy ${CSS_SRC_FULL_DIR} ${CSS_GEN_FULL_DIR}
-	  DEPENDS ${DOXYGEN_OUTPUT} ${CSS_SRC_FULL_DIR}
+	  DEPENDS doc ${CSS_SRC_FULL_DIR}
 	  COMMENT "Copying style '${CSS_SRC_FULL_DIR}' into '${htmldoc_DIR}'...")
+
+	# Transpose the CSS-related operation into a target, so that CMake
+	# can handle it properly
 	add_custom_target (css_${style_SRC} ALL DEPENDS ${CSS_GEN_FULL_DIR})
+	list (APPEND CSS_ALL_TARGETS css_${style_SRC})
   endforeach (style_SRC)
+  set (CSS_ALL_TARGETS ${CSS_ALL_TARGETS} PARENT_SCOPE)
+  add_custom_target (css_style ALL DEPENDS ${CSS_ALL_TARGETS})
 
   # Images
   foreach (image_SRC ${image_SOURCES})
@@ -1720,10 +1781,16 @@ macro (doc_add_web_pages)
 	add_custom_command (OUTPUT ${IMG_GEN_FULL_DIR}
 	  COMMAND ${CMAKE_COMMAND} 
 	  ARGS -E copy ${IMG_SRC_FULL_DIR} ${IMG_GEN_FULL_DIR}
-	  DEPENDS ${DOXYGEN_OUTPUT} ${IMG_SRC_FULL_DIR}
+	  DEPENDS doc ${IMG_SRC_FULL_DIR}
 	  COMMENT "Copying image '${IMG_SRC_FULL_DIR}' into '${htmldoc_DIR}'...")
+
+	# Transpose the image-related operation into a target, so that CMake
+	# can handle it properly
 	add_custom_target (img_${image_SRC} ALL DEPENDS ${IMG_GEN_FULL_DIR})
+	list (APPEND IMG_ALL_TARGETS img_${image_SRC})
   endforeach (image_SRC)
+  set (IMG_ALL_TARGETS ${IMG_ALL_TARGETS} PARENT_SCOPE)
+  add_custom_target (img_style ALL DEPENDS ${IMG_ALL_TARGETS})
 
   ##
   # PDF, generated by (Pdf)Latex from the Latex source file, itself generated
@@ -1731,25 +1798,21 @@ macro (doc_add_web_pages)
   set (REFMAN_IDX ${REFMAN}.idx)
   set (REFMAN_IDX_FULL ${TEX_GEN_DIR}/${REFMAN_IDX})
   set (REFMAN_PDF ${REFMAN}.pdf)
+  set (REFMAN_PDF ${REFMAN_PDF} PARENT_SCOPE)
   set (REFMAN_PDF_FULL ${TEX_GEN_DIR}/${REFMAN_PDF})
   # Note the "|| echo" addition to the pdflatex command, as that latter returns
   # as if there were an error.
   add_custom_command (OUTPUT ${REFMAN_IDX_FULL} ${REFMAN_PDF_FULL}
-	DEPENDS ${DOXYGEN_OUTPUT} ${REFMAN_TEX_FULL}
+	DEPENDS doc css_style img_style
 	COMMAND ${CMAKE_COMMAND}
-	ARGS -E chdir ${TEX_GEN_DIR} pdflatex -interaction batchmode ${REFMAN_TEX} || echo "First PDF generation done."
+	ARGS -E chdir ${TEX_GEN_DIR} pdflatex -interaction batchmode ${REFMAN_TEX} || echo 'First PDF generation done.'
 	COMMAND ${CMAKE_COMMAND}
-	ARGS -E chdir ${TEX_GEN_DIR} makeindex -q ${REFMAN_IDX}
+	ARGS -E chdir ${TEX_GEN_DIR} egrep -s 'Rerun to get cross-references right' refman.log && (cd ${TEX_GEN_DIR} && pdflatex -interaction batchmode ${REFMAN_TEX} || echo 'Second PDF generation done.') || echo 'Second PDF generation was not necessary'
 	COMMAND ${CMAKE_COMMAND}
-	ARGS -E chdir ${TEX_GEN_DIR} pdflatex -interaction batchmode ${REFMAN_TEX} || echo "Second PDF generation done."
+	ARGS -E chdir ${TEX_GEN_DIR} egrep -s 'Rerun to get cross-references right' refman.log && (cd ${TEX_GEN_DIR} && pdflatex -interaction batchmode ${REFMAN_TEX} || echo 'Third PDF generation done.') || echo 'Third PDF generation was not necessary'
 	COMMAND ${CMAKE_COMMAND}
-	ARGS -E chdir ${TEX_GEN_DIR} makeindex -q ${REFMAN_IDX}
-	COMMAND ${CMAKE_COMMAND}
-	ARGS -E chdir ${TEX_GEN_DIR} pdflatex -interaction batchmode ${REFMAN_TEX} || echo "Third PDF generation done."
-	COMMENT "Generating PDF Reference Manual ('${REFMAN_PDF}')..."
-	COMMAND ${CMAKE_COMMAND}
-	ARGS -E chdir ${TEX_GEN_DIR} test -f ${REFMAN_PDF} || (touch ${REFMAN_PDF} && echo "Warning: the PDF reference manual \\\('${REFMAN_PDF_FULL}'\\\) has failed to build. You can perform a simple re-build \\\('make' in the 'doc/latex' sub-directory\\\).")
-	COMMENT "Checking whether the PDF Reference Manual ('${REFMAN_PDF}') has been built...")
+	ARGS -E chdir ${TEX_GEN_DIR} test -f ${REFMAN_PDF} || (cd ${TEX_GEN_DIR} && touch ${REFMAN_PDF} && echo 'Warning: the PDF reference manual ('${REFMAN_PDF_FULL}') has failed to build. You can perform a simple re-build ('make' in the 'doc/latex' sub-directory).')
+	COMMENT "Generating PDF Reference Manual ('${REFMAN_TEX}' => '${REFMAN_PDF}')...")
   # Add the 'pdf' target, depending on the generated PDF manual
   add_custom_target (pdf ALL DEPENDS ${REFMAN_PDF_FULL})
 
@@ -1789,12 +1852,11 @@ macro (doc_add_man_pages)
   endforeach (_idx RANGE 1 9)
 
   # Initialise the lists gathering information for each valid manual section
-  set (man_doxy_output_list "")
-  set (man_dir_list "")
+  set (man_dir_list)
 
   # Parse the arguments
-  set (options "")
-  set (oneValueArgs "")
+  set (options)
+  set (oneValueArgs)
 
   # Added one argument option for every manual section
   foreach (man_sect ${man_section_list})
@@ -1857,9 +1919,11 @@ macro (doc_add_man_pages)
 		DEPENDS ${DOXYGEN_CFG${man_sect}} ${man${man_sect}_SOURCES}
 		COMMENT "Generating section ${man_sect} manual pages with Doxygen, from '${DOXYGEN_CFG${man_sect}}'...")
 
-	  # Add the current manual section output to the dedicated list,
-	  # so that it can then be added to the corresponding target (see below).
-	  list (APPEND man_doxy_output_list ${DOXYGEN_OUTPUT${man_sect}})
+	  # Transpose the man-page-related operation into a target, so that CMake
+	  # can handle it properly
+	  add_custom_target (man_${man_sect} 
+		ALL DEPENDS ${DOXYGEN_OUTPUT${man_sect}})
+	  list (APPEND MAN_ALL_TARGETS man_${man_sect})
 
 	  # Specifiy what to do for the installation of the manual pages
 	  install (DIRECTORY "${man${man_sect}_DIR}" DESTINATION ${MAN_PATH})
@@ -1868,7 +1932,8 @@ macro (doc_add_man_pages)
   endforeach (man_sect ${man_section_list})
 
   # Add the 'man' target, depending on the generated manual page documentation
-  add_custom_target (man ALL DEPENDS ${man_doxy_output_list})
+  set (MAN_ALL_TARGETS ${MAN_ALL_TARGETS} PARENT_SCOPE)
+  add_custom_target (man ALL DEPENDS ${MAN_ALL_TARGETS})
 
   # Clean-up $build/man1 and $build/man3 on 'make clean'
   set_property (DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES 
@@ -2223,6 +2288,30 @@ macro (display_status_all_modules)
 endmacro (display_status_all_modules)
 
 ##
+macro (display_status_all_test_suites)
+  message (STATUS)
+  foreach (_test_suite ${PROJ_ALL_SUITES_FOR_TST})
+    message (STATUS "* Test Suite ...................... : ${_test_suite}")
+    message (STATUS "  + Dependencies on other layers .. : ${${_test_suite}_INTER_TARGETS}")
+    message (STATUS "  + Library dependencies .......... : ${${_test_suite}_ALL_LIBS}")
+    message (STATUS "  + Tests to perform .............. : ${${_test_suite}_ALL_TESTS}")
+  endforeach (_test_suite)
+endmacro (display_status_all_test_suites)
+
+##
+macro (display_doc_generation)
+  message (STATUS)
+    message (STATUS "* Documentation to be generated ... :")
+	if (INSTALL_DOC)
+      message (STATUS "  + HTML main page ................ : ${DOXYGEN_OUTPUT_REL}")
+      message (STATUS "  + CSS-related files ............. : ${CSS_ALL_TARGETS}")
+      message (STATUS "  + Image-related files ........... : ${IMG_ALL_TARGETS}")
+      message (STATUS "  + PDF reference manual .......... : ${REFMAN_TEX} => ${REFMAN_PDF}")
+	endif (INSTALL_DOC)
+    message (STATUS "  + Man page sections ............. : ${MAN_ALL_TARGETS}")
+endmacro (display_doc_generation)
+
+##
 macro (display_status)
   message (STATUS)
   message (STATUS "=============================================================")
@@ -2244,9 +2333,11 @@ macro (display_status)
   message (STATUS "Modules to build .................. : ${PROJ_ALL_MOD_FOR_BLD}")
   message (STATUS "Libraries to build/install ........ : ${PROJ_ALL_LIB_TARGETS}")
   message (STATUS "Binaries to build/install ......... : ${PROJ_ALL_BIN_TARGETS}")
-  message (STATUS "Modules to test ................... : ${PROJ_ALL_MOD_FOR_TST}")
+  message (STATUS "Test suites to check .............. : ${PROJ_ALL_SUITES_FOR_TST}")
   message (STATUS "Binaries to test .................. : ${PROJ_ALL_TST_TARGETS}")
   display_status_all_modules ()
+  display_status_all_test_suites ()
+  display_doc_generation ()
   message (STATUS)
   message (STATUS "BUILD_SHARED_LIBS ................. : ${BUILD_SHARED_LIBS}")
   message (STATUS "CMAKE_BUILD_TYPE .................. : ${CMAKE_BUILD_TYPE}")
@@ -2254,6 +2345,7 @@ macro (display_status)
   message (STATUS " * CMAKE_CXX_FLAGS ................ : ${CMAKE_CXX_FLAGS}")
   message (STATUS " * BUILD_FLAGS .................... : ${BUILD_FLAGS}")
   message (STATUS " * COMPILE_FLAGS .................. : ${COMPILE_FLAGS}")
+  message (STATUS "ENABLE_TEST ....................... : ${ENABLE_TEST}" )
   message (STATUS "CMAKE_MODULE_PATH ................. : ${CMAKE_MODULE_PATH}")
   message (STATUS "CMAKE_INSTALL_PREFIX .............. : ${CMAKE_INSTALL_PREFIX}")
   display_doxygen ()
