@@ -124,8 +124,14 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Sun Dec 18 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.46.0-1
+* Sat Jan 28 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.46.0-1
 - Upstream update
+
+* Sun Jan 15 2012 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.45.1-1
+- Upstream update
+
+* Sat Jan 14 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.45.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
 * Sun Dec 04 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.45.0-1
 - Upstream update
