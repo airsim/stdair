@@ -14,6 +14,7 @@ set_project_versions (99 99 99)
 ##
 # Project options
 # The parameters are:
+#  * whether or not the tests must be compiled and run
 #  * whether or not the documentation must be built and installed
 set_project_options (on on)
 
