@@ -45,11 +45,17 @@ Building the library and test binary from the tarball:
 The latest stable source tarball (stdair*.tar.gz or .bz2) can be found here:
 http://sourceforge.net/project/showfiles.php?group_id=267760
 
+To customise the following to your environment, you can alter the path
+to the installation directory:
+export INSTALL_BASEDIR=/home/user/dev/deliveries
+export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
+
 Then, as usual:
 * To configure the project, type something like:
   mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-99.99.99 \
-   -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=ON ..
+  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-99.99.99 \
+   -DCMAKE_BUILD_TYPE:STRING=Debug \
+   -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON ${LIBSUFFIX_4_CMAKE} ..
 * To build the project, type:
   make
 * To test the project, type:
@@ -58,14 +64,12 @@ Then, as usual:
   make install
 * To package the source files, type:
   make dist
-* To package the binary and the documentation:
+* To package the binary and the (HTML and PDF) documentation:
   make package
 * To run the local binary version:
   ./stdair/stdair -b
-* To run the installed version (the first following line must be done once
-  per session):
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/user/dev/deliveries/stdair-99.99.99/lib
-  /home/user/dev/deliveries/stdair-99.99.99/bin/stdair -b
+* To run the installed version:
+  ${INSTALL_BASEDIR}/stdair-99.99.99/bin/stdair -b
 
 Denis Arnaud (August 2011)
 
