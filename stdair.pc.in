@@ -20,7 +20,7 @@ pkglibdir=${libdir}/@PACKAGE@
 pkglibexecdir=${libexecdir}/@PACKAGE@
 
 Name: @PACKAGE_PRETTY_NAME@
-Description: C++ Standard Airline IT Object Library
+Description: @PACKAGE_BRIEF@
 Version: @PACKAGE_VERSION@
 URL: http://sourceforge.net/projects/@PACKAGE@/
 Libs: -L${libdir} -l@PACKAGE@ @LDFLAGS@ @LIBS@

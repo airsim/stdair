@@ -1127,9 +1127,9 @@ macro (set_install_directories)
   set (pdfdir        ${htmldir})
   set (mandir        ${datarootdir}/man)
   set (infodir       ${datarootdir}/info)
-  set (pkgincludedir ${includedir}/stdair)
-  set (pkglibdir     ${libdir}/stdair)
-  set (pkglibexecdir ${libexecdir}/stdair)
+  set (pkgincludedir ${includedir}/${PACKAGE})
+  set (pkglibdir     ${libdir}/${PACKAGE})
+  set (pkglibexecdir ${libexecdir}/${PACKAGE})
 endmacro (set_install_directories)
 
 
