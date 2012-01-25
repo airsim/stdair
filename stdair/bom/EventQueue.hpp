@@ -338,7 +338,7 @@ namespace stdair {
   public:
     // ////////// Debug methods /////////
     /** Queue size */
-    Count_T getQueueSize() const;
+    const Count_T& getQueueSize() const;
 
     /** Is queue empty */
     bool isQueueEmpty() const;
