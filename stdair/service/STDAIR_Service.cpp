@@ -281,7 +281,7 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string STDAIR_Service::jsonExportBookingRequestObjects () const {
+  std::string STDAIR_Service::jsonExportEventObjects (const EventType::EN_EventType& iType) const {
     std::ostringstream oStr; 
 
     // Retrieve the StdAir service context
@@ -291,11 +291,25 @@ namespace stdair {
     // Retrieve the event queue object instance
     const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
 
-    BomJSONExport::jsonExportBookingRequestObjects (oStr, lQueue);
+    switch (iType) {
+    case EventType::BKG_REQ:{
+      BomJSONExport::jsonExportBookingRequestObjects (oStr, lQueue);
+      break;
+    }
+    case EventType::CX:
+    case EventType::OPT_NOT_4_FD:
+    case EventType::OPT_NOT_4_NET:
+    case EventType::SKD_CHG:
+    case EventType::SNAPSHOT:
+    case EventType::RM:
+    case EventType::BRK_PT:
+      break;
+    default:
+      break;
+    }
     
     return oStr.str();
   }
-
 
   // //////////////////////////////////////////////////////////////////////
   std::string STDAIR_Service::list (const AirlineCode_T& iAirlineCode,

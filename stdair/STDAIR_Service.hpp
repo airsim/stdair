@@ -325,15 +325,15 @@ namespace stdair {
 					     const Date_T& iDepartureDate) const;  
 
     /**
-     * Recursively dump, in the returned string and in JSON format,
-     * the booking request events.
+     * Recursively dump, in the returned string and in JSON format, the
+     * events with the asking type.
      *
-     * @return std::string Output string in which the booking-requests are 
-     * JSON-ified.
+     * @return std::string Output string in which the events with given type
+     * are JSON-ified.
      */
-    std::string jsonExportBookingRequestObjects () const;
+    std::string jsonExportEventObjects (const EventType::EN_EventType&) const;
 
-
+    
   public:
     // //////////////// Display support methods /////////////////
     /**
