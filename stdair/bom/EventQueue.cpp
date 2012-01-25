@@ -59,8 +59,9 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  Count_T EventQueue::getQueueSize() const {
-    return _eventList.size();
+  const Count_T& EventQueue::getQueueSize() const {
+    const Count_T& lEventListSize = _eventList.size();
+    return lEventListSize;
   }
   
   // //////////////////////////////////////////////////////////////////////
