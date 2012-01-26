@@ -281,7 +281,8 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string STDAIR_Service::jsonExportEventObjects (const EventType::EN_EventType& iType) const {
+  std::string STDAIR_Service::
+  jsonExportEventObjects (const EventType::EN_EventType& iType) const {
     std::ostringstream oStr; 
 
     // Retrieve the StdAir service context
@@ -289,7 +290,7 @@ namespace stdair {
     STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
 
     // Retrieve the event queue object instance
-    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
+    EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
 
     switch (iType) {
     case EventType::BKG_REQ:{
@@ -307,7 +308,6 @@ namespace stdair {
     default:
       break;
     }
-    
     return oStr.str();
   }
 
