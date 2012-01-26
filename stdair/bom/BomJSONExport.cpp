@@ -640,10 +640,12 @@ namespace stdair {
     // Browse the events
     for (EventList_T::const_iterator itEvent = lEventList.begin();
 	 itEvent != lEventList.end(); ++itEvent) {
-      const EventListElement_T& lEvent_ptr = (*itEvent);
-      const EventStruct& lEvent = lEvent_ptr.second;    
+      const EventListElement_T* lEventListElement_ptr = &(*itEvent);
+      assert (lEventListElement_ptr != NULL);
+      const EventListElement_T& lEventListElement = *lEventListElement_ptr;
+      const EventStruct& lEvent = lEventListElement.second;
       const EventType::EN_EventType& lEventType =
-        lEvent.getEventType(); 	
+        lEvent.getEventType();
 
       if (lEventType == EventType::BKG_REQ) { 	
 
