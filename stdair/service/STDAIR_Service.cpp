@@ -281,7 +281,8 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string STDAIR_Service::jsonExportEventObjects (const EventType::EN_EventType& iType) const {
+  std::string STDAIR_Service::
+  jsonExportEventObjects (const EventType::EN_EventType& iType) const {
     std::ostringstream oStr; 
 
     // Retrieve the StdAir service context
@@ -289,7 +290,7 @@ namespace stdair {
     STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
 
     // Retrieve the event queue object instance
-    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
+    EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
 
     switch (iType) {
     case EventType::BKG_REQ:{
@@ -307,7 +308,6 @@ namespace stdair {
     default:
       break;
     }
-    
     return oStr.str();
   }
 
@@ -485,127 +485,6 @@ namespace stdair {
   void STDAIR_Service::finalise() {
     // Clean all the objects
     FacSupervisor::cleanAll();
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  const Count_T& STDAIR_Service::
-  getExpectedTotalNumberOfEventsToBeGenerated() const {
-    
-    // Retrieve the StdAir service context
-    assert (_stdairServiceContext != NULL);
-    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
-
-    // Retrieve the event queue object instance
-    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
-    
-    // Delegate the call to the dedicated command
-    const Count_T& oExpectedTotalNumberOfEventsToBeGenerated =
-      lQueue.getExpectedTotalNbOfEvents();
-
-    //
-    return oExpectedTotalNumberOfEventsToBeGenerated;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  const Count_T& STDAIR_Service::
-  getExpectedTotalNumberOfEventsToBeGenerated (const EventType::EN_EventType& iType) const {
-    
-    // Retrieve the StdAir service context
-    assert (_stdairServiceContext != NULL);
-    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
-
-    // Retrieve the event queue object instance
-    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
-    
-    // Delegate the call to the dedicated command
-    const Count_T& oExpectedTotalNumberOfEventsToBeGenerated =
-      lQueue.getExpectedTotalNbOfEvents (iType);
-
-    //
-    return oExpectedTotalNumberOfEventsToBeGenerated;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  const Count_T& STDAIR_Service::
-  getActualTotalNumberOfEventsToBeGenerated() const {
-    
-    // Retrieve the StdAir service context
-    assert (_stdairServiceContext != NULL);
-    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
-
-    // Retrieve the event queue object instance
-    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
-    
-    // Delegate the call to the dedicated command
-    const Count_T& oActualTotalNumberOfEventsToBeGenerated =
-      lQueue.getActualTotalNbOfEvents();
-
-    //
-    return oActualTotalNumberOfEventsToBeGenerated;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  const Count_T& STDAIR_Service::
-  getActualTotalNumberOfEventsToBeGenerated (const EventType::EN_EventType& iType) const {
-    
-    // Retrieve the StdAir service context
-    assert (_stdairServiceContext != NULL);
-    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
-
-    // Retrieve the event queue object instance
-    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
-    
-    // Delegate the call to the dedicated command
-    const Count_T& oActualTotalNumberOfEventsToBeGenerated =
-      lQueue.getActualTotalNbOfEvents (iType);
-
-    //
-    return oActualTotalNumberOfEventsToBeGenerated;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  ProgressStatusSet STDAIR_Service::popEvent (EventStruct& ioEventStruct) const {
-
-    // Retrieve the StdAir service context
-    assert (_stdairServiceContext != NULL);
-    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
-
-    // Retrieve the event queue object instance
-    EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
-    
-    // Extract the next event from the queue
-    return lQueue.popEvent (ioEventStruct);
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  bool STDAIR_Service::isQueueDone() const {
-
-    // Retrieve the StdAir service context
-    assert (_stdairServiceContext != NULL);
-    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
-
-    // Retrieve the event queue object instance
-    const EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
-    
-    // Calculates whether the event queue has been fully emptied
-    const bool isQueueDone = lQueue.isQueueDone();
-
-    //
-    return isQueueDone;
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  void STDAIR_Service::reset() const {
-
-    // Retrieve the StdAir service context
-    assert (_stdairServiceContext != NULL);
-    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
-
-    // Retrieve the event queue object instance
-    EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
-    
-    // Delegate the call to the event queue object
-    lQueue.reset();
   }
 
 }

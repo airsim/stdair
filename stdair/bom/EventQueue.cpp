@@ -289,7 +289,15 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   ProgressStatusSet EventQueue::popEvent (EventStruct& ioEventStruct) {
-    assert (_eventList.empty() == false);
+
+    if (_eventList.empty() == true) {  
+      std::ostringstream oStr;
+      oStr << "The event queue '" << describeKey() << "' is empty. "
+	   << "No event can be popped.";
+      //
+      STDAIR_LOG_ERROR (oStr.str());
+      throw EventQueueException (oStr.str());
+    }
 
     /**
      * 1. Update the event queue itself.
