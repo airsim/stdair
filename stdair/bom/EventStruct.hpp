@@ -19,6 +19,7 @@
 #include <stdair/bom/SnapshotTypes.hpp>
 #include <stdair/bom/CancellationTypes.hpp>
 #include <stdair/bom/RMEventTypes.hpp>
+#include <stdair/bom/BreakPointTypes.hpp>
 
 namespace stdair {
 
@@ -100,6 +101,17 @@ namespace stdair {
     const RMEventStruct& getRMEvent() const {
       assert (_rmEvent != NULL);
       return *_rmEvent;
+    }   
+
+    /**
+     * Get a reference on the break point referred to by event.
+     *
+     * \note When that event is not of type booking break point
+     *       (EventType::BRK_PT), an assertion fails.
+     */
+    const BreakPointStruct& getBreakPoint() const {
+      assert (_breakPoint != NULL);
+      return *_breakPoint;
     }
 
     // ////////// Display methods //////////
@@ -126,7 +138,9 @@ namespace stdair {
     /** Constructor for events corresponding to snapshot requests. */
     EventStruct (const EventType::EN_EventType&, SnapshotPtr_T);
     /** Constructor for events corresponding to RM events. */
-    EventStruct (const EventType::EN_EventType&, RMEventPtr_T);
+    EventStruct (const EventType::EN_EventType&, RMEventPtr_T);   
+    /** Constructor for events corresponding to Break Point events. */
+    EventStruct (const EventType::EN_EventType&, BreakPointPtr_T);
     /** Copy constructor. */
     EventStruct (const EventStruct&);
 
@@ -171,7 +185,12 @@ namespace stdair {
     /**
      * Pointer to the RM event referred to by the event.
      */
-    RMEventPtr_T _rmEvent;
+    RMEventPtr_T _rmEvent; 
+
+    /**
+     * Pointer to the break point referred to by the event.
+     */
+    BreakPointPtr_T _breakPoint;
   };
 
 }
