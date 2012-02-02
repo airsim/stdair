@@ -14,7 +14,6 @@ namespace stdair {
 
   /// Forward declarations
   class BomRoot;
-  class EventQueue;
   class Inventory;
   class FlightDate;
   class LegDate;
@@ -39,15 +38,6 @@ namespace stdair {
   class BomDisplay {
   public:
     // //////////////// Display support methods /////////////////
-    /**
-     * Recursively display (dump in the underlying output log stream)
-     * the objects of the BOM tree.
-     *
-     * @param const stdair::EventQueue& Root of the BOM tree to be displayed.
-     * @return std::string Output string in which the BOM tree should be
-     *        logged/dumped.
-     */
-    static std::string csvDisplay (const EventQueue&);
 
     /**
      * Display (dump in the underlying output log stream) the list of

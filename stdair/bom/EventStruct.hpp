@@ -34,14 +34,17 @@ namespace stdair {
    *       to start before that date-time.
    */
   struct EventStruct : public StructAbstract {
-    // Friend classes and structures
-    friend struct EventQueue;
 
     // ///////////// Getters ///////////
   public:
     /** Get the event type */
     const EventType::EN_EventType& getEventType() const {
       return _eventType;
+    }  
+
+    /** Get the event time stamp */
+    const LongDuration_T& getEventTimeStamp() const {
+      return _eventTimeStamp;
     }
 
     /**

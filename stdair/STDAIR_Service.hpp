@@ -23,15 +23,13 @@
 #include <stdair/basic/BasLogParams.hpp>
 #include <stdair/basic/BasDBParams.hpp>
 #include <stdair/basic/ServiceInitialisationType.hpp>
-#include <stdair/basic/EventType.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
 
 namespace stdair {
 
   /// Forward declarations
   class BomRoot;
-  class EventQueue;
-  class EventStruct;
+  struct EventStruct;
   struct ProgressStatusSet;
   struct BookingRequestStruct;
   class STDAIR_ServiceContext;
@@ -225,18 +223,17 @@ namespace stdair {
      */
     std::string jsonExportFlightDateObjects (const AirlineCode_T&, 
 					     const FlightNumber_T&,
-					     const Date_T& iDepartureDate) const;  
+					     const Date_T& iDepartureDate) const;
 
-    /**
-     * Recursively dump, in the returned string and in JSON format, the
-     * events with the asking type.
+   /**
+    * Recursively dump, in the returned string and in JSON format, the
+     * event object.
      *
-     * @return std::string Output string in which the events with given type
-     * are JSON-ified.
+     * @return std::string Output string in which the event is JSON-ified.
      */
-    std::string jsonExportEventObjects (const EventType::EN_EventType&) const;
+    std::string jsonExportEventObject (const EventStruct&) const;
 
-    
+
   public:
     // //////////////// Display support methods /////////////////
     /**
@@ -345,16 +342,6 @@ namespace stdair {
      * @return BomRoot& Reference on the BomRoot.
      */
     BomRoot& getBomRoot() const;
-    
-    /**
-     * @brief Get a reference on the EventQueue object.
-     *
-     * If the service context has not been initialised, that
-     * method throws an exception (failing assertion).
-     *
-     * @return EventQueue& Reference on the EventQueue.
-     */
-    EventQueue& getEventQueue() const;
     
     /**
      * Get the log parameters.

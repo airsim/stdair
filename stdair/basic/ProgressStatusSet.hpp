@@ -26,7 +26,7 @@ namespace stdair {
      *
      * Note that that progress status may not be up-to-date. That
      * attribute is up-to-date only after a call to the
-     * EventQueue::popEvent() method.
+     * popEvent() method of SEvMgr.
      */
     const ProgressStatus& getTypeSpecificStatus() const {
       return _typeSpecificProgressStatus;
@@ -38,7 +38,7 @@ namespace stdair {
      *
      * Note that that progress status may not be up-to-date. That
      * attribute is up-to-date only after a call to the
-     * EventQueue::popEvent() method.
+     * popEvent() method of SEvMgr.
      */
     const ProgressStatus& getSpecificGeneratorStatus() const {
       return _generatorProgressStatus;
@@ -49,7 +49,7 @@ namespace stdair {
      *
      * Note that that progress status may not be up-to-date. That
      * attribute is up-to-date only after a call to the
-     * EventQueue::popEvent() method.
+     * popEvent() method of SEvMgr.
      */
     const ProgressStatus& getOverallStatus() const {
       return _overallProgressStatus;
