@@ -260,6 +260,14 @@ namespace stdair {
     }
 
     return oStr.str();
+  } 
+
+  // //////////////////////////////////////////////////////////////////////
+  void EventStruct::incrementEventTimeStamp() {
+    // The date-time is counted in milliseconds (1e-3 second). Hence,
+    // one thousand (1e3) of attempts correspond to 1 second.
+    // Increment the time stamp of one millisecond.
+    ++_eventTimeStamp;
   }
 
 }

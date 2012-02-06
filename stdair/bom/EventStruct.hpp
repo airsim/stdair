@@ -148,8 +148,19 @@ namespace stdair {
     EventStruct (const EventStruct&);
 
     /** Destructor. */
-    ~EventStruct();
+    ~EventStruct();    
 
+    // ////////// Modifiers /////////
+  public:
+    /**
+     * Increment the date-time stamp which is counted in milliseconds.
+     * 
+     * This incrementation of one millisecond is needed when the
+     * insertion in the event queue failed, that is to say when an
+     * event with the exact same time stamp has already been inserted
+     * in the queue.
+     */
+    void incrementEventTimeStamp();
     
     // ////////////////// Attributes //////////////////
   private:
