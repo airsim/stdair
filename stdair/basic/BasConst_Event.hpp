@@ -10,9 +10,6 @@
 #include <stdair/stdair_event_types.hpp>
 
 namespace stdair {
-
-  /** Default ID for the event queue. */
-  extern const EventQueueID_T DEFAULT_EVENT_QUEUE_ID;
   
   /** Default progress status. */
   extern const Count_T DEFAULT_PROGRESS_STATUS;

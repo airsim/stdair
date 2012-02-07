@@ -17,7 +17,6 @@
 #include <stdair/bom/BomJSONExport.hpp>
 #include <stdair/bom/BomDisplay.hpp>
 #include <stdair/bom/BomRoot.hpp>
-#include <stdair/bom/EventQueue.hpp>
 #include <stdair/bom/EventStruct.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/DatePeriod.hpp>
@@ -128,14 +127,6 @@ namespace stdair {
     assert (_stdairServiceContext != NULL);
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
     return lSTDAIR_ServiceContext.getBomRoot();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  EventQueue& STDAIR_Service::getEventQueue() const {
-    // Retrieve the StdAir service context
-    assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
-    return lSTDAIR_ServiceContext.getEventQueue();
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -278,23 +269,20 @@ namespace stdair {
     }
     
     return oStr.str();
-  }
+  } 
 
   // //////////////////////////////////////////////////////////////////////
   std::string STDAIR_Service::
-  jsonExportEventObjects (const EventType::EN_EventType& iType) const {
+  jsonExportEventObject (const EventStruct& iEventStruct) const {
+    
     std::ostringstream oStr; 
 
-    // Retrieve the StdAir service context
-    assert (_stdairServiceContext != NULL);
-    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    const EventType::EN_EventType& lEventType = 
+      iEventStruct.getEventType();
 
-    // Retrieve the event queue object instance
-    EventQueue& lQueue = lSTDAIR_ServiceContext.getEventQueue();
-
-    switch (iType) {
+    switch (lEventType) {
     case EventType::BKG_REQ:{
-      BomJSONExport::jsonExportBookingRequestObjects (oStr, lQueue);
+      BomJSONExport::jsonExportBookingRequestObject (oStr, iEventStruct);
       break;
     }
     case EventType::CX:

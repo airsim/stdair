@@ -34,14 +34,17 @@ namespace stdair {
    *       to start before that date-time.
    */
   struct EventStruct : public StructAbstract {
-    // Friend classes and structures
-    friend struct EventQueue;
 
     // ///////////// Getters ///////////
   public:
     /** Get the event type */
     const EventType::EN_EventType& getEventType() const {
       return _eventType;
+    }  
+
+    /** Get the event time stamp */
+    const LongDuration_T& getEventTimeStamp() const {
+      return _eventTimeStamp;
     }
 
     /**
@@ -145,8 +148,19 @@ namespace stdair {
     EventStruct (const EventStruct&);
 
     /** Destructor. */
-    ~EventStruct();
+    ~EventStruct();    
 
+    // ////////// Modifiers /////////
+  public:
+    /**
+     * Increment the date-time stamp which is counted in milliseconds.
+     * 
+     * This incrementation of one millisecond is needed when the
+     * insertion in the event queue failed, that is to say when an
+     * event with the exact same time stamp has already been inserted
+     * in the queue.
+     */
+    void incrementEventTimeStamp();
     
     // ////////////////// Attributes //////////////////
   private:
