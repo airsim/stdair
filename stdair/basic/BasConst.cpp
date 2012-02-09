@@ -402,8 +402,8 @@ namespace stdair {
   /** Default flight number (9999). */
   const FlightNumber_T DEFAULT_FLIGHT_NUMBER (9999);
 
-  /** Default guillotine number (9999). */
-  const GuillotineNumber_T DEFAULT_GUILLOTINE_NUMBER (9999);
+  /** Default data table number (9999). */
+  const TableID_T DEFAULT_TABLE_ID (9999);
   
   /** Default flight departure date (01/01/1900). */
   const Date_T DEFAULT_DEPARTURE_DATE (1900, boost::gregorian::Jan, 1);
