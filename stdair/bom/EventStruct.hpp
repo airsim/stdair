@@ -19,6 +19,7 @@
 #include <stdair/bom/SnapshotTypes.hpp>
 #include <stdair/bom/CancellationTypes.hpp>
 #include <stdair/bom/RMEventTypes.hpp>
+#include <stdair/bom/BreakPointTypes.hpp>
 
 namespace stdair {
 
@@ -33,14 +34,17 @@ namespace stdair {
    *       to start before that date-time.
    */
   struct EventStruct : public StructAbstract {
-    // Friend classes and structures
-    friend struct EventQueue;
 
     // ///////////// Getters ///////////
   public:
     /** Get the event type */
     const EventType::EN_EventType& getEventType() const {
       return _eventType;
+    }  
+
+    /** Get the event time stamp */
+    const LongDuration_T& getEventTimeStamp() const {
+      return _eventTimeStamp;
     }
 
     /**
@@ -100,6 +104,17 @@ namespace stdair {
     const RMEventStruct& getRMEvent() const {
       assert (_rmEvent != NULL);
       return *_rmEvent;
+    }   
+
+    /**
+     * Get a reference on the break point referred to by event.
+     *
+     * \note When that event is not of type booking break point
+     *       (EventType::BRK_PT), an assertion fails.
+     */
+    const BreakPointStruct& getBreakPoint() const {
+      assert (_breakPoint != NULL);
+      return *_breakPoint;
     }
 
     // ////////// Display methods //////////
@@ -126,13 +141,26 @@ namespace stdair {
     /** Constructor for events corresponding to snapshot requests. */
     EventStruct (const EventType::EN_EventType&, SnapshotPtr_T);
     /** Constructor for events corresponding to RM events. */
-    EventStruct (const EventType::EN_EventType&, RMEventPtr_T);
+    EventStruct (const EventType::EN_EventType&, RMEventPtr_T);   
+    /** Constructor for events corresponding to Break Point events. */
+    EventStruct (const EventType::EN_EventType&, BreakPointPtr_T);
     /** Copy constructor. */
     EventStruct (const EventStruct&);
 
     /** Destructor. */
-    ~EventStruct();
+    ~EventStruct();    
 
+    // ////////// Modifiers /////////
+  public:
+    /**
+     * Increment the date-time stamp which is counted in milliseconds.
+     * 
+     * This incrementation of one millisecond is needed when the
+     * insertion in the event queue failed, that is to say when an
+     * event with the exact same time stamp has already been inserted
+     * in the queue.
+     */
+    void incrementEventTimeStamp();
     
     // ////////////////// Attributes //////////////////
   private:
@@ -171,7 +199,12 @@ namespace stdair {
     /**
      * Pointer to the RM event referred to by the event.
      */
-    RMEventPtr_T _rmEvent;
+    RMEventPtr_T _rmEvent; 
+
+    /**
+     * Pointer to the break point referred to by the event.
+     */
+    BreakPointPtr_T _breakPoint;
   };
 
 }

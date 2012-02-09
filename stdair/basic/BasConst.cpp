@@ -290,8 +290,6 @@ namespace stdair {
 
 
   // //////// Event Generation /////////
-  /** Default ID for the event queue. */
-  const EventQueueID_T DEFAULT_EVENT_QUEUE_ID ("EQ01");
 
   /** Default progress status. */
   const Count_T DEFAULT_PROGRESS_STATUS (0);

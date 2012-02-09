@@ -199,12 +199,5 @@ namespace stdair {
     EventException (const std::string& iWhat) : RootException (iWhat) {}
   };
 
-  /** EventQueue. */
-  class EventQueueException : public RootException { 
-  public:
-    /** Constructor. */
-    EventQueueException (const std::string& iWhat) : RootException (iWhat) {}
-  };
-
 }
 #endif // __STDAIR_STDAIR_EXCEPTIONS_HPP

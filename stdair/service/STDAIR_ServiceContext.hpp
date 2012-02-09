@@ -17,7 +17,6 @@ namespace stdair {
 
   /// Forward declarations
   class BomRoot;
-  class EventQueue;
 
   /**
    * @brief Class holding the context of the Stdair services.
@@ -32,14 +31,9 @@ namespace stdair {
   private:
     // ///////// Getters //////////
     /**
-     * Get the pointer on the EventQueue instance.
+     * Get the pointer on the BomRoot instance.
      */
     BomRoot& getBomRoot() const;
-
-    /**
-     * Get the pointer on the EventQueue instance.
-     */
-    EventQueue& getEventQueue() const;
 
     /**
      * Get the database parameters.
@@ -128,14 +122,6 @@ namespace stdair {
      */
     void initBomRoot();
     
-    /**
-     * Initialisation.
-     *
-     * The EventQueue object is created by that method, and then
-     * stored within the service context.
-     */
-    void initEventQueue();
-    
 
   private:
     // ///////////// Children ////////////
@@ -143,11 +129,6 @@ namespace stdair {
      * @brief Root of the BOM tree.
      */
     BomRoot* _bomRoot;
-
-    /**
-     * @brief EventQueue.
-     */
-    EventQueue* _eventQueue;
 
     /**
      * @brief Database parameters.

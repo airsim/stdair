@@ -23,15 +23,13 @@
 #include <stdair/basic/BasLogParams.hpp>
 #include <stdair/basic/BasDBParams.hpp>
 #include <stdair/basic/ServiceInitialisationType.hpp>
-#include <stdair/basic/EventType.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
 
 namespace stdair {
 
   /// Forward declarations
   class BomRoot;
-  class EventQueue;
-  class EventStruct;
+  struct EventStruct;
   struct ProgressStatusSet;
   struct BookingRequestStruct;
   class STDAIR_ServiceContext;
@@ -195,103 +193,6 @@ namespace stdair {
      */
     BookingRequestStruct buildSampleBookingRequest (const bool isForCRS = false);
 
-    /**
-     * Get the expected number of events to be generated.
-     *
-     * The getExpectedTotalNbOfEvents() method is called on the
-     * underlying EventQueue object, which keeps track of that number.
-     *
-     * \note That number usually corresponds to an expectation (i.e.,
-     *       the mean value of a random distribution), and may not be
-     *       accurate. The actual number will be known after calling
-     *       the generateFirstEvents() method for each event type
-     *       (e.g., booking request, optimisation notification, etc).
-     *
-     * @return const Count_T& Expected number of events to be generated.
-     */
-    const Count_T& getExpectedTotalNumberOfEventsToBeGenerated() const;
-
-    /**
-     * Get the expected number of events to be generated for the given
-     * event type.
-     *
-     * The getExpectedTotalNbOfEvents() method is called on the
-     * underlying EventQueue object, which keeps track of that number.
-     *
-     * \note That number usually corresponds to an expectation (i.e.,
-     *       the mean value of a random distribution), and may not be
-     *       accurate. The actual number will be known after calling
-     *       the generateFirstEvents() method for each event type
-     *       (e.g., booking request, optimisation notification, etc).
-     *
-     * @param const EventType_T& Event type for which the number is calculated.
-     * @return const Count_T& Expected number of events to be generated.
-     */
-    const Count_T&
-    getExpectedTotalNumberOfEventsToBeGenerated (const EventType::EN_EventType&) const;
-
-    /**
-     * Get the actual number of events to be generated for all the
-     * demand streams.
-     *
-     * The getActualTotalNbOfEvents() method is called on the
-     * underlying EventQueue object, which keeps track of that number.
-     *
-     * \note That number is being known after calling the
-     *       generateFirstEvents() method.
-     *
-     * @return const Count_T& Expected number of events to be generated.
-     */
-    const Count_T& getActualTotalNumberOfEventsToBeGenerated() const;
-
-    /**
-     * Get the actual number of events to be generated for the given
-     * event type.
-     *
-     * The getActualTotalNbOfEvents() method is called on the
-     * underlying EventQueue object, which keeps track of that number.
-     *
-     * \note That number is being known after calling the
-     *       generateFirstEvents() method.
-     *
-     * @param const EventType_T& Event type for which the number is calculated.
-     * @return const Count_T& Expected number of events to be generated.
-     */
-    const Count_T&
-    getActualTotalNumberOfEventsToBeGenerated (const EventType::EN_EventType&) const;
-
-    /**
-     * Pop the next coming (in time) event, and remove it from the
-     * event queue.
-     * <ul>
-     *   <li>The next coming (in time) event corresponds to the event
-     *     having the earliest date-time stamp. In other words, it is
-     *     the first/front element of the event queue.</li>
-     *   <li>That (first) event/element is then removed from the event
-     *     queue</li>
-     *   <li>The progress status is updated for the corresponding
-     *     event type.</li>
-     * </ul>
-     *
-     * @return EventStruct A copy of the event structure,
-     *   which comes first in time from within the event queue.
-     */
-    ProgressStatusSet popEvent (EventStruct&) const;
-
-    /**
-     * States whether the event queue has reached the end.
-     *
-     * For now, that method states whether or not the event queue is empty.
-     */
-    bool isQueueDone() const;
-
-    /**
-     * Reset the context of the demand streams for another demand generation
-     * without having to reparse the demand input file.
-     */
-    void reset() const;
-
-
   public:  
 
     // //////////////// Export support methods /////////////////
@@ -322,16 +223,15 @@ namespace stdair {
      */
     std::string jsonExportFlightDateObjects (const AirlineCode_T&, 
 					     const FlightNumber_T&,
-					     const Date_T& iDepartureDate) const;  
+					     const Date_T& iDepartureDate) const;
 
-    /**
-     * Recursively dump, in the returned string and in JSON format,
-     * the booking request events.
+   /**
+    * Recursively dump, in the returned string and in JSON format, the
+     * event object.
      *
-     * @return std::string Output string in which the booking-requests are 
-     * JSON-ified.
+     * @return std::string Output string in which the event is JSON-ified.
      */
-    std::string jsonExportBookingRequestObjects () const;
+    std::string jsonExportEventObject (const EventStruct&) const;
 
 
   public:
@@ -442,16 +342,6 @@ namespace stdair {
      * @return BomRoot& Reference on the BomRoot.
      */
     BomRoot& getBomRoot() const;
-    
-    /**
-     * @brief Get a reference on the EventQueue object.
-     *
-     * If the service context has not been initialised, that
-     * method throws an exception (failing assertion).
-     *
-     * @return EventQueue& Reference on the EventQueue.
-     */
-    EventQueue& getEventQueue() const;
     
     /**
      * Get the log parameters.
