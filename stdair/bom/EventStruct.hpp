@@ -45,7 +45,10 @@ namespace stdair {
     /** Get the event time stamp */
     const LongDuration_T& getEventTimeStamp() const {
       return _eventTimeStamp;
-    }
+    }  
+
+    /** Get the event date-time i.e the stamp converted to a date-time format. */
+    const DateTime_T& getEventTime () const;
 
     /**
      * Get a reference on the booking request referred to by event.

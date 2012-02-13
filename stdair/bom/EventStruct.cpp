@@ -260,6 +260,47 @@ namespace stdair {
     }
 
     return oStr.str();
+  }   
+
+  // //////////////////////////////////////////////////////////////////////
+  const DateTime_T& EventStruct::getEventTime() const {
+    const DateTime_T& lDateTime (DEFAULT_EVENT_OLDEST_DATETIME);
+
+    //
+    switch (_eventType) {
+    case EventType::BKG_REQ: {
+      assert (_bookingRequest != NULL);
+      return _bookingRequest->getRequestDateTime();
+      break;
+    }
+    case EventType::CX: {
+      assert (_cancellation != NULL);
+      return _cancellation->getCancellationDateTime() ;
+      break;
+    }
+    case EventType::OPT_NOT_4_FD: {
+      assert (_optimisationNotification != NULL);
+      return _optimisationNotification->getNotificationDateTime();
+      break;
+    }
+    case EventType::SNAPSHOT: {
+      assert (_snapshot != NULL);
+      return _snapshot->getSnapshotTime();
+      break;
+    }
+    case EventType::RM: {
+      assert (_rmEvent != NULL);
+      return _rmEvent->getRMEventTime();
+      break;
+    }
+    default: {
+      assert(false); 
+      return lDateTime;
+      break;
+    }
+    }
+
+    return lDateTime;
   } 
 
   // //////////////////////////////////////////////////////////////////////
