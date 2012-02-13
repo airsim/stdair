@@ -17,6 +17,7 @@
 #include <stdair/bom/SnapshotStruct.hpp>
 #include <stdair/bom/CancellationStruct.hpp>
 #include <stdair/bom/RMEventStruct.hpp>
+#include <stdair/bom/BreakPointStruct.hpp>
 #include <stdair/bom/EventStruct.hpp>
 
 namespace stdair {
@@ -148,6 +149,31 @@ namespace stdair {
     const Duration_T lDuration =
       _rmEvent->getRMEventTime() - DEFAULT_EVENT_OLDEST_DATETIME;
     _eventTimeStamp = lDuration.total_milliseconds();
+  }  
+
+  // //////////////////////////////////////////////////////////////////////
+  EventStruct::EventStruct (const EventType::EN_EventType& iEventType,
+                            BreakPointPtr_T ioBreakPointPtr)
+    : _eventType (iEventType) {
+
+    //
+    assert (ioBreakPointPtr != NULL);
+
+#if BOOST_VERSION >= 103900
+    _breakPoint = boost::make_shared<BreakPointStruct> (*ioBreakPointPtr);
+#else  // BOOST_VERSION >= 103900
+    _breakPoint = ioBreakPointPtr;
+#endif // BOOST_VERSION >= 103900
+    assert (_breakPoint != NULL);
+    
+    /**
+     * Compute and store the number of milliseconds between the
+     * date-time of the RM event and DEFAULT_EVENT_OLDEST_DATETIME
+     * (as of Feb. 2011, that date is set to Jan. 1, 2010).
+     */
+    const Duration_T lDuration =
+      _breakPoint->getBreakPointTime() - DEFAULT_EVENT_OLDEST_DATETIME;
+    _eventTimeStamp = lDuration.total_milliseconds();
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -201,6 +227,15 @@ namespace stdair {
 #else  // BOOST_VERSION >= 103900
       _rmEvent = iEventStruct._rmEvent;
 #endif // BOOST_VERSION >= 103900
+    } 
+
+    //
+    if (iEventStruct._breakPoint != NULL) {
+#if BOOST_VERSION >= 103900
+      _breakPoint = boost::make_shared<BreakPointStruct> (*iEventStruct._breakPoint);
+#else  // BOOST_VERSION >= 103900
+      _breakPoint = iEventStruct._breakPoint;
+#endif // BOOST_VERSION >= 103900
     }
   }
   
@@ -227,30 +262,38 @@ namespace stdair {
     switch (_eventType) {
     case EventType::BKG_REQ: {
       assert (_bookingRequest != NULL);
-      oStr << ", " << _eventType << ", " << _bookingRequest->describe();
+      oStr << ", " << EventType::getLabel(_eventType)
+	   << ", " << _bookingRequest->describe();
       break;
     }
     case EventType::CX: {
       assert (_cancellation != NULL);
-      oStr << ", " << _eventType << ", " << _cancellation->describe();
+      oStr << ", " << EventType::getLabel(_eventType)
+	   << ", " << _cancellation->describe();
       break;
     }
     case EventType::OPT_NOT_4_FD: {
       assert (_optimisationNotification != NULL);
-      oStr << ", " << _eventType
+      oStr << ", " << EventType::getLabel(_eventType)
            << ", " << _optimisationNotification->describe();
       break;
     }
     case EventType::SNAPSHOT: {
       assert (_snapshot != NULL);
-      oStr << ", " << _eventType
+      oStr << ", " << EventType::getLabel(_eventType)
            << ", " << _snapshot->describe();
       break;
     }
     case EventType::RM: {
       assert (_rmEvent != NULL);
-      oStr << ", " << _eventType
+      oStr << ", " << EventType::getLabel(_eventType)
            << ", " << _rmEvent->describe();
+      break;
+    } 
+    case EventType::BRK_PT: {
+      assert (_breakPoint != NULL);
+      oStr << ", " << EventType::getLabel(_eventType)
+           << ", " << _breakPoint->describe();
       break;
     }
     default: {
@@ -291,6 +334,11 @@ namespace stdair {
     case EventType::RM: {
       assert (_rmEvent != NULL);
       return _rmEvent->getRMEventTime();
+      break;
+    } 
+    case EventType::BRK_PT: {
+      assert (_breakPoint != NULL);
+      return _breakPoint->getBreakPointTime();
       break;
     }
     default: {
