@@ -170,11 +170,15 @@ namespace stdair {
   /** Define a const view for a given range of DTD. */
   typedef SnapshotBlock_T::const_array_view<2>::type ConstSegmentCabinDTDRangeSnapshotView_T;
   
-  /** Define the snapshot block number. */
-  typedef unsigned short BlockNumber_T;
+  /** Define the segment ID within a snapshot data table. */
+  typedef unsigned short SegmentDataID_T;
+  
+  /** Define the leg ID within a snapshot data table. */
+  typedef unsigned short LegDataID_T;
 
-  /** Define the index type within a snapshot block. */
-  typedef unsigned short BlockIndex_T;
+  /** Define the index type of a class within a
+      snapshot block of a leg/segment. */
+  typedef unsigned short ClassIndex_T;
 
 }
 #endif // __STDAIR_STDAIR_INVENTORY_TYPES_HPP
