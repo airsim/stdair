@@ -26,14 +26,21 @@ namespace stdair {
       LAST_VALUE
     } EN_EventType;
 
-    /** Get the label as a string (e.g., "BookingRequest" or
-        "ScheduleChange"). */
+    /** Get the label as a string (e.g., "BookingRequest", "Cancellation", 
+     * "OptimisationNotificationForFlightDate",
+     * "OptimisationNotificationForNetwork", "ScheduleChange", "Snapshot",
+     * "RevenueManagement", "BreakPoint" or "BookingRequest").
+     */
     static const std::string& getLabel (const EN_EventType&);
 
-    /** Get the label as a single char (e.g., 'B' or 'S'). */
+    /** Get the label as a single char 
+     * (e.g., 'B', 'X', 'F', 'N', 'C', 'S', 'R' or 'P'). 
+     */
     static char getTypeLabel (const EN_EventType&);
 
-    /** Get the label as a string of a single char (e.g., "B" or "S"). */
+    /** Get the label as a string of a single char 
+     * (e.g., "B", "X", "F", "N", "C", "S", "R" or "P"). 
+     */
     static std::string getTypeLabelAsString (const EN_EventType&);
 
     /** List the labels. */
@@ -42,11 +49,16 @@ namespace stdair {
     /** Get the enumerated value. */
     EN_EventType getType() const;
 
-    /** Get the enumerated value as a short string (e.g., "B" or "S"). */
+    /** Get the enumerated value as a short string 
+     * (e.g., "B", "X", "F", "N", "C", "S", "R" or "P").
+     */
     std::string getTypeAsString() const;
     
-    /** Give a description of the structure (e.g., "BookingRequest" or
-        "ScheduleChange"). */
+    /** Give a description of the structure (e.g., "BookingRequest", "Cancellation", 
+     * "OptimisationNotificationForFlightDate",
+     * "OptimisationNotificationForNetwork", "ScheduleChange", "Snapshot",
+     * "RevenueManagement", "BreakPoint" or "BookingRequest").
+     */
     const std::string describe() const;
 
   public:

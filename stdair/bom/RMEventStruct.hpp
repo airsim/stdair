@@ -31,7 +31,7 @@ namespace stdair {
 
     /** Get the snapshot action time. */
     const DateTime_T& getRMEventTime() const {
-      return _snapshotTime;
+      return _RMEventTime;
     }
     
     // /////////// Display support method /////////////
@@ -74,7 +74,7 @@ namespace stdair {
     const KeyDescription_T _flightDateDescription;
     
     /** RMEvent time. */
-    const DateTime_T _snapshotTime;
+    const DateTime_T _RMEventTime;
   };
 
 }
