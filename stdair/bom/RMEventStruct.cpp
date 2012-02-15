@@ -19,7 +19,7 @@ namespace stdair {
   RMEventStruct (const RMEventStruct& iRMEvent)
     : _airlineCode (iRMEvent._airlineCode),
       _flightDateDescription (iRMEvent._flightDateDescription),
-      _snapshotTime (iRMEvent._snapshotTime) {
+      _RMEventTime (iRMEvent._RMEventTime) {
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ namespace stdair {
                   const DateTime_T& iRMEventTime)
     : _airlineCode (iAirlineCode),
       _flightDateDescription (iFlightDateDescription),
-      _snapshotTime (iRMEventTime) {
+      _RMEventTime (iRMEventTime) {
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ namespace stdair {
   const std::string RMEventStruct::describe() const {
     std::ostringstream oStr;
     oStr << _airlineCode << ", " << _flightDateDescription << ", "
-         << _snapshotTime;
+         << _RMEventTime;
     return oStr.str();
   }
 

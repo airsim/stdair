@@ -25,6 +25,7 @@
 #include <stdair/bom/EventStruct.hpp>
 #include <stdair/bom/EventTypes.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
+#include <stdair/bom/BreakPointStruct.hpp>
 #include <stdair/bom/BomJSONExport.hpp>
 
 namespace stdair { 
@@ -622,10 +623,10 @@ namespace stdair {
   void BomJSONExport::
   jsonExportBookingRequestObject (std::ostream& oStream,
 				  const EventStruct& iEventStruct) {
-
+   
+    // Get the current event type: it should be booking request
     const EventType::EN_EventType& lEventType =
       iEventStruct.getEventType();
-
     assert (lEventType == EventType::BKG_REQ); 	
 
     // Get the booking request (the current event type is booking request)
@@ -635,78 +636,109 @@ namespace stdair {
 #if BOOST_VERSION >= 104100  
 
     // Create an empty property tree object for the current booking request
-    bpt::ptree ptCurrBookingRequest;  
-    bpt::ptree ptBookingRequestList; 
+    bpt::ptree ptBookingRequest;
 
     // Put request date time in property tree 
     const DateTime_T& lRequestDateTime = 
       lBookingRequest.getRequestDateTime();	
-    ptCurrBookingRequest.put ("time_stamp", lRequestDateTime);	 
+    ptBookingRequest.put ("time_stamp", lRequestDateTime); 
+    // Put event type in property tree 
+    ptBookingRequest.put ("event_type", EventType::getLabel(lEventType));		 
     // Put origin in property tree 
     const AirportCode_T& lOrigin = lBookingRequest.getOrigin();
-    ptCurrBookingRequest.put ("org", lOrigin);	 
+    ptBookingRequest.put ("org", lOrigin);	 
     // Put destination in property tree
     const AirportCode_T& lDestination = lBookingRequest.getDestination();
-    ptCurrBookingRequest.put ("des", lDestination);		
+    ptBookingRequest.put ("des", lDestination);		
     // Put preferred cabin in property tree
     const CabinCode_T& lCabinCode = lBookingRequest.getPreferredCabin();	
-    ptCurrBookingRequest.put ("cab", lCabinCode); 
+    ptBookingRequest.put ("cab", lCabinCode); 
     // Put party size in property tree
     const NbOfSeats_T& lNbOfSeats = lBookingRequest.getPartySize();	
-    ptCurrBookingRequest.put ("pax", lNbOfSeats); 	
+    ptBookingRequest.put ("pax", lNbOfSeats); 	
     // Put point-of-sale in property tree
     const AirportCode_T& lPOS = lBookingRequest.getPOS();
-    ptCurrBookingRequest.put ("pos", lPOS);  	 
+    ptBookingRequest.put ("pos", lPOS);  	 
     // Put channel in property tree
     const ChannelLabel_T& lChannelLabel = 
       lBookingRequest.getBookingChannel();
-    ptCurrBookingRequest.put ("cha", lChannelLabel); 	
+    ptBookingRequest.put ("cha", lChannelLabel); 	
     // Put WTP in property tree
     const WTP_T& lWTP = lBookingRequest.getWTP();	
-    ptCurrBookingRequest.put ("wtp", lWTP); 
+    ptBookingRequest.put ("wtp", lWTP); 
     // Put request date in property tree 
     const Date_T& lRequestDate = 
       lRequestDateTime.boost::posix_time::ptime::date();
-    ptCurrBookingRequest.put ("bkg_date", lRequestDate); 	
+    ptBookingRequest.put ("bkg_date", lRequestDate); 	
     // Put departure date in property tree 	
     const Date_T& lPreferedDepartureDate = 
       lBookingRequest.getPreferedDepartureDate();
-    ptCurrBookingRequest.put ("dep_date", lPreferedDepartureDate);  	
+    ptBookingRequest.put ("dep_date", lPreferedDepartureDate);  	
     // Put advance purchase in property tree 
     assert (lPreferedDepartureDate >= lRequestDate);
     const DateOffset_T& lAdvancePurchase = 
       lPreferedDepartureDate - lRequestDate;
-    ptCurrBookingRequest.put ("adv_purchase", lAdvancePurchase); 
+    ptBookingRequest.put ("adv_purchase", lAdvancePurchase); 
     // Put stay duration in property tree 
     const DayDuration_T& lStayDuration = 
       lBookingRequest.getStayDuration(); 	
-    ptCurrBookingRequest.put ("stay_duration", lStayDuration); 
+    ptBookingRequest.put ("stay_duration", lStayDuration); 
     //  Put return date in property tree	
     const DateOffset_T lDayDuration (lStayDuration);	
     const Date_T& lReturnDate = 
       lPreferedDepartureDate + lDayDuration;
-    ptCurrBookingRequest.put ("return_date", lReturnDate); 	
+    ptBookingRequest.put ("return_date", lReturnDate); 	
     // Put cancellation date in property tree  
     // TODO:  cancellation date
-    ptCurrBookingRequest.put ("cancel_date", "xxxx-xx-xx"); 	
+    ptBookingRequest.put ("cancel_date", "xxxx-xx-xx"); 	
     // Put preferred departure time in property tree   
     const Duration_T& lPreferredDepartureTime = 
       lBookingRequest.getPreferredDepartureTime();
-    ptCurrBookingRequest.put ("dep_time", lPreferredDepartureTime); 	
+    ptBookingRequest.put ("dep_time", lPreferredDepartureTime); 	
     // Put preferred return time in property tree 	
     // TODO: preferred return time  
-    ptCurrBookingRequest.put ("return_time", "xxPM"); 		
+    ptBookingRequest.put ("return_time", "xxPM"); 		
     // Put preferred carriers in property tree   
     // TODO: preferred carriers
-    ptCurrBookingRequest.put ("pref_carriers", "XX"); 	
-
-    // Put the current booking request in the booking request list
-    ptBookingRequestList.push_back(std::make_pair("", ptCurrBookingRequest));
+    ptBookingRequest.put ("pref_carriers", "XX"); 	
     
     // Write the property tree into the JSON stream.
-    write_json (oStream, ptBookingRequestList);
+    write_json (oStream, ptBookingRequest);
   
 #endif // BOOST_VERSION >= 104100
-  }
+  } 
+
+  // ////////////////////////////////////////////////////////////////////
+  void BomJSONExport::
+  jsonExportBreakPointObject (std::ostream& oStream,
+			      const EventStruct& iEventStruct) {
+ 
+    // Get the current event type: it should be break point
+    const EventType::EN_EventType& lEventType =
+      iEventStruct.getEventType();
+    assert (lEventType == EventType::BRK_PT); 	
+
+    // Get the break point (the current event type is break point)
+    const BreakPointStruct& lBreakPoint = 
+      iEventStruct.getBreakPoint(); 
+
+#if BOOST_VERSION >= 104100  
+
+    // Create an empty property tree object for the current break point
+    bpt::ptree ptBreakPoint;     
+
+    // Put break point date time in property tree 
+    const DateTime_T& lRequestDateTime = 
+      lBreakPoint.getBreakPointTime();	
+    ptBreakPoint.put ("time_stamp", lRequestDateTime);  
+    // Put event type in property tree 
+    ptBreakPoint.put ("event_type", EventType::getLabel(lEventType));		 	   
+    
+    // Write the property tree into the JSON stream.
+    write_json (oStream, ptBreakPoint);
+
+
+#endif // BOOST_VERSION >= 104100
+  }  
 
 }

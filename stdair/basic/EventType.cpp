@@ -14,7 +14,7 @@ namespace stdair {
   const std::string EventType::_labels[LAST_VALUE] =
     { "BookingRequest", "Cancellation","OptimisationNotificationForFlightDate",
       "OptimisationNotificationForNetwork", "ScheduleChange", "Snapshot",
-      "RevenueMangement", "BreakPoint" };
+      "RevenueManagement", "BreakPoint" };
 
   // //////////////////////////////////////////////////////////////////////
   const char EventType::
