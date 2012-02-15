@@ -85,6 +85,18 @@ namespace stdair {
     static void jsonExportBookingRequestObject (std::ostream&, 
 						const EventStruct&);
 
+    /**
+     * Export (dump in the underlying output log stream and in JSON format) 
+     * the break point object contained in the event structure. 
+     *
+     * @param std::ostream& Output stream in which the events should be
+     *        logged/dumped.
+     * @param const EventStruct& Break point to be stored in JSON-ified 
+     * format.
+     */
+    static void jsonExportBreakPointObject (std::ostream&, 
+					    const EventStruct&);
+
   private:
 
     /**

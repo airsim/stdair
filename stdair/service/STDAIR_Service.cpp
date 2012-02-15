@@ -292,6 +292,7 @@ namespace stdair {
     case EventType::SNAPSHOT:
     case EventType::RM:
     case EventType::BRK_PT:
+      BomJSONExport::jsonExportBreakPointObject (oStr, iEventStruct);
       break;
     default:
       break;
