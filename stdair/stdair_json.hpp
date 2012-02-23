@@ -6,7 +6,6 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <string>
-#include <iosfwd>
 
 namespace stdair {
 
@@ -19,12 +18,12 @@ namespace stdair {
     /**
      * Main Constructor.
      */
-    JSONString (const std::string& iJsonString) :
+    explicit JSONString (const std::string& iJsonString) :
       _jsonString (iJsonString) {}
     /**
      * Default constructor.
      */
-    JSONString () : _jsonString ("") {}
+    explicit JSONString () : _jsonString ("") {}
     
     /**
      * Destructor.
