@@ -13,6 +13,7 @@
 // StdAir
 #include <stdair/bom/BomJSONImport.hpp>
 #include <stdair/stdair_exceptions.hpp>
+#include <stdair/stdair_json.hpp>
 
 #if BOOST_VERSION >= 104100
 namespace bpt = boost::property_tree;
@@ -26,7 +27,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   bool BomJSONImport::
-  jsonImportCommand (const std::string& iBomJSONStr,
+  jsonImportCommand (const JSONString& iBomJSONStr,
                      JSonCommand::EN_JSonCommand& ioEnumJSonCommand) {
 
     bool hasCommandBeenSuccessfullyRetrieved = true;
@@ -49,8 +50,9 @@ namespace stdair {
       // See the caller for the regular expression
       boost::regex lExpression (lRegEx);
 
-      std::string::const_iterator itStart = iBomJSONStr.begin();
-      std::string::const_iterator itEnd = iBomJSONStr.end();
+      const std::string& lBomJSONStr = iBomJSONStr.getString();
+      std::string::const_iterator itStart = lBomJSONStr.begin();
+      std::string::const_iterator itEnd = lBomJSONStr.end();
 
       boost::match_results<std::string::const_iterator> lWhat;
       boost::match_flag_type lFlags = boost::match_default;
@@ -93,7 +95,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  bool BomJSONImport::jsonImportInventoryKey (const std::string& iBomJSONStr,
+  bool BomJSONImport::jsonImportInventoryKey (const JSONString& iBomJSONStr,
                                               AirlineCode_T& ioAirlineCode) {
     bool hasKeyBeenSuccessfullyRetrieved = true;
 
@@ -106,7 +108,7 @@ namespace stdair {
       // Load the JSON formatted string into the property tree.
       // If reading fails (cannot open stream, parse error), an
       // exception is thrown.
-      std::istringstream iStr (iBomJSONStr);
+      std::istringstream iStr (iBomJSONStr.getString());
       read_json (iStr, pt);
 
       // Build the right path to obtain the airline code value.
@@ -128,7 +130,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  bool BomJSONImport::jsonImportFlightDate (const std::string& iBomJSONStr,
+  bool BomJSONImport::jsonImportFlightDate (const JSONString& iBomJSONStr,
                                             Date_T& ioDepartureDate) {
     bool hasKeyBeenSuccessfullyRetrieved = true;
 
@@ -141,7 +143,7 @@ namespace stdair {
       // Load the JSON formatted string into the property tree.
       // If reading fails (cannot open stream, parse error), an
       // exception is thrown.
-      std::istringstream iStr (iBomJSONStr);
+      std::istringstream iStr (iBomJSONStr.getString());
       read_json (iStr, pt);
 
       // Build the right path to obtain the departure date value.
@@ -161,7 +163,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  bool BomJSONImport::jsonImportFlightNumber (const std::string& iBomJSONStr,
+  bool BomJSONImport::jsonImportFlightNumber (const JSONString& iBomJSONStr,
                                               FlightNumber_T& ioFlightNumber) {
     
     bool hasKeyBeenSuccessfullyRetrieved = true;
@@ -175,7 +177,7 @@ namespace stdair {
       // Load the JSON formatted string into the property tree.
       // If reading fails (cannot open stream, parse error), an
       // exception is thrown.
-      std::istringstream iStr (iBomJSONStr);
+      std::istringstream iStr (iBomJSONStr.getString());
       read_json (iStr, pt);
 
       // Build the right path to obtain the flight number value.
