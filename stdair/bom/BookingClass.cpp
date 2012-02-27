@@ -25,7 +25,7 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   BookingClass::BookingClass (const Key_T& iKey)
-    : _key (iKey), _parent (NULL), _cumulatedProtection (0.0),
+    : _key (iKey), _parent (NULL), _subclassCode(0), _cumulatedProtection (0.0),
       _protection (0.0), _cumulatedBookingLimit (0.0), _au (0.0), _nego (0.0),
       _noShowPercentage (0.0), _cancellationPercentage (0.0),
       _nbOfBookings (0.0), _groupNbOfBookings (0.0),
