@@ -80,6 +80,15 @@ namespace stdair {
   /** Default seat index (for a bucket and/or Bid-Price Vector slot)(e.g., 1). */
   extern const SeatIndex_T DEFAULT_SEAT_INDEX;
 
+  /** Default number of bookings. */
+  extern const NbOfSeats_T DEFAULT_NULL_BOOKING_NUMBER;
+
+  /** Default capacity adjustment of the cabin. */
+  extern const CapacityAdjustment_T DEFAULT_NULL_CAPACITY_ADJUSTMENT;
+  
+  /** Default unsold Protection (UPR). */
+  extern const UPR_T DEFAULT_NULL_UPR;
+
   /** Default value type (within a guillotine block) for fare family. */
   extern const std::string DEFAULT_FARE_FAMILY_VALUE_TYPE;
 

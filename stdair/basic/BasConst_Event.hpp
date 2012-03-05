@@ -20,7 +20,10 @@ namespace stdair {
 
   /** Default reference (oldest) date-time for the events. No event can
       occur before that date-time. */
-  extern const DateTime_T DEFAULT_EVENT_OLDEST_DATETIME;
+  extern const DateTime_T DEFAULT_EVENT_OLDEST_DATETIME;  
+
+  /** Maximum progress status. */
+  extern const Percentage_T MAXIMUM_PROGRESS_STATUS;
 
 }
 #endif // __STDAIR_BAS_BASCONST_EVENT_HPP
