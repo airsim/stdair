@@ -108,7 +108,7 @@ namespace stdair {
   const NonRefundable_T NON_REFUNDABLE (true);
 
   /** Default refundable value (false). */
-  const NonRefundable_T No_NON_REFUNDABLE (false);
+  const NonRefundable_T NO_NON_REFUNDABLE (false);
 
   /** Default saturdayStay value (true). */
   const SaturdayStay_T DEFAULT_BOM_TREE_SATURDAY_STAY (true);
@@ -509,6 +509,10 @@ namespace stdair {
     oDPMap[-1] = 0.9; oDPMap[0] = 1.0;
     return oDPMap;
   }
+  
+  /** Default number of bookings (with counted cancellation)
+      for FareFamilies. */
+  const NbOfBookings_T DEFAULT_FF_NB_OF_BOOKINGS (0);
 
 
   // ////////// Key and display related /////////////

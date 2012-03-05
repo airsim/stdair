@@ -101,6 +101,9 @@ namespace stdair {
   extern const DTDProbMap_T DEFAULT_DTD_PROB_MAP;
   struct DefaultDtdProbMap { static DTDProbMap_T init();};
 
+  /** Default number of bookings (with counted cancellation)
+      for FareFamilies (0). */
+  extern const NbOfBookings_T DEFAULT_FF_NB_OF_BOOKINGS;
 
 }
 #endif // __STDAIR_BAS_BASCONST_INVENTORY_HPP
