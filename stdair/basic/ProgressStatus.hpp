@@ -9,8 +9,10 @@
 // Boost Progress
 #include <boost/progress.hpp>
 // StdAir
+#include <stdair/basic/BasConst_Event.hpp>
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
+#include <stdair/service/Logger.hpp>
 
 namespace stdair {
 
@@ -49,9 +51,12 @@ namespace stdair {
     const ProgressPercentage_T progress() const {
       if (_actualNb == 0) {
         return 100.0;
-      }
-      return (static_cast<Percentage_T> (_currentNb)
-              / static_cast<Percentage_T> (_actualNb));
+      } 
+      Percentage_T lPercentage = 
+	(static_cast<Percentage_T> (_currentNb)
+	 / static_cast<Percentage_T> (_actualNb));
+      lPercentage *= MAXIMUM_PROGRESS_STATUS;
+      return lPercentage;
     }
     
 
@@ -64,11 +69,11 @@ namespace stdair {
     /** Set the expected number. */
     void setExpectedNb (const Count_T& iExpectedNb) {
       _expectedNb = iExpectedNb;
-    }
+    } 
 
     /** Set the actual number. */
     void setActualNb (const Count_T& iActualNb) {
-      _actualNb = iActualNb;
+      _actualNb = iActualNb;  
     }
 
     /** Reset the current number (to 0). */

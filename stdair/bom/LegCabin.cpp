@@ -36,7 +36,17 @@ namespace stdair {
       _availabilityPool (DEFAULT_AVAILABILITY),
       _availability (DEFAULT_AVAILABILITY),
       _currentBidPrice (DEFAULT_BID_PRICE),
-      _bidPriceVector (DEFAULT_BID_PRICE_VECTOR) {
+      _bidPriceVector (DEFAULT_BID_PRICE_VECTOR),
+      _dcsRegrade (DEFAULT_NULL_CAPACITY_ADJUSTMENT),
+      _au (DEFAULT_CLASS_AUTHORIZATION_LEVEL),
+      _upr (DEFAULT_NULL_UPR),
+      _nav (DEFAULT_AVAILABILITY),
+      _gav (DEFAULT_AVAILABILITY),
+      _acp (DEFAULT_CLASS_OVERBOOKING_RATE),
+      _etb (DEFAULT_NULL_BOOKING_NUMBER),
+      _staffNbOfBookings (DEFAULT_NULL_BOOKING_NUMBER),
+      _wlNbOfBookings (DEFAULT_NULL_BOOKING_NUMBER),
+      _groupNbOfBookings (DEFAULT_NULL_BOOKING_NUMBER) {
   }
 
   // ////////////////////////////////////////////////////////////////////

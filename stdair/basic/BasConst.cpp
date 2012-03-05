@@ -292,7 +292,10 @@ namespace stdair {
   // //////// Event Generation /////////
 
   /** Default progress status. */
-  const Count_T DEFAULT_PROGRESS_STATUS (0);
+  const Count_T DEFAULT_PROGRESS_STATUS (0); 
+
+  /** Maximum progress status. */
+  const Percentage_T MAXIMUM_PROGRESS_STATUS (100);
 
   /** Default reference (oldest) date for the events. No event can
       occur before that date. */
@@ -453,6 +456,15 @@ namespace stdair {
 
   /** Default seat index (for a bucket and/or Bid-Price Vector slot). */
   const SeatIndex_T DEFAULT_SEAT_INDEX (1);
+
+  /** Default number of bookings. */
+  const NbOfSeats_T DEFAULT_NULL_BOOKING_NUMBER (0);
+  
+  /** Default capacity adjustment of the cabin. */
+  const CapacityAdjustment_T DEFAULT_NULL_CAPACITY_ADJUSTMENT (0);
+
+  /** Default unsold Protection (UPR). */
+  const UPR_T DEFAULT_NULL_UPR (0);
 
   /** Default value type (within a guillotine block) for fare family. */
   const std::string DEFAULT_FARE_FAMILY_VALUE_TYPE ("FF");
