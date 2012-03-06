@@ -85,7 +85,7 @@ namespace stdair {
     /**
      * Default constructor with class ID list.
      */
-    CancellationStruct (const BookingClassIDList_T&,
+    CancellationStruct (const SegmentPath_T&, const BookingClassIDList_T&,
                         const PartySize_T&, const DateTime_T&);
 
     /**
