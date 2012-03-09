@@ -290,7 +290,8 @@ namespace stdair {
     case EventType::OPT_NOT_4_NET:
     case EventType::SKD_CHG:
     case EventType::SNAPSHOT:
-    case EventType::RM:
+    case EventType::RM: 
+      break;
     case EventType::BRK_PT:
       BomJSONExport::jsonExportBreakPointObject (oStr, iEventStruct);
       break;
