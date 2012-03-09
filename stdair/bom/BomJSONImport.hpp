@@ -10,6 +10,7 @@
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
 #include <stdair/basic/JSonCommand.hpp>
+#include <stdair/bom/BreakPointStruct.hpp>
 
 
 namespace stdair {
@@ -61,6 +62,16 @@ namespace stdair {
      */
     static bool jsonImportFlightNumber (const JSONString&,
                                         FlightNumber_T&);
+
+    /**
+     * Extract the break points from a given JSON-formatted string.
+     *
+     * @param const JSONString& JSON-formatted string.
+     * @param BreakPointList_T& List of breaking points extracted from the given string.
+     * @return bool State whether the extracting has been successful.
+     */
+    static bool jsonImportBreakPoints (const JSONString&,
+				       BreakPointList_T&);
   };
 
 }

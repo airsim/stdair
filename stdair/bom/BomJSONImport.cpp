@@ -14,6 +14,7 @@
 #include <stdair/bom/BomJSONImport.hpp>
 #include <stdair/stdair_exceptions.hpp>
 #include <stdair/stdair_json.hpp>
+#include <stdair/basic/BasConst_General.hpp>
 
 #if BOOST_VERSION >= 104100
 namespace bpt = boost::property_tree;
@@ -43,9 +44,10 @@ namespace stdair {
        */
       const std::string lRegEx("^[{][[:space:]]*\""
                                "([[:alpha:]|_]*)\"[[:space:]]*:"
+			       "[[]?"
                                "[[:space:]]*[{]"
                                "([[:alnum:]|[:punct:]|[:space:]]*)"
-                               "[}][}]");
+                               "[}][]]?[}]");
     
       // See the caller for the regular expression
       boost::regex lExpression (lRegEx);
@@ -152,7 +154,8 @@ namespace stdair {
       
       // Get the departure_date.
       // If the path key is not found, an exception is thrown.
-      ioDepartureDate = boost::gregorian::from_simple_string (lDepartureDateStr);
+      ioDepartureDate = 
+	boost::gregorian::from_simple_string (lDepartureDateStr);
 
     } catch (bpt::ptree_error& bptException) {
       hasKeyBeenSuccessfullyRetrieved = false;
@@ -196,6 +199,57 @@ namespace stdair {
 #endif // BOOST_VERSION >= 104100
 
     return hasKeyBeenSuccessfullyRetrieved;
-  }
+  } 
 
+  // ////////////////////////////////////////////////////////////////////
+  bool BomJSONImport::jsonImportBreakPoints (const JSONString& iBomJSONStr,
+					     BreakPointList_T& oBreakPointList) { 
+    
+    bool hasKeyBeenSuccessfullyRetrieved = true;
+
+#if BOOST_VERSION >= 104100
+    // Create an empty property tree object
+    bpt::ptree pt;    
+
+    try {
+
+      // Load the JSON formatted string into the property tree.
+      // If reading fails (cannot open stream, parse error), an
+      // exception is thrown.
+      std::istringstream iStr (iBomJSONStr.getString());
+      read_json (iStr, pt);    
+
+      // Access the break point list tree
+      bpt::ptree::const_iterator itBegin = pt.begin();
+      bpt::ptree ptListOfBP = itBegin->second; 
+      // Browse the break point list
+      for (bpt::ptree::const_iterator itBP = ptListOfBP.begin();   
+	   itBP != ptListOfBP.end(); ++itBP) { 
+	// Access the current break point tree
+	bpt::ptree ptBP = itBP->second;
+	// Access the date of the break point
+	bpt::ptree::const_iterator itDate = ptBP.begin(); 
+	bpt::ptree ptDate = itDate->second;
+	// Recover the string containing the date
+	std::string lDateString = ptDate.data();
+	if (lDateString.empty() == false) {
+	  // Construct the break point using the recovered string
+	  const Date_T lDate = 
+	    boost::gregorian::from_simple_string (lDateString);  
+	  const Duration_T lDuration (0, 0, 0);
+	  const DateTime_T lDateTime (lDate, lDuration);
+	  BreakPointStruct lBreakPoint (lDateTime);
+	  // Add the break point to the list
+	  oBreakPointList.push_back (lBreakPoint);
+	}
+      }
+    } catch (bpt::ptree_error& bptException) {
+      hasKeyBeenSuccessfullyRetrieved = false;
+    } catch (boost::bad_lexical_cast& eCast) { 
+      hasKeyBeenSuccessfullyRetrieved = false;
+    }
+#endif // BOOST_VERSION >= 104100
+
+    return hasKeyBeenSuccessfullyRetrieved;
+  }
 }
