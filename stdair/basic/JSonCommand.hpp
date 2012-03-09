@@ -20,26 +20,28 @@ namespace stdair {
       LIST = 0,
       FLIGHT_DATE,
       EVENT_LIST,
+      BREAK_POINT,
+      RUN,	
       LAST_VALUE
     } EN_JSonCommand;
 
     /**
-     * Get the label as a string (e.g., "list", "flight_date" or "event_list").
+     * Get the label as a string (e.g., "list", "flight_date", "event_list", "break_point" or "run").
      */
     static const std::string& getLabel (const EN_JSonCommand&);
 
     /**
-     * Get the command value from parsing a single char (e.g., 'l', 'f' or 'e').
+     * Get the command value from parsing a single char (e.g., 'l', 'f', 'e', 'b' or 'r').
      */
     static EN_JSonCommand getCommand (const char);
 
     /**
-     * Get the label as a single char (e.g., 'l', 'f' or 'e').
+     * Get the label as a single char (e.g., 'l', 'f', 'e', 'b' or 'r').
      */
     static char getCommandLabel (const EN_JSonCommand&);
 
     /**
-     * Get the label as a string of a single char (e.g., "l", "f" or "e").
+     * Get the label as a string of a single char (e.g., "l", "f", "e", "b" or "r").
      */
     static std::string getCommandLabelAsString (const EN_JSonCommand&);
 
@@ -54,17 +56,17 @@ namespace stdair {
     EN_JSonCommand getCommand() const;
 
     /**
-     * Get the enumerated value as a char (e.g., 'l', 'f' or 'e').
+     * Get the enumerated value as a char (e.g., 'l', 'f' or 'e', 'b' or 'r').
      */
     char getCommandAsChar() const;
 
     /**
-     * Get the enumerated value as a short string (e.g., "l", "f" or "e").
+     * Get the enumerated value as a short string (e.g., "l", "f", "e", "b" or "r").
      */
     std::string getCommandAsString() const;
     
     /**
-     * Give a description of the structure (e.g., "list", "flight_date" or "event_list").
+     * Give a description of the structure (e.g., "list", "flight_date", "event_list", "break_point" or "run").
      */
     const std::string describe() const;
 
