@@ -45,9 +45,9 @@ namespace stdair {
       const std::string lRegEx("^[{][[:space:]]*\""
                                "([[:alpha:]|_]*)\"[[:space:]]*:"
 			       "[[]?"
-                               "[[:space:]]*[{]"
+                               "[[:space:]]*[{]?"
                                "([[:alnum:]|[:punct:]|[:space:]]*)"
-                               "[}][]]?[}]");
+                               "[}]?[]]?[}]");
     
       // See the caller for the regular expression
       boost::regex lExpression (lRegEx);
