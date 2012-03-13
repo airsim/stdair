@@ -11,56 +11,56 @@
 // StdAir
 #include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/basic/BasConst_BomDisplay.hpp>
-#include <stdair/bom/SegmentSnapshotTableKey.hpp>
+#include <stdair/bom/GuillotineBlockKey.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentSnapshotTableKey::SegmentSnapshotTableKey()
-    : _tableID (DEFAULT_TABLE_ID) {
+  GuillotineBlockKey::GuillotineBlockKey()
+    : _guillotineNumber (DEFAULT_GUILLOTINE_NUMBER) {
     assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentSnapshotTableKey::
-  SegmentSnapshotTableKey (const TableID_T& iTableID)
-    : _tableID (iTableID) {
+  GuillotineBlockKey::
+  GuillotineBlockKey (const GuillotineNumber_T& iGuillotineNumber)
+    : _guillotineNumber (iGuillotineNumber) {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentSnapshotTableKey::SegmentSnapshotTableKey (const SegmentSnapshotTableKey& iKey)
-    : _tableID (iKey._tableID) {
+  GuillotineBlockKey::GuillotineBlockKey (const GuillotineBlockKey& iKey)
+    : _guillotineNumber (iKey._guillotineNumber) {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentSnapshotTableKey::~SegmentSnapshotTableKey() {
+  GuillotineBlockKey::~GuillotineBlockKey() {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void SegmentSnapshotTableKey::toStream (std::ostream& ioOut) const {
-    ioOut << "SegmentSnapshotTableKey: " << toString();
+  void GuillotineBlockKey::toStream (std::ostream& ioOut) const {
+    ioOut << "GuillotineBlockKey: " << toString();
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void SegmentSnapshotTableKey::fromStream (std::istream& ioIn) {
+  void GuillotineBlockKey::fromStream (std::istream& ioIn) {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  const std::string SegmentSnapshotTableKey::toString() const {
+  const std::string GuillotineBlockKey::toString() const {
     std::ostringstream oStr;
-    oStr << _tableID;
+    oStr << _guillotineNumber;
     return oStr.str();
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void SegmentSnapshotTableKey::serialisationImplementationExport() const {
+  void GuillotineBlockKey::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void SegmentSnapshotTableKey::serialisationImplementationImport() {
+  void GuillotineBlockKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;
@@ -68,21 +68,21 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   template<class Archive>
-  void SegmentSnapshotTableKey::serialize (Archive& ioArchive,
+  void GuillotineBlockKey::serialize (Archive& ioArchive,
                                  const unsigned int iFileVersion) {
     /**
      * \note The serialised member should not be const (as, as far as
      *       I understand, they are tracked by Boost.Serialisation).
      */
-    ioArchive & _tableID;
+    ioArchive & _guillotineNumber;
   }
 
   // ////////////////////////////////////////////////////////////////////
   // Explicit template instantiation
   namespace ba = boost::archive;
-  template void SegmentSnapshotTableKey::
+  template void GuillotineBlockKey::
   serialize<ba::text_oarchive> (ba::text_oarchive&, unsigned int);
-  template void SegmentSnapshotTableKey::
+  template void GuillotineBlockKey::
   serialize<ba::text_iarchive> (ba::text_iarchive&, unsigned int);
   // ////////////////////////////////////////////////////////////////////
 

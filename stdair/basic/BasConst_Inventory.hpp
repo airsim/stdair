@@ -23,8 +23,8 @@ namespace stdair {
   /** Default flight number (9999). */
   extern const FlightNumber_T DEFAULT_FLIGHT_NUMBER;
 
-  /** Default data table ID (9999). */
-  extern const TableID_T DEFAULT_TABLE_ID;
+  /** Default guillotine number (9999). */
+  extern const GuillotineNumber_T DEFAULT_GUILLOTINE_NUMBER;
   
   /** Default flight departure date (01/01/1900). */
   extern const Date_T DEFAULT_DEPARTURE_DATE;

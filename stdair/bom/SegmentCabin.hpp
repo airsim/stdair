@@ -22,7 +22,7 @@ namespace boost {
 
 namespace stdair {
   // Forward declarations
-  class SegmentSnapshotTable;
+  class GuillotineBlock;
   
   /**
    * @brief Class representing the actual attributes for an airline
@@ -82,9 +82,9 @@ namespace stdair {
     const MapKey_T getFullerKey() const;
 
     /** Get the guilltine block. */
-    const SegmentSnapshotTable& getSegmentSnapshotTable() const {
-      assert (_segmentSnapshotTable != NULL);
-      return *_segmentSnapshotTable;
+    const GuillotineBlock& getGuillotineBlock() const {
+      assert (_guillotineBlock != NULL);
+      return *_guillotineBlock;
     }
 
     /** Get the cabin capacity. */
@@ -139,9 +139,9 @@ namespace stdair {
 
   public:
     // ///////// Setters //////////
-    /** Set the snapshot table. */
-    void setSegmentSnapshotTable (SegmentSnapshotTable& ioTable) {
-      _segmentSnapshotTable = &ioTable;
+    /** Set the guillotine block. */
+    void setGuillotineBlock (GuillotineBlock& ioGuillotine) {
+      _guillotineBlock = &ioGuillotine;
     }
 
     /** Set the cabin capacity. */
@@ -289,9 +289,9 @@ namespace stdair {
     HolderMap_T _holderMap;
 
     /**
-     * The data table used for Revenue Management activities.
+     * The guillotine block used for Revenue Management activities.
      */
-    SegmentSnapshotTable* _segmentSnapshotTable;
+    GuillotineBlock* _guillotineBlock;
 
     /** Capacity of the cabin. */
     CabinCapacity_T _capacity;
