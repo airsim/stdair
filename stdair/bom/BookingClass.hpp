@@ -307,7 +307,7 @@ namespace stdair {
     /** Yield. */
     Yield_T _yield;
 
-    /** Achievable demand distribution forecast. */
+    /** Remaining demand distribution forecast. */
     MeanValue_T _mean;
     StdDevValue_T _stdDev;
 

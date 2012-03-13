@@ -12,10 +12,7 @@ namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
   const std::string JSonCommand::_labels[LAST_VALUE] =
-    { "list", "flight_date", "event_list", "break_point", "run"};
-
-  // //////////////////////////////////////////////////////////////////////
-  const char JSonCommand::_commandLabels[LAST_VALUE] = { 'l', 'f', 'e', 'b', 'r' };
+    { "list", "flight_date", "event_list", "break_point", "run", "reset"};
 
   // //////////////////////////////////////////////////////////////////////
   JSonCommand::JSonCommand()
@@ -31,22 +28,29 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   JSonCommand::EN_JSonCommand
-  JSonCommand::getCommand (const char iCommandChar) {
+  JSonCommand::getCommand (const std::string& iCommandStr) {
  
     EN_JSonCommand oJSonCommand;
-    switch (iCommandChar) {
-    case 'l': oJSonCommand = LIST; break;
-    case 'f': oJSonCommand = FLIGHT_DATE; break;
-    case 'e': oJSonCommand = EVENT_LIST; break;
-    case 'b': oJSonCommand = BREAK_POINT; break;
-    case 'r': oJSonCommand = RUN; break;
-    default: oJSonCommand = LAST_VALUE; break;
+    if (iCommandStr == "list") {
+      oJSonCommand = LIST;
+    } else if (iCommandStr == "flight_date") {
+      oJSonCommand = FLIGHT_DATE; 
+    } else if (iCommandStr == "event_list") {
+      oJSonCommand = EVENT_LIST; 
+    } else if (iCommandStr == "break_point") {
+      oJSonCommand = BREAK_POINT; 
+    } else if (iCommandStr == "run") {
+      oJSonCommand = RUN; 
+    } else if (iCommandStr == "reset") {
+      oJSonCommand = RESET; 
+    } else {
+      oJSonCommand = LAST_VALUE;
     }
 
     if (oJSonCommand == LAST_VALUE) {
       const std::string& lLabels = describeLabels();
       std::ostringstream oMessage;
-      oMessage << "The JSON command '" << iCommandChar
+      oMessage << "The JSON command '" << iCommandStr
                << "' is not known. Known forecasting commands: " << lLabels;
       throw CodeConversionException (oMessage.str());
     }
@@ -54,38 +58,15 @@ namespace stdair {
     return oJSonCommand;
   }
 
-  
   // //////////////////////////////////////////////////////////////////////
-  JSonCommand::JSonCommand (const char iCommandChar) 
-    : _command (getCommand (iCommandChar)) {
+  std::string JSonCommand::getLabel(const EN_JSonCommand& iCommand) {
+    return _labels[iCommand];
   }
   
   // //////////////////////////////////////////////////////////////////////
   JSonCommand::JSonCommand (const std::string& iCommandStr) {
     // 
-    const size_t lSize = iCommandStr.size();
-    assert (lSize == 1);
-    const char lCommandChar = iCommandStr[0];
-    _command = getCommand (lCommandChar);
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  const std::string& JSonCommand::
-  getLabel (const EN_JSonCommand& iCommand) {
-    return _labels[iCommand];
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
-  char JSonCommand::getCommandLabel (const EN_JSonCommand& iCommand) {
-    return _commandLabels[iCommand];
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  std::string JSonCommand::
-  getCommandLabelAsString (const EN_JSonCommand& iCommand) {
-    std::ostringstream oStr;
-    oStr << _commandLabels[iCommand];
-    return oStr.str();
+    _command = getCommand (iCommandStr);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -95,7 +76,7 @@ namespace stdair {
       if (idx != 0) {
         ostr << ", ";
       }
-      ostr << _labels[idx] << " '" << _commandLabels[idx] << "'";
+      ostr << _labels[idx] << " ";//'" << _commandLabels[idx] << "'";
     }
     return ostr.str();
   }
@@ -103,19 +84,6 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   JSonCommand::EN_JSonCommand JSonCommand::getCommand() const {
     return _command;
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
-  std::string JSonCommand::getCommandAsString() const {
-    std::ostringstream oStr;
-    oStr << _commandLabels[_command];
-    return oStr.str();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  char JSonCommand::getCommandAsChar() const {
-    const char oCommandChar = _commandLabels[_command];
-    return oCommandChar;
   }
   
   // //////////////////////////////////////////////////////////////////////
