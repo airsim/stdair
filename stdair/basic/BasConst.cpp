@@ -370,6 +370,8 @@ namespace stdair {
   /** Default value of time (expressed as a monetary unit per hour). */
   const PriceValue_T DEFAULT_VALUE_OF_TIME (100.0);
     
+  /** Number of second in one hour */
+  const IntDuration_T HOUR_CONVERTED_IN_SECONDS (3600);
 
   // //////// Travel Solutions ///////
   /** Default Minimal connection time. */
@@ -523,8 +525,11 @@ namespace stdair {
   }
   
   /** Default number of bookings (with counted cancellation)
-      for FareFamilies. */
+      for FareFamily. */
   const NbOfBookings_T DEFAULT_FF_NB_OF_BOOKINGS (0);
+
+  /** Default number of cancellations for FareFamily. */
+  const NbOfCancellations_T DEFAULT_FF_NB_OF_CANCELLATIONS (0);
 
 
   // ////////// Key and display related /////////////
