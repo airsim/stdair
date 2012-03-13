@@ -21,29 +21,20 @@ namespace stdair {
       FLIGHT_DATE,
       EVENT_LIST,
       BREAK_POINT,
-      RUN,	
+      RUN,
+      RESET,	
       LAST_VALUE
     } EN_JSonCommand;
 
     /**
-     * Get the label as a string (e.g., "list", "flight_date", "event_list", "break_point" or "run").
+     * Get the command value from parsing a single char (e.g., "list", "flight_date", "event_list", "break_point", "run" or "reset).
      */
-    static const std::string& getLabel (const EN_JSonCommand&);
+    static EN_JSonCommand getCommand (const std::string& iCommandStr);
 
     /**
-     * Get the command value from parsing a single char (e.g., 'l', 'f', 'e', 'b' or 'r').
+     * Get a label of a command
      */
-    static EN_JSonCommand getCommand (const char);
-
-    /**
-     * Get the label as a single char (e.g., 'l', 'f', 'e', 'b' or 'r').
-     */
-    static char getCommandLabel (const EN_JSonCommand&);
-
-    /**
-     * Get the label as a string of a single char (e.g., "l", "f", "e", "b" or "r").
-     */
-    static std::string getCommandLabelAsString (const EN_JSonCommand&);
+    static std::string getLabel(const EN_JSonCommand&);
 
     /**
      * List the labels.
@@ -54,19 +45,9 @@ namespace stdair {
      * Get the enumerated value.
      */
     EN_JSonCommand getCommand() const;
-
-    /**
-     * Get the enumerated value as a char (e.g., 'l', 'f' or 'e', 'b' or 'r').
-     */
-    char getCommandAsChar() const;
-
-    /**
-     * Get the enumerated value as a short string (e.g., "l", "f", "e", "b" or "r").
-     */
-    std::string getCommandAsString() const;
     
     /**
-     * Give a description of the structure (e.g., "list", "flight_date", "event_list", "break_point" or "run").
+     * Give a description of the structure (e.g., "list", "flight_date", "event_list", "break_point" "run" or "reset).
      */
     const std::string describe() const;
 
@@ -85,7 +66,7 @@ namespace stdair {
     /**
      * Constructor.
      */
-    JSonCommand (const char);
+    //JSonCommand (const char);
     
     /**
      * Alternative constructor.
@@ -109,12 +90,6 @@ namespace stdair {
      * String version of the enumeration.
      */    
     static const std::string _labels[LAST_VALUE];
-    
-    /**
-     * Method version of the enumeration.
-     */    
-    static const char _commandLabels[LAST_VALUE];
-
 
   private:
     // //////// Attributes /////////

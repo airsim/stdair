@@ -82,10 +82,7 @@ namespace stdair {
       assert (oTokenList.size() >= 2);
       // Retrieved the command string into the token list
       const std::string lCommandStr = oTokenList.at(1);
-    
-      // Remember the first letter of the command string
-      const std::string lCommandCharStr (lCommandStr.substr(0, 1));
-      const JSonCommand lJSonCommand (lCommandCharStr);
+      const JSonCommand lJSonCommand (lCommandStr);
       ioEnumJSonCommand = lJSonCommand.getCommand();
 
     } catch (stdair::CodeConversionException& ccException) {

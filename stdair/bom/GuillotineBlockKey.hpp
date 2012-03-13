@@ -1,5 +1,5 @@
-#ifndef __STDAIR_BOM_SEGMENTSNAPSHOTTABLEKEY_HPP
-#define __STDAIR_BOM_SEGMENTSNAPSHOTTABLEKEY_HPP
+#ifndef __STDAIR_BOM_GUILLOTINEBLOCKKEY_HPP
+#define __STDAIR_BOM_GUILLOTINEBLOCKKEY_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -23,7 +23,7 @@ namespace stdair {
   /**
    * @brief Key of a given guillotine block, made of a guillotine number.
    */
-  struct SegmentSnapshotTableKey : public KeyAbstract {
+  struct GuillotineBlockKey : public KeyAbstract {
     friend class boost::serialization::access;
 
     // /////////// Constructors and destructors ///////////
@@ -31,30 +31,30 @@ namespace stdair {
     /**
      * Default constructor.
      */
-    SegmentSnapshotTableKey();
+    GuillotineBlockKey();
 
   public:
     /**
      * Constructor.
      */
-    SegmentSnapshotTableKey (const TableID_T&);
+    GuillotineBlockKey (const GuillotineNumber_T&);
 
     /**
      * Copy constructor.
      */
-    SegmentSnapshotTableKey (const SegmentSnapshotTableKey&);
+    GuillotineBlockKey (const GuillotineBlockKey&);
 
     /**
      * Destructor.
      */
-    ~SegmentSnapshotTableKey();
+    ~GuillotineBlockKey();
 
 
   public:
     // /////////// Getters //////////
-    /** Get the table ID. */
-    const TableID_T& getTableID() const {
-      return _tableID;
+    /** Get the guillotine number. */
+    const GuillotineNumber_T& getGuillotineNumber() const {
+      return _guillotineNumber;
     }
 
 
@@ -106,11 +106,11 @@ namespace stdair {
   private:
     // ///////////////// Attributes ///////////////
     /**
-     * Table ID (number).
+     * Guillotine number.
      */
-    TableID_T _tableID;
+    GuillotineNumber_T _guillotineNumber;
 
   };
 
 }
-#endif // __STDAIR_BOM_SEGMENTSNAPSHOTTABLEKEY_HPP
+#endif // __STDAIR_BOM_GUILLOTINEBLOCKKEY_HPP
