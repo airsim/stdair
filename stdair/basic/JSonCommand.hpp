@@ -32,6 +32,11 @@ namespace stdair {
     static EN_JSonCommand getCommand (const std::string& iCommandStr);
 
     /**
+     * Get a label of a command
+     */
+    static std::string getLabel(const EN_JSonCommand&);
+
+    /**
      * List the labels.
      */
     static std::string describeLabels();

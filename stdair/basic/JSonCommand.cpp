@@ -57,6 +57,11 @@ namespace stdair {
 
     return oJSonCommand;
   }
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string JSonCommand::getLabel(const EN_JSonCommand& iCommand) {
+    return _labels[iCommand];
+  }
   
   // //////////////////////////////////////////////////////////////////////
   JSonCommand::JSonCommand (const std::string& iCommandStr) {
