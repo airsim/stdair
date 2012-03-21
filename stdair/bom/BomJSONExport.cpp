@@ -74,7 +74,7 @@ namespace stdair {
 #if BOOST_VERSION >= 104100 
 
         // Create an empty flight-dates array
-        bpt::ptree lFDDatePropertyTree; 
+        // bpt::ptree lFDDatePropertyTree; 
 
         // Browse the flight-dates
         const FlightDateMap_T& lFlightDateList =
@@ -92,17 +92,17 @@ namespace stdair {
           if (iFlightNumber == 0 || iFlightNumber == lFlightNumber) {   
             
             // Create an empty property tree object for the current flight date
-            bpt::ptree lCurrFDTree; 
+            // bpt::ptree lCurrFDTree; 
 
             // Add the airline code to the inventory tree
             lCurrAirlineTree.put ("airline_code", lAirlineCode);  	
             // Put flight number in property tree 
-            lCurrFDTree.put ("number", lFlightNumber);
+            lCurrAirlineTree.put ("number", lFlightNumber);
             // Put flight date date in property tree 
-            lCurrFDTree.put ("date", lFlightDateDate);
+            lCurrAirlineTree.put ("date", lFlightDateDate);
             
-            // Put the current flight date tree in the flight date array
-            ioFDPropertyTree.push_back(std::make_pair("", lCurrFDTree));
+            // Put the current flight date tree in the array
+            ptInventoryList.push_back(std::make_pair("", lCurrAirlineTree));
             
           }
         }  
