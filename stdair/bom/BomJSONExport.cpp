@@ -602,11 +602,11 @@ namespace stdair {
     // Put sub class in property tree
     ioSCTree.put ("class_code", iBookingClass.toString());
     // Put authorization level in property tree 
-    std::ostringstream oAUProtStr;
-    oAUProtStr << iBookingClass.getAuthorizationLevel()
-               << " (" << iBookingClass.getProtection()
-	       << ") ";
-    ioSCTree.put ("min/au (prot)", oAUProtStr.str());
+    std::ostringstream oAUBlStr;
+    oAUBlStr << iBookingClass.getAuthorizationLevel();
+      //<< " (" << iBookingClass.getCumulatedBookingLimit()
+      //<< ") ";
+    ioSCTree.put ("au", oAUBlStr.str());
     // Put negotiated space in property tree
     const NbOfSeats_T& lNegotiatedSpace = 
       iBookingClass.getNegotiatedSpace();
