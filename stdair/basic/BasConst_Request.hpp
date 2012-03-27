@@ -71,5 +71,8 @@ namespace stdair {
   /** Default value of time (expressed as a monetary unit per hour). */
   extern const PriceValue_T DEFAULT_VALUE_OF_TIME;
 
+  /** Number of second in one hour */
+  extern const IntDuration_T HOUR_CONVERTED_IN_SECONDS;
+
 }
 #endif // __STDAIR_BAS_BASCONST_REQUEST_HPP
