@@ -326,6 +326,7 @@ namespace stdair {
 
       // Create an empty property tree object for the current leg cabin
       bpt::ptree lCurrLCTree;
+      bpt::ptree lCurrLCBPV;
 
       // Put the cabin code in property tree 
       const CabinCode_T& lCabinCode = lLC_ptr->getCabinCode();
@@ -381,7 +382,22 @@ namespace stdair {
       lCurrLCTree.put ("etb", lExpectedToBoard );
       // Put current bid price in property tree 
       const BidPrice_T& lCurrentBidPrice = lLC_ptr->getCurrentBidPrice();
-      lCurrLCTree.put ("bid_price", lCurrentBidPrice);  
+      lCurrLCTree.put ("bid_price", lCurrentBidPrice);
+      // Put current bid price vector in property tree 
+      const BidPriceVector_T& lCurrentBidPriceVector =
+        lLC_ptr->getBidPriceVector();
+      std::ostringstream ostr;
+      ostr << "[";
+      BidPriceVector_T::const_iterator itBP = lCurrentBidPriceVector.begin();
+      while (itBP != lCurrentBidPriceVector.end()) {
+        ostr << *itBP;
+        ++itBP;
+        if (itBP != lCurrentBidPriceVector.end()) {
+          ostr << ",";
+        }
+      }
+      ostr << "]";
+      lCurrLCTree.put ("BPV", ostr.str());
 
       // Create an empty property tree object for the buckets array
       // corresponding to the current leg cabin.
