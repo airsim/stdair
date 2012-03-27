@@ -387,7 +387,6 @@ namespace stdair {
       const BidPriceVector_T& lCurrentBidPriceVector =
         lLC_ptr->getBidPriceVector();
       std::ostringstream ostr;
-      ostr << "[";
       BidPriceVector_T::const_iterator itBP = lCurrentBidPriceVector.begin();
       while (itBP != lCurrentBidPriceVector.end()) {
         ostr << *itBP;
@@ -396,7 +395,6 @@ namespace stdair {
           ostr << ",";
         }
       }
-      ostr << "]";
       lCurrLCTree.put ("BPV", ostr.str());
 
       // Create an empty property tree object for the buckets array
