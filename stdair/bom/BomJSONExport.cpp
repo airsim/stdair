@@ -41,9 +41,9 @@ namespace stdair {
     if (BomManager::hasList<Inventory> (iBomRoot) == false) {
       return;
     }
-
-#if BOOST_VERSION >= 104100 
-
+    
+#if BOOST_VERSION >= 104100
+    
     // Create empty property tree objects
     bpt::ptree pt;    
     bpt::ptree ptInventoryList;    
@@ -61,20 +61,16 @@ namespace stdair {
 
       // Display only the requested inventories
       if (iAirlineCode == "all" || iAirlineCode == lAirlineCode) {
-	// Flight date array
-	// bpt::ptree ptFD;
-	// Inventory tree
-	bpt::ptree lCurrAirlineTree; 
+        
+	// Flight date tree
+	bpt::ptree ptFD;
+        // Create an empty flight-dates array
+        bpt::ptree lFDDatePropertyTree; 
 
         // Check whether there are FlightDate objects
         if (BomManager::hasMap<FlightDate> (*lInv_ptr) == false) {
           return;
         }
-    
-#if BOOST_VERSION >= 104100 
-
-        // Create an empty flight-dates array
-        // bpt::ptree lFDDatePropertyTree; 
 
         // Browse the flight-dates
         const FlightDateMap_T& lFlightDateList =
@@ -89,33 +85,23 @@ namespace stdair {
           const Date_T& lFlightDateDate = lFD_ptr->getDepartureDate();
 
           // Display only the requested flight number
-          if (iFlightNumber == 0 || iFlightNumber == lFlightNumber) {   
-            
-            // Create an empty property tree object for the current flight date
-            // bpt::ptree lCurrFDTree; 
+          if (iFlightNumber == 0 || iFlightNumber == lFlightNumber) {
 
             // Add the airline code to the inventory tree
-            lCurrAirlineTree.put ("airline_code", lAirlineCode);  	
+            ptFD.put ("airline_code", lAirlineCode);  	
             // Put flight number in property tree 
-            lCurrAirlineTree.put ("number", lFlightNumber);
+            ptFD.put ("number", lFlightNumber);
             // Put flight date date in property tree 
-            lCurrAirlineTree.put ("date", lFlightDateDate);
+            ptFD.put ("date", lFlightDateDate);
             
             // Put the current flight date tree in the array
-            ptInventoryList.push_back(std::make_pair("", lCurrAirlineTree));
+            lFDDatePropertyTree.push_back(std::make_pair("", ptFD));
             
           }
-        }  
-#endif // BOOST_VERSION >= 104100
-
-	// Get the list of flight-dates for that inventory
-	// jsonExportFlightDate (ptFD, *lInv_ptr, iFlightNumber);  	
-
-	// Add the flight-dates array to the inventory tree
-	// lCurrAirlineTree.add_child ("flights", ptFD);  	
+        }  	
 	
 	// Put the current inventory tree in the inventory(ies) array
-	ptInventoryList.push_back(std::make_pair("", lCurrAirlineTree));
+	ptInventoryList.push_back(std::make_pair("", lFDDatePropertyTree));
 
       }
     } 	
