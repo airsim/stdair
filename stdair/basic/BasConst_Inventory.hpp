@@ -7,6 +7,8 @@
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
+#include <stdair/basic/UnconstrainingMethod.hpp>
+#include <stdair/basic/PartnershipTechnique.hpp>
 
 namespace stdair {
 
@@ -116,6 +118,12 @@ namespace stdair {
 
   /** Default number of cancellations for FareFamily (0). */
   extern const NbOfCancellations_T DEFAULT_FF_NB_OF_CANCELLATIONS;
+
+  /** Default Unconstraining Method (By Time Frame). */
+  extern const UnconstrainingMethod DEFAULT_UNCONSTRAINING_METHOD;
+
+  /** Default Partnership Technique (None). */
+  extern const PartnershipTechnique DEFAULT_PARTNERSHIP_TECHNIQUE;
 
 }
 #endif // __STDAIR_BAS_BASCONST_INVENTORY_HPP

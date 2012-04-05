@@ -209,6 +209,11 @@ namespace stdair {
   /** Maximal offered capacity in a cabin. */
   const Availability_T MAXIMAL_AVAILABILITY (9999.0);
 
+  /** Default Unconstraining Method (By Time Frame). */
+  const UnconstrainingMethod DEFAULT_UNCONSTRAINING_METHOD ('T');
+
+  /** Default Partnership Technique (None). */
+  const PartnershipTechnique DEFAULT_PARTNERSHIP_TECHNIQUE ('N');
 
   // //////// (Segment-)Class-related BOM ///////
   /** Default boolean for censorship flag given the status of
