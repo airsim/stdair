@@ -9,7 +9,11 @@
 #include <string>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
+#include <stdair/basic/UnconstrainingMethod.hpp>
+#include <stdair/basic/PartnershipTechnique.hpp>
+#include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/BomAbstract.hpp>
+#include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/bom/InventoryKey.hpp>
 #include <stdair/bom/InventoryTypes.hpp>
 
@@ -23,7 +27,6 @@ namespace boost {
 namespace stdair {
   
   /// Forward declarations
-  class AirlineFeature;
   struct FlightDateKey;
   class FlightDate;
 
@@ -53,6 +56,24 @@ namespace stdair {
     /** Get the airline code (inventory/primary key). */
     const AirlineCode_T& getAirlineCode() const {
       return _key.getAirlineCode();
+    }
+
+    /** Get the unconstraining method. */
+    UnconstrainingMethod::EN_UnconstrainingMethod getUnconstrainingMethod() const {
+      if (_airlineFeature == NULL) {
+        return DEFAULT_UNCONSTRAINING_METHOD.getMethod();
+      }
+      assert (_airlineFeature != NULL);
+      return _airlineFeature->getUnconstrainingMethod();
+    }
+
+    /** Get the partnership technique. */
+    PartnershipTechnique::EN_PartnershipTechnique getPartnershipTechnique() const {
+      if (_airlineFeature == NULL) {
+        return DEFAULT_PARTNERSHIP_TECHNIQUE.getTechnique();
+      }
+      assert (_airlineFeature != NULL);
+      return _airlineFeature->getPartnershipTechnique();
     }
     
     /** Get the parent object. */

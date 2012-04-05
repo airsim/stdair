@@ -13,18 +13,26 @@
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory::Inventory() : _key (DEFAULT_AIRLINE_CODE), _parent (NULL) {
+  Inventory::Inventory() :
+    _key (DEFAULT_AIRLINE_CODE),
+    _parent (NULL),
+    _airlineFeature (NULL) {
     // That constructor is used by the serialisation process
   }
 
   // ////////////////////////////////////////////////////////////////////
   Inventory::Inventory (const Inventory&)
-    : _key (DEFAULT_AIRLINE_CODE), _parent (NULL) {
+    : _key (DEFAULT_AIRLINE_CODE),
+      _parent (NULL),
+      _airlineFeature (NULL) {
     assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory::Inventory (const Key_T& iKey) : _key (iKey), _parent (NULL) {
+  Inventory::Inventory (const Key_T& iKey) :
+    _key (iKey),
+    _parent (NULL),
+    _airlineFeature (NULL) {
   }
 
   // ////////////////////////////////////////////////////////////////////
