@@ -6,6 +6,8 @@
 // //////////////////////////////////////////////////////////////////////
 // StdAir
 #include <stdair/stdair_rm_types.hpp>
+#include <stdair/basic/UnconstrainingMethod.hpp>
+#include <stdair/basic/PartnershipTechnique.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/AirlineFeatureKey.hpp>
 #include <stdair/bom/AirlineFeatureTypes.hpp>
@@ -27,12 +29,25 @@ namespace stdair {
     const Key_T& getKey() const {
       return _key;
     }
+    
+    /** Get the unconstraining method. */
+    UnconstrainingMethod::EN_UnconstrainingMethod getUnconstrainingMethod() const {
+      return _unconstrainingMethod.getMethod();
+    }
+
+    /** Get the partnership method. */
+    PartnershipTechnique::EN_PartnershipTechnique getPartnershipTechnique() const {
+      return _partnershipTechnique.getTechnique();
+    }  
 
   public:
     // //////////// Setters //////////
     /** Intialization method. */
-    void init (const ForecasterMode_T&, const HistoricalDataLimit_T&,
-               const ControlMode_T&);
+    void init (const ForecasterMode_T&,
+               const UnconstrainingMethod&,
+               const HistoricalDataLimit_T&,
+               const ControlMode_T&,
+               const PartnershipTechnique&);
     
   public:
     // /////////// Display support methods /////////
@@ -71,6 +86,13 @@ namespace stdair {
 
     /** The type of inventory control. */
     ControlMode_T _controlMode;
+
+    /** The type of unconstraining method. */
+    UnconstrainingMethod _unconstrainingMethod;
+
+    /** The type of partnership technique. */
+    PartnershipTechnique _partnershipTechnique;
+ 
   };
 
 }
