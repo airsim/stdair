@@ -6,75 +6,77 @@
 #include <sstream>
 // StdAir
 #include <stdair/stdair_exceptions.hpp>
-#include <stdair/basic/UnconstrainingMethod.hpp>
+#include <stdair/basic/ForecastingMethod.hpp>
 
 namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
-  const std::string UnconstrainingMethod::_labels[LAST_VALUE] =
-    { "ByTimeFrame", "BookingCurve" };
+  const std::string ForecastingMethod::_labels[LAST_VALUE] =
+    { "Q Forecasting", "Hybrid Forecasting", "Old QFF", "New QFF" };
 
   // //////////////////////////////////////////////////////////////////////
-  const char UnconstrainingMethod::
-  _methodLabels[LAST_VALUE] = { 'T', 'B' };
+  const char ForecastingMethod::
+  _methodLabels[LAST_VALUE] = { 'Q', 'H', 'O' , 'N'};
 
   
   // //////////////////////////////////////////////////////////////////////
-  UnconstrainingMethod::UnconstrainingMethod()
+  ForecastingMethod::ForecastingMethod()
     : _method (LAST_VALUE) {
     assert (false);
   }
 
   // //////////////////////////////////////////////////////////////////////
-  UnconstrainingMethod::
-  UnconstrainingMethod (const UnconstrainingMethod& iUnconstrainingMethod)
-    : _method (iUnconstrainingMethod._method) {
+  ForecastingMethod::
+  ForecastingMethod (const ForecastingMethod& iForecastingMethod)
+    : _method (iForecastingMethod._method) {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  UnconstrainingMethod::
-  UnconstrainingMethod (const EN_UnconstrainingMethod& iUnconstrainingMethod)
-    : _method (iUnconstrainingMethod) {
+  ForecastingMethod::
+  ForecastingMethod (const EN_ForecastingMethod& iForecastingMethod)
+    : _method (iForecastingMethod) {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  UnconstrainingMethod::UnconstrainingMethod (const char iMethod) {
+  ForecastingMethod::ForecastingMethod (const char iMethod) {
     switch (iMethod) {
-    case 'T': _method = TIME_FRAME; break;
-    case 'B': _method = BOOKING_CURVE; break;
+    case 'Q': _method = Q_FORECASTING; break;
+    case 'H': _method = HYBRID_FORECASTING; break;
+    case 'O': _method = OLD_QFF; break;
+    case 'N': _method = NEW_QFF; break;
     default: _method = LAST_VALUE; break;
     }
 
     if (_method == LAST_VALUE) {
       const std::string& lLabels = describeLabels();
       std::ostringstream oMessage;
-      oMessage << "The unconstraining method '" << iMethod
-               << "' is not known. Known unconstraining methods: " << lLabels;
+      oMessage << "The forecasting method '" << iMethod
+               << "' is not known. Known forecasting methods: " << lLabels;
       throw CodeConversionException (oMessage.str());
     }
   }
   
   // //////////////////////////////////////////////////////////////////////
-  const std::string& UnconstrainingMethod::
-  getLabel (const EN_UnconstrainingMethod& iMethod) {
+  const std::string& ForecastingMethod::
+  getLabel (const EN_ForecastingMethod& iMethod) {
     return _labels[iMethod];
   }
   
   // //////////////////////////////////////////////////////////////////////
-  char UnconstrainingMethod::getMethodLabel (const EN_UnconstrainingMethod& iMethod) {
+  char ForecastingMethod::getMethodLabel (const EN_ForecastingMethod& iMethod) {
     return _methodLabels[iMethod];
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string UnconstrainingMethod::
-  getMethodLabelAsString (const EN_UnconstrainingMethod& iMethod) {
+  std::string ForecastingMethod::
+  getMethodLabelAsString (const EN_ForecastingMethod& iMethod) {
     std::ostringstream oStr;
     oStr << _methodLabels[iMethod];
     return oStr.str();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string UnconstrainingMethod::describeLabels() {
+  std::string ForecastingMethod::describeLabels() {
     std::ostringstream ostr;
     for (unsigned short idx = 0; idx != LAST_VALUE; ++idx) {
       if (idx != 0) {
@@ -86,27 +88,27 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  UnconstrainingMethod::EN_UnconstrainingMethod UnconstrainingMethod::getMethod() const {
+  ForecastingMethod::EN_ForecastingMethod ForecastingMethod::getMethod() const {
     return _method;
   }
   
   // //////////////////////////////////////////////////////////////////////
-  std::string UnconstrainingMethod::getMethodAsString() const {
+  std::string ForecastingMethod::getMethodAsString() const {
     std::ostringstream oStr;
     oStr << _methodLabels[_method];
     return oStr.str();
   }
   
   // //////////////////////////////////////////////////////////////////////
-  const std::string UnconstrainingMethod::describe() const {
+  const std::string ForecastingMethod::describe() const {
     std::ostringstream ostr;
     ostr << _labels[_method];
     return ostr.str();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  bool UnconstrainingMethod::
-  operator== (const EN_UnconstrainingMethod& iMethod) const {
+  bool ForecastingMethod::
+  operator== (const EN_ForecastingMethod& iMethod) const {
     return (_method == iMethod);
   }
   

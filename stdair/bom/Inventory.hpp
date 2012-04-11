@@ -58,6 +58,15 @@ namespace stdair {
       return _key.getAirlineCode();
     }
 
+    /** Get the forecasting method. */
+    ForecastingMethod::EN_ForecastingMethod getForecastingMethod() const {
+      if (_airlineFeature == NULL) {
+        return DEFAULT_FORECASTING_METHOD.getMethod();
+      }
+      assert (_airlineFeature != NULL);
+      return _airlineFeature->getForecastingMethod();
+    }
+
     /** Get the unconstraining method. */
     UnconstrainingMethod::EN_UnconstrainingMethod getUnconstrainingMethod() const {
       if (_airlineFeature == NULL) {

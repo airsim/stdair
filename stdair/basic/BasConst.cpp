@@ -215,6 +215,10 @@ namespace stdair {
   /** Default Partnership Technique (None). */
   const PartnershipTechnique DEFAULT_PARTNERSHIP_TECHNIQUE ('N');
 
+  /** Default Forecasting Method (Q Forecasting). */
+  const ForecastingMethod DEFAULT_FORECASTING_METHOD ('Q');
+  
+
   // //////// (Segment-)Class-related BOM ///////
   /** Default boolean for censorship flag given the status of
       availability for BookingClass. */

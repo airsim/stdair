@@ -257,44 +257,42 @@ namespace stdair {
     const DateTime_T lEventDateTime (DEFAULT_EVENT_OLDEST_DATETIME
                                    + lEventDateTimeDelta);
 
+    oStr << lEventDateTime;
+
     //
     switch (_eventType) {
     case EventType::BKG_REQ: {
       assert (_bookingRequest != NULL);
-      oStr << lEventDateTime;
       oStr << ", " << EventType::getLabel(_eventType)
 	   << ", " << _bookingRequest->describe();
       break;
     }
     case EventType::CX: {
       assert (_cancellation != NULL);
-      oStr << lEventDateTime;
       oStr << ", " << EventType::getLabel(_eventType)
 	   << ", " << _cancellation->describe();
       break;
     }
     case EventType::OPT_NOT_4_FD: {
       assert (_optimisationNotification != NULL);
-      oStr << lEventDateTime;
       oStr << ", " << EventType::getLabel(_eventType)
            << ", " << _optimisationNotification->describe();
       break;
     }
     case EventType::SNAPSHOT: {
       assert (_snapshot != NULL);
-      /**oStr << ", " << EventType::getLabel(_eventType)
-         << ", " << _snapshot->describe();*/
+      oStr << ", " << EventType::getLabel(_eventType)
+         << ", " << _snapshot->describe();
       break;
     }
     case EventType::RM: {
       assert (_rmEvent != NULL);
-      /**oStr << ", " << EventType::getLabel(_eventType)
-         << ", " << _rmEvent->describe();*/
+      oStr << ", " << EventType::getLabel(_eventType)
+         << ", " << _rmEvent->describe();
       break;
     } 
     case EventType::BRK_PT: {
       assert (_breakPoint != NULL);
-      oStr << lEventDateTime;
       oStr << ", " << EventType::getLabel(_eventType)
            << ", " << _breakPoint->describe(); 
       break;
