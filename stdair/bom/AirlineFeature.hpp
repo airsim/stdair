@@ -7,6 +7,7 @@
 // StdAir
 #include <stdair/stdair_rm_types.hpp>
 #include <stdair/basic/UnconstrainingMethod.hpp>
+#include <stdair/basic/ForecastingMethod.hpp>
 #include <stdair/basic/PartnershipTechnique.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/AirlineFeatureKey.hpp>
@@ -29,6 +30,11 @@ namespace stdair {
     const Key_T& getKey() const {
       return _key;
     }
+
+    /** Get the forecasting method. */
+    ForecastingMethod::EN_ForecastingMethod getForecastingMethod() const {
+      return _forecastingMethod.getMethod();
+    }
     
     /** Get the unconstraining method. */
     UnconstrainingMethod::EN_UnconstrainingMethod getUnconstrainingMethod() const {
@@ -43,7 +49,7 @@ namespace stdair {
   public:
     // //////////// Setters //////////
     /** Intialization method. */
-    void init (const ForecasterMode_T&,
+    void init (const ForecastingMethod&,
                const UnconstrainingMethod&,
                const HistoricalDataLimit_T&,
                const ControlMode_T&,
@@ -79,7 +85,7 @@ namespace stdair {
     Key_T _key;
 
     /** The type of forecaster. */
-    ForecasterMode_T _forecasterMode;
+    ForecastingMethod _forecastingMethod;
 
     /** The size of the moving average window. */
     HistoricalDataLimit_T _historicalDataLimit;

@@ -13,6 +13,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   AirlineFeature::AirlineFeature (const Key_T& iKey) :
     _key (iKey),
+    _forecastingMethod(DEFAULT_FORECASTING_METHOD),
     _unconstrainingMethod(DEFAULT_UNCONSTRAINING_METHOD),
     _partnershipTechnique(DEFAULT_PARTNERSHIP_TECHNIQUE) {
   }
@@ -22,12 +23,12 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void AirlineFeature::init (const ForecasterMode_T& iForecastMode,
+  void AirlineFeature::init (const ForecastingMethod& iForecastingMethod,
                              const UnconstrainingMethod& iUnconstrainingMethod,
                              const HistoricalDataLimit_T& iHistoricalDataLimit,
                              const ControlMode_T& iControlMode,
                              const PartnershipTechnique& iPartnershipTechnique) {
-    _forecasterMode = iForecastMode;
+    _forecastingMethod = iForecastingMethod;
     _unconstrainingMethod = iUnconstrainingMethod;
     _historicalDataLimit = iHistoricalDataLimit;
     _controlMode = iControlMode;
@@ -38,7 +39,7 @@ namespace stdair {
   std::string AirlineFeature::toString() const {
     std::ostringstream ostr;
     ostr << describeKey()
-         << ", " << _forecasterMode
+         << ", " << _forecastingMethod
          << ", " << _unconstrainingMethod
          << ", " << _historicalDataLimit
          << ", " << _controlMode
