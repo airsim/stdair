@@ -52,7 +52,7 @@ namespace stdair {
   const std::string FlightDateKey::toString() const {
     std::ostringstream oStr;
     const std::string& lDepartureDateStr =
-      boost::gregorian::to_simple_string (_departureDate);
+      boost::gregorian::to_iso_extended_string (_departureDate);
     oStr << _flightNumber
          << DEFAULT_KEY_SUB_FLD_DELIMITER << " " << lDepartureDateStr;
     return oStr.str();
