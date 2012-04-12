@@ -57,6 +57,30 @@ namespace stdair {
     InputFilePath (const Filename_T& iFilename) :
       RootFilePath (iFilename) {}
   };
+
+  /**
+   * Schedule input file.
+   */
+  class ScheduleFilePath : public InputFilePath {
+  public:
+    /**
+     * Constructor.
+     */
+    explicit ScheduleFilePath (const Filename_T& iFilename)
+      : InputFilePath (iFilename) {}
+  };
+
+  /**
+   * OD input file.
+   */
+  class ODFilePath : public InputFilePath {
+  public:
+    /**
+     * Constructor.
+     */
+    explicit ODFilePath (const Filename_T& iFilename)
+      : InputFilePath (iFilename) {}
+  };
   
 }
 #endif // __STDAIR_STDAIR_FILE_HPP
