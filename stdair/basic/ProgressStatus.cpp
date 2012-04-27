@@ -57,6 +57,14 @@ namespace stdair {
     std::ostringstream oStr;
     oStr << _currentNb << " / {" << _expectedNb << ", " << _actualNb << "}";
     return oStr.str();
+  } 
+  
+  // //////////////////////////////////////////////////////////////////////
+  const std::string ProgressStatus::toString() const {
+    std::ostringstream oStr;
+    oStr << std::setprecision (3) << progress() 
+	 << "%  (" << _currentNb << "/" << _actualNb << ")";
+    return oStr.str();
   }
   
 }

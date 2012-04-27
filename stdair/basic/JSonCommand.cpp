@@ -12,7 +12,7 @@ namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
   const std::string JSonCommand::_labels[LAST_VALUE] =
-    { "list", "flight_date", "event_list", "break_point", "run", "reset"};
+    { "list", "flight_date", "event_list", "break_point", "run", "reset", "status"};
 
   // //////////////////////////////////////////////////////////////////////
   JSonCommand::JSonCommand()
@@ -42,7 +42,9 @@ namespace stdair {
     } else if (iCommandStr == "run") {
       oJSonCommand = RUN; 
     } else if (iCommandStr == "reset") {
-      oJSonCommand = RESET; 
+      oJSonCommand = RESET;  
+    } else if (iCommandStr == "status") {
+      oJSonCommand = STATUS; 
     } else {
       oJSonCommand = LAST_VALUE;
     }

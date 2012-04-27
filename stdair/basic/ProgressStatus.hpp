@@ -50,7 +50,7 @@ namespace stdair {
     /** Get the progress as a percentage. */
     const ProgressPercentage_T progress() const {
       if (_actualNb == 0) {
-        return 100.0;
+        return 0;
       } 
       Percentage_T lPercentage = 
 	(static_cast<Percentage_T> (_currentNb)
@@ -94,8 +94,11 @@ namespace stdair {
 
   public:
     // //////////////// Display Support Methods /////////////////
-    /** Give a description of the structure (e.g., "4 / 100 / 101"). */
-    const std::string describe() const;
+    /** Give a description of the structure (e.g., "1 {99, 100}"). */
+    const std::string describe() const;   
+
+    /** Give a description of the structure (e.g., "1% (1/ 100)"). */
+    const std::string toString() const;
 
     
   public:

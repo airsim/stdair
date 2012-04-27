@@ -22,12 +22,13 @@ namespace stdair {
       EVENT_LIST,
       BREAK_POINT,
       RUN,
-      RESET,	
+      RESET,
+      STATUS,	
       LAST_VALUE
     } EN_JSonCommand;
 
     /**
-     * Get the command value from parsing a single char (e.g., "list", "flight_date", "event_list", "break_point", "run" or "reset).
+     * Get the command value from parsing a single char (e.g., "list", "flight_date", "event_list", "break_point", "run", "reset or "status").
      */
     static EN_JSonCommand getCommand (const std::string& iCommandStr);
 
@@ -47,7 +48,7 @@ namespace stdair {
     EN_JSonCommand getCommand() const;
     
     /**
-     * Give a description of the structure (e.g., "list", "flight_date", "event_list", "break_point" "run" or "reset).
+     * Give a description of the structure (e.g., "list", "flight_date", "event_list", "break_point" "run", "reset or "status").
      */
     const std::string describe() const;
 
