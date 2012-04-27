@@ -95,13 +95,10 @@ namespace stdair {
             ptFD.put ("date", lFlightDateDate);
             
             // Put the current flight date tree in the array
-            lFDDatePropertyTree.push_back(std::make_pair("", ptFD));
+            ptInventoryList.push_back(std::make_pair("", ptFD));
             
           }
         }  	
-	
-	// Put the current inventory tree in the inventory(ies) array
-	ptInventoryList.push_back(std::make_pair("", lFDDatePropertyTree));
 
       }
     } 	
