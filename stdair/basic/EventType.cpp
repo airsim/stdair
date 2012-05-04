@@ -58,8 +58,27 @@ namespace stdair {
                << "' is not known. Known event types: " << lLabels;
       throw CodeConversionException (oMessage.str());
     }
+  }   
+
+  // //////////////////////////////////////////////////////////////////////
+  EventType::EventType (const std::string iTypeStr) {  
+    for (unsigned short idx = 0; idx != LAST_VALUE; ++idx) {
+      if (iTypeStr.compare(_labels[idx]) == 0) { 
+	_type = static_cast<EN_EventType> (idx);
+	break; 
+      } else {
+	_type = LAST_VALUE;
+      } 
+    }
+    if (_type == LAST_VALUE) {
+      const std::string& lLabels = describeLabels();
+      std::ostringstream oMessage;
+      oMessage << "The event type '" << iTypeStr
+	       << "' is not known. Known event types: " << lLabels;
+      throw CodeConversionException (oMessage.str());
+    }
   }
-  
+
   // //////////////////////////////////////////////////////////////////////
   const std::string& EventType::getLabel (const EN_EventType& iType) {
     return _labels[iType];

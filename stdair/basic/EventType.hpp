@@ -68,8 +68,10 @@ namespace stdair {
   public:
     /** Constructor. */
     EventType (const EN_EventType&);
-    /** Constructor. */
-    EventType (const char iType);
+    /** Constructor using a char. */
+    EventType (const char iType);  
+    /** Constructor using a string. */
+    EventType (const std::string iTypeStr);
     /** Default copy constructor. */
     EventType (const EventType&);
 
