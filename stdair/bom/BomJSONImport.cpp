@@ -232,10 +232,8 @@ namespace stdair {
 	if (lDateString.empty() == false) {
 	  // Construct the break point using the recovered string
 	  const Date_T lDate = 
-	    boost::gregorian::from_simple_string (lDateString);  
-	  const Duration_T lDuration (0, 0, 0);
-	  const DateTime_T lDateTime (lDate, lDuration);
-	  BreakPointStruct lBreakPoint (lDateTime);
+	    boost::gregorian::from_simple_string (lDateString);
+	  BreakPointStruct lBreakPoint (lDate);
 	  // Add the break point to the list
 	  oBreakPointList.push_back (lBreakPoint);
 	}

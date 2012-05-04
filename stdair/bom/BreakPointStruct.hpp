@@ -39,7 +39,10 @@ namespace stdair {
     // /////////////// Constructors and Destructors /////////////////
   public:
     /** Constructor. */
-    BreakPointStruct (const DateTime_T&);
+    BreakPointStruct (const DateTime_T&); 
+
+    /** Constructor. */
+    BreakPointStruct (const Date_T&);
 
     /** Copy constructor. */
     BreakPointStruct (const BreakPointStruct&);
