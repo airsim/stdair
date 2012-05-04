@@ -71,7 +71,7 @@ namespace stdair {
     /** Constructor using a char. */
     EventType (const char iType);  
     /** Constructor using a string. */
-    EventType (const std::string iTypeStr);
+    EventType (const std::string& iTypeStr);
     /** Default copy constructor. */
     EventType (const EventType&);
 
