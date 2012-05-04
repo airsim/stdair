@@ -61,7 +61,7 @@ namespace stdair {
   }   
 
   // //////////////////////////////////////////////////////////////////////
-  EventType::EventType (const std::string iTypeStr) {  
+  EventType::EventType (const std::string& iTypeStr) {  
     for (unsigned short idx = 0; idx != LAST_VALUE; ++idx) {
       if (iTypeStr.compare(_labels[idx]) == 0) { 
 	_type = static_cast<EN_EventType> (idx);
