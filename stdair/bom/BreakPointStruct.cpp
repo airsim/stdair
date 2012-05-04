@@ -5,6 +5,7 @@
 #include <cassert>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/BreakPointStruct.hpp>
 
 namespace stdair {
@@ -24,6 +25,12 @@ namespace stdair {
   BreakPointStruct::
   BreakPointStruct (const DateTime_T& iBreakPointTime)
     : _breakPointTime (iBreakPointTime) {
+  }  
+
+  // //////////////////////////////////////////////////////////////////////
+  BreakPointStruct::
+  BreakPointStruct (const Date_T& iBreakPointDate)
+    : _breakPointTime (iBreakPointDate, NULL_BOOST_TIME_DURATION) {
   }
   
   // //////////////////////////////////////////////////////////////////////
