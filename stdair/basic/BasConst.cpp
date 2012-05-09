@@ -217,8 +217,10 @@ namespace stdair {
 
   /** Default Forecasting Method (Q Forecasting). */
   const ForecastingMethod DEFAULT_FORECASTING_METHOD ('Q');
-  
 
+  /** Default Optimisation Method (Leg Based EMSRb). */
+  const OptimisationMethod DEFAULT_OPTIMISATION_METHOD ('E');;
+  
   // //////// (Segment-)Class-related BOM ///////
   /** Default boolean for censorship flag given the status of
       availability for BookingClass. */
