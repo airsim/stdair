@@ -414,6 +414,9 @@ namespace stdair {
   /** Default flight number (9999). */
   const FlightNumber_T DEFAULT_FLIGHT_NUMBER (9999);
 
+  /** Default flight number for fare families (255). */
+  const FlightNumber_T DEFAULT_FLIGHT_NUMBER_FF (255);
+
   /** Default data table number (9999). */
   const TableID_T DEFAULT_TABLE_ID (9999);
   
@@ -533,14 +536,6 @@ namespace stdair {
     return oDPMap;
   }
   
-  /** Default number of bookings (with counted cancellation)
-      for FareFamily. */
-  const NbOfBookings_T DEFAULT_FF_NB_OF_BOOKINGS (0);
-
-  /** Default number of cancellations for FareFamily. */
-  const NbOfCancellations_T DEFAULT_FF_NB_OF_CANCELLATIONS (0);
-
-
   // ////////// Key and display related /////////////
   /** Default delimiter for string display (e.g delimiter for inventory key
       and flight-date key). */

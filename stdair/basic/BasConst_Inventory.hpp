@@ -26,6 +26,9 @@ namespace stdair {
   /** Default flight number (9999). */
   extern const FlightNumber_T DEFAULT_FLIGHT_NUMBER;
 
+  /** Default flight number for fare families (255). */
+  extern const FlightNumber_T DEFAULT_FLIGHT_NUMBER_FF;
+
   /** Default data table ID (9999). */
   extern const TableID_T DEFAULT_TABLE_ID;
   
@@ -112,13 +115,6 @@ namespace stdair {
   /** Default arrival pattern map. */
   extern const DTDProbMap_T DEFAULT_DTD_PROB_MAP;
   struct DefaultDtdProbMap { static DTDProbMap_T init();};
-
-  /** Default number of bookings (with counted cancellation)
-      for FareFamily (0). */
-  extern const NbOfBookings_T DEFAULT_FF_NB_OF_BOOKINGS;
-
-  /** Default number of cancellations for FareFamily (0). */
-  extern const NbOfCancellations_T DEFAULT_FF_NB_OF_CANCELLATIONS;
 
   /** Default Forecasting Method (Q Forecasting). */
   extern const ForecastingMethod DEFAULT_FORECASTING_METHOD;
