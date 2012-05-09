@@ -9,8 +9,6 @@
 #include <string>
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
-#include <stdair/basic/UnconstrainingMethod.hpp>
-#include <stdair/basic/PartnershipTechnique.hpp>
 #include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/AirlineFeature.hpp>
@@ -74,6 +72,15 @@ namespace stdair {
       }
       assert (_airlineFeature != NULL);
       return _airlineFeature->getUnconstrainingMethod();
+    }
+
+    /** Get the optimisation method. */
+    OptimisationMethod::EN_OptimisationMethod getOptimisationMethod() const {
+      if (_airlineFeature == NULL) {
+        return DEFAULT_OPTIMISATION_METHOD.getMethod();
+      }
+      assert (_airlineFeature != NULL);
+      return _airlineFeature->getOptimisationMethod();
     }
 
     /** Get the partnership technique. */

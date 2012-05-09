@@ -9,6 +9,7 @@
 #include <stdair/stdair_date_time_types.hpp>
 #include <stdair/basic/ForecastingMethod.hpp>
 #include <stdair/basic/UnconstrainingMethod.hpp>
+#include <stdair/basic/OptimisationMethod.hpp>
 #include <stdair/basic/PartnershipTechnique.hpp>
 
 namespace stdair {
@@ -120,7 +121,10 @@ namespace stdair {
   extern const ForecastingMethod DEFAULT_FORECASTING_METHOD;
 
   /** Default Unconstraining Method (By Time Frame). */
-  extern const UnconstrainingMethod DEFAULT_UNCONSTRAINING_METHOD;
+  extern const UnconstrainingMethod DEFAULT_UNCONSTRAINING_METHOD; 
+
+  /** Default Optimisation Method (Leg Based EMSRb). */
+  extern const OptimisationMethod DEFAULT_OPTIMISATION_METHOD;
 
   /** Default Partnership Technique (None). */
   extern const PartnershipTechnique DEFAULT_PARTNERSHIP_TECHNIQUE;

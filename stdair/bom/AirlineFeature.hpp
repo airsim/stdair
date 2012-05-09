@@ -8,6 +8,7 @@
 #include <stdair/stdair_rm_types.hpp>
 #include <stdair/basic/UnconstrainingMethod.hpp>
 #include <stdair/basic/ForecastingMethod.hpp>
+#include <stdair/basic/OptimisationMethod.hpp>
 #include <stdair/basic/PartnershipTechnique.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/AirlineFeatureKey.hpp>
@@ -44,13 +45,20 @@ namespace stdair {
     /** Get the partnership method. */
     PartnershipTechnique::EN_PartnershipTechnique getPartnershipTechnique() const {
       return _partnershipTechnique.getTechnique();
+    }     
+
+    /** Get the optimisation method. */
+    OptimisationMethod::EN_OptimisationMethod getOptimisationMethod() const {
+      return _optimisationMethod.getMethod();
     }  
+
 
   public:
     // //////////// Setters //////////
     /** Intialization method. */
     void init (const ForecastingMethod&,
                const UnconstrainingMethod&,
+	       const OptimisationMethod&,
                const HistoricalDataLimit_T&,
                const ControlMode_T&,
                const PartnershipTechnique&);
@@ -94,7 +102,10 @@ namespace stdair {
     ControlMode_T _controlMode;
 
     /** The type of unconstraining method. */
-    UnconstrainingMethod _unconstrainingMethod;
+    UnconstrainingMethod _unconstrainingMethod;   
+
+    /** The type of optimisation method. */
+    OptimisationMethod _optimisationMethod;
 
     /** The type of partnership technique. */
     PartnershipTechnique _partnershipTechnique;
