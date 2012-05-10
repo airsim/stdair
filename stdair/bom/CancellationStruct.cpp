@@ -7,6 +7,7 @@
 // StdAir
 #include <stdair/basic/BasConst_BookingClass.hpp>
 #include <stdair/bom/CancellationStruct.hpp>
+#include <stdair/bom/BookingClass.hpp>
 
 namespace stdair {
   // ////////////////////////////////////////////////////////////////////
@@ -54,8 +55,25 @@ namespace stdair {
       const std::string& lSegmentKey = *lItSegmentPath;
       oStr << lSegmentKey;
     }
-
-    oStr << ";" << _classList << ";" << _partySize << ";" << _datetime;
+    if (_classList == "") {
+      oStr << ";";
+      BookingClassIDList_T::const_iterator lItBookingClassIDList =  
+        _classIDList.begin();
+      idx = 0;
+      for (; lItBookingClassIDList != _classIDList.end(); 
+            ++lItBookingClassIDList, ++idx) {
+        if (idx != 0) {
+          oStr << "-";
+        }
+        const BookingClassID_T& lBookingClassID = *lItBookingClassIDList;
+        const BookingClass& lBookingClass = lBookingClassID.getObject();
+        const ClassCode_T& lClassCode = lBookingClass.getClassCode();
+        oStr << lClassCode;
+      }
+      oStr << ";" << _partySize << ";" << _datetime;
+    } else {
+      oStr << ";" << _classList << ";" << _partySize << ";" << _datetime;
+    }
     return oStr.str();
   }
 
@@ -73,8 +91,25 @@ namespace stdair {
       const std::string& lSegmentKey = *itSegPath;
       oStr << "[" << idx << "] " << lSegmentKey;
     }
-
-    oStr << ";" << _classList << ";" << _partySize << ";" << _datetime;
+    if (_classList == "") {
+      oStr << ";";
+      BookingClassIDList_T::const_iterator lItBookingClassIDList =  
+        _classIDList.begin();
+      idx = 0;
+      for (; lItBookingClassIDList != _classIDList.end(); 
+            ++lItBookingClassIDList, ++idx) {
+        if (idx != 0) {
+          oStr << "-";
+        }
+        const BookingClassID_T& lBookingClassID = *lItBookingClassIDList;
+        const BookingClass& lBookingClass = lBookingClassID.getObject();
+        const ClassCode_T& lClassCode = lBookingClass.getClassCode();
+        oStr << lClassCode;
+      }
+      oStr << ";" << _partySize << ";" << _datetime;
+    } else {
+      oStr << ";" << _classList << ";" << _partySize << ";" << _datetime;
+    }
     return oStr.str();
   }
 }
