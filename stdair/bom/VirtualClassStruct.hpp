@@ -14,6 +14,7 @@
 #include <stdair/stdair_maths_types.hpp>
 #include <stdair/stdair_rm_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
+#include <stdair/bom/BookingClassTypes.hpp>
 
 namespace stdair {
   // Forward declarations.
@@ -23,6 +24,11 @@ namespace stdair {
   struct VirtualClassStruct : public StructAbstract {
   public:
     // /////////// Getters ///////////////
+    /** Get the list of booking class. */
+    const BookingClassList_T& getBookingClassList() const {
+      return _bookingClassList;
+    }
+
     /** Get the yield (average price paid for that virtual class). */
     const Yield_T& getYield() const {
       return _yield;
@@ -49,7 +55,7 @@ namespace stdair {
     }
 
     /** Get the generated demand sample vector for Monte-Carlo method. */
-    const GeneratedDemandVector_T& getGeneratedDemandVector () const;
+    const GeneratedDemandVector_T getGeneratedDemandVector () const;
     
   public:
     // /////////// Setters ///////////////
@@ -94,10 +100,10 @@ namespace stdair {
 
   public:
     // //////////// Constructors & Destructor ///////////////
-    /** Constructor. */
-    VirtualClassStruct (const VirtualClassStruct&);
     /** Default copy constructor. */
-    VirtualClassStruct (BookingClass&);
+    VirtualClassStruct (const VirtualClassStruct&);
+    /** Constructor. */
+    VirtualClassStruct (const BookingClassList_T&);
     /** Destructor. */
     ~VirtualClassStruct();
     
@@ -108,8 +114,8 @@ namespace stdair {
 
   private:
     // ///////////////////// Attributes //////////////////////
-    /** Pointer on the origin booking class. */
-    BookingClass* _bookingClass;
+    /** List of pointers on the booking classes. */
+    BookingClassList_T _bookingClassList;
 
     /** Yield. */
     Yield_T _yield;
