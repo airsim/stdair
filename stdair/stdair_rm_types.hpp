@@ -78,5 +78,8 @@ namespace stdair {
   /** Define the map between class and sell-up factor curve. */
   typedef std::map<BookingClass*, SellUpCurve_T> BookingClassSellUpCurveMap_T;
 
+  /** Define the revenue of a policy */
+  typedef double Revenue_T;
+
 }
 #endif // __STDAIR_STDAIR_RM_TYPES_HPP

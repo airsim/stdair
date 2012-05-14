@@ -286,18 +286,30 @@ namespace stdair {
                                       stdair::DatePeriodList_T&);
 
     /**
-     * Retrieve the sample leg-cabin of the dummy inventory of "XX".
+     * Retrieve one sample leg-cabin of the dummy inventory of "XX".
      *
      * @param stdair::BomRoot& The BOM tree.
+     * @param const bool Boolean to choose the sample leg-cabin.
+     *                   True:  the dummy leg-cabin with fare families.
+     *                   False: the dummy leg-cabin without fare families.
+     *                   By default the value is false.
      */
-    static stdair::LegCabin& retrieveDummyLegCabin (stdair::BomRoot&);
+    static stdair::LegCabin& 
+    retrieveDummyLegCabin (stdair::BomRoot&,
+                           const bool isForFareFamilies = false);
 
     /**
-     * Retrieve the sample segment-cabin of the dummy inventory of "XX".
+     * Retrieve one sample segment-cabin of the dummy inventory of "XX".
      *
      * @param stdair::BomRoot& The BOM tree.
+     * @param const bool Boolean to choose the sample segment-cabin.
+     *                   True:  the dummy segment-cabin with fare families.
+     *                   False: the dummy segment-cabin without fare families.
+     *                   By default the value is false.
      */
-    static stdair::SegmentCabin& retrieveDummySegmentCabin (stdair::BomRoot&);
+    static stdair::SegmentCabin& 
+    retrieveDummySegmentCabin (stdair::BomRoot&,
+                               const bool isForFareFamilies = false);
 
   };
   

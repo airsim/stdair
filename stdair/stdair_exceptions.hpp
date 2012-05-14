@@ -199,5 +199,22 @@ namespace stdair {
     EventException (const std::string& iWhat) : RootException (iWhat) {}
   };
 
+  /** Simple Nesting Structure. */
+  class SimpleNestingStructException : public RootException { 
+  public:
+    /** Constructor. */
+    SimpleNestingStructException (const std::string& iWhat) 
+      : RootException (iWhat) {}
+  };
+  
+  /** Empty booking class list in Simple Nesting Structure. */
+  class BookingClassListEmptyInNestingStructException : 
+    public SimpleNestingStructException { 
+  public:
+    /** Constructor. */
+    BookingClassListEmptyInNestingStructException (const std::string& iWhat) 
+      : SimpleNestingStructException (iWhat) {}
+  };
+
 }
 #endif // __STDAIR_STDAIR_EXCEPTIONS_HPP

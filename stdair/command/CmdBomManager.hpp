@@ -39,7 +39,6 @@ namespace stdair {
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
      */
-
     static void buildSampleBom (BomRoot&);
 
     /**
@@ -54,6 +53,18 @@ namespace stdair {
      *        be attached.
      */
     static void buildSampleInventorySchedule (BomRoot&);
+    
+    /**
+     * Build a sample BOM tree, with mainly Inventory-related and
+     * Schedule-related objects and attach it to the given reference.
+     *
+     * As for now, one inventory, containing one flight, for SQ is built.
+     * This flight has one legs and one segment with two fare families.
+     *     
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+	  static void buildSampleInventoryScheduleForFareFamilies (BomRoot&);	
 
     /**
      * Build a dummy inventory, containing a dummy flight-date with a
@@ -69,6 +80,22 @@ namespace stdair {
      *        be attached.
      */
     static void buildCompleteDummyInventory (BomRoot&);
+
+    /**
+     * Build a dummy inventory, containing a dummy flight-date with a
+     * single segment cabin, a single leg-cabin, two fare families and
+     * four booking classes (two for each fare family).
+     * That structure is the bare minimum required to perform a
+     * Marginal Revenue Transformation on a leg-cabin.
+     *
+     * As for now(May 2012), that method is only called by RMOL when a 
+     * BOM tree for fare families is built.
+     *
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    static void buildCompleteDummyInventoryForFareFamilies (BomRoot&);
+
 
     /**
      * Build a dummy inventory, containing a dummy flight-date with a
@@ -97,6 +124,16 @@ namespace stdair {
      *        be attached.
      */
     static void buildSamplePricing (BomRoot&);
+
+    /**
+     * Build a sample BOM tree, with mainly Pricing-related objects according to
+     * the inventory of buildSampleInventoryScheduleForFareFamilies,
+     * and attach it to the given reference.
+     *
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    static void buildSamplePricingForFareFamilies (BomRoot&);
 
     /**
      * Build a sample list of travel solutions.

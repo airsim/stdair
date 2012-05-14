@@ -342,7 +342,8 @@ namespace stdair {
   
   // ////////////////////////////////////////////////////////////////////
   LegCabin& BomRetriever::
-  retrieveDummyLegCabin (stdair::BomRoot& iBomRoot) {
+  retrieveDummyLegCabin (stdair::BomRoot& iBomRoot,
+                         const bool isForFareFamilies) {
 
     LegCabin* oLegCabin_ptr = NULL;
 
@@ -358,17 +359,33 @@ namespace stdair {
     }
     
     // Retrieve the FlightDate
-    const FlightDate* lFlightDate_ptr = BomRetriever::
-      retrieveFlightDateFromKey (*lInventory_ptr, DEFAULT_FLIGHT_NUMBER,
-                                 DEFAULT_DEPARTURE_DATE);
-    
-    if (lFlightDate_ptr == NULL) {
-      std::ostringstream oStr;
-      oStr << "The flight-date corresponding to ("
-           << DEFAULT_FLIGHT_NUMBER << ", "
-           << DEFAULT_DEPARTURE_DATE << ") can not be found";
-      throw ObjectNotFoundException (oStr.str());
+    FlightDate* lFlightDate_ptr = NULL;
+    if (isForFareFamilies == true) {
+      lFlightDate_ptr = BomRetriever::
+        retrieveFlightDateFromKey (*lInventory_ptr, DEFAULT_FLIGHT_NUMBER_FF,
+                                   DEFAULT_DEPARTURE_DATE);
+      
+      if (lFlightDate_ptr == NULL) {
+        std::ostringstream oStr;
+        oStr << "The flight-date corresponding to ("
+             << DEFAULT_FLIGHT_NUMBER_FF << ", "
+             << DEFAULT_DEPARTURE_DATE << ") can not be found";
+        throw ObjectNotFoundException (oStr.str());
+      }
+    } else {
+      lFlightDate_ptr = BomRetriever::
+        retrieveFlightDateFromKey (*lInventory_ptr, DEFAULT_FLIGHT_NUMBER,
+                                   DEFAULT_DEPARTURE_DATE);
+      
+      if (lFlightDate_ptr == NULL) {
+        std::ostringstream oStr;
+        oStr << "The flight-date corresponding to ("
+             << DEFAULT_FLIGHT_NUMBER << ", "
+             << DEFAULT_DEPARTURE_DATE << ") can not be found";
+        throw ObjectNotFoundException (oStr.str());
+      }
     }
+    assert(lFlightDate_ptr != NULL);
 
     // Retrieve the LegDate
     const LegDateKey lLegDateKey (DEFAULT_ORIGIN);
@@ -400,7 +417,8 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   SegmentCabin& BomRetriever::
-  retrieveDummySegmentCabin (stdair::BomRoot& iBomRoot) {
+  retrieveDummySegmentCabin (stdair::BomRoot& iBomRoot,
+                             const bool isForFareFamilies) {
 
     SegmentCabin* oSegmentCabin_ptr = NULL;
 
@@ -414,20 +432,36 @@ namespace stdair {
            << DEFAULT_AIRLINE_CODE << "' airline can not be found";
       throw ObjectNotFoundException (oStr.str());
     }
-    
+
     // Retrieve the FlightDate
-    const FlightDate* lFlightDate_ptr = BomRetriever::
-      retrieveFlightDateFromKey (*lInventory_ptr, DEFAULT_FLIGHT_NUMBER,
-                                 DEFAULT_DEPARTURE_DATE);
-    
-    if (lFlightDate_ptr == NULL) {
-      std::ostringstream oStr;
-      oStr << "The flight-date corresponding to ("
-           << DEFAULT_FLIGHT_NUMBER << ", "
-           << DEFAULT_DEPARTURE_DATE << ") can not be found";
-      throw ObjectNotFoundException (oStr.str());
+    FlightDate* lFlightDate_ptr = NULL;
+    if (isForFareFamilies == true) {
+      lFlightDate_ptr = BomRetriever::
+        retrieveFlightDateFromKey (*lInventory_ptr, DEFAULT_FLIGHT_NUMBER_FF,
+                                   DEFAULT_DEPARTURE_DATE);
+      
+      if (lFlightDate_ptr == NULL) {
+        std::ostringstream oStr;
+        oStr << "The flight-date corresponding to ("
+             << DEFAULT_FLIGHT_NUMBER_FF << ", "
+             << DEFAULT_DEPARTURE_DATE << ") can not be found";
+        throw ObjectNotFoundException (oStr.str());
+      }
+    } else {
+      lFlightDate_ptr = BomRetriever::
+        retrieveFlightDateFromKey (*lInventory_ptr, DEFAULT_FLIGHT_NUMBER,
+                                   DEFAULT_DEPARTURE_DATE);
+      
+      if (lFlightDate_ptr == NULL) {
+        std::ostringstream oStr;
+        oStr << "The flight-date corresponding to ("
+             << DEFAULT_FLIGHT_NUMBER << ", "
+             << DEFAULT_DEPARTURE_DATE << ") can not be found";
+        throw ObjectNotFoundException (oStr.str());
+      }
     }
-    
+    assert(lFlightDate_ptr != NULL);
+
     // Retrieve the SegmentDate
     const SegmentDateKey lSegmentDateKey (DEFAULT_ORIGIN, DEFAULT_DESTINATION);
     const SegmentDate* lSegmentDate_ptr =

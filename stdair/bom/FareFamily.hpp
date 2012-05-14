@@ -59,6 +59,18 @@ namespace stdair {
       return _holderMap;
     }
 
+    /** Demand distribution. */
+    const MeanStdDevPairVector_T& getMeanStdDev () const {return _meanStdDev; }
+
+
+  public:
+    // /////////// Setters ////////////
+
+    /** Demand distribution. */
+    void setMeanStdDev (const MeanStdDevPairVector_T& iMeanStdDev){ 
+      _meanStdDev = iMeanStdDev; 
+    }
+
 
   public:
     // /////////// Display support methods /////////
@@ -90,8 +102,8 @@ namespace stdair {
     const std::string describeKey() const {
       return _key.toString();
     }
-
-    
+   
+ 
   public:
     // /////////// (Boost) Serialisation support methods /////////
     /**
@@ -100,6 +112,7 @@ namespace stdair {
     template<class Archive>
     void serialize (Archive& ar, const unsigned int iFileVersion);
 
+
   private:
     /**
      * Serialisation helpers (allows to be sure the template method is
@@ -107,7 +120,7 @@ namespace stdair {
      */
     void serialisationImplementationExport() const;
     void serialisationImplementationImport();
-
+ 
 
   protected:
     // ////////// Constructors and destructors /////////
@@ -120,6 +133,7 @@ namespace stdair {
      * Destructor.
      */
     virtual ~FareFamily();
+
 
   private:
     /**
@@ -149,6 +163,9 @@ namespace stdair {
      * Map holding the children (BookingClass objects).
      */
     HolderMap_T _holderMap;
+
+    /** Achievable demand distribution forecast. */
+    MeanStdDevPairVector_T _meanStdDev;
   };
 
 }

@@ -80,7 +80,7 @@ namespace stdair {
     static OBJECT2* getObjectPtr (const OBJECT1&, const MapKey_T&);
 
     /**
-     * Get the OBJECT2 corresponding the the given string key.
+     * Get the OBJECT2 corresponding to the given string key.
      */
     template <typename OBJECT2, typename OBJECT1>
     static OBJECT2& getObject (const OBJECT1&, const MapKey_T&);

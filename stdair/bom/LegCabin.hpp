@@ -15,6 +15,7 @@
 #include <stdair/bom/VirtualClassStruct.hpp>
 #include <stdair/bom/VirtualClassTypes.hpp>
 
+
 namespace stdair {
 
   /**
@@ -178,7 +179,7 @@ namespace stdair {
 
 
     /** Get the yield-demand map. */
-    const YieldLevelDemandMap_T getYieldLevelDemandMap() {
+    const YieldLevelDemandMap_T& getYieldLevelDemandMap() {
       return _yieldLevelDemandMap;
     }
 
@@ -365,6 +366,7 @@ namespace stdair {
      */
     ~LegCabin();
 
+
   private:
     /**
      * Default constructor.
@@ -374,7 +376,6 @@ namespace stdair {
      * Default copy constructor.
      */
     LegCabin (const LegCabin&);
-
 
 
   protected:

@@ -89,6 +89,11 @@ namespace stdair {
   typedef std::pair<MeanValue_T, StdDevValue_T> MeanStdDevPair_T;
 
   /**
+   * Define a vector of couple (mean, standart deviation)
+   */ 
+  typedef std::vector<MeanStdDevPair_T> MeanStdDevPairVector_T;
+
+  /**
    * Probability.
    */
   typedef float Probability_T; 
