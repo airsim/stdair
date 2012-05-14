@@ -63,8 +63,11 @@ namespace stdair {
   extern const RandomSeed_T DEFAULT_RANDOM_SEED;
     
   /** Null time duration (in boost::time_duration unit).*/
-  extern const Duration_T NULL_BOOST_TIME_DURATION;
-    
+  extern const Duration_T NULL_BOOST_TIME_DURATION;  
+
+  /** Default null duration (in boost::time_duration unit).*/
+  extern const Duration_T DEFAULT_NULL_DURATION;
+     
   /** Default value of Availability. */
   extern const Fare_T DEFAULT_CLASS_FARE_VALUE;
 

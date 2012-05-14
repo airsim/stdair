@@ -30,7 +30,7 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   BreakPointStruct::
   BreakPointStruct (const Date_T& iBreakPointDate)
-    : _breakPointTime (iBreakPointDate, NULL_BOOST_TIME_DURATION) {
+    : _breakPointTime (iBreakPointDate, DEFAULT_NULL_DURATION) {
   }
   
   // //////////////////////////////////////////////////////////////////////
