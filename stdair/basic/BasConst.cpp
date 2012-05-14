@@ -31,6 +31,9 @@ namespace stdair {
   /** Null time duration (in boost::time_duration unit).*/
   const Duration_T NULL_BOOST_TIME_DURATION (-1, -1, -1);
 
+  /** Default null duration (in boost::time_duration unit).*/
+  const Duration_T DEFAULT_NULL_DURATION (0, 0, 0);
+
   /** Default number of days in a year. */
   const unsigned int DEFAULT_NB_OF_DAYS_IN_A_YEAR (365);
 
