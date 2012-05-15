@@ -51,14 +51,16 @@ namespace stdair {
                       << "specifications.");
 
     // ////// Basic Bom Tree ///////
-    // Build the inventory (flight-dates) and the schedule (flight period) parts.
+    // Build the inventory (flight-dates) and the schedule (flight period) 
+    // parts.
     buildSampleInventorySchedule (ioBomRoot);
 
     // Build the pricing (fare rules) and revenue accounting (yields) parts.
     buildSamplePricing (ioBomRoot);
 
     // ////// Partnership Bom Tree ///////    
-    // Build the inventory (flight-dates) and the schedule (flight period) parts.
+    // Build the inventory (flight-dates) and the schedule (flight period) 
+    // parts.
     buildPartnershipsSampleInventoryAndRM (ioBomRoot);
 
     // Build the pricing (fare rules) and revenue accounting (yields) parts.
@@ -68,8 +70,8 @@ namespace stdair {
     buildCompleteDummyInventory (ioBomRoot);
 
     // ////// Fare Families Bom Tree ///////
-    // Build the inventory (flight-dates) and the schedule (flight period) parts
-    // with fare families.
+    // Build the inventory (flight-dates) and the schedule (flight period) 
+    // parts with fare families.
     buildSampleInventoryScheduleForFareFamilies (ioBomRoot);
     
     // Build the pricing (fare rules) and revenue accounting (yields) parts.
@@ -658,41 +660,28 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void CmdBomManager::buildSampleInventoryScheduleForFareFamilies (BomRoot& ioBomRoot) {
+  void CmdBomManager::
+  buildSampleInventoryScheduleForFareFamilies (BomRoot& ioBomRoot) {
 
     // Inventory
     // Step 0.1: Inventory level
-    // Create an Inventory for SQ
+    // Get the Inventory SQ (already built by construction)  
     const InventoryKey lSQKey ("SQ");
-    Inventory* lSQInvPtr = BomManager::getObjectPtr<Inventory>(ioBomRoot,
-                                                             lSQKey.toString());
-
-    if (lSQInvPtr == NULL) {
-      Inventory& lSQInv = FacBom<Inventory>::instance().create (lSQKey);
-      FacBomManager::addToListAndMap (ioBomRoot, lSQInv);
-      FacBomManager::linkWithParent (ioBomRoot, lSQInv);
-    }
     Inventory& lSQInv = BomManager::getObject<Inventory>(ioBomRoot,
-                                                  lSQKey.toString());
+							 lSQKey.toString());
 
     // SQ
     // Step 0.2: Flight-date level
     // Create a FlightDate (SQ747/8-FEB-2010) for SQ's Inventory
-    FlightNumber_T lFlightNumber = 747;
-    Date_T lDate (2010, 2, 8);
-    FlightDateKey lFlightDateKey (lFlightNumber, lDate);
-    FlightDate* lSQ747_20100208_FD_Ptr = 
-      BomManager::getObjectPtr<FlightDate>(lSQInv, lFlightDateKey.toString());
-    if (lSQ747_20100208_FD_Ptr == NULL) {
-      FlightDate& lSQ747_20100208_FD =
-        FacBom<FlightDate>::instance().create (lFlightDateKey);
-      FacBomManager::addToListAndMap (lSQInv, lSQ747_20100208_FD);
-      FacBomManager::linkWithParent (lSQInv, lSQ747_20100208_FD);
-    }
+    const FlightNumber_T lFlightNumber747 = 747;
+    const Date_T lDate (2010, 2, 8);
+    const FlightDateKey lFlightDateKey (lFlightNumber747, lDate);
+
     FlightDate& lSQ747_20100208_FD =
-      BomManager::getObject<FlightDate>(lSQInv, lFlightDateKey.toString());
-    
-    
+        FacBom<FlightDate>::instance().create (lFlightDateKey);
+    FacBomManager::addToListAndMap (lSQInv, lSQ747_20100208_FD);
+    FacBomManager::linkWithParent (lSQInv, lSQ747_20100208_FD);
+
     // Display the flight-date
     // STDAIR_LOG_DEBUG ("FlightDate: " << lSQ747_20100208_FD.toString());
     
@@ -703,22 +692,13 @@ namespace stdair {
     const Duration_T l0635 (6, 35, 0);
     const Duration_T l0800 (8, 0, 0);
     const Duration_T l0225 (2, 25, 0);
-    SegmentDateKey lSegmentDateKey (lSIN, lBKK);
-  
-    SegmentDate* lSINBKKSegmentPtr = 
-      BomManager::getObjectPtr<SegmentDate>(lSQ747_20100208_FD, 
-                                            lSegmentDateKey.toString());
+    const SegmentDateKey lSegmentDateKey (lSIN, lBKK);
 
-    if (lSINBKKSegmentPtr == NULL) {
-      SegmentDate& lSINBKKSegment =
-        FacBom<SegmentDate>::instance().create (lSegmentDateKey);
-	    FacBomManager::addToListAndMap (lSQ747_20100208_FD, lSINBKKSegment);
-      FacBomManager::linkWithParent (lSQ747_20100208_FD, lSINBKKSegment);
-    }
+    SegmentDate& lSINBKKSegment =
+      FacBom<SegmentDate>::instance().create (lSegmentDateKey);
+    FacBomManager::addToListAndMap (lSQ747_20100208_FD, lSINBKKSegment);
+    FacBomManager::linkWithParent (lSQ747_20100208_FD, lSINBKKSegment);
 
-    SegmentDate& lSINBKKSegment = 
-      BomManager::getObject<SegmentDate>(lSQ747_20100208_FD, 
-                                            lSegmentDateKey.toString());
     // Fill the SegmentDate content
     lSINBKKSegment.setBoardingDate (lDate);
     lSINBKKSegment.setOffDate (lDate);
@@ -731,19 +711,12 @@ namespace stdair {
 
     // Step 0.4: Leg-date level
     // Create a LegDate (SIN) for SQ's Inventory
-    LegDateKey lLegDateKey (lSIN);
+    const LegDateKey lLegDateKey (lSIN);
 
-    LegDate* lSINLegPtr = 
-      BomManager::getObjectPtr<LegDate>(lSQ747_20100208_FD, 
-                                            lLegDateKey.toString());
-    if (lSINLegPtr == NULL) {
-      LegDate& lSINLeg = FacBom<LegDate>::instance().create (lLegDateKey);
-      FacBomManager::addToListAndMap (lSQ747_20100208_FD, lSINLeg);
-      FacBomManager::linkWithParent (lSQ747_20100208_FD, lSINLeg);
-    }
-    LegDate& lSINLeg =
-      BomManager::getObject<LegDate>(lSQ747_20100208_FD, 
-                                     lLegDateKey.toString());
+    LegDate& lSINLeg = FacBom<LegDate>::instance().create (lLegDateKey);
+    FacBomManager::addToListAndMap (lSQ747_20100208_FD, lSINLeg);
+    FacBomManager::linkWithParent (lSQ747_20100208_FD, lSINLeg);
+
     // Fill the LegDate content
     lSINLeg.setOffPoint (lBKK);
     lSINLeg.setBoardingDate (lDate);
@@ -756,37 +729,17 @@ namespace stdair {
     // STDAIR_LOG_DEBUG ("LegDate: " << lSINLeg.toString());
 
     // Link the segment-dates with the leg-dates
-
-    SegmentDate* lSINBKKSegment_Ptr =
-      BomManager::getObjectPtr<SegmentDate>(lSINLeg, 
-                                            lSegmentDateKey.toString());
-    if (lSINBKKSegment_Ptr == NULL) {
-      FacBomManager::addToListAndMap (lSINLeg, lSINBKKSegment);
-    }
-    LegDate* lSINLeg_Ptr = 
-      BomManager::getObjectPtr<LegDate>(lSINBKKSegment, 
-                                        lLegDateKey.toString()); 
-    if (lSINLeg_Ptr == NULL) {
-      FacBomManager::addToListAndMap (lSINBKKSegment, lSINLeg);
-    }
+    FacBomManager::addToListAndMap (lSINLeg, lSINBKKSegment);
+    FacBomManager::addToListAndMap (lSINBKKSegment, lSINLeg);
 
     // Step 0.5: segment-cabin level
     // Create a SegmentCabin (Y) for the Segment SIN-BKK of SQ's Inventory
     const CabinCode_T lY ("Y");
-    SegmentCabinKey lYSegmentCabinKey (lY);
-
-    SegmentCabin* lSINBKKSegmentYCabinPtr =
-      BomManager::getObjectPtr<SegmentCabin>(lSINBKKSegment, 
-                                             lYSegmentCabinKey.toString());
-    if (lSINBKKSegmentYCabinPtr == NULL) {
-      SegmentCabin& lSINBKKSegmentYCabin =
-        FacBom<SegmentCabin>::instance().create (lYSegmentCabinKey);
-      FacBomManager::addToListAndMap (lSINBKKSegment, lSINBKKSegmentYCabin);
-      FacBomManager::linkWithParent (lSINBKKSegment, lSINBKKSegmentYCabin);
-    }
+    const SegmentCabinKey lYSegmentCabinKey (lY);
     SegmentCabin& lSINBKKSegmentYCabin =
-      BomManager::getObject<SegmentCabin>(lSINBKKSegment, 
-                                             lYSegmentCabinKey.toString());
+      FacBom<SegmentCabin>::instance().create (lYSegmentCabinKey);
+    FacBomManager::addToListAndMap (lSINBKKSegment, lSINBKKSegmentYCabin);
+    FacBomManager::linkWithParent (lSINBKKSegment, lSINBKKSegmentYCabin);
     lSINBKKSegmentYCabin.activateFareFamily ();
     
     // Display the segment-cabin
@@ -794,20 +747,12 @@ namespace stdair {
 
     // Step 0.6: leg-cabin level
     // Create a LegCabin (Y) for the Leg SIN-BKK on SQ's Inventory
-    LegCabinKey lYLegCabinKey (lY);
-
-    LegCabin* lSINLegYCabinPtr =
-      BomManager::getObjectPtr<LegCabin>(lSINLeg, 
-                                         lYLegCabinKey.toString());
-    if (lSINLegYCabinPtr == NULL) {
-      LegCabin& lSINLegYCabin =
-        FacBom<LegCabin>::instance().create (lYLegCabinKey);
-      FacBomManager::addToListAndMap (lSINLeg, lSINLegYCabin);
-      FacBomManager::linkWithParent (lSINLeg, lSINLegYCabin);
-    }
+    const LegCabinKey lYLegCabinKey (lY);
     LegCabin& lSINLegYCabin =
-      BomManager::getObject<LegCabin>(lSINLeg, 
-                                      lYLegCabinKey.toString());
+      FacBom<LegCabin>::instance().create (lYLegCabinKey);
+    FacBomManager::addToListAndMap (lSINLeg, lSINLegYCabin);
+    FacBomManager::linkWithParent (lSINLeg, lSINLegYCabin);
+
     // Display the leg-cabin
     // STDAIR_LOG_DEBUG ("LegCabin: " << lSINLegYCabin.toString());
 
@@ -821,13 +766,8 @@ namespace stdair {
      * Hence, the segment-cabins must be differentiated according to their
      * boarding and off points as well.
      */
-    SegmentCabin* lSINBKKSegmentYCabin_Ptr =
-      BomManager::getObjectPtr<SegmentCabin>(lSINLegYCabin, 
-                                lSINBKKSegmentYCabin.getFullerKey());
-    if (lSINBKKSegmentYCabin_Ptr == NULL) {
-      FacBomManager::addToListAndMap (lSINLegYCabin, lSINBKKSegmentYCabin,
-                                      lSINBKKSegmentYCabin.getFullerKey());
-    }
+    FacBomManager::addToListAndMap (lSINLegYCabin, lSINBKKSegmentYCabin,
+				    lSINBKKSegmentYCabin.getFullerKey());
     
     /**
      * Add the leg-cabin to the segment-cabin routing.
@@ -839,33 +779,19 @@ namespace stdair {
      * Hence, the leg-cabins must be differentiated according to their
      * boarding point as well.
      */
-    LegCabin* lSINLegYCabin_Ptr =
-      BomManager::getObjectPtr<LegCabin>(lSINBKKSegmentYCabin, 
-                                         lSINLegYCabin.getFullerKey());
-    if (lSINLegYCabin_Ptr == NULL) {
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin, lSINLegYCabin,
-                                      lSINLegYCabin.getFullerKey());
-    }
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin, lSINLegYCabin,
+				    lSINLegYCabin.getFullerKey());
    
     // Step 0.7: fare family level
     // Create a FareFamily (1) for the Segment SIN-BKK, cabin Y on SQ's Inv
     const FamilyCode_T l1 ("1");
-    FareFamilyKey l1FareFamilyKey (l1);
-
-    FareFamily* lSINBKKSegmentYCabin1FamilyPtr =
-      BomManager::getObjectPtr<FareFamily>(lSINBKKSegmentYCabin, 
-                                         l1FareFamilyKey.toString());
-    if (lSINBKKSegmentYCabin1FamilyPtr == NULL){
-      FareFamily& lSINBKKSegmentYCabin1Family =
-        FacBom<FareFamily>::instance().create (l1FareFamilyKey);
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
-                                      lSINBKKSegmentYCabin1Family);
-      FacBomManager::linkWithParent (lSINBKKSegmentYCabin,
-                                     lSINBKKSegmentYCabin1Family);
-    }
+    const FareFamilyKey l1FareFamilyKey (l1);
     FareFamily& lSINBKKSegmentYCabin1Family =
-      BomManager::getObject<FareFamily>(lSINBKKSegmentYCabin, 
-                                         l1FareFamilyKey.toString());
+      FacBom<FareFamily>::instance().create (l1FareFamilyKey);
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
+                                      lSINBKKSegmentYCabin1Family);
+    FacBomManager::linkWithParent (lSINBKKSegmentYCabin,
+				   lSINBKKSegmentYCabin1Family);
     
     // Display the booking class
     // STDAIR_LOG_DEBUG ("FareFamily: "
@@ -873,22 +799,13 @@ namespace stdair {
 
     // Create a FareFamily (2) for the Segment SIN-BKK, cabin Y on SQ's Inv
     const FamilyCode_T l2 ("2");
-    FareFamilyKey l2FareFamilyKey (l2);
-
-    FareFamily* lSINBKKSegmentYCabin2FamilyPtr = 
-      BomManager::getObjectPtr<FareFamily>(lSINBKKSegmentYCabin, 
-                                           l2FareFamilyKey.toString());
-    if (lSINBKKSegmentYCabin2FamilyPtr == NULL){
-      FareFamily& lSINBKKSegmentYCabin2Family =
-        FacBom<FareFamily>::instance().create (l2FareFamilyKey);
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
-                                      lSINBKKSegmentYCabin2Family);
-      FacBomManager::linkWithParent (lSINBKKSegmentYCabin,
-                                     lSINBKKSegmentYCabin2Family);
-    }
+    const FareFamilyKey l2FareFamilyKey (l2);
     FareFamily& lSINBKKSegmentYCabin2Family =
-      BomManager::getObject<FareFamily>(lSINBKKSegmentYCabin, 
-                                         l2FareFamilyKey.toString());
+        FacBom<FareFamily>::instance().create (l2FareFamilyKey);
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
+                                      lSINBKKSegmentYCabin2Family);
+    FacBomManager::linkWithParent (lSINBKKSegmentYCabin,
+				   lSINBKKSegmentYCabin2Family);
     
     // Display the booking class
     // STDAIR_LOG_DEBUG ("FareFamily: "
@@ -898,27 +815,18 @@ namespace stdair {
     // Create a BookingClass (Y) for the Segment SIN-BKK, cabin Y,
     // fare family 2 on SQ's Inv
     const ClassCode_T lClassY ("Y");
-    BookingClassKey lYBookingClassKey (lClassY);
-
-    BookingClass* lSINBKKSegmentYCabin2FamilyYClassPtr =
-      BomManager::getObjectPtr<BookingClass>(lSINBKKSegmentYCabin2Family, 
-                                             lYBookingClassKey.toString());
-    if (lSINBKKSegmentYCabin2FamilyYClassPtr == NULL) {
-      BookingClass& lSINBKKSegmentYCabin2FamilyYClass =
-        FacBom<BookingClass>::instance().create (lYBookingClassKey);
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin2Family,
-                                      lSINBKKSegmentYCabin2FamilyYClass);
-      FacBomManager::linkWithParent (lSINBKKSegmentYCabin2Family,
-                                     lSINBKKSegmentYCabin2FamilyYClass);
-
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
-                                      lSINBKKSegmentYCabin2FamilyYClass);
-      FacBomManager::addToListAndMap (lSINBKKSegment,
-                                      lSINBKKSegmentYCabin2FamilyYClass);
-    }
+    const BookingClassKey lYBookingClassKey (lClassY);
     BookingClass& lSINBKKSegmentYCabin2FamilyYClass =
-      BomManager::getObject<BookingClass>(lSINBKKSegmentYCabin2Family, 
-                                             lYBookingClassKey.toString());
+      FacBom<BookingClass>::instance().create (lYBookingClassKey);
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin2Family,
+				    lSINBKKSegmentYCabin2FamilyYClass);
+    FacBomManager::linkWithParent (lSINBKKSegmentYCabin2Family,
+				   lSINBKKSegmentYCabin2FamilyYClass);
+
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
+				    lSINBKKSegmentYCabin2FamilyYClass);
+    FacBomManager::addToListAndMap (lSINBKKSegment,
+				    lSINBKKSegmentYCabin2FamilyYClass);
     lSINBKKSegmentYCabin2FamilyYClass.setYield(1200);
     
     // Display the booking class
@@ -928,27 +836,18 @@ namespace stdair {
     // Create a BookingClass (B) for the Segment SIN-BKK, cabin Y,
     // fare family 2 on SQ's Inv
     const ClassCode_T lB ("B");
-    BookingClassKey lBBookingClassKey (lB);
-
-    BookingClass* lSINBKKSegmentYCabin2FamilyBClassPtr =
-      BomManager::getObjectPtr<BookingClass>(lSINBKKSegmentYCabin2Family, 
-                                             lBBookingClassKey.toString());
-    if (lSINBKKSegmentYCabin2FamilyBClassPtr == NULL) {
-      BookingClass& lSINBKKSegmentYCabin2FamilyBClass =
-        FacBom<BookingClass>::instance().create (lBBookingClassKey);
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin2Family,
-                                      lSINBKKSegmentYCabin2FamilyBClass);
-      FacBomManager::linkWithParent (lSINBKKSegmentYCabin2Family,
-                                     lSINBKKSegmentYCabin2FamilyBClass);
-
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
-                                      lSINBKKSegmentYCabin2FamilyBClass);
-      FacBomManager::addToListAndMap (lSINBKKSegment,
-                                      lSINBKKSegmentYCabin2FamilyBClass);
-    }
+    const BookingClassKey lBBookingClassKey (lB);
     BookingClass& lSINBKKSegmentYCabin2FamilyBClass =
-      BomManager::getObject<BookingClass>(lSINBKKSegmentYCabin2Family, 
-                                             lBBookingClassKey.toString());
+      FacBom<BookingClass>::instance().create (lBBookingClassKey);
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin2Family,
+				    lSINBKKSegmentYCabin2FamilyBClass);
+    FacBomManager::linkWithParent (lSINBKKSegmentYCabin2Family,
+				   lSINBKKSegmentYCabin2FamilyBClass);
+
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
+				    lSINBKKSegmentYCabin2FamilyBClass);
+    FacBomManager::addToListAndMap (lSINBKKSegment,
+				    lSINBKKSegmentYCabin2FamilyBClass);
     lSINBKKSegmentYCabin2FamilyBClass.setYield(800);
     
     // Display the booking class
@@ -958,27 +857,18 @@ namespace stdair {
     // Create a BookingClass (M) for the Segment SIN-BKK, cabin Y,
     // fare family 1 on SQ's Inv
     const ClassCode_T lM ("M");
-    BookingClassKey lMBookingClassKey (lM);
-
-    BookingClass* lSINBKKSegmentYCabin1FamilyMClassPtr =
-      BomManager::getObjectPtr<BookingClass>(lSINBKKSegmentYCabin1Family, 
-                                             lMBookingClassKey.toString());
-    if (lSINBKKSegmentYCabin1FamilyMClassPtr == NULL) {
-      BookingClass& lSINBKKSegmentYCabin1FamilyMClass =
-        FacBom<BookingClass>::instance().create (lMBookingClassKey);
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin1Family,
-                                      lSINBKKSegmentYCabin1FamilyMClass);
-      FacBomManager::linkWithParent (lSINBKKSegmentYCabin1Family,
-                                     lSINBKKSegmentYCabin1FamilyMClass);
-
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
-                                      lSINBKKSegmentYCabin1FamilyMClass);
-      FacBomManager::addToListAndMap (lSINBKKSegment,
-                                      lSINBKKSegmentYCabin1FamilyMClass);
-    }
+    const BookingClassKey lMBookingClassKey (lM);
     BookingClass& lSINBKKSegmentYCabin1FamilyMClass =
-      BomManager::getObject<BookingClass>(lSINBKKSegmentYCabin1Family, 
-                                             lMBookingClassKey.toString());
+      FacBom<BookingClass>::instance().create (lMBookingClassKey);
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin1Family,
+				    lSINBKKSegmentYCabin1FamilyMClass);
+    FacBomManager::linkWithParent (lSINBKKSegmentYCabin1Family,
+				   lSINBKKSegmentYCabin1FamilyMClass);
+
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
+				    lSINBKKSegmentYCabin1FamilyMClass);
+    FacBomManager::addToListAndMap (lSINBKKSegment,
+				    lSINBKKSegmentYCabin1FamilyMClass);
     lSINBKKSegmentYCabin1FamilyMClass.setYield(900);
     
     // Display the booking class
@@ -988,27 +878,18 @@ namespace stdair {
     // Create a BookingClass (Q) for the Segment SIN-BKK, cabin Y,
     // fare family 1 on SQ's Inv
     const ClassCode_T lQ ("Q");
-    BookingClassKey lQBookingClassKey (lQ);
-
-    BookingClass* lSINBKKSegmentYCabin1FamilyQClassPtr =
-      BomManager::getObjectPtr<BookingClass>(lSINBKKSegmentYCabin1Family, 
-                                             lQBookingClassKey.toString());
-    if (lSINBKKSegmentYCabin1FamilyQClassPtr == NULL) {
-      BookingClass& lSINBKKSegmentYCabin1FamilyQClass =
-        FacBom<BookingClass>::instance().create (lQBookingClassKey);
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin1Family,
-                                      lSINBKKSegmentYCabin1FamilyQClass);
-      FacBomManager::linkWithParent (lSINBKKSegmentYCabin1Family,
-                                     lSINBKKSegmentYCabin1FamilyQClass);
-
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
-                                      lSINBKKSegmentYCabin1FamilyQClass);
-      FacBomManager::addToListAndMap (lSINBKKSegment,
-                                      lSINBKKSegmentYCabin1FamilyQClass);
-    }
+    const BookingClassKey lQBookingClassKey (lQ);
     BookingClass& lSINBKKSegmentYCabin1FamilyQClass =
-      BomManager::getObject<BookingClass>(lSINBKKSegmentYCabin1Family, 
-                                             lQBookingClassKey.toString());
+      FacBom<BookingClass>::instance().create (lQBookingClassKey);
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin1Family,
+				    lSINBKKSegmentYCabin1FamilyQClass);
+    FacBomManager::linkWithParent (lSINBKKSegmentYCabin1Family,
+				   lSINBKKSegmentYCabin1FamilyQClass);
+
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin,
+				    lSINBKKSegmentYCabin1FamilyQClass);
+    FacBomManager::addToListAndMap (lSINBKKSegment,
+				    lSINBKKSegmentYCabin1FamilyQClass);
     lSINBKKSegmentYCabin1FamilyQClass.setYield(600);
 
   
@@ -1026,45 +907,28 @@ namespace stdair {
     const DoWStruct lDoWSrtuct ("1111111");
     const Date_T lSQ747DateRangeStart (2010, boost::gregorian::Feb, 8);
     const Date_T lSQ747DateRangeEnd (2010, boost::gregorian::Feb, 9);
-    const DatePeriod_T lSQ747DatePeriod (lSQ747DateRangeStart, lSQ747DateRangeEnd);
+    const DatePeriod_T lSQ747DatePeriod (lSQ747DateRangeStart, 
+					 lSQ747DateRangeEnd);
     const PeriodStruct lSQ747PeriodStruct (lSQ747DatePeriod, lDoWSrtuct);
 
-    lFlightNumber = FlightNumber_T (747);
-
-    FlightPeriodKey lSQ747FlightPeriodKey (lFlightNumber, lSQ747PeriodStruct);
-    
-    FlightPeriod* lSQ747FlightPeriodPtr = 
-      BomManager::getObjectPtr<FlightPeriod>(lSQInv, 
-                                             lSQ747FlightPeriodKey.toString());
-    if (lSQ747FlightPeriodPtr == NULL){
-      FlightPeriod& lSQ747FlightPeriod =
-        FacBom<FlightPeriod>::instance().create (lSQ747FlightPeriodKey);
-      FacBomManager::addToListAndMap (lSQInv, lSQ747FlightPeriod);
-      FacBomManager::linkWithParent (lSQInv, lSQ747FlightPeriod);
-    }
+    const FlightPeriodKey lSQ747FlightPeriodKey (lFlightNumber747, 
+					   lSQ747PeriodStruct);
     FlightPeriod& lSQ747FlightPeriod =
-      BomManager::getObject<FlightPeriod>(lSQInv, 
-                                          lSQ747FlightPeriodKey.toString());
+      FacBom<FlightPeriod>::instance().create (lSQ747FlightPeriodKey);
+    FacBomManager::addToListAndMap (lSQInv, lSQ747FlightPeriod);
+    FacBomManager::linkWithParent (lSQInv, lSQ747FlightPeriod);
+
     // Step 2: segment period level
     // Create a segment period for SIN-BKK:
 
-    SegmentPeriodKey lSINBKKSegmentPeriodKey (lSIN, lBKK);
-
-    SegmentPeriod* lSINBKKSegmentPeriodPtr =
-      BomManager::getObjectPtr<SegmentPeriod>(lSQ747FlightPeriod, 
-                                            lSINBKKSegmentPeriodKey.toString());
-    if (lSINBKKSegmentPeriodPtr == NULL) {
-      SegmentPeriod& lSINBKKSegmentPeriod =
-        FacBom<SegmentPeriod>::instance().create (lSINBKKSegmentPeriodKey);
-      FacBomManager::addToListAndMap (lSQ747FlightPeriod, lSINBKKSegmentPeriod);
-      FacBomManager::linkWithParent (lSQ747FlightPeriod, lSINBKKSegmentPeriod);
-     
-      ClassList_String_T lYBMQ  ("YBMQ");
-      lSINBKKSegmentPeriod.addCabinBookingClassList (lY,lYBMQ);
-    }
+    const SegmentPeriodKey lSINBKKSegmentPeriodKey (lSIN, lBKK);
     SegmentPeriod& lSINBKKSegmentPeriod =
-      BomManager::getObject<SegmentPeriod>(lSQ747FlightPeriod, 
-                                            lSINBKKSegmentPeriodKey.toString());
+      FacBom<SegmentPeriod>::instance().create (lSINBKKSegmentPeriodKey);
+    FacBomManager::addToListAndMap (lSQ747FlightPeriod, lSINBKKSegmentPeriod);
+    FacBomManager::linkWithParent (lSQ747FlightPeriod, lSINBKKSegmentPeriod);
+     
+    ClassList_String_T lYBMQ  ("YBMQ");
+    lSINBKKSegmentPeriod.addCabinBookingClassList (lY,lYBMQ);
     lSINBKKSegmentPeriod.setBoardingTime (l0635);
     lSINBKKSegmentPeriod.setOffTime (l0800);
     lSINBKKSegmentPeriod.setElapsedTime (l0225);
@@ -1074,39 +938,24 @@ namespace stdair {
       ================================================================================*/
     // O&D 
     // Create an O&D Date (SQ;747,2011-Feb-14;SIN,BKK) for SQ's Inventory
-    OnDString_T  lSQSINBKKOnDStr = "SQ;747,2011-Feb-14;SIN,BKK";
+    const OnDString_T lSQSINBKKOnDStr = "SQ;747,2011-Feb-14;SIN,BKK";
     OnDStringList_T lSQOnDStrList;
     lSQOnDStrList.push_back (lSQSINBKKOnDStr);
 
-    OnDDateKey lSQOnDDateKey (lSQOnDStrList);
-
-    OnDDate* lSQ_SINBKK_OnDDate_Ptr =
-      BomManager::getObjectPtr<OnDDate>(lSQInv, 
-                                        lSQOnDDateKey.toString());
-    if (lSQ_SINBKK_OnDDate_Ptr == NULL){
-      OnDDate& lSQ_SINBKK_OnDDate =
-        FacBom<OnDDate>::instance().create (lSQOnDDateKey);
-      // Link to the inventory
-      FacBomManager::addToListAndMap (lSQInv, lSQ_SINBKK_OnDDate);
-      FacBomManager::linkWithParent (lSQInv, lSQ_SINBKK_OnDDate);
-      // Add total forecast info for cabin Y.
-      const MeanStdDevPair_T lMean120StdDev12 (120.0, 12.0);
-      const WTP_T lWTP1000 = 1000.0;
-      const WTPDemandPair_T lWTP1000Mean120StdDev12 (lWTP1000, lMean120StdDev12);
-      lSQ_SINBKK_OnDDate.setTotalForecast (lY, lWTP1000Mean120StdDev12);
-    }
+    const OnDDateKey lSQOnDDateKey (lSQOnDStrList);
     OnDDate& lSQ_SINBKK_OnDDate =
-      BomManager::getObject<OnDDate>(lSQInv, 
-                                     lSQOnDDateKey.toString());
-
-    SegmentDate* lSINBKKSegmentPtr2 = 
-      BomManager::getObjectPtr<SegmentDate>(lSQ_SINBKK_OnDDate, 
-                                            lSegmentDateKey.toString());
-
-    if (lSINBKKSegmentPtr2 == NULL) {
-      // Add the segment
-      FacBomManager::addToListAndMap (lSQ_SINBKK_OnDDate, lSINBKKSegment);
-    }
+      FacBom<OnDDate>::instance().create (lSQOnDDateKey);
+    // Link to the inventory
+    FacBomManager::addToListAndMap (lSQInv, lSQ_SINBKK_OnDDate);
+    FacBomManager::linkWithParent (lSQInv, lSQ_SINBKK_OnDDate);
+    // Add total forecast info for cabin Y.
+    const MeanStdDevPair_T lMean120StdDev12 (120.0, 12.0);
+    const WTP_T lWTP1000 = 1000.0;
+    const WTPDemandPair_T lWTP1000Mean120StdDev12 (lWTP1000, lMean120StdDev12);
+    lSQ_SINBKK_OnDDate.setTotalForecast (lY, lWTP1000Mean120StdDev12);
+ 
+    // Add the segment
+    FacBomManager::addToListAndMap (lSQ_SINBKK_OnDDate, lSINBKKSegment);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -1318,48 +1167,31 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void CmdBomManager::buildCompleteDummyInventoryForFareFamilies  (BomRoot& ioBomRoot) {
+  void CmdBomManager::
+  buildCompleteDummyInventoryForFareFamilies (BomRoot& ioBomRoot) {
 
     // Build a dummy inventory, containing a dummy flight-date with a
-    // single segment-cabin and a single leg-cabin.
-    const CabinCapacity_T lCapacity = DEFAULT_CABIN_CAPACITY;
+    // single segment-cabin and a single leg-cabin (for fare families 
+    // algorithms)
 
-    // Inventory
+    // Get the default Inventory object (already built in by construction)
     const InventoryKey lInventoryKey (DEFAULT_AIRLINE_CODE);
-    Inventory* lInvPtr = BomManager::getObjectPtr<Inventory>(ioBomRoot,
-                                                             lInventoryKey.toString());
-
-    if (lInvPtr == NULL) {
-      Inventory& lInv = FacBom<Inventory>::instance().create (lInventoryKey);
-      FacBomManager::addToListAndMap (ioBomRoot, lInv);
-      FacBomManager::linkWithParent (ioBomRoot, lInv);
-    }
     Inventory& lInv = BomManager::getObject<Inventory>(ioBomRoot,
                                                   lInventoryKey.toString());
 
-    // Flight-date
-    FlightDateKey lFlightDateKey(DEFAULT_FLIGHT_NUMBER_FF, DEFAULT_DEPARTURE_DATE);
-    FlightDate* lFlightDatePtr = 
-      BomManager::getObjectPtr<FlightDate>(ioBomRoot, lFlightDateKey.toString());
-    if (lFlightDatePtr == NULL) {
-      FlightDate& lFlightDate = FacBom<FlightDate>::instance().create (lFlightDateKey);
-      FacBomManager::addToListAndMap (lInv, lFlightDate);
-      FacBomManager::linkWithParent (lInv, lFlightDate);
-    }
-    FlightDate& lFlightDate = BomManager::getObject<FlightDate>(lInv,
-                                                  lFlightDateKey.toString());
+    // Create a dummy Flight-date
+    const FlightDateKey lFlightDateKey(DEFAULT_FLIGHT_NUMBER_FF, 
+				       DEFAULT_DEPARTURE_DATE);
+    FlightDate& lFlightDate = 
+      FacBom<FlightDate>::instance().create (lFlightDateKey);
+    FacBomManager::addToListAndMap (lInv, lFlightDate);
+    FacBomManager::linkWithParent (lInv, lFlightDate);
 
-    // Leg-date
+    // Create a dummy Leg-date
     LegDateKey lLegDateKey (DEFAULT_ORIGIN);
-    LegDate* lLegPtr = 
-      BomManager::getObjectPtr<LegDate>(lFlightDate, lLegDateKey.toString());
-    if (lLegPtr == NULL) {
-      LegDate& lLeg = FacBom<LegDate>::instance().create (lLegDateKey);
-      FacBomManager::addToListAndMap (lFlightDate, lLeg);
-      FacBomManager::linkWithParent (lFlightDate, lLeg);
-    }
-    LegDate& lLeg = BomManager::getObject<LegDate>(lFlightDate,
-                                                  lLegDateKey.toString());
+    LegDate& lLeg = FacBom<LegDate>::instance().create (lLegDateKey);
+    FacBomManager::addToListAndMap (lFlightDate, lLeg);
+    FacBomManager::linkWithParent (lFlightDate, lLeg);
 
     // Fill the LegDate content
     lLeg.setOffPoint (DEFAULT_DESTINATION);
@@ -1369,17 +1201,17 @@ namespace stdair {
     lLeg.setOffTime (Duration_T (16, 0, 0));
     lLeg.setElapsedTime (Duration_T (8, 0, 0));
 
-    // Leg-cabin
-    LegCabinKey lLegCabinKey (DEFAULT_CABIN_CODE);
+    // Create a dummy Leg-cabin
+    const LegCabinKey lLegCabinKey (DEFAULT_CABIN_CODE);
     LegCabin& lLegCabin = FacBom<LegCabin>::instance().create (lLegCabinKey);
     FacBomManager::addToListAndMap (lLeg, lLegCabin);
     FacBomManager::linkWithParent (lLeg, lLegCabin);
-
+    const CabinCapacity_T lCapacity = DEFAULT_CABIN_CAPACITY;
     lLegCabin.setCapacities (lCapacity);
     lLegCabin.setAvailabilityPool (lCapacity);
 
-    // Segment-date
-    SegmentDateKey lSegmentDateKey (DEFAULT_ORIGIN, DEFAULT_DESTINATION);
+    // Create a dummy Segment-date
+    const SegmentDateKey lSegmentDateKey (DEFAULT_ORIGIN, DEFAULT_DESTINATION);
     SegmentDate& lSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
     FacBomManager::addToListAndMap (lFlightDate, lSegment);
@@ -1396,8 +1228,8 @@ namespace stdair {
     lSegment.setOffTime (Duration_T (16, 0, 0));
     lSegment.setElapsedTime (Duration_T (8, 0, 0));
 
-    // Segment-cabin
-    SegmentCabinKey lSegmentCabinKey (DEFAULT_CABIN_CODE);
+    // Create a dummy Segment-cabin
+    const SegmentCabinKey lSegmentCabinKey (DEFAULT_CABIN_CODE);
     SegmentCabin& lSegmentCabin =
       FacBom<SegmentCabin>::instance().create (lSegmentCabinKey);
     FacBomManager::addToListAndMap (lSegment, lSegmentCabin);
@@ -1409,9 +1241,9 @@ namespace stdair {
     FacBomManager::addToListAndMap (lSegmentCabin, lLegCabin,
                                     lLegCabin.getFullerKey());
 
-    // Create a FareFamily (1) 
+    // Create a dummy FareFamily (FF1) 
     const FamilyCode_T l1 ("FF1");
-    FareFamilyKey l1FareFamilyKey (l1);
+    const FareFamilyKey l1FareFamilyKey (l1);
 
     FareFamily& lSegmentYCabin1Family =
       FacBom<FareFamily>::instance().create (l1FareFamilyKey);
@@ -1428,9 +1260,9 @@ namespace stdair {
     FacBomManager::addToListAndMap (lSegmentCabin, lSegmentYCabin1Family);
     FacBomManager::linkWithParent (lSegmentCabin, lSegmentYCabin1Family);
 
-    // Create a booking-class
+    // Create a dummy booking-class
     const ClassCode_T lY ("Y");
-    BookingClassKey lYBookingClassKey (lY);
+    const BookingClassKey lYBookingClassKey (lY);
 
     BookingClass& lSegmentYCabin1FamilyYClass =
       FacBom<BookingClass>::instance().create (lYBookingClassKey);
@@ -1444,9 +1276,9 @@ namespace stdair {
     FacBomManager::addToListAndMap (lSegmentCabin, lSegmentYCabin1FamilyYClass);
     FacBomManager::addToListAndMap (lSegment, lSegmentYCabin1FamilyYClass);
 
-    // Create a booking-class
+    // Create a second dummy booking-class
     const ClassCode_T lU ("U");
-    BookingClassKey lUBookingClassKey (lU);
+    const BookingClassKey lUBookingClassKey (lU);
 
     BookingClass& lSegmentYCabin1FamilyUClass =
       FacBom<BookingClass>::instance().create (lUBookingClassKey);
@@ -1460,9 +1292,9 @@ namespace stdair {
     FacBomManager::addToListAndMap (lSegmentCabin, lSegmentYCabin1FamilyUClass);
     FacBomManager::addToListAndMap (lSegment, lSegmentYCabin1FamilyUClass);
 
-    // Create a FareFamily (2) 
+    // Create a second dummy FareFamily (2) 
     const FamilyCode_T l2 ("FF2");
-    FareFamilyKey l2FareFamilyKey (l2);
+    const FareFamilyKey l2FareFamilyKey (l2);
 
     FareFamily& lSegmentYCabin2Family =
       FacBom<FareFamily>::instance().create (l2FareFamilyKey);
@@ -1479,9 +1311,9 @@ namespace stdair {
     FacBomManager::addToListAndMap (lSegmentCabin, lSegmentYCabin2Family);
     FacBomManager::linkWithParent (lSegmentCabin, lSegmentYCabin2Family);
 
-    // Create a booking-class
+    // Create a third dummy booking-class
     const ClassCode_T lO ("O");
-    BookingClassKey lOBookingClassKey (lO);
+    const BookingClassKey lOBookingClassKey (lO);
 
     BookingClass& lSegmentYCabin2FamilyOClass =
       FacBom<BookingClass>::instance().create (lOBookingClassKey);
@@ -1495,9 +1327,9 @@ namespace stdair {
     FacBomManager::addToListAndMap (lSegmentCabin, lSegmentYCabin2FamilyOClass);
     FacBomManager::addToListAndMap (lSegment, lSegmentYCabin2FamilyOClass);
 
-    // Create a booking-class
+     // Create a fourth dummy booking-class
     const ClassCode_T lQ ("Q");
-    BookingClassKey lQBookingClassKey (lQ);
+    const BookingClassKey lQBookingClassKey (lQ);
 
     BookingClass& lSegmentYCabin2FamilyQClass =
       FacBom<BookingClass>::instance().create (lQBookingClassKey);
@@ -1525,7 +1357,8 @@ namespace stdair {
     const DatePeriod_T lXXDatePeriod (lXXDateRangeStart, lXXDateRangeEnd);
     const PeriodStruct lXXPeriodStruct (lXXDatePeriod, lDoWSrtuct);
 
-    FlightPeriodKey lXXFlightPeriodKey (DEFAULT_FLIGHT_NUMBER_FF, lXXPeriodStruct);
+    const FlightPeriodKey lXXFlightPeriodKey (DEFAULT_FLIGHT_NUMBER_FF, 
+					      lXXPeriodStruct);
 
     FlightPeriod& lXXFlightPeriod =
       FacBom<FlightPeriod>::instance().create (lXXFlightPeriodKey);
@@ -1534,8 +1367,8 @@ namespace stdair {
 
     // Step 2: segment period level
     // Create a segment period 
-
-    SegmentPeriodKey lXXSegmentPeriodKey (DEFAULT_ORIGIN, DEFAULT_DESTINATION);
+    const SegmentPeriodKey lXXSegmentPeriodKey (DEFAULT_ORIGIN, 
+						DEFAULT_DESTINATION);
 
     SegmentPeriod& lXXSegmentPeriod =
       FacBom<SegmentPeriod>::instance().create (lXXSegmentPeriodKey);
@@ -1647,25 +1480,11 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   void CmdBomManager::buildSamplePricingForFareFamilies (BomRoot& ioBomRoot) {
 
-    // Set the airport-pair primary key.
+    // Get the airport-pair primary key SIN-BKK
+    // (already built by construction)
     const AirportPairKey lAirportPairKey ("SIN", "BKK");
-    
-
-    AirportPair* lAirportPairPtr = 
-        BomManager::getObjectPtr<AirportPair>(ioBomRoot, 
-                                              lAirportPairKey.toString());
-    if (lAirportPairPtr == NULL) {
-      // Create the AirportPairKey object and link it to the BOM tree root.
-      AirportPair& lAirportPair =
-        FacBom<AirportPair>::instance().create (lAirportPairKey);
-      FacBomManager::addToListAndMap (ioBomRoot, lAirportPair);
-      FacBomManager::linkWithParent (ioBomRoot, lAirportPair);
-    }
     AirportPair& lAirportPair =
       BomManager::getObject<AirportPair>(ioBomRoot, lAirportPairKey.toString());
-
-    
-   
 
     // Set the fare date-period primary key.
     const Date_T lDateRangeStart (2010, boost::gregorian::Feb, 1);
@@ -1673,55 +1492,31 @@ namespace stdair {
     const DatePeriod_T lDateRange (lDateRangeStart, lDateRangeEnd);
     const DatePeriodKey lDatePeriodKey (lDateRange);
 
-    DatePeriod* lDatePeriodPtr =
-      BomManager::getObjectPtr<DatePeriod>(lAirportPair, 
-                                           lDatePeriodKey.toString());
-    if (lDatePeriodPtr == NULL) {
-      // Create the DatePeriodKey object and link it to the PosChannel object.
-      DatePeriod& lDatePeriod =
-        FacBom<DatePeriod>::instance().create (lDatePeriodKey);
-      FacBomManager::addToListAndMap (lAirportPair, lDatePeriod);
-      FacBomManager::linkWithParent (lAirportPair, lDatePeriod);  
-    }
+    // Create the DatePeriodKey object and link it to the PosChannel object.
     DatePeriod& lDatePeriod =
-      BomManager::getObject<DatePeriod>(lAirportPair, 
-                                        lDatePeriodKey.toString());
+      FacBom<DatePeriod>::instance().create (lDatePeriodKey);
+    FacBomManager::addToListAndMap (lAirportPair, lDatePeriod);
+    FacBomManager::linkWithParent (lAirportPair, lDatePeriod);  
 
     // Set the point-of-sale-channel primary key.
     const PosChannelKey lPosChannelKey ("SIN", CHANNEL_IN);  
     
-    PosChannel* lPosChannelPtr =
-      BomManager::getObjectPtr<PosChannel>(lDatePeriod, 
-                                           lPosChannelKey.toString());
-    if (lPosChannelPtr == NULL) {
-      // Create the PositionKey object and link it to the AirportPair object.
-      PosChannel& lPosChannel =
-        FacBom<PosChannel>::instance().create (lPosChannelKey);
-      FacBomManager::addToListAndMap (lDatePeriod, lPosChannel);
-      FacBomManager::linkWithParent (lDatePeriod, lPosChannel);
-    }
+    // Create the PositionKey object and link it to the AirportPair object.
     PosChannel& lPosChannel =
-      BomManager::getObject<PosChannel>(lDatePeriod, 
-                                        lPosChannelKey.toString());
+      FacBom<PosChannel>::instance().create (lPosChannelKey);
+    FacBomManager::addToListAndMap (lDatePeriod, lPosChannel);
+    FacBomManager::linkWithParent (lDatePeriod, lPosChannel);
 
     // Set the fare time-period primary key.
     const Time_T lTimeRangeStart (0, 0, 0);
     const Time_T lTimeRangeEnd (23, 0, 0);
     const TimePeriodKey lTimePeriodKey (lTimeRangeStart, lTimeRangeEnd);
 
-    TimePeriod* lTimePeriodPtr =
-      BomManager::getObjectPtr<TimePeriod>(lPosChannel, 
-                                           lTimePeriodKey.toString());
-    if (lTimePeriodPtr == NULL) {
-      // Create the TimePeriodKey and link it to the DatePeriod object.
-      TimePeriod& lTimePeriod =
-        FacBom<TimePeriod>::instance().create (lTimePeriodKey);
-      FacBomManager::addToListAndMap (lPosChannel, lTimePeriod);
-      FacBomManager::linkWithParent (lPosChannel, lTimePeriod);        
-    }
+    // Create the TimePeriodKey and link it to the DatePeriod object.
     TimePeriod& lTimePeriod =
-      BomManager::getObject<TimePeriod>(lPosChannel, 
-                                        lTimePeriodKey.toString());
+      FacBom<TimePeriod>::instance().create (lTimePeriodKey);
+    FacBomManager::addToListAndMap (lPosChannel, lTimePeriod);
+    FacBomManager::linkWithParent (lPosChannel, lTimePeriod);        
 
     // Pricing -- Generate the FareRule
     const DayDuration_T ONE_MONTH_ADVANCE_PURCHASE = 30;
@@ -1733,19 +1528,11 @@ namespace stdair {
                                             NON_REFUNDABLE,
                                             NO_STAY_DURATION);
 
-    FareFeatures* lFareFeaturesQPtr =
-      BomManager::getObjectPtr<FareFeatures>(lTimePeriod, 
-                                             lFareFeaturesQKey.toString());
-    if (lFareFeaturesQPtr == NULL) {
-      // Create the FareFeaturesKey and link it to the TimePeriod object.
-      FareFeatures& lFareFeaturesQ =
-        FacBom<FareFeatures>::instance().create (lFareFeaturesQKey);
-      FacBomManager::addToListAndMap (lTimePeriod, lFareFeaturesQ);
-      FacBomManager::linkWithParent (lTimePeriod, lFareFeaturesQ);
-    }    
+    // Create the FareFeaturesKey and link it to the TimePeriod object.
     FareFeatures& lFareFeaturesQ =
-      BomManager::getObject<FareFeatures>(lTimePeriod, 
-                                          lFareFeaturesQKey.toString());
+      FacBom<FareFeatures>::instance().create (lFareFeaturesQKey);
+    FacBomManager::addToListAndMap (lTimePeriod, lFareFeaturesQ);
+    FacBomManager::linkWithParent (lTimePeriod, lFareFeaturesQ);
 
     // Generate the second FareFeatures for the class M 
     const FareFeaturesKey lFareFeaturesMKey (TRIP_TYPE_ONE_WAY,
@@ -1755,41 +1542,25 @@ namespace stdair {
                                             NON_REFUNDABLE,
                                             NO_STAY_DURATION);
 
-    FareFeatures* lFareFeaturesMPtr =
-      BomManager::getObjectPtr<FareFeatures>(lTimePeriod, 
-                                             lFareFeaturesMKey.toString());
-    if (lFareFeaturesMPtr == NULL) {
-      // Create the FareFeaturesKey and link it to the TimePeriod object.
-      FareFeatures& lFareFeaturesM =
-        FacBom<FareFeatures>::instance().create (lFareFeaturesMKey);
-      FacBomManager::addToListAndMap (lTimePeriod, lFareFeaturesM);
-      FacBomManager::linkWithParent (lTimePeriod, lFareFeaturesM); 
-    }
+    // Create the FareFeaturesKey and link it to the TimePeriod object.
     FareFeatures& lFareFeaturesM =
-      BomManager::getObject<FareFeatures>(lTimePeriod, 
-                                          lFareFeaturesMKey.toString());  
+      FacBom<FareFeatures>::instance().create (lFareFeaturesMKey);
+    FacBomManager::addToListAndMap (lTimePeriod, lFareFeaturesM);
+    FacBomManager::linkWithParent (lTimePeriod, lFareFeaturesM); 
 
     // Generate the third FareFeatures for the class B
     const FareFeaturesKey lFareFeaturesBKey (TRIP_TYPE_ONE_WAY,
-                                            ONE_MONTH_ADVANCE_PURCHASE,
-                                            SATURDAY_STAY,
-                                            NO_CHANGE_FEES,
-                                            NO_NON_REFUNDABLE,//Refundable
-                                            NO_STAY_DURATION);
+					     ONE_MONTH_ADVANCE_PURCHASE,
+					     SATURDAY_STAY,
+					     NO_CHANGE_FEES,
+					     NO_NON_REFUNDABLE,//Refundable
+					     NO_STAY_DURATION);
 
-    FareFeatures* lFareFeaturesBPtr =
-      BomManager::getObjectPtr<FareFeatures>(lTimePeriod, 
-                                             lFareFeaturesBKey.toString());
-    if (lFareFeaturesBPtr == NULL) {
-      // Create the FareFeaturesKey and link it to the TimePeriod object.
-      FareFeatures& lFareFeaturesB =
-        FacBom<FareFeatures>::instance().create (lFareFeaturesBKey);
-      FacBomManager::addToListAndMap (lTimePeriod, lFareFeaturesB);
-      FacBomManager::linkWithParent (lTimePeriod, lFareFeaturesB);       
-    }
+    // Create the FareFeaturesKey and link it to the TimePeriod object.
     FareFeatures& lFareFeaturesB =
-      BomManager::getObject<FareFeatures>(lTimePeriod, 
-                                          lFareFeaturesBKey.toString());  
+      FacBom<FareFeatures>::instance().create (lFareFeaturesBKey);
+    FacBomManager::addToListAndMap (lTimePeriod, lFareFeaturesB);
+    FacBomManager::linkWithParent (lTimePeriod, lFareFeaturesB);       
 
     // Generate the fourth FareFeatures for the class Y
     const FareFeaturesKey lFareFeaturesYKey (TRIP_TYPE_ONE_WAY,
@@ -1799,36 +1570,21 @@ namespace stdair {
                                             NO_NON_REFUNDABLE,//Refundable
                                             NO_STAY_DURATION);
 
-    FareFeatures* lFareFeaturesYPtr =
-      BomManager::getObjectPtr<FareFeatures>(lTimePeriod, 
-                                             lFareFeaturesYKey.toString());
-    if (lFareFeaturesYPtr == NULL) {
-      // Create the FareFeaturesKey and link it to the TimePeriod object.
-      FareFeatures& lFareFeaturesY =
-        FacBom<FareFeatures>::instance().create (lFareFeaturesYKey);
-      FacBomManager::addToListAndMap (lTimePeriod, lFareFeaturesY);
-      FacBomManager::linkWithParent (lTimePeriod, lFareFeaturesY);
-    }         
+    // Create the FareFeaturesKey and link it to the TimePeriod object.
     FareFeatures& lFareFeaturesY =
-      BomManager::getObject<FareFeatures>(lTimePeriod, 
-                                          lFareFeaturesYKey.toString());  
+      FacBom<FareFeatures>::instance().create (lFareFeaturesYKey);
+    FacBomManager::addToListAndMap (lTimePeriod, lFareFeaturesY);
+    FacBomManager::linkWithParent (lTimePeriod, lFareFeaturesY);
   
     // Revenue Accounting -- Generate the YieldRule
     const YieldFeaturesKey lYieldFeaturesKey (TRIP_TYPE_ONE_WAY,
                                               CABIN_Y);
-    YieldFeatures* lYieldFeaturesPtr =
-      BomManager::getObjectPtr<YieldFeatures>(lTimePeriod, 
-                                              lYieldFeaturesKey.toString());
-    if (lYieldFeaturesPtr == NULL) {
-      // Create the YieldFeaturesKey and link it to the TimePeriod object.
-      YieldFeatures& lYieldFeatures =
-        FacBom<YieldFeatures>::instance().create (lYieldFeaturesKey);
-      FacBomManager::addToListAndMap (lTimePeriod, lYieldFeatures);
-      FacBomManager::linkWithParent (lTimePeriod, lYieldFeatures);     
-    }
-    YieldFeatures& lYieldFeatures = 
-      BomManager::getObject<YieldFeatures>(lTimePeriod, 
-                                           lYieldFeaturesKey.toString());
+
+    // Create the YieldFeaturesKey and link it to the TimePeriod object.
+    YieldFeatures& lYieldFeatures =
+      FacBom<YieldFeatures>::instance().create (lYieldFeaturesKey);
+    FacBomManager::addToListAndMap (lTimePeriod, lYieldFeatures);
+    FacBomManager::linkWithParent (lTimePeriod, lYieldFeatures);
                                   
     // Generate Segment Features and link them to their respective
     // fare and yield rules.
@@ -1840,131 +1596,79 @@ namespace stdair {
     const AirlineClassListKey lAirlineClassYListKey (lAirlineCodeList,
                                                     lClassYList);
     
-    AirlineClassList* lAirlineClassYListPtr =
-      BomManager::getObjectPtr<AirlineClassList>(lFareFeaturesY, 
-                                              lAirlineClassYListKey.toString());
-    if (lAirlineClassYListPtr == NULL) {
-      // Create the AirlineClassList
-      AirlineClassList& lAirlineClassYList =
-        FacBom<AirlineClassList>::instance().create (lAirlineClassYListKey);
-      // Link the AirlineClassList to the FareFeatures object
-      FacBomManager::addToListAndMap (lFareFeaturesY, lAirlineClassYList);
-      FacBomManager::linkWithParent (lFareFeaturesY, lAirlineClassYList);
-    }
+    // Create the AirlineClassList
     AirlineClassList& lAirlineClassYList =
-      BomManager::getObject<AirlineClassList>(lFareFeaturesY, 
-                                              lAirlineClassYListKey.toString());
-    lAirlineClassYList.setFare (1200);
+        FacBom<AirlineClassList>::instance().create (lAirlineClassYListKey);
+    // Link the AirlineClassList to the FareFeatures object
+    FacBomManager::addToListAndMap (lFareFeaturesY, lAirlineClassYList);
+    FacBomManager::linkWithParent (lFareFeaturesY, lAirlineClassYList);
+    lAirlineClassYList.setFare (1200);    
+    lAirlineClassYList.setYield (1200);
 
     // Link the AirlineClassList to the YieldFeatures object
-    lAirlineClassYList.setYield (1200);
-    AirlineClassList* lAirlineClassYList_Ptr =
-      BomManager::getObjectPtr<AirlineClassList>(lYieldFeatures, 
-                                              lAirlineClassYListKey.toString());
-    if (lAirlineClassYList_Ptr == NULL) {
-      FacBomManager::addToListAndMap (lYieldFeatures, lAirlineClassYList);
-      // \todo (gsabatier): the following calls overrides the parent for
-      //       lAirlineClassList. Check that it is what is actually wanted.
-      FacBomManager::linkWithParent (lYieldFeatures, lAirlineClassYList);
-    }
+    FacBomManager::addToListAndMap (lYieldFeatures, lAirlineClassYList);
+    // \todo (gsabatier): the following calls overrides the parent for
+    //       lAirlineClassList. Check that it is what is actually wanted.
+    FacBomManager::linkWithParent (lYieldFeatures, lAirlineClassYList);
 
     ClassList_StringList_T lClassBList;
     lClassBList.push_back ("B");
     const AirlineClassListKey lAirlineClassBListKey (lAirlineCodeList,
                                                      lClassBList);
-    
-    AirlineClassList* lAirlineClassBListPtr =
-      BomManager::getObjectPtr<AirlineClassList>(lFareFeaturesB, 
-                                              lAirlineClassBListKey.toString());
-    if (lAirlineClassBListPtr == NULL) {
-      // Create the AirlineClassList
-      AirlineClassList& lAirlineClassBList =
-        FacBom<AirlineClassList>::instance().create (lAirlineClassBListKey);
-      // Link the AirlineClassList to the FareFeatures object
-      FacBomManager::addToListAndMap (lFareFeaturesB, lAirlineClassBList);
-      FacBomManager::linkWithParent (lFareFeaturesB, lAirlineClassBList);
-    }
+    // Create the AirlineClassList
     AirlineClassList& lAirlineClassBList =
-      BomManager::getObject<AirlineClassList>(lFareFeaturesB, 
-                                           lAirlineClassBListKey.toString());
-    lAirlineClassBList.setFare (800);
+      FacBom<AirlineClassList>::instance().create (lAirlineClassBListKey);
+    // Link the AirlineClassList to the FareFeatures object
+    FacBomManager::addToListAndMap (lFareFeaturesB, lAirlineClassBList);
+    FacBomManager::linkWithParent (lFareFeaturesB, lAirlineClassBList);
+    lAirlineClassBList.setFare (800); 
+    lAirlineClassBList.setYield (800);
   
     // Link the AirlineClassList to the YieldFeatures object
-    lAirlineClassBList.setYield (800);
-    AirlineClassList* lAirlineClassBList_Ptr =
-      BomManager::getObjectPtr<AirlineClassList>(lYieldFeatures, 
-                                              lAirlineClassBListKey.toString());
-    if (lAirlineClassBList_Ptr == NULL) {
-      FacBomManager::addToListAndMap (lYieldFeatures, lAirlineClassBList);
-      // \todo (gsabatier): the following calls overrides the parent for
-      //       lAirlineClassList. Check that it is what is actually wanted.
-      FacBomManager::linkWithParent (lYieldFeatures, lAirlineClassBList);
-    }
+    FacBomManager::addToListAndMap (lYieldFeatures, lAirlineClassBList);
+    // \todo (gsabatier): the following calls overrides the parent for
+    //       lAirlineClassList. Check that it is what is actually wanted.
+    FacBomManager::linkWithParent (lYieldFeatures, lAirlineClassBList);
 
     ClassList_StringList_T lClassMList;
     lClassMList.push_back ("M");
     const AirlineClassListKey lAirlineClassMListKey (lAirlineCodeList,
                                                     lClassMList);
 
-    AirlineClassList* lAirlineClassMListPtr =
-      BomManager::getObjectPtr<AirlineClassList>(lFareFeaturesM, 
-                                              lAirlineClassMListKey.toString());
-    if (lAirlineClassMListPtr == NULL) {
-      // Create the AirlineClassList
-      AirlineClassList& lAirlineClassMList =
-        FacBom<AirlineClassList>::instance().create (lAirlineClassMListKey);
-      // Link the AirlineClassList to the FareFeatures object
-      FacBomManager::addToListAndMap (lFareFeaturesM, lAirlineClassMList);
-      FacBomManager::linkWithParent (lFareFeaturesM, lAirlineClassMList);
-    }
+    // Create the AirlineClassList
     AirlineClassList& lAirlineClassMList =
-      BomManager::getObject<AirlineClassList>(lFareFeaturesM, 
-                                           lAirlineClassMListKey.toString());
-    lAirlineClassMList.setFare (900);
-    // Link the AirlineClassList to the YieldFeatures object
+      FacBom<AirlineClassList>::instance().create (lAirlineClassMListKey);
+    // Link the AirlineClassList to the FareFeatures object
+    FacBomManager::addToListAndMap (lFareFeaturesM, lAirlineClassMList);
+    FacBomManager::linkWithParent (lFareFeaturesM, lAirlineClassMList);
+    lAirlineClassMList.setFare (900);   
     lAirlineClassMList.setYield (900);
-    AirlineClassList* lAirlineClassMList_Ptr =
-      BomManager::getObjectPtr<AirlineClassList>(lYieldFeatures, 
-                                              lAirlineClassMListKey.toString());
-    if (lAirlineClassMList_Ptr == NULL) {
-      FacBomManager::addToListAndMap (lYieldFeatures, lAirlineClassMList);
-      // \todo (gsabatier): the following calls overrides the parent for
-      //       lAirlineClassList. Check that it is what is actually wanted.
-      FacBomManager::linkWithParent (lYieldFeatures, lAirlineClassMList);
-    }
+
+    // Link the AirlineClassList to the YieldFeatures object
+    FacBomManager::addToListAndMap (lYieldFeatures, lAirlineClassMList);
+    // \todo (gsabatier): the following calls overrides the parent for
+    //       lAirlineClassList. Check that it is what is actually wanted.
+    FacBomManager::linkWithParent (lYieldFeatures, lAirlineClassMList);
 
     ClassList_StringList_T lClassQList;
     lClassQList.push_back ("Q");
     const AirlineClassListKey lAirlineClassQListKey (lAirlineCodeList,
-                                                    lClassQList);
+						     lClassQList);
 
-    AirlineClassList* lAirlineClassQListPtr =
-      BomManager::getObjectPtr<AirlineClassList>(lFareFeaturesQ, 
-                                              lAirlineClassQListKey.toString());
-    if (lAirlineClassQListPtr == NULL) {
-      // Create the AirlineClassList
-      AirlineClassList& lAirlineClassQList =
-        FacBom<AirlineClassList>::instance().create (lAirlineClassQListKey);
-      // Link the AirlineClassList to the FareFeatures object
-      FacBomManager::addToListAndMap (lFareFeaturesQ, lAirlineClassQList);
-      FacBomManager::linkWithParent (lFareFeaturesQ, lAirlineClassQList);
-    }
+    // Create the AirlineClassList
     AirlineClassList& lAirlineClassQList =
-      BomManager::getObject<AirlineClassList>(lFareFeaturesQ, 
-                                           lAirlineClassQListKey.toString());
-    lAirlineClassQList.setFare (600);
+      FacBom<AirlineClassList>::instance().create (lAirlineClassQListKey);
+    // Link the AirlineClassList to the FareFeatures object
+    FacBomManager::addToListAndMap (lFareFeaturesQ, lAirlineClassQList);
+    FacBomManager::linkWithParent (lFareFeaturesQ, lAirlineClassQList);
+    lAirlineClassQList.setFare (600);  
+    lAirlineClassQList.setYield (600);
     
     // Link the AirlineClassList to the YieldFeatures object
-    lAirlineClassQList.setYield (600);
-    AirlineClassList* lAirlineClassQList_Ptr =
-      BomManager::getObjectPtr<AirlineClassList>(lYieldFeatures, 
-                                              lAirlineClassQListKey.toString());
-    if (lAirlineClassQList_Ptr == NULL) {
-      FacBomManager::addToListAndMap (lYieldFeatures, lAirlineClassQList);
-      // \todo (gsabatier): the following calls overrides the parent for
-      //       lAirlineClassList. Check that it is what is actually wanted.
-      FacBomManager::linkWithParent (lYieldFeatures, lAirlineClassQList);
-    }
+    FacBomManager::addToListAndMap (lYieldFeatures, lAirlineClassQList);
+    // \todo (gsabatier): the following calls overrides the parent for
+    //       lAirlineClassList. Check that it is what is actually wanted.
+    FacBomManager::linkWithParent (lYieldFeatures, lAirlineClassQList);
 	
   }
 
@@ -2169,28 +1873,21 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void CmdBomManager::buildPartnershipsSampleInventoryAndRM (BomRoot& ioBomRoot) {
+  void CmdBomManager::
+  buildPartnershipsSampleInventoryAndRM (BomRoot& ioBomRoot) {
 
     // Step 0.1: Inventory level
     // Create an Inventory for SQ
     const InventoryKey lSQKey ("SQ");
-    Inventory* lSQInvPtr = BomManager::getObjectPtr<Inventory>(ioBomRoot,
-                                                             lSQKey.toString());
-
-    if (lSQInvPtr == NULL) {
-      Inventory& lSQInv = FacBom<Inventory>::instance().create (lSQKey);
-      FacBomManager::addToListAndMap (ioBomRoot, lSQInv);
-      FacBomManager::linkWithParent (ioBomRoot, lSQInv);
-    }
-    Inventory& lSQInv = BomManager::getObject<Inventory>(ioBomRoot,
-                                                  lSQKey.toString());
+    Inventory& lSQInv = FacBom<Inventory>::instance().create (lSQKey);
+    FacBomManager::addToListAndMap (ioBomRoot, lSQInv);
+    FacBomManager::linkWithParent (ioBomRoot, lSQInv);
     
     // Create an Inventory for CX
     const InventoryKey lCXKey ("CX");
     Inventory& lCXInv = FacBom<Inventory>::instance().create (lCXKey);
     FacBomManager::addToListAndMap (ioBomRoot, lCXInv);
     FacBomManager::linkWithParent (ioBomRoot, lCXInv);
-
     
     // ////// SQ ///////    
     // Step 0.2: Flight-date level
@@ -2321,7 +2018,7 @@ namespace stdair {
      * boarding and off points as well.
      */
     
-      FacBomManager::addToListAndMap (lSINLegYCabin, lSINBKKSegmentYCabin,
+    FacBomManager::addToListAndMap (lSINLegYCabin, lSINBKKSegmentYCabin,
                                     lSINBKKSegmentYCabin.getFullerKey());
     
     /**
@@ -2334,9 +2031,8 @@ namespace stdair {
      * Hence, the leg-cabins must be differentiated according to their
      * boarding point as well.
      */
-      FacBomManager::addToListAndMap (lSINBKKSegmentYCabin, lSINLegYCabin,
+    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin, lSINLegYCabin,
                                     lSINLegYCabin.getFullerKey());
-
 
     // Step 0.7: fare family level
     // Create a FareFamily (1) for the Segment SIN-BKK, cabin Y on SQ's Inv
@@ -2459,8 +2155,10 @@ namespace stdair {
 
     SegmentDate& lPartnerBKKHKGSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerCX12_20100208_FD, lPartnerBKKHKGSegment);
-    FacBomManager::linkWithParent (lPartnerCX12_20100208_FD, lPartnerBKKHKGSegment);
+    FacBomManager::addToListAndMap (lPartnerCX12_20100208_FD, 
+				    lPartnerBKKHKGSegment);
+    FacBomManager::linkWithParent (lPartnerCX12_20100208_FD, 
+				   lPartnerBKKHKGSegment);
 
     lPartnerBKKHKGSegment.setBoardingDate (lDate);
     lPartnerBKKHKGSegment.setOffDate (lDate);
@@ -2472,8 +2170,10 @@ namespace stdair {
 
     SegmentDate& lPartnerMktSINBKKSegment =
       FacBom<SegmentDate>::instance().create (lMktSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerCX1100_20100208_FD, lPartnerMktSINBKKSegment);
-    FacBomManager::linkWithParent (lPartnerCX1100_20100208_FD, lPartnerMktSINBKKSegment);
+    FacBomManager::addToListAndMap (lPartnerCX1100_20100208_FD, 
+				    lPartnerMktSINBKKSegment);
+    FacBomManager::linkWithParent (lPartnerCX1100_20100208_FD, 
+				   lPartnerMktSINBKKSegment);
 
     lPartnerMktSINBKKSegment.setBoardingDate (lDate);
     lPartnerMktSINBKKSegment.setOffDate (lDate);
@@ -2502,13 +2202,17 @@ namespace stdair {
     
     SegmentCabin& lPartnerBKKHKGSegmentYCabin =
       FacBom<SegmentCabin>::instance().create (lYSegmentCabinKey);
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegment, lPartnerBKKHKGSegmentYCabin);
-    FacBomManager::linkWithParent (lPartnerBKKHKGSegment, lPartnerBKKHKGSegmentYCabin);
+    FacBomManager::addToListAndMap (lPartnerBKKHKGSegment, 
+				    lPartnerBKKHKGSegmentYCabin);
+    FacBomManager::linkWithParent (lPartnerBKKHKGSegment, 
+				   lPartnerBKKHKGSegmentYCabin);
 
     SegmentCabin& lPartnerMktSINBKKSegmentYCabin =
       FacBom<SegmentCabin>::instance().create (lYSegmentCabinKey);
-    FacBomManager::addToListAndMap (lPartnerMktSINBKKSegment, lPartnerMktSINBKKSegmentYCabin);
-    FacBomManager::linkWithParent (lPartnerMktSINBKKSegment, lPartnerMktSINBKKSegmentYCabin);
+    FacBomManager::addToListAndMap (lPartnerMktSINBKKSegment, 
+				    lPartnerMktSINBKKSegmentYCabin);
+    FacBomManager::linkWithParent (lPartnerMktSINBKKSegment, 
+				   lPartnerMktSINBKKSegmentYCabin);
 
     // Step 9.0.6: leg-cabin level
     
@@ -2521,9 +2225,11 @@ namespace stdair {
     lPartnerBKKLegYCabin.setCapacities (lCapacity);
     lPartnerBKKLegYCabin.setAvailabilityPool (lCapacity);
 
-    FacBomManager::addToListAndMap (lPartnerBKKLegYCabin, lPartnerBKKHKGSegmentYCabin,
+    FacBomManager::addToListAndMap (lPartnerBKKLegYCabin, 
+				    lPartnerBKKHKGSegmentYCabin,
                                     lPartnerBKKHKGSegmentYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegmentYCabin, lPartnerBKKLegYCabin,
+    FacBomManager::addToListAndMap (lPartnerBKKHKGSegmentYCabin, 
+				    lPartnerBKKLegYCabin,
                                     lPartnerBKKLegYCabin.getFullerKey());
 
     // Step 9.0.7: fare family level
@@ -2601,7 +2307,8 @@ namespace stdair {
     /* =================================================================================== */
 
     // Step 1.0: O&D level
-    // Create an O&D Date (SQ11/08-FEB-2010/SIN-BKK-SQ1200/08-FEB-2010/BKK-HKG) for SQ's Inventory
+    // Create an O&D Date (SQ11/08-FEB-2010/SIN-BKK-SQ1200/08-FEB-2010/BKK-HKG)
+    // for SQ's Inventory
     OnDString_T lSQSINBKKOnDStr = "SQ;11,2010-Feb-08;SIN,BKK";
     OnDString_T lMktSQBKKHKGOnDStr = "SQ;1200,2010-Feb-08;BKK,HKG";
     OnDStringList_T lOnDStringList;
@@ -2646,8 +2353,10 @@ namespace stdair {
     lCabinClassPairList.push_back(lCC_YY2);
     const MeanStdDevPair_T lMean10StdDev1 (10.0, 1.0);
     const Yield_T lYield1200 = 1200.0;
-    const YieldDemandPair_T lYield1200Mean10StdDev1 (lYield1200, lMean10StdDev1);
-    lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield1200Mean10StdDev1);
+    const YieldDemandPair_T lYield1200Mean10StdDev1 (lYield1200, 
+						     lMean10StdDev1);
+    lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, 
+					     lYield1200Mean10StdDev1);
 
     // Create an O&D Date (SQ11/08-FEB-2010/SIN-BKK) for SQ's Inventory
     lOnDStringList.clear();
@@ -2674,13 +2383,15 @@ namespace stdair {
     const MeanStdDevPair_T lMean20StdDev1 (20.0, 1.0);
     const Yield_T lYield500 = 500.0;
     const YieldDemandPair_T lYield500Mean20StdDev1 (lYield500, lMean20StdDev1);
-    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, lYield500Mean20StdDev1);
+    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, 
+					     lYield500Mean20StdDev1);
 
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YY1);
     const Yield_T lYield700 = 700.0;
     const YieldDemandPair_T lYield700Mean20StdDev1 (lYield700, lMean10StdDev1 );
-    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, lYield700Mean20StdDev1);
+    lSQ_SINBKK_OnDDate.setDemandInformation (lCabinClassPairList, 
+					     lYield700Mean20StdDev1);
 
     /*******************************************************************************
     // Create an O&D Date (SQ1200/08-FEB-2010/BKK-HKG) for SQ's Inventory
@@ -2902,7 +2613,8 @@ namespace stdair {
     // Step 0.9: Partner Inventory
     // Create a partner Inventory SQ for CX   
     const InventoryKey lPartnerSQKey ("SQ");
-    Inventory& lPartnerSQInv = FacBom<Inventory>::instance().create (lPartnerSQKey);
+    Inventory& lPartnerSQInv = 
+      FacBom<Inventory>::instance().create (lPartnerSQKey);
     FacBomManager::addToListAndMap (lCXInv, lPartnerSQInv);
     FacBomManager::linkWithParent (lCXInv, lPartnerSQInv);
 
@@ -2928,8 +2640,10 @@ namespace stdair {
 
     SegmentDate& lPartnerSINBKKSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQ11_20100208_FD, lPartnerSINBKKSegment);
-    FacBomManager::linkWithParent (lPartnerSQ11_20100208_FD, lPartnerSINBKKSegment);
+    FacBomManager::addToListAndMap (lPartnerSQ11_20100208_FD, 
+				    lPartnerSINBKKSegment);
+    FacBomManager::linkWithParent (lPartnerSQ11_20100208_FD, 
+				   lPartnerSINBKKSegment);
     
     lPartnerSINBKKSegment.setBoardingDate (lDate);
     lPartnerSINBKKSegment.setOffDate (lDate);
@@ -2941,8 +2655,10 @@ namespace stdair {
 
     SegmentDate& lPartnerMktBKKHKGSegment =
       FacBom<SegmentDate>::instance().create (lMktSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQ1200_20100208_FD, lPartnerMktBKKHKGSegment);
-    FacBomManager::linkWithParent (lPartnerSQ1200_20100208_FD, lPartnerMktBKKHKGSegment);
+    FacBomManager::addToListAndMap (lPartnerSQ1200_20100208_FD, 
+				    lPartnerMktBKKHKGSegment);
+    FacBomManager::linkWithParent (lPartnerSQ1200_20100208_FD,
+				   lPartnerMktBKKHKGSegment);
 
     lPartnerMktBKKHKGSegment.setBoardingDate (lDate);
     lPartnerMktBKKHKGSegment.setOffDate (lDate);
@@ -2971,13 +2687,17 @@ namespace stdair {
 
     SegmentCabin& lPartnerSINBKKSegmentYCabin =
       FacBom<SegmentCabin>::instance().create (lYSegmentCabinKey);
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegment, lPartnerSINBKKSegmentYCabin);
-    FacBomManager::linkWithParent (lPartnerSINBKKSegment, lPartnerSINBKKSegmentYCabin);
+    FacBomManager::addToListAndMap (lPartnerSINBKKSegment, 
+				    lPartnerSINBKKSegmentYCabin);
+    FacBomManager::linkWithParent (lPartnerSINBKKSegment, 
+				   lPartnerSINBKKSegmentYCabin);
     
     SegmentCabin& lPartnerMktBKKHKGSegmentYCabin =
       FacBom<SegmentCabin>::instance().create (lYSegmentCabinKey);
-    FacBomManager::addToListAndMap (lPartnerMktBKKHKGSegment, lPartnerMktBKKHKGSegmentYCabin);
-    FacBomManager::linkWithParent (lPartnerMktBKKHKGSegment, lPartnerMktBKKHKGSegmentYCabin);
+    FacBomManager::addToListAndMap (lPartnerMktBKKHKGSegment, 
+				    lPartnerMktBKKHKGSegmentYCabin);
+    FacBomManager::linkWithParent (lPartnerMktBKKHKGSegment, 
+				   lPartnerMktBKKHKGSegmentYCabin);
     
     // Step 9.0.6: leg-cabin level
     
@@ -2990,9 +2710,11 @@ namespace stdair {
     lPartnerSINLegYCabin.setCapacities (lCapacity);
     lPartnerSINLegYCabin.setAvailabilityPool (lCapacity);
 
-    FacBomManager::addToListAndMap (lPartnerSINLegYCabin, lPartnerSINBKKSegmentYCabin,
+    FacBomManager::addToListAndMap (lPartnerSINLegYCabin, 
+				    lPartnerSINBKKSegmentYCabin,
                                     lPartnerSINBKKSegmentYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegmentYCabin, lPartnerSINLegYCabin,
+    FacBomManager::addToListAndMap (lPartnerSINBKKSegmentYCabin, 
+				    lPartnerSINLegYCabin,
                                     lPartnerSINLegYCabin.getFullerKey());
 
     // Step 9.0.7: fare family level
@@ -3095,12 +2817,14 @@ namespace stdair {
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YM1);
     lCabinClassPairList.push_back(lCC_YM2);
-    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield850Mean20StdDev2);
+    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, 
+					     lYield850Mean20StdDev2);
 
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YY1);
     lCabinClassPairList.push_back(lCC_YY2);
-    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield1200Mean10StdDev1);
+    lCX_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, 
+					     lYield1200Mean10StdDev1);
 
     /***********************************************************************************
     // Create an O&D Date (CX1100/08-FEB-2010/SIN-BKK) for CX's Inventory
@@ -3144,12 +2868,14 @@ namespace stdair {
     // Add demand info
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YM2);
-    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield500Mean20StdDev1);
+    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, 
+					     lYield500Mean20StdDev1);
 
     lCabinClassPairList.clear();
     lCabinClassPairList.push_back(lCC_YY2);
     const YieldDemandPair_T lYield700Mean10StdDev1 (lYield700, lMean10StdDev1 );
-    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, lYield700Mean10StdDev1);
+    lCX_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, 
+					     lYield700Mean10StdDev1);
 
     /*================================================================================
       ================================================================================
@@ -3265,7 +2991,7 @@ namespace stdair {
     TimePeriod& lSINBKKFareTimePeriod =
       FacBom<TimePeriod>::instance().create (lFareTimePeriodKey);
     FacBomManager::addToListAndMap (lSINPosChannel, lSINBKKFareTimePeriod);
-    FacBomManager::linkWithParent (lSINPosChannel, lSINBKKFareTimePeriod);        
+    FacBomManager::linkWithParent (lSINPosChannel, lSINBKKFareTimePeriod); 
 
     // Generate the FareRule
     const FareFeaturesKey lFareFeaturesKey (TRIP_TYPE_ONE_WAY,
@@ -3279,7 +3005,7 @@ namespace stdair {
     FareFeatures& lSINBKKFareFeatures =
       FacBom<FareFeatures>::instance().create (lFareFeaturesKey);
     FacBomManager::addToListAndMap (lSINBKKFareTimePeriod, lSINBKKFareFeatures);
-    FacBomManager::linkWithParent (lSINBKKFareTimePeriod, lSINBKKFareFeatures);        
+    FacBomManager::linkWithParent (lSINBKKFareTimePeriod, lSINBKKFareFeatures);
 
     // Generate Segment Features and link them to their FareRule.
     AirlineCodeList_T lSQAirlineCodeList;
@@ -3344,7 +3070,7 @@ namespace stdair {
     TimePeriod& lBKKHKGFareTimePeriod =
       FacBom<TimePeriod>::instance().create (lFareTimePeriodKey);
     FacBomManager::addToListAndMap (lBKKPosChannel, lBKKHKGFareTimePeriod);
-    FacBomManager::linkWithParent (lBKKPosChannel, lBKKHKGFareTimePeriod);        
+    FacBomManager::linkWithParent (lBKKPosChannel, lBKKHKGFareTimePeriod);
 
     // Generate the FareRule
     // Use the same key as previously.
@@ -3353,7 +3079,7 @@ namespace stdair {
     FareFeatures& lBKKHKGFareFeatures =
       FacBom<FareFeatures>::instance().create (lFareFeaturesKey);
     FacBomManager::addToListAndMap (lBKKHKGFareTimePeriod, lBKKHKGFareFeatures);
-    FacBomManager::linkWithParent (lBKKHKGFareTimePeriod, lBKKHKGFareFeatures);        
+    FacBomManager::linkWithParent (lBKKHKGFareTimePeriod, lBKKHKGFareFeatures);
 
     // Generate Segment Features and link them to their FareRule.
     AirlineCodeList_T lCXAirlineCodeList;
@@ -3414,7 +3140,7 @@ namespace stdair {
     TimePeriod& lSINHKGFareTimePeriod =
       FacBom<TimePeriod>::instance().create (lFareTimePeriodKey);
     FacBomManager::addToListAndMap (lOnDSINPosChannel, lSINHKGFareTimePeriod);
-    FacBomManager::linkWithParent (lOnDSINPosChannel, lSINHKGFareTimePeriod);        
+    FacBomManager::linkWithParent (lOnDSINPosChannel, lSINHKGFareTimePeriod);
 
     // Generate the FareRule
     // Use the same key as previously.
@@ -3423,7 +3149,7 @@ namespace stdair {
     FareFeatures& lSINHKGFareFeatures =
       FacBom<FareFeatures>::instance().create (lFareFeaturesKey);
     FacBomManager::addToListAndMap (lSINHKGFareTimePeriod, lSINHKGFareFeatures);
-    FacBomManager::linkWithParent (lSINHKGFareTimePeriod, lSINHKGFareFeatures);        
+    FacBomManager::linkWithParent (lSINHKGFareTimePeriod, lSINHKGFareFeatures);
 
     // Generate Segment Features and link them to their FareRule.
     AirlineCodeList_T lSQ_CXAirlineCodeList;
@@ -3446,14 +3172,18 @@ namespace stdair {
     AirlineClassList& lSQ_CXAirlineYClassList =
       FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineYClassListKey);
     lSQ_CXAirlineYClassList.setFare(1200);
-    FacBomManager::addToListAndMap (lSINHKGFareFeatures, lSQ_CXAirlineYClassList);
-    FacBomManager::linkWithParent (lSINHKGFareFeatures, lSQ_CXAirlineYClassList);
+    FacBomManager::addToListAndMap (lSINHKGFareFeatures, 
+				    lSQ_CXAirlineYClassList);
+    FacBomManager::linkWithParent (lSINHKGFareFeatures, 
+				   lSQ_CXAirlineYClassList);
     
     AirlineClassList& lSQ_CXAirlineMClassList =
       FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineMClassListKey);
     lSQ_CXAirlineMClassList.setFare(850);
-    FacBomManager::addToListAndMap (lSINHKGFareFeatures, lSQ_CXAirlineMClassList);
-    FacBomManager::linkWithParent (lSINHKGFareFeatures, lSQ_CXAirlineMClassList);
+    FacBomManager::addToListAndMap (lSINHKGFareFeatures, 
+				    lSQ_CXAirlineMClassList);
+    FacBomManager::linkWithParent (lSINHKGFareFeatures, 
+				   lSQ_CXAirlineMClassList);
 
 
     ////////////////////// AirRAC //////////////////////
@@ -3478,8 +3208,10 @@ namespace stdair {
     // Create the TimePeriodKey and link it to the DatePeriod object.
     TimePeriod& lSINBKKYieldTimePeriod =
       FacBom<TimePeriod>::instance().create (lYieldTimePeriodKey);
-    FacBomManager::addToListAndMap (lRAC_SINBKKPosChannel, lSINBKKYieldTimePeriod);
-    FacBomManager::linkWithParent (lRAC_SINBKKPosChannel, lSINBKKYieldTimePeriod);        
+    FacBomManager::addToListAndMap (lRAC_SINBKKPosChannel, 
+				    lSINBKKYieldTimePeriod);
+    FacBomManager::linkWithParent (lRAC_SINBKKPosChannel, 
+				   lSINBKKYieldTimePeriod);        
 
     // Generate the YieldRule
     const YieldFeaturesKey lYieldFeaturesKey (TRIP_TYPE_ONE_WAY,
@@ -3488,8 +3220,10 @@ namespace stdair {
     // Create the YieldFeaturesKey and link it to the TimePeriod object.
     YieldFeatures& lSINBKKYieldFeatures =
       FacBom<YieldFeatures>::instance().create (lYieldFeaturesKey);
-    FacBomManager::addToListAndMap (lSINBKKYieldTimePeriod, lSINBKKYieldFeatures);
-    FacBomManager::linkWithParent (lSINBKKYieldTimePeriod, lSINBKKYieldFeatures);        
+    FacBomManager::addToListAndMap (lSINBKKYieldTimePeriod,
+				    lSINBKKYieldFeatures);
+    FacBomManager::linkWithParent (lSINBKKYieldTimePeriod, 
+				   lSINBKKYieldFeatures);        
 
     // Generate Segment Features and link them to their YieldRule.
     // Use the same key as previously.
@@ -3498,14 +3232,18 @@ namespace stdair {
     AirlineClassList& lRAC_SQAirlineYClassList =
       FacBom<AirlineClassList>::instance().create (lSQAirlineYClassListKey);
     lRAC_SQAirlineYClassList.setYield(700);
-    FacBomManager::addToListAndMap (lSINBKKYieldFeatures, lRAC_SQAirlineYClassList);
-    FacBomManager::linkWithParent (lSINBKKYieldFeatures, lRAC_SQAirlineYClassList);
+    FacBomManager::addToListAndMap (lSINBKKYieldFeatures, 
+				    lRAC_SQAirlineYClassList);
+    FacBomManager::linkWithParent (lSINBKKYieldFeatures, 
+				   lRAC_SQAirlineYClassList);
 
     AirlineClassList& lRAC_SQAirlineMClassList =
       FacBom<AirlineClassList>::instance().create (lSQAirlineMClassListKey);
     lRAC_SQAirlineMClassList.setYield(500);
-    FacBomManager::addToListAndMap (lSINBKKYieldFeatures, lRAC_SQAirlineMClassList);
-    FacBomManager::linkWithParent (lSINBKKYieldFeatures, lRAC_SQAirlineMClassList);
+    FacBomManager::addToListAndMap (lSINBKKYieldFeatures, 
+				    lRAC_SQAirlineMClassList);
+    FacBomManager::linkWithParent (lSINBKKYieldFeatures, 
+				   lRAC_SQAirlineMClassList);
 
     /*===================================================================================*/
 
@@ -3526,8 +3264,10 @@ namespace stdair {
     // Create the TimePeriodKey and link it to the DatePeriod object.
     TimePeriod& lBKKHKGYieldTimePeriod =
       FacBom<TimePeriod>::instance().create (lYieldTimePeriodKey);
-    FacBomManager::addToListAndMap (lRAC_BKKHKGPosChannel, lBKKHKGYieldTimePeriod);
-    FacBomManager::linkWithParent (lRAC_BKKHKGPosChannel, lBKKHKGYieldTimePeriod);        
+    FacBomManager::addToListAndMap (lRAC_BKKHKGPosChannel, 
+				    lBKKHKGYieldTimePeriod);
+    FacBomManager::linkWithParent (lRAC_BKKHKGPosChannel, 
+				   lBKKHKGYieldTimePeriod);        
 
     // Generate the YieldRule
     // Use the same key as previously.
@@ -3535,8 +3275,10 @@ namespace stdair {
     // Create the YieldFeaturesKey and link it to the TimePeriod object.
     YieldFeatures& lBKKHKGYieldFeatures =
       FacBom<YieldFeatures>::instance().create (lYieldFeaturesKey);
-    FacBomManager::addToListAndMap (lBKKHKGYieldTimePeriod, lBKKHKGYieldFeatures);
-    FacBomManager::linkWithParent (lBKKHKGYieldTimePeriod, lBKKHKGYieldFeatures);        
+    FacBomManager::addToListAndMap (lBKKHKGYieldTimePeriod, 
+				    lBKKHKGYieldFeatures);
+    FacBomManager::linkWithParent (lBKKHKGYieldTimePeriod, 
+				   lBKKHKGYieldFeatures);        
 
     // Generate Segment Features and link them to their YieldRule.
     // Use the same key as previously.
@@ -3545,14 +3287,18 @@ namespace stdair {
     AirlineClassList& lRAC_CXAirlineYClassList =
       FacBom<AirlineClassList>::instance().create (lCXAirlineYClassListKey);
     lRAC_CXAirlineYClassList.setYield(700);
-    FacBomManager::addToListAndMap (lBKKHKGYieldFeatures, lRAC_CXAirlineYClassList);
-    FacBomManager::linkWithParent (lBKKHKGYieldFeatures, lRAC_CXAirlineYClassList);
+    FacBomManager::addToListAndMap (lBKKHKGYieldFeatures, 
+				    lRAC_CXAirlineYClassList);
+    FacBomManager::linkWithParent (lBKKHKGYieldFeatures, 
+				   lRAC_CXAirlineYClassList);
     
     AirlineClassList& lRAC_CXAirlineMClassList =
       FacBom<AirlineClassList>::instance().create (lCXAirlineMClassListKey);
     lRAC_CXAirlineMClassList.setYield(500);
-    FacBomManager::addToListAndMap (lBKKHKGYieldFeatures, lRAC_CXAirlineMClassList);
-    FacBomManager::linkWithParent (lBKKHKGYieldFeatures, lRAC_CXAirlineMClassList);
+    FacBomManager::addToListAndMap (lBKKHKGYieldFeatures, 
+				    lRAC_CXAirlineMClassList);
+    FacBomManager::linkWithParent (lBKKHKGYieldFeatures, 
+				   lRAC_CXAirlineMClassList);
 
     /*===================================================================================*/
 
@@ -3574,7 +3320,7 @@ namespace stdair {
     TimePeriod& lSINHKGYieldTimePeriod =
       FacBom<TimePeriod>::instance().create (lYieldTimePeriodKey);
     FacBomManager::addToListAndMap (lRAC_SINHKGChannel, lSINHKGYieldTimePeriod);
-    FacBomManager::linkWithParent (lRAC_SINHKGChannel, lSINHKGYieldTimePeriod);        
+    FacBomManager::linkWithParent (lRAC_SINHKGChannel, lSINHKGYieldTimePeriod);  
 
     // Generate the YieldRule
     // Use the same key as previously.
@@ -3582,8 +3328,10 @@ namespace stdair {
     // Create the YieldFeaturesKey and link it to the TimePeriod object.
     YieldFeatures& lSINHKGYieldFeatures =
       FacBom<YieldFeatures>::instance().create (lYieldFeaturesKey);
-    FacBomManager::addToListAndMap (lSINHKGYieldTimePeriod, lSINHKGYieldFeatures);
-    FacBomManager::linkWithParent (lSINHKGYieldTimePeriod, lSINHKGYieldFeatures);        
+    FacBomManager::addToListAndMap (lSINHKGYieldTimePeriod, 
+				    lSINHKGYieldFeatures);
+    FacBomManager::linkWithParent (lSINHKGYieldTimePeriod, 
+				   lSINHKGYieldFeatures);        
 
     // Generate Segment Features and link them to their YieldRule.
     // Use the same key as previously
@@ -3592,14 +3340,18 @@ namespace stdair {
     AirlineClassList& lRAC_SQ_CXAirlineYClassList =
       FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineYClassListKey);
     lRAC_SQ_CXAirlineYClassList.setYield(1200);
-    FacBomManager::addToListAndMap (lSINHKGYieldFeatures, lRAC_SQ_CXAirlineYClassList);
-    FacBomManager::linkWithParent (lSINHKGYieldFeatures, lRAC_SQ_CXAirlineYClassList);
+    FacBomManager::addToListAndMap (lSINHKGYieldFeatures, 
+				    lRAC_SQ_CXAirlineYClassList);
+    FacBomManager::linkWithParent (lSINHKGYieldFeatures, 
+				   lRAC_SQ_CXAirlineYClassList);
     
     AirlineClassList& lRAC_SQ_CXAirlineMClassList =
       FacBom<AirlineClassList>::instance().create (lSQ_CXAirlineMClassListKey);
     lRAC_SQ_CXAirlineMClassList.setYield(850);
-    FacBomManager::addToListAndMap (lSINHKGYieldFeatures, lRAC_SQ_CXAirlineMClassList);
-    FacBomManager::linkWithParent (lSINHKGYieldFeatures, lRAC_SQ_CXAirlineMClassList);
+    FacBomManager::addToListAndMap (lSINHKGYieldFeatures, 
+				    lRAC_SQ_CXAirlineMClassList);
+    FacBomManager::linkWithParent (lSINHKGYieldFeatures, 
+				   lRAC_SQ_CXAirlineMClassList);
     
   }
 
