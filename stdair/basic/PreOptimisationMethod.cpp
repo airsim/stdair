@@ -6,74 +6,76 @@
 #include <sstream>
 // StdAir
 #include <stdair/stdair_exceptions.hpp>
-#include <stdair/basic/UnconstrainingMethod.hpp>
+#include <stdair/basic/PreOptimisationMethod.hpp>
 
 namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
-  const std::string UnconstrainingMethod::_labels[LAST_VALUE] =
-    { "Expectation-Maximisation" };
+  const std::string PreOptimisationMethod::_labels[LAST_VALUE] =
+    {"None", "Fare Adjustment", "Marginal Revenue Transformation"};
 
   // //////////////////////////////////////////////////////////////////////
-  const char UnconstrainingMethod::
-  _methodLabels[LAST_VALUE] = { 'E' };
+  const char PreOptimisationMethod::
+  _methodLabels[LAST_VALUE] = {'N', 'F', 'M'};
 
   
   // //////////////////////////////////////////////////////////////////////
-  UnconstrainingMethod::UnconstrainingMethod()
+  PreOptimisationMethod::PreOptimisationMethod()
     : _method (LAST_VALUE) {
     assert (false);
   }
 
   // //////////////////////////////////////////////////////////////////////
-  UnconstrainingMethod::
-  UnconstrainingMethod (const UnconstrainingMethod& iUnconstrainingMethod)
-    : _method (iUnconstrainingMethod._method) {
+  PreOptimisationMethod::
+  PreOptimisationMethod (const PreOptimisationMethod& iPreOptimisationMethod)
+    : _method (iPreOptimisationMethod._method) {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  UnconstrainingMethod::
-  UnconstrainingMethod (const EN_UnconstrainingMethod& iUnconstrainingMethod)
-    : _method (iUnconstrainingMethod) {
+  PreOptimisationMethod::
+  PreOptimisationMethod (const EN_PreOptimisationMethod& iPreOptimisationMethod)
+    : _method (iPreOptimisationMethod) {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  UnconstrainingMethod::UnconstrainingMethod (const char iMethod) {
+  PreOptimisationMethod::PreOptimisationMethod (const char iMethod) {
     switch (iMethod) {
-    case 'E': _method = EM; break;
+    case 'N': _method = NONE; break;
+    case 'F': _method = FA; break;
+    case 'M': _method = MRT; break;
     default: _method = LAST_VALUE; break;
     }
 
     if (_method == LAST_VALUE) {
       const std::string& lLabels = describeLabels();
       std::ostringstream oMessage;
-      oMessage << "The unconstraining method '" << iMethod
-               << "' is not known. Known unconstraining methods: " << lLabels;
+      oMessage << "The pre-optimisation method '" << iMethod
+               << "' is not known. Known pre-optimisation methods: " << lLabels;
       throw CodeConversionException (oMessage.str());
     }
   }
   
   // //////////////////////////////////////////////////////////////////////
-  const std::string& UnconstrainingMethod::
-  getLabel (const EN_UnconstrainingMethod& iMethod) {
+  const std::string& PreOptimisationMethod::
+  getLabel (const EN_PreOptimisationMethod& iMethod) {
     return _labels[iMethod];
   }
   
   // //////////////////////////////////////////////////////////////////////
-  char UnconstrainingMethod::getMethodLabel (const EN_UnconstrainingMethod& iMethod) {
+  char PreOptimisationMethod::getMethodLabel (const EN_PreOptimisationMethod& iMethod) {
     return _methodLabels[iMethod];
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string UnconstrainingMethod::
-  getMethodLabelAsString (const EN_UnconstrainingMethod& iMethod) {
+  std::string PreOptimisationMethod::
+  getMethodLabelAsString (const EN_PreOptimisationMethod& iMethod) {
     std::ostringstream oStr;
     oStr << _methodLabels[iMethod];
     return oStr.str();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string UnconstrainingMethod::describeLabels() {
+  std::string PreOptimisationMethod::describeLabels() {
     std::ostringstream ostr;
     for (unsigned short idx = 0; idx != LAST_VALUE; ++idx) {
       if (idx != 0) {
@@ -85,27 +87,27 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  UnconstrainingMethod::EN_UnconstrainingMethod UnconstrainingMethod::getMethod() const {
+  PreOptimisationMethod::EN_PreOptimisationMethod PreOptimisationMethod::getMethod() const {
     return _method;
   }
   
   // //////////////////////////////////////////////////////////////////////
-  std::string UnconstrainingMethod::getMethodAsString() const {
+  std::string PreOptimisationMethod::getMethodAsString() const {
     std::ostringstream oStr;
     oStr << _methodLabels[_method];
     return oStr.str();
   }
   
   // //////////////////////////////////////////////////////////////////////
-  const std::string UnconstrainingMethod::describe() const {
+  const std::string PreOptimisationMethod::describe() const {
     std::ostringstream ostr;
     ostr << _labels[_method];
     return ostr.str();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  bool UnconstrainingMethod::
-  operator== (const EN_UnconstrainingMethod& iMethod) const {
+  bool PreOptimisationMethod::
+  operator== (const EN_PreOptimisationMethod& iMethod) const {
     return (_method == iMethod);
   }
   

@@ -43,6 +43,15 @@ namespace stdair {
   /** Define the code of the fare family (e.g., 1, 2, 3, etc.). */
   typedef std::string FamilyCode_T;
 
+  /** Define the code of the policy (e.g., 1, 2, 3, etc.). */
+  typedef std::string PolicyCode_T;
+
+  /** Define the code of the nesting structure (e.g., "default"). */
+  typedef std::string NestingStructureCode_T;
+
+  /** Define the code of the nesting node (e.g., 1, 2, 3, etc). */
+  typedef std::string NestingNodeCode_T;
+
   /** Define the booking class code (product segment class, e.g., H,
       B, K, etc.). */
   typedef std::string ClassCode_T;

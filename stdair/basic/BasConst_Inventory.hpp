@@ -9,6 +9,7 @@
 #include <stdair/stdair_date_time_types.hpp>
 #include <stdair/basic/ForecastingMethod.hpp>
 #include <stdair/basic/UnconstrainingMethod.hpp>
+#include <stdair/basic/PreOptimisationMethod.hpp>
 #include <stdair/basic/OptimisationMethod.hpp>
 #include <stdair/basic/PartnershipTechnique.hpp>
 
@@ -56,6 +57,21 @@ namespace stdair {
 
   /** Default null fare family Code ("NoFF"). */
   extern const FamilyCode_T DEFAULT_NULL_FARE_FAMILY_CODE;
+
+  /** Default Policy Code ("0"). */
+  extern const PolicyCode_T DEFAULT_POLICY_CODE;
+
+  /** Default Nesting Structure Code ("DEFAULT"). */
+  extern const NestingStructureCode_T DEFAULT_NESTING_STRUCTURE_CODE;
+
+  /** Display Nesting Structure Code ("Display Nesting"). */
+  extern const NestingStructureCode_T DISPLAY_NESTING_STRUCTURE_CODE;
+
+  /** Display Nesting Structure Code ("Yield-Based Nesting"). */
+  extern const NestingStructureCode_T YIELD_BASED_NESTING_STRUCTURE_CODE;
+
+  /** Default Nesting Node Code ("0"). */
+  extern const NestingNodeCode_T DEFAULT_NESTING_NODE_CODE;
 
   /** Default class code value ("X"). */
   extern const ClassCode_T DEFAULT_CLASS_CODE;
@@ -122,6 +138,9 @@ namespace stdair {
 
   /** Default Unconstraining Method (By Time Frame). */
   extern const UnconstrainingMethod DEFAULT_UNCONSTRAINING_METHOD; 
+
+  /** Default Pre-Optimisation Method (NONE). */
+  extern const PreOptimisationMethod DEFAULT_PREOPTIMISATION_METHOD;
 
   /** Default Optimisation Method (Leg Based EMSRb). */
   extern const OptimisationMethod DEFAULT_OPTIMISATION_METHOD;

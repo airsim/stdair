@@ -155,8 +155,23 @@ namespace stdair {
   const FrequentFlyer_T FREQUENT_FLYER_MEMBER ("M");
 
   // //////// Default ///////
-  /** Default family code value ("X"). */
-  const ClassCode_T DEFAULT_FAMILY_CODE ("0");
+  /** Default family code value ("0"). */
+  const FamilyCode_T DEFAULT_FAMILY_CODE ("0");
+  
+  /** Default policy code value ("0"). */
+  const PolicyCode_T DEFAULT_POLICY_CODE ("0");
+
+  /** Default Nesting Structure Code ("DEFAULT"). */
+  const NestingStructureCode_T DEFAULT_NESTING_STRUCTURE_CODE ("DEFAULT");
+
+  /** Display Nesting Structure Code ("Display Nesting"). */
+  const NestingStructureCode_T DISPLAY_NESTING_STRUCTURE_CODE ("Display Nesting");
+
+  /** Display Nesting Structure Code ("Yield-Based Nesting"). */
+  const NestingStructureCode_T YIELD_BASED_NESTING_STRUCTURE_CODE ("Yield-Based Nesting");
+
+  /** Default Nesting Node Code ("0"). */
+  const NestingNodeCode_T DEFAULT_NESTING_NODE_CODE ("0");
 
   /** Default number of airlines. */
   const NbOfAirlines_T DEFAULT_NBOFAIRLINES (0);
@@ -219,7 +234,10 @@ namespace stdair {
   const PartnershipTechnique DEFAULT_PARTNERSHIP_TECHNIQUE ('N');
 
   /** Default Forecasting Method (Q Forecasting). */
-  const ForecastingMethod DEFAULT_FORECASTING_METHOD ('Q');
+  const ForecastingMethod DEFAULT_FORECASTING_METHOD ('Q'); 
+
+  /** Default Pre-Optimisation Method (NONE). */
+  const PreOptimisationMethod DEFAULT_PREOPTIMISATION_METHOD ('N');
 
   /** Default Optimisation Method (Leg Based EMSRb). */
   const OptimisationMethod DEFAULT_OPTIMISATION_METHOD ('E');;

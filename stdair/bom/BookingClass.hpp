@@ -144,10 +144,21 @@ namespace stdair {
 
     /** Yield. */
     const Yield_T& getYield () const { return _yield; }
+    const Yield_T& getAdjustedYield () const { return _adjustedYield; }
     
     /** Demand distribution. */
     const MeanValue_T& getMean () const { return _mean; }
     const StdDevValue_T& getStdDev () const {return _stdDev; }
+    const MeanValue_T& getPriceDemMean () const { return _priceDemMean; }
+    const StdDevValue_T& getPriceDemStdDev () const { return _priceDemStdDev; }
+    const MeanValue_T& getCumuPriceDemMean () const {
+      return _cumuPriceDemMean;
+    }
+    const StdDevValue_T& getCumuPriceDemStdDev () const {
+      return _cumuPriceDemStdDev;
+    }  
+    const MeanValue_T& getProductDemMean () const { return _productDemMean; }
+    const StdDevValue_T& getProductDemStdDev () const {return _productDemStdDev; }
 
     /** Generated demand vector. */
     const GeneratedDemandVector_T& getGeneratedDemandVector () const {
@@ -182,11 +193,30 @@ namespace stdair {
     }
 
     /** Yield. */
-    void setYield (const Yield_T& iYield) { _yield = iYield; }
+    void setYield (const Yield_T& iYield) {
+      _yield = iYield;
+      _adjustedYield = iYield;
+    }
+    void setAdjustedYield (const Yield_T& iYield) { _adjustedYield = iYield; }
     
     /** Demand distribution. */
     void setMean (const MeanValue_T& iMean) { _mean = iMean; }
     void setStdDev (const StdDevValue_T& iStdDev) { _stdDev = iStdDev; }
+    void setPriceDemMean (const MeanValue_T& iMean) { _priceDemMean = iMean; }
+    void setPriceDemStdDev (const StdDevValue_T& iStdDev) {
+      _priceDemStdDev = iStdDev;
+    }
+    void setCumuPriceDemMean (const MeanValue_T& iMean) {
+      _cumuPriceDemMean = iMean; }
+    void setCumuPriceDemStdDev (const StdDevValue_T& iStdDev) {
+      _cumuPriceDemStdDev = iStdDev;
+    }
+    void setProductDemMean (const MeanValue_T& iMean) {
+      _productDemMean = iMean;
+    }
+    void setProductDemStdDev (const StdDevValue_T& iStdDev) {
+      _productDemStdDev = iStdDev;
+    }
 
   public:
     // /////////// Display support methods /////////
@@ -306,10 +336,23 @@ namespace stdair {
 
     /** Yield. */
     Yield_T _yield;
+    Yield_T _adjustedYield;
 
-    /** Achievable demand distribution forecast. */
+    /** Demand distribution forecast. */
     MeanValue_T _mean;
     StdDevValue_T _stdDev;
+
+    /** Price-oriented demand distribution forecast. */
+    MeanValue_T _priceDemMean;
+    StdDevValue_T _priceDemStdDev;
+
+    /** Cumulative price-oriented demand distribution forecast. */
+    MeanValue_T _cumuPriceDemMean;
+    StdDevValue_T _cumuPriceDemStdDev;
+
+    /** Product-oriented demand distribution forecast. */
+    MeanValue_T _productDemMean;
+    StdDevValue_T _productDemStdDev;
 
     /** Vector of number of demand samples drawn from the demand distribution.*/
     GeneratedDemandVector_T _generatedDemandVector;

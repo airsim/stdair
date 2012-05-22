@@ -38,12 +38,6 @@ namespace stdair {
 
   /** Define the sellup probability.*/
   typedef double SellupProbability_T;
-
-  /** Define the sellup probability vector.*/
-  typedef std::vector<SellupProbability_T> SellupProbabilityVector_T;
-
-  /** Define the holder of sellup factors (used for computing Q-eq bookings)*/
-  typedef std::vector<double> SellupFactorHolder_T;
   
     /** Define the vector of historical unconstrained demand. */
   typedef std::vector<NbOfRequests_T> UncDemVector_T;
@@ -51,32 +45,27 @@ namespace stdair {
     /** Define the vector of historical bookings. */
   typedef std::vector<NbOfBookings_T> BookingVector_T;
 
-  /** Define the map betweent the booking class and it's corresponding
-      unconstrained demand vector. */
-  typedef std::map<BookingClass*, UncDemVector_T>BookingClassUncDemVectorMap_T;
-
-  /** Define the map betweent the booking class and it's corresponding
-      unconstrained demand. */
-  typedef std::map<BookingClass*, NbOfRequests_T>BookingClassUncDemMap_T;
-
   /** Define the FRAT5 curve. */
   typedef std::map<const DTD_T, double> FRAT5Curve_T;
 
-  /** Define the (cumulative) unconstrained demand curve. */
-  typedef std::vector<NbOfRequests_T> UncDemCurve_T;
-
-  /** Define the holder of unconstrained demand curves. */
-  typedef std::vector<UncDemCurve_T> UncDemCurveHolder_T;
-
-  /** Define the map between booking class and holder of unconstrained
-      demand curve. */
-  typedef std::map<BookingClass*, UncDemCurveHolder_T> BookingClassUncDemCurveHolderMap_T;
+  /** Define the fare family disutility curve. */
+  typedef std::map<const DTD_T, double> FFDisutility_T;
 
   /** Define the sell-up factor curve. */
-  typedef std::vector<double> SellUpCurve_T;
+  typedef std::map<const DTD_T, double> SellUpCurve_T;
+
+  /** Define the dispatching factor curve. */
+  typedef std::map<const DTD_T, double> DispatchingCurve_T;
 
   /** Define the map between class and sell-up factor curve. */
   typedef std::map<BookingClass*, SellUpCurve_T> BookingClassSellUpCurveMap_T;
+
+  /** Define the map between class and dispatching factor curve. */
+  typedef std::map<BookingClass*, DispatchingCurve_T> BookingClassDispatchingCurveMap_T;
+
+  /** Define the map between the yield of a class and the demand forecast
+      of this class within a policy. */
+  typedef std::map<const Yield_T, double> YieldDemandMap_T;
 
   /** Define the revenue of a policy */
   typedef double Revenue_T;

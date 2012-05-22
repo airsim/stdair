@@ -15,13 +15,11 @@ namespace stdair {
   struct UnconstrainingMethod : public StructAbstract {
   public:
     typedef enum { 
-      TIME_FRAME = 0,
-      BOOKING_CURVE,
+      EM = 0,
       LAST_VALUE
     } EN_UnconstrainingMethod;
 
-    /** Get the label as a string (e.g., "ByTimeFrame or
-        "BookingCurve"). */
+    /** Get the label as a string (e.g., "Expectation-Maximisation") */
     static const std::string& getLabel (const EN_UnconstrainingMethod&);
 
     /** Get the label as a single char (e.g., 'T' or 'B'). */
@@ -39,8 +37,8 @@ namespace stdair {
     /** Get the enumerated value as a short string (e.g., "T" or "B"). */
     std::string getMethodAsString() const;
     
-    /** Give a description of the structure (e.g., "ByTimeFrame" or
-        "BookingCurve"). */
+    /** Give a description of the structure (e.g.,
+        "Expectation-Maximisation"). */
     const std::string describe() const;
 
   public:
