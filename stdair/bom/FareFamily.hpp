@@ -66,7 +66,7 @@ namespace stdair {
     }
         
     /** Get the Disutility Curve. */
-    const FFDisutility_T& getDisutilityCurve () const {
+    const FFDisutilityCurve_T& getDisutilityCurve () const {
       return _disutilityCurve;
     }
     
@@ -86,7 +86,7 @@ namespace stdair {
     }
     
     /** Disutility Curve. */
-    void setDisutilityCurve (const FFDisutility_T& iDisutilityCurve) {
+    void setDisutilityCurve (const FFDisutilityCurve_T& iDisutilityCurve) {
       _disutilityCurve = iDisutilityCurve;
     }
     
@@ -200,7 +200,7 @@ namespace stdair {
     /**
      * The associated disutility for the next higher fare family.
      */
-    FFDisutility_T _disutilityCurve;
+    FFDisutilityCurve_T _disutilityCurve;
 
     /** Demand distribution forecast. */
     MeanValue_T _mean;

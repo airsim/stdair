@@ -49,7 +49,7 @@ namespace stdair {
   typedef std::map<const DTD_T, double> FRAT5Curve_T;
 
   /** Define the fare family disutility curve. */
-  typedef std::map<const DTD_T, double> FFDisutility_T;
+  typedef std::map<const DTD_T, double> FFDisutilityCurve_T;
 
   /** Define the sell-up factor curve. */
   typedef std::map<const DTD_T, double> SellUpCurve_T;
