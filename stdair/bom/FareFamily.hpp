@@ -7,7 +7,8 @@
 // STL
 #include <iosfwd>
 #include <string>
-// StdAir 
+// StdAir
+#include <stdair/stdair_rm_types.hpp>
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/FareFamilyKey.hpp>
 #include <stdair/bom/FareFamilyTypes.hpp>
@@ -58,6 +59,20 @@ namespace stdair {
     const HolderMap_T& getHolderMap() const {
       return _holderMap;
     }
+    
+    /** Get the FRAT5 Curve. */
+    const FRAT5Curve_T& getFrat5Curve () const {
+      return _frat5Curve;
+    }
+        
+    /** Get the Disutility Curve. */
+    const FFDisutilityCurve_T& getDisutilityCurve () const {
+      return _disutilityCurve;
+    }
+    
+    /** Demand distribution. */
+    const MeanValue_T& getMean () const { return _mean; }
+    const StdDevValue_T& getStdDev () const {return _stdDev; }
 
     /** Demand distribution. */
     const MeanStdDevPairVector_T& getMeanStdDev () const {return _meanStdDev; }
@@ -65,7 +80,20 @@ namespace stdair {
 
   public:
     // /////////// Setters ////////////
-
+    /** FRAT5 Curve. */
+    void setFrat5Curve (const FRAT5Curve_T& iFRAT5Curve) {
+      _frat5Curve = iFRAT5Curve;
+    }
+    
+    /** Disutility Curve. */
+    void setDisutilityCurve (const FFDisutilityCurve_T& iDisutilityCurve) {
+      _disutilityCurve = iDisutilityCurve;
+    }
+    
+    /** Demand distribution. */
+    void setMean (const MeanValue_T& iMean) { _mean = iMean; }
+    void setStdDev (const StdDevValue_T& iStdDev) { _stdDev = iStdDev; }
+    
     /** Demand distribution. */
     void setMeanStdDev (const MeanStdDevPairVector_T& iMeanStdDev){ 
       _meanStdDev = iMeanStdDev; 
@@ -164,7 +192,23 @@ namespace stdair {
      */
     HolderMap_T _holderMap;
 
-    /** Achievable demand distribution forecast. */
+    /**
+     * The associated FRAT5 curve. 
+     */
+    FRAT5Curve_T _frat5Curve;
+
+    /**
+     * The associated disutility for the next higher fare family.
+     */
+    FFDisutilityCurve_T _disutilityCurve;
+
+    /** Demand distribution forecast. */
+    MeanValue_T _mean;
+    StdDevValue_T _stdDev;
+
+    /**
+     * Achievable demand distribution forecast.
+     */
     MeanStdDevPairVector_T _meanStdDev;
   };
 

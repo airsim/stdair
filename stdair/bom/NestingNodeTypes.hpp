@@ -1,6 +1,6 @@
 // //////////////////////////////////////////////////////////////////////
-#ifndef __STDAIR_BOM_POLICYTYPES_HPP
-#define __STDAIR_BOM_POLICYTYPES_HPP
+#ifndef __STDAIR_BOM_NESTINGNODETYPES_HPP
+#define __STDAIR_BOM_NESTINGNODETYPES_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -14,13 +14,13 @@
 namespace stdair {
 
   // Forward declarations.
-  class Policy;
+  class NestingNode;
 
   /** Define the fare family list. */
-  typedef std::list<Policy*> PolicyList_T;
+  typedef std::list<NestingNode*> NestingNodeList_T;
 
   /** Define the fare family map. */
-  typedef std::map<const MapKey_T, Policy*> PolicyMap_T;
+  typedef std::map<const MapKey_T, NestingNode*> NestingNodeMap_T;
   
 }
-#endif // __STDAIR_BOM_POLICYTYPES_HPP
+#endif // __STDAIR_BOM_NESTINGNODETYPES_HPP
