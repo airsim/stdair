@@ -25,7 +25,8 @@ namespace stdair {
    * @brief Class representing the actual attributes for a family fare.
    */
   class FareFamily : public BomAbstract {
-    template <typename BOM> friend class FacBom;
+    template <typename BOM> friend class FacBom; 
+    template <typename BOM> friend class FacCloneBom;
     friend class FacBomManager;
     friend class boost::serialization::access;
 

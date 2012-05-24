@@ -33,7 +33,8 @@ namespace stdair {
    * segment-cabin.
    */
   class SegmentCabin : public BomAbstract {
-    template <typename BOM> friend class FacBom;
+    template <typename BOM> friend class FacBom;  
+    template <typename BOM> friend class FacCloneBom;
     friend class FacBomManager;
     friend class boost::serialization::access;
     

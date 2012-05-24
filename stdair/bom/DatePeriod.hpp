@@ -16,7 +16,8 @@ namespace stdair {
    * @brief Class representing the actual attributes for a fare date-period.
    */
   class DatePeriod : public BomAbstract {
-    template <typename BOM> friend class FacBom;
+    template <typename BOM> friend class FacBom; 
+    template <typename BOM> friend class FacCloneBom;
     friend class FacBomManager;
 
   public:

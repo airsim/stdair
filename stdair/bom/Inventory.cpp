@@ -21,11 +21,10 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory::Inventory (const Inventory&)
-    : _key (DEFAULT_AIRLINE_CODE),
+  Inventory::Inventory (const Inventory& iInventory)
+    : _key (iInventory._key),
       _parent (NULL),
       _airlineFeature (NULL) {
-    assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////

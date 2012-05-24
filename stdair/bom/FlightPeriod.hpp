@@ -13,7 +13,8 @@ namespace stdair {
 
   /** Class representing the actual attributes for an airline flight-period. */
   class FlightPeriod : public BomAbstract {
-    template <typename BOM> friend class FacBom;
+    template <typename BOM> friend class FacBom; 
+    template <typename BOM> friend class FacCloneBom;
     friend class FacBomManager;
 
   public:
@@ -58,11 +59,27 @@ namespace stdair {
     const std::string describeKey() const { return _key.toString(); }
     
   protected:
-    /** Default constructors. */
-    FlightPeriod (const Key_T&);
+    /**
+     * Main constructor.
+     */
+    FlightPeriod (const Key_T&);  
+
+    /** 
+     * Destructor. 
+     */
+    ~FlightPeriod ();
+
+  private:  
+
+    /**
+     * Default constructor.
+     */
+    FlightPeriod ();
+
+    /** 
+     * Copy constructor. 
+     */
     FlightPeriod (const FlightPeriod&);
-    /** Destructor. */
-    ~FlightPeriod();
 
   protected:
     // Attributes

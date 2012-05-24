@@ -22,7 +22,8 @@ namespace stdair {
    * class.
    */
   class BookingClass : public BomAbstract {
-    template <typename BOM> friend class FacBom;
+    template <typename BOM> friend class FacBom;    
+    template <typename BOM> friend class FacCloneBom;
     friend class FacBomManager;
 
   public:

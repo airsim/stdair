@@ -16,7 +16,8 @@ namespace stdair {
    * @brief Class representing the actual attributes for an airport-pair.
    */
   class AirportPair : public BomAbstract {
-    template <typename BOM> friend class FacBom;
+    template <typename BOM> friend class FacBom;    
+    template <typename BOM> friend class FacCloneBom;
     friend class FacBomManager; 
 
   public:

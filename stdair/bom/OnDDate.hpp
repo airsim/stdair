@@ -31,7 +31,8 @@ namespace stdair {
    * flight-date.
    */
   class OnDDate : public BomAbstract {
-    template <typename BOM> friend class FacBom;
+    template <typename BOM> friend class FacBom;  
+    template <typename BOM> friend class FacCloneBom;
     friend class FacBomManager;
     friend class boost::serialization::access;
 
