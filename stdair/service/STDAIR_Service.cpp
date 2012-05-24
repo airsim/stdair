@@ -21,6 +21,7 @@
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/DatePeriod.hpp>
 #include <stdair/command/CmdBomManager.hpp>
+#include <stdair/command/CmdCloneBomManager.hpp>
 #include <stdair/service/FacSupervisor.hpp>
 #include <stdair/service/FacSTDAIRServiceContext.hpp>
 #include <stdair/service/STDAIR_ServiceContext.hpp>
@@ -125,8 +126,20 @@ namespace stdair {
   BomRoot& STDAIR_Service::getBomRoot() const {
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
-    return lSTDAIR_ServiceContext.getBomRoot();
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
+    // Return the clone built-in Bom root
+    return lSTDAIR_ServiceContext.getCloneBomRoot();
+  }  
+
+  // //////////////////////////////////////////////////////////////////////
+  BomRoot& STDAIR_Service::getPersistentBomRoot() const {
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
+    // Return the persistent built-in Bom root
+    return lSTDAIR_ServiceContext.getPersistentBomRoot();
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -138,7 +151,8 @@ namespace stdair {
   const BasDBParams& STDAIR_Service::getDBParams() const {
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
     return lSTDAIR_ServiceContext.getDBParams();
   }
   
@@ -147,7 +161,8 @@ namespace stdair {
   getServiceInitialisationType() const {
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
     return lSTDAIR_ServiceContext.getServiceInitialisationType();
   }
 
@@ -155,13 +170,14 @@ namespace stdair {
   void STDAIR_Service::buildSampleBom() {
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
 
     // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    BomRoot& lPersistentBomRoot = lSTDAIR_ServiceContext.getPersistentBomRoot();
     
     // Delegate the building process to the dedicated command
-    CmdBomManager::buildSampleBom (lBomRoot);
+    CmdBomManager::buildSampleBom (lPersistentBomRoot);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -169,13 +185,27 @@ namespace stdair {
   buildDummyInventory (const CabinCapacity_T& iCabinCapacity) {
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
 
     // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    BomRoot& lPersistentBomRoot = lSTDAIR_ServiceContext.getPersistentBomRoot();
     
     // Delegate the building process to the dedicated command
-    CmdBomManager::buildDummyInventory (lBomRoot, iCabinCapacity);
+    CmdBomManager::buildDummyInventory (lPersistentBomRoot, iCabinCapacity);
+    CmdBomManager::buildCompleteDummyInventoryForFareFamilies (lPersistentBomRoot);
+
+  } 
+
+  // //////////////////////////////////////////////////////////////////////
+  void STDAIR_Service::
+  buildDummyLegSegmentAccesses (BomRoot& iBomRoot) {
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+
+    // Delegate the building process to the dedicated command
+    CmdBomManager::buildDummyLegSegmentAccesses (iBomRoot);
+
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -213,12 +243,14 @@ namespace stdair {
 
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
 
     // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    const BomRoot& lCloneBomRoot = lSTDAIR_ServiceContext.getCloneBomRoot();
 
-    BomJSONExport::jsonExportFlightDateList (oStr, lBomRoot, iAirlineCode, iFlightNumber);
+    BomJSONExport::jsonExportFlightDateList (oStr, lCloneBomRoot, 
+					     iAirlineCode, iFlightNumber);
     
     return oStr.str();
   }
@@ -232,15 +264,17 @@ namespace stdair {
 
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
 
     // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    const BomRoot& lCloneBomRoot = lSTDAIR_ServiceContext.getCloneBomRoot();
 
     // Retrieve the flight-date object corresponding to the key
     FlightDate* lFlightDate_ptr = 
-      BomRetriever::retrieveFlightDateFromKeySet (lBomRoot, iAirlineCode,
-                                                  iFlightNumber, iDepartureDate);
+      BomRetriever::retrieveFlightDateFromKeySet (lCloneBomRoot, iAirlineCode,
+                                                  iFlightNumber, 
+						  iDepartureDate);
 
     // Dump the content of the whole BOM tree into the string
     if (lFlightDate_ptr != NULL) {
@@ -311,10 +345,10 @@ namespace stdair {
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
 
     // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    const BomRoot& lCloneBomRoot = lSTDAIR_ServiceContext.getCloneBomRoot();
     
     // Dump the content of the whole BOM tree into the string
-    BomDisplay::list (oStr, lBomRoot, iAirlineCode, iFlightNumber);
+    BomDisplay::list (oStr, lCloneBomRoot, iAirlineCode, iFlightNumber);
     
     return oStr.str();
   }
@@ -328,10 +362,10 @@ namespace stdair {
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
 
     // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    const BomRoot& lCloneBomRoot = lSTDAIR_ServiceContext.getCloneBomRoot();
     
     // Dump the content of the whole BOM tree into the string
-    BomDisplay::listAirportPairDateRange (oStr, lBomRoot);
+    BomDisplay::listAirportPairDateRange (oStr, lCloneBomRoot);
     
     return oStr.str();
   }
@@ -347,11 +381,11 @@ namespace stdair {
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
 
     // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    const BomRoot& lCloneBomRoot = lSTDAIR_ServiceContext.getCloneBomRoot();
     
     // Dump the content of the whole BOM tree into the string
     const FlightDate* lFlightDate_ptr =
-      BomRetriever::retrieveFlightDateFromKeySet (lBomRoot, iAirlineCode,
+      BomRetriever::retrieveFlightDateFromKeySet (lCloneBomRoot, iAirlineCode,
                                                   iFlightNumber,
                                                   iDepartureDate);    
     
@@ -369,11 +403,11 @@ namespace stdair {
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
 
     // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    const BomRoot& lCloneBomRoot = lSTDAIR_ServiceContext.getCloneBomRoot();
     
     // Dump the content of the whole BOM tree into the string
     stdair::DatePeriodList_T lDatePeriodList;
-    BomRetriever::retrieveDatePeriodListFromKeySet  (lBomRoot, ioOrigin,
+    BomRetriever::retrieveDatePeriodListFromKeySet  (lCloneBomRoot, ioOrigin,
                                                      ioDestination,
                                                      ioDepartureDate,
                                                      lDatePeriodList);    
@@ -390,10 +424,10 @@ namespace stdair {
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
 
     // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    const BomRoot& lCloneBomRoot = lSTDAIR_ServiceContext.getCloneBomRoot();
     
     // Dump the content of the whole BOM tree into the string
-    BomDisplay::csvDisplay (oStr, lBomRoot);
+    BomDisplay::csvDisplay (oStr, lCloneBomRoot);
     
     return oStr.str();
   }
@@ -410,12 +444,13 @@ namespace stdair {
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
 
     // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    const BomRoot& lCloneBomRoot = lSTDAIR_ServiceContext.getCloneBomRoot();
 
     // Retrieve the flight-date object corresponding to the key
     FlightDate* lFlightDate_ptr = 
-      BomRetriever::retrieveFlightDateFromKeySet (lBomRoot, iAirlineCode,
-                                                  iFlightNumber, iDepartureDate);
+      BomRetriever::retrieveFlightDateFromKeySet (lCloneBomRoot, iAirlineCode,
+                                                  iFlightNumber, 
+						  iDepartureDate);
 
     // Dump the content of the whole BOM tree into the string
     if (lFlightDate_ptr != NULL) {
@@ -452,12 +487,13 @@ namespace stdair {
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
 
     // Retrieve the BOM tree root
-    BomRoot& lBomRoot = lSTDAIR_ServiceContext.getBomRoot();
+    const BomRoot& lCloneBomRoot = lSTDAIR_ServiceContext.getCloneBomRoot();
 
     // Retrieve the flight-date object corresponding to the key
     DatePeriodList_T lDatePeriodList;
-    BomRetriever::retrieveDatePeriodListFromKeySet (lBomRoot, iOrigin,
-                                                    iDestination, iDepartureDate,
+    BomRetriever::retrieveDatePeriodListFromKeySet (lCloneBomRoot, iOrigin,
+                                                    iDestination, 
+						    iDepartureDate,
                                                     lDatePeriodList);
 
     // Dump the content of the whole BOM tree into the string
@@ -475,6 +511,29 @@ namespace stdair {
   void STDAIR_Service::finalise() {
     // Clean all the objects
     FacSupervisor::cleanAll();
+  } 
+
+  // //////////////////////////////////////////////////////////////////////
+  void STDAIR_Service::clonePersistentBom () {  
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext; 
+
+    // Clean all the cloned objects
+    FacSupervisor::instance().cleanCloneBomLayer();
+
+    // Init the root of the clone BOM tree
+    lSTDAIR_ServiceContext.initCloneBomRoot();
+
+    // Retrieve the persistent BOM tree root and the clone BOM tree root
+    const BomRoot& lPersistentBomRoot = 
+      lSTDAIR_ServiceContext.getPersistentBomRoot(); 
+    BomRoot& lCloneBomRoot = lSTDAIR_ServiceContext.getCloneBomRoot(); 
+   
+    // Call the dedicated service to clone the whole BOM
+    CmdCloneBomManager::cloneBomRoot (lPersistentBomRoot, lCloneBomRoot);
+    
   }
 
 }

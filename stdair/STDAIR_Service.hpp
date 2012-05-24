@@ -191,7 +191,12 @@ namespace stdair {
      * @param const bool isForCRS Whether the sample booking request is for CRS.
      * @return BookingRequestStruct& Sample booking request structure.
      */
-    BookingRequestStruct buildSampleBookingRequest (const bool isForCRS = false);
+    BookingRequestStruct buildSampleBookingRequest (const bool isForCRS = false);  
+
+    /**
+     * @brief Clone the persistent Bom.
+     */
+    void clonePersistentBom ();
 
   public:  
 
@@ -431,10 +436,21 @@ namespace stdair {
     /**
      * @brief Finalise.
      */
-    void finalise();
-    
+    void finalise();  public:
 
-  private:
+    /**
+     * @brief Get a reference on the BomRoot object.
+     *
+     * If the service context has not been initialised, that
+     * method throws an exception (failing assertion).
+     *
+     * @return BomRoot& Reference on the BomRoot.
+     */
+    BomRoot& getPersistentBomRoot() const;
+
+    void buildDummyLegSegmentAccesses (BomRoot&);
+
+ private:
     // ///////// Service Context /////////
     /**
      * Stdair context.
