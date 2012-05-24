@@ -6,6 +6,7 @@
 #include <sstream>
 // StdAir
 #include <stdair/basic/BasConst_Inventory.hpp>
+#include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/BomKeyManager.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRoot.hpp>
@@ -489,6 +490,38 @@ namespace stdair {
 
     assert (oSegmentCabin_ptr != NULL);
     return *oSegmentCabin_ptr;
+  } 
+
+  // ////////////////////////////////////////////////////////////////////
+  std::string BomRetriever::
+  retrieveFullKeyFromSegmentDate (const SegmentDate& iSegmentdate) { 
+
+    std::ostringstream lFullKeyStr;
+ 
+    // Get the parent flight date
+    FlightDate* lFlightDate_ptr = 
+      BomManager::getParentPtr<FlightDate>(iSegmentdate);
+    if (lFlightDate_ptr == NULL) { 
+      return lFullKeyStr.str();
+    }
+    assert (lFlightDate_ptr != NULL);
+
+    // Get the parent inventory
+    Inventory* lInventory_ptr = 
+      BomManager::getParentPtr<Inventory> (*lFlightDate_ptr);  
+    if (lInventory_ptr == NULL) { 
+      return lFullKeyStr.str();
+    }
+    assert (lInventory_ptr != NULL);
+    
+    lFullKeyStr << lInventory_ptr->describeKey() 
+		<< DEFAULT_KEY_SUB_FLD_DELIMITER;	
+    lFullKeyStr << lFlightDate_ptr->describeKey() 
+		<< DEFAULT_KEY_SUB_FLD_DELIMITER;
+    lFullKeyStr << iSegmentdate.describeKey();
+	
+    return lFullKeyStr.str();
+
   }
 
 }
