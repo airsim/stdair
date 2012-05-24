@@ -307,7 +307,9 @@ namespace stdair {
       ioSegmentDate.getMarketingSegmentDateList ();
     const bool isMarketingSegmentDateListEmpty =
       lMarketingSegmentDateList.empty();
-    return isMarketingSegmentDateListEmpty;
+    const bool hasMarketingSegmentDateList = 
+      !isMarketingSegmentDateListEmpty;
+    return hasMarketingSegmentDateList;
   }
   
   // Specialization of the template method hasList above for the types
@@ -331,8 +333,8 @@ namespace stdair {
   inline bool BomManager::hasMap<SegmentDate,SegmentDate>
   (const SegmentDate& ioSegmentDate) {
     
-    const bool hasList = false;
-    return hasList;
+    const bool hasMap = false;
+    return hasMap;
   }
   
 }
