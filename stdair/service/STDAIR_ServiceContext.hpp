@@ -31,9 +31,14 @@ namespace stdair {
   private:
     // ///////// Getters //////////
     /**
-     * Get the pointer on the BomRoot instance.
+     * Get the pointer on the persistent BomRoot instance.
      */
-    BomRoot& getBomRoot() const;
+    BomRoot& getPersistentBomRoot() const;    
+
+    /**
+     * Get the pointer on the cloned BomRoot instance.
+     */
+    BomRoot& getCloneBomRoot() const;
 
     /**
      * Get the database parameters.
@@ -121,14 +126,26 @@ namespace stdair {
      * will be attached, is being created by that method.
      */
     void initBomRoot();
-    
 
+    /**
+     * Initialisation.
+     *
+     * The root of the cloned BOM tree, on which all of the other BOM objects
+     * will be attached, is being created by that method.
+     */
+    void initCloneBomRoot();
+    
   private:
     // ///////////// Children ////////////
     /**
      * @brief Root of the BOM tree.
      */
-    BomRoot* _bomRoot;
+    BomRoot* _cloneBomRoot;
+
+    /**
+     * @brief Root of the persistent BOM tree.
+     */
+    BomRoot* _persistentBomRoot;
 
     /**
      * @brief Database parameters.
