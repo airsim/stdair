@@ -1,5 +1,5 @@
-#ifndef __STDAIR_FAC_FACBOM_HPP
-#define __STDAIR_FAC_FACBOM_HPP
+#ifndef __STDAIR_FAC_FACCLONEBOM_HPP
+#define __STDAIR_FAC_FACCLONEBOM_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -19,7 +19,7 @@ namespace stdair {
    * @brief Base class for Factory layer.
    */
   template <typename BOM>
-  class FacBom : public FacAbstract {
+  class FacCloneBom : public FacAbstract {
 
     /// Internal type definitions.
     typedef std::list<BOM*> BomPool_T;
@@ -32,27 +32,26 @@ namespace stdair {
      * Provide the unique instance.
      *
      * The singleton is instantiated when first used.
-     * @return FacBom&
+     * @return FacCloneBom&
      */
-    static FacBom& instance();
+    static FacCloneBom& instance();
 
     /**
-     * Create a BOM object, given a key or not.
+     * Clone a BOM object.
      */
-    BOM& create ();
-    BOM& create (const Key_T&);
+    BOM& clone (const BOM&);
     
   protected:
     /**
      * Default Constructor.
      */
-    FacBom() {}
+    FacCloneBom() {}
 
   public:
     /**
      * Destructor.
      */
-    ~FacBom() {
+    ~FacCloneBom() {
       clean();
     }
 
@@ -67,7 +66,7 @@ namespace stdair {
     /**
      * The unique instance.
      */
-    static FacBom* _instance;
+    static FacCloneBom* _instance;
 
     /**
      * List of instantiated Business Objects.
@@ -77,21 +76,21 @@ namespace stdair {
 
 
   // ////////////////////////////////////////////////////////////////////
-  template <typename BOM> FacBom<BOM>* FacBom<BOM>::_instance = NULL;
+  template <typename BOM> FacCloneBom<BOM>* FacCloneBom<BOM>::_instance = NULL;
   
   // ////////////////////////////////////////////////////////////////////
-  template <typename BOM> FacBom<BOM>& FacBom<BOM>::instance () {
+  template <typename BOM> FacCloneBom<BOM>& FacCloneBom<BOM>::instance () {
     if (_instance == NULL) {
-      _instance = new FacBom ();
+      _instance = new FacCloneBom ();
       assert (_instance != NULL);
 
-      FacSupervisor::instance().registerPersistentBomFactory (_instance);
+      FacSupervisor::instance().registerCloneBomFactory (_instance);
     }
     return *_instance;
   }
 
   // ////////////////////////////////////////////////////////////////////
-  template <typename BOM> void FacBom<BOM>::clean () {
+  template <typename BOM> void FacCloneBom<BOM>::clean () {
     // Destroy all the objects
     for (typename BomPool_T::iterator itBom = _pool.begin();
          itBom != _pool.end(); ++itBom) {
@@ -108,18 +107,12 @@ namespace stdair {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  template <typename BOM> BOM& FacBom<BOM>::create () {
-    Key_T lKey;
-    return instance().create (lKey);
-  }
-  
-  // ////////////////////////////////////////////////////////////////////
-  template <typename BOM> BOM& FacBom<BOM>::create (const Key_T& iKey) {
-    BOM* oBom_ptr = new BOM (iKey);
+  template <typename BOM> BOM& FacCloneBom<BOM>::clone (const BOM& iBom) {
+    BOM* oBom_ptr = new BOM (iBom);
     assert (oBom_ptr != NULL);
     _pool.push_back (oBom_ptr);
     return *oBom_ptr;
   }
   
 }
-#endif // __STDAIR_FAC_FACBOM_HPP
+#endif // __STDAIR_FAC_FACCLONEBOM_HPP
