@@ -20,8 +20,17 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  LegDate::LegDate (const LegDate&) : _key (DEFAULT_ORIGIN), _parent (NULL) {
-    assert (false);
+  LegDate::LegDate (const LegDate& iLegDate) :
+    _key (iLegDate._key),
+    _parent (NULL),
+    _offPoint (iLegDate._offPoint),
+    _boardingDate (iLegDate._boardingDate),
+    _boardingTime (iLegDate._boardingTime),
+    _offDate (iLegDate._offDate),
+    _offTime (iLegDate._offTime ),
+    _elapsedTime (iLegDate._elapsedTime),
+    _distance (iLegDate._distance),
+    _capacity (iLegDate._capacity) {
   }
 
   // ////////////////////////////////////////////////////////////////////

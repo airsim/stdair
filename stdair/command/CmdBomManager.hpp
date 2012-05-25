@@ -64,7 +64,7 @@ namespace stdair {
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.
      */
-	  static void buildSampleInventoryScheduleForFareFamilies (BomRoot&);	
+    static void buildSampleInventoryScheduleForFareFamilies (BomRoot&);	
 
     /**
      * Build a dummy inventory, containing a dummy flight-date with a
@@ -115,6 +115,20 @@ namespace stdair {
      *        leg-cabin on which the optimisation should be performed.
      */
     static void buildDummyInventory (BomRoot&, const CabinCapacity_T&);
+ 
+    /**
+     * Build the direct accesses between segment cabin and leg cabin
+     * within the dummy flight dates (for the dummy fare family flight date
+     * and the classic dummy flight date).
+     *
+     * As for now, that method is called only by RMOL.
+     * It is a substitute for the InventoryManager::createDirectAccesses
+     * command of AirInv.
+     *
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    static void buildDummyLegSegmentAccesses (BomRoot&);
 
     /**
      * Build a sample BOM tree, with mainly Pricing-related objects,

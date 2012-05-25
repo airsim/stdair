@@ -21,6 +21,16 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
+  Bucket::Bucket (const Bucket& iBucket) :
+    _key (iBucket._key),
+    _parent (NULL),
+    _yieldRangeUpperValue (iBucket._yieldRangeUpperValue),
+    _availability (iBucket._availability),
+    _soldSeats (iBucket._soldSeats) {
+    
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   Bucket::Bucket (const Key_T& iKey) : _key (iKey), _parent (NULL) {
   }
 

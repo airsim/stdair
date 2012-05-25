@@ -24,8 +24,10 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   AirlineClassList::AirlineClassList (const AirlineClassList& iACL)
-    : _key (iACL._key), _parent (NULL)  {
-    assert (false);
+    : _key (iACL._key),
+      _parent (NULL),
+      _yield(iACL._yield),
+      _fare(iACL._fare) {
   }
 
   // ////////////////////////////////////////////////////////////////////

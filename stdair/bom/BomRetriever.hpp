@@ -309,7 +309,18 @@ namespace stdair {
      */
     static stdair::SegmentCabin& 
     retrieveDummySegmentCabin (stdair::BomRoot&,
-                               const bool isForFareFamilies = false);
+                               const bool isForFareFamilies = false);  
+
+    /**
+     * Retrieve the whole key of the segment date, that is to say a string 
+     * composed of the inventory key, the flight date  key and the segment date
+     * key.
+     *
+     * @param const SegmentDate& Segment date to retrieve the whole key for.
+     *
+     * @return std::string The just retrieved whole key.
+     */
+    static std::string retrieveFullKeyFromSegmentDate (const SegmentDate&);
 
   };
   

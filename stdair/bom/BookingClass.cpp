@@ -18,9 +18,30 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  BookingClass::BookingClass (const BookingClass&)
-    : _key (DEFAULT_CLASS_CODE), _parent (NULL) {
-    assert (false);
+  BookingClass::BookingClass (const BookingClass& iBookingClass)
+    : _key (iBookingClass._key),
+      _parent (NULL),
+      _subclassCode (iBookingClass._subclassCode),
+      _cumulatedProtection (iBookingClass._cumulatedProtection),
+      _protection (iBookingClass._protection),
+      _cumulatedBookingLimit (iBookingClass._cumulatedBookingLimit),
+      _au (iBookingClass._au),
+      _nego (iBookingClass._nego),
+      _noShowPercentage (iBookingClass._noShowPercentage),
+      _cancellationPercentage (iBookingClass._cancellationPercentage),
+      _nbOfBookings (iBookingClass._nbOfBookings),
+      _groupNbOfBookings (iBookingClass._groupNbOfBookings),
+      _groupPendingNbOfBookings (iBookingClass._groupPendingNbOfBookings),
+      _staffNbOfBookings (iBookingClass._staffNbOfBookings),
+      _wlNbOfBookings (iBookingClass._wlNbOfBookings),
+      _nbOfCancellations (iBookingClass._nbOfCancellations),
+      _etb (iBookingClass._etb),
+      _netClassAvailability (iBookingClass._netClassAvailability),
+      _segmentAvailability (iBookingClass._segmentAvailability),
+      _netRevenueAvailability (iBookingClass._netRevenueAvailability),
+      _yield (iBookingClass._yield),
+      _mean (iBookingClass._mean),
+      _stdDev (iBookingClass._stdDev) {
   }
 
   // ////////////////////////////////////////////////////////////////////

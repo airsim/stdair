@@ -220,17 +220,6 @@ namespace stdair {
     lBKKLeg.setOffTime (l1540);
     lBKKLeg.setElapsedTime (l0905);
 
-    // Link the segment-dates with the leg-dates
-    FacBomManager::addToListAndMap (lLHRLeg, lLHRSYDSegment);
-    FacBomManager::addToListAndMap (lLHRLeg, lLHRBKKSegment);
-    FacBomManager::addToListAndMap (lBKKLeg, lLHRSYDSegment);
-    FacBomManager::addToListAndMap (lBKKLeg, lBKKSYDSegment);
-    FacBomManager::addToListAndMap (lLHRSYDSegment, lLHRLeg);
-    FacBomManager::addToListAndMap (lLHRBKKSegment, lLHRLeg);
-    FacBomManager::addToListAndMap (lLHRSYDSegment, lBKKLeg);
-    FacBomManager::addToListAndMap (lBKKSYDSegment, lBKKLeg);
-
-
     // Step 0.5: segment-cabin level
     // Create a SegmentCabin (Y) for the Segment LHR-BKK of BA's Inventory
     const CabinCode_T lY ("Y");
@@ -282,45 +271,6 @@ namespace stdair {
     FacBomManager::linkWithParent (lBKKLeg, lBKKLegYCabin);
     // Display the leg-cabin
     // STDAIR_LOG_DEBUG ("LegCabin: " << lBKKLegYCabin.toString());
-
-    /**
-     * Add the segment-cabin to the list which the leg-cabin crosses.
-     *
-     * As several segment-cabins may cross the leg-cabin,
-     * and as the segment-cabin key is only made by a cabin code (which
-     * is the same as for the leg-cabin), all the segment-cabins
-     * crossing the leg-cabin would have the same key.
-     * Hence, the segment-cabins must be differentiated according to their
-     * boarding and off points as well.
-     */
-    FacBomManager::addToListAndMap (lLHRLegYCabin, lLHRSYDSegmentYCabin,
-                                    lLHRSYDSegmentYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lLHRLegYCabin, lLHRBKKSegmentYCabin,
-                                    lLHRBKKSegmentYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lBKKLegYCabin, lLHRSYDSegmentYCabin,
-                                    lLHRSYDSegmentYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lBKKLegYCabin, lBKKSYDSegmentYCabin,
-    lBKKSYDSegmentYCabin.getFullerKey());
-
-    /**
-     * Add the leg-cabin to the segment-cabin routing.
-     *
-     * As several leg-cabins may compose the segment-cabin routing,
-     * and as the leg-cabin key is only made by a cabin code (which
-     * is the same as for the segment-cabin), all the leg-cabins
-     * composing the routing would have the same key.
-     * Hence, the leg-cabins must be differentiated according to their
-     * boarding point as well.
-     */
-    FacBomManager::addToListAndMap (lLHRSYDSegmentYCabin, lLHRLegYCabin,
-                                    lLHRLegYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lLHRBKKSegmentYCabin, lLHRLegYCabin,
-                                    lLHRLegYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lLHRSYDSegmentYCabin, lBKKLegYCabin,
-                                    lBKKLegYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lBKKSYDSegmentYCabin, lBKKLegYCabin,
-                                    lBKKLegYCabin.getFullerKey());
-
 
     // Step 0.7: fare family level
     // Create a FareFamily (1) for the Segment LHR-BKK, cabin Y on BA's Inv
@@ -480,11 +430,6 @@ namespace stdair {
     // Display the leg-date
     // STDAIR_LOG_DEBUG ("LegDate: " << lCDGLeg.toString());
 
-    // Link the segment-dates with the leg-dates
-    FacBomManager::addToListAndMap (lCDGLeg, lCDGSFOSegment);
-    FacBomManager::addToListAndMap (lCDGSFOSegment, lCDGLeg);
-
-
     // Step 0.5: segment-cabin level
     // Create a SegmentCabin (Y) for the Segment CDG-SFO of AF's Inventory
     SegmentCabin& lCDGSFOSegmentYCabin =
@@ -504,13 +449,6 @@ namespace stdair {
 
     // Display the leg-cabin
     // STDAIR_LOG_DEBUG ("LegCabin: " << lLHRLegYCabin.toString());
-
-    // Link the segment-dates with the leg-dates
-    FacBomManager::addToListAndMap (lCDGLegYCabin, lCDGSFOSegmentYCabin,
-                                    lCDGSFOSegmentYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lCDGSFOSegmentYCabin, lCDGLegYCabin,
-                                    lCDGLegYCabin.getFullerKey());
-
 
     // Step 0.7: fare family level
     // Create a fareFamily (1) for the Segment CDG-SFO, cabin Y on AF's Inv
@@ -567,7 +505,7 @@ namespace stdair {
     FacBomManager::linkWithParent (lBAInv, lBA9FlightPeriod);
 
     // Step 2: segment period level
-    // Create a segment period for SIN-BKK:
+    // Create a segment period for LHR-SYD:
 
     SegmentPeriodKey lLHRSYDSegmentPeriodKey (lLHR, lSYD);
 
@@ -600,7 +538,7 @@ namespace stdair {
     FacBomManager::linkWithParent (lAFInv, lAF84FlightPeriod);
 
     // Step 2: segment period level
-    // Create a segment period for SIN-BKK:
+    // Create a segment period for CDG-SFO:
 
     SegmentPeriodKey lCDGSFOSegmentPeriodKey (lCDG, lSFO);
 
@@ -728,10 +666,6 @@ namespace stdair {
     // Display the leg-date
     // STDAIR_LOG_DEBUG ("LegDate: " << lSINLeg.toString());
 
-    // Link the segment-dates with the leg-dates
-    FacBomManager::addToListAndMap (lSINLeg, lSINBKKSegment);
-    FacBomManager::addToListAndMap (lSINBKKSegment, lSINLeg);
-
     // Step 0.5: segment-cabin level
     // Create a SegmentCabin (Y) for the Segment SIN-BKK of SQ's Inventory
     const CabinCode_T lY ("Y");
@@ -755,32 +689,6 @@ namespace stdair {
 
     // Display the leg-cabin
     // STDAIR_LOG_DEBUG ("LegCabin: " << lSINLegYCabin.toString());
-
-    /**
-     * Add the segment-cabin to the list which the leg-cabin crosses.
-     *
-     * As several segment-cabins may cross the leg-cabin,
-     * and as the segment-cabin key is only made by a cabin code (which
-     * is the same as for the leg-cabin), all the segment-cabins
-     * crossing the leg-cabin would have the same key.
-     * Hence, the segment-cabins must be differentiated according to their
-     * boarding and off points as well.
-     */
-    FacBomManager::addToListAndMap (lSINLegYCabin, lSINBKKSegmentYCabin,
-				    lSINBKKSegmentYCabin.getFullerKey());
-    
-    /**
-     * Add the leg-cabin to the segment-cabin routing.
-     *
-     * As several leg-cabins may compose the segment-cabin routing,
-     * and as the leg-cabin key is only made by a cabin code (which
-     * is the same as for the segment-cabin), all the leg-cabins
-     * composing the routing would have the same key.
-     * Hence, the leg-cabins must be differentiated according to their
-     * boarding point as well.
-     */
-    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin, lSINLegYCabin,
-				    lSINLegYCabin.getFullerKey());
    
     // Step 0.7: fare family level
     // Create a FareFamily (1) for the Segment SIN-BKK, cabin Y on SQ's Inv
@@ -959,6 +867,38 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  void CmdBomManager::buildDummyLegSegmentAccesses (BomRoot& ioBomRoot) {
+   
+    // ////// Dummy Inventory Leg Segment Accesses ///////
+    // Retrieve the (sample) segment-cabin.
+    SegmentCabin& lDummySegmentCabin =
+      BomRetriever::retrieveDummySegmentCabin (ioBomRoot);
+    
+    // Retrieve the (sample) leg-cabin.
+    LegCabin& lDummyLegCabin =
+      BomRetriever::retrieveDummyLegCabin (ioBomRoot);
+
+    // Links between the segment-date and the leg-date
+    FacBomManager::addToListAndMap (lDummyLegCabin, lDummySegmentCabin);
+    FacBomManager::addToListAndMap (lDummySegmentCabin, lDummyLegCabin);
+ 
+    // ////// Fare Families Dummy Inventory Leg Segment Accesses ///////
+    const bool isForFareFamilies = true;
+    // Retrieve the (sample) segment-cabin for fare families.
+    SegmentCabin& lFFDummySegmentCabin =
+      BomRetriever::retrieveDummySegmentCabin (ioBomRoot, isForFareFamilies);
+    
+    // Retrieve the (sample) leg-cabin for fare families.
+    stdair::LegCabin& lFFDummyLegCabin =
+      stdair::BomRetriever::retrieveDummyLegCabin (ioBomRoot, 
+						   isForFareFamilies);
+
+    // Links between the segment-date and the leg-date for fare families.
+    FacBomManager::addToListAndMap (lFFDummyLegCabin, lFFDummySegmentCabin);
+    FacBomManager::addToListAndMap (lFFDummySegmentCabin, lFFDummyLegCabin);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   void CmdBomManager::buildCompleteDummyInventory  (BomRoot& ioBomRoot) {
 
     // Build a dummy inventory, containing a dummy flight-date with a
@@ -1079,10 +1019,6 @@ namespace stdair {
     FacBomManager::addToListAndMap (lFlightDate, lSegment);
     FacBomManager::linkWithParent (lFlightDate, lSegment);
 
-    // Links between the segment-date and the leg-date
-    FacBomManager::addToListAndMap (lLeg, lSegment);
-    FacBomManager::addToListAndMap (lSegment, lLeg);
-
     // Fill the SegmentDate content
     lSegment.setBoardingDate (DEFAULT_DEPARTURE_DATE);
     lSegment.setOffDate (DEFAULT_DEPARTURE_DATE);
@@ -1096,12 +1032,6 @@ namespace stdair {
       FacBom<SegmentCabin>::instance().create (lSegmentCabinKey);
     FacBomManager::addToListAndMap (lSegment, lSegmentCabin);
     FacBomManager::linkWithParent (lSegment, lSegmentCabin);
-
-    // Links between the segment-cabin and the leg-cabin
-    FacBomManager::addToListAndMap (lLegCabin, lSegmentCabin,
-                                    lSegmentCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lSegmentCabin, lLegCabin,
-                                    lLegCabin.getFullerKey());
 
     // Create a FareFamily (1) for the Segment LHR-BKK, cabin Y on BA's Inv
     const FamilyCode_T l1 ("EcoSaver");
@@ -1217,10 +1147,6 @@ namespace stdair {
     FacBomManager::addToListAndMap (lFlightDate, lSegment);
     FacBomManager::linkWithParent (lFlightDate, lSegment);
 
-    // Links between the segment-date and the leg-date
-    FacBomManager::addToListAndMap (lLeg, lSegment);
-    FacBomManager::addToListAndMap (lSegment, lLeg);
-
     // Fill the SegmentDate content
     lSegment.setBoardingDate (DEFAULT_DEPARTURE_DATE);
     lSegment.setOffDate (DEFAULT_DEPARTURE_DATE);
@@ -1234,12 +1160,6 @@ namespace stdair {
       FacBom<SegmentCabin>::instance().create (lSegmentCabinKey);
     FacBomManager::addToListAndMap (lSegment, lSegmentCabin);
     FacBomManager::linkWithParent (lSegment, lSegmentCabin);
-
-    // Links between the segment-cabin and the leg-cabin
-    FacBomManager::addToListAndMap (lLegCabin, lSegmentCabin,
-                                    lSegmentCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lSegmentCabin, lLegCabin,
-                                    lLegCabin.getFullerKey());
 
     // Create a dummy FareFamily (FF1) 
     const FamilyCode_T l1 ("FF1");
@@ -1972,11 +1892,6 @@ namespace stdair {
     lSINLeg.setOffTime (l1100);
     lSINLeg.setElapsedTime (l0340);
 
-    
-    // Link the segment-dates with the leg-dates
-    FacBomManager::addToListAndMap (lSINLeg, lSINBKKSegment);  
-    FacBomManager::addToListAndMap (lSINBKKSegment, lSINLeg);
-
     // Step 0.5: segment-cabin level
     // Create a SegmentCabin (Y) for the Segment SIN-BKK of SQ's Inventory
     const CabinCode_T lY ("Y");
@@ -2006,33 +1921,7 @@ namespace stdair {
     CabinCapacity_T lCapacity (100);
     lSINLegYCabin.setCapacities (lCapacity);
     lSINLegYCabin.setAvailabilityPool (lCapacity);
-    
-    /**
-     * Add the segment-cabin to the list which the leg-cabin crosses.
-     *
-     * As several segment-cabins may cross the leg-cabin,
-     * and as the segment-cabin key is only made by a cabin code (which
-     * is the same as for the leg-cabin), all the segment-cabins
-     * crossing the leg-cabin would have the same key.
-     * Hence, the segment-cabins must be differentiated according to their
-     * boarding and off points as well.
-     */
-    
-    FacBomManager::addToListAndMap (lSINLegYCabin, lSINBKKSegmentYCabin,
-                                    lSINBKKSegmentYCabin.getFullerKey());
-    
-    /**
-     * Add the leg-cabin to the segment-cabin routing.
-     *
-     * As several leg-cabins may compose the segment-cabin routing,
-     * and as the leg-cabin key is only made by a cabin code (which
-     * is the same as for the segment-cabin), all the leg-cabins
-     * composing the routing would have the same key.
-     * Hence, the leg-cabins must be differentiated according to their
-     * boarding point as well.
-     */
-    FacBomManager::addToListAndMap (lSINBKKSegmentYCabin, lSINLegYCabin,
-                                    lSINLegYCabin.getFullerKey());
+
 
     // Step 0.7: fare family level
     // Create a FareFamily (1) for the Segment SIN-BKK, cabin Y on SQ's Inv
@@ -2195,9 +2084,6 @@ namespace stdair {
     lPartnerBKKLeg.setOffTime (l1540);
     lPartnerBKKLeg.setElapsedTime (l0240);
 
-    FacBomManager::addToListAndMap (lPartnerBKKLeg, lPartnerBKKHKGSegment);
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegment, lPartnerBKKLeg);
-
     // Step 9.0.5: segment-cabin level
     
     SegmentCabin& lPartnerBKKHKGSegmentYCabin =
@@ -2225,12 +2111,6 @@ namespace stdair {
     lPartnerBKKLegYCabin.setCapacities (lCapacity);
     lPartnerBKKLegYCabin.setAvailabilityPool (lCapacity);
 
-    FacBomManager::addToListAndMap (lPartnerBKKLegYCabin, 
-				    lPartnerBKKHKGSegmentYCabin,
-                                    lPartnerBKKHKGSegmentYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegmentYCabin, 
-				    lPartnerBKKLegYCabin,
-                                    lPartnerBKKLegYCabin.getFullerKey());
 
     // Step 9.0.7: fare family level
     
@@ -2492,10 +2372,6 @@ namespace stdair {
     // Display the leg-date
     // STDAIR_LOG_DEBUG ("LegDate: " << lCDGLeg.toString());
 
-    // Link the segment-dates with the leg-dates
-    FacBomManager::addToListAndMap (lBKKLeg, lBKKHKGSegment);
-    FacBomManager::addToListAndMap (lBKKHKGSegment, lBKKLeg);
-
     // Step 0.5: segment-cabin level
     // Create a SegmentCabin (Y) for the Segment BKK-HKG of CX's Inventory
     SegmentCabin& lBKKHKGSegmentYCabin =
@@ -2520,12 +2396,6 @@ namespace stdair {
     lBKKLegYCabin.setCapacities (lCapacity);
     lBKKLegYCabin.setAvailabilityPool (lCapacity);
 
-    // Link the segment-dates with the leg-dates
-    FacBomManager::addToListAndMap (lBKKLegYCabin, lBKKHKGSegmentYCabin,
-                                    lBKKHKGSegmentYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lBKKHKGSegmentYCabin, lBKKLegYCabin,
-                                    lBKKLegYCabin.getFullerKey());
-   
     // Step 0.7: fare family level
     // Create a fareFamily (1) for the Segment BKK-HKG, cabin Y on CX's Inv
     FareFamily& lBKKHKGSegmentYCabin1Family =
@@ -2680,9 +2550,6 @@ namespace stdair {
     lPartnerSINLeg.setOffTime (l1100);
     lPartnerSINLeg.setElapsedTime (l0340);
 
-    FacBomManager::addToListAndMap (lPartnerSINLeg, lPartnerSINBKKSegment);
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegment, lPartnerSINLeg);
-
     // Step 9.0.5: segment-cabin level
 
     SegmentCabin& lPartnerSINBKKSegmentYCabin =
@@ -2709,13 +2576,6 @@ namespace stdair {
     lCapacity = CabinCapacity_T(999);
     lPartnerSINLegYCabin.setCapacities (lCapacity);
     lPartnerSINLegYCabin.setAvailabilityPool (lCapacity);
-
-    FacBomManager::addToListAndMap (lPartnerSINLegYCabin, 
-				    lPartnerSINBKKSegmentYCabin,
-                                    lPartnerSINBKKSegmentYCabin.getFullerKey());
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegmentYCabin, 
-				    lPartnerSINLegYCabin,
-                                    lPartnerSINLegYCabin.getFullerKey());
 
     // Step 9.0.7: fare family level
 

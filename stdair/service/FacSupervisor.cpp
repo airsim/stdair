@@ -25,24 +25,43 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   FacSupervisor::~FacSupervisor() {
-    cleanBomLayer();
+    cleanPersistentBomLayer();
+    cleanCloneBomLayer();
     cleanServiceLayer();
-  }
+  }  
 
   // //////////////////////////////////////////////////////////////////////
-  void FacSupervisor::registerBomFactory (FacAbstract* ioFac_ptr) {
-    _bomPool.push_back (ioFac_ptr);
+  void FacSupervisor::registerPersistentBomFactory (FacAbstract* ioFac_ptr) {
+    _persistentBomPool.push_back (ioFac_ptr);
+  } 
+
+  // //////////////////////////////////////////////////////////////////////
+  void FacSupervisor::registerCloneBomFactory (FacAbstract* ioFac_ptr) {
+    _cloneBomPool.push_back (ioFac_ptr);
   }
 
   // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::registerServiceFactory (FacServiceAbstract* ioFac_ptr) {
     _svcPool.push_back (ioFac_ptr);
+  } 
+
+  // //////////////////////////////////////////////////////////////////////
+  void FacSupervisor::cleanPersistentBomLayer() { 
+    for (PersistentBomFactoryPool_T::const_iterator itFactory = _persistentBomPool.begin();
+         itFactory != _persistentBomPool.end(); itFactory++) {
+      const FacAbstract* currentFactory_ptr = *itFactory;
+      assert (currentFactory_ptr != NULL);
+
+      delete (currentFactory_ptr); currentFactory_ptr = NULL;
+    }
+    // Empty the pool of BOM factories
+    _persistentBomPool.clear();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FacSupervisor::cleanBomLayer() {
-    for (BomFactoryPool_T::const_iterator itFactory = _bomPool.begin();
-         itFactory != _bomPool.end(); itFactory++) {
+  void FacSupervisor::cleanCloneBomLayer() {
+    for (CloneBomFactoryPool_T::const_iterator itFactory = _cloneBomPool.begin();
+         itFactory != _cloneBomPool.end(); itFactory++) {
       const FacAbstract* currentFactory_ptr = *itFactory;
       assert (currentFactory_ptr != NULL);
 
@@ -50,7 +69,7 @@ namespace stdair {
     }
 
     // Empty the pool of BOM factories
-    _bomPool.clear();
+    _cloneBomPool.clear();
   }
 
   // //////////////////////////////////////////////////////////////////////

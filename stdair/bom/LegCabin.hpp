@@ -23,7 +23,8 @@ namespace stdair {
    * leg-cabin.
    */
   class LegCabin : public BomAbstract {
-    template <typename BOM> friend class FacBom;
+    template <typename BOM> friend class FacBom; 
+    template <typename BOM> friend class FacCloneBom;
     friend class FacBomManager;
 
   public:

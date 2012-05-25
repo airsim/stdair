@@ -21,9 +21,25 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  LegCabin::LegCabin (const LegCabin&)
-    : _key (DEFAULT_CABIN_CODE), _parent (NULL) {
-    assert (false);
+  LegCabin::LegCabin (const LegCabin& iLegCabin)
+    : _key (iLegCabin._key), _parent (NULL),
+      _offeredCapacity (iLegCabin._offeredCapacity),
+      _physicalCapacity (iLegCabin._physicalCapacity),
+      _soldSeat (iLegCabin._soldSeat),
+      _committedSpace (iLegCabin._committedSpace),
+      _availabilityPool (iLegCabin._availabilityPool),
+      _availability (iLegCabin._availability),
+      _currentBidPrice (iLegCabin._currentBidPrice),
+      _dcsRegrade (iLegCabin._dcsRegrade),
+      _au (iLegCabin._au),
+      _upr (iLegCabin._upr),
+      _nav (iLegCabin._nav),
+      _gav (iLegCabin._gav),
+      _acp (iLegCabin._acp),
+      _etb (iLegCabin._etb),
+      _staffNbOfBookings (iLegCabin._staffNbOfBookings),
+      _wlNbOfBookings (iLegCabin._wlNbOfBookings),
+      _groupNbOfBookings (iLegCabin._groupNbOfBookings) {
   }
 
   // ////////////////////////////////////////////////////////////////////

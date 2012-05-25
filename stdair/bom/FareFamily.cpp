@@ -20,9 +20,10 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  FareFamily::FareFamily (const FareFamily&)
-    : _key (DEFAULT_FARE_FAMILY_CODE), _parent (NULL) {
-    assert (false);
+  FareFamily::FareFamily (const FareFamily& iFareFamily)
+    : _key (iFareFamily._key),
+      _parent (NULL),
+      _meanStdDev (iFareFamily._meanStdDev) {
   }
 
   // ////////////////////////////////////////////////////////////////////

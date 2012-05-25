@@ -21,9 +21,8 @@ namespace stdair {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (const FlightDate&)
-    : _key (DEFAULT_FLIGHT_NUMBER, DEFAULT_DEPARTURE_DATE), _parent (NULL) {
-    assert (false);
+  FlightDate::FlightDate (const FlightDate& iFlightDate)
+    : _key (iFlightDate._key), _parent (NULL) {
   }
   
   // ////////////////////////////////////////////////////////////////////

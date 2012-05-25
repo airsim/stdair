@@ -457,7 +457,7 @@ namespace stdair {
   const AirportCode_T DEFAULT_ORIGIN ("XXX");
   
   /** Default destination. */
-  const AirportCode_T DEFAULT_DESTINATION ("XXX");
+  const AirportCode_T DEFAULT_DESTINATION ("YYY");
   
   /** Default cabin code. */
   const CabinCode_T DEFAULT_CABIN_CODE ("X");

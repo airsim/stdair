@@ -12,13 +12,15 @@
 #include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/factory/FacBom.hpp>
+#include <stdair/factory/FacCloneBom.hpp>
 #include <stdair/service/STDAIR_ServiceContext.hpp>
 
 namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   STDAIR_ServiceContext::STDAIR_ServiceContext()
-    : _bomRoot (NULL), 
+    : _cloneBomRoot (NULL), 
+      _persistentBomRoot (NULL),
       _initType (ServiceInitialisationType::NOT_YET_INITIALISED) {
     // Build the BomRoot object
     init();
@@ -27,7 +29,8 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   STDAIR_ServiceContext::
   STDAIR_ServiceContext (const STDAIR_ServiceContext& iServiceContext)
-    : _bomRoot (iServiceContext._bomRoot),
+    : _cloneBomRoot (iServiceContext._cloneBomRoot),
+      _persistentBomRoot (iServiceContext._persistentBomRoot),
       _initType (ServiceInitialisationType::NOT_YET_INITIALISED) {
     assert (false);
   }
@@ -44,9 +47,18 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void STDAIR_ServiceContext::initBomRoot() {
-    _bomRoot = &FacBom<BomRoot>::instance().create();
+    _persistentBomRoot = &FacBom<BomRoot>::instance().create();
+    _cloneBomRoot = 
+      &FacCloneBom<BomRoot>::instance().clone(*_persistentBomRoot);
+    initCloneBomRoot();
   }
 
+  // //////////////////////////////////////////////////////////////////////
+  void STDAIR_ServiceContext::initCloneBomRoot() {
+    _cloneBomRoot = 
+      &FacCloneBom<BomRoot>::instance().clone(*_persistentBomRoot);
+  }
+  
   // //////////////////////////////////////////////////////////////////////
   const std::string STDAIR_ServiceContext::shortDisplay() const {
     std::ostringstream oStr;
@@ -65,13 +77,19 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string STDAIR_ServiceContext::describe() const {
     return shortDisplay();
-  }
+  } 
 
   // //////////////////////////////////////////////////////////////////////
-  BomRoot& STDAIR_ServiceContext::getBomRoot() const {
-    assert (_bomRoot != NULL);
-    return *_bomRoot;
-  }
+  BomRoot& STDAIR_ServiceContext::getPersistentBomRoot() const {
+    assert (_persistentBomRoot != NULL);
+    return *_persistentBomRoot;
+  }  
+  
+  // //////////////////////////////////////////////////////////////////////
+  BomRoot& STDAIR_ServiceContext::getCloneBomRoot() const {
+    assert (_cloneBomRoot != NULL);
+    return *_cloneBomRoot;
+  } 
 }
 
 /*!

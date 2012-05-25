@@ -21,10 +21,16 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::SegmentDate (const SegmentDate&)
-    : _key (DEFAULT_ORIGIN, DEFAULT_DESTINATION), _parent (NULL),
-      _operatingSegmentDate (NULL) {
-    assert (false);
+  SegmentDate::SegmentDate (const SegmentDate& iSegmentDate)
+    : _key (iSegmentDate._key),
+      _parent (NULL),
+      _operatingSegmentDate (NULL),
+      _boardingDate (iSegmentDate._boardingDate),
+      _boardingTime (iSegmentDate._boardingTime),
+      _offDate (iSegmentDate._offDate),
+      _offTime (iSegmentDate._offTime),
+      _elapsedTime (iSegmentDate._elapsedTime),
+      _distance (iSegmentDate._distance) {
   }
 
   // ////////////////////////////////////////////////////////////////////

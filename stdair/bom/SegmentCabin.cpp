@@ -23,9 +23,15 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentCabin::SegmentCabin (const SegmentCabin&)
-    : _key (DEFAULT_CABIN_CODE), _parent (NULL) {
-    assert (false);
+  SegmentCabin::SegmentCabin (const SegmentCabin& iSegmentCabin)
+    : _key (iSegmentCabin._key), _parent (NULL),
+      _capacity (iSegmentCabin._capacity),
+      _blockSpace (iSegmentCabin._blockSpace),
+      _bookingCounter (iSegmentCabin._bookingCounter),
+      _committedSpace (iSegmentCabin._committedSpace),
+      _availabilityPool (iSegmentCabin._availabilityPool),
+      _currentBidPrice (iSegmentCabin._currentBidPrice),
+      _fareFamilyActivation (iSegmentCabin._fareFamilyActivation) {
   }
 
   // ////////////////////////////////////////////////////////////////////
