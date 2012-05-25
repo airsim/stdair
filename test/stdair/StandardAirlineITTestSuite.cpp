@@ -261,6 +261,9 @@ BOOST_AUTO_TEST_CASE (bom_structure_serialisation_test) {
   const std::string& lCSVDump = stdairService.csvDisplay();
   STDAIR_LOG_DEBUG (lCSVDump);
 
+  // Clone the persistent BOM
+  stdairService.clonePersistentBom ();
+
   // Retrieve (a reference on) the top of the BOM tree
   stdair::BomRoot& lBomRoot = stdairService.getBomRoot();
 
