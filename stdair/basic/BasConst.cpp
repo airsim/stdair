@@ -12,6 +12,7 @@
 #include <stdair/basic/BasConst_DefaultObject.hpp>
 #include <stdair/basic/BasConst_Period_BOM.hpp>
 #include <stdair/basic/BasConst_TravelSolution.hpp>
+#include <stdair/basic/BasConst_SellUpCurves.hpp>
 
 namespace stdair {
 
@@ -155,8 +156,23 @@ namespace stdair {
   const FrequentFlyer_T FREQUENT_FLYER_MEMBER ("M");
 
   // //////// Default ///////
-  /** Default family code value ("X"). */
-  const ClassCode_T DEFAULT_FAMILY_CODE ("0");
+  /** Default family code value ("0"). */
+  const FamilyCode_T DEFAULT_FAMILY_CODE ("0");
+  
+  /** Default policy code value ("0"). */
+  const PolicyCode_T DEFAULT_POLICY_CODE ("0");
+
+  /** Default Nesting Structure Code ("DEFAULT"). */
+  const NestingStructureCode_T DEFAULT_NESTING_STRUCTURE_CODE ("DEFAULT");
+
+  /** Display Nesting Structure Code ("Display Nesting"). */
+  const NestingStructureCode_T DISPLAY_NESTING_STRUCTURE_CODE ("Display Nesting");
+
+  /** Display Nesting Structure Code ("Yield-Based Nesting"). */
+  const NestingStructureCode_T YIELD_BASED_NESTING_STRUCTURE_CODE ("Yield-Based Nesting");
+
+  /** Default Nesting Node Code ("0"). */
+  const NestingNodeCode_T DEFAULT_NESTING_NODE_CODE ("0");
 
   /** Default number of airlines. */
   const NbOfAirlines_T DEFAULT_NBOFAIRLINES (0);
@@ -213,13 +229,16 @@ namespace stdair {
   const Availability_T MAXIMAL_AVAILABILITY (9999.0);
 
   /** Default Unconstraining Method (By Time Frame). */
-  const UnconstrainingMethod DEFAULT_UNCONSTRAINING_METHOD ('T');
+  const UnconstrainingMethod DEFAULT_UNCONSTRAINING_METHOD ('E');
 
   /** Default Partnership Technique (None). */
   const PartnershipTechnique DEFAULT_PARTNERSHIP_TECHNIQUE ('N');
 
   /** Default Forecasting Method (Q Forecasting). */
-  const ForecastingMethod DEFAULT_FORECASTING_METHOD ('Q');
+  const ForecastingMethod DEFAULT_FORECASTING_METHOD ('Q'); 
+
+  /** Default Pre-Optimisation Method (NONE). */
+  const PreOptimisationMethod DEFAULT_PREOPTIMISATION_METHOD ('N');
 
   /** Default Optimisation Method (Leg Based EMSRb). */
   const OptimisationMethod DEFAULT_OPTIMISATION_METHOD ('E');;
@@ -505,13 +524,69 @@ namespace stdair {
     oDCPList.push_back (16);oDCPList.push_back (13);oDCPList.push_back (10);
     oDCPList.push_back (7); oDCPList.push_back (5); oDCPList.push_back (3);
     oDCPList.push_back (1); oDCPList.push_back (0);
-    // oDCPList.push_back (63); oDCPList.push_back (49);
-    // oDCPList.push_back (35); oDCPList.push_back (23); 
-    // oDCPList.push_back (16); oDCPList.push_back (10);
-    // oDCPList.push_back (5);  oDCPList.push_back (1);
-    // oDCPList.push_back (0);
     return oDCPList;
   }
+
+  /** FRAT5 curve A for forecasting and optimisation. */
+  const FRAT5Curve_T FRAT5_CURVE_A =
+    DefaultMap::createFRAT5CurveA();
+  FRAT5Curve_T DefaultMap::createFRAT5CurveA() {
+    FRAT5Curve_T oCurve;
+    oCurve[63] = 1.05;  oCurve[56] = 1.07;  oCurve[49] = 1.09;
+    oCurve[42] = 1.11;  oCurve[35] = 1.14;  oCurve[31] = 1.16;
+    oCurve[27] = 1.18;  oCurve[23] = 1.21;  oCurve[19] = 1.24;
+    oCurve[16] = 1.27;  oCurve[13] = 1.30;  oCurve[10] = 1.33;
+    oCurve[7]  = 1.37;  oCurve[5]  = 1.40;  oCurve[3]  = 1.45;
+    oCurve[1]  = 1.50; 
+    return oCurve;
+  }
+
+  /** FRAT5 curve B for forecasting and optimisation. */
+  const FRAT5Curve_T FRAT5_CURVE_B =
+    DefaultMap::createFRAT5CurveB();
+  FRAT5Curve_T DefaultMap::createFRAT5CurveB() {
+    FRAT5Curve_T oCurve;
+    oCurve[63] = 1.10;  oCurve[56] = 1.11;  oCurve[49] = 1.17;
+    oCurve[42] = 1.27;  oCurve[35] = 1.28;  oCurve[31] = 1.28;
+    oCurve[27] = 1.28;  oCurve[23] = 1.37;  oCurve[19] = 1.37;
+    oCurve[16] = 1.60;  oCurve[13] = 1.60;  oCurve[10] = 1.80;
+    oCurve[7]  = 1.80;  oCurve[5]  = 2.23;  oCurve[3]  = 2.23;
+    oCurve[1]  = 2.50; 
+    return oCurve;
+  }
+
+  /** FRAT5 curve A for forecasting and optimisation. */
+  const FRAT5Curve_T FRAT5_CURVE_C =
+    DefaultMap::createFRAT5CurveC();
+  FRAT5Curve_T DefaultMap::createFRAT5CurveC() {
+    FRAT5Curve_T oCurve;
+    oCurve[63] = 1.40;  oCurve[56] = 1.45;  oCurve[49] = 1.50;
+    oCurve[42] = 1.55;  oCurve[35] = 1.60;  oCurve[31] = 1.70;
+    oCurve[27] = 1.80;  oCurve[23] = 2.00;  oCurve[19] = 2.30;
+    oCurve[16] = 2.60;  oCurve[13] = 3.00;  oCurve[10] = 3.30;
+    oCurve[7]  = 3.40;  oCurve[5]  = 3.44;  oCurve[3]  = 3.47;
+    oCurve[1]  = 3.50;
+    return oCurve;
+  }
+
+  /**
+   * Disutility curve A for forecasting and optimisation.
+   * The lower the value (disutility), the higher the demand sells up to
+   * higher fare families.
+   */
+  const FFDisutilityCurve_T FF_DISUTILITY_CURVE_A =
+    DefaultMap::createFFDisutilityCurveA();
+  FFDisutilityCurve_T DefaultMap::createFFDisutilityCurveA() {
+    FFDisutilityCurve_T oCurve;
+    oCurve[63] = 0.0050;  oCurve[56] = 0.0049;  oCurve[49] = 0.0047;
+    oCurve[42] = 0.0045;  oCurve[35] = 0.0043;  oCurve[31] = 0.0040;
+    oCurve[27] = 0.0037;  oCurve[23] = 0.0034;  oCurve[19] = 0.0030;
+    oCurve[16] = 0.0026;  oCurve[13] = 0.0022;  oCurve[10] = 0.0017;
+    oCurve[7]  = 0.0013;  oCurve[5]  = 0.0012;  oCurve[3]  = 0.0011;
+    oCurve[1]  = 0.0010;
+    return oCurve;
+  }
+
   /** Default frat5 coef map for demand to come forecaster. */
   const DTDFratMap_T DEFAULT_DTD_FRAT5COEF_MAP =
     DefaultDtdFratMap::init();

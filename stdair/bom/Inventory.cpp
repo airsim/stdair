@@ -59,5 +59,55 @@ namespace stdair {
     return getFlightDate (iFlightDateKey.toString());
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  ForecastingMethod::EN_ForecastingMethod Inventory::
+  getForecastingMethod() const {
+    if (_airlineFeature == NULL) {
+      return DEFAULT_FORECASTING_METHOD.getMethod();
+    }
+    assert (_airlineFeature != NULL);
+    return _airlineFeature->getForecastingMethod();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  UnconstrainingMethod::EN_UnconstrainingMethod Inventory::
+  getUnconstrainingMethod() const {
+    if (_airlineFeature == NULL) {
+      return DEFAULT_UNCONSTRAINING_METHOD.getMethod();
+    }
+    assert (_airlineFeature != NULL);
+    return _airlineFeature->getUnconstrainingMethod();
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  PreOptimisationMethod::EN_PreOptimisationMethod Inventory::
+  getPreOptimisationMethod() const {
+    if (_airlineFeature == NULL) {
+      return DEFAULT_PREOPTIMISATION_METHOD.getMethod();
+      }
+    assert (_airlineFeature != NULL);
+    return _airlineFeature->getPreOptimisationMethod();
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  OptimisationMethod::EN_OptimisationMethod Inventory::
+  getOptimisationMethod() const {
+    if (_airlineFeature == NULL) {
+      return DEFAULT_OPTIMISATION_METHOD.getMethod();
+      }
+    assert (_airlineFeature != NULL);
+    return _airlineFeature->getOptimisationMethod();
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  PartnershipTechnique::EN_PartnershipTechnique Inventory::
+  getPartnershipTechnique() const {
+    if (_airlineFeature == NULL) {
+      return DEFAULT_PARTNERSHIP_TECHNIQUE.getTechnique();
+    }
+    assert (_airlineFeature != NULL);
+    return _airlineFeature->getPartnershipTechnique();
+  }
+
 }
 

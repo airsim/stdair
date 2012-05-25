@@ -12,10 +12,7 @@
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/SegmentCabinKey.hpp>
 #include <stdair/bom/SegmentCabinTypes.hpp>
-#include <stdair/bom/PolicyStruct.hpp>
 #include <stdair/bom/PolicyTypes.hpp>
-#include <stdair/bom/NestingTypes.hpp>
-#include <stdair/bom/SimpleNestingStruct.hpp>
 
 /// Forward declarations
 namespace boost {
@@ -27,6 +24,7 @@ namespace boost {
 namespace stdair {
   // Forward declarations
   class SegmentSnapshotTable;
+  class Policy;
   
   /**
    * @brief Class representing the actual attributes for an airline
@@ -141,15 +139,10 @@ namespace stdair {
     const bool getFareFamilyStatus() const {
       return _fareFamilyActivation;
     }
-    
-    /** Retrieve the convex hull. */
-    const PolicyList_T& getConvexHull() const{
-      return _convexHull;
-    }
 
-    /** Retrieve the nesting struct. */
-    const SimpleNestingStruct& getNestingStruct() const{
-      return _nestingStruct;
+    /** Retrieve the convex hull. */
+    const PolicyList_T& getConvexHull() const {
+      return _convexHull;
     }
 
   public:
@@ -203,52 +196,20 @@ namespace stdair {
     void activateFareFamily () {
       _fareFamilyActivation = true;
     }
-
-    /** Set the Convex Hull. */
-    void setConvexHull (const PolicyList_T& iConvexHull) {
-      _convexHull = iConvexHull;
-    }
-  
-  public:
-    // //////////// Nesting Struct Management methods ////////////
-    /**
-     * Clear the nesting struct
-     */
-    void clearNestingStruct() {
-      _nestingStruct.clear();
-    }
-
-    /**
-     * Add a nesting node to the nesting structure
-     */
-    const bool 
-    insertBookingClassListInNestingStruct(const Yield_T iYield,
-                                          BookingClassList_T iBCList) {
-      return _nestingStruct.insertBookingClassList(iYield, iBCList);
-    }
-
-    /**
-     * Initialise the nesting node map
-     */
-    void initNestingStruct();
-
-    /**
-     * Fill the nesting struct with the remaining booking classes
-     */
-    void fillNestingStruct();
-
-    /**
-     * Search if a booking class is already in the nesting structure
-     */
-    const bool alreadyInNestingStruct(const ClassCode_T& iClassCode) const {
-      return _nestingStruct.alreadyInNestingStruct(iClassCode);
-    }
   
   public:
     // /////////// Business methods //////////
     /** Register a sale. */
     void updateFromReservation (const NbOfBookings_T&);
 
+    /** Reset the convex hull. */
+    void resetConvexHull () { _convexHull.clear(); }
+    
+    /** Add a policy to the convex hull.
+     *  Note: we do not use the FacBomManager here because the convex hull
+     *  is not a list of children but a temporary list of policies.
+     */
+    void addPolicy (Policy&);
     
   public:
     // /////////// Display support methods /////////
@@ -378,11 +339,8 @@ namespace stdair {
     /** Indicate if fare family is in use. */
     bool _fareFamilyActivation;
 
-    /** Convex hull of policies */
-    PolicyList_T _convexHull;    
-
-    /** Nesting structure */
-    SimpleNestingStruct _nestingStruct;
+    /** The convex hull of MRT. */
+    PolicyList_T _convexHull;
 
   };
 

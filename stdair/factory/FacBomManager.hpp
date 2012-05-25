@@ -21,6 +21,8 @@
 
 
 namespace stdair {
+  // Forward declarations.
+  class SegmentCabin; 
 
   /**
    * @brief Utility class for linking StdAir-based objects.
@@ -189,6 +191,13 @@ namespace stdair {
      */
     template <typename OBJECT2, typename OBJECT1>
     static BomHolder<OBJECT2>& getBomHolder (OBJECT1&);
+
+  public:
+    /**
+     * Reset the yield-based nesting structure of a segment-cabin. This
+     * method is used with FA or MRT.
+     */
+    static void resetYieldBasedNestingStructure (const SegmentCabin&);
 
 
   protected:
@@ -436,7 +445,7 @@ namespace stdair {
     lDestHolder._bomList = lOriginHolder._bomList;
     lDestHolder._bomMap = lOriginHolder._bomMap;
   }
-
+  
   // ////////////////////////////////////////////////////////////////////
   //
   // Specialization of the template method addToList above for the types

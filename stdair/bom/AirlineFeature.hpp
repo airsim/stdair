@@ -8,6 +8,7 @@
 #include <stdair/stdair_rm_types.hpp>
 #include <stdair/basic/UnconstrainingMethod.hpp>
 #include <stdair/basic/ForecastingMethod.hpp>
+#include <stdair/basic/PreOptimisationMethod.hpp>
 #include <stdair/basic/OptimisationMethod.hpp>
 #include <stdair/basic/PartnershipTechnique.hpp>
 #include <stdair/bom/BomAbstract.hpp>
@@ -47,6 +48,11 @@ namespace stdair {
       return _partnershipTechnique.getTechnique();
     }     
 
+    /** Get the pre-optimisation method. */
+    PreOptimisationMethod::EN_PreOptimisationMethod getPreOptimisationMethod() const {
+      return _preOptimisationMethod.getMethod();
+    }   
+
     /** Get the optimisation method. */
     OptimisationMethod::EN_OptimisationMethod getOptimisationMethod() const {
       return _optimisationMethod.getMethod();
@@ -58,6 +64,7 @@ namespace stdair {
     /** Intialization method. */
     void init (const ForecastingMethod&,
                const UnconstrainingMethod&,
+	       const PreOptimisationMethod&,
 	       const OptimisationMethod&,
                const HistoricalDataLimit_T&,
                const ControlMode_T&,
@@ -103,6 +110,9 @@ namespace stdair {
 
     /** The type of unconstraining method. */
     UnconstrainingMethod _unconstrainingMethod;   
+
+    /** The type of pre-optimisation method. */
+    PreOptimisationMethod _preOptimisationMethod;  
 
     /** The type of optimisation method. */
     OptimisationMethod _optimisationMethod;

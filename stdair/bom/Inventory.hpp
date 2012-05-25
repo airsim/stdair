@@ -58,40 +58,19 @@ namespace stdair {
     }
 
     /** Get the forecasting method. */
-    ForecastingMethod::EN_ForecastingMethod getForecastingMethod() const {
-      if (_airlineFeature == NULL) {
-        return DEFAULT_FORECASTING_METHOD.getMethod();
-      }
-      assert (_airlineFeature != NULL);
-      return _airlineFeature->getForecastingMethod();
-    }
+    ForecastingMethod::EN_ForecastingMethod getForecastingMethod() const;
 
     /** Get the unconstraining method. */
-    UnconstrainingMethod::EN_UnconstrainingMethod getUnconstrainingMethod() const {
-      if (_airlineFeature == NULL) {
-        return DEFAULT_UNCONSTRAINING_METHOD.getMethod();
-      }
-      assert (_airlineFeature != NULL);
-      return _airlineFeature->getUnconstrainingMethod();
-    }
-
+    UnconstrainingMethod::EN_UnconstrainingMethod getUnconstrainingMethod() const;
+    
+    /** Get the pre-optimisation method. */
+    PreOptimisationMethod::EN_PreOptimisationMethod getPreOptimisationMethod() const;
+    
     /** Get the optimisation method. */
-    OptimisationMethod::EN_OptimisationMethod getOptimisationMethod() const {
-      if (_airlineFeature == NULL) {
-        return DEFAULT_OPTIMISATION_METHOD.getMethod();
-      }
-      assert (_airlineFeature != NULL);
-      return _airlineFeature->getOptimisationMethod();
-    }
-
+    OptimisationMethod::EN_OptimisationMethod getOptimisationMethod() const;
+    
     /** Get the partnership technique. */
-    PartnershipTechnique::EN_PartnershipTechnique getPartnershipTechnique() const {
-      if (_airlineFeature == NULL) {
-        return DEFAULT_PARTNERSHIP_TECHNIQUE.getTechnique();
-      }
-      assert (_airlineFeature != NULL);
-      return _airlineFeature->getPartnershipTechnique();
-    }
+    PartnershipTechnique::EN_PartnershipTechnique getPartnershipTechnique() const;
     
     /** Get the parent object. */
     BomAbstract* const getParent() const {
