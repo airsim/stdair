@@ -296,10 +296,11 @@ namespace stdair {
      * Recursively display (dump in the returned string) the objects
      * of the BOM tree.
      *
+     * @param const BomRoot& Reference on the BomRoot to display.
      * @return std::string Output string in which the BOM tree is
      *        logged/dumped.
      */
-    std::string csvDisplay() const;
+    std::string csvDisplay(const BomRoot&) const;
 
     /**
      * Recursively display (dump in the returned string) the flight-date
