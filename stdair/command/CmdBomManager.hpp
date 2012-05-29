@@ -88,7 +88,7 @@ namespace stdair {
      * That structure is the bare minimum required to perform a
      * Marginal Revenue Transformation on a leg-cabin.
      *
-     * As for now(May 2012), that method is only called by RMOL when a 
+     * As for now (May 2012), that method is only called by RMOL when a 
      * BOM tree for fare families is built.
      *
      * @param BomRoot& Top of the BOM tree, to which the sample should
@@ -117,13 +117,13 @@ namespace stdair {
     static void buildDummyInventory (BomRoot&, const CabinCapacity_T&);
  
     /**
-     * Build the direct accesses between segment cabin and leg cabin
-     * within the dummy flight dates (for the dummy fare family flight date
-     * and the classic dummy flight date).
+     * Build the direct accesses between the dummy segment cabins and the dummy 
+     * leg cabins within the dummy flight dates (the dummy fare family 
+     * flight date and the classic dummy flight date).
      *
-     * As for now, that method is called only by RMOL.
-     * It is a substitute for the InventoryManager::createDirectAccesses
-     * command of AirInv.
+     * As for now (May 2012), that method is called only by RMOL.
+     * It is a substitute for the code doing it automatically located in AirInv.
+     * See the AIRINV::InventoryManager::createDirectAccesses command.
      *
      * @param BomRoot& Top of the BOM tree, to which the sample should
      *        be attached.

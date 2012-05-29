@@ -867,7 +867,16 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void CmdBomManager::buildDummyLegSegmentAccesses (BomRoot& ioBomRoot) {
+  void CmdBomManager::buildDummyLegSegmentAccesses (BomRoot& ioBomRoot) {    
+
+    /* Build the direct accesses between the dummy segment cabins and the dummy 
+     * leg cabins within the dummy flight dates (the dummy fare family 
+     * flight date and the classic dummy flight date).
+     *
+     * As for now (May 2012), that method is called only by RMOL.
+     * It is a substitute for the code doing it automatically located in AirInv.
+     * See the AIRINV::InventoryManager::createDirectAccesses command.
+     */
    
     // ////// Dummy Inventory Leg Segment Accesses ///////
     // Retrieve the (sample) segment-cabin.
