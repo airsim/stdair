@@ -149,11 +149,11 @@ BOOST_AUTO_TEST_CASE (stdair_service_initialisation_test) {
   const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
   stdair::STDAIR_Service stdairService (lLogParams);
 
-  // Retrieve (a reference on) the top of the BOM tree
-  stdair::BomRoot& lBomRoot = stdairService.getBomRoot();
+  // Retrieve (a reference on) the top of the persistent BOM tree
+  stdair::BomRoot& lPersistentBomRoot = stdairService.getPersistentBomRoot();
 
   // Retrieve the BomRoot key, and compare it to the expected one
-  const std::string& lBomRootKeyStr = lBomRoot.describeKey();
+  const std::string& lBomRootKeyStr = lPersistentBomRoot.describeKey();
   const std::string lBomRootString (" -- ROOT -- ");
 
   // DEBUG
@@ -170,7 +170,7 @@ BOOST_AUTO_TEST_CASE (stdair_service_initialisation_test) {
   stdairService.buildSampleBom();
 
   // DEBUG: Display the whole BOM tree
-  const std::string& lCSVDump = stdairService.csvDisplay();
+  const std::string& lCSVDump = stdairService.csvDisplay(lPersistentBomRoot);
   STDAIR_LOG_DEBUG (lCSVDump);
 
   // Close the Log outputFile
@@ -182,7 +182,7 @@ BOOST_AUTO_TEST_CASE (stdair_service_initialisation_test) {
  */
 BOOST_AUTO_TEST_CASE (bom_structure_instantiation_test) {
   // Step 0.0: initialisation
-  // Create the root of the Bom tree (i.e., a BomRoot object)
+  // Create the root of a Bom tree (i.e., a BomRoot object)
   stdair::BomRoot& lBomRoot =
     stdair::FacBom<stdair::BomRoot>::instance().create();
         
@@ -257,19 +257,20 @@ BOOST_AUTO_TEST_CASE (bom_structure_serialisation_test) {
   // Build a sample BOM tree
   stdairService.buildSampleBom();
 
+  // Retrieve (a reference on) the top of the persistent BOM tree
+  stdair::BomRoot& lPersistentBomRoot = stdairService.getPersistentBomRoot();
+
   // DEBUG: Display the whole BOM tree
-  const std::string& lCSVDump = stdairService.csvDisplay();
+  const std::string& lCSVDump = stdairService.csvDisplay(lPersistentBomRoot);
   STDAIR_LOG_DEBUG (lCSVDump);
 
   // Clone the persistent BOM
   stdairService.clonePersistentBom ();
 
-  // Retrieve (a reference on) the top of the BOM tree
-  stdair::BomRoot& lBomRoot = stdairService.getBomRoot();
-
   // Retrieve the BomRoot key, and compare it to the expected one
   const std::string lBAInvKeyStr ("BA");
-  stdair::Inventory* lBAInv_ptr = lBomRoot.getInventory (lBAInvKeyStr);
+  stdair::Inventory* lBAInv_ptr = 
+    lPersistentBomRoot.getInventory (lBAInvKeyStr);
 
   // DEBUG
   STDAIR_LOG_DEBUG ("There should be an Inventory object corresponding to the '"
@@ -286,7 +287,7 @@ BOOST_AUTO_TEST_CASE (bom_structure_serialisation_test) {
   {
     boost::archive::text_oarchive oa (ofs);
     // write class instance to archive
-    oa << lBomRoot;
+    oa << lPersistentBomRoot;
     // archive and stream closed when destructors are called
   }
 
@@ -302,10 +303,10 @@ BOOST_AUTO_TEST_CASE (bom_structure_serialisation_test) {
     // archive and stream closed when destructors are called
   }
   
-  // DEBUG: Display the whole BOM tree
-  std::ostringstream oRestoredCSVDumpStr;
-  stdair::BomDisplay::csvDisplay (oRestoredCSVDumpStr, lRestoredBomRoot);
-  STDAIR_LOG_DEBUG (oRestoredCSVDumpStr.str());
+  // DEBUG: Display the whole restored BOM tree
+  const std::string& lRestoredCSVDump = 
+    stdairService.csvDisplay(lRestoredBomRoot);
+  STDAIR_LOG_DEBUG (lRestoredCSVDump);
 
   // Retrieve the BomRoot key, and compare it to the expected one
   const std::string& lBomRootKeyStr = lRestoredBomRoot.describeKey();
@@ -327,11 +328,94 @@ BOOST_AUTO_TEST_CASE (bom_structure_serialisation_test) {
 
   // DEBUG
   STDAIR_LOG_DEBUG ("There should be an Inventory object corresponding to the '"
-                    << lBAInvKeyStr << "' key.");
+                    << lBAInvKeyStr << "' key in the restored BOM root.");
 
   BOOST_CHECK_MESSAGE (lRestoredBAInv_ptr != NULL,
                        "An Inventory object should exist with the key, '"
-                       << lBAInvKeyStr << "'.");
+                       << lBAInvKeyStr << "' in the restored BOM root.");
+
+  // Close the Log outputFile
+  logOutputFile.close();
+}
+
+/**
+ * Test the clone of Standard Airline IT BOM objects.
+ */
+BOOST_AUTO_TEST_CASE (bom_structure_clone_test) {  
+
+  // Output log File
+  const std::string lLogFilename ("StandardAirlineITTestSuite_clone.log");
+
+  // Set the log parameters
+  std::ofstream logOutputFile;
+  
+  // Open and clean the log outputfile
+  logOutputFile.open (lLogFilename.c_str());
+  logOutputFile.clear();
+  
+  // Initialise the stdair BOM
+  const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
+  stdair::STDAIR_Service stdairService (lLogParams);
+
+  // Build a sample BOM tree
+  stdairService.buildSampleBom();
+
+  // Retrieve (a constant reference on) the top of the persistent BOM tree
+  const stdair::BomRoot& lPersistentBomRoot =
+    stdairService.getPersistentBomRoot();  
+
+  // DEBUG: Display the whole persistent BOM tree
+  const std::string& lCSVDump = stdairService.csvDisplay(lPersistentBomRoot); 
+  STDAIR_LOG_DEBUG ("Display the persistent BOM tree.");
+  STDAIR_LOG_DEBUG (lCSVDump); 
+
+  // Retrieve (a reference on) the top of the clone BOM tree
+  stdair::BomRoot& lCloneBomRoot = stdairService.getBomRoot(); 
+
+  // DEBUG: Display the clone BOM tree before the clone process.
+  const std::string& lBeforeCloneCSVDump = 
+    stdairService.csvDisplay(lCloneBomRoot); 
+  STDAIR_LOG_DEBUG ("Display the clone BOM tree before the clone process.");
+  STDAIR_LOG_DEBUG (lBeforeCloneCSVDump);
+
+  // Clone the persistent BOM
+  stdairService.clonePersistentBom ();   
+
+  // DEBUG: Display the clone BOM tree after the clone process.
+  const std::string& lAfterCloneCSVDump = 
+    stdairService.csvDisplay(lCloneBomRoot); 
+  STDAIR_LOG_DEBUG ("Display the clone BOM tree after the clone process.");
+  STDAIR_LOG_DEBUG (lAfterCloneCSVDump);
+
+  // Retrieve the clone BomRoot key, and compare it to the persistent BomRoot 
+  // key.
+  const std::string& lCloneBomRootKeyStr = lCloneBomRoot.describeKey();
+  const std::string& lPersistentBomRootKeyStr = 
+    lPersistentBomRoot.describeKey();
+
+  // DEBUG
+  STDAIR_LOG_DEBUG ("The clone BOM root key is '" << lCloneBomRootKeyStr
+                    << "'. It should be equal to '" 
+		    << lPersistentBomRootKeyStr << "'");
+  
+  BOOST_CHECK_EQUAL (lCloneBomRootKeyStr, lPersistentBomRootKeyStr);
+  BOOST_CHECK_MESSAGE (lCloneBomRootKeyStr == lPersistentBomRootKeyStr,
+                       "The clone BOM root key, '" << lCloneBomRootKeyStr
+                       << "', should be equal to '" << lPersistentBomRootKeyStr
+                       << "', but is not.");
+
+  // Retrieve the BA inventory in the clone BOM root
+  const std::string lBAInvKeyStr ("BA");
+  stdair::Inventory* lCloneBAInv_ptr =
+    lCloneBomRoot.getInventory (lBAInvKeyStr); 
+
+  // DEBUG
+  STDAIR_LOG_DEBUG ("There should be an Inventory object corresponding to the '"
+                    << lBAInvKeyStr << "' key in the clone BOM root.");
+
+  BOOST_CHECK_MESSAGE (lCloneBAInv_ptr != NULL,
+                       "An Inventory object should exist with the key, '"
+                       << lBAInvKeyStr << "' in the clone BOM root.");
 
   // Close the Log outputFile
   logOutputFile.close();
