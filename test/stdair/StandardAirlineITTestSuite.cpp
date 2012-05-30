@@ -369,17 +369,11 @@ BOOST_AUTO_TEST_CASE (bom_structure_clone_test) {
   STDAIR_LOG_DEBUG ("Display the persistent BOM tree.");
   STDAIR_LOG_DEBUG (lCSVDump); 
 
-  // Retrieve (a reference on) the top of the clone BOM tree
-  stdair::BomRoot& lCloneBomRoot = stdairService.getBomRoot(); 
-
-  // DEBUG: Display the clone BOM tree before the clone process.
-  const std::string& lBeforeCloneCSVDump = 
-    stdairService.csvDisplay(lCloneBomRoot); 
-  STDAIR_LOG_DEBUG ("Display the clone BOM tree before the clone process.");
-  STDAIR_LOG_DEBUG (lBeforeCloneCSVDump);
-
   // Clone the persistent BOM
-  stdairService.clonePersistentBom ();   
+  stdairService.clonePersistentBom (); 
+
+  // Retrieve (a reference on) the top of the clone BOM tree
+  stdair::BomRoot& lCloneBomRoot = stdairService.getBomRoot();   
 
   // DEBUG: Display the clone BOM tree after the clone process.
   const std::string& lAfterCloneCSVDump = 
