@@ -240,8 +240,8 @@ namespace stdair {
   /** Default Pre-Optimisation Method (NONE). */
   const PreOptimisationMethod DEFAULT_PREOPTIMISATION_METHOD ('N');
 
-  /** Default Optimisation Method (Leg Based EMSRb). */
-  const OptimisationMethod DEFAULT_OPTIMISATION_METHOD ('E');;
+  /** Default Optimisation Method (Leg Based Monte Carlo). */
+  const OptimisationMethod DEFAULT_OPTIMISATION_METHOD ('M');;
   
   // //////// (Segment-)Class-related BOM ///////
   /** Default boolean for censorship flag given the status of
@@ -584,6 +584,24 @@ namespace stdair {
     oCurve[16] = 0.0026;  oCurve[13] = 0.0022;  oCurve[10] = 0.0017;
     oCurve[7]  = 0.0013;  oCurve[5]  = 0.0012;  oCurve[3]  = 0.0011;
     oCurve[1]  = 0.0010;
+    return oCurve;
+  }
+
+  /**
+   * Disutility curve A for forecasting and optimisation.
+   * The lower the value (disutility), the higher the demand sells up to
+   * higher fare families.
+   */
+  const FFDisutilityCurve_T FF_DISUTILITY_CURVE_B =
+    DefaultMap::createFFDisutilityCurveB();
+  FFDisutilityCurve_T DefaultMap::createFFDisutilityCurveB() {
+    FFDisutilityCurve_T oCurve;
+    oCurve[63] = 0.0043;  oCurve[56] = 0.0042;  oCurve[49] = 0.0041;
+    oCurve[42] = 0.0039;  oCurve[35] = 0.0037;  oCurve[31] = 0.0035;
+    oCurve[27] = 0.0032;  oCurve[23] = 0.0029;  oCurve[19] = 0.0025;
+    oCurve[16] = 0.0021;  oCurve[13] = 0.0018;  oCurve[10] = 0.0013;
+    oCurve[7]  = 0.0011;  oCurve[5]  = 0.0010;  oCurve[3]  = 0.0009;
+    oCurve[1]  = 0.0008;
     return oCurve;
   }
 
