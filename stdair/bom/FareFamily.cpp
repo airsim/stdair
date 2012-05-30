@@ -23,6 +23,8 @@ namespace stdair {
   FareFamily::FareFamily (const FareFamily& iFareFamily)
     : _key (iFareFamily._key),
       _parent (NULL),
+      _frat5Curve (iFareFamily._frat5Curve),
+      _disutilityCurve (iFareFamily._disutilityCurve),
       _meanStdDev (iFareFamily._meanStdDev) {
   }
 
