@@ -16,6 +16,7 @@ namespace stdair {
 
   /** Disutility curves for fare families. */
   extern const FFDisutilityCurve_T FF_DISUTILITY_CURVE_A;
+  extern const FFDisutilityCurve_T FF_DISUTILITY_CURVE_B;
 
   /** FRAT5 curves. */
   struct DefaultMap {
@@ -23,6 +24,7 @@ namespace stdair {
     static FRAT5Curve_T createFRAT5CurveB();
     static FRAT5Curve_T createFRAT5CurveC();
     static FFDisutilityCurve_T createFFDisutilityCurveA();
+    static FFDisutilityCurve_T createFFDisutilityCurveB();
   };
 }
 #endif // __STDAIR_BAS_BASCONST_SELLUPCURVES_HPP

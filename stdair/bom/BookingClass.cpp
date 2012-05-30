@@ -40,6 +40,7 @@ namespace stdair {
       _segmentAvailability (iBookingClass._segmentAvailability),
       _netRevenueAvailability (iBookingClass._netRevenueAvailability),
       _yield (iBookingClass._yield),
+      _adjustedYield (iBookingClass._adjustedYield),
       _mean (iBookingClass._mean),
       _stdDev (iBookingClass._stdDev) {
   }
