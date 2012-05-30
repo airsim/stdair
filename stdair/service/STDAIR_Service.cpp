@@ -416,18 +416,14 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string STDAIR_Service::csvDisplay() const {
+  std::string STDAIR_Service::csvDisplay(const BomRoot& iBomRoot) const {
     std::ostringstream oStr;
 
     // Retrieve the StdAir service context
     assert (_stdairServiceContext != NULL);
-    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = *_stdairServiceContext;
-
-    // Retrieve the BOM tree root
-    const BomRoot& lCloneBomRoot = lSTDAIR_ServiceContext.getCloneBomRoot();
     
     // Dump the content of the whole BOM tree into the string
-    BomDisplay::csvDisplay (oStr, lCloneBomRoot);
+    BomDisplay::csvDisplay (oStr, iBomRoot);
     
     return oStr.str();
   }

@@ -481,8 +481,8 @@ namespace stdair {
               << lBoardPoint << "-" << lOffPoint << ", " << lSegmentDateDate << std::endl;
 
       // Check if the current segment has corresponding marketing segments. 
-      const bool isMarketingSDListEmpty = BomManager::hasList<SegmentDate>(*lSD_ptr);
-      if (isMarketingSDListEmpty == false) {
+      const bool hasMarketingSDList = BomManager::hasList<SegmentDate>(*lSD_ptr);
+      if (hasMarketingSDList == true) {
         //
         const SegmentDateList_T& lMarketingSDList = BomManager::getList<SegmentDate>(*lSD_ptr);
           
