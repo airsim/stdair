@@ -246,5 +246,49 @@ namespace stdair {
 #endif // BOOST_VERSION >= 104100
 
     return hasKeyBeenSuccessfullyRetrieved;
-  }
+  }  
+
+  // ////////////////////////////////////////////////////////////////////
+  bool BomJSONImport::jsonImportEventType (const JSONString& iBomJSONStr,
+					   EventType::EN_EventType& ioEventType) {
+    
+    bool hasKeyBeenSuccessfullyRetrieved = true;
+
+#if BOOST_VERSION >= 104100
+    // Create an empty property tree object
+    bpt::ptree pt;
+
+    try {
+
+      // Load the JSON formatted string into the property tree.
+      // If reading fails (cannot open stream, parse error), an
+      // exception is thrown.
+      std::istringstream iStr (iBomJSONStr.getString());
+      read_json (iStr, pt);
+
+      // Build the right path to obtain the event type value.
+      bpt::ptree::const_iterator itBegin = pt.begin();
+      const std::string lEventTypeName = itBegin->first;
+      std::ostringstream lPath;
+      lPath << lEventTypeName << ".event_type";
+      
+      // Get the event type string
+      // If the path key is not found, an exception bpt::ptree_error is thrown.
+      const std::string lEventTypeStr = pt.get<std::string> (lPath.str());  
+      // Build the event type using the string.
+      // If the input string is incorrect, an exception 
+      // stdair::CodeConversionException is thrown.
+      const EventType lEventType (lEventTypeStr);
+      ioEventType = lEventType.getType();
+
+    } catch (bpt::ptree_error& bptException) {
+      hasKeyBeenSuccessfullyRetrieved = false;
+    } catch (stdair::CodeConversionException& cceException) {
+      hasKeyBeenSuccessfullyRetrieved = false;
+    }
+#endif // BOOST_VERSION >= 104100
+
+    return hasKeyBeenSuccessfullyRetrieved;
+  } 
+
 }

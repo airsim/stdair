@@ -10,6 +10,7 @@
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_date_time_types.hpp>
 #include <stdair/basic/JSonCommand.hpp>
+#include <stdair/basic/EventType.hpp>
 #include <stdair/bom/BreakPointStruct.hpp>
 
 
@@ -72,6 +73,16 @@ namespace stdair {
      */
     static bool jsonImportBreakPoints (const JSONString&,
 				       BreakPointList_T&);
+ 
+    /**
+     * Extract the event type from a given JSON-formatted string.
+     *
+     * @param const JSONString& JSON-formatted string.
+     * @param EventType::EN_EventType& Event type extracted from the given string.
+     * @return bool State whether the extracting has been successful.
+     */
+    static bool jsonImportEventType (const JSONString&,
+				     EventType::EN_EventType&);
   };
 
 }
