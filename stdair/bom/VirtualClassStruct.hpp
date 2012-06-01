@@ -83,6 +83,15 @@ namespace stdair {
     void setCumulatedProtection (const ProtectionLevel_T& iP) {
       _cumulatedProtection = iP;
     }
+
+    /** Add a booking class to the list of booking classes. 
+     *  Note: it is not a link Parent/Child so we don't use the FacBom.
+     *        The Virtual Classes are not bom objects because the
+     *        optimiser needs to build them before each optimisation.
+     */
+    void addBookingClass (BookingClass& iBookingClass) {
+      _bookingClassList.push_back(&iBookingClass);
+    }
     
   public:
     // /////////// Display support method /////////////
