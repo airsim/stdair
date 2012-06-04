@@ -48,8 +48,6 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   void STDAIR_ServiceContext::initBomRoot() {
     _persistentBomRoot = &FacBom<BomRoot>::instance().create();
-    _cloneBomRoot = 
-      &FacCloneBom<BomRoot>::instance().clone(*_persistentBomRoot);
     initCloneBomRoot();
   }
 
