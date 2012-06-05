@@ -280,13 +280,9 @@ int main (int argc, char* argv[]) {
     STDAIR_LOG_DEBUG ("StdAir will parse " << lInputFilename
                       << " and build the corresponding BOM tree.");
   }
-  
-  // Retrieve (a constant reference on) the top of the persistent BOM tree
-  const stdair::BomRoot& lPersistentBomRoot = 
-    stdairService.getPersistentBomRoot();  
 
-  // DEBUG: Display the whole BOM tree
-  const std::string& lCSVDump = stdairService.csvDisplay(lPersistentBomRoot);
+  // DEBUG: Display the whole persistent BOM tree
+  const std::string& lCSVDump = stdairService.csvDisplay ();
   STDAIR_LOG_DEBUG (lCSVDump);
 
   // Close the Log outputFile
