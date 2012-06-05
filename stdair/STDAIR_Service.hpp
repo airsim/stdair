@@ -127,6 +127,20 @@ namespace stdair {
      *        optimisation.
      */
     void buildDummyInventory (const CabinCapacity_T& iCabinCapacity);
+  
+    /**
+     * Build the direct accesses between the dummy segment cabins and the dummy 
+     * leg cabins within the dummy flight dates (the dummy fare family 
+     * flight date and the classic dummy flight date).   
+     * 
+     * As for now (May 2012), that method is called only by RMOL.
+     * It is a substitute for the code doing it automatically located in AirInv.
+     * See the AIRINV::InventoryManager::createDirectAccesses command.
+     *
+     * @param BomRoot& Top of the BOM tree, to which the sample should
+     *        be attached.
+     */
+    void buildDummyLegSegmentAccesses (BomRoot&);
     
     /**
      * Build a sample list of travel solutions.
@@ -290,7 +304,16 @@ namespace stdair {
      *        is a valid one.
      */
     bool check (const AirportCode_T&, const AirportCode_T&,
-                const Date_T& iDepartureDate) const;
+                const Date_T& iDepartureDate) const; 
+
+    /**
+     * Recursively display (dump in the returned string) the objects
+     * of the persistent BOM tree.
+     *.
+     * @return std::string Output string in which the persistent BOM tree is
+     *        logged/dumped.
+     */
+    std::string csvDisplay () const;
 
     /**
      * Recursively display (dump in the returned string) the objects
@@ -300,7 +323,7 @@ namespace stdair {
      * @return std::string Output string in which the BOM tree is
      *        logged/dumped.
      */
-    std::string csvDisplay(const BomRoot&) const;
+    std::string csvDisplay (const BomRoot&) const;
 
     /**
      * Recursively display (dump in the returned string) the flight-date
@@ -348,6 +371,16 @@ namespace stdair {
      * @return BomRoot& Reference on the BomRoot.
      */
     BomRoot& getBomRoot() const;
+
+    /**
+     * @brief Get a reference on the BomRoot object.
+     *
+     * If the service context has not been initialised, that
+     * method throws an exception (failing assertion).
+     *
+     * @return BomRoot& Reference on the BomRoot.
+     */
+    BomRoot& getPersistentBomRoot() const;
     
     /**
      * Get the log parameters.
@@ -437,19 +470,8 @@ namespace stdair {
     /**
      * @brief Finalise.
      */
-    void finalise();  public:
+    void finalise();
 
-    /**
-     * @brief Get a reference on the BomRoot object.
-     *
-     * If the service context has not been initialised, that
-     * method throws an exception (failing assertion).
-     *
-     * @return BomRoot& Reference on the BomRoot.
-     */
-    BomRoot& getPersistentBomRoot() const;
-
-    void buildDummyLegSegmentAccesses (BomRoot&);
 
  private:
     // ///////// Service Context /////////

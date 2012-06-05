@@ -170,7 +170,7 @@ BOOST_AUTO_TEST_CASE (stdair_service_initialisation_test) {
   stdairService.buildSampleBom();
 
   // DEBUG: Display the whole BOM tree
-  const std::string& lCSVDump = stdairService.csvDisplay(lPersistentBomRoot);
+  const std::string& lCSVDump = stdairService.csvDisplay ();
   STDAIR_LOG_DEBUG (lCSVDump);
 
   // Close the Log outputFile
@@ -261,7 +261,7 @@ BOOST_AUTO_TEST_CASE (bom_structure_serialisation_test) {
   stdair::BomRoot& lPersistentBomRoot = stdairService.getPersistentBomRoot();
 
   // DEBUG: Display the whole BOM tree
-  const std::string& lCSVDump = stdairService.csvDisplay(lPersistentBomRoot);
+  const std::string& lCSVDump = stdairService.csvDisplay ();
   STDAIR_LOG_DEBUG (lCSVDump);
 
   // Clone the persistent BOM
@@ -365,7 +365,7 @@ BOOST_AUTO_TEST_CASE (bom_structure_clone_test) {
     stdairService.getPersistentBomRoot();  
 
   // DEBUG: Display the whole persistent BOM tree
-  const std::string& lCSVDump = stdairService.csvDisplay(lPersistentBomRoot); 
+  const std::string& lCSVDump = stdairService.csvDisplay (); 
   STDAIR_LOG_DEBUG ("Display the persistent BOM tree.");
   STDAIR_LOG_DEBUG (lCSVDump); 
 

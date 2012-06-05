@@ -413,10 +413,26 @@ namespace stdair {
                                                      lDatePeriodList);    
     
     return (lDatePeriodList.size() != 0);
+  } 
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::csvDisplay () const {
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);    
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
+
+    // Retrieve the persistent BOM tree root
+    const BomRoot& lPersistentBomRoot = 
+      lSTDAIR_ServiceContext.getPersistentBomRoot();
+    
+    // Call the dedicated service
+    return csvDisplay (lPersistentBomRoot);
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string STDAIR_Service::csvDisplay(const BomRoot& iBomRoot) const {
+  std::string STDAIR_Service::csvDisplay (const BomRoot& iBomRoot) const {
     std::ostringstream oStr;
 
     // Retrieve the StdAir service context
