@@ -16,6 +16,7 @@
 #include <stdair/bom/BomRetriever.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
+#include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/LegDate.hpp>
 #include <stdair/bom/LegCabin.hpp>
@@ -87,16 +88,30 @@ namespace stdair {
     // Inventory
     // Step 0.1: Inventory level
     // Create an Inventory for BA
-    const InventoryKey lBAKey ("BA");
+    const AirlineCode_T lAirlineCodeBA ("BA");
+    const InventoryKey lBAKey (lAirlineCodeBA);
     Inventory& lBAInv = FacBom<Inventory>::instance().create (lBAKey);
     FacBomManager::addToListAndMap (ioBomRoot, lBAInv);
     FacBomManager::linkWithParent (ioBomRoot, lBAInv);
 
+    // Add the airline feature object to the BA inventory
+    const AirlineFeatureKey lAirlineFeatureBAKey (lAirlineCodeBA);
+    AirlineFeature& lAirlineFeatureBA =
+      FacBom<AirlineFeature>::instance().create (lAirlineFeatureBAKey);
+    lBAInv.setAirlineFeature (lAirlineFeatureBA);
+    
     // Create an Inventory for AF
-    const InventoryKey lAFKey ("AF");
+    const AirlineCode_T lAirlineCodeAF ("AF");
+    const InventoryKey lAFKey (lAirlineCodeAF);
     Inventory& lAFInv = FacBom<Inventory>::instance().create (lAFKey);
     FacBomManager::addToListAndMap (ioBomRoot, lAFInv);
     FacBomManager::linkWithParent (ioBomRoot, lAFInv);
+    
+    // Add the airline feature object to the AF inventory
+    const AirlineFeatureKey lAirlineFeatureAFKey (lAirlineCodeAF);
+    AirlineFeature& lAirlineFeatureAF =
+      FacBom<AirlineFeature>::instance().create (lAirlineFeatureAFKey);
+    lAFInv.setAirlineFeature (lAirlineFeatureAF);
 
     // BA
     // Step 0.2: Flight-date level
@@ -991,6 +1006,12 @@ namespace stdair {
     FacBomManager::addToListAndMap (ioBomRoot, lInv);
     FacBomManager::linkWithParent (ioBomRoot, lInv);
 
+    // Add the airline feature object to the dummy inventory
+    const AirlineFeatureKey lAirlineFeatureKey (DEFAULT_AIRLINE_CODE);
+    AirlineFeature& lAirlineFeature =
+      FacBom<AirlineFeature>::instance().create (lAirlineFeatureKey);
+    lInv.setAirlineFeature (lAirlineFeature);
+
     // Flight-date
     FlightDateKey lFlightDateKey(DEFAULT_FLIGHT_NUMBER, DEFAULT_DEPARTURE_DATE);
     FlightDate& lFlightDate =
@@ -1807,16 +1828,30 @@ namespace stdair {
 
     // Step 0.1: Inventory level
     // Create an Inventory for SQ
-    const InventoryKey lSQKey ("SQ");
+    const AirlineCode_T lAirlineCodeSQ ("SQ");
+    const InventoryKey lSQKey (lAirlineCodeSQ);
     Inventory& lSQInv = FacBom<Inventory>::instance().create (lSQKey);
     FacBomManager::addToListAndMap (ioBomRoot, lSQInv);
     FacBomManager::linkWithParent (ioBomRoot, lSQInv);
+
+    // Add the airline feature object to the SQ inventory
+    const AirlineFeatureKey lAirlineFeatureSQKey (lAirlineCodeSQ);
+    AirlineFeature& lAirlineFeatureSQ =
+      FacBom<AirlineFeature>::instance().create (lAirlineFeatureSQKey);
+    lSQInv.setAirlineFeature (lAirlineFeatureSQ);
     
     // Create an Inventory for CX
-    const InventoryKey lCXKey ("CX");
+    const AirlineCode_T lAirlineCodeCX ("CX");
+    const InventoryKey lCXKey (lAirlineCodeCX);
     Inventory& lCXInv = FacBom<Inventory>::instance().create (lCXKey);
     FacBomManager::addToListAndMap (ioBomRoot, lCXInv);
     FacBomManager::linkWithParent (ioBomRoot, lCXInv);
+
+    // Add the airline feature object to the CX inventory
+    const AirlineFeatureKey lAirlineFeatureCXKey (lAirlineCodeCX);
+    AirlineFeature& lAirlineFeatureCX =
+      FacBom<AirlineFeature>::instance().create (lAirlineFeatureCXKey);
+    lCXInv.setAirlineFeature (lAirlineFeatureCX);
     
     // ////// SQ ///////    
     // Step 0.2: Flight-date level

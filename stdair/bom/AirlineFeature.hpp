@@ -20,6 +20,7 @@ namespace stdair {
   /** Class representing the actual attributes for an airline booking class. */
   class AirlineFeature : public BomAbstract {
     template <typename BOM> friend class FacBom;
+    template <typename BOM> friend class FacCloneBom;	
     
   public:
     // Type definitions.

@@ -19,6 +19,8 @@
 #include <stdair/service/Logger.hpp>
 // Stdair BOM Objects
 #include <stdair/bom/SegmentDate.hpp>
+#include <stdair/bom/Inventory.hpp>
+#include <stdair/bom/AirlineFeature.hpp>
 
 namespace stdair {
   
@@ -100,6 +102,17 @@ namespace stdair {
   template <typename OBJECT2, typename OBJECT1> 
   const BomHolder<OBJECT2>& BomManager::getBomHolder (const OBJECT1& iObject1) {
 
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));
+
     const HolderMap_T& lHolderMap = iObject1.getHolderMap();
     
     HolderMap_T::const_iterator itHolder = lHolderMap.find (&typeid (OBJECT2));
@@ -126,6 +139,14 @@ namespace stdair {
   const typename BomHolder<OBJECT2>::BomList_T& BomManager::
   getList (const OBJECT1& iObject1) {
     
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <AirlineFeature, Inventory>
+    //
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));
+    
   const BomHolder<OBJECT2>& lBomHolder = getBomHolder<OBJECT2> (iObject1);
     return lBomHolder._bomList;
   }
@@ -141,9 +162,12 @@ namespace stdair {
     // Compile time assertation: this function must never be called with the
     // following list of couple types:
     // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
     // 
     BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
                           || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));
     
     const BomHolder<OBJECT2>& lBomHolder = getBomHolder<OBJECT2> (iObject1);
     return lBomHolder._bomMap;
@@ -194,6 +218,14 @@ namespace stdair {
   // (No compile time assertation to check PARENT and CHILD types.)
   template <typename PARENT, typename CHILD>
   PARENT* BomManager::getParentPtr (const CHILD& iChild) {
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <Inventory, AirlineFeature>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<CHILD, AirlineFeature>::value == false
+                          || boost::is_same<PARENT, Inventory>::value == false));
     
     PARENT* const lParent_ptr = static_cast<PARENT* const> (iChild.getParent());
     return lParent_ptr; 
@@ -204,6 +236,14 @@ namespace stdair {
   // (No compile time assertation to check PARENT and CHILD types.)
   template <typename PARENT, typename CHILD>
   PARENT& BomManager::getParent (const CHILD& iChild) {
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <Inventory, AirlineFeature>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<CHILD, AirlineFeature>::value == false
+                          || boost::is_same<PARENT, Inventory>::value == false));
     
     PARENT* const lParent_ptr = getParentPtr<PARENT> (iChild);
     assert (lParent_ptr != NULL);
@@ -298,7 +338,8 @@ namespace stdair {
   
   // Specialization of the template method hasList above for the types
   // <SegmentDate, SegmentDate>.
-  // Add an element to the marketing segment date list of a segment date.
+  // Return a boolean saying if the marketing segment date list is empty
+  // or not. 
   template<> 
   inline bool BomManager::hasList<SegmentDate,SegmentDate>
   (const SegmentDate& ioSegmentDate) {
@@ -314,8 +355,7 @@ namespace stdair {
   
   // Specialization of the template method hasList above for the types
   // <SegmentDate, SegmentDate>.
-  // Return a boolean saying if the marketing segment date list is empty
-  // or not. 
+  // Return the marketing segment date list.
   template<> 
   inline const BomHolder<SegmentDate>::BomList_T&
   BomManager::getList<SegmentDate,SegmentDate> (const SegmentDate& ioSegmentDate) {
@@ -336,6 +376,60 @@ namespace stdair {
     const bool hasMap = false;
     return hasMap;
   }
+
+  // ////////////////////////////////////////////////////////////////////
+  //
+  // Specialization of the template methods above for an inventory
+  // and its airline features.
+  //
+  // ////////////////////////////////////////////////////////////////////
+
+  // Specialization of the template method hasList above for the types
+  // <AirlineFeature,Inventory>.
+  template<> 
+  inline bool BomManager::hasList<AirlineFeature,Inventory>
+  (const Inventory& ioInventory) {
+    
+    const bool hasList = false;
+    return hasList;
+  }
+  
+  // Specialization of the template method hasMap above for the types
+  // <AirlineFeature,Inventory>.
+  template<> 
+  inline bool BomManager::hasMap<AirlineFeature,Inventory>
+  (const Inventory& ioInventory) {
+    
+    const bool hasMap = false;
+    return hasMap;
+  }
+
+  // Specialization of the template method getObjectPtr above for the types
+  // <AirlineFeature,Inventory>.
+  template<> 
+  inline AirlineFeature* BomManager::getObjectPtr<AirlineFeature,Inventory>
+  (const Inventory& iInventory, const MapKey_T& iKey) {
+
+    AirlineFeature* lAirlineFeature_ptr = iInventory.getAirlineFeature ();
+
+    return lAirlineFeature_ptr;
+
+
+  }
+
+  // Specialization of the template method getObject above for the types
+  // <AirlineFeature,Inventory>.
+  template<> 
+  inline AirlineFeature& BomManager::getObject<AirlineFeature,Inventory>
+  (const Inventory& iInventory, const MapKey_T& iKey) {
+
+    AirlineFeature* lAirlineFeature_ptr =
+      getObjectPtr<AirlineFeature,Inventory> (iInventory, iKey);
+    assert (lAirlineFeature_ptr != NULL);
+    return *lAirlineFeature_ptr;
+
+  }
+
   
 }
 #endif // __STDAIR_BOM_BOMMANAGER_HPP

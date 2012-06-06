@@ -11,6 +11,7 @@
 // StdAir Bom
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
+#include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/bom/OnDDate.hpp>
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/LegDate.hpp>
@@ -56,7 +57,16 @@ namespace stdair {
      *
      * @return Inventory& Root of the cloned BOM tree.
      */
-    static Inventory& cloneInventory (const Inventory&); 
+    static Inventory& cloneInventory (const Inventory&);
+
+    /**
+     * Clone an airline feature object.
+     *
+     * @param const AirlineFeature& Airline feature to be cloned. 
+     * 
+     * @return AirlineFeature& Cloned airline feature.
+     */
+    static AirlineFeature& cloneAirlineFeature (const AirlineFeature&);
   
     /**
      * Recursively clone the children of an OnD.

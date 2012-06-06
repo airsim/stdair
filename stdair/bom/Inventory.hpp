@@ -106,12 +106,19 @@ namespace stdair {
      */
     FlightDate* getFlightDate (const FlightDateKey&) const;
 
+    /**
+     * Get the airline feature.
+     */
+    AirlineFeature* getAirlineFeature () const {
+      return _airlineFeature;
+    }
+
 
   public:
     // /////////// Setters ////////////
     /** Set the airline feature. */
-    void setAirlineFeature (const AirlineFeature* ioAirlineFeaturePtr) {
-      _airlineFeature = ioAirlineFeaturePtr;
+    void setAirlineFeature (AirlineFeature& iAirlineFeature) {
+      _airlineFeature = &iAirlineFeature;
     }
 
 
@@ -204,7 +211,7 @@ namespace stdair {
     /**
      * Features specific to the airline.
      */
-    const AirlineFeature* _airlineFeature;
+    AirlineFeature* _airlineFeature;
 
     /**
      * Map holding the children (FlightDate objects).

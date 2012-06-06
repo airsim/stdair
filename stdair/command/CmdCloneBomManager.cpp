@@ -161,8 +161,33 @@ namespace stdair {
       }
     }
 
+    // Check whether there is an airline feature object
+    const AirlineFeature* lAirlineFeature_ptr =
+      BomManager::getObjectPtr<AirlineFeature,Inventory> (iInventory,
+                                                          iInventory.getAirlineCode());
+    if (lAirlineFeature_ptr != NULL) {
+      // Clone the current airline feature object
+      AirlineFeature& lCloneAirlineFeature =
+        cloneAirlineFeature (*lAirlineFeature_ptr);
+      lCloneInventory.setAirlineFeature (lCloneAirlineFeature);
+    }
+
     return lCloneInventory;
-  }  
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  AirlineFeature& CmdCloneBomManager::
+  cloneAirlineFeature (const AirlineFeature& iAirlineFeature) {   
+
+    /**
+     * O&D-date level (only)
+     */ 
+    AirlineFeature& lCloneAirlineFeature = 
+      FacCloneBom<AirlineFeature>::instance().clone (iAirlineFeature);  
+
+    return lCloneAirlineFeature;
+  } 
+ 
 
   // ////////////////////////////////////////////////////////////////////
   OnDDate& CmdCloneBomManager::cloneOnDDate (const OnDDate& iOnDDate) {   
