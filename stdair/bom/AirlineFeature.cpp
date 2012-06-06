@@ -21,6 +21,16 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
+  AirlineFeature::AirlineFeature (const AirlineFeature& iAirlineFeature) :
+    _key (iAirlineFeature._key),
+    _forecastingMethod (iAirlineFeature._forecastingMethod),
+    _unconstrainingMethod (iAirlineFeature._unconstrainingMethod),
+    _preOptimisationMethod (iAirlineFeature._preOptimisationMethod),
+    _optimisationMethod (iAirlineFeature._optimisationMethod),
+    _partnershipTechnique (iAirlineFeature._partnershipTechnique) {
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   AirlineFeature::~AirlineFeature () {
   }
 
