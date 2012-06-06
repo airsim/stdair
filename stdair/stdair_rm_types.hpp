@@ -70,5 +70,8 @@ namespace stdair {
   /** Define the revenue of a policy */
   typedef double Revenue_T;
 
+  /** Define the number of samples for the generated demand of booking class */
+  typedef int NbOfSamples_T;
+
 }
 #endif // __STDAIR_STDAIR_RM_TYPES_HPP

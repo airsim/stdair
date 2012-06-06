@@ -250,11 +250,11 @@ namespace stdair {
 
     /** Generate demand samples for Monte-Carlo method with the default
         random seed. */
-    void generateDemandSamples (const int&);
+    void generateDemandSamples (const NbOfSamples_T&);
 
     /** Generate demand samples for Monte-Carlo method with the given
         random seed. */
-    void generateDemandSamples (const int&, const RandomSeed_T&);
+    void generateDemandSamples (const NbOfSamples_T&, const RandomSeed_T&);
 
   protected:
     // ////////// Constructors and destructors /////////

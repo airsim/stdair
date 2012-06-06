@@ -80,7 +80,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BookingClass::generateDemandSamples (const int& K) {
+  void BookingClass::generateDemandSamples (const NbOfSamples_T& K) {
     _generatedDemandVector.clear();
     if (_stdDev > 0) {
       RandomGeneration lGenerator (DEFAULT_RANDOM_SEED);
@@ -92,7 +92,7 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void BookingClass::generateDemandSamples (const int& K,
+  void BookingClass::generateDemandSamples (const NbOfSamples_T& K,
                                             const RandomSeed_T& iSeed) {
     _generatedDemandVector.clear();
     if (_stdDev > 0) {
