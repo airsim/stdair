@@ -84,7 +84,7 @@ namespace stdair {
     _generatedDemandVector.clear();
     if (_stdDev > 0) {
       RandomGeneration lGenerator (DEFAULT_RANDOM_SEED);
-      for (int i = 0; i < K; ++i) {
+      for (unsigned int i = 0; i < K; ++i) {
         RealNumber_T lDemandSample = lGenerator.generateNormal (_mean, _stdDev);
         _generatedDemandVector.push_back (lDemandSample);
       }
@@ -97,7 +97,7 @@ namespace stdair {
     _generatedDemandVector.clear();
     if (_stdDev > 0) {
       RandomGeneration lGenerator (iSeed);
-      for (int i = 0; i < K; ++i) {
+      for (unsigned int i = 0; i < K; ++i) {
         RealNumber_T lDemandSample = lGenerator.generateNormal (_mean, _stdDev);
         _generatedDemandVector.push_back (lDemandSample);
       }
