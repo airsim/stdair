@@ -218,14 +218,6 @@ namespace stdair {
   // (No compile time assertation to check PARENT and CHILD types.)
   template <typename PARENT, typename CHILD>
   PARENT* BomManager::getParentPtr (const CHILD& iChild) {
-
-    //
-    // Compile time assertation: this function must never be called with the
-    // following list of couple types:
-    // <Inventory, AirlineFeature>
-    // 
-    BOOST_STATIC_ASSERT ((boost::is_same<CHILD, AirlineFeature>::value == false
-                          || boost::is_same<PARENT, Inventory>::value == false));
     
     PARENT* const lParent_ptr = static_cast<PARENT* const> (iChild.getParent());
     return lParent_ptr; 
@@ -236,14 +228,6 @@ namespace stdair {
   // (No compile time assertation to check PARENT and CHILD types.)
   template <typename PARENT, typename CHILD>
   PARENT& BomManager::getParent (const CHILD& iChild) {
-
-    //
-    // Compile time assertation: this function must never be called with the
-    // following list of couple types:
-    // <Inventory, AirlineFeature>
-    // 
-    BOOST_STATIC_ASSERT ((boost::is_same<CHILD, AirlineFeature>::value == false
-                          || boost::is_same<PARENT, Inventory>::value == false));
     
     PARENT* const lParent_ptr = getParentPtr<PARENT> (iChild);
     assert (lParent_ptr != NULL);
@@ -413,8 +397,6 @@ namespace stdair {
     AirlineFeature* lAirlineFeature_ptr = iInventory.getAirlineFeature ();
 
     return lAirlineFeature_ptr;
-
-
   }
 
   // Specialization of the template method getObject above for the types
@@ -426,8 +408,8 @@ namespace stdair {
     AirlineFeature* lAirlineFeature_ptr =
       getObjectPtr<AirlineFeature,Inventory> (iInventory, iKey);
     assert (lAirlineFeature_ptr != NULL);
+    
     return *lAirlineFeature_ptr;
-
   }
 
   
