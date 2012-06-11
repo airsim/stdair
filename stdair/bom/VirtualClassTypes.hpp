@@ -20,7 +20,7 @@ namespace stdair {
   typedef std::list<VirtualClassStruct> VirtualClassList_T;
   
   /** Define the booking class map. */
-  typedef std::map<const Yield_T, VirtualClassStruct> VirtualClassMap_T;
+  typedef std::map<const YieldLevel_T, VirtualClassStruct> VirtualClassMap_T;
 }
 #endif // __STDAIR_BOM_VIRTUALCLASSTYPES_HPP
 
