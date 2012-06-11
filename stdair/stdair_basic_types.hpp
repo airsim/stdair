@@ -131,6 +131,12 @@ namespace stdair {
   /** Define the unsigned index type. */
   typedef unsigned int UnsignedIndex_T;
 
+  /** Define the number of booking classes. */
+  typedef unsigned int NbOfClasses_T;
+
+  /** Define the number of fare families. */
+  typedef unsigned int NbOfFareFamilies_T;
+
   // ///////////// Technical ////////////////
   /** File or directory name.
       <br>It may contain paths, relative or absolute (e.g., /foo/bar
