@@ -46,62 +46,86 @@ namespace stdair {
 
   public:
     // /////////// Getters /////////////
-    /** Get the segment-date key. */
+    /**
+     * Get the segment-date key.
+     */
     const Key_T& getKey() const {
       return _key;
     }
 
-    /** Get the parent object. */
+    /**
+     * Get the parent object.
+     */
     BomAbstract* const getParent() const {
       return _parent;
     }
     
-    /** Get the boarding point (part of the primary key). */
+    /**
+     * Get the boarding point (part of the primary key).
+     */
     const AirportCode_T& getBoardingPoint() const {
       return _key.getBoardingPoint();
     }
 
-    /** Get the off point (part of the primary key). */
+    /**
+     * Get the off point (part of the primary key).
+     */
     const AirportCode_T& getOffPoint() const {
       return _key.getOffPoint();
     }
 
-    /** Get the map of children holders. */
+    /**
+     * Get the map of children holders.
+     */
     const HolderMap_T& getHolderMap() const {
       return _holderMap;
     }
 
-    /** Get the boarding date. */
+    /**
+     * Get the boarding date.
+     */
     const Date_T& getBoardingDate() const {
       return _boardingDate;
     }
 
-    /** Get the boarding time. */
+    /**
+     * Get the boarding time.
+     */
     const Duration_T& getBoardingTime() const {
       return _boardingTime;
     }
 
-    /** Get the off date. */
+    /**
+     * Get the off date.
+     */
     const Date_T& getOffDate() const {
       return _offDate;
     }
 
-    /** Get the off time. */
+    /**
+     * Get the off time.
+     */
     const Duration_T& getOffTime() const {
       return _offTime;
     }
 
-    /** Get the elapsed time. */
+    /**
+     * Get the elapsed time.
+     */
     const Duration_T& getElapsedTime() const {
       return _elapsedTime;
     }
 
-    /** Get the distance. */
+    /**
+     * Get the distance.
+     */
     const Distance_T& getDistance() const {
       return _distance;
     }
 
-    /** Get the date offset (off date - boarding date). */
+    /**
+     * Get the date offset (off date - boarding date).
+     */
     const DateOffset_T getDateOffset() const {
       return _offDate - _boardingDate;
     }
@@ -132,37 +156,52 @@ namespace stdair {
     
   public:
     // ///////// Setters //////////
-    /** Set the boarding date. */
+    /**
+     * Set the boarding date.
+     */
     void setBoardingDate (const Date_T& iBoardingDate) {
       _boardingDate = iBoardingDate;
     }
 
-    /** Set the boarding time. */
+    /**
+     * Set the boarding time.
+     */
     void setBoardingTime (const Duration_T& iBoardingTime) {
       _boardingTime = iBoardingTime;
     }
 
-    /** Set the off date. */
+    /**
+     * Set the off date.
+     */
     void setOffDate (const Date_T& iOffDate) {
       _offDate = iOffDate;
     }
 
-    /** Set the off time. */
+    /**
+     * Set the off time.
+     */
     void setOffTime (const Duration_T& iOffTime) {
       _offTime = iOffTime;
     }
 
-    /** Set the elapsed time. */
+    /**
+     * Set the elapsed time.
+     */
     void setElapsedTime (const Duration_T& iElapsedTime) {
       _elapsedTime = iElapsedTime;
     }
 
-    /** Set the distance. */
+    /**
+     * Set the distance.
+     */
     void setDistance (const Distance_T& iDistance) {
       _distance = iDistance;
     }
-    
-    /** Set operating segment date. */
+
+  private:
+    /**
+     * Set operating segment date.
+     */
     void linkWithOperating (SegmentDate& iSegmentDate) {
       _operatingSegmentDate = &iSegmentDate;
     }

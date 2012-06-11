@@ -199,6 +199,22 @@ namespace stdair {
      */
     static void resetYieldBasedNestingStructure (const SegmentCabin&);
 
+    /**
+     * Set the airline feature object of an inventory.
+     */
+    static void setAirlineFeature (Inventory& iInventory,
+                                   AirlineFeature& iAirlineFeature) {
+      iInventory.setAirlineFeature (iAirlineFeature);
+    }
+
+    /**
+     * Link the segment date with its operating segment date.
+     */
+    static void linkWithOperating (SegmentDate& iSegmentDate,
+                                   SegmentDate& iOperatingSegmentDate) {
+      iSegmentDate.linkWithOperating (iOperatingSegmentDate);
+    }
+
 
   protected:
     /**
@@ -225,9 +241,13 @@ namespace stdair {
     // Compile time assertation: this function must never be called with the
     // following list of couple types:
     // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
     //
     BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
-                          || boost::is_same<OBJECT2, SegmentDate>::value == false));    
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));         
+
 
     BomHolder<OBJECT2>* lBomHolder_ptr =
       &FacBom<BomHolder<OBJECT2> >::instance().create();
@@ -251,10 +271,13 @@ namespace stdair {
     // Compile time assertation: this function must never be called with the
     // following list of couple types:
     // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
     // 
     BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
-                          || boost::is_same<OBJECT2, SegmentDate>::value == false));            
-
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));
+    
     BomHolder<OBJECT2>* lBomHolder_ptr = NULL;
 
     // Find the corresponding BomHolder within the object1, if existing.
@@ -272,6 +295,17 @@ namespace stdair {
   // Private method.
   template <typename OBJECT2, typename OBJECT1> 
   BomHolder<OBJECT2>& FacBomManager::getBomHolder (OBJECT1& ioObject1) {
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));       
 
     BomHolder<OBJECT2>* lBomHolder_ptr = NULL;
 
@@ -297,6 +331,18 @@ namespace stdair {
   template <typename OBJECT1, typename OBJECT2>
   void FacBomManager::addToList (BomHolder<OBJECT2>& ioBomHolder,
                                  OBJECT1& ioObject1, OBJECT2& ioObject2) {
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));
+    
     ioBomHolder._bomList.push_back (&ioObject2);
   }
   
@@ -306,6 +352,17 @@ namespace stdair {
   // <SegmentDate, SegmentDate>
   template <typename OBJECT1, typename OBJECT2>
   void FacBomManager::addToList (OBJECT1& ioObject1, OBJECT2& ioObject2) {
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));
 
     BomHolder<OBJECT2>& lBomHolder = getBomHolder<OBJECT2> (ioObject1);
 
@@ -318,6 +375,17 @@ namespace stdair {
   void FacBomManager::addToMap (BomHolder<OBJECT2>& ioBomHolder,
                                 OBJECT1& ioObject1, OBJECT2& ioObject2,
                                 const MapKey_T& iKey) {
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of couple types:
+    // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));
 
     const bool insertionSucceeded =
       ioBomHolder._bomMap.insert (typename std::map<const MapKey_T, OBJECT2*>::
@@ -359,9 +427,12 @@ namespace stdair {
     // Compile time assertation: this function must never be called with the
     // following list of couple types:
     // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
     // 
     BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
-                          || boost::is_same<OBJECT2, SegmentDate>::value == false));          
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));         
 
     BomHolder<OBJECT2>& lBomHolder = getBomHolder<OBJECT2> (ioObject1);
 
@@ -378,9 +449,12 @@ namespace stdair {
     // Compile time assertation: this function must never be called with the
     // following list of couple types:
     // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
     // 
     BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
                           || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));   
     
     const MapKey_T& lKey = ioObject2.describeKey();
     addToMap (ioObject1, ioObject2, lKey);
@@ -396,9 +470,12 @@ namespace stdair {
     // Compile time assertation: this function must never be called with the
     // following list of couple types:
     // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
     // 
     BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
-                          || boost::is_same<OBJECT2, SegmentDate>::value == false));              
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));                
     
     BomHolder<OBJECT2>& lBomHolder = getBomHolder<OBJECT2> (ioObject1);
 
@@ -416,9 +493,12 @@ namespace stdair {
     // Compile time assertation: this function must never be called with the
     // following list of couple types:
     // <SegmentDate, SegmentDate>
+    // <AirlineFeature, Inventory>
     // 
     BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, SegmentDate>::value == false
-                          || boost::is_same<OBJECT2, SegmentDate>::value == false));            
+                          || boost::is_same<OBJECT2, SegmentDate>::value == false));
+    BOOST_STATIC_ASSERT ((boost::is_same<OBJECT1, Inventory>::value == false
+                          || boost::is_same<OBJECT2, AirlineFeature>::value == false));          
     
     const MapKey_T& lKey = ioObject2.describeKey();
     addToListAndMap<OBJECT1, OBJECT2> (ioObject1, ioObject2, lKey);

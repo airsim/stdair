@@ -114,7 +114,7 @@ namespace stdair {
     }
 
 
-  public:
+  private:
     // /////////// Setters ////////////
     /** Set the airline feature. */
     void setAirlineFeature (AirlineFeature& iAirlineFeature) {
