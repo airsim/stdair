@@ -98,7 +98,10 @@ namespace stdair {
     const AirlineFeatureKey lAirlineFeatureBAKey (lAirlineCodeBA);
     AirlineFeature& lAirlineFeatureBA =
       FacBom<AirlineFeature>::instance().create (lAirlineFeatureBAKey);
-    lBAInv.setAirlineFeature (lAirlineFeatureBA);
+    FacBomManager::setAirlineFeature (lBAInv, lAirlineFeatureBA);
+    FacBomManager::linkWithParent (lBAInv, lAirlineFeatureBA);
+    // Link the airline feature object with the top of the BOM tree
+    FacBomManager::addToListAndMap (ioBomRoot, lAirlineFeatureBA);
     
     // Create an Inventory for AF
     const AirlineCode_T lAirlineCodeAF ("AF");
@@ -111,7 +114,10 @@ namespace stdair {
     const AirlineFeatureKey lAirlineFeatureAFKey (lAirlineCodeAF);
     AirlineFeature& lAirlineFeatureAF =
       FacBom<AirlineFeature>::instance().create (lAirlineFeatureAFKey);
-    lAFInv.setAirlineFeature (lAirlineFeatureAF);
+    FacBomManager::setAirlineFeature (lAFInv, lAirlineFeatureAF);
+    FacBomManager::linkWithParent (lAFInv, lAirlineFeatureAF);
+    // Link the airline feature object with the top of the BOM tree
+    FacBomManager::addToListAndMap (ioBomRoot, lAirlineFeatureAF);
 
     // BA
     // Step 0.2: Flight-date level
@@ -1010,7 +1016,10 @@ namespace stdair {
     const AirlineFeatureKey lAirlineFeatureKey (DEFAULT_AIRLINE_CODE);
     AirlineFeature& lAirlineFeature =
       FacBom<AirlineFeature>::instance().create (lAirlineFeatureKey);
-    lInv.setAirlineFeature (lAirlineFeature);
+    FacBomManager::setAirlineFeature (lInv, lAirlineFeature);
+    FacBomManager::linkWithParent (lInv, lAirlineFeature);
+    // Link the airline feature object with the top of the BOM tree
+    FacBomManager::addToListAndMap (ioBomRoot, lAirlineFeature);
 
     // Flight-date
     FlightDateKey lFlightDateKey(DEFAULT_FLIGHT_NUMBER, DEFAULT_DEPARTURE_DATE);
@@ -1838,20 +1847,26 @@ namespace stdair {
     const AirlineFeatureKey lAirlineFeatureSQKey (lAirlineCodeSQ);
     AirlineFeature& lAirlineFeatureSQ =
       FacBom<AirlineFeature>::instance().create (lAirlineFeatureSQKey);
-    lSQInv.setAirlineFeature (lAirlineFeatureSQ);
+    FacBomManager::setAirlineFeature (lSQInv, lAirlineFeatureSQ);
+    FacBomManager::linkWithParent (lSQInv, lAirlineFeatureSQ);
+    // Link the airline feature object with the top of the BOM tree
+    FacBomManager::addToListAndMap (ioBomRoot, lAirlineFeatureSQ);
     
     // Create an Inventory for CX
     const AirlineCode_T lAirlineCodeCX ("CX");
     const InventoryKey lCXKey (lAirlineCodeCX);
     Inventory& lCXInv = FacBom<Inventory>::instance().create (lCXKey);
     FacBomManager::addToListAndMap (ioBomRoot, lCXInv);
-    FacBomManager::linkWithParent (ioBomRoot, lCXInv);
 
     // Add the airline feature object to the CX inventory
     const AirlineFeatureKey lAirlineFeatureCXKey (lAirlineCodeCX);
     AirlineFeature& lAirlineFeatureCX =
       FacBom<AirlineFeature>::instance().create (lAirlineFeatureCXKey);
-    lCXInv.setAirlineFeature (lAirlineFeatureCX);
+    FacBomManager::setAirlineFeature (lCXInv, lAirlineFeatureCX);
+    FacBomManager::linkWithParent (lCXInv, lAirlineFeatureCX);
+    // Link the airline feature object with the top of the BOM tree
+    FacBomManager::addToListAndMap (ioBomRoot, lAirlineFeatureCX);
+    FacBomManager::linkWithParent (ioBomRoot, lAirlineFeatureCX);
     
     // ////// SQ ///////    
     // Step 0.2: Flight-date level
@@ -2226,7 +2241,7 @@ namespace stdair {
 
     FacBomManager::addToList (lSINBKKSegment, lPartnerMktSINBKKSegment);
 
-    lMktBKKHKGSegment.linkWithOperating (lPartnerBKKHKGSegment);
+    FacBomManager::linkWithOperating (lMktBKKHKGSegment, lPartnerBKKHKGSegment);
     
     /* =================================================================================== */
 
@@ -2691,7 +2706,7 @@ namespace stdair {
     // Step 9.0.9: link CX inventory objects to Partner SQ inventory objects
     FacBomManager::addToList (lBKKHKGSegment, lPartnerMktBKKHKGSegment);
 
-    lMktSINBKKSegment.linkWithOperating (lPartnerSINBKKSegment);
+    FacBomManager::linkWithOperating (lMktSINBKKSegment, lPartnerSINBKKSegment);
 
     /* =================================================================================== */
 

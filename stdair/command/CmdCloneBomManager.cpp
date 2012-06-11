@@ -39,7 +39,7 @@ namespace stdair {
 	assert (lInv_ptr != NULL);
 
 	// Clone the current inventory
-	Inventory& lCloneInventory = cloneInventory (*lInv_ptr);
+	Inventory& lCloneInventory = cloneInventory (*lInv_ptr, ioCloneBomRoot);
 	FacBomManager::addToListAndMap (ioCloneBomRoot, lCloneInventory);
 	FacBomManager::linkWithParent (ioCloneBomRoot, lCloneInventory);
       }
@@ -71,7 +71,8 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory& CmdCloneBomManager::cloneInventory (const Inventory& iInventory) { 
+  Inventory& CmdCloneBomManager::cloneInventory (const Inventory& iInventory,
+                                                 BomRoot& ioCloneBomRoot) { 
 
     /**
      * Inventory level (only)
@@ -112,7 +113,8 @@ namespace stdair {
         assert (lInv_ptr != NULL);
 	
         // Clone the current partnership inventory
-        Inventory& lClonePartnerInventory = cloneInventory (*lInv_ptr);  
+        Inventory& lClonePartnerInventory = cloneInventory (*lInv_ptr,
+                                                            ioCloneBomRoot);  
 	FacBomManager::addToListAndMap (lCloneInventory,
                                         lClonePartnerInventory);
 	FacBomManager::linkWithParent (lCloneInventory,
@@ -169,7 +171,10 @@ namespace stdair {
       // Clone the current airline feature object
       AirlineFeature& lCloneAirlineFeature =
         cloneAirlineFeature (*lAirlineFeature_ptr);
-      lCloneInventory.setAirlineFeature (lCloneAirlineFeature);
+      FacBomManager::setAirlineFeature (lCloneInventory, lCloneAirlineFeature);
+      FacBomManager::linkWithParent (lCloneInventory, lCloneAirlineFeature);
+      // Link the airline feature object with the top of the BOM tree
+      FacBomManager::addToListAndMap (ioCloneBomRoot, lCloneAirlineFeature);
     }
 
     return lCloneInventory;
@@ -826,8 +831,9 @@ namespace stdair {
 
 	    // link inventory objects to partner inventory objects
 	    FacBomManager::addToList (*lCloneOperatingSD_ptr, 
-				      *lCloneMarketingSD_ptr);    
-	    lCloneMarketingSD_ptr->linkWithOperating (*lCloneOperatingSD_ptr);
+				      *lCloneMarketingSD_ptr);
+            FacBomManager::linkWithOperating (*lCloneMarketingSD_ptr,
+                                              *lCloneOperatingSD_ptr);
 	  }
 	}
       }   

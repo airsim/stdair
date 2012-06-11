@@ -56,8 +56,9 @@ namespace stdair {
      * @param const Inventory& Root of the BOM tree to be cloned.
      *
      * @return Inventory& Root of the cloned BOM tree.
+     * @param BomRoot& Root of the cloned BOM tree.
      */
-    static Inventory& cloneInventory (const Inventory&);
+    static Inventory& cloneInventory (const Inventory&, BomRoot&);
 
     /**
      * Clone an airline feature object.
