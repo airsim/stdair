@@ -18,7 +18,9 @@
 namespace stdair {
 
   /**
-   * @brief Class representing the actual attributes for an airline booking class.
+   * @brief Class representing various configuration parameters (e.g., revenue
+   * management methods such EMSRb or Monte-Carlo) for a given airline for the
+   * simulation.
    */
   class AirlineFeature : public BomAbstract {
     template <typename BOM> friend class FacBom;

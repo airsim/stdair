@@ -546,11 +546,11 @@ namespace stdair {
     DefaultMap::createFRAT5CurveB();
   FRAT5Curve_T DefaultMap::createFRAT5CurveB() {
     FRAT5Curve_T oCurve;
-    oCurve[63] = 1.10;  oCurve[56] = 1.11;  oCurve[49] = 1.17;
-    oCurve[42] = 1.27;  oCurve[35] = 1.28;  oCurve[31] = 1.28;
-    oCurve[27] = 1.28;  oCurve[23] = 1.37;  oCurve[19] = 1.37;
-    oCurve[16] = 1.60;  oCurve[13] = 1.60;  oCurve[10] = 1.80;
-    oCurve[7]  = 1.80;  oCurve[5]  = 2.23;  oCurve[3]  = 2.23;
+    oCurve[63] = 1.20;  oCurve[56] = 1.23;  oCurve[49] = 1.26;
+    oCurve[42] = 1.30;  oCurve[35] = 1.35;  oCurve[31] = 1.40;
+    oCurve[27] = 1.50;  oCurve[23] = 1.60;  oCurve[19] = 1.80;
+    oCurve[16] = 2.10;  oCurve[13] = 2.20;  oCurve[10] = 2.30;
+    oCurve[7]  = 2.40;  oCurve[5]  = 2.44;  oCurve[3]  = 2.47;
     oCurve[1]  = 2.50; 
     return oCurve;
   }
