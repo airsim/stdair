@@ -45,8 +45,11 @@ namespace stdair {
     /** Define the vector of historical bookings. */
   typedef std::vector<NbOfBookings_T> BookingVector_T;
 
+  /** Define the FRAT5 coefficient. */
+  typedef double FRAT5_T;
+
   /** Define the FRAT5 curve. */
-  typedef std::map<const DTD_T, double> FRAT5Curve_T;
+  typedef std::map<const DTD_T, FRAT5_T> FRAT5Curve_T;
 
   /** Define the fare family disutility curve. */
   typedef std::map<const DTD_T, double> FFDisutilityCurve_T;
