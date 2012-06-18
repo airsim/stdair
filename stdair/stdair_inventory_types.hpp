@@ -42,6 +42,9 @@ namespace stdair {
   /** Map between the cabin codes and the booking class codes within
       each cabin. */
   typedef std::map<CabinCode_T, ClassList_String_T> CabinBookingClassMap_T;
+
+  /** Curve key for FRAT5 or FF Disutility. */
+  typedef std::string CurveKey_T;
   
   /** Define the cabin capacity (resource, e.g., 200 seats).
       <br>The capacity is expressed as a double to cope with overbooking. */
