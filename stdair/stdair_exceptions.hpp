@@ -145,6 +145,14 @@ namespace stdair {
       : ParserException(iWhat) {}
   };
   
+  /** Key duplication. */
+  class KeyDuplicationException : public ParserException { 
+  public:
+    /** Constructor. */
+    KeyDuplicationException (const std::string& iWhat)
+      : ParserException(iWhat) {}
+  };
+  
   /** Duplicated object. */
   class ObjectCreationgDuplicationException : public ParserException {
   public:

@@ -10,6 +10,8 @@
 // StdAir
 #include <stdair/bom/BomAbstract.hpp>
 #include <stdair/bom/BomRootKey.hpp>
+#include <stdair/bom/FRAT5CurveHolderStruct.hpp>
+#include <stdair/bom/FFDisutilityCurveHolderStruct.hpp>
 
 /// Forward declarations
 namespace boost {
@@ -51,6 +53,16 @@ namespace stdair {
     const HolderMap_T& getHolderMap() const {
       return _holderMap;
     }
+    
+    /** Get the FRAT5 curve corresponding to the given key. */
+    const FRAT5Curve_T& getFRAT5Curve (const std::string& iKey) const {
+      return _frat5CurveHolder.getFRAT5Curve (iKey);
+    }
+
+    /** Get the FFDisutility curve corresponding to the given key. */
+    const FFDisutilityCurve_T& getFFDisutilityCurve (const std::string& iKey) const{
+      return _ffDisutilityCurveHolder.getFFDisutilityCurve (iKey);
+    }    
 
     /**
      * Get a pointer on the Inventory object corresponding to the
@@ -75,6 +87,18 @@ namespace stdair {
      * @return Inventory* Found Inventory object. NULL if not found.
      */
     Inventory* getInventory (const InventoryKey&) const;
+
+    // ///////////// Business Methods //////////
+    /** Add a new FRAT5 curve to the holder. */
+    void addFRAT5Curve (const std::string& iKey, const FRAT5Curve_T& iCurve) {
+      _frat5CurveHolder.addCurve (iKey, iCurve);
+    }
+    
+    /** Add a new FF disutility curve to the holder. */
+    void addFFDisutilityCurve (const std::string& iKey,
+                               const FFDisutilityCurve_T& iCurve) {
+      _ffDisutilityCurveHolder.addCurve (iKey, iCurve);
+    }
 
 
   public:
@@ -170,6 +194,16 @@ namespace stdair {
      * Map holding the children (Inventory objects).
      */
     HolderMap_T _holderMap;
+
+    /**
+     * Holder of FRAT5 curves.
+     */
+    FRAT5CurveHolderStruct _frat5CurveHolder;
+
+    /**
+     * Holder of fare family disutility curves.
+     */
+    FFDisutilityCurveHolderStruct _ffDisutilityCurveHolder;
   };
 
 }

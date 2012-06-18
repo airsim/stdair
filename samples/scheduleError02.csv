@@ -3,4 +3,4 @@
 //            ElapsedTime; LegCabins;
 // LegCabins: CabinCode; Capacity;
 // Segments: Specific; 
-SQ; 11; 2010-01-15; 2010-02-28; 1111111; SIN; BKK; 08:20; 1aaa; 07:40; Y; 300; 0; Y; YM; 1; Y; 2; M;
+SQ; 11; 2010-01-15; 2010-02-28; 1111111; SIN; BKK; 08:20; 1aaa; 07:40; Y; 300; 0; Y; YM; 1; F1; D1; Y; 2; F2; D2; M;

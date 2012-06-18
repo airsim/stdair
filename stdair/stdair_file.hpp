@@ -81,6 +81,30 @@ namespace stdair {
     explicit ODFilePath (const Filename_T& iFilename)
       : InputFilePath (iFilename) {}
   };
+
+  /**
+   * FRAT5 input file.
+   */
+  class FRAT5FilePath : public InputFilePath {
+  public:
+    /**
+     * Constructor.
+     */
+    explicit FRAT5FilePath (const Filename_T& iFilename)
+      : InputFilePath (iFilename) {}
+  };
+
+  /**
+   * FFDisutility input file.
+   */
+  class FFDisutilityFilePath : public InputFilePath {
+  public:
+    /**
+     * Constructor.
+     */
+    explicit FFDisutilityFilePath (const Filename_T& iFilename)
+      : InputFilePath (iFilename) {}
+  };
   
 }
 #endif // __STDAIR_STDAIR_FILE_HPP
