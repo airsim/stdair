@@ -1857,6 +1857,7 @@ namespace stdair {
     const InventoryKey lCXKey (lAirlineCodeCX);
     Inventory& lCXInv = FacBom<Inventory>::instance().create (lCXKey);
     FacBomManager::addToListAndMap (ioBomRoot, lCXInv);
+    FacBomManager::linkWithParent (ioBomRoot, lCXInv);
 
     // Add the airline feature object to the CX inventory
     const AirlineFeatureKey lAirlineFeatureCXKey (lAirlineCodeCX);
@@ -1866,7 +1867,6 @@ namespace stdair {
     FacBomManager::linkWithParent (lCXInv, lAirlineFeatureCX);
     // Link the airline feature object with the top of the BOM tree
     FacBomManager::addToListAndMap (ioBomRoot, lAirlineFeatureCX);
-    FacBomManager::linkWithParent (ioBomRoot, lAirlineFeatureCX);
     
     // ////// SQ ///////    
     // Step 0.2: Flight-date level
