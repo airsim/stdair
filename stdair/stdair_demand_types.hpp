@@ -46,6 +46,9 @@ namespace stdair {
       availability. */
   typedef double NonRefundableRatio_T;
 
+  /** Define the disutility of restriction. */
+  typedef double Disutility_T;
+
   /** Define the passenger characteristics, leisure or business
       for instance (1-letter-code, e.g., L or B). */
   typedef std::string PassengerType_T;

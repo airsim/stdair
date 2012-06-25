@@ -101,9 +101,19 @@ namespace stdair {
       return _changeFees;
     }
 
+    /** Get the change disutility. */
+    const Disutility_T& getChangeFeeDisutility () const {
+      return _changeFeeDisutility;
+    }
+
     /** Get the non refundable acceptation. */
     const NonRefundable_T& getNonRefundable () const {
       return _nonRefundable;
+    }
+
+    /** Get the non refundable disutility. */
+    const Disutility_T& getNonRefundableDisutility () const {
+      return _nonRefundableDisutility;
     }
       
 
@@ -200,7 +210,9 @@ namespace stdair {
                           const WTP_T& iWTP,
                           const PriceValue_T& iValueOfTime,
                           const ChangeFees_T& iChangeFees,
-                          const NonRefundable_T& iNonRefundable);
+                          const Disutility_T& iChangeFeeDisutility,
+                          const NonRefundable_T& iNonRefundable,
+                          const Disutility_T& iNonRefundableDisutility);
 
     /**
      * Constructor without the demand generator key, used for batches.
@@ -220,7 +232,9 @@ namespace stdair {
                           const WTP_T& iWTP,
                           const PriceValue_T& iValueOfTime,
                           const ChangeFees_T& iChangeFees,
-                          const NonRefundable_T& iNonRefundable);
+                          const Disutility_T& iChangeFeeDisutility,
+                          const NonRefundable_T& iNonRefundable,
+                          const Disutility_T& iNonRefundableDisutility);
     /**
      * Copy constructor.
      */
@@ -292,8 +306,14 @@ namespace stdair {
     /** Change fee restriction acceptation. */
     const ChangeFees_T _changeFees;
 
+    /** Change fee disutility. */
+    const Disutility_T _changeFeeDisutility;
+
     /** Non refundable restriction acceptation. */
     const NonRefundable_T _nonRefundable;
+
+    /** Non refundable disutility. */
+    const Disutility_T _nonRefundableDisutility;
   };
 
 }
