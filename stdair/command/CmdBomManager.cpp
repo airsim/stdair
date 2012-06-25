@@ -1742,7 +1742,9 @@ namespace stdair {
 
     // Restrictions
     const ChangeFees_T lChangeFees = true;
+    const Disutility_T lChangeFeeDisutility = 50;
     const NonRefundable_T lNonRefundable = true;
+    const Disutility_T lNonRefundableDisutility = 50;
 
     // Creation of the booking request structure
     BookingRequestStruct oBookingRequest (lOrigin, lDestination, lPOS,
@@ -1754,7 +1756,9 @@ namespace stdair {
                                           lFrequentFlyerType,
                                           lPreferredDepartureTime,
                                           lWTP, lValueOfTime,
-                                          lChangeFees, lNonRefundable);
+                                          lChangeFees, lChangeFeeDisutility,
+                                          lNonRefundable,
+                                          lNonRefundableDisutility);
 
     return oBookingRequest;
   }
@@ -1812,7 +1816,9 @@ namespace stdair {
 
     // Restrictions
     const ChangeFees_T lChangeFees = true;
+    const Disutility_T lChangeFeeDisutility = 50;
     const NonRefundable_T lNonRefundable = true;
+    const Disutility_T lNonRefundableDisutility = 50;
     
     // Creation of the booking request structure
     BookingRequestStruct oBookingRequest (lOrigin,
@@ -1826,7 +1832,9 @@ namespace stdair {
                                           lFrequentFlyerType,
                                           lPreferredDepartureTime,
                                           lWTP, lValueOfTime,
-                                          lChangeFees, lNonRefundable);
+                                          lChangeFees, lChangeFeeDisutility,
+                                          lNonRefundable,
+                                          lNonRefundableDisutility);
 
     return oBookingRequest;
   }
