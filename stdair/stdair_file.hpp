@@ -105,6 +105,19 @@ namespace stdair {
     explicit FFDisutilityFilePath (const Filename_T& iFilename)
       : InputFilePath (iFilename) {}
   };
+
+  /**
+   * Config file: INI format
+   */
+  class ConfigINIFile : public InputFilePath { 
+  public:
+    /**
+     * Constructor.
+     */
+    explicit ConfigINIFile (const Filename_T& iFilename)
+      : InputFilePath (iFilename) {}
+    
+  };
   
 }
 #endif // __STDAIR_STDAIR_FILE_HPP
