@@ -35,7 +35,7 @@ namespace stdair {
   typedef boost::gregorian::date_duration DateOffset_T;
 
   /** Define a duration in number of days. */
-  typedef unsigned int DayDuration_T;
+  typedef int DayDuration_T;
 
   /** Define the Saturday stay status of a travel. */
   typedef bool SaturdayStay_T;
@@ -44,7 +44,7 @@ namespace stdair {
   typedef long int IntDuration_T;
 
   /** Time duration in (unsigned long long integer) number of milliseconds */
-  typedef unsigned long long int LongDuration_T;
+  typedef long long int LongDuration_T;
   
   /** Duration in (float) number of time units */
   typedef float FloatDuration_T;
