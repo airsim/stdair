@@ -103,7 +103,7 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   ConfigHolderStruct& STDAIR_ServiceContext::getConfigHolder() const { 
-    assert (_cloneBomRoot != NULL);
+    assert (_configHolderPtr != NULL);
     return *_configHolderPtr;
   } 
 }
