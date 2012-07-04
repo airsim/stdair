@@ -15,6 +15,7 @@
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRetriever.hpp>
 #include <stdair/bom/BomJSONExport.hpp>
+#include <stdair/bom/BomINIImport.hpp>
 #include <stdair/bom/BomDisplay.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/EventStruct.hpp>
@@ -333,6 +334,22 @@ namespace stdair {
       break;
     }
     return oStr.str();
+  }
+
+  // //////////////////////////////////////////////////////////////////////  
+  void STDAIR_Service::importINIConfig (const ConfigINIFile& iConfigINIFile) {  
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    ConfigHolderStruct& lConfigHolder = 
+      lSTDAIR_ServiceContext.getConfigHolder();
+
+    // Try to import the configuration
+    stdair::BomINIImport::importINIConfig (lConfigHolder, iConfigINIFile);
   }
 
   // //////////////////////////////////////////////////////////////////////

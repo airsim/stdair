@@ -8,6 +8,12 @@
 // STL
 #include <cassert>
 #include <sstream>
+// Boost
+#if BOOST_VERSION >= 103900
+#include <boost/make_shared.hpp>
+#else  // BOOST_VERSION >= 103900
+#include <boost/shared_ptr.hpp>
+#endif // BOOST_VERSION >= 103900
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/BomRoot.hpp>
@@ -43,6 +49,7 @@ namespace stdair {
   void STDAIR_ServiceContext::init() {
     //
     initBomRoot();
+    initConfigHolder();
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -55,6 +62,11 @@ namespace stdair {
   void STDAIR_ServiceContext::initCloneBomRoot() {
     _cloneBomRoot = 
       &FacCloneBom<BomRoot>::instance().clone(*_persistentBomRoot);
+  } 
+
+  // //////////////////////////////////////////////////////////////////////
+  void STDAIR_ServiceContext::initConfigHolder() {
+    _configHolderPtr = boost::make_shared<ConfigHolderStruct> ();
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -87,6 +99,12 @@ namespace stdair {
   BomRoot& STDAIR_ServiceContext::getCloneBomRoot() const {
     assert (_cloneBomRoot != NULL);
     return *_cloneBomRoot;
+  }  
+
+  // //////////////////////////////////////////////////////////////////////
+  ConfigHolderStruct& STDAIR_ServiceContext::getConfigHolder() const { 
+    assert (_cloneBomRoot != NULL);
+    return *_configHolderPtr;
   } 
 }
 
