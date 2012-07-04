@@ -14,6 +14,7 @@
 #include <stdair/bom/SegmentCabin.hpp>
 #include <stdair/bom/BookingClass.hpp>
 #include <stdair/bom/BookingClassTypes.hpp>
+#include <stdair/bom/Policy.hpp>
 
 namespace stdair {
 
@@ -64,6 +65,18 @@ namespace stdair {
   std::string SegmentCabin::toString() const {
     std::ostringstream oStr;
     oStr << describeKey();
+    return oStr.str();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  const std::string SegmentCabin::describeConvexHull() const{
+    std::ostringstream oStr;
+    for (PolicyList_T::const_iterator itP = _convexHull.begin();
+        itP != _convexHull.end(); ++itP) {
+      const Policy* lPolicy = *itP;
+      assert (lPolicy != NULL);
+      oStr << lPolicy->toString();
+    }
     return oStr.str();
   }
 

@@ -236,11 +236,16 @@ namespace stdair {
     std::string toString() const;
     
     /**
-     * Get a string describing the  key.
+     * Get a string describing the key.
      */
     const std::string describeKey() const {
       return _key.toString();
     }
+
+    /**
+     * Get a string describing the convex hull.
+     */
+    const std::string describeConvexHull() const;
 
     
   public:
