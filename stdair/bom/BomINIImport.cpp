@@ -12,6 +12,7 @@
 // StdAir
 #include <stdair/basic/BasFileMgr.hpp>
 #include <stdair/bom/BomINIImport.hpp>
+#include <stdair/bom/ConfigHolderStruct.hpp>
 
 #if BOOST_VERSION >= 104100
 namespace bpt = boost::property_tree;
@@ -24,7 +25,8 @@ namespace bpt {
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  void BomINIImport::importINIConfig (const ConfigINIFile& iConfigINIFile) {
+  void BomINIImport::importINIConfig (ConfigHolderStruct& iConfigHolder,
+				      const ConfigINIFile& iConfigINIFile) {
 
     // Get the config file name.
     const stdair::Filename_T lFilename = iConfigINIFile.name();
@@ -40,11 +42,9 @@ namespace stdair {
 
     // Transform the INI file into a BOOST property tree.
     bpt::ptree pt;
-    bpt::ini_parser::read_ini(lFilename, pt);
-    
-    /**std::cout << pt.get<std::string>("log.filename") << std::endl;
-       std::cout << pt.get<std::string>("demand generation.method") << std::endl;*/
-    //boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::property_tree::ptree_bad_path> >
+    bpt::ini_parser::read_ini(lFilename, pt); 
+    // Add the property tree to the configuration structure.
+    iConfigHolder.add(pt);
 
 #endif // BOOST_VERSION >= 104100  
   }

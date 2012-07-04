@@ -20,6 +20,7 @@
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/stdair_service_types.hpp>
+#include <stdair/stdair_file.hpp>
 #include <stdair/basic/BasLogParams.hpp>
 #include <stdair/basic/BasDBParams.hpp>
 #include <stdair/basic/ServiceInitialisationType.hpp>
@@ -470,7 +471,16 @@ namespace stdair {
     /**
      * @brief Finalise.
      */
-    void finalise();
+    void finalise();  
+
+  public:  
+
+    /**
+     * @brief Import the configuration INI input file (format cfg).
+     * 
+     * @param const ConfigINIFile& INI input file.
+     */
+    void importINIConfig (const ConfigINIFile&);
 
 
  private:

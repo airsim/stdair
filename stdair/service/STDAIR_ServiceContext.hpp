@@ -10,6 +10,7 @@
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/basic/BasLogParams.hpp>
 #include <stdair/basic/BasDBParams.hpp>
+#include <stdair/bom/ConfigHolderStruct.hpp>
 #include <stdair/basic/ServiceInitialisationType.hpp>
 #include <stdair/service/ServiceAbstract.hpp>
 
@@ -41,6 +42,11 @@ namespace stdair {
     BomRoot& getCloneBomRoot() const;
 
     /**
+     * Get the pointer on the config holder structure.
+     */
+    ConfigHolderStruct& getConfigHolder() const;
+
+    /**
      * Get the database parameters.
      */
     const BasDBParams& getDBParams() const {
@@ -69,7 +75,7 @@ namespace stdair {
      */
     void setServiceInitialisationType (const ServiceInitialisationType& iSIT) {
       _initType = iSIT;
-    }
+    } 
 
     
   private:
@@ -133,7 +139,14 @@ namespace stdair {
      * The root of the cloned BOM tree, on which all of the other BOM objects
      * will be attached, is being created by that method.
      */
-    void initCloneBomRoot();
+    void initCloneBomRoot();  
+  
+    /**
+     * Initialisation.
+     *
+     * Initialise the smart pointer on the configuration structure.
+     */
+    void initConfigHolder();
     
   private:
     // ///////////// Children ////////////
@@ -145,7 +158,12 @@ namespace stdair {
     /**
      * @brief Root of the persistent BOM tree.
      */
-    BomRoot* _persistentBomRoot;
+    BomRoot* _persistentBomRoot;  
+
+    /**
+     * @brief Smart pointer on the configuration holder.
+     */
+    ConfigHolderPtr_T _configHolderPtr;
 
     /**
      * @brief Database parameters.
