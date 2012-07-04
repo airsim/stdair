@@ -228,7 +228,7 @@ namespace stdair {
   /** Maximal offered capacity in a cabin. */
   const Availability_T MAXIMAL_AVAILABILITY (9999.0);
 
-  /** Default Unconstraining Method (By Time Frame). */
+  /** Default Unconstraining Method (By Expectation-Maximisation). */
   const UnconstrainingMethod DEFAULT_UNCONSTRAINING_METHOD ('E');
 
   /** Default Partnership Technique (None). */
@@ -555,7 +555,7 @@ namespace stdair {
     return oCurve;
   }
 
-  /** FRAT5 curve A for forecasting and optimisation. */
+  /** FRAT5 curve C for forecasting and optimisation. */
   const FRAT5Curve_T FRAT5_CURVE_C =
     DefaultMap::createFRAT5CurveC();
   FRAT5Curve_T DefaultMap::createFRAT5CurveC() {
@@ -569,6 +569,20 @@ namespace stdair {
     return oCurve;
   }
 
+  /** FRAT5 curve D for forecasting and optimisation. */
+  const FRAT5Curve_T FRAT5_CURVE_D =
+    DefaultMap::createFRAT5CurveD();
+  FRAT5Curve_T DefaultMap::createFRAT5CurveD() {
+    FRAT5Curve_T oCurve;
+    oCurve[63] = 1.60;  oCurve[56] = 1.67;  oCurve[49] = 1.74;
+    oCurve[42] = 1.81;  oCurve[35] = 1.88;  oCurve[31] = 2.00;
+    oCurve[27] = 2.15;  oCurve[23] = 2.45;  oCurve[19] = 2.75;
+    oCurve[16] = 3.20;  oCurve[13] = 3.80;  oCurve[10] = 4.25;
+    oCurve[7]  = 4.35;  oCurve[5]  = 4.40;  oCurve[3]  = 4.45;
+    oCurve[1]  = 4.50;
+    return oCurve;
+  }
+
   /**
    * Disutility curve A for forecasting and optimisation.
    * The lower the value (disutility), the higher the demand sells up to
@@ -577,6 +591,60 @@ namespace stdair {
   const FFDisutilityCurve_T FF_DISUTILITY_CURVE_A =
     DefaultMap::createFFDisutilityCurveA();
   FFDisutilityCurve_T DefaultMap::createFFDisutilityCurveA() {
+    FFDisutilityCurve_T oCurve;
+    oCurve[63] = 0.0098;  oCurve[56] = 0.0096;  oCurve[49] = 0.0093;
+    oCurve[42] = 0.0090;  oCurve[35] = 0.0086;  oCurve[31] = 0.0082;
+    oCurve[27] = 0.0077;  oCurve[23] = 0.0071;  oCurve[19] = 0.0065;
+    oCurve[16] = 0.0059;  oCurve[13] = 0.0052;  oCurve[10] = 0.0045;
+    oCurve[7]  = 0.0039;  oCurve[5]  = 0.0036;  oCurve[3]  = 0.0033;
+    oCurve[1]  = 0.0030;
+    return oCurve;
+  }
+
+  /**
+   * Disutility curve B for forecasting and optimisation.
+   * The lower the value (disutility), the higher the demand sells up to
+   * higher fare families.
+   */
+  const FFDisutilityCurve_T FF_DISUTILITY_CURVE_B =
+    DefaultMap::createFFDisutilityCurveB();
+  FFDisutilityCurve_T DefaultMap::createFFDisutilityCurveB() {
+    FFDisutilityCurve_T oCurve;
+    oCurve[63] = 0.0082;  oCurve[56] = 0.0080;  oCurve[49] = 0.0078;
+    oCurve[42] = 0.0075;  oCurve[35] = 0.0072;  oCurve[31] = 0.0068;
+    oCurve[27] = 0.0064;  oCurve[23] = 0.0059;  oCurve[19] = 0.0054;
+    oCurve[16] = 0.0049;  oCurve[13] = 0.0044;  oCurve[10] = 0.0038;
+    oCurve[7]  = 0.0033;  oCurve[5]  = 0.0030;  oCurve[3]  = 0.0028;
+    oCurve[1]  = 0.0025;
+    return oCurve;
+  }
+
+  /**
+   * Disutility curve C for forecasting and optimisation.
+   * The lower the value (disutility), the higher the demand sells up to
+   * higher fare families.
+   */
+  const FFDisutilityCurve_T FF_DISUTILITY_CURVE_C =
+    DefaultMap::createFFDisutilityCurveC();
+  FFDisutilityCurve_T DefaultMap::createFFDisutilityCurveC() {
+    FFDisutilityCurve_T oCurve;
+    oCurve[63] = 0.0065;  oCurve[56] = 0.0064;  oCurve[49] = 0.0062;
+    oCurve[42] = 0.0060;  oCurve[35] = 0.0057;  oCurve[31] = 0.0054;
+    oCurve[27] = 0.0051;  oCurve[23] = 0.0047;  oCurve[19] = 0.0043;
+    oCurve[16] = 0.0039;  oCurve[13] = 0.0035;  oCurve[10] = 0.0030;
+    oCurve[7]  = 0.0026;  oCurve[5]  = 0.0024;  oCurve[3]  = 0.0022;
+    oCurve[1]  = 0.0020;
+    return oCurve;
+  }
+
+  /**
+   * Disutility curve D for forecasting and optimisation.
+   * The lower the value (disutility), the higher the demand sells up to
+   * higher fare families.
+   */
+  const FFDisutilityCurve_T FF_DISUTILITY_CURVE_D =
+    DefaultMap::createFFDisutilityCurveD();
+  FFDisutilityCurve_T DefaultMap::createFFDisutilityCurveD() {
     FFDisutilityCurve_T oCurve;
     oCurve[63] = 0.0050;  oCurve[56] = 0.0049;  oCurve[49] = 0.0047;
     oCurve[42] = 0.0045;  oCurve[35] = 0.0043;  oCurve[31] = 0.0040;
@@ -588,13 +656,13 @@ namespace stdair {
   }
 
   /**
-   * Disutility curve A for forecasting and optimisation.
+   * Disutility curve E for forecasting and optimisation.
    * The lower the value (disutility), the higher the demand sells up to
    * higher fare families.
    */
-  const FFDisutilityCurve_T FF_DISUTILITY_CURVE_B =
-    DefaultMap::createFFDisutilityCurveB();
-  FFDisutilityCurve_T DefaultMap::createFFDisutilityCurveB() {
+  const FFDisutilityCurve_T FF_DISUTILITY_CURVE_E =
+    DefaultMap::createFFDisutilityCurveE();
+  FFDisutilityCurve_T DefaultMap::createFFDisutilityCurveE() {
     FFDisutilityCurve_T oCurve;
     oCurve[63] = 0.0043;  oCurve[56] = 0.0042;  oCurve[49] = 0.0041;
     oCurve[42] = 0.0039;  oCurve[35] = 0.0037;  oCurve[31] = 0.0035;
@@ -602,6 +670,24 @@ namespace stdair {
     oCurve[16] = 0.0021;  oCurve[13] = 0.0018;  oCurve[10] = 0.0013;
     oCurve[7]  = 0.0011;  oCurve[5]  = 0.0010;  oCurve[3]  = 0.0009;
     oCurve[1]  = 0.0008;
+    return oCurve;
+  }
+
+  /**
+   * Disutility curve F for forecasting and optimisation.
+   * The lower the value (disutility), the higher the demand sells up to
+   * higher fare families.
+   */
+  const FFDisutilityCurve_T FF_DISUTILITY_CURVE_F =
+    DefaultMap::createFFDisutilityCurveF();
+  FFDisutilityCurve_T DefaultMap::createFFDisutilityCurveF() {
+    FFDisutilityCurve_T oCurve;
+    oCurve[63] = 0.0032;  oCurve[56] = 0.0031;  oCurve[49] = 0.0030;
+    oCurve[42] = 0.0029;  oCurve[35] = 0.0027;  oCurve[31] = 0.0025;
+    oCurve[27] = 0.0022;  oCurve[23] = 0.0019;  oCurve[19] = 0.0016;
+    oCurve[16] = 0.0013;  oCurve[13] = 0.0010;  oCurve[10] = 0.0008;
+    oCurve[7]  = 0.0007;  oCurve[5]  = 0.0006;  oCurve[3]  = 0.0005;
+    oCurve[1]  = 0.0004;
     return oCurve;
   }
 

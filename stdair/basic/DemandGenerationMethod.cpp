@@ -12,7 +12,7 @@ namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
   const std::string DemandGenerationMethod::_labels[LAST_VALUE] =
-    { "PoissonProcess", "SatisticsOrder" };
+    { "PoissonProcess", "StatisticsOrder" };
 
   // //////////////////////////////////////////////////////////////////////
   const char DemandGenerationMethod::_methodLabels[LAST_VALUE] = { 'P', 'S' };

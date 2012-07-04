@@ -23,7 +23,7 @@ namespace stdair {
     } EN_DemandGenerationMethod;
 
     /**
-     * Get the label as a string (e.g., "PoissonProcess" or "SatisticsOrder").
+     * Get the label as a string (e.g., "PoissonProcess" or "StatisticsOrder").
      */
     static const std::string& getLabel (const EN_DemandGenerationMethod&);
 

@@ -12,11 +12,12 @@ namespace stdair {
   
   // //////////////////////////////////////////////////////////////////////
   const std::string ForecastingMethod::_labels[LAST_VALUE] =
-    { "Q Forecasting", "Hybrid Forecasting", "Old QFF", "New QFF" };
+    { "Q Forecasting", "Hybrid Forecasting", "Old QFF", "New QFF",
+      "Based Forecasting" };
 
   // //////////////////////////////////////////////////////////////////////
   const char ForecastingMethod::
-  _methodLabels[LAST_VALUE] = { 'Q', 'H', 'O' , 'N'};
+  _methodLabels[LAST_VALUE] = { 'Q', 'H', 'O' , 'N', 'B'};
 
   
   // //////////////////////////////////////////////////////////////////////
@@ -44,6 +45,7 @@ namespace stdair {
     case 'H': _method = HYBRID_FORECASTING; break;
     case 'O': _method = OLD_QFF; break;
     case 'N': _method = NEW_QFF; break;
+    case 'B': _method = BASED_FORECASTING; break;
     default: _method = LAST_VALUE; break;
     }
 
