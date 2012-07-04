@@ -1,0 +1,10 @@
+// Flights:   AirlineCode; FlightNumber; Date-Range; ; DOW; Legs; Segments;
+// Legs:      BoardPoint; OffPoint; BoardTime; ArrivalDateOffSet; ArrivalTime;
+//            ElapsedTime; LegCabins;
+// LegCabins: CabinCode; Capacity;
+// Segments: Specific; 
+
+//AC; 938; 2012-02-08; 2012-02-08; 1111100; YYZ; FLL; 07:15; 10:25; 03:10; Y; 40; 0; Y; YBMQ; 2; YB; 1; MQ;
+//AC; 747; 2012-02-09; 2012-02-09; 1111100; YYZ; FLL; 10:15; 13:25; 03:10; Y; 40; 0; Y; YBMQ; 2; YB; 1; MQ;
+//AC; 938; 2012-02-08; 2012-02-08; 0000011; YYZ; FLL; 07:15; 10:25; 03:10; Y; 40; 0; Y; YBMQ; 2; YB; 1; MQ;
+SQ; 747; 2010-02-08; 2010-11-08; 1000000; SIN; BKK; 06:35; 10:00; 03:25; Y; 100; 0; Y; YBHUVODKQ; 1; FC; DA; YBU; 2; FA; DA; HVD; 3; FC; DA; OKQ;

@@ -1,0 +1,38 @@
+// Demand:
+//   Fixed:
+//     Prefered departure date (yyyy-mm-dd)
+//     Origin (3-char airport code)
+//     Destination (3-char airport code)
+//     Preferred cabin ('F' for First, 'C' for Club/Business, 'Y' for Economy)
+//   Distribution with Probability Masses:
+//     POS
+//     Channel (D=direct, I=indirect, N=oNline, F=oFfline)
+//     Trip type (RO=outbound of round-trip, RI=inbound of round-trip, OW=one way)
+//     Stay duration (number of days). Combined with trip type for detemining
+//       saturday stay restriction.
+//     Frequent flyer (P=Platinum, G=Gold, S=Silver, M=Member, N=None)
+//     Change fees restriction. 'True' for accepting the restriction
+//     Non refundable restriction. 'True' for accepting the restriction
+//   Continuous cumulative distribution:
+//     Preferred departure time (hh.mm)
+//     WTP (moneraty value)
+//     Preferred arrival date (equal to prefered departure date)
+//     Preferred arrival time (equal to prefered departure time)
+//     Value of time
+//     Arrival pattern (DTD as a positive value)
+//   Distribution of number of requests (distribution and parameters)
+// The main fields are separated by ';'
+// Probability mass distributions are defined by comma-separated
+//   'value:probability' pairs
+// Continuous cumulative distribution are defined by comma-separated
+//   'value:probability' pairs, sorted in increasing order of values.
+// The meaning of probability is P(random variable <= value) = probability.
+// The distribution of number of requests is specified using comma-separated 
+//  values:
+//  distribution, parameter1, parameter2, ... 
+//  For example, normal with mean 10.0 and standard deviation 1.0 is specified as
+//  N, 10.0, 1.0
+//
+
+2010-02-08; 2010-11-08; 1000000; SIN; BKK; Y; SIN:1;  IN:1;  OW:1; 0:0.1, 1:0.1, 2:0.15, 3:0.15, 4:0.15, 5:0.35; G:0.01, M:0.4, N:0.40, P:0.10, S:0.09; 0; 290; 1; 0; 06:0, 08:0.7, 10:0.8, 12:0.9, 14:1; 250; 15:0, 60:1; 330:0, 150:0.1, 92:0.2, 60:0.3, 30:0.8, 21:0.82, 12:0.85, 6:0.87, 3:0.90, 1:1; N, 30.0, 2.5;
+2010-02-08; 2010-11-08; 1000000; SIN; BKK; Z; SIN:1;  IN:1;  OW:1; 0:0.1, 1:0.1, 2:0.15, 3:0.15, 4:0.15, 5:0.35; G:0.01, M:0.4, N:0.40, P:0.10, S:0.09; 0; 190; 1; 0; 06:0, 08:0.7, 10:0.8, 12:0.9, 14:1; 100; 15:0, 60:1; 330:0, 150:0.1, 92:0.2, 60:0.3, 30:0.8, 21:0.82, 12:0.85, 6:0.87, 3:0.90, 1:1; N, 90.0, 7.5;
