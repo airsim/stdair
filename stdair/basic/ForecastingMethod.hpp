@@ -19,6 +19,7 @@ namespace stdair {
       HYBRID_FORECASTING,
       OLD_QFF,
       NEW_QFF,
+      BASED_FORECASTING,
       LAST_VALUE
     } EN_ForecastingMethod;
 
@@ -26,11 +27,11 @@ namespace stdair {
         "Old QFF" or "New QFF"). */
     static const std::string& getLabel (const EN_ForecastingMethod&);
 
-    /** Get the label as a single char (e.g., 'Q', 'H', 'O' or 'N'). */
+    /** Get the label as a single char (e.g., 'Q', 'H', 'O', 'N' or 'B'). */
     static char getMethodLabel (const EN_ForecastingMethod&);
 
-    /** Get the label as a string of a single char (e.g., "Q", "H", "O" or
-        "N"). */
+    /** Get the label as a string of a single char (e.g., "Q", "H", "O", "N"
+        or "B"). */
     static std::string getMethodLabelAsString (const EN_ForecastingMethod&);
 
     /** List the labels. */
@@ -39,12 +40,12 @@ namespace stdair {
     /** Get the enumerated value. */
     EN_ForecastingMethod getMethod() const;
 
-    /** Get the enumerated value as a short string (e.g., "Q", "H", "O" or
-        "N"). */
+    /** Get the enumerated value as a short string (e.g., "Q", "H", "O", 
+        "N" or "B"). */
     std::string getMethodAsString() const;
     
     /** Give a description of the structure (e.g., "Q Forecasting",
-        "Hybrid Forecasting, "Old QFF" or "New QFF"). */
+        "Hybrid Forecasting, "Old QFF", "New QFF" or "Based Forecasting"). */
     const std::string describe() const;
 
   public:
