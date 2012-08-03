@@ -25,7 +25,6 @@
 #include <stdair/command/CmdCloneBomManager.hpp>
 #include <stdair/service/FacSupervisor.hpp>
 #include <stdair/service/FacSTDAIRServiceContext.hpp>
-#include <stdair/service/STDAIR_ServiceContext.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/service/DBSessionManager.hpp>
 #include <stdair/STDAIR_Service.hpp>
@@ -334,6 +333,23 @@ namespace stdair {
       break;
     }
     return oStr.str();
+  } 
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::
+  jsonExportConfiguration () const {  
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    ConfigHolderStruct& lConfigHolder = 
+      lSTDAIR_ServiceContext.getConfigHolder();
+
+    // Export the configuration tree in a JSon format
+    return lConfigHolder.jsonExport();
   }
 
   // //////////////////////////////////////////////////////////////////////  
@@ -350,6 +366,23 @@ namespace stdair {
 
     // Try to import the configuration
     stdair::BomINIImport::importINIConfig (lConfigHolder, iConfigINIFile);
+  } 
+
+  // //////////////////////////////////////////////////////////////////////  
+  void STDAIR_Service::importConfigValue (const std::string& iValue,
+					  const std::string& iPath) {  
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    ConfigHolderStruct& lConfigHolder = 
+      lSTDAIR_ServiceContext.getConfigHolder();
+
+    // Add the given value to the configuration
+    lConfigHolder.addValue (iValue, iPath);
   }
 
   // //////////////////////////////////////////////////////////////////////

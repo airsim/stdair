@@ -7,11 +7,17 @@
 // STL
 #include <iosfwd>
 #include <string>
+// Boost
+#include <boost/static_assert.hpp>
+#include <boost/type_traits/is_same.hpp>
 #if BOOST_VERSION >= 104100
 // Boost Property Tree
 #include <boost/property_tree/ptree.hpp>
 #endif // BOOST_VERSION >= 104100
 // StdAir
+#include <stdair/stdair_file.hpp>
+#include <stdair/stdair_maths_types.hpp>
+#include <stdair/stdair_date_time_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
 #include <stdair/bom/ConfigHolderTypes.hpp>
 
@@ -49,16 +55,28 @@ namespace stdair {
      * @param const std::string& Value to add at the given path.
      * @param const std::string& Path to create (or to look for).
      */
-    void addValue (const std::string& iValue, 
-		   const std::string& iPath);
+    bool addValue (const std::string& iValue, 
+		   const std::string& iPath);   
 
-  private:   
+    /**
+     * Look for the specified path in the configuration tree and,
+     * if existing, try to extract the corresponding value.
+     * The type of the value to extract is a template parameter.
+     * 
+     * @param ValueType& Value to add in the configuration tree. 
+     * @param const std::string& Path to look for.
+     */    
+    template <typename ValueType> 
+    bool exportValue (ValueType& ioValue, const std::string& iPath) const;
+
+  private: 
     /**
      * Helping method for the merge.
      */
     void add (const bpt::ptree&, 
 	      const std::string&);
     
+  public:     
     // /////////// Display support method /////////////
     /**
      * Dump a Business Object into an output stream.
@@ -75,7 +93,12 @@ namespace stdair {
     /**
      * Display of the structure.
      */
-    const std::string describe() const;
+    const std::string describe() const; 
+
+    /**
+     * Display of the configuration in a JSON-ified format.
+     */
+    const std::string jsonExport() const;
 
     
     // /////////////// Constructors and Destructors /////////////////
@@ -105,5 +128,81 @@ namespace stdair {
     bpt::ptree _pt;
   };
 
+  // ////////////////////////////////////////////////////////////////////
+  template <typename ValueType> 
+  bool ConfigHolderStruct::exportValue (ValueType& ioValue,
+					const std::string& iPath) const { 
+
+    //
+    // Compile time assertation: this function must never be called with the
+    // following list of types:
+    // <Date_T>
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<ValueType, Date_T>::value == false));
+    //
+    // Compile time assertation: this function must always be called with the
+    // one of following types:
+    // RandomSeed_T
+    // Filename_T
+    // 
+    BOOST_STATIC_ASSERT ((boost::is_same<ValueType, RandomSeed_T>::value == true) ||
+			 (boost::is_same<ValueType, Filename_T>::value == true));
+  
+    bool hasValueBeenSuccessfullyRetrieved = true;
+
+#if BOOST_VERSION >= 104100
+      
+    try {
+      // Get the value.
+      // If the path key is not found, an exception is thrown.
+      ioValue = _pt.get<ValueType> (iPath);
+    
+    } catch (bpt::ptree_error& bptException) {
+      hasValueBeenSuccessfullyRetrieved = false;
+    }
+#endif // BOOST_VERSION >= 104100
+    
+    return hasValueBeenSuccessfullyRetrieved;
+    
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  //
+  // Specialization of the template method exportValue above for the type
+  // Date_T.
+  //
+  // ////////////////////////////////////////////////////////////////////
+
+  template<>
+  inline bool ConfigHolderStruct::exportValue<Date_T> 
+  (Date_T& ioValue,
+   const std::string& iPath) const {     
+
+    bool hasValueBeenSuccessfullyRetrieved = true;
+
+#if BOOST_VERSION >= 104100
+    
+    try { 
+
+      // Get the string date value. 
+      // If the path key is not found, an exception is thrown.
+      const std::string& lDateStr =
+        _pt.get<std::string> (iPath);
+      
+      // Convert the string into a Date_T.
+      ioValue = 
+	boost::gregorian::from_simple_string (lDateStr);
+    
+    } catch (bpt::ptree_error& bptException) {
+      hasValueBeenSuccessfullyRetrieved = false;
+    }
+#endif // BOOST_VERSION >= 104100
+    
+    return hasValueBeenSuccessfullyRetrieved;
+
+    
+  }
+
 }
+
 #endif // __STDAIR_BOM_CONFIGHOLDERSTRUCT_HPP
