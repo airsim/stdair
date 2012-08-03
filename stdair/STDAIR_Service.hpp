@@ -25,6 +25,8 @@
 #include <stdair/basic/BasDBParams.hpp>
 #include <stdair/basic/ServiceInitialisationType.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
+#include <stdair/bom/ConfigHolderStruct.hpp>
+#include <stdair/service/STDAIR_ServiceContext.hpp>
 
 namespace stdair {
 
@@ -33,7 +35,6 @@ namespace stdair {
   struct EventStruct;
   struct ProgressStatusSet;
   struct BookingRequestStruct;
-  class STDAIR_ServiceContext;
   
 
   /**
@@ -245,14 +246,21 @@ namespace stdair {
 					     const FlightNumber_T&,
 					     const Date_T& iDepartureDate) const;
 
-   /**
-    * Recursively dump, in the returned string and in JSON format, the
+    /**
+     * Recursively dump, in the returned string and in JSON format, the
      * event object.
      *
      * @return std::string Output string in which the event is JSON-ified.
      */
-    std::string jsonExportEventObject (const EventStruct&) const;
-
+    std::string jsonExportEventObject (const EventStruct&) const; 
+    
+    /**
+     * Dump, in the returned string and in JSON format, the configuration.
+     *
+     * @return std::string Output string in which the configuration tree is 
+     * JSON-ified.
+     */
+    std::string jsonExportConfiguration () const;
 
   public:
     // //////////////// Display support methods /////////////////
@@ -480,8 +488,29 @@ namespace stdair {
      * 
      * @param const ConfigINIFile& INI input file.
      */
-    void importINIConfig (const ConfigINIFile&);
+    void importINIConfig (const ConfigINIFile&); 
+ 
+    /**
+     * Create the given specified path in the configuration tree and add the 
+     * corresponding given value (or replace the value if the path already 
+     * exists).
+     * 
+     * @param const std::string& Value to add in the configuration tree.
+     * @param const std::string& Path to create (or to look for).
+     */
+    void importConfigValue (const std::string& iValue,
+			    const std::string& iPath);   
 
+    /**
+     * Look for the specified path in the configuration tree and, 
+     * if existing,  try to extract the corresponding value.
+     * The type of the value to extract is a template parameter.
+     * 
+     * @param ValueType& Value to add in the configuration tree. 
+     * @param const std::string& Path to look for.
+     */   
+    template <typename ValueType> 
+    bool exportConfigValue (ValueType& ioValue, const std::string& iPath);
 
  private:
     // ///////// Service Context /////////
@@ -489,6 +518,26 @@ namespace stdair {
      * Stdair context.
      */
     STDAIR_ServiceContext* _stdairServiceContext;
-  };
+  };  
+
+  // ////////////////////////////////////////////////////////////////////
+  template <typename ValueType> 
+  bool STDAIR_Service::exportConfigValue (ValueType& ioValue,
+					  const std::string& iPath) {  
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
+
+    // Retrieve the BOM tree root
+    const ConfigHolderStruct& lConfigHolder = 
+      lSTDAIR_ServiceContext.getConfigHolder();
+
+    // Call the dedicated configuration holder method.
+    return lConfigHolder.exportValue <ValueType> (ioValue, iPath);
+  }
+  // ////////////////////////////////////////////////////////////////////
+
 }
 #endif // __STDAIR_STDAIR_HPP

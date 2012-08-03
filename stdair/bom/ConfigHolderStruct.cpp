@@ -41,8 +41,18 @@ namespace stdair {
   const std::string ConfigHolderStruct::describe() const {
     std::ostringstream oStr;
     return oStr.str();
-  }  
-
+  } 
+ 
+  // ////////////////////////////////////////////////////////////////////
+  const std::string ConfigHolderStruct::jsonExport() const {    
+    std::ostringstream oStr; 
+#if BOOST_VERSION >= 104100
+    // Write the property tree into the JSON stream.
+    write_json (oStr, _pt);
+#endif // BOOST_VERSION >= 104100
+    return oStr.str();
+  }
+  
   // ////////////////////////////////////////////////////////////////////
   void ConfigHolderStruct::add (const bpt::ptree& iConfigPropertyTree) {
     // Call the dedicated recursive method with an empty path in order to merge
@@ -84,19 +94,27 @@ namespace stdair {
     // the correponding value
     if (isThereAnyChild == false) {
       std::string lValue (iConfigPropertyTree.data());
-      addValue(iPath, lValue);
+      const bool hasInsertionBeenSuccessful = addValue (lValue, iPath);
+      assert (hasInsertionBeenSuccessful == true);   
     } 
 #endif // BOOST_VERSION >= 104100
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void ConfigHolderStruct::addValue (const std::string& iValue,
-				     const std::string& iPath) {
+  bool ConfigHolderStruct::addValue (const std::string& iValue,
+				     const std::string& iPath) {  
+    bool hasInsertionBeenSuccessful = true;
     // Create the given specified path and add the corresponding given value,
     // or replace the value if the path already exists. 
 #if BOOST_VERSION >= 104100
-    _pt.put(iPath, iValue);
-#endif // BOOST_VERSION >= 104100
-  }
 
+    try {
+      _pt.put (iPath, iValue);
+    } catch (bpt::ptree_bad_data& bptException) {
+      hasInsertionBeenSuccessful = false;
+    }
+#endif // BOOST_VERSION >= 104100
+
+    return hasInsertionBeenSuccessful;
+  }
 }
