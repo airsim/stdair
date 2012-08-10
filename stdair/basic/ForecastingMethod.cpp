@@ -84,7 +84,7 @@ namespace stdair {
       if (idx != 0) {
         ostr << ", ";
       }
-      ostr << _labels[idx];
+      ostr << _labels[idx] << " (" << _methodLabels[idx] << ")";
     }
     return ostr.str();
   }
