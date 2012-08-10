@@ -16,7 +16,8 @@ namespace stdair {
   /// Forward declarations
   class BomRoot;
   struct InventoryKey;
-  class Inventory;
+  class Inventory; 
+  class AirlineFeature;
   struct FlightDateKey;
   class FlightDate;
   class LegDate;
@@ -69,7 +70,17 @@ namespace stdair {
      * @return Inventory* The just retrieved Inventory object.
      */
     static Inventory* retrieveInventoryFromKey (const BomRoot&,
-                                                const AirlineCode_T&);
+                                                const AirlineCode_T&); 
+ 
+    /**
+     * Retrieve an Airline Feature object from an airline code.
+     *
+     * @param const BomRoot& The root of the BOM tree.
+     * @param const AirlineCode_T& The key.
+     * @return AirlineFeature* The just retrieved Airline Feature object.
+     */
+    static AirlineFeature* retrieveAirlineFeatureFromKey (const BomRoot&,
+							  const AirlineCode_T&);
 
     /**
      * Retrieve a FlightDate object from a (full) key string.
