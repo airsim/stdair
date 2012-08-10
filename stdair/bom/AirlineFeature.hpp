@@ -103,7 +103,7 @@ namespace stdair {
     }
 
     /**
-     * Get the partnership method.
+     * Get the partnership technique.
      */
     PartnershipTechnique::EN_PartnershipTechnique getPartnershipTechnique() const {
       return _partnershipTechnique.getTechnique();
@@ -142,7 +142,43 @@ namespace stdair {
 	       const OptimisationMethod&,
                const HistoricalDataLimit_T&,
                const ControlMode_T&,
-               const PartnershipTechnique&);
+               const PartnershipTechnique&); 
+
+    /**
+     * Set the forecasting method.
+     */
+    void setForecastingMethod (const ForecastingMethod& iForecastingMethod) {
+      _forecastingMethod = iForecastingMethod;
+    }
+    
+    /**
+     * Set the unconstraining method.
+     */
+    void setUnconstrainingMethod(const UnconstrainingMethod& iUnconstrainingMethod) {
+      _unconstrainingMethod = iUnconstrainingMethod;
+    }
+
+    /**
+     * Set the partnership technique.
+     */
+    void setPartnershipTechnique(const PartnershipTechnique& iPartnershipTechnique) {
+      _partnershipTechnique = iPartnershipTechnique;
+    }     
+
+    /**
+     * Set the pre-optimisation method.
+     */
+    void setPreOptimisationMethod(const PreOptimisationMethod& iPreOptimisationMethod) {
+      _preOptimisationMethod = iPreOptimisationMethod;
+    }   
+
+    /**
+     * Set the optimisation method.
+     */
+    void setOptimisationMethod(const OptimisationMethod& iOptimisationMethod) {
+      _optimisationMethod = iOptimisationMethod;
+    }  
+
 
   protected:
     // ////////// Constructors and destructors /////////

@@ -11,6 +11,7 @@
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
+#include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/LegDate.hpp>
 #include <stdair/bom/SegmentDate.hpp>
@@ -62,6 +63,27 @@ namespace stdair {
     oInventory_ptr = iBomRoot.getInventory (lKey);
 
     return oInventory_ptr;
+  } 
+
+  // ////////////////////////////////////////////////////////////////////
+  AirlineFeature* BomRetriever::
+  retrieveAirlineFeatureFromKey (const BomRoot& iBomRoot,
+				 const AirlineCode_T& iAirlineCode) {
+    Inventory* oInventory_ptr = NULL;
+    AirlineFeature* oAirlineFeature_ptr = NULL;
+
+    //
+    oInventory_ptr = retrieveInventoryFromKey (iBomRoot, iAirlineCode);
+    if (oInventory_ptr == NULL) {
+      return oAirlineFeature_ptr;
+    }
+    assert (oInventory_ptr != NULL);
+
+    oAirlineFeature_ptr = 
+      BomManager::getObjectPtr<AirlineFeature,Inventory> (*oInventory_ptr,
+							  iAirlineCode);
+
+    return oAirlineFeature_ptr;
   }
 
   // ////////////////////////////////////////////////////////////////////

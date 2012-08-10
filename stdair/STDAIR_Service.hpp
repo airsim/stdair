@@ -512,6 +512,12 @@ namespace stdair {
     template <typename ValueType> 
     bool exportConfigValue (ValueType& ioValue, const std::string& iPath);
 
+    /**
+     * @brief Update the airline features objects thanks to the configuration
+     * holder.
+     */
+    void updateAirlineFeatures ();
+
  private:
     // ///////// Service Context /////////
     /**

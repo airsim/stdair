@@ -120,7 +120,7 @@ namespace stdair {
       if (idx != 0) {
         ostr << ", ";
       }
-      ostr << _labels[idx];
+      ostr << _labels[idx] << " (" << _techniqueLabels[idx] << ")";
     }
     return ostr.str();
   }

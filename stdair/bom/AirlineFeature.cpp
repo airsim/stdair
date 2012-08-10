@@ -60,7 +60,7 @@ namespace stdair {
 	 << ", " << _preOptimisationMethod
       	 << ", " << _optimisationMethod
          << ", " << _historicalDataLimit
-         << ", " << _controlMode
+      //<< ", " << _controlMode
          << ", " << _partnershipTechnique;
     return ostr.str();
   }
