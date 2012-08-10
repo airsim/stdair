@@ -377,12 +377,32 @@ namespace stdair {
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
       *_stdairServiceContext;
 
-    // Retrieve the BOM tree root
+    // Retrieve the config holder
     ConfigHolderStruct& lConfigHolder = 
       lSTDAIR_ServiceContext.getConfigHolder();
 
     // Add the given value to the configuration
     lConfigHolder.addValue (iValue, iPath);
+  }
+
+  // //////////////////////////////////////////////////////////////////////  
+  void STDAIR_Service::updateAirlineFeatures () { 
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
+
+    // Retrieve the config holder
+    ConfigHolderStruct& lConfigHolder = 
+      lSTDAIR_ServiceContext.getConfigHolder();
+
+    // Retrieve the persistent BOM tree root
+    BomRoot& lPersistentBomRoot = 
+      lSTDAIR_ServiceContext.getPersistentBomRoot(); 
+
+    // Add the given value to the configuration
+    lConfigHolder.updateAirlineFeatures (lPersistentBomRoot);
   }
 
   // //////////////////////////////////////////////////////////////////////
