@@ -31,6 +31,9 @@ namespace bpt {
 
 namespace stdair {
 
+  /// Forward declarations
+  class BomRoot;
+
   /**
    * Structure holding the configuration of the simulation.
    */
@@ -68,6 +71,14 @@ namespace stdair {
      */    
     template <typename ValueType> 
     bool exportValue (ValueType& ioValue, const std::string& iPath) const;
+
+    /**
+     * Update the airline features objects thanks to the configuration
+     * holder.  
+     *
+     * @param BomRoot& Reference on the BomRoot to update.
+     */
+    void updateAirlineFeatures (BomRoot&);
 
   private: 
     /**
@@ -131,22 +142,7 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   template <typename ValueType> 
   bool ConfigHolderStruct::exportValue (ValueType& ioValue,
-					const std::string& iPath) const { 
-
-    //
-    // Compile time assertation: this function must never be called with the
-    // following list of types:
-    // <Date_T>
-    // 
-    BOOST_STATIC_ASSERT ((boost::is_same<ValueType, Date_T>::value == false));
-    //
-    // Compile time assertation: this function must always be called with the
-    // one of following types:
-    // RandomSeed_T
-    // Filename_T
-    // 
-    BOOST_STATIC_ASSERT ((boost::is_same<ValueType, RandomSeed_T>::value == true) ||
-			 (boost::is_same<ValueType, Filename_T>::value == true));
+					const std::string& iPath) const {
   
     bool hasValueBeenSuccessfullyRetrieved = true;
 

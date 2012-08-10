@@ -10,7 +10,16 @@
 #include <boost/foreach.hpp>
 #endif // BOOST_VERSION >= 104100
 // StdAir
+#include <stdair/stdair_exceptions.hpp>
+#include <stdair/basic/ForecastingMethod.hpp>
+#include <stdair/basic/UnconstrainingMethod.hpp>
+#include <stdair/basic/PartnershipTechnique.hpp>
+#include <stdair/basic/PreOptimisationMethod.hpp>
+#include <stdair/basic/OptimisationMethod.hpp>
+#include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/bom/ConfigHolderStruct.hpp>
+#include <stdair/bom/BomRetriever.hpp>
+#include <stdair/service/Logger.hpp>
 
 namespace stdair {
   
@@ -116,5 +125,88 @@ namespace stdair {
 #endif // BOOST_VERSION >= 104100
 
     return hasInsertionBeenSuccessful;
+  } 
+
+  // ////////////////////////////////////////////////////////////////////
+  void ConfigHolderStruct::updateAirlineFeatures (BomRoot& iBomRoot) {  
+
+    AirlineCode_T lAirlineCode ("");
+
+    // Browse the children nodes
+    BOOST_FOREACH(bpt::ptree::value_type itChild, _pt) { 
+      std::ostringstream lPathStr;
+      lPathStr << itChild.first.data() << ".airline_code";
+      const bool hasAirlineCodeBeenRetrieved = 
+	exportValue<AirlineCode_T> (lAirlineCode , lPathStr.str());
+      if (hasAirlineCodeBeenRetrieved == true) {
+	AirlineFeature* lAirlineFeature_ptr = 
+	  BomRetriever::retrieveAirlineFeatureFromKey (iBomRoot, lAirlineCode);
+	if (lAirlineFeature_ptr != NULL) { 
+
+	  try {
+
+	    std::ostringstream lPathStr;
+	    char lChar;
+
+	    // Try to extract the forecasting method from the config tree
+	    lPathStr << itChild.first.data() << ".forecasting_method";
+	    const bool hasForecastingMethodBeenRetrieved =    
+	      exportValue<char> (lChar, lPathStr.str());	 
+	    if (hasForecastingMethodBeenRetrieved == true) {
+	      const ForecastingMethod lForecastingMethod (lChar);
+	      lAirlineFeature_ptr->setForecastingMethod(lForecastingMethod);  
+	    } 
+
+	    // Try to extract the unconstraining method from the config tree
+	    lPathStr.str("");  
+	    lPathStr << itChild.first.data() << ".unconstraining_method"; 
+	    const bool hasUnconstrainingMethodBeenRetrieved =    
+	      exportValue<char> (lChar, lPathStr.str());
+	    if (hasUnconstrainingMethodBeenRetrieved == true) {
+	      const UnconstrainingMethod lUnconstrainingMethod (lChar);
+	      lAirlineFeature_ptr->setUnconstrainingMethod(lUnconstrainingMethod);  
+	    } 
+
+	    // Try to extract the partnership technique from the config tree 
+	    lPathStr.str("");    
+	    lPathStr << itChild.first.data() << ".partnership_technique"; 
+	    const bool hasPartnershipTechniqueBeenRetrieved =    
+	      exportValue<char> (lChar, lPathStr.str());
+	    if (hasPartnershipTechniqueBeenRetrieved == true) {
+	      const PartnershipTechnique lPartnershipTechnique (lChar);
+	      lAirlineFeature_ptr->setPartnershipTechnique(lPartnershipTechnique);  
+	    } 
+
+	    // Try to extract the pre optimisation method from the config tree  
+	    lPathStr.str("");
+	    lPathStr << itChild.first.data() << ".pre_optimisation_method"; 
+	    const bool hasPreOptMethodBeenRetrieved =    
+	      exportValue<char> (lChar, lPathStr.str());
+	    if (hasPreOptMethodBeenRetrieved == true) {
+	      const PreOptimisationMethod lPreOptimisationMethod (lChar);
+	      lAirlineFeature_ptr->setPreOptimisationMethod(lPreOptimisationMethod);  
+	    } 
+
+	    // Try to extract the optimisation method from the config tree   
+	    lPathStr.str("");
+	    lPathStr << itChild.first.data() << ".optimisation_method"; 
+	    const bool hasOptMethodBeenRetrieved =    
+	      exportValue<char> (lChar, lPathStr.str());
+	    if (hasOptMethodBeenRetrieved == true) {
+	      const OptimisationMethod lOptimisationMethod (lChar);
+	      lAirlineFeature_ptr->setOptimisationMethod(lOptimisationMethod);  
+	    }
+
+	  } catch (CodeConversionException& lCodeConversionException) {
+	    std::ostringstream oMessage;
+	    oMessage << "Wrong input features for the airline '" 
+		     << lAirlineCode << "' in the input configuration file: "
+		     << lCodeConversionException.what();
+	    STDAIR_LOG_ERROR (oMessage.str());
+	    throw CodeConversionException (oMessage.str());
+	  }
+	}
+      }
+    }
   }
 }
