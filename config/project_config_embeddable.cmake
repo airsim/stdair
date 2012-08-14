@@ -306,6 +306,14 @@ macro (get_external_libs)
       get_git (${_arg_version})
     endif (${_arg_lower} STREQUAL "git")
 
+    if (${_arg_lower} STREQUAL "gcov")
+      get_gcov (${_arg_version})
+    endif (${_arg_lower} STREQUAL "gcov")
+
+    if (${_arg_lower} STREQUAL "lcov")
+      get_lcov (${_arg_version})
+    endif (${_arg_lower} STREQUAL "lcov")
+
     if (${_arg_lower} STREQUAL "python")
       get_python (${_arg_version})
     endif (${_arg_lower} STREQUAL "python")
@@ -404,6 +412,30 @@ macro (get_git)
     message (STATUS "Current Git revision name: ${PROJ_WC_REVISION_NAME}")
   endif (Git_FOUND)
 endmacro (get_git)
+
+# ~~~~~~~~~~ Gcov ~~~~~~~~~~
+macro (get_gcov)
+  message (STATUS "Requires gcov without specifying any version")
+
+  find_package (GCOV)
+  if (GCOV_FOUND)
+    GCOV_WC_INFO (${CMAKE_CURRENT_SOURCE_DIR} PROJ)
+    set (GCOV_REVISION ${PROJ_WC_REVISION_HASH})
+    message (STATUS "Current gcov revision name: ${PROJ_WC_REVISION_NAME}")
+  endif (GCOV_FOUND)
+endmacro (get_gcov)
+
+# ~~~~~~~~~~ Lcov ~~~~~~~~~~
+macro (get_lcov)
+  message (STATUS "Requires lcov without specifying any version")
+
+  find_package (LCOV)
+  if (LCOV_FOUND)
+    LCOV_WC_INFO (${CMAKE_CURRENT_SOURCE_DIR} PROJ)
+    set (LCOV_REVISION ${PROJ_WC_REVISION_HASH})
+    message (STATUS "Current lcov revision name: ${PROJ_WC_REVISION_NAME}")
+  endif (LCOV_FOUND)
+endmacro (get_lcov)
 
 # ~~~~~~~~~~ Python ~~~~~~~~~
 macro (get_python)
@@ -1073,7 +1105,7 @@ macro (init_build)
   #    will set CMAKE_CXX_FLAGS as being equal to -O2.
   if (NOT CMAKE_CXX_FLAGS)
 	#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Werror")
-	set (CMAKE_CXX_FLAGS "-Wall -Werror")
+	set (CMAKE_CXX_FLAGS "-Wall -Werror -fprofile-arcs -ftest-coverage")
   endif (NOT CMAKE_CXX_FLAGS)
   # Tell the source code the version of Boost (only once)
   if (NOT "${CMAKE_CXX_FLAGS}" MATCHES "-DBOOST_VERSION=")
@@ -1941,6 +1973,16 @@ macro (doc_add_man_pages)
 
 endmacro (doc_add_man_pages)
 
+macro (gcov_task)
+add_custom_command( TARGET check
+                    POST_BUILD
+                    COMMAND "mkdir" "-p" "${CMAKE_BINARY_DIR}/gcov" 
+                    COMMAND "geninfo" "${CMAKE_BINARY_DIR}/" "-o" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
+                    COMMAND "genhtml" "-o" "${CMAKE_BINARY_DIR}/gcov" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
+                    COMMAND "rm" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
+                    )
+endmacro (gcov_task)
+
 
 ###################################################################
 ##                    Development Helpers                        ##
@@ -2003,6 +2045,26 @@ macro (display_doxygen)
   message (STATUS "  - DOXYGEN_DOT_EXECUTABLE ........ : ${DOXYGEN_DOT_EXECUTABLE}")
   message (STATUS "  - DOXYGEN_DOT_PATH .............. : ${DOXYGEN_DOT_PATH}")
 endmacro (display_doxygen)
+
+# Gcov
+macro (display_gcov)
+  message (STATUS)
+  message (STATUS "* gcov:")
+  message (STATUS "  - GCOV_VERSION .................. : ${GCOV_VERSION}")
+  message (STATUS "  - GCOV_EXECUTABLE ............... : ${GCOV_EXECUTABLE}")
+  message (STATUS "  - GCOV_DOT_EXECUTABLE ........... : ${GCOV_DOT_EXECUTABLE}")
+  message (STATUS "  - GCOV_DOT_PATH ................. : ${GCOV_DOT_PATH}")
+endmacro (display_gcov)
+
+# Gcov
+macro (display_lcov)
+  message (STATUS)
+  message (STATUS "* lcov:")
+  message (STATUS "  - LCOV_VERSION .................. : ${LCOV_VERSION}")
+  message (STATUS "  - LCOV_EXECUTABLE ............... : ${LCOV_EXECUTABLE}")
+  message (STATUS "  - LCOV_DOT_EXECUTABLE ........... : ${LCOV_DOT_EXECUTABLE}")
+  message (STATUS "  - LCOV_DOT_PATH ................. : ${LCOV_DOT_PATH}")
+endmacro (display_lcov)
 
 # Python
 macro (display_python)
@@ -2349,6 +2411,8 @@ macro (display_status)
   message (STATUS "CMAKE_MODULE_PATH ................. : ${CMAKE_MODULE_PATH}")
   message (STATUS "CMAKE_INSTALL_PREFIX .............. : ${CMAKE_INSTALL_PREFIX}")
   display_doxygen ()
+  display_gcov ()
+  display_lcov ()
   message (STATUS)
   message (STATUS "-------------------------------------")
   message (STATUS "---  Installation Configuration   ---")
