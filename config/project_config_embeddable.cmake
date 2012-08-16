@@ -71,8 +71,9 @@ endmacro (set_project_versions)
 #  * INSTALL_INCLUDE_DIR - Installation directory for the header files
 #  * INSTALL_DATA_DIR    - Installation directory for the data files
 #  * INSTALL_SAMPLE_DIR  - Installation directory for the (CSV) sample files
+#  * RUN_GCOV            - Whether or not to perform code coverage
 #
-macro (set_project_options _build_doc _enable_tests)
+macro (set_project_options _build_doc _enable_tests _run_gcov)
   # Shared libraries
   option (BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON)
 
@@ -117,6 +118,10 @@ macro (set_project_options _build_doc _enable_tests)
     "Installation directory for data files")
   set (INSTALL_SAMPLE_DIR share/${PROJECT_NAME}/samples CACHE PATH
     "Installation directory for (CSV) sample files")
+
+  # GCOV
+  option (RUN_GCOV "Set to OFF to skip code coverage" 
+    ${_run_gcov})
 
   # Make relative paths absolute (needed later on)
   foreach (_path_type LIB BIN INCLUDE DATA SAMPLE)
@@ -415,26 +420,30 @@ endmacro (get_git)
 
 # ~~~~~~~~~~ Gcov ~~~~~~~~~~
 macro (get_gcov)
-  message (STATUS "Requires gcov without specifying any version")
+  if (${RUN_GCOV} STREQUAL "ON")	
+    message (STATUS "Requires gcov without specifying any version")
 
-  find_package (GCOV)
-  if (GCOV_FOUND)
-    GCOV_WC_INFO (${CMAKE_CURRENT_SOURCE_DIR} PROJ)
-    set (GCOV_REVISION ${PROJ_WC_REVISION_HASH})
-    message (STATUS "Current gcov revision name: ${PROJ_WC_REVISION_NAME}")
-  endif (GCOV_FOUND)
+    find_package (GCOV)
+    if (GCOV_FOUND)
+      GCOV_WC_INFO (${CMAKE_CURRENT_SOURCE_DIR} PROJ)
+      set (GCOV_REVISION ${PROJ_WC_REVISION_HASH})
+      message (STATUS "Current gcov revision name: ${PROJ_WC_REVISION_NAME}")
+    endif (GCOV_FOUND)
+  endif (${RUN_GCOV} STREQUAL "ON")
 endmacro (get_gcov)
 
 # ~~~~~~~~~~ Lcov ~~~~~~~~~~
 macro (get_lcov)
-  message (STATUS "Requires lcov without specifying any version")
+  if (${RUN_GCOV} STREQUAL "ON")	
+    message (STATUS "Requires lcov without specifying any version")
 
-  find_package (LCOV)
-  if (LCOV_FOUND)
-    LCOV_WC_INFO (${CMAKE_CURRENT_SOURCE_DIR} PROJ)
-    set (LCOV_REVISION ${PROJ_WC_REVISION_HASH})
-    message (STATUS "Current lcov revision name: ${PROJ_WC_REVISION_NAME}")
-  endif (LCOV_FOUND)
+    find_package (LCOV)
+    if (LCOV_FOUND)
+      LCOV_WC_INFO (${CMAKE_CURRENT_SOURCE_DIR} PROJ)
+      set (LCOV_REVISION ${PROJ_WC_REVISION_HASH})
+      message (STATUS "Current lcov revision name: ${PROJ_WC_REVISION_NAME}")
+    endif (LCOV_FOUND)
+  endif (${RUN_GCOV} STREQUAL "ON")	
 endmacro (get_lcov)
 
 # ~~~~~~~~~~ Python ~~~~~~~~~
@@ -1974,13 +1983,15 @@ macro (doc_add_man_pages)
 endmacro (doc_add_man_pages)
 
 macro (gcov_task)
-add_custom_command( TARGET check
-                    POST_BUILD
-                    COMMAND "mkdir" "-p" "${CMAKE_BINARY_DIR}/gcov" 
-                    COMMAND "geninfo" "${CMAKE_BINARY_DIR}/" "-o" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
-                    COMMAND "genhtml" "-o" "${CMAKE_BINARY_DIR}/gcov" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
-                    COMMAND "rm" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
-                    )
+  if (${RUN_GCOV} STREQUAL "ON")
+    add_custom_command (TARGET check
+                        POST_BUILD
+                        COMMAND "mkdir" "-p" "${CMAKE_BINARY_DIR}/gcov" 
+                        COMMAND "geninfo" "${CMAKE_BINARY_DIR}/" "-o" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
+                        COMMAND "genhtml" "-o" "${CMAKE_BINARY_DIR}/gcov" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
+                        COMMAND "rm" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
+	               )
+  endif (${RUN_GCOV} STREQUAL "ON")
 endmacro (gcov_task)
 
 
@@ -2046,24 +2057,29 @@ macro (display_doxygen)
   message (STATUS "  - DOXYGEN_DOT_PATH .............. : ${DOXYGEN_DOT_PATH}")
 endmacro (display_doxygen)
 
-# Gcov
-macro (display_gcov)
-  message (STATUS)
-  message (STATUS "* gcov:")
-  message (STATUS "  - GCOV_VERSION .................. : ${GCOV_VERSION}")
-  message (STATUS "  - GCOV_EXECUTABLE ............... : ${GCOV_EXECUTABLE}")
-  message (STATUS "  - GCOV_DOT_EXECUTABLE ........... : ${GCOV_DOT_EXECUTABLE}")
-  message (STATUS "  - GCOV_DOT_PATH ................. : ${GCOV_DOT_PATH}")
-endmacro (display_gcov)
 
 # Gcov
+macro (display_gcov)
+  if (${RUN_GCOV} STREQUAL "ON")
+    message (STATUS)
+    message (STATUS "* gcov:")
+    message (STATUS "  - GCOV_VERSION .................. : ${GCOV_VERSION}")
+    message (STATUS "  - GCOV_EXECUTABLE ............... : ${GCOV_EXECUTABLE}")
+    message (STATUS "  - GCOV_DOT_EXECUTABLE ........... : ${GCOV_DOT_EXECUTABLE}")
+    message (STATUS "  - GCOV_DOT_PATH ................. : ${GCOV_DOT_PATH}")
+  endif (${RUN_GCOV} STREQUAL "ON")
+endmacro (display_gcov)
+
+# Lcov
 macro (display_lcov)
-  message (STATUS)
-  message (STATUS "* lcov:")
-  message (STATUS "  - LCOV_VERSION .................. : ${LCOV_VERSION}")
-  message (STATUS "  - LCOV_EXECUTABLE ............... : ${LCOV_EXECUTABLE}")
-  message (STATUS "  - LCOV_DOT_EXECUTABLE ........... : ${LCOV_DOT_EXECUTABLE}")
-  message (STATUS "  - LCOV_DOT_PATH ................. : ${LCOV_DOT_PATH}")
+  if (${RUN_GCOV} STREQUAL "ON")
+    message (STATUS)
+    message (STATUS "* lcov:")
+    message (STATUS "  - LCOV_VERSION .................. : ${LCOV_VERSION}")
+    message (STATUS "  - LCOV_EXECUTABLE ............... : ${LCOV_EXECUTABLE}")
+    message (STATUS "  - LCOV_DOT_EXECUTABLE ........... : ${LCOV_DOT_EXECUTABLE}")
+    message (STATUS "  - LCOV_DOT_PATH ................. : ${LCOV_DOT_PATH}")
+  endif (${RUN_GCOV} STREQUAL "ON")
 endmacro (display_lcov)
 
 # Python
