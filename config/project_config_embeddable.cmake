@@ -1114,7 +1114,11 @@ macro (init_build)
   #    will set CMAKE_CXX_FLAGS as being equal to -O2.
   if (NOT CMAKE_CXX_FLAGS)
 	#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Werror")
-	set (CMAKE_CXX_FLAGS "-Wall -Werror -fprofile-arcs -ftest-coverage")
+        if (${RUN_GCOV} STREQUAL "ON")
+	  set (CMAKE_CXX_FLAGS "-Wall -Werror -fprofile-arcs -ftest-coverage")
+        else (${RUN_GCOV} STREQUAL "ON")
+          set (CMAKE_CXX_FLAGS "-Wall -Werror")
+	endif (${RUN_GCOV} STREQUAL "ON")
   endif (NOT CMAKE_CXX_FLAGS)
   # Tell the source code the version of Boost (only once)
   if (NOT "${CMAKE_CXX_FLAGS}" MATCHES "-DBOOST_VERSION=")
@@ -1982,14 +1986,39 @@ macro (doc_add_man_pages)
 
 endmacro (doc_add_man_pages)
 
+
+###################################################################
+##                            GCOV                               ##
+###################################################################
+
 macro (gcov_task)
   if (${RUN_GCOV} STREQUAL "ON")
+    set (GCDA_GCNO_PATH "${CMAKE_BINARY_DIR}/${PROJECT_NAME}/CMakeFiles/${PROJECT_NAME}lib.dir")
+    set (GCDA_FILE "${GCDA_GCNO_PATH}/command/CmdBomSerialiser.cpp.gcda")
+    set (GCNO_FILE "${GCDA_GCNO_PATH}/command/CmdBomSerialiser.cpp.gcno")
+    # Removed generated gcda and gcno files relative to the CmdBomSerialiser object: 
+    # gcov failed processing the CmdBomSerialiser.cpp.gcda file without displaying a clear message
     add_custom_command (TARGET check
-                        POST_BUILD
+                        # This task is post-build and post-check
+                        POST_BUILD  
+                        # Because the "-f" option is given, the commands do not fail when the files are missing
+	                COMMAND "rm" "-f" "${GCDA_FILE}"
+                        COMMAND "rm" "-f" "${GCNO_FILE}"
+                        ) 
+    # Build a coverage report info and html pages using gcda and gcno files
+    add_custom_command (TARGET check
+                        # This task is post-build and post-check
+                        POST_BUILD 
+                        # Create a directory for the gcov reports
                         COMMAND "mkdir" "-p" "${CMAKE_BINARY_DIR}/gcov" 
-                        COMMAND "geninfo" "${CMAKE_BINARY_DIR}/" "-o" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
-                        COMMAND "genhtml" "-o" "${CMAKE_BINARY_DIR}/gcov" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
-                        COMMAND "rm" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
+                        # Generate a global gcov report using the directory containing the gcda/gcno files
+                        COMMAND "geninfo" "${GCDA_GCNO_PATH}" "-o" "${CMAKE_BINARY_DIR}/gcov/gcov_tmp_report.info"	
+                        # Extract from the global report the data relative to the module files (i, e remove external libraries) and copy them in a second report
+			COMMAND "lcov" "-e" "${CMAKE_BINARY_DIR}/gcov/gcov_tmp_report.info" "'${CMAKE_CURRENT_SOURCE_DIR}/*'" ">>" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
+                        # Generate html documentation about the module files coverage
+                        COMMAND "genhtml" "-o" "${CMAKE_BINARY_DIR}/gcov" "-p" "${CMAKE_CURRENT_SOURCE_DIR}*" "${CMAKE_BINARY_DIR}/gcov/gcov_report.info"
+                        # Delete heavy .info files
+                        COMMAND "rm" "${CMAKE_BINARY_DIR}/gcov/*.info"
 	               )
   endif (${RUN_GCOV} STREQUAL "ON")
 endmacro (gcov_task)
