@@ -13,6 +13,7 @@
 #include <stdair/basic/BasFileMgr.hpp>
 #include <stdair/bom/BomINIImport.hpp>
 #include <stdair/bom/ConfigHolderStruct.hpp>
+#include <stdair/service/Logger.hpp>
 
 #if BOOST_VERSION >= 104100
 namespace bpt = boost::property_tree;
@@ -35,8 +36,12 @@ namespace stdair {
     const bool doesExistAndIsReadable =
       stdair::BasFileMgr::doesExistAndIsReadable (lFilename);
     if (doesExistAndIsReadable == false) {
+      STDAIR_LOG_DEBUG ("The config input file '" << lFilename
+                       << "' can not be retrieved on the file-system.");
       return;
     }
+    STDAIR_LOG_DEBUG ("Load the config input file '" << lFilename
+                      << "' content into the configuration holder.");
     
 #if BOOST_VERSION >= 104100
 
