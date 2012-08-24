@@ -123,6 +123,11 @@ namespace stdair {
      * Display of the structure.
      */
     const std::string display() const;
+
+    /**
+     * Display only the segment path.
+     */
+    const std::string describeSegmentPath() const;
   
 
   public:

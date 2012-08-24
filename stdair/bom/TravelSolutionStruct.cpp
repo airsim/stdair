@@ -27,6 +27,27 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   void TravelSolutionStruct::fromStream (std::istream& ioIn) {
   }
+
+  // ////////////////////////////////////////////////////////////////////
+  const std::string TravelSolutionStruct::describeSegmentPath() const {
+    std::ostringstream oStr;
+
+    //
+    oStr << "Segment path: ";
+    unsigned short idx = 0;
+    for (SegmentPath_T::const_iterator lItSegmentPath = _segmentPath.begin();
+         lItSegmentPath != _segmentPath.end(); ++lItSegmentPath, ++idx) {
+      if (idx != 0) {
+        oStr << " - ";
+      }
+      const std::string& lSegmentPathString = *lItSegmentPath;
+      const stdair::ParsedKey& lSegmentParsedKey =
+        stdair::BomKeyManager::extractKeys (lSegmentPathString);
+      const std::string& lSegmentKey = lSegmentParsedKey.toString();
+      oStr << lSegmentKey;
+    }
+    return oStr.str();
+  }
   
   // ////////////////////////////////////////////////////////////////////
   const std::string TravelSolutionStruct::describe() const {
