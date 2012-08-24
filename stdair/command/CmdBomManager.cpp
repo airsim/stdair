@@ -1842,7 +1842,7 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   void CmdBomManager::
   buildPartnershipsSampleInventoryAndRM (BomRoot& ioBomRoot) {
-
+    
     // Step 0.1: Inventory level
     // Create an Inventory for SQ
     const AirlineCode_T lAirlineCodeSQ ("SQ");
@@ -1878,25 +1878,25 @@ namespace stdair {
     
     // ////// SQ ///////    
     // Step 0.2: Flight-date level
-    // Create a FlightDate (SQ11/08-FEB-2010) for SQ's Inventory
+    // Create a FlightDate (SQ11/08-MAR-2010) for SQ's Inventory
     FlightNumber_T lFlightNumber = 11;
-    Date_T lDate (2010, 2, 8);
+    Date_T lDate (2010, 3, 8);
     FlightDateKey lFlightDateKey (lFlightNumber, lDate);
 
-    FlightDate& lSQ11_20100208_FD =
+    FlightDate& lSQ11_20100308_FD =
       FacBom<FlightDate>::instance().create (lFlightDateKey);
-    FacBomManager::addToListAndMap (lSQInv, lSQ11_20100208_FD);
-    FacBomManager::linkWithParent (lSQInv, lSQ11_20100208_FD);
+    FacBomManager::addToListAndMap (lSQInv, lSQ11_20100308_FD);
+    FacBomManager::linkWithParent (lSQInv, lSQ11_20100308_FD);
 
-    // Create a (mkt) FlightDate (SQ1200/08-FEB-2010) for SQ's Inventory
+    // Create a (mkt) FlightDate (SQ1200/08-MAR-2010) for SQ's Inventory
     FlightNumber_T lMktFlightNumber = 1200;
-    //lDate = Date_T (2010, 2, 8);
+    //lDate = Date_T (2010, 3, 8);
     FlightDateKey lMktFlightDateKey (lMktFlightNumber, lDate);
 
-    FlightDate& lSQ1200_20100208_FD =
+    FlightDate& lSQ1200_20100308_FD =
       FacBom<FlightDate>::instance().create (lMktFlightDateKey);
-    FacBomManager::addToListAndMap (lSQInv, lSQ1200_20100208_FD);
-    FacBomManager::linkWithParent (lSQInv, lSQ1200_20100208_FD);
+    FacBomManager::addToListAndMap (lSQInv, lSQ1200_20100308_FD);
+    FacBomManager::linkWithParent (lSQInv, lSQ1200_20100308_FD);
     
     // Display the flight-date
     // STDAIR_LOG_DEBUG ("FlightDate: " << lBA9_20110610_FD.toString());
@@ -1914,8 +1914,8 @@ namespace stdair {
 
     SegmentDate& lSINBKKSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
-    FacBomManager::addToListAndMap (lSQ11_20100208_FD, lSINBKKSegment);
-    FacBomManager::linkWithParent (lSQ11_20100208_FD, lSINBKKSegment);
+    FacBomManager::addToListAndMap (lSQ11_20100308_FD, lSINBKKSegment);
+    FacBomManager::linkWithParent (lSQ11_20100308_FD, lSINBKKSegment);
 
     // Fill the SegmentDate content
     lSINBKKSegment.setBoardingDate (lDate);
@@ -1933,8 +1933,8 @@ namespace stdair {
 
     SegmentDate& lMktBKKHKGSegment =
       FacBom<SegmentDate>::instance().create (lMktSegmentDateKey);
-    FacBomManager::addToListAndMap (lSQ1200_20100208_FD, lMktBKKHKGSegment);
-    FacBomManager::linkWithParent (lSQ1200_20100208_FD, lMktBKKHKGSegment);
+    FacBomManager::addToListAndMap (lSQ1200_20100308_FD, lMktBKKHKGSegment);
+    FacBomManager::linkWithParent (lSQ1200_20100308_FD, lMktBKKHKGSegment);
 
     // Fill the (mkt) SegmentDate content
     lMktBKKHKGSegment.setBoardingDate (lDate);
@@ -1948,8 +1948,8 @@ namespace stdair {
     LegDateKey lLegDateKey (lSIN);
 
     LegDate& lSINLeg = FacBom<LegDate>::instance().create (lLegDateKey);
-    FacBomManager::addToListAndMap (lSQ11_20100208_FD, lSINLeg);
-    FacBomManager::linkWithParent (lSQ11_20100208_FD, lSINLeg);
+    FacBomManager::addToListAndMap (lSQ11_20100308_FD, lSINLeg);
+    FacBomManager::linkWithParent (lSQ11_20100308_FD, lSINLeg);
 
     // Fill the LegDate content
     lSINLeg.setOffPoint (lBKK);
@@ -2093,27 +2093,27 @@ namespace stdair {
     lFlightNumber = 12;
     lFlightDateKey = FlightDateKey (lFlightNumber, lDate);
 
-    FlightDate& lPartnerCX12_20100208_FD =
+    FlightDate& lPartnerCX12_20100308_FD =
       FacBom<FlightDate>::instance().create (lFlightDateKey);
-    FacBomManager::addToListAndMap (lPartnerCXInv, lPartnerCX12_20100208_FD);
-    FacBomManager::linkWithParent (lPartnerCXInv, lPartnerCX12_20100208_FD);
+    FacBomManager::addToListAndMap (lPartnerCXInv, lPartnerCX12_20100308_FD);
+    FacBomManager::linkWithParent (lPartnerCXInv, lPartnerCX12_20100308_FD);
 
     lFlightNumber = 1100;
     lMktFlightDateKey = FlightDateKey (lFlightNumber, lDate);
 
-    FlightDate& lPartnerCX1100_20100208_FD =
+    FlightDate& lPartnerCX1100_20100308_FD =
       FacBom<FlightDate>::instance().create (lMktFlightDateKey);
-    FacBomManager::addToListAndMap (lPartnerCXInv, lPartnerCX1100_20100208_FD);
-    FacBomManager::linkWithParent (lPartnerCXInv, lPartnerCX1100_20100208_FD);
+    FacBomManager::addToListAndMap (lPartnerCXInv, lPartnerCX1100_20100308_FD);
+    FacBomManager::linkWithParent (lPartnerCXInv, lPartnerCX1100_20100308_FD);
 
     // Step 0.9.3: Segment-date level
     lSegmentDateKey = SegmentDateKey (lBKK, lHKG);
 
     SegmentDate& lPartnerBKKHKGSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerCX12_20100208_FD, 
+    FacBomManager::addToListAndMap (lPartnerCX12_20100308_FD, 
 				    lPartnerBKKHKGSegment);
-    FacBomManager::linkWithParent (lPartnerCX12_20100208_FD, 
+    FacBomManager::linkWithParent (lPartnerCX12_20100308_FD, 
 				   lPartnerBKKHKGSegment);
 
     lPartnerBKKHKGSegment.setBoardingDate (lDate);
@@ -2126,9 +2126,9 @@ namespace stdair {
 
     SegmentDate& lPartnerMktSINBKKSegment =
       FacBom<SegmentDate>::instance().create (lMktSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerCX1100_20100208_FD, 
+    FacBomManager::addToListAndMap (lPartnerCX1100_20100308_FD, 
 				    lPartnerMktSINBKKSegment);
-    FacBomManager::linkWithParent (lPartnerCX1100_20100208_FD, 
+    FacBomManager::linkWithParent (lPartnerCX1100_20100308_FD, 
 				   lPartnerMktSINBKKSegment);
 
     lPartnerMktSINBKKSegment.setBoardingDate (lDate);
@@ -2141,8 +2141,8 @@ namespace stdair {
     lLegDateKey = LegDateKey (lBKK);
 
     LegDate& lPartnerBKKLeg = FacBom<LegDate>::instance().create (lLegDateKey);
-    FacBomManager::addToListAndMap (lPartnerCX12_20100208_FD, lPartnerBKKLeg);
-    FacBomManager::linkWithParent (lPartnerCX12_20100208_FD, lPartnerBKKLeg);
+    FacBomManager::addToListAndMap (lPartnerCX12_20100308_FD, lPartnerBKKLeg);
+    FacBomManager::linkWithParent (lPartnerCX12_20100308_FD, lPartnerBKKLeg);
 
     lPartnerBKKLeg.setOffPoint (lHKG);
     lPartnerBKKLeg.setBoardingDate (lDate);
@@ -2254,10 +2254,10 @@ namespace stdair {
     /* =================================================================================== */
 
     // Step 1.0: O&D level
-    // Create an O&D Date (SQ11/08-FEB-2010/SIN-BKK-SQ1200/08-FEB-2010/BKK-HKG)
+    // Create an O&D Date (SQ11/08-MAR-2010/SIN-BKK-SQ1200/08-MAR-2010/BKK-HKG)
     // for SQ's Inventory
-    OnDString_T lSQSINBKKOnDStr = "SQ;11,2010-Feb-08;SIN,BKK";
-    OnDString_T lMktSQBKKHKGOnDStr = "SQ;1200,2010-Feb-08;BKK,HKG";
+    OnDString_T lSQSINBKKOnDStr = "SQ;11,2010-Mar-08;SIN,BKK";
+    OnDString_T lMktSQBKKHKGOnDStr = "SQ;1200,2010-Mar-08;BKK,HKG";
     OnDStringList_T lOnDStringList;
     lOnDStringList.push_back (lSQSINBKKOnDStr);
     lOnDStringList.push_back (lMktSQBKKHKGOnDStr);
@@ -2305,7 +2305,7 @@ namespace stdair {
     lSQ_SINHKG_OnDDate.setDemandInformation (lCabinClassPairList, 
 					     lYield1200Mean10StdDev1);
 
-    // Create an O&D Date (SQ11/08-FEB-2010/SIN-BKK) for SQ's Inventory
+    // Create an O&D Date (SQ11/08-MAR-2010/SIN-BKK) for SQ's Inventory
     lOnDStringList.clear();
     lOnDStringList.push_back (lSQSINBKKOnDStr);
 
@@ -2341,7 +2341,7 @@ namespace stdair {
 					     lYield700Mean20StdDev1);
 
     /*******************************************************************************
-    // Create an O&D Date (SQ1200/08-FEB-2010/BKK-HKG) for SQ's Inventory
+    // Create an O&D Date (SQ1200/08-MAR-2010/BKK-HKG) for SQ's Inventory
     lFullKeyList.clear();
     lFullKeyList.push_back (lMktSQBKKHKGFullKeyStr);
 
@@ -2365,25 +2365,25 @@ namespace stdair {
             
     // ////// CX ///////    
     // Step 0.2: Flight-date level
-    // Create a FlightDate (CX12/08-FEB-2010) for CX's Inventory
+    // Create a FlightDate (CX12/08-MAR-2010) for CX's Inventory
     lFlightNumber = 12;
     //lDate = Date_T (2010, 2, 8);
     lFlightDateKey = FlightDateKey (lFlightNumber, lDate);
 
-    FlightDate& lCX12_20100208_FD =
+    FlightDate& lCX12_20100308_FD =
       FacBom<FlightDate>::instance().create (lFlightDateKey);
-    FacBomManager::addToListAndMap (lCXInv, lCX12_20100208_FD);
-    FacBomManager::linkWithParent (lCXInv, lCX12_20100208_FD);
+    FacBomManager::addToListAndMap (lCXInv, lCX12_20100308_FD);
+    FacBomManager::linkWithParent (lCXInv, lCX12_20100308_FD);
 
     // Create a (mkt) FlightDate (CX1100/08-FEB-2010) for CX's Inventory
     lFlightNumber = 1100;
     //lDate = Date_T (2010, 2, 8);
     lMktFlightDateKey = FlightDateKey (lFlightNumber, lDate);
 
-    FlightDate& lCX1100_20100208_FD =
+    FlightDate& lCX1100_20100308_FD =
       FacBom<FlightDate>::instance().create (lMktFlightDateKey);
-    FacBomManager::addToListAndMap (lCXInv, lCX1100_20100208_FD);
-    FacBomManager::linkWithParent (lCXInv, lCX1100_20100208_FD);
+    FacBomManager::addToListAndMap (lCXInv, lCX1100_20100308_FD);
+    FacBomManager::linkWithParent (lCXInv, lCX1100_20100308_FD);
     
     // Display the flight-date
     // STDAIR_LOG_DEBUG ("FlightDate: " << lAF084_20110320_FD.toString());
@@ -2395,8 +2395,8 @@ namespace stdair {
 
     SegmentDate& lBKKHKGSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
-    FacBomManager::addToListAndMap (lCX12_20100208_FD, lBKKHKGSegment);
-    FacBomManager::linkWithParent (lCX12_20100208_FD, lBKKHKGSegment);  
+    FacBomManager::addToListAndMap (lCX12_20100308_FD, lBKKHKGSegment);
+    FacBomManager::linkWithParent (lCX12_20100308_FD, lBKKHKGSegment);  
 
     // Fill the SegmentDate content
     lBKKHKGSegment.setBoardingDate (lDate);
@@ -2410,8 +2410,8 @@ namespace stdair {
 
     SegmentDate& lMktSINBKKSegment =
       FacBom<SegmentDate>::instance().create (lMktSegmentDateKey);
-    FacBomManager::addToListAndMap (lCX1100_20100208_FD, lMktSINBKKSegment);
-    FacBomManager::linkWithParent (lCX1100_20100208_FD, lMktSINBKKSegment);
+    FacBomManager::addToListAndMap (lCX1100_20100308_FD, lMktSINBKKSegment);
+    FacBomManager::linkWithParent (lCX1100_20100308_FD, lMktSINBKKSegment);
 
     // Fill the (mkt) SegmentDate content
     lMktSINBKKSegment.setBoardingDate (lDate);
@@ -2425,8 +2425,8 @@ namespace stdair {
     lLegDateKey = LegDateKey (lBKK);
 
     LegDate& lBKKLeg = FacBom<LegDate>::instance().create (lLegDateKey);
-    FacBomManager::addToListAndMap (lCX12_20100208_FD, lBKKLeg);
-    FacBomManager::linkWithParent (lCX12_20100208_FD, lBKKLeg);
+    FacBomManager::addToListAndMap (lCX12_20100308_FD, lBKKLeg);
+    FacBomManager::linkWithParent (lCX12_20100308_FD, lBKKLeg);
 
     // Fill the LegDate content
     lBKKLeg.setOffPoint (lHKG);
@@ -2559,27 +2559,27 @@ namespace stdair {
     lFlightNumber = 11;
     lFlightDateKey = FlightDateKey (lFlightNumber, lDate);
 
-    FlightDate& lPartnerSQ11_20100208_FD =
+    FlightDate& lPartnerSQ11_20100308_FD =
       FacBom<FlightDate>::instance().create (lFlightDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQInv, lPartnerSQ11_20100208_FD);
-    FacBomManager::linkWithParent (lPartnerSQInv, lPartnerSQ11_20100208_FD);
+    FacBomManager::addToListAndMap (lPartnerSQInv, lPartnerSQ11_20100308_FD);
+    FacBomManager::linkWithParent (lPartnerSQInv, lPartnerSQ11_20100308_FD);
 
     lFlightNumber = 1200;
     lMktFlightDateKey = FlightDateKey (lFlightNumber, lDate);
 
-    FlightDate& lPartnerSQ1200_20100208_FD =
+    FlightDate& lPartnerSQ1200_20100308_FD =
       FacBom<FlightDate>::instance().create (lMktFlightDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQInv, lPartnerSQ1200_20100208_FD);
-    FacBomManager::linkWithParent (lPartnerSQInv, lPartnerSQ1200_20100208_FD);
+    FacBomManager::addToListAndMap (lPartnerSQInv, lPartnerSQ1200_20100308_FD);
+    FacBomManager::linkWithParent (lPartnerSQInv, lPartnerSQ1200_20100308_FD);
 
     // Step 0.9.3: Segment-date level
     lSegmentDateKey = SegmentDateKey (lSIN, lBKK);
 
     SegmentDate& lPartnerSINBKKSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQ11_20100208_FD, 
+    FacBomManager::addToListAndMap (lPartnerSQ11_20100308_FD, 
 				    lPartnerSINBKKSegment);
-    FacBomManager::linkWithParent (lPartnerSQ11_20100208_FD, 
+    FacBomManager::linkWithParent (lPartnerSQ11_20100308_FD, 
 				   lPartnerSINBKKSegment);
     
     lPartnerSINBKKSegment.setBoardingDate (lDate);
@@ -2592,9 +2592,9 @@ namespace stdair {
 
     SegmentDate& lPartnerMktBKKHKGSegment =
       FacBom<SegmentDate>::instance().create (lMktSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQ1200_20100208_FD, 
+    FacBomManager::addToListAndMap (lPartnerSQ1200_20100308_FD, 
 				    lPartnerMktBKKHKGSegment);
-    FacBomManager::linkWithParent (lPartnerSQ1200_20100208_FD,
+    FacBomManager::linkWithParent (lPartnerSQ1200_20100308_FD,
 				   lPartnerMktBKKHKGSegment);
 
     lPartnerMktBKKHKGSegment.setBoardingDate (lDate);
@@ -2607,8 +2607,8 @@ namespace stdair {
     lLegDateKey = LegDateKey (lSIN);
 
     LegDate& lPartnerSINLeg = FacBom<LegDate>::instance().create (lLegDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQ11_20100208_FD, lPartnerSINLeg);
-    FacBomManager::linkWithParent (lPartnerSQ11_20100208_FD, lPartnerSINLeg);
+    FacBomManager::addToListAndMap (lPartnerSQ11_20100308_FD, lPartnerSINLeg);
+    FacBomManager::linkWithParent (lPartnerSQ11_20100308_FD, lPartnerSINLeg);
 
     lPartnerSINLeg.setOffPoint (lBKK);
     lPartnerSINLeg.setBoardingDate (lDate);
@@ -2719,9 +2719,9 @@ namespace stdair {
     /* =================================================================================== */
 
     // Step 1.0: O&D level
-    // Create an O&D Date (CX1100/08-FEB-2010/SIN-BKK-CX12/08-FEB-2010/BKK-HKG) for CX's Inventory
-    OnDString_T lMktCXSINBKKOnDStr = "CX;1100,2010-Feb-08;SIN,BKK";
-    OnDString_T lCXBKKHKGOnDStr = "CX;12,2010-Feb-08;BKK,HKG";
+    // Create an O&D Date (CX1100/08-MAR-2010/SIN-BKK-CX12/08-MAR-2010/BKK-HKG) for CX's Inventory
+    OnDString_T lMktCXSINBKKOnDStr = "CX;1100,2010-Mar-08;SIN,BKK";
+    OnDString_T lCXBKKHKGOnDStr = "CX;12,2010-Mar-08;BKK,HKG";
     lOnDStringList.clear();
     lOnDStringList.push_back (lMktCXSINBKKOnDStr);
     lOnDStringList.push_back (lCXBKKHKGOnDStr);
@@ -2754,7 +2754,7 @@ namespace stdair {
 					     lYield1200Mean10StdDev1);
 
     /***********************************************************************************
-    // Create an O&D Date (CX1100/08-FEB-2010/SIN-BKK) for CX's Inventory
+    // Create an O&D Date (CX1100/08-MAR-2010/SIN-BKK) for CX's Inventory
     lFullKeyList.clear();
     lFullKeyList.push_back (lMktCXSINBKKFullKeyStr);
 
@@ -2812,8 +2812,8 @@ namespace stdair {
     // Step 1: flight period level
     // Create a flight period for SQ11:
     const DoWStruct lDoWSrtuct ("1111111");
-    const Date_T lDateRangeStart (2010, boost::gregorian::Feb, 8);
-    const Date_T lDateRangeEnd (2010, boost::gregorian::Feb, 9);
+    const Date_T lDateRangeStart (2010, boost::gregorian::Mar, 8);
+    const Date_T lDateRangeEnd (2010, boost::gregorian::Mar, 9);
     const DatePeriod_T lDatePeriod (lDateRangeStart, lDateRangeEnd);
     const PeriodStruct lPeriodStruct (lDatePeriod,lDoWSrtuct);
 
@@ -2888,8 +2888,8 @@ namespace stdair {
     FacBomManager::linkWithParent (ioBomRoot, lSINBKKAirportPair);
 
     // Set the fare date-period primary key.
-    const Date_T lDateRangeStart (2010, boost::gregorian::Jan, 15);
-    const Date_T lDateRangeEnd (2010, boost::gregorian::Dec, 31);
+    const Date_T lDateRangeStart (2010, boost::gregorian::Mar, 01);
+    const Date_T lDateRangeEnd (2010, boost::gregorian::Mar, 31);
     const DatePeriod_T lDateRange (lDateRangeStart, lDateRangeEnd);
     const DatePeriodKey lDatePeriodKey (lDateRange);
 

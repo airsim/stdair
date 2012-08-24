@@ -15,6 +15,7 @@
 #include <stdair/stdair_exceptions.hpp>
 #include <stdair/stdair_json.hpp>
 #include <stdair/basic/BasConst_General.hpp>
+#include <stdair/bom/ConfigHolderStruct.hpp>
 
 #if BOOST_VERSION >= 104100
 namespace bpt = boost::property_tree;
@@ -289,6 +290,34 @@ namespace stdair {
 #endif // BOOST_VERSION >= 104100
 
     return hasKeyBeenSuccessfullyRetrieved;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  bool BomJSONImport::jsonImportConfig (const JSONString& iBomJSONStr,
+                                        ConfigHolderStruct& iConfigHolderStruct) {
+    
+    bool hasConfigBeenSuccessfullyRetrieved = true;
+
+#if BOOST_VERSION >= 104100
+    // Create an empty property tree object
+    bpt::ptree pt;
+
+    try {
+
+      // Load the JSON formatted string into the property tree.
+      // If reading fails (cannot open stream, parse error), an
+      // exception is thrown.
+      std::istringstream iStr (iBomJSONStr.getString());
+      read_json (iStr, pt);
+
+      // Load the pt in the configuration holder
+      iConfigHolderStruct.add (pt);
+    } catch (bpt::ptree_error& bptException) {
+      hasConfigBeenSuccessfullyRetrieved = false;
+    }
+#endif // BOOST_VERSION >= 104100
+
+    return hasConfigBeenSuccessfullyRetrieved;
   } 
 
 }

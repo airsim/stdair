@@ -11,10 +11,12 @@
 #endif // BOOST_VERSION >= 104100
 // StdAir
 #include <stdair/stdair_types.hpp>
+#include <stdair/stdair_json.hpp>
 #include <stdair/basic/BasChronometer.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRetriever.hpp>
 #include <stdair/bom/BomJSONExport.hpp>
+#include <stdair/bom/BomJSONImport.hpp>
 #include <stdair/bom/BomINIImport.hpp>
 #include <stdair/bom/BomDisplay.hpp>
 #include <stdair/bom/BomRoot.hpp>
@@ -333,7 +335,24 @@ namespace stdair {
       break;
     }
     return oStr.str();
-  } 
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  bool STDAIR_Service::
+  jsonImportConfiguration (const JSONString& iJSONString) const {  
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
+
+    // Retrieve the config holder
+    ConfigHolderStruct& lConfigHolder = 
+      lSTDAIR_ServiceContext.getConfigHolder();
+
+    // Import the JSON string in the configuration holder
+    return BomJSONImport::jsonImportConfig (iJSONString, lConfigHolder);
+  }
 
   // //////////////////////////////////////////////////////////////////////
   std::string STDAIR_Service::
@@ -344,7 +363,7 @@ namespace stdair {
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
       *_stdairServiceContext;
 
-    // Retrieve the BOM tree root
+    // Retrieve the config holder
     ConfigHolderStruct& lConfigHolder = 
       lSTDAIR_ServiceContext.getConfigHolder();
 
@@ -360,7 +379,7 @@ namespace stdair {
     const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
       *_stdairServiceContext;
 
-    // Retrieve the BOM tree root
+    // Retrieve the config holder
     ConfigHolderStruct& lConfigHolder = 
       lSTDAIR_ServiceContext.getConfigHolder();
 

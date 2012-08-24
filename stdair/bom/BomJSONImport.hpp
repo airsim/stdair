@@ -18,6 +18,7 @@ namespace stdair {
 
   /// Forward declarations
   class JSONString;
+  class ConfigHolderStruct;
 
   /**
    * @brief Utility class to import StdAir objects in a JSON format.
@@ -83,6 +84,17 @@ namespace stdair {
      */
     static bool jsonImportEventType (const JSONString&,
 				     EventType::EN_EventType&);
+
+    /**
+     * Extract the configuration ptree from the given JSON-formatted string
+     * and add it to the configuration holder
+     *
+     * @param const JSONString& JSON-formatted string.
+     * @param ConfigHolderStruct& Configuration holder.
+     * @return bool State whether the extracting has been successful.
+     */
+    static bool jsonImportConfig (const JSONString&,
+                                  ConfigHolderStruct&);
   };
 
 }
