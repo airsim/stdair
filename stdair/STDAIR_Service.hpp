@@ -35,6 +35,7 @@ namespace stdair {
   struct EventStruct;
   struct ProgressStatusSet;
   struct BookingRequestStruct;
+  class JSONString;
   
 
   /**
@@ -261,6 +262,18 @@ namespace stdair {
      * JSON-ified.
      */
     std::string jsonExportConfiguration () const;
+
+  public:  
+
+    // //////////////// Import support methods /////////////////
+    /**
+     * Extract the configuration ptree from the given JSON-formatted string
+     * and add it to the configuration holder
+     *
+     * @param const JSONString& JSON-formatted string.
+     * @return bool State whether the extracting has been successful.
+     */  
+    bool jsonImportConfiguration (const JSONString&) const;
 
   public:
     // //////////////// Display support methods /////////////////

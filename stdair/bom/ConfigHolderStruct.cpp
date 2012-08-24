@@ -118,7 +118,18 @@ namespace stdair {
 #if BOOST_VERSION >= 104100
 
     try {
-      _pt.put (iPath, iValue);
+      std::size_t found;
+      const std::string lPrefix ("config");
+      std::string lFinalPath;
+      found = iPath.find(lPrefix);
+      if (found == std::string::npos) {
+        lFinalPath += lPrefix;
+        lFinalPath += ".";
+      }
+      lFinalPath += iPath;
+      if (lFinalPath != lPrefix) {
+        _pt.put (lFinalPath, iValue);
+      }
     } catch (bpt::ptree_bad_data& bptException) {
       hasInsertionBeenSuccessful = false;
     }

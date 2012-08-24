@@ -147,11 +147,12 @@ namespace stdair {
     bool hasValueBeenSuccessfullyRetrieved = true;
 
 #if BOOST_VERSION >= 104100
-      
     try {
       // Get the value.
       // If the path key is not found, an exception is thrown.
-      ioValue = _pt.get<ValueType> (iPath);
+      const std::string lPrefix ("config.");
+      const std::string lFinalPath = lPrefix + iPath;
+      ioValue = _pt.get<ValueType> (lFinalPath);
     
     } catch (bpt::ptree_error& bptException) {
       hasValueBeenSuccessfullyRetrieved = false;
@@ -182,8 +183,10 @@ namespace stdair {
 
       // Get the string date value. 
       // If the path key is not found, an exception is thrown.
+      const std::string lPrefix ("config.");
+      const std::string lFinalPath = lPrefix + iPath;
       const std::string& lDateStr =
-        _pt.get<std::string> (iPath);
+        _pt.get<std::string> (lFinalPath);
       
       // Convert the string into a Date_T.
       ioValue = 
