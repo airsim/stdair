@@ -1660,33 +1660,82 @@ namespace stdair {
     const std::string lBA9_SegmentDateKey ("BA, 9, 2011-06-10, LHR, SYD, 21:45");
 
     // Add the segment date key to the travel solution
-    TravelSolutionStruct lTS;
-    lTS.addSegment (lBA9_SegmentDateKey);
+    TravelSolutionStruct lTS1;
+    lTS1.addSegment (lBA9_SegmentDateKey);
 
-    // Fare option
-    const ClassCode_T lClassPath (CLASS_CODE_Q);
-    const Fare_T lFare (900);
+    // Fare option number 1
+    const ClassCode_T lClassPathQ (CLASS_CODE_Q);
+    const Fare_T lFare900 (900);
     const ChangeFees_T lChangeFee (CHANGE_FEES);
     const NonRefundable_T isNonRefundable (NON_REFUNDABLE);
     const SaturdayStay_T lSaturdayStay (SATURDAY_STAY);
-    const FareOptionStruct lFareOption (lClassPath, lFare, lChangeFee,
+    const FareOptionStruct lFareOption1 (lClassPathQ, lFare900, lChangeFee,
                                         isNonRefundable, lSaturdayStay);
 
     // Add (a copy of) the fare option
-    lTS.addFareOption (lFareOption);
+    lTS1.addFareOption (lFareOption1);
+    //
 
     // Map of class availabilities: set the availability for the Q
     // booking class (the one corresponding to the fare option) to 8.
-    ClassAvailabilityMap_T lClassAvailabilityMap;
-    const Availability_T lAvl (8);
-    const bool hasInsertBeenSuccessful = lClassAvailabilityMap.
-      insert (ClassAvailabilityMap_T::value_type (lClassPath, lAvl)).second;
-    assert (hasInsertBeenSuccessful == true);
+    ClassAvailabilityMap_T lClassAvailabilityMap1;
+    const Availability_T lAvl1 (8);
+    bool hasInsertOfQBeenSuccessful = lClassAvailabilityMap1.
+      insert (ClassAvailabilityMap_T::value_type (lClassPathQ, lAvl1)).second;
+    assert (hasInsertOfQBeenSuccessful == true);
     // Add the map to the dedicated list held by the travel solution
-    lTS.addClassAvailabilityMap (lClassAvailabilityMap);
+    lTS1.addClassAvailabilityMap (lClassAvailabilityMap1);
 
     // Add the travel solution to the list
-    ioTravelSolutionList.push_back (lTS);
+    ioTravelSolutionList.push_back (lTS1);
+
+    //
+    const std::string lQF12_SegmentDateKey ("QF, 12, 2011-06-10, LHR, SYD, 20:45");
+
+    // Add the segment date key to the travel solution
+    TravelSolutionStruct lTS2;
+    lTS2.addSegment (lQF12_SegmentDateKey);
+
+    // Fare option number 2
+    const ClassCode_T lClassPathY (CLASS_CODE_Y);
+    const Fare_T lFare1000 (1000);
+    const ChangeFees_T lNoChangeFee (NO_CHANGE_FEES);
+    const NonRefundable_T isRefundable (NO_NON_REFUNDABLE);
+    const FareOptionStruct lFareOption2 (lClassPathY, lFare1000, lNoChangeFee,
+                                         isRefundable, lSaturdayStay);
+
+    // Map of class availabilities: set the availability for the Y
+    // booking class (the one corresponding to the fare option) to 9.
+    ClassAvailabilityMap_T lClassAvailabilityMap2;
+    const Availability_T lAvl2 (9);
+    const bool hasInsertOfYBeenSuccessful = lClassAvailabilityMap2.
+      insert (ClassAvailabilityMap_T::value_type (lClassPathY, lAvl2)).second;
+    assert (hasInsertOfYBeenSuccessful == true);
+    // Add the map to the dedicated list held by the travel solution
+    lTS2.addClassAvailabilityMap (lClassAvailabilityMap2);
+
+    // Add (a copy of) the fare option
+    lTS2.addFareOption (lFareOption2);
+
+    // Fare option number 3
+    const Fare_T lFare920 (920);
+    const FareOptionStruct lFareOption3 (lClassPathQ, lFare920, lNoChangeFee,
+                                         isNonRefundable, lSaturdayStay);
+
+    // Map of class availabilities: set the availability for the Q
+    // booking class (the one corresponding to the fare option) to 9.
+    hasInsertOfQBeenSuccessful = lClassAvailabilityMap2.
+      insert (ClassAvailabilityMap_T::value_type (lClassPathQ, lAvl2)).second;
+    assert (hasInsertOfYBeenSuccessful == true);
+    // Add the map to the dedicated list held by the travel solution
+    lTS2.addClassAvailabilityMap (lClassAvailabilityMap2);
+
+    // Add (a copy of) the fare option
+    lTS2.addFareOption (lFareOption3);
+
+    // Add the travel solution to the list
+    ioTravelSolutionList.push_back (lTS2);
+    
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -1741,9 +1790,9 @@ namespace stdair {
     const PriceValue_T lValueOfTime (DEFAULT_VALUE_OF_TIME);
 
     // Restrictions
-    const ChangeFees_T lChangeFees = true;
-    const Disutility_T lChangeFeeDisutility = 50;
-    const NonRefundable_T lNonRefundable = true;
+    const ChangeFees_T lChangeFees = false;
+    const Disutility_T lChangeFeeDisutility = 30;
+    const NonRefundable_T lNonRefundable = false;
     const Disutility_T lNonRefundableDisutility = 50;
 
     // Creation of the booking request structure
