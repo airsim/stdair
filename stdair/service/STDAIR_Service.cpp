@@ -502,7 +502,24 @@ namespace stdair {
                                                      lDatePeriodList);    
     
     return (lDatePeriodList.size() != 0);
-  } 
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  std::string STDAIR_Service::configDisplay () const {
+
+    // Retrieve the StdAir service context
+    assert (_stdairServiceContext != NULL);    
+    const STDAIR_ServiceContext& lSTDAIR_ServiceContext = 
+      *_stdairServiceContext;
+
+    // Retrieve the config holder
+    ConfigHolderStruct& lConfigHolder = 
+      lSTDAIR_ServiceContext.getConfigHolder();
+
+    // Display (dump in the returned string) the configuration.
+    return lConfigHolder.describe();
+
+  }
 
   // //////////////////////////////////////////////////////////////////////
   std::string STDAIR_Service::csvDisplay () const {

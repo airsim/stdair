@@ -326,7 +326,15 @@ namespace stdair {
      *        is a valid one.
      */
     bool check (const AirportCode_T&, const AirportCode_T&,
-                const Date_T& iDepartureDate) const; 
+                const Date_T& iDepartureDate) const;
+
+    /**
+     * Display (dump in the returned string) the configuration.
+     *
+     * @return std::string Output string in which the configuration is
+     *        logged/dumped.
+     */
+    std::string configDisplay () const;
 
     /**
      * Recursively display (dump in the returned string) the objects

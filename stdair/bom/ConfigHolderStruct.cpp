@@ -49,6 +49,84 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string ConfigHolderStruct::describe() const {
     std::ostringstream oStr;
+    oStr << "Configuration Display:" << std::endl;
+
+    // Look for the start and end date values.
+    stdair::Date_T lStartDate;
+    const bool hasStartDateBeenRetrieved = 
+      exportValue<Date_T> (lStartDate, "date.start"); 
+    if (hasStartDateBeenRetrieved == true) {
+      oStr << "  Start date: " << lStartDate << std::endl;
+    }
+    stdair::Date_T lEndDate;
+    const bool hasEndDateBeenRetrieved = 
+      exportValue<Date_T> (lEndDate, "date.end");
+    if (hasEndDateBeenRetrieved == true) {
+      oStr << "  End date: " << lEndDate << std::endl;
+    }
+    
+    // Look for the random seed value.
+    RandomSeed_T lRandomSeed;
+    const bool hasSeedBeenRetrieved = 
+      exportValue<RandomSeed_T> (lRandomSeed, "random.seed");
+    if (hasSeedBeenRetrieved == true) {
+      oStr << "  Random Seed: " << lRandomSeed << std::endl;
+    }
+
+    // Look for the demand generation method.
+    char lChar;
+    const bool hasDemandGenMethodBeenRetrieved = 
+      exportValue<char> (lChar, "demand generation.method"); 
+    if (hasDemandGenMethodBeenRetrieved == true) {
+      oStr << "  Demand Generation method: " << lChar << std::endl;
+    }
+   
+    // Look for the number of runs value.
+    Count_T lTotalNumberOfRuns;
+    const bool hasNumberOfRunsBeenRetrieved = 
+      exportValue<Count_T> (lTotalNumberOfRuns, "runs.number");
+    if (hasNumberOfRunsBeenRetrieved == true) {
+      oStr << "  Number Of Runs: " << lTotalNumberOfRuns << std::endl;
+    }
+    
+    // Look for the input files.
+    stdair::Filename_T lFilename (""); 
+    const bool hasScheduleFileBeenRetrieved = 
+      exportValue<stdair::Filename_T> (lFilename, "input.schedule"); 
+    if (hasScheduleFileBeenRetrieved == true) {
+      oStr << "  Schedule input file: " << lFilename << std::endl;
+    }
+    const bool hasODFileBeenRetrieved = 
+      exportValue<stdair::Filename_T> (lFilename, "input.ond");  
+    if (hasODFileBeenRetrieved == true) {
+      oStr << "  OnD input file: " << lFilename << std::endl;
+    }     
+    const bool hasFrat5FileBeenRetrieved = 
+      exportValue<stdair::Filename_T> (lFilename, "input.frat5");  
+    if (hasFrat5FileBeenRetrieved == true) {
+      oStr << "  Frat5 input file: " << lFilename << std::endl;
+    }
+    const bool hasFFdisutilityFileBeenRetrieved = 
+      exportValue<stdair::Filename_T> (lFilename, "input.ffdisutility");  
+    if (hasFFdisutilityFileBeenRetrieved == true) {
+      oStr << "  FFdisutility input file: " << lFilename << std::endl;
+    }
+    const bool hasYieldFileBeenRetrieved = 
+      exportValue<stdair::Filename_T> (lFilename, "input.yield");  
+    if (hasYieldFileBeenRetrieved == true) {
+      oStr << "  Yield input file: " << lFilename << std::endl;
+    }
+    const bool hasFareFileBeenRetrieved = 
+      exportValue<stdair::Filename_T> (lFilename, "input.fare");  
+    if (hasFareFileBeenRetrieved == true) {
+      oStr << "  Fare input file: " << lFilename << std::endl;
+    }
+    const bool hasDemandFileBeenRetrieved = 
+      exportValue<stdair::Filename_T> (lFilename, "input.demand");  
+    if  (hasDemandFileBeenRetrieved == true) {
+      oStr << "  Demand input file: " << lFilename << std::endl;
+    }
+    
     return oStr.str();
   } 
  
