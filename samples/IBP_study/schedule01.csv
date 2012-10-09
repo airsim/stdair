@@ -2,8 +2,8 @@
 // Legs:      BoardPoint; OffPoint; BoardTime; ArrivalDateOffSet; ArrivalTime;
 //            ElapsedTime; LegCabins;
 // LegCabins: CabinCode; Capacity;
-// Segments: Specific; 
+// Segments: Specific;
 SQ; 11; 2010-01-15; 2010-10-15; 1111111; SIN; BKK; 08:20; 11:00; 03:40; Y; 30; 0; Y; YM; 1; F1; D1; YM;
 CX; 12; 2010-01-15; 2010-10-15; 1111111; BKK; HKG; 12:00; 15:40; 02:40; Y; 30; 0; Y; YM; 1; F1; D1; YM;
-
+SQ; 1200; 2010-01-15; 2010-10-15; 1111111; CX; 12; BKK; HKG; 12:00; 15:40; 02:40; Y; 30; 0; Y; YM; 1; F1; D1; YM;
 
