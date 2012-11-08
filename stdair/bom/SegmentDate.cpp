@@ -30,7 +30,8 @@ namespace stdair {
       _offDate (iSegmentDate._offDate),
       _offTime (iSegmentDate._offTime),
       _elapsedTime (iSegmentDate._elapsedTime),
-      _distance (iSegmentDate._distance) {
+      _distance (iSegmentDate._distance),
+      _routingLegKeyList (iSegmentDate._routingLegKeyList) {
   }
 
   // ////////////////////////////////////////////////////////////////////
