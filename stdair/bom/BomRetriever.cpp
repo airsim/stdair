@@ -42,6 +42,24 @@ namespace stdair {
   }
 
   // ////////////////////////////////////////////////////////////////////
+  Inventory* BomRetriever::
+  retrieveInventoryFromLongKey (const Inventory& iInventory,
+                                const std::string& iFullKeyStr) {
+    Inventory* oInventory_ptr = NULL;
+    
+    // Extract the inventory key (i.e., airline code)
+    const InventoryKey& lInventoryKey =
+      BomKeyManager::extractInventoryKey (iFullKeyStr);
+    const stdair::AirlineCode_T lAirlineCode = 
+      lInventoryKey.getAirlineCode();
+
+    oInventory_ptr =
+      BomManager::getObjectPtr<Inventory> (iInventory,
+                                           lAirlineCode);
+    return oInventory_ptr;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   Inventory* BomRetriever::retrieveInventoryFromKey (const BomRoot& iBomRoot,
                                                      const InventoryKey& iKey) {
     Inventory* oInventory_ptr = NULL;
@@ -241,6 +259,47 @@ namespace stdair {
     oSegmentDate_ptr = iFlightDate.getSegmentDate (lSegmentDateKey);
 
     return oSegmentDate_ptr;
+  } 
+
+  // ////////////////////////////////////////////////////////////////////
+  LegDate* BomRetriever::
+  retrieveOperatingLegDateFromLongKey (const FlightDate& iFlightDate,
+				       const std::string& iFullKeyStr) {
+    LegDate* oLegDate_ptr = NULL;
+
+    // Extract the segment-date key (i.e., origin and destination)
+    const LegDateKey& lLegDateKey =
+      BomKeyManager::extractLegDateKey (iFullKeyStr);
+
+    oLegDate_ptr = iFlightDate.getLegDate (lLegDateKey);
+
+    return oLegDate_ptr;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  SegmentDate* BomRetriever::
+  retrievePartnerSegmentDateFromLongKey (const Inventory& iInventory,
+                                         const std::string& iFullKeyStr) {
+    SegmentDate* oSegmentDate_ptr = NULL;
+    Inventory* oInventory_ptr = NULL;
+
+    // Extract the inventory key (i.e., airline code)
+    const InventoryKey& lInventoryKey =
+      BomKeyManager::extractInventoryKey (iFullKeyStr);
+    const stdair::AirlineCode_T lAirlineCode = 
+      lInventoryKey.getAirlineCode();
+
+    // Retrieve the inventory
+    oInventory_ptr =
+      retrieveInventoryFromLongKey (iInventory, lAirlineCode);
+
+    if (oInventory_ptr != NULL) { 
+      oSegmentDate_ptr =
+        retrieveSegmentDateFromLongKey (*oInventory_ptr, iFullKeyStr);
+    }
+
+    return oSegmentDate_ptr;
+
   }
 
   // ////////////////////////////////////////////////////////////////////
