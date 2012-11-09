@@ -15,7 +15,8 @@ namespace stdair {
   /// Forward declarations
   struct InventoryKey;
   struct FlightDateKey;
-  struct SegmentDateKey;
+  struct SegmentDateKey; 
+  struct LegDateKey;
 
   /** Structure which holds the results/keys after the parsing. */
   struct ParsedKey : public KeyAbstract{
@@ -28,7 +29,10 @@ namespace stdair {
     FlightDateKey getFlightDateKey () const;
 
     /** Segment-date key. */
-    SegmentDateKey getSegmentKey () const;
+    SegmentDateKey getSegmentKey () const;  
+
+    /** Leg-date key. */
+    LegDateKey getLegKey () const;
 
     /** Boarding time. */
     const Duration_T getBoardingTime () const;

@@ -7,6 +7,7 @@
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
 #include <stdair/basic/BasConst_Inventory.hpp>
+#include <stdair/basic/BasConst_BomDisplay.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/LegCabin.hpp>
@@ -55,6 +56,19 @@ namespace stdair {
   std::string LegDate::toString() const {
     std::ostringstream oStr;
     oStr << describeKey();
+    return oStr.str();
+  } 
+
+  // ////////////////////////////////////////////////////////////////////
+  const std::string LegDate::describeRoutingKey() const {  
+    const FlightDate* lFlightDate_ptr =
+      static_cast<const FlightDate*> (getParent());
+    assert (lFlightDate_ptr != NULL); 
+    std::ostringstream oStr;
+    oStr << _operatingAirlineCode << DEFAULT_KEY_FLD_DELIMITER
+	 << _operatingFlightNumber << DEFAULT_KEY_FLD_DELIMITER
+	 << lFlightDate_ptr->getDepartureDate() << DEFAULT_KEY_FLD_DELIMITER 
+	 << describeKey();
     return oStr.str();
   }
 

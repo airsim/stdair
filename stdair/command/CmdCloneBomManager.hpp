@@ -40,7 +40,7 @@ namespace stdair {
   class CmdCloneBomManager : public CmdAbstract {
     //
     friend class STDAIR_Service;
-  private: 
+  private:
   
     /**
      * Recursively clone the children of the BOM tree.
@@ -231,34 +231,7 @@ namespace stdair {
      * 
      * @return SegmentPeriod& Cloned segment period.
      */
-    static SegmentPeriod& cloneSegmentPeriod (const SegmentPeriod&); 
-
-    /**
-     * Add the partnership links of the BOM root to be cloned in the clone BOM 
-     * root.
-     *      
-     * @param const BomRoot& Root of the BOM tree to be cloned.  
-     * @param BomRoot& Root of the cloned BOM tree.
-     */
-    static void addPartnershipLinks (const BomRoot&, BomRoot&);  
-
-    /**
-     * Add the partnership links of the BOM root to be cloned in the clone BOM 
-     * root.
-     *      
-     * @param const Inventory& Root of the BOM tree to be cloned.  
-     * @param BomRoot& Root of the cloned BOM tree.
-     */
-    static void addPartnershipLinks (const Inventory&, BomRoot&); 
-
-    /**
-     * Add the partnership links of the BOM root to be cloned in the clone BOM 
-     * root.
-     *      
-     * @param const FlightDate& Root of the BOM tree to be cloned.  
-     * @param BomRoot& Root of the cloned BOM tree.
-     */
-    static void addPartnershipLinks (const FlightDate&, BomRoot&);
+    static SegmentPeriod& cloneSegmentPeriod (const SegmentPeriod&);
 
   };
 }

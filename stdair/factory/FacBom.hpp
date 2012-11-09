@@ -41,6 +41,7 @@ namespace stdair {
      */
     BOM& create ();
     BOM& create (const Key_T&);
+    BOM& create (const BOM&);
     
   protected:
     /**
@@ -116,6 +117,14 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   template <typename BOM> BOM& FacBom<BOM>::create (const Key_T& iKey) {
     BOM* oBom_ptr = new BOM (iKey);
+    assert (oBom_ptr != NULL);
+    _pool.push_back (oBom_ptr);
+    return *oBom_ptr;
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  template <typename BOM> BOM& FacBom<BOM>::create (const BOM& iBom) {
+    BOM* oBom_ptr = new BOM (iBom);
     assert (oBom_ptr != NULL);
     _pool.push_back (oBom_ptr);
     return *oBom_ptr;

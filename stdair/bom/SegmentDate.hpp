@@ -24,7 +24,10 @@ namespace stdair {
 
   /// Forward declarations
   struct SegmentCabinKey;
-  class SegmentCabin;
+  class SegmentCabin; 
+
+  // Define the routing leg keys list type.
+  typedef std::list<std::string> RoutingLegKeyList_T;
 
   /**
    * @brief Class representing the actual attributes for an airline
@@ -154,6 +157,13 @@ namespace stdair {
       return _marketingSegmentDateList;
     }
     
+    /**
+     * Get the list of routing leg keys.
+     */
+    const RoutingLegKeyList_T& getLegKeyList () const {
+      return _routingLegKeyList;
+    }
+    
   public:
     // ///////// Setters //////////
     /**
@@ -196,6 +206,13 @@ namespace stdair {
      */
     void setDistance (const Distance_T& iDistance) {
       _distance = iDistance;
+    }
+
+    /**
+     * Add a routing leg key to the list.
+     */
+    void addLegKey (const std::string& iLegKey) {
+      _routingLegKeyList.push_back(iLegKey);
     }
 
   private:
@@ -344,6 +361,11 @@ namespace stdair {
      * Trip distance.
      */
     Distance_T _distance;
+
+    /**
+     * List of routing leg keys.
+     */
+    RoutingLegKeyList_T _routingLegKeyList;
   };
 
 }

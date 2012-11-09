@@ -170,7 +170,17 @@ namespace stdair {
     }
 
     /** Set the elapsed time. */
-    void setElapsedTime (const Duration_T&);
+    void setElapsedTime (const Duration_T&);  
+
+    /** Set the operating airline code. */
+    void setOperatingAirlineCode (const AirlineCode_T& iAirlineCode) {
+      _operatingAirlineCode = iAirlineCode;
+    }  
+
+    /** Set the operating flight number. */
+    void setOperatingFlightNumber (const FlightNumber_T& iFlightNumber) {
+      _operatingFlightNumber = iFlightNumber;
+    }
 
   private:
     /** Method computing the distance of the segment (in kilometers). */
@@ -196,8 +206,10 @@ namespace stdair {
     /** Get a string describing the  key. */
     const std::string describeKey() const {
       return _key.toString();
-    }
+    } 
 
+    /** Get a string describing the routing key. */
+    const std::string describeRoutingKey() const;
 
   protected:
     // ////////// Constructors and destructors /////////
@@ -246,7 +258,13 @@ namespace stdair {
     Distance_T _distance;
 
     /** Aggregated capacity for all the leg-cabins. */
-    CabinCapacity_T _capacity;
+    CabinCapacity_T _capacity;   
+
+    /** Operating airline code. */ 
+    AirlineCode_T _operatingAirlineCode;
+
+    /** Operating flight number. */ 
+    FlightNumber_T _operatingFlightNumber;
   };
 
 }

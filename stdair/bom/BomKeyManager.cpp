@@ -14,6 +14,7 @@
 #include <stdair/bom/InventoryKey.hpp>
 #include <stdair/bom/FlightDateKey.hpp>
 #include <stdair/bom/SegmentDateKey.hpp>
+#include <stdair/bom/LegDateKey.hpp>
 #include <stdair/bom/ParsedKey.hpp>
 #include <stdair/bom/BomKeyManager.hpp>
 #include <stdair/service/Logger.hpp>
@@ -95,5 +96,13 @@ namespace stdair {
     ParsedKey lParsedKey = extractKeys (iFullKeyStr);
 
     return lParsedKey.getSegmentKey();
+  } 
+
+  // ////////////////////////////////////////////////////////////////////
+  LegDateKey BomKeyManager::
+  extractLegDateKey (const std::string& iFullKeyStr) {
+    ParsedKey lParsedKey = extractKeys (iFullKeyStr);
+
+    return lParsedKey.getLegKey();
   }
 }
