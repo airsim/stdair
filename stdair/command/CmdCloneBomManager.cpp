@@ -65,9 +65,6 @@ namespace stdair {
 	FacBomManager::linkWithParent (ioCloneBomRoot, lCloneAirportPair);
       }
     }
-
-    // Check whether there are partnership links to create
-    addPartnershipLinks (iBomRoot, ioCloneBomRoot);
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -736,108 +733,6 @@ namespace stdair {
       FacCloneBom<SegmentPeriod>::instance().clone (iSegmentPeriod);
 
     return lCloneSegmentPeriod;
-  }   
-
-  // ////////////////////////////////////////////////////////////////////
-  void CmdCloneBomManager::addPartnershipLinks (const BomRoot& iBomRoot,
-						BomRoot& ioCloneBomRoot) { 
-
-    // Check whether there are Inventory objects
-    const bool hasInventoryList =BomManager::hasList<Inventory> (iBomRoot);
-    if (hasInventoryList == true) {
-
-      // Browse the inventories
-      const InventoryList_T& lInventoryList =
-	BomManager::getList<Inventory> (iBomRoot);
-      for (InventoryList_T::const_iterator itInv = lInventoryList.begin();
-	   itInv != lInventoryList.end(); ++itInv) {
-	const Inventory* lInv_ptr = *itInv;
-	assert (lInv_ptr != NULL);
-
-	addPartnershipLinks (*lInv_ptr, ioCloneBomRoot);
-      }
-    }
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  void CmdCloneBomManager::addPartnershipLinks (const Inventory& iInventory,
-						BomRoot& ioCloneBomRoot) {
-
-    // Check whether there are FlightDate objects
-    const bool hasFlightDateList = BomManager::hasList<FlightDate> (iInventory);
-    if (hasFlightDateList == true) {    
-      // Browse the flight-dates
-      const FlightDateList_T& lFlightDateList =
-	BomManager::getList<FlightDate> (iInventory);
-      for (FlightDateList_T::const_iterator itFD = lFlightDateList.begin();
-	   itFD != lFlightDateList.end(); ++itFD) {
-	const FlightDate* lFD_ptr = *itFD;
-	assert (lFD_ptr != NULL);
-	
-	addPartnershipLinks (*lFD_ptr, ioCloneBomRoot);
-      }
-    }
-  }  
-
-  // ////////////////////////////////////////////////////////////////////
-  void CmdCloneBomManager::addPartnershipLinks (const FlightDate& iFlightDate,
-						BomRoot& ioCloneBomRoot) {
-
-    // Check whether there are SegmentDate objects
-    const bool hasSegmentDateList = 
-      BomManager::hasList<SegmentDate> (iFlightDate);
-    if (hasSegmentDateList == true) {
-	      
-      // Browse the segment-dates
-      const SegmentDateList_T& lSegmentDateList =
-	BomManager::getList<SegmentDate> (iFlightDate);
-      for (SegmentDateList_T::const_iterator itSD = lSegmentDateList.begin();
-	   itSD != lSegmentDateList.end(); ++itSD) {
-	const SegmentDate* lSD_ptr = *itSD;
-	assert (lSD_ptr != NULL);
-
-	// Check if the current segment has corresponding marketing segments. 
-	const bool hasMarketingSDList =
-	  BomManager::hasList<SegmentDate>(*lSD_ptr);
-
-	if (hasMarketingSDList == true) { 
-
-	  // Browse the marketing segment-dates
-	  const SegmentDateList_T& lMarketSDList =
-	    BomManager::getList<SegmentDate>(*lSD_ptr);  
-	  for (SegmentDateList_T::const_iterator itMarketSD = 
-		 lMarketSDList.begin();
-	       itMarketSD != lMarketSDList.end(); ++itMarketSD) {
-	    const SegmentDate* lMarketingSD_ptr = *itMarketSD;
-	    assert (lMarketingSD_ptr != NULL);
-
-	    // Retrieve the whole key (including inventory and flight date)
-	    // describing the operating segment date
-	    const std::string lOperatingFullKeyStr =  BomRetriever::
-	      retrieveFullKeyFromSegmentDate (*lSD_ptr); 
-	    // Look for the operating segment date in the clone bom root
-	    SegmentDate* lCloneOperatingSD_ptr = BomRetriever::
-	      retrieveSegmentDateFromLongKey (ioCloneBomRoot,
-					      lOperatingFullKeyStr);
-
- 	    // Retrieve the whole key (including inventory and flight date)
-	    // describing the marketing segment date
-	    const std::string lMarketingFullKeyStr =  BomRetriever::
-	      retrieveFullKeyFromSegmentDate (*lMarketingSD_ptr);	    
-	    // Look for the marketing segment date in the clone bom root
-	    SegmentDate* lCloneMarketingSD_ptr = BomRetriever::
-	      retrieveSegmentDateFromLongKey (ioCloneBomRoot,
-					      lMarketingFullKeyStr );	
-
-	    // link inventory objects to partner inventory objects
-	    FacBomManager::addToList (*lCloneOperatingSD_ptr, 
-				      *lCloneMarketingSD_ptr);
-            FacBomManager::linkWithOperating (*lCloneMarketingSD_ptr,
-                                              *lCloneOperatingSD_ptr);
-	  }
-	}
-      }   
-    }
   }
 
 }
