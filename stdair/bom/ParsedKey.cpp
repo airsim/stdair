@@ -15,6 +15,7 @@
 #include <stdair/bom/InventoryKey.hpp>
 #include <stdair/bom/FlightDateKey.hpp>
 #include <stdair/bom/SegmentDateKey.hpp>
+#include <stdair/bom/LegDateKey.hpp>
 #include <stdair/bom/ParsedKey.hpp>
 #include <stdair/service/Logger.hpp>
 
@@ -77,6 +78,20 @@ namespace stdair {
     const FlightDateKey oFlightDateKey (lFlightNumber, lDepartureDate);
 
     return oFlightDateKey;
+  } 
+
+  // ////////////////////////////////////////////////////////////////////
+  LegDateKey ParsedKey::getLegKey() const {
+    if (_boardingPoint.size() != 3) {
+      STDAIR_LOG_ERROR ("No airport code can be found in '" << _fullKey << "'");
+      STDAIR_LOG_DEBUG ("Parsed key: " << toString());
+      throw KeyNotFoundException ("No airport code can be found in '"
+                                  + _fullKey + "'");
+    }
+
+    const LegDateKey oLegDateKey (_boardingPoint);
+
+    return oLegDateKey;
   }
   
   // ////////////////////////////////////////////////////////////////////
