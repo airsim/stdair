@@ -149,7 +149,13 @@ namespace stdair {
     SegmentDate& lLHRSYDSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
     FacBomManager::addToListAndMap (lBA9_20110610_FD, lLHRSYDSegment);
-    FacBomManager::linkWithParent (lBA9_20110610_FD, lLHRSYDSegment);
+    FacBomManager::linkWithParent (lBA9_20110610_FD, lLHRSYDSegment); 
+
+    // Add the routing leg keys to the LHR-SYD segment.
+    const std::string lBALHRRoutingLegStr = "BA;9;2011-Jun-10;LHR";
+    const std::string lBABKKRoutingLegStr = "BA;9;2011-Jun-10;BKK";
+    lLHRSYDSegment.addLegKey (lBALHRRoutingLegStr);
+    lLHRSYDSegment.addLegKey (lBABKKRoutingLegStr);
 
     // Fill the SegmentDate content
     lLHRSYDSegment.setBoardingDate (lDate);
@@ -171,7 +177,10 @@ namespace stdair {
     SegmentDate& lLHRBKKSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
     FacBomManager::addToListAndMap (lBA9_20110610_FD, lLHRBKKSegment);
-    FacBomManager::linkWithParent (lBA9_20110610_FD, lLHRBKKSegment);
+    FacBomManager::linkWithParent (lBA9_20110610_FD, lLHRBKKSegment); 
+
+    // Add the routing leg key to the LHR-BKK segment.
+    lLHRBKKSegment.addLegKey (lBALHRRoutingLegStr);
 
     // Fill the SegmentDate content
     lLHRBKKSegment.setBoardingDate (lDate);
@@ -193,6 +202,9 @@ namespace stdair {
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
     FacBomManager::addToListAndMap (lBA9_20110610_FD, lBKKSYDSegment);
     FacBomManager::linkWithParent (lBA9_20110610_FD, lBKKSYDSegment);
+
+    // Add the routing leg key to the BKK-SYD segment.
+    lBKKSYDSegment.addLegKey (lBABKKRoutingLegStr);
 
     // Fill the SegmentDate content
     lBKKSYDSegment.setBoardingDate (lDate + l1Day);
@@ -420,7 +432,11 @@ namespace stdair {
     SegmentDate& lCDGSFOSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
     FacBomManager::addToListAndMap (lAF084_20110320_FD, lCDGSFOSegment);
-    FacBomManager::linkWithParent (lAF084_20110320_FD, lCDGSFOSegment);
+    FacBomManager::linkWithParent (lAF084_20110320_FD, lCDGSFOSegment);  
+
+    // Add the routing leg key to the CDG-SFO segment.
+    const std::string lAFCDGRoutingLegStr = "AF;84;2011-Mar-20;CDG";
+    lCDGSFOSegment.addLegKey (lAFCDGRoutingLegStr);
 
     // Display the segment-date
     // STDAIR_LOG_DEBUG ("SegmentDate: " << lCDGSFOSegment.toString());
@@ -656,7 +672,11 @@ namespace stdair {
     SegmentDate& lSINBKKSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
     FacBomManager::addToListAndMap (lSQ747_20100208_FD, lSINBKKSegment);
-    FacBomManager::linkWithParent (lSQ747_20100208_FD, lSINBKKSegment);
+    FacBomManager::linkWithParent (lSQ747_20100208_FD, lSINBKKSegment); 
+
+    // Add the routing leg key to the SIN-BKK segment.
+    const std::string lSQSINRoutingLegStr = "SQ;747;2010-Feb-8;SIN";
+    lSINBKKSegment.addLegKey (lSQSINRoutingLegStr);
 
     // Fill the SegmentDate content
     lSINBKKSegment.setBoardingDate (lDate);
@@ -1056,7 +1076,15 @@ namespace stdair {
     SegmentDate& lSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
     FacBomManager::addToListAndMap (lFlightDate, lSegment);
-    FacBomManager::linkWithParent (lFlightDate, lSegment);
+    FacBomManager::linkWithParent (lFlightDate, lSegment); 
+
+    // Add the routing leg key to the dummy segment.
+    std::ostringstream oStr;
+    oStr << DEFAULT_AIRLINE_CODE << ";"
+	 << DEFAULT_FLIGHT_NUMBER << ";" 
+	 << DEFAULT_DEPARTURE_DATE << ";"
+	 << DEFAULT_ORIGIN;
+    lSegment.addLegKey (oStr.str());
 
     // Fill the SegmentDate content
     lSegment.setBoardingDate (DEFAULT_DEPARTURE_DATE);
@@ -1184,7 +1212,15 @@ namespace stdair {
     SegmentDate& lSegment =
       FacBom<SegmentDate>::instance().create (lSegmentDateKey);
     FacBomManager::addToListAndMap (lFlightDate, lSegment);
-    FacBomManager::linkWithParent (lFlightDate, lSegment);
+    FacBomManager::linkWithParent (lFlightDate, lSegment); 
+
+    // Add the routing leg key to the dummy segment.
+    std::ostringstream oStr;
+    oStr << DEFAULT_AIRLINE_CODE << ";"
+	 << DEFAULT_FLIGHT_NUMBER << ";" 
+	 << DEFAULT_DEPARTURE_DATE << ";"
+	 << DEFAULT_ORIGIN;
+    lSegment.addLegKey (oStr.str());
 
     // Fill the SegmentDate content
     lSegment.setBoardingDate (DEFAULT_DEPARTURE_DATE);
@@ -1966,6 +2002,10 @@ namespace stdair {
     FacBomManager::addToListAndMap (lSQ11_20100308_FD, lSINBKKSegment);
     FacBomManager::linkWithParent (lSQ11_20100308_FD, lSINBKKSegment);
 
+    // Add the routing leg key to the SIN-BKK segment.
+    const std::string lSQSINRoutingLegStr = "SQ;11;2010-Mar-8;SIN";
+    lSINBKKSegment.addLegKey (lSQSINRoutingLegStr);
+
     // Fill the SegmentDate content
     lSINBKKSegment.setBoardingDate (lDate);
     lSINBKKSegment.setOffDate (lDate);
@@ -1983,7 +2023,12 @@ namespace stdair {
     SegmentDate& lMktBKKHKGSegment =
       FacBom<SegmentDate>::instance().create (lMktSegmentDateKey);
     FacBomManager::addToListAndMap (lSQ1200_20100308_FD, lMktBKKHKGSegment);
-    FacBomManager::linkWithParent (lSQ1200_20100308_FD, lMktBKKHKGSegment);
+    FacBomManager::linkWithParent (lSQ1200_20100308_FD, lMktBKKHKGSegment); 
+
+    // Add the routing leg key CX;12;2010-Mar-8;BKK to the marketing
+    // SQ;1200;2010-Mar-8;BKK-HKG segment.
+    const std::string lCXBKKRoutingLegStr = "CX;12;2010-Mar-8;BKK";
+    lMktBKKHKGSegment.addLegKey (lCXBKKRoutingLegStr);
 
     // Fill the (mkt) SegmentDate content
     lMktBKKHKGSegment.setBoardingDate (lDate);
@@ -2129,176 +2174,6 @@ namespace stdair {
                                     lMktBKKHKGSegmentYCabin1FamilyMClass);
 
     lMktBKKHKGSegmentYCabin1FamilyMClass.setYield(500);
-
-    /* =================================================================================== */
-    // Step 0.9: Partner Inventory
-    // Create a partner Inventory CX for SQ    
-    const InventoryKey lPartnerCXKey ("CX");
-    Inventory& lPartnerCXInv = FacBom<Inventory>::instance().create (lPartnerCXKey);
-    FacBomManager::addToListAndMap (lSQInv, lPartnerCXInv);
-    FacBomManager::linkWithParent (lSQInv, lPartnerCXInv);
-
-    // Step 0.9.2 : Flight-date level
-    lFlightNumber = 12;
-    lFlightDateKey = FlightDateKey (lFlightNumber, lDate);
-
-    FlightDate& lPartnerCX12_20100308_FD =
-      FacBom<FlightDate>::instance().create (lFlightDateKey);
-    FacBomManager::addToListAndMap (lPartnerCXInv, lPartnerCX12_20100308_FD);
-    FacBomManager::linkWithParent (lPartnerCXInv, lPartnerCX12_20100308_FD);
-
-    lFlightNumber = 1100;
-    lMktFlightDateKey = FlightDateKey (lFlightNumber, lDate);
-
-    FlightDate& lPartnerCX1100_20100308_FD =
-      FacBom<FlightDate>::instance().create (lMktFlightDateKey);
-    FacBomManager::addToListAndMap (lPartnerCXInv, lPartnerCX1100_20100308_FD);
-    FacBomManager::linkWithParent (lPartnerCXInv, lPartnerCX1100_20100308_FD);
-
-    // Step 0.9.3: Segment-date level
-    lSegmentDateKey = SegmentDateKey (lBKK, lHKG);
-
-    SegmentDate& lPartnerBKKHKGSegment =
-      FacBom<SegmentDate>::instance().create (lSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerCX12_20100308_FD, 
-				    lPartnerBKKHKGSegment);
-    FacBomManager::linkWithParent (lPartnerCX12_20100308_FD, 
-				   lPartnerBKKHKGSegment);
-
-    lPartnerBKKHKGSegment.setBoardingDate (lDate);
-    lPartnerBKKHKGSegment.setOffDate (lDate);
-    lPartnerBKKHKGSegment.setBoardingTime (l1200);
-    lPartnerBKKHKGSegment.setOffTime (l1540);
-    lPartnerBKKHKGSegment.setElapsedTime (l0240);
-
-    lMktSegmentDateKey = SegmentDateKey (lSIN, lBKK);
-
-    SegmentDate& lPartnerMktSINBKKSegment =
-      FacBom<SegmentDate>::instance().create (lMktSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerCX1100_20100308_FD, 
-				    lPartnerMktSINBKKSegment);
-    FacBomManager::linkWithParent (lPartnerCX1100_20100308_FD, 
-				   lPartnerMktSINBKKSegment);
-
-    lPartnerMktSINBKKSegment.setBoardingDate (lDate);
-    lPartnerMktSINBKKSegment.setOffDate (lDate);
-    lPartnerMktSINBKKSegment.setBoardingTime (l0820);
-    lPartnerMktSINBKKSegment.setOffTime (l1100);
-    lPartnerMktSINBKKSegment.setElapsedTime (l0340);
-
-    // Step 0.9.4: Leg-date level
-    lLegDateKey = LegDateKey (lBKK);
-
-    LegDate& lPartnerBKKLeg = FacBom<LegDate>::instance().create (lLegDateKey);
-    FacBomManager::addToListAndMap (lPartnerCX12_20100308_FD, lPartnerBKKLeg);
-    FacBomManager::linkWithParent (lPartnerCX12_20100308_FD, lPartnerBKKLeg);
-
-    lPartnerBKKLeg.setOffPoint (lHKG);
-    lPartnerBKKLeg.setBoardingDate (lDate);
-    lPartnerBKKLeg.setOffDate (lDate);
-    lPartnerBKKLeg.setBoardingTime (l1200);
-    lPartnerBKKLeg.setOffTime (l1540);
-    lPartnerBKKLeg.setElapsedTime (l0240);
-
-    // Step 9.0.5: segment-cabin level
-    
-    SegmentCabin& lPartnerBKKHKGSegmentYCabin =
-      FacBom<SegmentCabin>::instance().create (lYSegmentCabinKey);
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegment, 
-				    lPartnerBKKHKGSegmentYCabin);
-    FacBomManager::linkWithParent (lPartnerBKKHKGSegment, 
-				   lPartnerBKKHKGSegmentYCabin);
-
-    SegmentCabin& lPartnerMktSINBKKSegmentYCabin =
-      FacBom<SegmentCabin>::instance().create (lYSegmentCabinKey);
-    FacBomManager::addToListAndMap (lPartnerMktSINBKKSegment, 
-				    lPartnerMktSINBKKSegmentYCabin);
-    FacBomManager::linkWithParent (lPartnerMktSINBKKSegment, 
-				   lPartnerMktSINBKKSegmentYCabin);
-
-    // Step 9.0.6: leg-cabin level
-    
-    LegCabin& lPartnerBKKLegYCabin =
-      FacBom<LegCabin>::instance().create (lYLegCabinKey);
-    FacBomManager::addToListAndMap (lPartnerBKKLeg, lPartnerBKKLegYCabin);
-    FacBomManager::linkWithParent (lPartnerBKKLeg, lPartnerBKKLegYCabin);
-
-    lCapacity = CabinCapacity_T(999);
-    lPartnerBKKLegYCabin.setCapacities (lCapacity);
-    lPartnerBKKLegYCabin.setAvailabilityPool (lCapacity);
-
-
-    // Step 9.0.7: fare family level
-    
-    FareFamily& lPartnerBKKHKGSegmentYCabin1Family =
-      FacBom<FareFamily>::instance().create (l1FareFamilyKey);
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegmentYCabin,
-                                    lPartnerBKKHKGSegmentYCabin1Family);
-    FacBomManager::linkWithParent (lPartnerBKKHKGSegmentYCabin,
-                                   lPartnerBKKHKGSegmentYCabin1Family);
-
-    FareFamily& lPartnerMktSINBKKSegmentYCabin1Family =
-      FacBom<FareFamily>::instance().create (l1FareFamilyKey);
-    FacBomManager::addToListAndMap (lPartnerMktSINBKKSegmentYCabin,
-                                    lPartnerMktSINBKKSegmentYCabin1Family);
-    FacBomManager::linkWithParent (lPartnerMktSINBKKSegmentYCabin,
-                                   lPartnerMktSINBKKSegmentYCabin1Family);
-
-    // Step 9.0.8: booking class level
-
-    BookingClass& lPartnerBKKHKGSegmentYCabin1FamilyYClass =
-      FacBom<BookingClass>::instance().create (lYBookingClassKey);
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegmentYCabin1Family,
-                                    lPartnerBKKHKGSegmentYCabin1FamilyYClass);
-    FacBomManager::linkWithParent (lPartnerBKKHKGSegmentYCabin1Family,
-                                   lPartnerBKKHKGSegmentYCabin1FamilyYClass);
-
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegmentYCabin,
-                                    lPartnerBKKHKGSegmentYCabin1FamilyYClass);
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegment,
-                                    lPartnerBKKHKGSegmentYCabin1FamilyYClass);
-
-    BookingClass& lPartnerMktSINBKKSegmentYCabin1FamilyYClass =
-      FacBom<BookingClass>::instance().create (lYBookingClassKey);
-    FacBomManager::addToListAndMap (lPartnerMktSINBKKSegmentYCabin1Family,
-                                    lPartnerMktSINBKKSegmentYCabin1FamilyYClass);
-    FacBomManager::linkWithParent (lPartnerMktSINBKKSegmentYCabin1Family,
-                                   lPartnerMktSINBKKSegmentYCabin1FamilyYClass);
-
-    FacBomManager::addToListAndMap (lPartnerMktSINBKKSegmentYCabin,
-                                    lPartnerMktSINBKKSegmentYCabin1FamilyYClass);
-    FacBomManager::addToListAndMap (lPartnerMktSINBKKSegment,
-                                    lPartnerMktSINBKKSegmentYCabin1FamilyYClass);
-    
-    BookingClass& lPartnerBKKHKGSegmentYCabin1FamilyMClass =
-      FacBom<BookingClass>::instance().create (lMBookingClassKey);
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegmentYCabin1Family,
-                                    lPartnerBKKHKGSegmentYCabin1FamilyMClass);
-    FacBomManager::linkWithParent (lPartnerBKKHKGSegmentYCabin1Family,
-                                   lPartnerBKKHKGSegmentYCabin1FamilyMClass);
-
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegmentYCabin,
-                                    lPartnerBKKHKGSegmentYCabin1FamilyMClass);
-    FacBomManager::addToListAndMap (lPartnerBKKHKGSegment,
-                                    lPartnerBKKHKGSegmentYCabin1FamilyMClass);
-
-    BookingClass& lPartnerMktSINBKKSegmentYCabin1FamilyMClass =
-      FacBom<BookingClass>::instance().create (lMBookingClassKey);
-    FacBomManager::addToListAndMap (lPartnerMktSINBKKSegmentYCabin1Family,
-                                    lPartnerMktSINBKKSegmentYCabin1FamilyMClass);
-    FacBomManager::linkWithParent (lPartnerMktSINBKKSegmentYCabin1Family,
-                                   lPartnerMktSINBKKSegmentYCabin1FamilyMClass);
-
-    FacBomManager::addToListAndMap (lPartnerMktSINBKKSegmentYCabin,
-                                    lPartnerMktSINBKKSegmentYCabin1FamilyMClass);
-    FacBomManager::addToListAndMap (lPartnerMktSINBKKSegment,
-                                    lPartnerMktSINBKKSegmentYCabin1FamilyMClass);    
-
-    // Step 9.0.9: link SQ inventory objects to Partner CX inventory objects
-
-    FacBomManager::addToList (lSINBKKSegment, lPartnerMktSINBKKSegment);
-
-    FacBomManager::linkWithOperating (lMktBKKHKGSegment, lPartnerBKKHKGSegment);
     
     /* =================================================================================== */
 
@@ -2410,8 +2285,8 @@ namespace stdair {
     // lCabinClassPairList.push_back(lCC_YM2);
     // lMktSQ_BKKHKG_OnDDate.setDemandInformation (lCabinClassPairList, 500.0, 20.0, 1.0);
     ***********************************************************************************/
+
     
-            
     // ////// CX ///////    
     // Step 0.2: Flight-date level
     // Create a FlightDate (CX12/08-MAR-2010) for CX's Inventory
@@ -2447,6 +2322,9 @@ namespace stdair {
     FacBomManager::addToListAndMap (lCX12_20100308_FD, lBKKHKGSegment);
     FacBomManager::linkWithParent (lCX12_20100308_FD, lBKKHKGSegment);  
 
+    // Add the routing leg key to the marketing BKK-HKG segment.
+    lBKKHKGSegment.addLegKey (lCXBKKRoutingLegStr);
+
     // Fill the SegmentDate content
     lBKKHKGSegment.setBoardingDate (lDate);
     lBKKHKGSegment.setOffDate (lDate);
@@ -2461,6 +2339,10 @@ namespace stdair {
       FacBom<SegmentDate>::instance().create (lMktSegmentDateKey);
     FacBomManager::addToListAndMap (lCX1100_20100308_FD, lMktSINBKKSegment);
     FacBomManager::linkWithParent (lCX1100_20100308_FD, lMktSINBKKSegment);
+
+    // Add the routing leg key SQ;11;2010-Mar-8;SIN to the marketing
+    // CX;1100;2010-Mar-8;SIN-BKK segment.
+    lMktSINBKKSegment.addLegKey (lSQSINRoutingLegStr);
 
     // Fill the (mkt) SegmentDate content
     lMktSINBKKSegment.setBoardingDate (lDate);
@@ -2594,176 +2476,6 @@ namespace stdair {
                                     lMktSINBKKSegmentYCabin1FamilyMClass);
 
     lMktSINBKKSegmentYCabin1FamilyMClass.setYield(500);
-
-    /* =================================================================================== */
-    // Step 0.9: Partner Inventory
-    // Create a partner Inventory SQ for CX   
-    const InventoryKey lPartnerSQKey ("SQ");
-    Inventory& lPartnerSQInv = 
-      FacBom<Inventory>::instance().create (lPartnerSQKey);
-    FacBomManager::addToListAndMap (lCXInv, lPartnerSQInv);
-    FacBomManager::linkWithParent (lCXInv, lPartnerSQInv);
-
-    // Step 0.9.2 : Flight-date level
-    lFlightNumber = 11;
-    lFlightDateKey = FlightDateKey (lFlightNumber, lDate);
-
-    FlightDate& lPartnerSQ11_20100308_FD =
-      FacBom<FlightDate>::instance().create (lFlightDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQInv, lPartnerSQ11_20100308_FD);
-    FacBomManager::linkWithParent (lPartnerSQInv, lPartnerSQ11_20100308_FD);
-
-    lFlightNumber = 1200;
-    lMktFlightDateKey = FlightDateKey (lFlightNumber, lDate);
-
-    FlightDate& lPartnerSQ1200_20100308_FD =
-      FacBom<FlightDate>::instance().create (lMktFlightDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQInv, lPartnerSQ1200_20100308_FD);
-    FacBomManager::linkWithParent (lPartnerSQInv, lPartnerSQ1200_20100308_FD);
-
-    // Step 0.9.3: Segment-date level
-    lSegmentDateKey = SegmentDateKey (lSIN, lBKK);
-
-    SegmentDate& lPartnerSINBKKSegment =
-      FacBom<SegmentDate>::instance().create (lSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQ11_20100308_FD, 
-				    lPartnerSINBKKSegment);
-    FacBomManager::linkWithParent (lPartnerSQ11_20100308_FD, 
-				   lPartnerSINBKKSegment);
-    
-    lPartnerSINBKKSegment.setBoardingDate (lDate);
-    lPartnerSINBKKSegment.setOffDate (lDate);
-    lPartnerSINBKKSegment.setBoardingTime (l0820);
-    lPartnerSINBKKSegment.setOffTime (l1100);
-    lPartnerSINBKKSegment.setElapsedTime (l0340);
-    
-    lMktSegmentDateKey = SegmentDateKey (lBKK, lHKG);
-
-    SegmentDate& lPartnerMktBKKHKGSegment =
-      FacBom<SegmentDate>::instance().create (lMktSegmentDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQ1200_20100308_FD, 
-				    lPartnerMktBKKHKGSegment);
-    FacBomManager::linkWithParent (lPartnerSQ1200_20100308_FD,
-				   lPartnerMktBKKHKGSegment);
-
-    lPartnerMktBKKHKGSegment.setBoardingDate (lDate);
-    lPartnerMktBKKHKGSegment.setOffDate (lDate);
-    lPartnerMktBKKHKGSegment.setBoardingTime (l1200);
-    lPartnerMktBKKHKGSegment.setOffTime (l1540);
-    lPartnerMktBKKHKGSegment.setElapsedTime (l0240);
-  
-    // Step 0.9.4: Leg-date level
-    lLegDateKey = LegDateKey (lSIN);
-
-    LegDate& lPartnerSINLeg = FacBom<LegDate>::instance().create (lLegDateKey);
-    FacBomManager::addToListAndMap (lPartnerSQ11_20100308_FD, lPartnerSINLeg);
-    FacBomManager::linkWithParent (lPartnerSQ11_20100308_FD, lPartnerSINLeg);
-
-    lPartnerSINLeg.setOffPoint (lBKK);
-    lPartnerSINLeg.setBoardingDate (lDate);
-    lPartnerSINLeg.setOffDate (lDate);
-    lPartnerSINLeg.setBoardingTime (l0820);
-    lPartnerSINLeg.setOffTime (l1100);
-    lPartnerSINLeg.setElapsedTime (l0340);
-
-    // Step 9.0.5: segment-cabin level
-
-    SegmentCabin& lPartnerSINBKKSegmentYCabin =
-      FacBom<SegmentCabin>::instance().create (lYSegmentCabinKey);
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegment, 
-				    lPartnerSINBKKSegmentYCabin);
-    FacBomManager::linkWithParent (lPartnerSINBKKSegment, 
-				   lPartnerSINBKKSegmentYCabin);
-    
-    SegmentCabin& lPartnerMktBKKHKGSegmentYCabin =
-      FacBom<SegmentCabin>::instance().create (lYSegmentCabinKey);
-    FacBomManager::addToListAndMap (lPartnerMktBKKHKGSegment, 
-				    lPartnerMktBKKHKGSegmentYCabin);
-    FacBomManager::linkWithParent (lPartnerMktBKKHKGSegment, 
-				   lPartnerMktBKKHKGSegmentYCabin);
-    
-    // Step 9.0.6: leg-cabin level
-    
-    LegCabin& lPartnerSINLegYCabin =
-      FacBom<LegCabin>::instance().create (lYLegCabinKey);
-    FacBomManager::addToListAndMap (lPartnerSINLeg, lPartnerSINLegYCabin);
-    FacBomManager::linkWithParent (lPartnerSINLeg, lPartnerSINLegYCabin);
-
-    lCapacity = CabinCapacity_T(999);
-    lPartnerSINLegYCabin.setCapacities (lCapacity);
-    lPartnerSINLegYCabin.setAvailabilityPool (lCapacity);
-
-    // Step 9.0.7: fare family level
-
-    FareFamily& lPartnerSINBKKSegmentYCabin1Family =
-      FacBom<FareFamily>::instance().create (l1FareFamilyKey);
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegmentYCabin,
-                                    lPartnerSINBKKSegmentYCabin1Family);
-    FacBomManager::linkWithParent (lPartnerSINBKKSegmentYCabin,
-                                   lPartnerSINBKKSegmentYCabin1Family);
-    
-    FareFamily& lPartnerMktBKKHKGSegmentYCabin1Family =
-      FacBom<FareFamily>::instance().create (l1FareFamilyKey);
-    FacBomManager::addToListAndMap (lPartnerMktBKKHKGSegmentYCabin,
-                                    lPartnerMktBKKHKGSegmentYCabin1Family);
-    FacBomManager::linkWithParent (lPartnerMktBKKHKGSegmentYCabin,
-                                   lPartnerMktBKKHKGSegmentYCabin1Family);
-
-    
-    // Step 9.0.8: booking class level
-
-    BookingClass& lPartnerSINBKKSegmentYCabin1FamilyYClass =
-      FacBom<BookingClass>::instance().create (lYBookingClassKey);
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegmentYCabin1Family,
-                                    lPartnerSINBKKSegmentYCabin1FamilyYClass);
-    FacBomManager::linkWithParent (lPartnerSINBKKSegmentYCabin1Family,
-                                   lPartnerSINBKKSegmentYCabin1FamilyYClass);
-
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegmentYCabin,
-                                    lPartnerSINBKKSegmentYCabin1FamilyYClass);
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegment,
-                                    lPartnerSINBKKSegmentYCabin1FamilyYClass);
-
-    BookingClass& lPartnerMktBKKHKGSegmentYCabin1FamilyYClass =
-      FacBom<BookingClass>::instance().create (lYBookingClassKey);
-    FacBomManager::addToListAndMap (lPartnerMktBKKHKGSegmentYCabin1Family,
-                                    lPartnerMktBKKHKGSegmentYCabin1FamilyYClass);
-    FacBomManager::linkWithParent (lPartnerMktBKKHKGSegmentYCabin1Family,
-                                   lPartnerMktBKKHKGSegmentYCabin1FamilyYClass);
-
-    FacBomManager::addToListAndMap (lPartnerMktBKKHKGSegmentYCabin,
-                                    lPartnerMktBKKHKGSegmentYCabin1FamilyYClass);
-    FacBomManager::addToListAndMap (lPartnerMktBKKHKGSegment,
-                                    lPartnerMktBKKHKGSegmentYCabin1FamilyYClass);    
-    
-    BookingClass& lPartnerSINBKKSegmentYCabin1FamilyMClass =
-      FacBom<BookingClass>::instance().create (lMBookingClassKey);
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegmentYCabin1Family,
-                                    lPartnerSINBKKSegmentYCabin1FamilyMClass);
-    FacBomManager::linkWithParent (lPartnerSINBKKSegmentYCabin1Family,
-                                   lPartnerSINBKKSegmentYCabin1FamilyMClass);
-
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegmentYCabin,
-                                    lPartnerSINBKKSegmentYCabin1FamilyMClass);
-    FacBomManager::addToListAndMap (lPartnerSINBKKSegment,
-                                    lPartnerSINBKKSegmentYCabin1FamilyMClass);
-
-    BookingClass& lPartnerMktBKKHKGSegmentYCabin1FamilyMClass =
-      FacBom<BookingClass>::instance().create (lMBookingClassKey);
-    FacBomManager::addToListAndMap (lPartnerMktBKKHKGSegmentYCabin1Family,
-                                    lPartnerMktBKKHKGSegmentYCabin1FamilyMClass);
-    FacBomManager::linkWithParent (lPartnerMktBKKHKGSegmentYCabin1Family,
-                                   lPartnerMktBKKHKGSegmentYCabin1FamilyMClass);
-
-    FacBomManager::addToListAndMap (lPartnerMktBKKHKGSegmentYCabin,
-                                    lPartnerMktBKKHKGSegmentYCabin1FamilyMClass);
-    FacBomManager::addToListAndMap (lPartnerMktBKKHKGSegment,
-                                    lPartnerMktBKKHKGSegmentYCabin1FamilyMClass);
-
-    // Step 9.0.9: link CX inventory objects to Partner SQ inventory objects
-    FacBomManager::addToList (lBKKHKGSegment, lPartnerMktBKKHKGSegment);
-
-    FacBomManager::linkWithOperating (lMktSINBKKSegment, lPartnerSINBKKSegment);
 
     /* =================================================================================== */
 
