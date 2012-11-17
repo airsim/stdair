@@ -53,7 +53,7 @@ export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
 Then, as usual:
 * To configure the project, type something like:
   mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-0.46.0 \
+  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-0.46.0 \
    -DCMAKE_BUILD_TYPE:STRING=Debug \
    -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON ${LIBSUFFIX_4_CMAKE} ..
 * To build the project, type:
