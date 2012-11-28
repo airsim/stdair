@@ -53,7 +53,7 @@ export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
 Then, as usual:
 * To configure the project, type something like:
   mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-0.46.0 \
+  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-1.00.0 \
    -DCMAKE_BUILD_TYPE:STRING=Debug \
    -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON ${LIBSUFFIX_4_CMAKE} ..
 * To build the project, type:
@@ -63,7 +63,7 @@ Then, as usual:
 * To install the library (libstdair*.so*) and the binary (stdair), just type:
   make install
   cd /home/user/dev/deliveries
-  rm -f stdair-stable && ln -s stdair-0.46.0 stdair-stable
+  rm -f stdair-stable && ln -s stdair-1.00.0 stdair-stable
   cd -
 * To package the source files, type:
   make dist

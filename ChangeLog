@@ -1,4 +1,7 @@
 
+* Wed Nov 28 2012 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 1.00.0
+- Open source release.
+
 * Sun Dec 18 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.46.0
 - Two new criteria have been added to the fare rule and to the booking
 request.
