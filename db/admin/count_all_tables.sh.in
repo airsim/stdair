@@ -14,7 +14,7 @@ fi
 
 ##
 # Database Username/account name
-DB_USER="dsim"
+DB_USER="tvlsim"
 if [ "$1" != "" ];
 then
     DB_USER="$1"
@@ -24,7 +24,7 @@ fi
 DB_PASSWD="${DB_USER}"
 
 # Database Name
-DB_NAME="sim_dsim"
+DB_NAME="sim_tvlsim"
 if [ "$2" != "" ];
 then
     DB_NAME="$2"

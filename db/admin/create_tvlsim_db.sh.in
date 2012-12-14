@@ -6,7 +6,7 @@
 #
 
 # Database Name
-DB_NAME="sim_dsim"
+DB_NAME="sim_tvlsim"
 
 # Database server (host)
 DB_HOST="localhost"

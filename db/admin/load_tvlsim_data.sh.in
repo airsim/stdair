@@ -28,17 +28,17 @@ then
 fi
 
 # Database User
-DB_USER="dsim"
+DB_USER="tvlsim"
 
 # Database Password
-DB_PASSWD="dsim"
+DB_PASSWD="tvlsim"
 
 # Database Name
-DB_NAME="sim_dsim"
+DB_NAME="sim_tvlsim"
 
 ##
 # Create the tables
-SQL_FILE="@STDAIR_DB_DATA_DIR@/create_dsim_tables.sql"
+SQL_FILE="@STDAIR_DB_DATA_DIR@/create_tvlsim_tables.sql"
 echo "Creating the tables for '${DB_USER}@${DB_NAME}'..."
 mysql -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} ${DB_NAME} < ${SQL_FILE}
 echo "... Done: the tables have been created for '${DB_USER}@${DB_NAME}'."

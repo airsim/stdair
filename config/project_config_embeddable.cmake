@@ -395,9 +395,9 @@ macro (get_external_libs)
       get_simcrs (${_arg_version})
     endif (${_arg_lower} STREQUAL "simcrs")
 
-    if (${_arg_lower} STREQUAL "dsim")
-      get_dsim (${_arg_version})
-    endif (${_arg_lower} STREQUAL "dsim")
+    if (${_arg_lower} STREQUAL "tvlsim")
+      get_tvlsim (${_arg_version})
+    endif (${_arg_lower} STREQUAL "tvlsim")
 
     if (${_arg_lower} STREQUAL "doxygen")
       get_doxygen (${_arg_version})
@@ -1065,37 +1065,37 @@ macro (get_simcrs)
 
 endmacro (get_simcrs)
 
-# ~~~~~~~~~~ DSim ~~~~~~~~~
-macro (get_dsim)
+# ~~~~~~~~~~ TvlSim ~~~~~~~~~
+macro (get_tvlsim)
   unset (_required_version)
   if (${ARGC} GREATER 0)
     set (_required_version ${ARGV0})
-    message (STATUS "Requires DSim-${_required_version}")
+    message (STATUS "Requires TvlSim-${_required_version}")
   else (${ARGC} GREATER 0)
-    message (STATUS "Requires DSim without specifying any version")
+    message (STATUS "Requires TvlSim without specifying any version")
   endif (${ARGC} GREATER 0)
 
-  find_package (DSim ${_required_version} REQUIRED
-	HINTS ${WITH_DSIM_PREFIX})
-  if (DSim_FOUND)
+  find_package (TvlSim ${_required_version} REQUIRED
+	HINTS ${WITH_TVLSIM_PREFIX})
+  if (TvlSim_FOUND)
     #
-    message (STATUS "Found DSim version: ${DSIM_VERSION}")
+    message (STATUS "Found TvlSim version: ${TVLSIM_VERSION}")
 
     # Update the list of include directories for the project
-    include_directories (${DSIM_INCLUDE_DIRS})
+    include_directories (${TVLSIM_INCLUDE_DIRS})
 
     # Update the list of dependencies for the project
-    set (PROJ_DEP_LIBS_FOR_LIB ${PROJ_DEP_LIBS_FOR_LIB} ${DSIM_LIBRARIES})
+    set (PROJ_DEP_LIBS_FOR_LIB ${PROJ_DEP_LIBS_FOR_LIB} ${TVLSIM_LIBRARIES})
 
-  else (DSim_FOUND)
-    set (ERROR_MSG "The DSim library cannot be found. If it is installed in")
+  else (TvlSim_FOUND)
+    set (ERROR_MSG "The TvlSim library cannot be found. If it is installed in")
     set (ERROR_MSG "${ERROR_MSG} a in a non standard directory, just invoke")
-    set (ERROR_MSG "${ERROR_MSG} 'cmake' specifying the -DWITH_DSIM_PREFIX=")
-    set (ERROR_MSG "${ERROR_MSG}<DSim install path> variable.")
+    set (ERROR_MSG "${ERROR_MSG} 'cmake' specifying the -DWITH_TVLSIM_PREFIX=")
+    set (ERROR_MSG "${ERROR_MSG}<TvlSim install path> variable.")
     message (FATAL_ERROR "${ERROR_MSG}")
-  endif (DSim_FOUND)
+  endif (TvlSim_FOUND)
 
-endmacro (get_dsim)
+endmacro (get_tvlsim)
 
 
 ##############################################
@@ -2367,19 +2367,19 @@ macro (display_simcrs)
   endif (SimCRS_FOUND)
 endmacro (display_simcrs)
 
-# DSim
-macro (display_dsim)
-  if (DSim_FOUND)
+# TvlSim
+macro (display_tvlsim)
+  if (TvlSim_FOUND)
     message (STATUS)
-    message (STATUS "* DSim:")
-    message (STATUS "  - DSIM_VERSION .................. : ${DSIM_VERSION}")
-    message (STATUS "  - DSIM_BINARY_DIRS .............. : ${DSIM_BINARY_DIRS}")
-    message (STATUS "  - DSIM_EXECUTABLES .............. : ${DSIM_EXECUTABLES}")
-    message (STATUS "  - DSIM_LIBRARY_DIRS ............. : ${DSIM_LIBRARY_DIRS}")
-    message (STATUS "  - DSIM_LIBRARIES ................ : ${DSIM_LIBRARIES}")
-    message (STATUS "  - DSIM_INCLUDE_DIRS ............. : ${DSIM_INCLUDE_DIRS}")
-  endif (DSim_FOUND)
-endmacro (display_dsim)
+    message (STATUS "* TvlSim:")
+    message (STATUS "  - TVLSIM_VERSION .................. : ${TVLSIM_VERSION}")
+    message (STATUS "  - TVLSIM_BINARY_DIRS .............. : ${TVLSIM_BINARY_DIRS}")
+    message (STATUS "  - TVLSIM_EXECUTABLES .............. : ${TVLSIM_EXECUTABLES}")
+    message (STATUS "  - TVLSIM_LIBRARY_DIRS ............. : ${TVLSIM_LIBRARY_DIRS}")
+    message (STATUS "  - TVLSIM_LIBRARIES ................ : ${TVLSIM_LIBRARIES}")
+    message (STATUS "  - TVLSIM_INCLUDE_DIRS ............. : ${TVLSIM_INCLUDE_DIRS}")
+  endif (TvlSim_FOUND)
+endmacro (display_tvlsim)
 
 ##
 macro (display_status_all_modules)
@@ -2508,7 +2508,7 @@ macro (display_status)
   display_simfqt ()
   display_simlfs ()
   display_simcrs ()
-  display_dsim ()
+  display_tvlsim ()
   #
   message (STATUS)
   message (STATUS "Change a value with: cmake -D<Variable>=<Value>" )

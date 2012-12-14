@@ -5,7 +5,7 @@ StdAir aims at providing a clean API, and the corresponding C++
 implementation, for the basis of Airline IT and travel distribution
 Business Object Model (BOM), that is, to be used by several other open
 source projects, such as AirRAC, RMOL, AirInv, AvlCal, AirSched, SimFQT,
-SimLFS, SimCRS, TravelCCM, SEvMgr, TraDemGen, DSim, OpenTREP, etc.
+SimLFS, SimCRS, TravelCCM, SEvMgr, TraDemGen, TvlSim, OpenTREP, etc.
 
 
 Getting and installing from the Fedora/CentOS/RedHat distribution:

@@ -1,5 +1,5 @@
-#ifndef __DSIM_CMD_DBMANAGERFORAIRLINES_HPP
-#define __DSIM_CMD_DBMANAGERFORAIRLINES_HPP
+#ifndef __TVLSIM_CMD_DBMANAGERFORAIRLINES_HPP
+#define __TVLSIM_CMD_DBMANAGERFORAIRLINES_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -71,4 +71,4 @@ namespace stdair {
   };
   
 }
-#endif // __DSIM_CMD_DBMANAGERFORAIRLINES_HPP
+#endif // __TVLSIM_CMD_DBMANAGERFORAIRLINES_HPP
