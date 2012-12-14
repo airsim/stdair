@@ -6,7 +6,7 @@
 #
 
 # Database Name
-DB_NAME="mysql"
+DB_NAME="sim_tvlsim"
 
 # Database server (host)
 DB_HOST="localhost"
@@ -31,8 +31,8 @@ if [ "$1" = "--help" -o  "$1" = "-h" -o  "$1" = "-H" ]; then
 fi
 
 #
-echo "Accessing MySQL database hosted on $DB_HOST:$DB_PORT to create database '${DB_NAME}'."
-echo "To create a database, username and password of an administrator-like MySQL account"
+echo "Accessing MySQL database hosted on $DB_HOST:$DB_PORT to export database '${DB_NAME}'."
+echo "To export a database, username and password of an administrator-like MySQL account"
 echo "are required. On most of MySQL databases, the 'root' MySQL account has all"
 echo "the administrative rights, but you may want to use a less-privileged MySQL"
 echo "administrator account. Type the username of administrator followed by "
@@ -48,15 +48,14 @@ DB_USER=${userinput_adminname}
 # Database password
 DB_PASSWD=${userinput_pw}
 
+# Export Tool
+# mysqldump is part of the mysql package on most Linux distributions. It is
+# usually located in /usr/bin.
+EXPORTER=mysqldump
+
+# Dump file
+DUMP_FILE="@STDAIR_DB_DATA_DIR@/${DB_NAME}.sql"
+
 #
-createDSimUser() {
-    echo "Creating the '${DB_USER}' user within the database..."
-    mysql -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} ${DB_NAME} < ${SQL_FILE}
-    mysql -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} -e "flush privileges"
-    echo "... Done: the '${DB_USER}' user has been created."
-}
-
-# Creating the DSim user
-SQL_FILE="@STDAIR_DB_DATA_DIR@/create_dsim_user.sql"
-createDSimUser
-
+${EXPORTER} -u ${DB_USER} --password=${DB_PASSWD} -P ${DB_PORT} -h ${DB_HOST} \
+	--no-data ${DB_NAME} > ${DUMP_FILE}

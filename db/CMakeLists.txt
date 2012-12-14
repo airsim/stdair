@@ -20,9 +20,9 @@ set (STDAIR_DB_DATA_DIR
 set (db_admin_sh_SOURCES clean_all_tables.sh clean_a_table.sh
   count_all_tables.sh count_a_table.sh
   create_airinv_db.sh create_airinv_user.sh
-  create_dsim_db.sh create_dsim_user.sh
-  dump_airinv_db_structure.sh dump_dsim_db_structure.sh
-  load_airinv_dsim_data.sh load_dsim_data.sh)
+  create_tvlsim_db.sh create_tvlsim_user.sh
+  dump_airinv_db_structure.sh dump_tvlsim_db_structure.sh
+  load_airinv_tvlsim_data.sh load_tvlsim_data.sh)
 set (db_admin_sh_in_SOURCES "")
 #
 foreach (db_admin_sh ${db_admin_sh_SOURCES})
