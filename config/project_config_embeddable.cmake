@@ -1783,18 +1783,23 @@ macro (doc_add_web_pages)
   set (REFMAN_TEX ${REFMAN}.tex)
   set (REFMAN_TEX ${REFMAN_TEX} PARENT_SCOPE)
   set (REFMAN_TEX_FULL ${TEX_GEN_DIR}/${REFMAN_TEX})
+  set (REFMAN_TEX_OTHERS ${TEX_GEN_DIR}/index.tex ${TEX_GEN_DIR}/namespaces.tex
+	${TEX_GEN_DIR}/annotated.tex ${TEX_GEN_DIR}/hierarchy.tex
+	${TEX_GEN_DIR}/files.tex)
 
   # Add the build rule for Doxygen
   set (DOXYGEN_OUTPUT_REL html/index.html)
   set (DOXYGEN_OUTPUT_REL ${DOXYGEN_OUTPUT_REL} PARENT_SCOPE)
   set (DOXYGEN_OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_OUTPUT_REL})
   set (DOXYGEN_OUTPUT ${DOXYGEN_OUTPUT} PARENT_SCOPE)
-  add_custom_command (OUTPUT ${DOXYGEN_OUTPUT} ${REFMAN_TEX_FULL}
+  add_custom_command (
+	OUTPUT ${DOXYGEN_OUTPUT} ${REFMAN_TEX_FULL} ${REFMAN_TEX_OTHERS}
 	COMMAND ${DOXYGEN_EXECUTABLE} ARGS ${DOXYGEN_CFG}
 	DEPENDS ${DOXYGEN_CFG} ${doc_SOURCES}
 	COMMENT "Generating documentation with Doxygen, from '${DOXYGEN_CFG}'...")
   # Add the 'doc' target, depending on the generated HTML documentation
-  add_custom_target (doc ALL DEPENDS ${DOXYGEN_OUTPUT} ${REFMAN_TEX_FULL})
+  add_custom_target (doc ALL DEPENDS
+	${DOXYGEN_OUTPUT} ${REFMAN_TEX_FULL} ${REFMAN_TEX_OTHERS})
 
   ##
   # Copy the needed files into the generated HTML directory
@@ -1845,18 +1850,21 @@ macro (doc_add_web_pages)
   set (REFMAN_PDF ${REFMAN}.pdf)
   set (REFMAN_PDF ${REFMAN_PDF} PARENT_SCOPE)
   set (REFMAN_PDF_FULL ${TEX_GEN_DIR}/${REFMAN_PDF})
+  set (WARNING_PDF_MSG "Warning: the PDF reference manual ('${REFMAN_PDF_FULL}') has failed to build. You can perform a simple re-build ('make' in the 'doc/latex' sub-directory).")
   # Note the "|| echo" addition to the pdflatex command, as that latter returns
   # as if there were an error.
   add_custom_command (OUTPUT ${REFMAN_IDX_FULL} ${REFMAN_PDF_FULL}
 	DEPENDS doc css_style img_style
 	COMMAND ${CMAKE_COMMAND}
-	ARGS -E chdir ${TEX_GEN_DIR} pdflatex -interaction batchmode ${REFMAN_TEX} || echo 'First PDF generation done.'
+	ARGS -E chdir ${TEX_GEN_DIR} pdflatex -interaction batchmode ${REFMAN_TEX} && echo 'First PDF generation done.' || echo 'First PDF generation done.'
 	COMMAND ${CMAKE_COMMAND}
-	ARGS -E chdir ${TEX_GEN_DIR} egrep -s 'Rerun to get cross-references right' refman.log && (cd ${TEX_GEN_DIR} && pdflatex -interaction batchmode ${REFMAN_TEX} || echo 'Second PDF generation done.') || echo 'Second PDF generation was not necessary'
+	ARGS -E chdir ${TEX_GEN_DIR} egrep -s -e 'Fatal error occurred' -e 'Rerun to get cross-references right' refman.log && (cd ${TEX_GEN_DIR} && pdflatex -interaction batchmode ${REFMAN_TEX} && echo 'Second PDF generation done.') || echo 'Second PDF generation was not necessary'
 	COMMAND ${CMAKE_COMMAND}
-	ARGS -E chdir ${TEX_GEN_DIR} egrep -s 'Rerun to get cross-references right' refman.log && (cd ${TEX_GEN_DIR} && pdflatex -interaction batchmode ${REFMAN_TEX} || echo 'Third PDF generation done.') || echo 'Third PDF generation was not necessary'
+	ARGS -E chdir ${TEX_GEN_DIR} egrep -s -e 'Fatal error occurred' -e 'Rerun to get cross-references right' refman.log && (cd ${TEX_GEN_DIR} && pdflatex -interaction batchmode ${REFMAN_TEX} && echo 'Third PDF generation done.') || echo 'Third PDF generation was not necessary'
 	COMMAND ${CMAKE_COMMAND}
-	ARGS -E chdir ${TEX_GEN_DIR} test -f ${REFMAN_PDF} || (cd ${TEX_GEN_DIR} && touch ${REFMAN_PDF} && echo 'Warning: the PDF reference manual ('${REFMAN_PDF_FULL}') has failed to build. You can perform a simple re-build ('make' in the 'doc/latex' sub-directory).')
+	ARGS -E chdir ${TEX_GEN_DIR} test ! -f ${REFMAN_PDF} && (cd ${TEX_GEN_DIR} && echo '${WARNING_PDF_MSG}' > ${REFMAN_PDF} && echo '${WARNING_PDF_MSG}') || echo 'The PDF reference manual has been successfully built'
+	COMMAND ${CMAKE_COMMAND}
+	ARGS -E chdir ${TEX_GEN_DIR} echo 'The file size of the PDF reference manual is: ' && (cd ${TEX_GEN_DIR} && du -sh ${REFMAN_PDF} | cut -f1)
 	COMMENT "Generating PDF Reference Manual ('${REFMAN_TEX}' => '${REFMAN_PDF}')...")
   # Add the 'pdf' target, depending on the generated PDF manual
   add_custom_target (pdf ALL DEPENDS ${REFMAN_PDF_FULL})
