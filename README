@@ -7,6 +7,9 @@ Business Object Model (BOM), that is, to be used by several other open
 source projects, such as AirRAC, RMOL, AirInv, AvlCal, AirSched, SimFQT,
 SimLFS, SimCRS, TravelCCM, SEvMgr, TraDemGen, TvlSim, OpenTREP, etc.
 
+StdAir is the one of the components of the Travel Market Simulator
+(http://www.travel-market-simulator). However, it may be used in a
+stand-alone mode.
 
 Getting and installing from the Fedora/CentOS/RedHat distribution:
 ------------------------------------------------------------------
@@ -15,8 +18,8 @@ yum -y install stdair-devel stdair-doc
 
 You can also get the RPM packages (which may work on Linux
 distributions like Novel Suse and Mandriva) from the Fedora repository
-(e.g., for Fedora 16, 
-http://fr2.rpmfind.net/linux/fedora/releases/16/Everything/)
+(e.g., for Fedora 18, 
+http://fr2.rpmfind.net/linux/fedora/releases/18/Everything/)
 
 
 Building the library and test binary from Git repository:
@@ -37,7 +40,8 @@ but names may vary according to distributions):
   * python-devel
   * gettext-devel
   * doxygen
-  * tetex-latex (optional)
+  * ghostscript (optional)
+  * texlive-latex (optional)
   * rpm-build (optional)
 
 Building the library and test binary from the tarball:
@@ -54,8 +58,8 @@ Then, as usual:
 * To configure the project, type something like:
   mkdir build && cd build
   cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-99.99.99 \
-   -DCMAKE_BUILD_TYPE:STRING=Debug \
-   -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON ${LIBSUFFIX_4_CMAKE} ..
+	-DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON \
+	-DINSTALL_DOC:BOOL=ON -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
 * To build the project, type:
   make
 * To test the project, type:
@@ -66,10 +70,14 @@ Then, as usual:
   make dist
 * To package the binary and the (HTML and PDF) documentation:
   make package
+* To browse the (just installed, if enabled) HTML documentation:
+  midori file://${INSTALL_BASEDIR}/stdair-99.99.99/share/doc/stdair-99.99.99/html/index.html
+* To browse the (just installed, if enabled) PDF documentation:
+  evince ${INSTALL_BASEDIR}/stdair-99.99.99/share/doc/stdair-99.99.99/html/refman.pdf
 * To run the local binary version:
   ./stdair/stdair -b
 * To run the installed version:
   ${INSTALL_BASEDIR}/stdair-99.99.99/bin/stdair -b
 
-Denis Arnaud (August 2011)
+Denis Arnaud (December 2012)
 
