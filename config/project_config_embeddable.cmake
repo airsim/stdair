@@ -339,6 +339,10 @@ macro (get_external_libs)
       get_readline (${_arg_version})
     endif (${_arg_lower} STREQUAL "readline")
 
+    if (${_arg_lower} STREQUAL "curses")
+      get_curses (${_arg_version})
+    endif (${_arg_lower} STREQUAL "curses")
+
     if (${_arg_lower} STREQUAL "mysql")
       get_mysql (${_arg_version})
     endif (${_arg_lower} STREQUAL "mysql")
@@ -612,6 +616,34 @@ macro (get_readline)
   endif (READLINE_FOUND)
 
 endmacro (get_readline)
+
+# ~~~~~~~~~~ (N)Curses ~~~~~~~~~
+macro (get_curses)
+  unset (_required_version)
+  if (${ARGC} GREATER 0)
+    set (_required_version ${ARGV0})
+    message (STATUS "Requires (N)Curses-${_required_version}")
+  else (${ARGC} GREATER 0)
+    message (STATUS "Requires (N)Curses without specifying any version")
+  endif (${ARGC} GREATER 0)
+
+  set (CURSES_FOUND False)
+
+  set (CURSES_NEED_NCURSES True)
+  find_package (Curses ${_required_version} REQUIRED)
+  if (CURSES_LIBRARY)
+    set (CURSES_FOUND True)
+  endif (CURSES_LIBRARY)
+
+  if (CURSES_FOUND)
+    # Update the list of include directories for the project
+    include_directories (${CURSES_INCLUDE_DIR})
+
+    # Update the list of dependencies for the project
+    list (APPEND PROJ_DEP_LIBS_FOR_LIB ${CURSES_LIBRARY})
+  endif (CURSES_FOUND)
+
+endmacro (get_curses)
 
 # ~~~~~~~~~~ MySQL ~~~~~~~~~
 macro (get_mysql)
@@ -2185,6 +2217,17 @@ macro (display_readline)
   endif (READLINE_FOUND)
 endmacro (display_readline)
 
+# (N)Curses
+macro (display_curses)
+  if (CURSES_FOUND)
+    message (STATUS)
+    message (STATUS "* (N)Curses:")
+    message (STATUS "  - CURSES_VERSION .............. : ${CURSES_VERSION}")
+    message (STATUS "  - CURSES_INCLUDE_DIR .......... : ${CURSES_INCLUDE_DIR}")
+    message (STATUS "  - CURSES_LIBRARY .............. : ${CURSES_LIBRARY}")
+  endif (CURSES_FOUND)
+endmacro (display_curses)
+
 # MySQL
 macro (display_mysql)
   if (MYSQL_FOUND)
@@ -2507,6 +2550,7 @@ macro (display_status)
   display_boost ()
   display_xapian ()
   display_readline ()
+  display_curses ()
   display_mysql ()
   display_soci ()
   display_stdair ()
