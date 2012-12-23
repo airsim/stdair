@@ -34,14 +34,12 @@ but names may vary according to distributions):
   * cmake
   * gcc-c++
   * boost-devel
-  * readline-devel
+  * readline-devel, ncurses-devel (optional)
   * soci-mysql-devel
   * zeromq-devel
   * python-devel
-  * gettext-devel
-  * doxygen
-  * ghostscript (optional)
-  * texlive-latex (optional)
+  * gettext-devel (optional)
+  * doxygen, ghostscript, graphviz, texlive-/tetex-latex (optional)
   * rpm-build (optional)
 
 Building the library and test binary from the tarball:
