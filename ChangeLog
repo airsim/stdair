@@ -1,4 +1,7 @@
 
+* Sun Dec 23 2012 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 1.00.1
+- Minor fix of the NEWS file.
+
 * Wed Nov 28 2012 Gabrielle Sabatier <g-sabatier at users dot sourceforge dot net> 1.00.0
 - Open source release.
 
@@ -70,6 +73,6 @@ code and/or flight number).
 * Wed Jun 15 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.34.0
 - CMake-based build.
 
-* Wed Jul 13 2010 Anh Quan Nguyen <quannaus at users dot sourceforge dot net> 0.1.0
+* Wed Jul 13 2010 Anh Quan Nguyen <quannaus at users dot sourceforge dot net> 0.01.0
 - First release. Air-Sched and AirInv are both working on top of it.
 
