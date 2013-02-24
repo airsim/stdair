@@ -1,2 +1,18 @@
-script: "rm -rf build && mkdir build; pushd build; cmake ..; make check"
+language: cpp
+compiler:
+ - gcc
+before_script:
+ - sudo apt-get install libboost-thread-dev libboost-regex-dev libboost-system-dev libboost-filesystem-dev 
+ - sudo apt-get readline-dev ncurses-dev soci-mysql-dev zeromq-dev python-dev gettext-dev doxygen ghostscript 
+script: |
+    rm -rf build
+    mkdir build
+    pushd build
+    # LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
+    cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=OFF -DRUN_GCOV:BOOL=OFF $LIBSUFFIX_4_CMAKE ..
+    make check
+    popd
+notifications:
+  irc:
+  - "irc.freenode.net#airsim"
 
