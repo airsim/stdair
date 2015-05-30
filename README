@@ -24,8 +24,9 @@ http://fr2.rpmfind.net/linux/fedora/releases/18/Everything/)
 
 Building the library and test binary from Git repository:
 ----------------------------------------------------------------
-The Sourceforge Git repository may be cloned as following:
-git clone ssh://stdair.git.sourceforge.net/gitroot/stdair/stdair stdairgit
+The Git repository may be cloned as following:
+$ git clone git@github.com:airsim/stdair.git airtspgit # through SSH
+$ git clone https://github.com/airsim/stdair.git # if the firewall filters SSH
 cd stdairgit
 git checkout trunk
 
@@ -33,14 +34,17 @@ Then, you need the following packages (Fedora/RedHat/CentOS names here,
 but names may vary according to distributions):
   * cmake
   * gcc-c++
-  * boost-devel
-  * readline-devel, ncurses-devel (optional)
+  * boost-devel / libboost-dev
+  * python-devel / python-dev
+  * gettext-devel / gettext-dev
+  * sqlite3-devel / libsqlite3-dev
+  * readline-devel / readline-dev
+  * ncurses-devel
   * soci-mysql-devel
-  * zeromq-devel
-  * python-devel
-  * gettext-devel (optional)
-  * doxygen, ghostscript, graphviz, texlive-/tetex-latex (optional)
+  * doxygen, ghostscript, graphviz
+  * tetex-latex (optional)
   * rpm-build (optional)
+
 
 Building the library and test binary from the tarball:
 ------------------------------------------------------
@@ -50,12 +54,14 @@ http://sourceforge.net/project/showfiles.php?group_id=267760
 To customise the following to your environment, you can alter the path
 to the installation directory:
 export INSTALL_BASEDIR=/home/user/dev/deliveries
-export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
+export TREP_VER=99.99.99
+if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
+export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
 
 Then, as usual:
 * To configure the project, type something like:
-  mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-99.99.99 \
+$ mkdir build && cd build
+$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$TREP_VER \
 	-DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON \
 	-DINSTALL_DOC:BOOL=ON -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
 * To build the project, type:
@@ -69,13 +75,12 @@ Then, as usual:
 * To package the binary and the (HTML and PDF) documentation:
   make package
 * To browse the (just installed, if enabled) HTML documentation:
-  midori file://${INSTALL_BASEDIR}/stdair-99.99.99/share/doc/stdair-99.99.99/html/index.html
+  midori file://${INSTALL_BASEDIR}/stdair-$TREP_VER/share/doc/stdair/html/index.html
 * To browse the (just installed, if enabled) PDF documentation:
-  evince ${INSTALL_BASEDIR}/stdair-99.99.99/share/doc/stdair-99.99.99/html/refman.pdf
+  evince ${INSTALL_BASEDIR}/stdair-$TREP_VER/share/doc/stdair/html/refman.pdf
 * To run the local binary version:
   ./stdair/stdair -b
 * To run the installed version:
-  ${INSTALL_BASEDIR}/stdair-99.99.99/bin/stdair -b
+  ${INSTALL_BASEDIR}/stdair-$TREP_VER/bin/stdair -b
 
-Denis Arnaud (December 2012)
-
+Denis Arnaud (May 2015)
