@@ -1,4 +1,7 @@
 
+* Sun May 31 2015 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 1.00.2
+- Removed the dependency on ZeroMQ (only AirInv is dependent on it, not StdAir)
+
 * Sun Dec 23 2012 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 1.00.1
 - Minor fix of the NEWS file.
 

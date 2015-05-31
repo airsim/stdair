@@ -54,14 +54,14 @@ http://sourceforge.net/project/showfiles.php?group_id=267760
 To customise the following to your environment, you can alter the path
 to the installation directory:
 export INSTALL_BASEDIR=/home/user/dev/deliveries
-export TREP_VER=1.00.1
+export STDAIR_VER=1.00.2
 if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
 export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
 
 Then, as usual:
 * To configure the project, type something like:
 $ mkdir build && cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$TREP_VER \
+$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$STDAIR_VER \
 	-DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON \
 	-DINSTALL_DOC:BOOL=ON -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
 * To build the project, type:
@@ -71,19 +71,19 @@ $ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$TREP_VER \
 * To install the library (libstdair*.so*) and the binary (stdair), just type:
   make install
   cd /home/user/dev/deliveries
-  rm -f stdair-stable && ln -s stdair-1.00.1 stdair-stable
+  rm -f stdair-stable && ln -s stdair-$STDAIR_VER stdair-stable
   cd -
 * To package the source files, type:
   make dist
 * To package the binary and the (HTML and PDF) documentation:
   make package
 * To browse the (just installed, if enabled) HTML documentation:
-  midori file://${INSTALL_BASEDIR}/stdair-$TREP_VER/share/doc/stdair/html/index.html
+  midori file://${INSTALL_BASEDIR}/stdair-$STDAIR_VER/share/doc/stdair/html/index.html
 * To browse the (just installed, if enabled) PDF documentation:
-  evince ${INSTALL_BASEDIR}/stdair-$TREP_VER/share/doc/stdair/html/refman.pdf
+  evince ${INSTALL_BASEDIR}/stdair-$STDAIR_VER/share/doc/stdair/html/refman.pdf
 * To run the local binary version:
   ./stdair/stdair -b
 * To run the installed version:
-  ${INSTALL_BASEDIR}/stdair-$TREP_VER/bin/stdair -b
+  ${INSTALL_BASEDIR}/stdair-$STDAIR_VER/bin/stdair -b
 
 Denis Arnaud (May 2015)
