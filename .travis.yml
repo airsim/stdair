@@ -4,7 +4,9 @@ compiler:
 before_install:
  - sudo apt-get update -qq
  - sudo apt-get install libboost-all-dev
- - sudo apt-get install libreadline-dev libncurses5-dev libsoci-dev python-dev libpython-dev gettext doxygen-latex ghostscript 
+ - sudo apt-get install libreadline-dev libncurses5-dev python-dev gettext doxygen-latex ghostscript 
+ - sudo add-apt-repository ppa:jtaylor/jtaylor -y
+ - sudo apt-get install libsoci-dev
 script: |
     rm -rf build
     mkdir build
