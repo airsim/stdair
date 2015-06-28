@@ -3,8 +3,8 @@ compiler:
  - gcc
 before_install:
  - sudo apt-get update -qq
- - sudo apt-get install libboost-thread-dev libboost-regex-dev libboost-system-dev libboost-filesystem-dev 
- - sudo apt-get readline-dev ncurses-dev soci-mysql-dev zeromq-dev python-dev gettext-dev doxygen ghostscript 
+ - sudo apt-get install libboost-all-dev
+ - sudo apt-get libreadline-dev libncurses5-dev libsoci-dev python-dev libpython-dev gettext doxygen-latex ghostscript 
 script:
  rm -rf build
  mkdir build
