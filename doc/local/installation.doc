@@ -22,10 +22,7 @@ Note that on
 <a href="http://fedoraproject.org">Fedora</a>/<a href="http://www.redhat.com">RedHat</a>
 Linux distributions, RPM packages are available and can be installed
 with your usual package manager. For instance:<br>
-<code> yum -y install stdair-devel stdair-doc </code>
-
-RPM packages can also be available on the
-<a href="http://sourceforge.net/project/showfiles.php?group_id=267760">SourceForge download site</a>.
+<code>yum -y install stdair-devel stdair-doc</code>
 
 
 \section requirements StdAir Requirements
@@ -510,7 +507,7 @@ cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-0.50.0 \
 -- ----------------------------------
 -- ---   Packaging Configuration  ---
 -- ----------------------------------
--- CPACK_PACKAGE_CONTACT .......... : Denis Arnaud <denis_arnaud - at - users dot sourceforge dot net>
+-- CPACK_PACKAGE_CONTACT .......... : Denis Arnaud <denis.arnaud_stdair - at - m4x dot org>
 -- CPACK_PACKAGE_VENDOR ........... : Denis Arnaud
 -- CPACK_PACKAGE_VERSION .......... : 0.50.0
 -- CPACK_PACKAGE_DESCRIPTION_FILE . : /home/user/dev/sim/stdair/stdairgithub/README
@@ -590,7 +587,7 @@ Scanning dependencies of target check
 \endverbatim
 
 Check if all the executed tests PASSED. If not, please contact us by filling
-a <a href="https://sourceforge.net/apps/trac/stdair/newticket">bug-report</a>.
+a <a href="http://github.com/airsim/stdair/issues/new">bug-report</a>.
 
 Finally, you should install the compiled and linked library, include files
 and (optionally) HTML and PDF documentation by typing:

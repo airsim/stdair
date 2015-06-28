@@ -27,13 +27,26 @@ to start using \c StdAir.
 \subsection ug_get_source Get the StdAir library
 
 \subsection ug_build_binaries Build the StdAir project
-To run the configuration script the first time, go to the
-top directory (where the StdAir package has been un-packed), and issue
-either of the following two commands, depending on whether the StdAir
-project has been checked out from the Subversion repository or
-downloaded as a tar-ball package from the Sourceforge Web site:
- - <tt>./autogen.sh</tt>
- - <tt>./configure</tt>
+To build StdAir, go to the top directory (where the StdAir package has been
+un-packed), and issue the following commands only once:
+\verbatim
+$ export INSTALL_BASEDIR=~/dev/deliveries
+$ export STDAIR_VER=99.99.99
+$ if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
+$ export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
+$ rm -rf build && mkdir build && cd build
+$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$STDAIR_VER \
+	-DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON \
+	-DINSTALL_DOC:BOOL=ON -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
+\endverbatim
+Then, everytime you change the source code:
+\verbatim
+$ make check
+\endverbatim
+When everything is fine, install StdAir locally:
+\verbatim
+$ make install
+\endverbatim
 
 \subsection ug_build_and_run_tests Build and Run the Tests
 

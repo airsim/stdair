@@ -33,18 +33,20 @@ git checkout trunk
 
 Then, you need the following packages (Fedora/RedHat/CentOS names here, 
 but names may vary according to distributions):
-  * cmake
-  * gcc-c++
-  * boost-devel / libboost-dev
-  * python-devel / python-dev
-  * gettext-devel / gettext-dev
-  * sqlite3-devel / libsqlite3-dev
-  * readline-devel / readline-dev
-  * ncurses-devel
-  * soci-mysql-devel
-  * doxygen, ghostscript, graphviz
-  * tetex-latex (optional)
-  * rpm-build (optional)
+* cmake
+* gcc-c++
+* boost-devel / libboost-dev
+* python-devel / python-dev
+* gettext-devel / gettext
+* sqlite3-devel / libsqlite3-dev
+* readline-devel / libreadline-dev
+* libncurses5-devel
+* soci-mysql-devel, soci-sqlite3-devel
+* stdair-devel / libstdair-dev
+* sevmgr-devel / libsevmgr-dev
+* doxygen / doxygen-latex, ghostscript, graphviz
+* tetex-latex (optional)
+* rpm-build (optional)
 
 
 Building the library and test binary from the tarball:
@@ -55,14 +57,14 @@ found on GitHub: http://github.com/airsim/stdair/releases
 To customise the following to your environment, you can alter the path
 to the installation directory:
 export INSTALL_BASEDIR=/home/user/dev/deliveries
-export TREP_VER=99.99.99
+export STDAIR_VER=99.99.99
 if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
 export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
 
 Then, as usual:
 * To configure the project, type something like:
 $ mkdir build && cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$TREP_VER \
+$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$STDAIR_VER \
 	-DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON \
 	-DINSTALL_DOC:BOOL=ON -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
 * To build the project, type:
@@ -76,13 +78,13 @@ $ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$TREP_VER \
 * To package the binary and the (HTML and PDF) documentation:
   make package
 * To browse the (just installed, if enabled) HTML documentation:
-  midori file://${INSTALL_BASEDIR}/stdair-$TREP_VER/share/doc/stdair/html/index.html
+  midori file://${INSTALL_BASEDIR}/stdair-$STDAIR_VER/share/doc/stdair/html/index.html
 * To browse the (just installed, if enabled) PDF documentation:
-  evince ${INSTALL_BASEDIR}/stdair-$TREP_VER/share/doc/stdair/html/refman.pdf
+  evince ${INSTALL_BASEDIR}/stdair-$STDAIR_VER/share/doc/stdair/html/refman.pdf
 * To run the local binary version:
   ./stdair/stdair -b
 * To run the installed version:
-  ${INSTALL_BASEDIR}/stdair-$TREP_VER/bin/stdair -b
+  ${INSTALL_BASEDIR}/stdair-$STDAIR_VER/bin/stdair -b
 
 Denis Arnaud (June 2015)
 

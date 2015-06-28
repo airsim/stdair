@@ -66,7 +66,7 @@ def handle_opt():
         else:
             assert False, "Unhandled option"
 
-    # Input Ditaa (http://ditaa.sourceforge.net) formatted file.
+    # Input Ditaa (http://ditaa.org) formatted file.
     if (input_filename != ''):
       input_file = open (input_filename, 'r')
 
