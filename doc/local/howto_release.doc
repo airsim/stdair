@@ -5,7 +5,7 @@
 
 This document describes briefly the recommended procedure of releasing
 a new version of StdAir using a Linux development machine and the
-SourceForge project site.
+GitHub project site.
 
 The following steps are required to make a release of the distribution package.
 
@@ -13,25 +13,25 @@ The following steps are required to make a release of the distribution package.
 \section initialisation Initialisation
 
 Clone locally the full
-<a href="http://stdair.git.sourceforge.net/git/gitweb.cgi?p=stdair/stdair;a=tree;h=refs/heads/trunk;hb=trunk">Git project</a>:
+<a href="http://github.com/airsim/stdair">Git project</a>:
 \verbatim 
-cd ~
-mkdir -p dev/sim
-cd ~/dev/sim
-git clone git://stdair.git.sourceforge.net/gitroot/stdair/stdair stdairgit
-cd stdairgit
-git checkout trunk
+$ mkdir -p ~/dev/sim
+$ cd ~/dev/sim
+$ git clone git@github.com:airsim/stdair.git stdairgit # If SSH is allowed
+$ git clone https://github.com/airsim/stdair.git stdairgit # If the firewall does not allow SSH
+$ cd stdairgit
+$ git checkout trunk
 \endverbatim 
 
 
 \section branch_creation Branch creation
 
 Create the branch, on your local clone, corresponding to the new release
-(say, 0.5.0):
+(say, 1.00.3):
 \verbatim
 cd ~/dev/sim/stdairgit
 git checkout trunk
-git checkout -b 0.5.0
+git checkout -b 1.00.3
 \endverbatim
 Update the version in the various build system files, replacing 99.99.99 by
 the correct version number:
@@ -53,7 +53,7 @@ Commit the new release:
 \verbatim
 cd ~/dev/sim/stdairgit
 git add -A
-git commit -m "[Release 0.5.0] Release of version 0.5.0."
+git commit -m "[Release 1.00.3] Release of version 1.00.3."
 git push
 \endverbatim
 
@@ -69,7 +69,7 @@ vi stdair.spec
 
 Commit the change-logs and publish the trunk (main development branch):
 \verbatim
-git commit -m "[Doc] Integrated the change-log of the release 0.5.0."
+git commit -m "[Doc] Integrated the change-log of the release 1.00.3."
 git push
 \endverbatim
 
@@ -78,18 +78,18 @@ git push
 Create the distribution packages using the following command:<br>
 \verbatim 
 cd ~/dev/sim/stdairgit
-git checkout 0.5.0
+git checkout 1.00.3
 rm -rf build && mkdir -p build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-0.5.0 \
+cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-1.00.3 \
  -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=ON ..
 make check && make dist
 \endverbatim 
 
 
 This will configure, compile and check the package. The output packages
-will be named, for instance, <tt>stdair-0.5.0.tar.gz</tt> and
-<tt>stdair-0.5.0.tar.bz2</tt>.
+will be named, for instance, <tt>stdair-1.00.3.tar.gz</tt> and
+<tt>stdair-1.00.3.tar.bz2</tt>.
 
 
 \section generate_rpm_packages Generation the RPM packages
@@ -98,7 +98,7 @@ Optionally, generate the RPM package (for instance, for
 <a href="http://fedoraproject.org">Fedora</a>/<a href="http://www.redhat.com">RedHat</a>):
 \verbatim 
 cd ~/dev/sim/stdairgit
-git checkout 0.5.0
+git checkout 1.00.3
 rm -rf build && mkdir -p build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/stdair-99.99.99 \
@@ -110,10 +110,10 @@ To perform this step, rpm-build, rpmlint and rpmdevtools have to be available
 on the system.
 \verbatim 
 cp stdair.spec ~/dev/packages/SPECS \
-  && cp stdair-0.5.0.tar.bz2 ~/dev/packages/SOURCES
+  && cp stdair-1.00.3.tar.bz2 ~/dev/packages/SOURCES
 cd ~/dev/packages/SPECS
 rpmbuild -ba stdair.spec
-rpmlint -i ../SPECS/stdair.spec ../SRPMS/stdair-0.5.0-1.fc15.src.rpm \
+rpmlint -i ../SPECS/stdair.spec ../SRPMS/stdair-1.00.3-1.fc15.src.rpm \
   ../RPMS/noarch/stdair-* ../RPMS/i686/stdair-*
 \endverbatim 
 
@@ -123,7 +123,7 @@ rpmlint -i ../SPECS/stdair.spec ../SRPMS/stdair-0.5.0-1.fc15.src.rpm \
 Update the \c NEWS and \c ChangeLog files with appropriate
 information, including what has changed since the previous release. Then
 commit and push the changes into the 
-<a href="http://stdair.git.sourceforge.net/git/gitweb.cgi?p=stdair/stdair;a=summary">StdAir's Git repository</a>.
+<a href="http://github.com/airsim/stdair">StdAir's Git repository</a>.
 
 
 \section create_bin_packages Create the binary package, including the documentation
@@ -135,57 +135,40 @@ make package
 \endverbatim 
 
 The output binary package will be named, for instance,
-<tt>stdair-0.5.0-Linux.tar.bz2</tt>. That package contains both the HTML
+<tt>stdair-1.00.3-Linux.tar.bz2</tt>. That package contains both the HTML
 and PDF documentation. The binary package contains also the executables
 and shared libraries, as well as C++ header files, but all of those do not
 interest us for now.
 
-\section upload_files Upload the files to SourceForge
+\section upload_files Files on GitHub
 
-Upload the distribution and documentation packages to the SourceForge server.
-Check
-<a href="https://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download#SCP">SourceForge help page on uploading software</a>.
+GitHub allows to archive/generate <a
+href="http://github.com/airsim/stdair/releases">packages (tar-balls)</a>
+corresponding to Git tags.
 
 
-\section upload_doc Upload the documentation to SourceForge
+\section upload_doc Upload the documentation to GitHub
 
-In order to update the Web site files, either:
-- <a href="https://sourceforge.net/apps/trac/sourceforge/wiki/Shell%20service#Accessingyourfileswithothertools">synchronise them with rsync and SSH</a>:
-\verbatim 
-cd ~/dev/sim/stdairgit
-git checkout 0.5.0
-rsync -aiv doc/html/ doc/latex/refman.pdf joe,stdair@web.sourceforge.net:htdocs/
+In order to update the Web site files:
+\verbatim
+$ export STDAIR_VER=1.00.3
+$ cd ~/dev/sim/stdairgit
+$ git checkout $STDAIR_VER
+$ cd build
+$ export INSTALL_BASEDIR=~/dev/deliveries
+$ if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
+$ export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
+$ rm -rf build && mkdir build && cd build
+$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$STDAIR_VER \
+	-DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON \
+	-DINSTALL_DOC:BOOL=ON -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
+$ make check && make install
+$ git checkout gh-pages
+$ rsync -av --del $INSTALL_BASEDIR/share/doc/stdair/html/ ./
+$ git checkout -- .gitignore README.md
+$ git add .
+$ git commit -m "[Doc] Updated the documentation for $STDAIR_VER"
+$ git push
 \endverbatim 
-where \c -aiv options mean:
-  - \c -a: archive/mirror mode; equals \c -rlptgoD
-    (no \c -H, \c -A, \c -X)
-  - \c -v: increase verbosity
-  - \c -i: output a change-summary for all updates
-  - Note the trailing slashes (/) at the end of both the source and target 
-    directories. It means that the content of the source directory 
-    (<tt>doc/html</tt>), rather than the directory itself, has to be copied
-    into the content of the target directory.
-- or use the
- <a href="https://sourceforge.net/apps/trac/sourceforge/wiki/Shell%20service">SourceForge Shell service</a>.
-
-
-\section post_news Make a new post
-
-- submit a new entry in the
-  <a href="https://sourceforge.net/news/submit.php?group_id=267760">SourceForge
-  project-related news feed</a>
-- make a new post on the
-  <a href="https://sourceforge.net/apps/wordpress/stdair/wp-admin/">SourceForge
-  hosted WordPress blog</a>
-- and update, if necessary,
-  <a href="https://sourceforge.net/apps/trac/stdair/report">Trac tickets</a>.
-
-
-\section send_announce Send an email on the announcement mailing-list
-
-Finally, you should send an announcement to
-  <a href="mailto:stdair-announce@lists.sourceforge.net">stdair-announce@lists.sourceforge.net</a>
-  (see <a href="https://lists.sourceforge.net/lists/listinfo/stdair-announce">https://lists.sourceforge.net/lists/listinfo/stdair-announce</a>
-  for the archives)
 
 */

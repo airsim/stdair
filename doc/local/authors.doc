@@ -4,27 +4,28 @@
 
 \section admins Project Admins (and Developers)
 
-- Denis Arnaud <denis_arnaud@users.sourceforge.net> (\ref N)
-- Anh Quan Nguyen <quannaus@users.sourceforge.net> (\ref N)
-- Gabrielle Sabatier <gsabatier@users.sourceforge.net> (\ref N)
+- Denis Arnaud <denis.arnaud_stdair at m4x.org> (\ref N)
+- Anh Quan Nguyen <aquannguyen+stdair at gmail.com> (\ref N)
+- Gabrielle Sabatier <gabrielle.sabatier+stdair at gmail.com> (\ref N)
 
 
 \section retired Retired Developers
 
-- Mehdi Ayouni <mehdi.ayouni@gmail.com>
+- Mehdi Ayouni <mehdi.ayouni+stdair at gmail.com>
 - Son Nguyen Kim <snguyenkim@users.sourceforge.net> (\ref N)
 
 
 \section contributors Contributors
 
-- Emmanuel Bastien <ebastien@users.sourceforge.net> (\ref N)
+- Emmanuel Bastien <os at ebastien.name> (\ref N)
 
 
 \section distributors Distribution Maintainers
 
-- <a href="http://fedoraproject.org">Fedora</a>/<a href="http://www.redhat.com">RedHat</a>:
-  Denis Arnaud <denis_arnaud@users.sourceforge.net> (\ref N)
-- <a href="http://www.debian.org">Debian</a>: Emmanuel Bastien <ebastien@users.sourceforge.net> (\ref N)
+- <a href="http://fedoraproject.org">Fedora</a>/<a
+href="http://www.redhat.com">RedHat</a>:
+  Denis Arnaud <denis.arnaud_stdair at m4x.org> (\ref N)
+- <a href="http://www.debian.org">Debian</a>: Emmanuel Bastien <os at ebastien.name> (\ref N)
 
 \note
 \anchor N
