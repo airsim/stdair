@@ -3,7 +3,7 @@ var NAVTREE =
   [ "StdAir", "index.html", [
     [ "StdAir Documentation", "index.html", [
       [ "Getting Started", "index.html#getting_started", null ],
-      [ "StdAir at SourceForge", "index.html#at_sourceforge", null ],
+      [ "StdAir on GitHub", "index.html#at_github", null ],
       [ "StdAir Development", "index.html#development", null ],
       [ "External Libraries", "index.html#external_libs", null ],
       [ "Support StdAir", "index.html#social_sponsorship", null ],
@@ -58,10 +58,8 @@ var NAVTREE =
       [ "Generation the RPM packages", "a00024.html#generate_rpm_packages", null ],
       [ "Update distributed change log", "a00024.html#update_changelog", null ],
       [ "Create the binary package, including the documentation", "a00024.html#create_bin_packages", null ],
-      [ "Upload the files to SourceForge", "a00024.html#upload_files", null ],
-      [ "Upload the documentation to SourceForge", "a00024.html#upload_doc", null ],
-      [ "Make a new post", "a00024.html#post_news", null ],
-      [ "Send an email on the announcement mailing-list", "a00024.html#send_announce", null ]
+      [ "Files on GitHub", "a00024.html#upload_files", null ],
+      [ "Upload the documentation to GitHub", "a00024.html#upload_doc", null ]
     ] ],
     [ "Installation", "a00026.html", [
       [ "Table of Contents", "a00026.html#toc", null ],
@@ -205,21 +203,21 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00002.html",
-"a00058.html",
-"a00077.html#a5d373e23ec46c213afbd47e2b77fb075",
-"a00099.html#a515f3ed2216045fc962c9071ce2831c5",
-"a00122.html#aaf1d56bd7032291d01930427954f7ca4",
-"a00141.html",
-"a00161.html#af9e08933f4c33a13af30e187be9e8502",
-"a00176.html#a7e1454d21babe2407d8b516a4acf657f",
-"a00189.html#ac98d07dd8f7b70e16ccb9a01abf56b9c",
-"a00204.html#affd4bebae3e65f399cbe609ac458edcd",
-"a00238.html#a6c918da3d250462d21227fbaca530c4c",
-"a00246.html#af39c23bd8d9a5aa95f75e7f997b5af25",
-"a00343.html#a4f856d999ece4dac721ce2278072a0da",
-"a00435.html",
-"a00523.html#a822c0576369b3f8c529a3286de96e8c0",
-"a00545.html#a80ac0d1f43ea1efa9df53269d995704d"
+"a00058.html#ac8f1b859b45c886f8206531e77a29695",
+"a00077.html#a5ea59a9ff9863dc570d92e960414fed0",
+"a00100.html",
+"a00122.html#ac2bbbadbccaf2e36d2033e73c8cc6dc6",
+"a00141.html#a4e9cc6f20637446d2967edf912bceea3",
+"a00162.html#a155fc4d802684890058173ca5d6480f5",
+"a00176.html#aac3c91aae4bd1a8ae2635d34b39a1036",
+"a00189.html#ae24974886ceedb779c10eab04d8e13e0",
+"a00205.html#a0160e5b0c91dcc303a8fcf089b5b818f",
+"a00238.html#a6e3497a44011f8e98f21449897825897",
+"a00246_source.html",
+"a00343_source.html",
+"a00436.html",
+"a00523.html#af0a129cd6bc6bbcb41179d08dd79b1af",
+"a00545.html#a8a362ea31826fa32ad8273fc69d2a617"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

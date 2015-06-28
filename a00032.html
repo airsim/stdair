@@ -43,16 +43,16 @@
 		  <tbody>
 			<tr style="height: 56px;">
 			  <td style="padding-left: 0.5em;">
-				<div id="projectname"><a href="http://stdair.sourceforge.net"><img height="45px" alt="StdAir Logo" src="stdair_logo.png"></a>
+				<div id="projectname"><a href="http://www.stdair.org"><img height="45px" alt="StdAir Logo" src="stdair_logo.png"></a>
 				  &#160;<span id="projectnumber">1.00.3</span>
 				</div>
 				<div id="projectbrief">C++ Standard Airline IT Object Library</div>
 			  </td>
-			  <!-- begin SOURCEFORGE_CUSTOM-->
+			  <!-- begin GITHUB_CUSTOM-->
 			  <td>
-				<div id="sflogo"><a href="http://stdair.sourceforge.net"><img height="45px" alt="SourceForge Logo" src="sfx_logo.png"></a></div>
+				<div id="sflogo"><a href="http://www.stdair.org"><img height="45px" alt="GitHub Logo" src="github_logo.png"></a></div>
 			  </td>
-			  <!-- end SOURCEFORGE_CUSTOM-->
+			  <!-- end GITHUB_CUSTOM-->
 			</tr>
 		  </tbody>
 		</table>
@@ -148,11 +148,17 @@ Get Started</h1>
 Get the StdAir library</h2>
 <h2><a class="anchor" id="ug_build_binaries"></a>
 Build the StdAir project</h2>
-<p>To run the configuration script the first time, go to the top directory (where the StdAir package has been un-packed), and issue either of the following two commands, depending on whether the StdAir project has been checked out from the Subversion repository or downloaded as a tar-ball package from the Sourceforge Web site:</p><ul>
-<li><code>./autogen.sh</code></li>
-<li><code>./configure</code></li>
-</ul>
-<h2><a class="anchor" id="ug_build_and_run_tests"></a>
+<p>To build StdAir, go to the top directory (where the StdAir package has been un-packed), and issue the following commands only once: </p><pre class="fragment">$ export INSTALL_BASEDIR=~/dev/deliveries
+$ export STDAIR_VER=99.99.99
+$ if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
+$ export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
+$ rm -rf build &amp;&amp; mkdir build &amp;&amp; cd build
+$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$STDAIR_VER \
+        -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON \
+        -DINSTALL_DOC:BOOL=ON -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
+</pre><p> Then, everytime you change the source code: </p><pre class="fragment">$ make check
+</pre><p> When everything is fine, install StdAir locally: </p><pre class="fragment">$ make install
+</pre><h2><a class="anchor" id="ug_build_and_run_tests"></a>
 Build and Run the Tests</h2>
 <h2><a class="anchor" id="ug_install_project"></a>
 Install the StdAir Project (Binaries, Documentation)</h2>
@@ -195,13 +201,13 @@ Extending the BOM Tree</h1>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 		
-		<li class="footer">Generated on Sun Jun 28 2015 18:08:05 for StdAir by
+		<li class="footer">Generated on Sun Jun 28 2015 20:38:03 for StdAir by
 		  <a href="http://www.doxygen.org/index.html">
 			<img class="footer" src="doxygen.png" alt="doxygen"/></a> 
 		  1.8.9.1
 		</li>
 		<li class="footer">
-		  <a href="http://sourceforge.net/projects/stdair"><img class="footer" src="http://sflogo.sourceforge.net/sflogo.php?group_id=267760&type=12&format=.png" alt="SourceForge Logo"></a>
+		  <a href="http://www.stdair.org"><img class="footer" src="http://assets-cdn.github.com/images/modules/logos_page/Octocat.png" alt="GitHub Logo"></a>
 		</li>
 	  </ul>
 	</div>

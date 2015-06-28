@@ -28505,10 +28505,8 @@
     <docanchor file="a00024" title="Generation the RPM packages">generate_rpm_packages</docanchor>
     <docanchor file="a00024" title="Update distributed change log">update_changelog</docanchor>
     <docanchor file="a00024" title="Create the binary package, including the documentation">create_bin_packages</docanchor>
-    <docanchor file="a00024" title="Upload the files to SourceForge">upload_files</docanchor>
-    <docanchor file="a00024" title="Upload the documentation to SourceForge">upload_doc</docanchor>
-    <docanchor file="a00024" title="Make a new post">post_news</docanchor>
-    <docanchor file="a00024" title="Send an email on the announcement mailing-list">send_announce</docanchor>
+    <docanchor file="a00024" title="Files on GitHub">upload_files</docanchor>
+    <docanchor file="a00024" title="Upload the documentation to GitHub">upload_doc</docanchor>
   </compound>
   <compound kind="page">
     <name>installation</name>
@@ -28651,7 +28649,7 @@
     <title>StdAir Documentation</title>
     <filename>index</filename>
     <docanchor file="index" title="Getting Started">getting_started</docanchor>
-    <docanchor file="index" title="StdAir at SourceForge">at_sourceforge</docanchor>
+    <docanchor file="index" title="StdAir on GitHub">at_github</docanchor>
     <docanchor file="index" title="StdAir Development">development</docanchor>
     <docanchor file="index" title="External Libraries">external_libs</docanchor>
     <docanchor file="index" title="Support StdAir">social_sponsorship</docanchor>

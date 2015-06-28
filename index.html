@@ -43,16 +43,16 @@
 		  <tbody>
 			<tr style="height: 56px;">
 			  <td style="padding-left: 0.5em;">
-				<div id="projectname"><a href="http://stdair.sourceforge.net"><img height="45px" alt="StdAir Logo" src="stdair_logo.png"></a>
+				<div id="projectname"><a href="http://www.stdair.org"><img height="45px" alt="StdAir Logo" src="stdair_logo.png"></a>
 				  &#160;<span id="projectnumber">1.00.3</span>
 				</div>
 				<div id="projectbrief">C++ Standard Airline IT Object Library</div>
 			  </td>
-			  <!-- begin SOURCEFORGE_CUSTOM-->
+			  <!-- begin GITHUB_CUSTOM-->
 			  <td>
-				<div id="sflogo"><a href="http://stdair.sourceforge.net"><img height="45px" alt="SourceForge Logo" src="sfx_logo.png"></a></div>
+				<div id="sflogo"><a href="http://www.stdair.org"><img height="45px" alt="GitHub Logo" src="github_logo.png"></a></div>
 			  </td>
-			  <!-- end SOURCEFORGE_CUSTOM-->
+			  <!-- end GITHUB_CUSTOM-->
 			</tr>
 		  </tbody>
 		</table>
@@ -141,24 +141,24 @@ Getting Started</h1>
 <li><a class="el" href="a00024.html">Make a new release</a></li>
 <li><a class="el" href="a00012.html">People</a></li>
 </ul>
-<h1><a class="anchor" id="at_sourceforge"></a>
-StdAir at SourceForge</h1>
+<h1><a class="anchor" id="at_github"></a>
+StdAir on GitHub</h1>
 <ul>
-<li><a href="http://sourceforge.net/projects/stdair/">Project page</a></li>
-<li><a href="http://sourceforge.net/project/showfiles.php?group_id=267760">Download StdAir</a></li>
-<li><a href="https://sourceforge.net/apps/trac/stdair/newticket">Open a ticket fora bug or feature</a></li>
-<li><a href="http://sourceforge.net/mail/?group_id=267760">Mailing lists</a></li>
-<li><a href="https://sourceforge.net/apps/phpbb/stdair/">Forums</a><ul>
-<li><a href="https://sourceforge.net/apps/phpbb/stdair/viewforum.php?f=1">Discuss about Development issues</a></li>
-<li><a href="https://sourceforge.net/apps/phpbb/stdair/viewforum.php?f=2">Ask for Help</a></li>
-<li><a href="https://sourceforge.net/apps/phpbb/stdair/viewforum.php?f=3">Discuss StdAir</a></li>
+<li><a href="http://github.com/airsim/stdair">Project page</a></li>
+<li><a href="http://github.com/airsim/stdair/tags">Download StdAir</a></li>
+<li><a href="http://github.com/airsim/stdair/issues">Issues/tickets (bugs or features)</a><ul>
+<li><a href="http://github.com/airsim/stdair/issues/new">Open an issue/ticket</a></li>
 </ul>
 </li>
 </ul>
 <h1><a class="anchor" id="development"></a>
 StdAir Development</h1>
 <ul>
-<li><a href="http://stdair.git.sourceforge.net/git/gitweb.cgi?p=stdair/stdair;a=tree;h=refs/heads/trunk;hb=trunk">Git Repository</a> (Subversion is deprecated)</li>
+<li><a href="http://github.com/airsim/stdair">Git Repository</a> <pre class="fragment">$ git clone git@github.com:airsim/stdair.git stdairgit # If SSH is allowed
+$ git clone https://github.com/airsim/stdair.git stdairgit # If the firewall does not allow SSH
+$ cd stdairgit
+$ git checkout trunk
+</pre></li>
 <li><a class="el" href="a00014.html">Coding Rules</a></li>
 <li><a class="el" href="a00018.html">Documentation Rules</a></li>
 <li><a class="el" href="a00030.html">Test Rules</a></li>
@@ -167,10 +167,10 @@ StdAir Development</h1>
 External Libraries</h1>
 <ul>
 <li><a href="http://www.boost.org">Boost (C++ STL extensions)</a></li>
-<li><a href="http://www.zeromq.org/">ZeroMQ (networking made easy)</a></li>
-<li><a href="http://www.python.org/">Python</a></li>
-<li><a href="http://dev.mysql.com/">MySQL client</a></li>
-<li><a href="http://soci.sourceforge.net/">SOCI (C++ DB API)</a></li>
+<li><a href="http://www.zeromq.org">ZeroMQ (networking made easy)</a></li>
+<li><a href="http://www.python.org">Python</a></li>
+<li><a href="http://mariadb.org">MariaDB (drop-in replacement for MySQL)</a></li>
+<li><a href="http://soci.sourceforge.net">SOCI (C++ DB API)</a></li>
 </ul>
 <h1><a class="anchor" id="social_sponsorship"></a>
 Support StdAir</h1>
@@ -193,11 +193,13 @@ Support StdAir</h1>
 </p>
 <h1><a class="anchor" id="about"></a>
 About StdAir</h1>
-<p>StdAir is a C++ library of classes and functions modeling typical airline IT business objects. For instance, it is used by the C++ Revenue Management Open Library project (<a href="http://sourceforge.net/projects/rmol/">http://sourceforge.net/projects/rmol/</a>). StdAir mainly targets simulation purposes. <a class="el" href="index.html#N">N</a></p>
+<p>StdAir aims at providing a clean API, and the corresponding C++ implementation, for the basis of Airline IT and travel distribution Business Object Model (BOM), that is, to be used by several other open source projects, including all the components of the Travel Market Simulator (<a href="http://www.travel-market-simulator.com">http://www.travel-market-simulator.com</a>), such as AirRAC, RMOL, AirInv, AvlCal, AirTSP, SimFQT, SimLFS, SimCRS, TravelCCM, SEvMgr, TraDemGen, and TvlSim.</p>
+<p>StdAir mainly targets simulation purposes. <a class="el" href="index.html#N">N</a> Indeed, StdAir is the fundamental brick of the Travel Market Simulator. However, it may be used in a stand-alone mode.</p>
 <p>StdAir makes an extensive use of existing open-source libraries for increased functionality, speed and accuracy. In particular <a href="http://www.boost.org">Boost</a> (<em>C++ STL Extensions</em>) library is used.</p>
-<p>The StdAir library originates from the department of Operational Research and Innovation at <a href="http://www.amadeus.com">Amadeus</a>, Sophia Antipolis, France. StdAir is released under the terms of the <a href="http://www.gnu.org/licenses/lgpl-2.1.html">GNU Lesser General Public License</a> (LGPLv2.1) for you to enjoy.</p>
+<p>The StdAir library originates from the Travel Intelligence (TI) Business Unit (BI) at <a href="http://www.amadeus.com/blog/tag/travel-intelligence/">Amadeus</a>. StdAir is released under the terms of the <a href="http://www.gnu.org/licenses/lgpl-2.1.html">GNU Lesser General Public License</a> (LGPLv2.1) for you to enjoy.</p>
 <p>StdAir should work on <a href="http://en.wikipedia.org/wiki/GNU/Linux">GNU/Linux</a>, <a href="http://www.sun.com/software/solaris/">Sun Solaris</a>, Microsoft Windows (with <a href="http://www.cygwin.com/">Cygwin</a>, <a href="http://www.mingw.org/">MinGW/MSYS</a>, or <a href="http://msdn.microsoft.com/visualc/">Microsoft Visual C++ .NET</a>) and <a href="http://www.apple.com/macosx/">Mac OS X</a> operating systems.</p>
-<dl class="section note"><dt>Note</dt><dd><a class="anchor" id="N"></a>(N) - The StdAir library is <b>NOT</b> intended, in any way, to be used by airlines for production systems. If you want to report issue, bug or feature request, or if you just want to give feedback, have a look on the right-hand side of this page for the preferred reporting methods. In any case, please do not contact Amadeus directly for any matter related to StdAir.</dd></dl>
+<p>StdAir has been packaged for <a href="http://www.redhat.com">RedHat</a>/<a href="http://www.centos.org">CentOS</a>/<a href="http://www.fedoraproject.org">Fedora</a>. On RedHat/CentOS, you have <a href="http://fedoraproject.org/wiki/EPEL/FAQ#How_can_I_install_the_packages_from_the_EPEL_software_repository.3F">to enable the EPEL repositories</a>.</p>
+<dl class="section note"><dt>Note</dt><dd><a class="anchor" id="N"></a>(N) - The StdAir library is <b>NOT</b> intended, in any way, to be used by airlines, or by anyone else, for production systems. If you want to report issue, bug or feature request, or if you just want to give feedback, have a look on the right-hand side of this page for the preferred reporting methods. In any case, please do not contact Amadeus directly for any matter related to StdAir.</dd></dl>
 <p> 
 </div>
 <!-- end of main block -->
@@ -205,13 +207,13 @@ About StdAir</h1>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 		
-		<li class="footer">Generated on Sun Jun 28 2015 18:08:36 for StdAir by
+		<li class="footer">Generated on Sun Jun 28 2015 20:38:33 for StdAir by
 		  <a href="http://www.doxygen.org/index.html">
 			<img class="footer" src="doxygen.png" alt="doxygen"/></a> 
 		  1.8.9.1
 		</li>
 		<li class="footer">
-		  <a href="http://sourceforge.net/projects/stdair"><img class="footer" src="http://sflogo.sourceforge.net/sflogo.php?group_id=267760&type=12&format=.png" alt="SourceForge Logo"></a>
+		  <a href="http://www.stdair.org"><img class="footer" src="http://assets-cdn.github.com/images/modules/logos_page/Octocat.png" alt="GitHub Logo"></a>
 		</li>
 	  </ul>
 	</div>

@@ -40,8 +40,6 @@ var NAVTREEINDEX0 =
 "a00024.html#description":[12,0],
 "a00024.html#generate_rpm_packages":[12,6],
 "a00024.html#initialisation":[12,1],
-"a00024.html#post_news":[12,11],
-"a00024.html#send_announce":[12,12],
 "a00024.html#trunk_update":[12,4],
 "a00024.html#update_changelog":[12,7],
 "a00024.html#upload_doc":[12,10],
@@ -249,5 +247,7 @@ var NAVTREEINDEX0 =
 "a00057.html#a878afe0324fa15bc13a041f14768f71b":[27,0,2,6,0],
 "a00057.html#aa0d2f5c0391319d0250eb4cf0f8342eb":[27,0,2,6,6],
 "a00057.html#ab89c650d184d2e33fa8e7cfa1a2282c8":[27,0,2,6,1],
-"a00057.html#ac21179612b26b7bf2d1a270d0fd9721b":[27,0,2,6,4]
+"a00057.html#ac21179612b26b7bf2d1a270d0fd9721b":[27,0,2,6,4],
+"a00058.html":[27,0,2,7],
+"a00058.html#a5901833b656f50b5a95c264664e81ded":[27,0,2,7,3]
 };
