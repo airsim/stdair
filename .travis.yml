@@ -1,19 +1,18 @@
 language: cpp
 compiler:
- - gcc
+	- gcc
 before_install:
- - sudo apt-get update -qq
- - sudo apt-get install libboost-all-dev
- - sudo apt-get libreadline-dev libncurses5-dev libsoci-dev python-dev libpython-dev gettext doxygen-latex ghostscript 
+	- sudo apt-get update -qq
+	- sudo apt-get install libboost-all-dev
+	- sudo apt-get libreadline-dev libncurses5-dev libsoci-dev python-dev libpython-dev gettext doxygen-latex ghostscript 
 script:
- rm -rf build
- mkdir build
- pushd build
- # LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
- cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=OFF -DRUN_GCOV:BOOL=OFF $LIBSUFFIX_4_CMAKE ..
- make check
- popd
+	rm -rf build && mkdir build
+	pushd build
+	# LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
+	cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=OFF -DRUN_GCOV:BOOL=OFF $LIBSUFFIX_4_CMAKE ..
+	make check
+	popd
 notifications:
- irc:
- - "irc.freenode.net#airsim"
+	irc:
+	- "irc.freenode.net#airsim"
 
