@@ -163,12 +163,14 @@ $ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$STDAIR_VER \
 	-DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON \
 	-DINSTALL_DOC:BOOL=ON -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
 $ make check && make install
+$ cd ..
 $ git checkout gh-pages
-$ rsync -av --del $INSTALL_BASEDIR/share/doc/stdair/html/ ./
-$ git checkout -- .gitignore README.md
+$ rsync -av --del --exclude=.git $INSTALL_BASEDIR/share/doc/stdair/html/ ./
+$ git checkout -- .gitignore README.md CNAME
 $ git add .
 $ git commit -m "[Doc] Updated the documentation for $STDAIR_VER"
 $ git push
+$ git branch -d gh-pages
 \endverbatim 
 
 */
