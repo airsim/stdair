@@ -1,0 +1,7 @@
+var a00242 =
+[
+    [ "DEFAULT_PROGRESS_STATUS", "a00242.html#a145d88cc0964b825e37e4ed9bd584674", null ],
+    [ "DEFAULT_EVENT_OLDEST_DATE", "a00242.html#a86c160a90a3eb899e193f4b01cbb9def", null ],
+    [ "DEFAULT_EVENT_OLDEST_DATETIME", "a00242.html#a9230d5a7e408680ae6bf667c9e9cf8b9", null ],
+    [ "MAXIMUM_PROGRESS_STATUS", "a00242.html#ae545c52977843d5ed958c02e3cc75952", null ]
+];

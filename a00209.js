@@ -1,0 +1,27 @@
+var a00209 =
+[
+    [ "TravelSolutionStruct", "a00209.html#a731a99735b1dc8d2b249a80eab954c93", null ],
+    [ "~TravelSolutionStruct", "a00209.html#aad9128eb2ce97ae264459c08770ad03d", null ],
+    [ "getSegmentPath", "a00209.html#a2a0109076bc5e4bbceb909850f310d50", null ],
+    [ "getClassAvailabilityMapHolder", "a00209.html#a52a63c80644684007e27374859cb68f4", null ],
+    [ "getClassObjectIDMapHolder", "a00209.html#a01d02ef3b1c968acd6ea00b505a55ecf", null ],
+    [ "getClassYieldMapHolder", "a00209.html#affc394db1e80222cc35c452e4ef577fc", null ],
+    [ "getBidPriceVectorHolder", "a00209.html#ac98b6218ed69df843c63b9bdb6e039e6", null ],
+    [ "getClassBpvMapHolder", "a00209.html#a5ada64a8918e0f2a490c6ddb7cc28b8b", null ],
+    [ "getFareOptionList", "a00209.html#aad235887e40ceb8611be081438178826", null ],
+    [ "getFareOptionListRef", "a00209.html#af6db3f883f5058d8e1a403a085cfa6f8", null ],
+    [ "getChosenFareOption", "a00209.html#a4035f7abf6efb6633e01cc955f0f4547", null ],
+    [ "addSegment", "a00209.html#a305950a9eb56c6c61eb79222a9e482a6", null ],
+    [ "addClassAvailabilityMap", "a00209.html#ad014befefab597eeb7ae9953d6d6d0f4", null ],
+    [ "addClassObjectIDMap", "a00209.html#a695a23343ec9e97f4333973531a7a1b8", null ],
+    [ "addClassYieldMap", "a00209.html#a616fe39da4640504a27c836f5994beb0", null ],
+    [ "addBidPriceVector", "a00209.html#a664b1faa5f9be5f383642f58b4d7219d", null ],
+    [ "addClassBpvMap", "a00209.html#abcadb1151fb08a9ac8d4de472d6418ad", null ],
+    [ "addFareOption", "a00209.html#aa799932ab0aa84f3c757c362c151f0cf", null ],
+    [ "setChosenFareOption", "a00209.html#ac13ba68d6ca8fade6eaffaf9b6b246b4", null ],
+    [ "toStream", "a00209.html#a60c7624da1035a1f07079a7307c744b5", null ],
+    [ "fromStream", "a00209.html#aea5f674aa64f45b57f51142844db7a9c", null ],
+    [ "describe", "a00209.html#a2342cae6b3f628ebe5b74777a614c2e4", null ],
+    [ "display", "a00209.html#acc6a7ea9ccb397d9c8dd50159a6a3050", null ],
+    [ "describeSegmentPath", "a00209.html#ae02cad1d64ca3859f4361e4c605d0079", null ]
+];
