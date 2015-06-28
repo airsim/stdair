@@ -106,6 +106,7 @@ Microsoft Windows (with <a href="http://www.cygwin.com/">Cygwin</a>,
 StdAir has been packaged for <a href="http://www.redhat.com">RedHat</a>/<a href="http://www.centos.org">CentOS</a>/<a href="http://www.fedoraproject.org">Fedora</a>. On RedHat/CentOS, you have <a
 href="http://fedoraproject.org/wiki/EPEL/FAQ#How_can_I_install_the_packages_from_the_EPEL_software_repository.3F">to enable the EPEL repositories</a>.
 
+Generated on $datetime
 
 \note
 \anchor N
