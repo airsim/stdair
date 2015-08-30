@@ -1,3 +1,7 @@
+* 2015-08-30:
+- Version 1.00.4
+- New API for Boost.Test for Boost 1.59
+
 * 2015-06-28:
 - Version 1.00.3
 - Documentation: moved the project hosting to GitHub (from SourceForge)
