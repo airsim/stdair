@@ -1,3 +1,6 @@
+* Sat Feb 25 2017 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.00.5
+- Attempt to fix the FTBFS issue related to new Boost 1.63 serialization
+
 * Sun Aug 30 2015 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 1.00.4
 - New API for Boost.Test for Boost 1.59
 
