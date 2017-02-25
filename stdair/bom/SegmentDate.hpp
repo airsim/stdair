@@ -285,6 +285,10 @@ namespace stdair {
     /**
      * Destructor.
      */
+    // (Bad) work-around for an issue with Boost 1.63 Serialization
+#if BOOST_VERSION == 106300
+  public:
+#endif
     virtual ~SegmentDate();
 
   private:
