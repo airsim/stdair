@@ -20,7 +20,14 @@ namespace boost {
   namespace serialization {
     class access;
   }
+  namespace archive {
+    namespace detail {
+      template <class T>
+      class heap_allocation;
+    }
+  }
 }
+
 
 namespace stdair {
   
@@ -36,6 +43,7 @@ namespace stdair {
     template <typename BOM> friend class FacCloneBom;
     friend class FacBomManager;
     friend class boost::serialization::access;
+    template <class T> friend class boost::archive::detail::heap_allocation;
 
   public :
     // ////////// Type definitions ////////////
@@ -184,10 +192,6 @@ namespace stdair {
     /**
      * Destructor.
      */
-    // (Bad) work-around for an issue with Boost 1.63 Serialization
-#if BOOST_VERSION == 106300
-  public:
-#endif
     virtual ~Inventory();
 
   private:
