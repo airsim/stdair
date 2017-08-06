@@ -1,3 +1,8 @@
+* 2017-08-06:
+- Version 1.00.6
+- Fixed the FTBFS issue related to newer Boost Serialization (from 1.63)
+  Issue #2: http://github.com/airsim/stdair/issues/2
+
 * 2017-02-25:
 - Version 1.00.5
 - Attempt to fix the FTBFS issue related to new Boost 1.63 serialization

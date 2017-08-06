@@ -1,3 +1,7 @@
+* Sun Aug 06 2017 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.00.6
+- Fixed the FTBFS issue related to newer Boost Serialization (from 1.63):
+Issue #2: http://github.com/airsim/stdair/issues/2
+
 * Sat Feb 25 2017 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.00.5
 - Attempt to fix the FTBFS issue related to new Boost 1.63 serialization
 
