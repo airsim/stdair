@@ -23,7 +23,7 @@ namespace boost {
   namespace archive {
     namespace detail {
       template <class T>
-      class heap_allocation;
+      struct heap_allocation;
     }
   }
 }
@@ -43,7 +43,7 @@ namespace stdair {
     template <typename BOM> friend class FacCloneBom;
     friend class FacBomManager;
     friend class boost::serialization::access;
-    template <class T> friend class boost::archive::detail::heap_allocation;
+    template <class T> friend struct boost::archive::detail::heap_allocation;
 
   public :
     // ////////// Type definitions ////////////

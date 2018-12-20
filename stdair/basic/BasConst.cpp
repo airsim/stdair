@@ -114,15 +114,6 @@ namespace stdair {
   /** Default refundable value (false). */
   const NonRefundable_T NO_NON_REFUNDABLE (false);
 
-  /** Default saturdayStay value (true). */
-  const SaturdayStay_T DEFAULT_BOM_TREE_SATURDAY_STAY (true);
-  
-  /** Default change fees value (true). */
-  const ChangeFees_T DEFAULT_BOM_TREE_CHANGE_FEES (true);
-  
-  /** Default non refundable value (true). */
-  const NonRefundable_T DEFAULT_BOM_TREE_NON_REFUNDABLE (true);
-
   /** Stay duration 0 day. */
   const DayDuration_T NO_STAY_DURATION (0);
   

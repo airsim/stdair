@@ -13,7 +13,7 @@ module_set_name (stdair)
 #  * Whether or not all the header files should be published. By default, only
 #    the header files of the root directory are to be published.
 #  * A list of additional dependency on inter-module library targets.
-module_library_add_standard(".;basic;bom;factory;dbadaptor;command;service" all)
+module_library_add_standard (".;basic;bom;factory;dbadaptor;command;service")
 
 ##
 # Building and installation of a specific library.
@@ -23,6 +23,8 @@ module_library_add_standard(".;basic;bom;factory;dbadaptor;command;service" all)
 #    short name: a 'lib' suffix is just appended to the short name.
 #  * The directory where to find the header files.
 #  * The header files to be published/installed along with the library.
+#    If there are no header to be exported, the 'na' keyword (standing for
+#    'non available') must be given.
 #  * The source files to build the library.
 #    Note that the source files contain at least the header files. Hence,
 #    even when there are no .cpp source files, the .hpp files will appear.
@@ -45,9 +47,15 @@ module_library_add_specific (${PROJECT_NAME}uicl ui/cmdline
 #  * If specified, the name to be given to the executable. If no such name
 #    is given as parameter, the executable is given the name of the current
 #    module.
-module_binary_add (../batches)
+module_binary_add (batches stdair)
+
+##
+# Installing Python scripts
+#module_script_add (python/pystdair)
+#python_module_add (python/__init__.py)
 
 ##
 # Install the CMake import helper, so that third party projects can refer to it
 # (for libraries, header files and binaries)
 module_export_install ()
+

@@ -33,7 +33,7 @@ namespace stdair {
   class SegmentDate;
   class SegmentCabin;
   class BookingClass; 
-  class EventStruct; 
+  struct EventStruct; 
 
   /**
    * @brief Utility class to export StdAir objects in a JSON format.
