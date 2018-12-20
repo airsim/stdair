@@ -83,12 +83,14 @@ namespace stdair {
     // /////////// Setters ////////////
     /** FRAT5 Curve. */
     void setFrat5Curve (const FRAT5Curve_T& iFRAT5Curve) {
-      _frat5Curve = iFRAT5Curve;
+      _frat5Curve.clear();
+      _frat5Curve.insert (iFRAT5Curve.begin(), iFRAT5Curve.end());
     }
     
     /** Disutility Curve. */
     void setDisutilityCurve (const FFDisutilityCurve_T& iDisutilityCurve) {
-      _disutilityCurve = iDisutilityCurve;
+      _disutilityCurve.clear();
+      _disutilityCurve.insert (iDisutilityCurve.begin(), iDisutilityCurve.end());
     }
     
     /** Demand distribution. */
@@ -96,7 +98,7 @@ namespace stdair {
     void setStdDev (const StdDevValue_T& iStdDev) { _stdDev = iStdDev; }
     
     /** Demand distribution. */
-    void setMeanStdDev (const MeanStdDevPairVector_T& iMeanStdDev){ 
+    void setMeanStdDev (const MeanStdDevPairVector_T& iMeanStdDev) {
       _meanStdDev = iMeanStdDev; 
     }
 

@@ -72,5 +72,8 @@ namespace stdair {
   /** Frequent flyer tier (e.g., "M" meaning member). */
   extern const FrequentFlyer_T FREQUENT_FLYER_MEMBER;
   
+  /** Default value of Fare. */
+  extern const Fare_T DEFAULT_OND_FARE_VALUE;
+
 }
 #endif // __STDAIR_BAS_BASCONST_DEFAULTOBJECT_HPP

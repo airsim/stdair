@@ -50,7 +50,8 @@ namespace stdair {
   initSnapshotBlocks (const SegmentCabinIndexMap_T& iSegmentCabinIndexMap,
                       const ClassIndexMap_T& iClassIndexMap) {
     _segmentCabinIndexMap = iSegmentCabinIndexMap;
-    _classIndexMap = iClassIndexMap;
+    _classIndexMap.clear();
+    _classIndexMap.insert (iClassIndexMap.begin(), iClassIndexMap.end());
 
     unsigned int lNumberOfSegmentCabins = _segmentCabinIndexMap.size();
     unsigned int lNumberOfClasses = _classIndexMap.size();

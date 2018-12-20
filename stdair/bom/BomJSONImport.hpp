@@ -18,7 +18,7 @@ namespace stdair {
 
   /// Forward declarations
   class JSONString;
-  class ConfigHolderStruct;
+  struct ConfigHolderStruct;
 
   /**
    * @brief Utility class to import StdAir objects in a JSON format.

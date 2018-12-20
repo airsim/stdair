@@ -12,6 +12,7 @@
 #include <boost/multi_array.hpp>
 // StdAir
 #include <stdair/bom/key_types.hpp>
+#include <stdair/stdair_inventory_types.hpp>
 
 namespace stdair {
 
