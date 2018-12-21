@@ -48,6 +48,7 @@ module_library_add_specific (${PROJECT_NAME}uicl ui/cmdline
 #    is given as parameter, the executable is given the name of the current
 #    module.
 module_binary_add (batches stdair)
+#module_binary_add (ui/cmdline stdairbrowser)
 
 ##
 # Installing Python scripts
