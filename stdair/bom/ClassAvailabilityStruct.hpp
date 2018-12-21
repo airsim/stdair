@@ -1,5 +1,5 @@
-#ifndef __STDAIR_BOM_CLASSAVAILABILITYMAPHOLDERSTRUCT_HPP
-#define __STDAIR_BOM_CLASSAVAILABILITYMAPHOLDERSTRUCT_HPP
+#ifndef __STDAIR_BOM_CLASSAVAILABILITYSTRUCT_HPP
+#define __STDAIR_BOM_CLASSAVAILABILITYSTRUCT_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -23,25 +23,13 @@ namespace stdair {
   /**
    * Define list of (booking class, availability) maps.
    */
-  typedef std::list<ClassAvailabilityMap_T> ClassAvailabilityMapHolder_T;
+  struct ClassAvailabilityStruct;
+  typedef std::list<ClassAvailabilityStruct> ClassAvailabilityMapHolder_T;
 
   /**
    * @brief Structure holding the elements of a travel solution.
    */
-  struct ClassAvailabilityMapHolderStruct : public StructAbstract {
-  public:
-    // /////////// Getters ///////////////
-    /** Get the holder of avalabilities. */
-    const ClassAvailabilityMapHolder_T& getClassAvailabilityMapHolder() const {
-      return _classAvailabilityMapHolder;
-    }
-
-  public:
-    // /////////// Setters ///////////////
-    /** Add a class availability map. */
-    void addClassAvailabilityMap (const ClassAvailabilityMap_T&);
-
-
+  struct ClassAvailabilityStruct : public StructAbstract {
   public:
     // /////////// Display support method /////////////
     /**
@@ -71,19 +59,24 @@ namespace stdair {
   public:
     // //////////// Constructors & Destructor ///////////////
     /**
+     * "Wrapper" contructor.
+     */
+    ClassAvailabilityStruct (const ClassAvailabilityMap_T&);
+    
+    /**
      * Default constructor.
      */
-    ClassAvailabilityMapHolderStruct();
+    ClassAvailabilityStruct();
 
     /**
      * Copy constructor.
      */
-    ClassAvailabilityMapHolderStruct (const ClassAvailabilityMapHolderStruct&);
+    ClassAvailabilityStruct (const ClassAvailabilityStruct&);
     
     /**
      * Destructor.
      */
-    ~ClassAvailabilityMapHolderStruct();
+    ~ClassAvailabilityStruct();
     
 
   private:
@@ -91,8 +84,8 @@ namespace stdair {
     /**
      * The list of availabilities for each segment-date.
      */
-    ClassAvailabilityMapHolder_T _classAvailabilityMapHolder;
+    ClassAvailabilityMap_T _classAvailabilityStruct;
   };
 
 }
-#endif // __STDAIR_BOM_CLASSAVAILABILITYMAPHOLDERSTRUCT_HPP
+#endif // __STDAIR_BOM_CLASSAVAILABILITYSTRUCT_HPP
