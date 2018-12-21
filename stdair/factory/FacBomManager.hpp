@@ -523,7 +523,9 @@ namespace stdair {
 
     BomHolder<OBJECT2>& lDestHolder = getBomHolder<OBJECT2> (ioDest);
     lDestHolder._bomList = lOriginHolder._bomList;
-    lDestHolder._bomMap = lOriginHolder._bomMap;
+    lDestHolder._bomMap.clear();
+    lDestHolder._bomMap.insert (lOriginHolder._bomMap.begin(),
+                                lOriginHolder._bomMap.end());
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -539,7 +541,7 @@ namespace stdair {
   (SegmentDate& ioSegmentDate,
    SegmentDate& ioMarketingSegmentDate) {
     
-    ioSegmentDate._marketingSegmentDateList.push_back(&ioMarketingSegmentDate);
+    ioSegmentDate._marketingSegmentDateList.push_back (&ioMarketingSegmentDate);
   }
   
   // ////////////////////////////////////////////////////////////////////

@@ -31,6 +31,12 @@ namespace stdair {
    */
   struct ClassAvailabilityStruct : public StructAbstract {
   public:
+    // /////////// Getters ///////////////
+    const ClassAvailabilityMap_T& getClassAvailabilityMap() const {
+      return _classAvailabilityStruct;
+    }
+
+  public:
     // /////////// Display support method /////////////
     /**
      * Dump a Business Object into an output stream.
