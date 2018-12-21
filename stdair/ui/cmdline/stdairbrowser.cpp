@@ -18,8 +18,9 @@
 int main (int argc, char* argv[]) {
 
   //
-  stdair::ClassAvailabilityMapHolderStruct lCAMStruct;
-  std::cout << lCAMStruct << std::endl;
+  stdair::ClassAvailabilityMapHolderStruct lCAMStruct1;
+  stdair::ClassAvailabilityMapHolderStruct lCAMStruct2 (lCAMStruct1);
+  std::cout << lCAMStruct1 << " - " << lCAMStruct2 << std::endl;
   
   return 0;
 }

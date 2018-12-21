@@ -35,12 +35,6 @@ namespace stdair {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  const ClassAvailabilityMapHolder_T& TravelSolutionStruct::
-  getClassAvailabilityMapHolder() const {
-    return _classAvailabilityMapHolder.getClassAvailabilityMapHolder();
-  }
-
-  // ////////////////////////////////////////////////////////////////////
   void TravelSolutionStruct::toStream (std::ostream& ioOut) const {
     ioOut << describe();
   }
@@ -144,8 +138,20 @@ namespace stdair {
 
     // List of booking class availability maps: one map per segment
     oStr << " --- ";
-    const std::string lClassAvlMapString= _classAvailabilityMapHolder.describe();
-    oStr << lClassAvlMapString;
+    for (ClassAvailabilityMapHolder_T::const_iterator itSegMap =
+           _classAvailabilityMapHolder.begin();
+         itSegMap != _classAvailabilityMapHolder.end(); ++itSegMap, ++idx) {
+      if (idx != 0) {
+        oStr << " ; ";
+      }
+
+      // Retrieve the booking class availability map
+      const ClassAvailabilityStruct& lClassAvlMap = *itSegMap;
+      oStr << "[" << idx << "] ";
+
+      const std::string lClassAvlMapString = lClassAvlMap.describe();
+      oStr << lClassAvlMapString;
+    }
 
     return oStr.str();
   }
@@ -157,8 +163,9 @@ namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   void TravelSolutionStruct::
-  addClassAvailabilityMap (const ClassAvailabilityMap_T& iMap) {
-    _classAvailabilityMapHolder.addClassAvailabilityMap (iMap);
+  addClassAvailabilityMap (const ClassAvailabilityMap_T& iClassAvlMap) {
+    const ClassAvailabilityStruct lClassAvlStruct (iClassAvlMap);
+    _classAvailabilityMapHolder.push_back (lClassAvlStruct);
   }
 
   // ////////////////////////////////////////////////////////////////////
