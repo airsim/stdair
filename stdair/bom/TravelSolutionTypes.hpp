@@ -28,12 +28,6 @@ namespace stdair {
   /** Define the list of segment paths. */
   typedef std::list<SegmentPath_T> SegmentPathList_T;
 
-  /** Define booking class - availability map. */
-  typedef std::map<const ClassCode_T, Availability_T> ClassAvailabilityMap_T;
-
-  /** Define list of booking class - availability maps. */
-  typedef std::list<ClassAvailabilityMap_T> ClassAvailabilityMapHolder_T;
-
   /** Define booking class - object ID map. */
   typedef std::map<const ClassCode_T, BookingClassID_T> ClassObjectIDMap_T;
 

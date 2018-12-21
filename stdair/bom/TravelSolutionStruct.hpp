@@ -7,11 +7,11 @@
 // STL
 #include <iosfwd>
 #include <string>
-#include <vector>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
 #include <stdair/bom/BookingClassTypes.hpp>
+#include <stdair/bom/ClassAvailabilityMapHolderStruct.hpp>
 #include <stdair/bom/FareOptionStruct.hpp>
 #include <stdair/bom/FareOptionTypes.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
@@ -30,9 +30,7 @@ namespace stdair {
     }
 
     /** Get the holder of avalabilities. */
-    const ClassAvailabilityMapHolder_T& getClassAvailabilityMapHolder() const {
-      return _classAvailabilityMapHolder;
-    }
+    const ClassAvailabilityMapHolder_T& getClassAvailabilityMapHolder() const;
 
     /** Get the holder of object ID's. */
     const ClassObjectIDMapHolder_T& getClassObjectIDMapHolder() const {
@@ -138,6 +136,11 @@ namespace stdair {
     TravelSolutionStruct();
 
     /**
+     * Copy constructor.
+     */
+    TravelSolutionStruct (const TravelSolutionStruct&);
+    
+    /**
      * Destructor.
      */
     ~TravelSolutionStruct();
@@ -153,7 +156,7 @@ namespace stdair {
     /**
      * The list of availabilities for each segment-date.
      */
-    ClassAvailabilityMapHolder_T _classAvailabilityMapHolder;
+    ClassAvailabilityMapHolderStruct _classAvailabilityMapHolder;
 
     /**
      * The list of class ID for each segment-date.
