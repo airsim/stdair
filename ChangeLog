@@ -1,3 +1,7 @@
+* Tue Jan 15 2019 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.00.7
+- CMake nows finds out automatically the right Boost.Python library version
+- Python 3.4 is the new minimum required version
+
 * Sun Aug 06 2017 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.00.6
 - Fixed the FTBFS issue related to newer Boost Serialization (from 1.63):
 Issue #2: http://github.com/airsim/stdair/issues/2

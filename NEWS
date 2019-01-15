@@ -1,3 +1,8 @@
+* 2019-01-15:
+- Version 1.00.7
+- CMake nows finds out automatically the right Boost.Python library version
+- Python 3.4 is the new minimum required version
+
 * 2017-08-06:
 - Version 1.00.6
 - Fixed the FTBFS issue related to newer Boost Serialization (from 1.63)
