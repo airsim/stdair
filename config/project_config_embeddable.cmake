@@ -479,9 +479,9 @@ macro (get_python)
   unset (_required_version)
   if (${ARGC} GREATER 0)
     set (_required_version ${ARGV0})
-    message (STATUS "Requires PythonLibs-${_required_version}")
+    message (STATUS "Requires Python with version ${_required_version}; however just Python3 is considered here")
   else (${ARGC} GREATER 0)
-    message (STATUS "Requires PythonLibs without specifying any version")
+    message (STATUS "Requires Python3; any version will do")
   endif (${ARGC} GREATER 0)
 
   # The first check searches for the libraries and include paths.
