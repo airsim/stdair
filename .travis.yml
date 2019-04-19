@@ -1,22 +1,40 @@
 language: cpp
+sudo: required
+dist: xenial
 compiler:
- - gcc
+  - gcc
+os:
+  - linux
 before_install:
- - sudo apt-get update -qq
- - sudo apt-get install libboost-all-dev
- - sudo apt-get install libreadline-dev libncurses5-dev python-dev gettext doxygen-latex ghostscript 
- - sudo add-apt-repository ppa:jtaylor/jtaylor -y
- - sudo apt-get update -q
- - sudo apt-get install soci
-script: |
-    rm -rf build
-    mkdir build
-    pushd build
-    # LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
-    cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=OFF -DRUN_GCOV:BOOL=OFF $LIBSUFFIX_4_CMAKE ..
-    make check
-    popd
-notifications:
-  irc:
-  - "irc.freenode.net#airsim"
+  - sudo apt-get update
+  - sudo apt-get -y install locales
+  - sudo locale-gen $LANG
+  - sudo apt-get -y install gcc g++ clang cppcheck cmake
+  - sudo apt-get -y install zlib1g-dev libbz2-dev libgmp-dev
+  - sudo apt-get -y install libboost-all-dev libxapian-dev graphviz
+  - sudo apt-get -y install libreadline-dev libncurses5-dev
+  - sudo apt-get -y install libzmqpp-dev libssl-dev libffi-dev
+  - sudo apt-get -y install sqlite3 libsqlite3-dev libmysql++-dev
+  - sudo apt-get -y install postgresql-server-dev-all
+  - sudo apt-get -y install libicu-dev libprotobuf-dev protobuf-compiler
+  - sudo apt-get -y install python libpython-dev python3 libpython3-dev
+  - sudo apt-get -y install doxygen ghostscript texlive-latex-recommended
+  - mkdir -p /opt
+  - git clone https://github.com/SOCI/soci.git /opt/soci
+  - cp ci-scripts/soci-debian-cmake.patch /opt/soci
+  - ./ci-scripts/soci-install-debian.sh
+script:
+  - mkdir build
+  - pushd build
+  - cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=ON -DRUN_GCOV:BOOL=OFF -DLIB_SUFFIX= ..
+  - make && make check
+  - sudo make install
+  - /usr/bin/stdair
+branches:
+  only:
+  - trunk
+  - "/^stdair-\\d+\\./"
+env:
+ - LANG="en_US.UTF-8"
+ - LC_ALL="en_US.UTF-8"
 
