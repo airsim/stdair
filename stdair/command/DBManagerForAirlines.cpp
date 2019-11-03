@@ -4,13 +4,8 @@
 // STL
 #include <cassert>
 // SOCI
-#if defined(SOCI_HEADERS_BURIED)
-#include <soci/core/soci.h>
-#include <soci/backends/mysql/soci-mysql.h>
-#else // SOCI_HEADERS_BURIED
-#include <soci.h>
-#include <mysql/soci-mysql.h>
-#endif // SOCI_HEADERS_BURIED
+#include <soci/soci.h>
+#include <soci/mysql/soci-mysql.h>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_exceptions.hpp>

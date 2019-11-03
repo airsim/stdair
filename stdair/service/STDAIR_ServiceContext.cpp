@@ -9,11 +9,11 @@
 #include <cassert>
 #include <sstream>
 // Boost
-#if BOOST_VERSION >= 103900
+#if BOOST_VERSION_MACRO >= 103900
 #include <boost/make_shared.hpp>
-#else  // BOOST_VERSION >= 103900
+#else  // BOOST_VERSION_MACRO >= 103900
 #include <boost/shared_ptr.hpp>
-#endif // BOOST_VERSION >= 103900
+#endif // BOOST_VERSION_MACRO >= 103900
 // StdAir
 #include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/BomRoot.hpp>
