@@ -4,11 +4,11 @@
 // STL
 #include <cassert>
 #include <sstream>
-#if BOOST_VERSION >= 104100
+#if BOOST_VERSION_MACRO >= 104100
 // Boost Property Tree
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#endif // BOOST_VERSION >= 104100
+#endif // BOOST_VERSION_MACRO >= 104100
 // StdAir
 #include <stdair/stdair_types.hpp>
 #include <stdair/stdair_json.hpp>
@@ -31,13 +31,13 @@
 #include <stdair/service/DBSessionManager.hpp>
 #include <stdair/STDAIR_Service.hpp>
 
-#if BOOST_VERSION >= 104100
+#if BOOST_VERSION_MACRO >= 104100
 namespace bpt = boost::property_tree;
-#else // BOOST_VERSION >= 104100
+#else // BOOST_VERSION_MACRO >= 104100
 namespace bpt {
   typedef char ptree;
 }
-#endif // BOOST_VERSION >= 104100
+#endif // BOOST_VERSION_MACRO >= 104100
 
 namespace stdair {
 
@@ -283,7 +283,7 @@ namespace stdair {
       BomJSONExport::jsonExportFlightDateObjects (oStr, *lFlightDate_ptr);
       
     } else {
-#if BOOST_VERSION >= 104100
+#if BOOST_VERSION_MACRO >= 104100
       //
       bpt::ptree lPropertyTree;
       
@@ -301,7 +301,7 @@ namespace stdair {
 
       // Write the property tree into the JSON stream.
       write_json (oStr, lPropertyTree);
-#endif // BOOST_VERSION >= 104100
+#endif // BOOST_VERSION_MACRO >= 104100
     }
     
     return oStr.str();

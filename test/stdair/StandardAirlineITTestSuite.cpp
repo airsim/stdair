@@ -19,9 +19,9 @@
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_MODULE StdAirTest
-#if BOOST_VERSION >= 103900
+#if BOOST_VERSION_MACRO >= 103900
 #include <boost/test/unit_test.hpp>
-#else  // BOOST_VERSION >= 103900
+#else  // BOOST_VERSION_MACRO >= 103900
 #include <boost/test/test_tools.hpp>
 #include <boost/test/results_reporter.hpp>
 #include <boost/test/unit_test_suite.hpp>
@@ -29,7 +29,7 @@
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/framework.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
-#endif // BOOST_VERSION >= 103900
+#endif // BOOST_VERSION_MACRO >= 103900
 // Boost Serialisation
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>

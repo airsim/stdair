@@ -3,13 +3,14 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
+#include <string>
 #include <sstream>
-#if BOOST_VERSION >= 104100
+#if BOOST_VERSION_MACRO >= 104100
 // Boost Property Tree
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#endif // BOOST_VERSION_MACRO >= 104100
 #include <boost/regex.hpp>
-#endif // BOOST_VERSION >= 104100
 // StdAir
 #include <stdair/bom/BomJSONImport.hpp>
 #include <stdair/stdair_exceptions.hpp>
@@ -17,13 +18,15 @@
 #include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/ConfigHolderStruct.hpp>
 
-#if BOOST_VERSION >= 104100
+#if BOOST_VERSION_MACRO >= 104100
 namespace bpt = boost::property_tree;
-#else // BOOST_VERSION >= 104100
-namespace bpt {
-  typedef char ptree;
+#else // BOOST_VERSION_MACRO >= 104100
+namespace boost {
+  namespace property_tree {
+    typedef std::string ptree;
+  }
 }
-#endif // BOOST_VERSION >= 104100
+#endif // BOOST_VERSION_MACRO >= 104100
 
 namespace stdair {
 
@@ -99,7 +102,7 @@ namespace stdair {
                                               AirlineCode_T& ioAirlineCode) {
     bool hasKeyBeenSuccessfullyRetrieved = true;
 
-#if BOOST_VERSION >= 104100
+#if BOOST_VERSION_MACRO >= 104100
     // Create an empty property tree object
     bpt::ptree pt;
 
@@ -125,7 +128,7 @@ namespace stdair {
       hasKeyBeenSuccessfullyRetrieved = false;
     }
       
-#endif // BOOST_VERSION >= 104100  
+#endif // BOOST_VERSION_MACRO >= 104100
     return hasKeyBeenSuccessfullyRetrieved;
   }
 
@@ -134,7 +137,7 @@ namespace stdair {
                                             Date_T& ioDepartureDate) {
     bool hasKeyBeenSuccessfullyRetrieved = true;
 
-#if BOOST_VERSION >= 104100
+#if BOOST_VERSION_MACRO >= 104100
     // Create an empty property tree object
     bpt::ptree pt;
 
@@ -158,7 +161,7 @@ namespace stdair {
     } catch (bpt::ptree_error& bptException) {
       hasKeyBeenSuccessfullyRetrieved = false;
     }
-#endif // BOOST_VERSION >= 104100
+#endif // BOOST_VERSION_MACRO >= 104100
 
     return hasKeyBeenSuccessfullyRetrieved;
   }
@@ -169,7 +172,7 @@ namespace stdair {
     
     bool hasKeyBeenSuccessfullyRetrieved = true;
 
-#if BOOST_VERSION >= 104100
+#if BOOST_VERSION_MACRO >= 104100
     // Create an empty property tree object
     bpt::ptree pt;
 
@@ -194,7 +197,7 @@ namespace stdair {
     } catch (bpt::ptree_error& bptException) {
       hasKeyBeenSuccessfullyRetrieved = false;
     }
-#endif // BOOST_VERSION >= 104100
+#endif // BOOST_VERSION_MACRO >= 104100
 
     return hasKeyBeenSuccessfullyRetrieved;
   } 
@@ -205,7 +208,7 @@ namespace stdair {
     
     bool hasKeyBeenSuccessfullyRetrieved = true;
 
-#if BOOST_VERSION >= 104100
+#if BOOST_VERSION_MACRO >= 104100
     // Create an empty property tree object
     bpt::ptree pt;    
 
@@ -244,7 +247,7 @@ namespace stdair {
     } catch (boost::bad_lexical_cast& eCast) { 
       hasKeyBeenSuccessfullyRetrieved = false;
     }
-#endif // BOOST_VERSION >= 104100
+#endif // BOOST_VERSION_MACRO >= 104100
 
     return hasKeyBeenSuccessfullyRetrieved;
   }  
@@ -255,7 +258,7 @@ namespace stdair {
     
     bool hasKeyBeenSuccessfullyRetrieved = true;
 
-#if BOOST_VERSION >= 104100
+#if BOOST_VERSION_MACRO >= 104100
     // Create an empty property tree object
     bpt::ptree pt;
 
@@ -287,7 +290,7 @@ namespace stdair {
     } catch (stdair::CodeConversionException& cceException) {
       hasKeyBeenSuccessfullyRetrieved = false;
     }
-#endif // BOOST_VERSION >= 104100
+#endif // BOOST_VERSION_MACRO >= 104100
 
     return hasKeyBeenSuccessfullyRetrieved;
   }
@@ -298,7 +301,7 @@ namespace stdair {
     
     bool hasConfigBeenSuccessfullyRetrieved = true;
 
-#if BOOST_VERSION >= 104100
+#if BOOST_VERSION_MACRO >= 104100
     // Create an empty property tree object
     bpt::ptree pt;
 
@@ -315,7 +318,7 @@ namespace stdair {
     } catch (bpt::ptree_error& bptException) {
       hasConfigBeenSuccessfullyRetrieved = false;
     }
-#endif // BOOST_VERSION >= 104100
+#endif // BOOST_VERSION_MACRO >= 104100
 
     return hasConfigBeenSuccessfullyRetrieved;
   } 
