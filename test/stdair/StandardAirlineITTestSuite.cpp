@@ -49,7 +49,7 @@
 
 namespace boost_utf = boost::unit_test;
 
-#if BOOST_VERSION >= 103900
+#if BOOST_VERSION_MACRO >= 103900
 
 // (Boost) Unit Test XML Report
 std::ofstream utfReportStream ("StandardAirlineITTestSuite_utfresults.xml");
@@ -61,7 +61,7 @@ struct UnitTestConfig {
   /** Constructor. */
   UnitTestConfig() {
     boost_utf::unit_test_log.set_stream (utfReportStream);
-#if BOOST_VERSION >= 105900
+#if BOOST_VERSION_MACRO >= 105900
     boost_utf::unit_test_log.set_format (boost_utf::OF_XML);
 #else
     boost_utf::unit_test_log.set_format (boost_utf::XML);
@@ -422,12 +422,12 @@ BOOST_AUTO_TEST_CASE (bom_structure_clone_test) {
 // End the test suite
 BOOST_AUTO_TEST_SUITE_END()
 
-#else // BOOST_VERSION >= 103900
+#else // BOOST_VERSION_MACRO >= 103900
 boost_utf::test_suite* init_unit_test_suite (int, char* []) {
   boost_utf::test_suite* test = BOOST_TEST_SUITE ("Unit test example 1");
   return test;
 }
-#endif // BOOST_VERSION >= 103900
+#endif // BOOST_VERSION_MACRO >= 103900
 
 /*!
  * \endcode

@@ -6,9 +6,9 @@
 #include <sstream>
 // Boost
 #include <boost/version.hpp>
-#if BOOST_VERSION >= 103500
+#if BOOST_VERSION_MACRO >= 103500
 #include <boost/math/distributions/normal.hpp>
-#endif // BOOST_VERSION >= 103500
+#endif // BOOST_VERSION_MACRO >= 103500
 // StdAir
 #include <stdair/basic/RandomGeneration.hpp>
 
@@ -68,15 +68,15 @@ namespace stdair {
   RealNumber_T RandomGeneration::generateNormal (const RealNumber_T& mu,
                                                  const RealNumber_T& sigma) {
     
-#if BOOST_VERSION >= 103500
+#if BOOST_VERSION_MACRO >= 103500
     const Probability_T lVariateUnif = generateUniform01();
     const boost::math::normal lNormal (mu, sigma);
     const RealNumber_T lRealNumberOfRequestsToBeGenerated =
       boost::math::quantile (lNormal, lVariateUnif);
-#else // BOOST_VERSION >= 103500
+#else // BOOST_VERSION_MACRO >= 103500
     // TODO: rely on GSL when Boost version smaller than 1.35
     const RealNumber_T lRealNumberOfRequestsToBeGenerated = 0.0;
-#endif // BOOST_VERSION >= 103500
+#endif // BOOST_VERSION_MACRO >= 103500
 
     return lRealNumberOfRequestsToBeGenerated;
         
