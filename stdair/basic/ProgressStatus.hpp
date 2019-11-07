@@ -6,8 +6,6 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <string>
-// Boost Progress
-#include <boost/progress.hpp>
 // StdAir
 #include <stdair/basic/BasConst_Event.hpp>
 #include <stdair/stdair_basic_types.hpp>
