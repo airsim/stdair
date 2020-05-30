@@ -1,6 +1,8 @@
+Standard Airline IT Library
+===========================
 
-Summary:
---------
+# Summary
+
 StdAir aims at providing a clean API, and the corresponding C++
 implementation, for the basis of Airline IT and travel distribution
 Business Object Model (BOM), that is, to be used by several other
@@ -12,25 +14,26 @@ TravelCCM, SEvMgr, TraDemGen, and TvlSim.
 StdAir is the fundamental brick of the Travel Market Simulator.
 However, it may be used in a stand-alone mode.
 
-Getting and installing from the Fedora/CentOS/RedHat distribution:
-------------------------------------------------------------------
-Just use Yum:
-yum -y install stdair-devel stdair-doc
+# Installation
+
+## On Fedora/CentOS/RedHat distribution
+Just use DNF (or Yum on older distributions):
+```bash
+$ dnf -y install stdair-devel stdair-doc
+```
 
 You can also get the RPM packages (which may work on Linux
 distributions like Novel Suse and Mandriva) from the Fedora repository
-(e.g., for Fedora 30, 
-http://fr2.rpmfind.net/linux/fedora/releases/30/Everything/)
+(_e.g._, for Fedora 32, 
+https://fr2.rpmfind.net/linux/RPM/fedora/32/x86_64/)
 
 
-Building the library and test binary from Git repository:
-----------------------------------------------------------------
+## Building the library and test binary from Git repository
 The Git repository may be cloned as following:
 ```bash
 $ git clone git@github.com:airsim/stdair.git # through SSH
 $ git clone https://github.com/airsim/stdair.git # if the firewall filters SSH
 $ cd stdair
-$ git checkout trunk
 ```
 
 Then, you need the following packages (Fedora/RedHat/CentOS names here, 
@@ -51,18 +54,17 @@ but names may vary according to distributions):
 * rpm-build (optional)
 
 
-Building the library and test binary from the tarball:
-------------------------------------------------------
+# Building the library and test binary from the tarball
 The latest stable source tarball (`stdair*.tar.gz` or `.bz2`) can be
 found on GitHub: http://github.com/airsim/stdair/releases, _e.g._,
-http://github.com/airsim/stdair/archive/stdair-1.00.8.tar.gz
+https://github.com/airsim/stdair/archive/stdair-1.00.9.tar.gz
 
 To customise the following to your environment, you can alter the path
 to the installation directory:
 ```bash
-export INSTALL_BASEDIR=/home/user/dev/deliveries
-export STDAIR_VER=1.00.8
-if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
+export INSTALL_BASEDIR="${HOME}/dev/deliveries"
+export STDAIR_VER="1.00.9"
+if [ -d /usr/lib64 ]; then LIBSUFFIX="64"; fi
 export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
 ```
 
