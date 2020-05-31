@@ -1,6 +1,5 @@
 language: cpp
-sudo: required
-dist: xenial
+dist: bionic
 compiler:
   - gcc
 os:
@@ -19,10 +18,15 @@ before_install:
   - sudo apt-get -y install libicu-dev libprotobuf-dev protobuf-compiler
   - sudo apt-get -y install python libpython-dev python3 libpython3-dev
   - sudo apt-get -y install doxygen ghostscript texlive-latex-recommended
-  - mkdir -p /opt
-  - git clone https://github.com/SOCI/soci.git /opt/soci
-  - cp ci-scripts/soci-debian-cmake.patch /opt/soci
-  - ./ci-scripts/soci-install-debian.sh
+  - sudo apt-get -y install apt-transport-https ca-certificates gnupg software-properties-common wget
+  - wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+  - sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+  - sudo apt-get update
+  - sudo apt-get -y install cmake
+  - sudo mkdir -p /opt
+  - sudo git clone https://github.com/SOCI/soci.git /opt/soci
+  - sudo cp ci-scripts/soci-debian-cmake.patch /opt/soci
+  - sudo ./ci-scripts/soci-install-debian.sh
 script:
   - mkdir build
   - pushd build
@@ -32,9 +36,8 @@ script:
   - /usr/bin/stdair
 branches:
   only:
-  - trunk
+  - master
   - "/^stdair-\\d+\\./"
 env:
- - LANG="en_US.UTF-8"
- - LC_ALL="en_US.UTF-8"
+ - LANG="en_US.UTF-8" LC_ALL="en_US.UTF-8"
 
