@@ -338,7 +338,7 @@ macro (get_external_libs)
     endif (${_arg_lower} STREQUAL "lcov")
 
     if (${_arg_lower} STREQUAL "python")
-      set (NEED_PYTHON ON PARENT_SCOPE)
+      set (NEED_PYTHON ON)
       get_python (${_arg_version})
     endif (${_arg_lower} STREQUAL "python")
 
@@ -627,9 +627,19 @@ macro (get_boost)
   set (Boost_USE_STATIC_LIBS OFF)
   set (Boost_USE_MULTITHREADED ON)
   set (Boost_USE_STATIC_RUNTIME OFF)
+  # Boost.Python - Depending on the platforms, the component name
+  # differs. We try all of them, and the find_package() will retrieve
+  # just one
   if (NEED_PYTHON)
-    set (python_cpt_name1 "python${Python3_VERSION_MAJOR}")
-    set (python_cpt_name2 "python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}")
+    set (python_cpt_name0 "python")
+    #
+    if (Python3_VERSION_MAJOR)
+      set (python_cpt_name1 "python${Python3_VERSION_MAJOR}")
+    endif (Python3_VERSION_MAJOR)
+    #
+    if (Python3_VERSION_MINOR)
+      set (python_cpt_name2 "python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}")
+    endif (Python3_VERSION_MINOR)
   endif (NEED_PYTHON)
 
   # Boost components for (non-Python) libraries
@@ -639,7 +649,7 @@ macro (get_boost)
   # Boost components for Python extensions
   if (NEED_PYTHON)
     set (BOOST_REQUIRED_COMPONENTS_FOR_PYEXT
-      ${python_cpt_name1} ${python_cpt_name2})
+      ${python_cpt_name0} ${python_cpt_name1} ${python_cpt_name2})
   endif (NEED_PYTHON)    
   
   # Boost components for main (non-test) binaries
@@ -667,55 +677,60 @@ macro (get_boost)
   find_package (BoostWrapper ${_required_version} REQUIRED)
 
   if (Boost_FOUND)
-    # Boost.Python library
-    if (NEED_PYTHON)
-      if (${Boost_PYTHON3_FOUND})
-	message (STATUS "  + Boost_PYTHON3_FOUND: ${Boost_PYTHON3_FOUND}")
-      endif (${Boost_PYTHON3_FOUND})
-      #
-      if (${Boost_PYTHON38_FOUND})
-	message (STATUS "  + Boost_PYTHON38_FOUND: ${Boost_PYTHON38_FOUND}")
-      endif (${Boost_PYTHON38_FOUND})
-      #
-      if (${Boost_PYTHON_VERSION})
-	message (STATUS "  + Boost_PYTHON_VERSION: ${Boost_PYTHON_VERSION}")
-      endif (${Boost_PYTHON_VERSION})
-      #
-      if (${Boost_PYTHON_LIBRARY})
-	message (STATUS "  + Boost_PYTHON_LIBRARY: ${Boost_PYTHON_LIBRARY}")
-      endif (${Boost_PYTHON_LIBRARY})
-      #
-      if (${Boost_PYTHON3_LIBRARY})
-	message (STATUS "  + Boost_PYTHON3_LIBRARY: ${Boost_PYTHON3_LIBRARY}")
-      endif (${Boost_PYTHON3_LIBRARY})
-      #
-      if (${Boost_PYTHON36_LIBRARY})
-	message (STATUS "  + Boost_PYTHON36_LIBRARY: ${Boost_PYTHON36_LIBRARY}")
-      endif (${Boost_PYTHON36_LIBRARY})
-      #
-      if (${Boost_PYTHON37_LIBRARY})
-	message (STATUS "  + Boost_PYTHON37_LIBRARY: ${Boost_PYTHON37_LIBRARY}")
-      endif (${Boost_PYTHON37_LIBRARY})
-      #
-      if (${Boost_PYTHON38_LIBRARY})
-	message (STATUS "  + Boost_PYTHON38_LIBRARY: ${Boost_PYTHON38_LIBRARY}")
-      endif (${Boost_PYTHON38_LIBRARY})
-      #
-      if (${Boost_PYTHON39_LIBRARY})
-	message (STATUS "  + Boost_PYTHON39_LIBRARY: ${Boost_PYTHON39_LIBRARY}")
-      endif (${Boost_PYTHON39_LIBRARY})
 
+    if (NEED_PYTHON)
       # Boost has a single Python library, but its name depends on the
       # distribution, it can be libboost_python3 or libboost_python3x
-      if (${Boost_PYTHON3_FOUND})
-	set (BOOST_REQUIRED_COMPONENTS_FOR_PYEXT ${python_cpt_name1})
-	list (REMOVE_ITEM BOOST_REQUIRED_COMPONENTS ${python_cpt_name2})
-      endif (${Boost_PYTHON3_FOUND})
+      if (Boost_PYTHON_LIBRARY)
+	set (BOOST_REQUIRED_COMPONENTS_FOR_PYEXT ${python_cpt_name0})
+	if (Python3_VERSION_MAJOR)
+	  list (REMOVE_ITEM BOOST_REQUIRED_COMPONENTS ${python_cpt_name1})
+	endif (Python3_VERSION_MAJOR)
+	if (Python3_VERSION_MINOR)
+	  list (REMOVE_ITEM BOOST_REQUIRED_COMPONENTS ${python_cpt_name2})
+	endif (Python3_VERSION_MINOR)
+      endif (Boost_PYTHON_LIBRARY)
 
-      if (${Boost_PYTHON${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}_FOUND})
+      #
+      if (Boost_PYTHON${Python3_VERSION_MAJOR}_LIBRARY)
+	set (BOOST_REQUIRED_COMPONENTS_FOR_PYEXT ${python_cpt_name1})
+	list (REMOVE_ITEM BOOST_REQUIRED_COMPONENTS ${python_cpt_name0})
+	if (Python3_VERSION_MINOR)
+	  list (REMOVE_ITEM BOOST_REQUIRED_COMPONENTS ${python_cpt_name2})
+	endif (Python3_VERSION_MINOR)
+      endif (Boost_PYTHON${Python3_VERSION_MAJOR}_LIBRARY)
+
+      #
+      if (Boost_PYTHON${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}_LIBRARY)
 	set (BOOST_REQUIRED_COMPONENTS_FOR_PYEXT ${python_cpt_name2})
-	list (REMOVE_ITEM BOOST_REQUIRED_COMPONENTS ${python_cpt_name1})
-      endif (${Boost_PYTHON${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}_FOUND})
+	list (REMOVE_ITEM BOOST_REQUIRED_COMPONENTS ${python_cpt_name0})
+	if (Python3_VERSION_MAJOR)
+	  list (REMOVE_ITEM BOOST_REQUIRED_COMPONENTS ${python_cpt_name1})
+	endif (Python3_VERSION_MAJOR)
+      endif (Boost_PYTHON${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}_LIBRARY)
+
+      # Reporting
+      message (STATUS "  + Retained Boost Python component: ${BOOST_REQUIRED_COMPONENTS_FOR_PYEXT}")
+      
+      # Derive the Boost.Python component name (amoung Boost_PYTHON,
+      # Boost_PYTHON3, Boost_PYTHON3X)
+      string (TOUPPER ${BOOST_REQUIRED_COMPONENTS_FOR_PYEXT} _python_cpt)
+
+      # Reporting
+      message (STATUS "  + Boost Python component: Boost_${_python_cpt}")
+
+      # Derive the Python version used by Boost.Python
+      if (${Boost_${_python_cpt}_LIBRARY} MATCHES "python([1-9])\\.?([0-9])?")
+	set (Boost_PYTHON_VERSION "${CMAKE_MATCH_1}${CMAKE_MATCH_2}")
+      endif (${Boost_${_python_cpt}_LIBRARY} MATCHES "python([1-9])\\.?([0-9])?")
+
+      # Reporting
+      message (STATUS "  + Boost_PYTHON_VERSION: ${Boost_PYTHON_VERSION}")
+
+      # Boost.Python library
+      if (Boost_${_python_cpt}_LIBRARY)
+	message (STATUS "  + Boost_${_python_cpt}_LIBRARY: ${Boost_${_python_cpt}_LIBRARY}")
+      endif (Boost_${_python_cpt}_LIBRARY)
     endif (NEED_PYTHON)
 
     # Update the list of include directories for the project
