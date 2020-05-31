@@ -1,3 +1,7 @@
+* 2020-05-31:
+- Version 1.00.10
+- More robust way to derive Boost.Python component (even if not used)
+
 * 2020-05-30:
 - Version 1.00.9
 - Removed dependency on Python
