@@ -143,7 +143,7 @@ namespace stdair {
     const DateOffset_T l2Days (2);
     const Duration_T l2135 (21, 45, 0);
     const Duration_T l0610 (6, 10, 0);
-    const Duration_T l2205 (22, 05, 0);
+    //const Duration_T l2205 (22, 05, 0);
     SegmentDateKey lSegmentDateKey (lLHR, lSYD);
 
     SegmentDate& lLHRSYDSegment =
@@ -1990,8 +1990,6 @@ namespace stdair {
     // Create a first SegmentDate (SIN-BKK) for SQ's Inventory
     const AirportCode_T lSIN ("SIN");
     const AirportCode_T lBKK ("BKK");
-    const DateOffset_T l1Day (1);
-    const DateOffset_T l2Days (2);
     const Duration_T l0820 (8, 20, 0);
     const Duration_T l1100 (11, 0, 0);
     const Duration_T l0340 (3, 40, 0);

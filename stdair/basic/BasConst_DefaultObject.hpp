@@ -19,6 +19,10 @@ namespace stdair {
   /** London city code (e.g., "LHR"). */
   extern const CityCode_T POS_LHR;
 
+  /** Dates **/
+  extern const Date_T DATE_20110115;
+  extern const Date_T DATE_20111231;
+
   /** Advance purchase 0 day. */ 
   extern const DayDuration_T NO_ADVANCE_PURCHASE;
   
