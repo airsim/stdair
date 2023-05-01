@@ -537,18 +537,13 @@ macro (get_icu)
     message (STATUS "Requires ICU without specifying any version")
   endif (${ARGC} GREATER 0)
 
-  # 
+  #
+  #set (ICU_DEBUG ON) 
   set (ICU_REQUIRED_COMPONENTS i18n uc data)
   find_package (ICU ${_required_version}
 	COMPONENTS ${ICU_REQUIRED_COMPONENTS} REQUIRED)
 
-  icudebug (ICU_I18N_FOUND)
   if (ICU_FOUND)
-	#
-	#if (ICU_I18N_FOUND)
-	#  icudebug (ICU_I18N_FOUND)
-	#endif (ICU_I18N_FOUND)
-
     # Update the list of include directories for the project
     include_directories (${ICU_INCLUDE_DIRS})
 
