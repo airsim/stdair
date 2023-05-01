@@ -30,7 +30,7 @@ namespace stdair {
     }
 
 #if BOOST_VERSION_MACRO >= 103500
-    if (boostfs::is_regular (lPath) == true) {
+    if (boostfs::is_regular_file (lPath) == true) {
       oFine = true;
     }
 #endif // BOOST_VERSION_MACRO >= 103500
@@ -39,3 +39,4 @@ namespace stdair {
   }
   
 }
+

@@ -2,17 +2,17 @@
 
 \page stdair-config Configuration Script for the C++ Standard Airline IT Object Library
 
-\section sec_synopsis SYNOPSIS
+\section sec_cfg_synopsis SYNOPSIS
 <b>stdair-config</b> <tt>[--prefix] [--version] [--libs] [--cflags]</tt>
 
-\section sec_description DESCRIPTION
+\section sec_cfg_description DESCRIPTION
 
 \e stdair-config is a tool that is used by configure to determine the
 compiler and linker flags that should be used to compile and link
 programs that use \e StdAir. It is also used internally by the .m4
 macros, that are included with \e StdAir, for GNU autoconf.
 
-\section sec_options OPTIONS
+\section sec_cfg_options OPTIONS
 
 \e stdair-config accepts the following options:
 
@@ -50,10 +50,10 @@ macros, that are included with \e StdAir, for GNU autoconf.
  \b --refmanpath<br>
     Show where the PDF documentation is located.
 
-\section sec_see_also SEE ALSO
+\section sec_cfg_see_also SEE ALSO
  \b stdair(1), \b boost-config(1), \b stdair-library(3)
 
-\section sec_copyright COPYRIGHT
+\section sec_cfg_copyright COPYRIGHT
 
 Copyright © 2009-2011 Denis Arnaud
 
