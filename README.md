@@ -24,8 +24,8 @@ $ dnf -y install stdair-devel stdair-doc
 
 You can also get the RPM packages (which may work on Linux
 distributions like Novel Suse and Mandriva) from the Fedora repository
-(_e.g._, for Fedora 32, 
-https://fr2.rpmfind.net/linux/RPM/fedora/32/x86_64/)
+(_e.g._, for Fedora Rawhide, 
+https://fr2.rpmfind.net/linux/RPM/fedora/devel/rawhide/x86_64/)
 
 
 ## Building the library and test binary from Git repository
@@ -124,5 +124,5 @@ $ ./stdair/stdair -b
 $ ${INSTALL_BASEDIR}/stdair-$STDAIR_VER/bin/stdair -b
 ```
 
-Denis Arnaud (August 2015)
+Denis Arnaud
 
