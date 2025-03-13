@@ -63,8 +63,6 @@ to the installation directory:
 ```bash
 export INSTALL_BASEDIR="${HOME}/dev/deliveries"
 export STDAIR_VER="1.00.17"
-if [ -d /usr/lib64 ]; then LIBSUFFIX="64"; fi
-export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
 ```
 
 Then, as usual:
@@ -73,7 +71,7 @@ Then, as usual:
 $ mkdir build && cd build
 $ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/stdair-$STDAIR_VER \
 	-DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON \
-	-DINSTALL_DOC:BOOL=ON -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
+	-DINSTALL_DOC:BOOL=ON -DRUN_GCOV:BOOL=OFF ..
 ```
 * With a specific version of Boost, say Boost 1.69 installed in a parallel way
   (for instance, as an optional module):
