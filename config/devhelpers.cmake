@@ -8,7 +8,7 @@ set (CFG_SCRIPT_PATH bin)
 
 # (Debian) Packaging helper
 set (PKGCFG_SCRIPT ${PROJECT_NAME}.pc)
-set (PKGCFG_SCRIPT_PATH ${LIBDIR}/pkgconfig)
+set (PKGCFG_SCRIPT_PATH ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 
 # GNU Autotools helper (M4 macro file)
 set (M4_MACROFILE ${PROJECT_NAME}.m4)
