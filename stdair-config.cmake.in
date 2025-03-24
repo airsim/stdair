@@ -1,3 +1,5 @@
+@PACKAGE_INIT@
+
 #
 # Config file for the StdAir package. It defines the following variables:
 #  STDAIR_VERSION      - version of StdAir
