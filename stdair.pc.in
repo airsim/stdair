@@ -1,7 +1,7 @@
 prefix=@prefix@
 exec_prefix=${prefix}
 bindir=${exec_prefix}/bin
-libdir=${exec_prefix}/lib@LIB_SUFFIX@
+libdir=${exec_prefix}/@INSTALL_LIB_DIR@
 libexecdir=${exec_prefix}/libexec
 sbindir=${exec_prefix}/sbin
 sysconfdir=${prefix}/etc

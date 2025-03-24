@@ -4,7 +4,7 @@
 
 # Configure helper (e.g., to easily retrieve the version and compilation flags)
 set (CFG_SCRIPT ${PROJECT_NAME}-config)
-set (CFG_SCRIPT_PATH bin)
+set (CFG_SCRIPT_PATH ${INSTALL_BIN_DIR})
 
 # (Debian) Packaging helper
 set (PKGCFG_SCRIPT ${PROJECT_NAME}.pc)
@@ -12,7 +12,7 @@ set (PKGCFG_SCRIPT_PATH ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 
 # GNU Autotools helper (M4 macro file)
 set (M4_MACROFILE ${PROJECT_NAME}.m4)
-set (M4_MACROFILE_PATH share/aclocal)
+set (M4_MACROFILE_PATH ${CMAKE_INSTALL_DATADIR}/aclocal)
 
 # Convert the developer script utilities (basically, just replace
 # the @<variable>@ variables)
