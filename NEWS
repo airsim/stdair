@@ -1,4 +1,8 @@
 * 2025-03-24:
+- Version 1.00.19
+- Fixing CMake export file
+
+* 2025-03-24:
 - Version 1.00.18
 - Upgraded CMake support files
 

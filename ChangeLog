@@ -1,3 +1,6 @@
+* Mon Mar 24 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.19:
+- Fixed CMake export file
+
 * Mon Mar 24 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.18:
 - Upgraded CMake support files
 
