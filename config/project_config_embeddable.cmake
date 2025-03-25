@@ -1843,6 +1843,11 @@ macro (module_library_add_specific
 
   # Register the (CMake) target for the library
   add_library (${_lib_target} SHARED ${_lib_sources})
+  # Add the include directory for the consumer
+  # TODO: Private and Public header files are not distinguished
+  target_include_directories(${_lib_target} PUBLIC
+      $<INSTALL_INTERFACE:${INSTALL_INCLUDE_DIR}>
+  )
 
   # For each module, given as parameter of that macro, add the corresponding
   # library target to a dedicated list
