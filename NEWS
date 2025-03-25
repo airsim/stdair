@@ -1,4 +1,8 @@
 * 2025-03-24:
+- Version 1.00.20
+- Made the CMake export relocatable
+
+* 2025-03-24:
 - Version 1.00.19
 - Fixing CMake export file
 
