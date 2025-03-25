@@ -18,7 +18,7 @@ set (STDAIR_LIBRARY_DIRS "@PACKAGE_STDAIR_LIB_DIR@")
 set (STDAIR_SAMPLE_DIR "@PACKAGE_STDAIR_SAMPLE_DIR@")
 
 # Our library dependencies (contains definitions for IMPORTED targets)
-include ("@STDAIR_CMAKE_DIR@/stdair-library-depends.cmake")
+include ("${CMAKE_CURRENT_LIST_DIR}/stdair-library-depends.cmake")
 
 # These are IMPORTED targets created by stdair-library-depends.cmake
 set (STDAIR_LIBRARIES stdairlib stdairuicllib)
