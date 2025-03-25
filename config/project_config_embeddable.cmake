@@ -2656,6 +2656,11 @@ macro (install_dev_helper_files)
   set (${PACKAGE_NAME}_LIBEXEC_DIR "${INSTALL_LIBEXEC_DIR}")
   set (${PACKAGE_NAME}_PY_LIB_DIR "${INSTALL_PY_LIB_DIR}")
   set (${PACKAGE_NAME}_CMAKE_DIR "${LIB_DEPENDENCY_EXPORT_PATH}")
+  # When the project is OpenTREP, OPENTREP_SAMPLE_DIR has
+  # already been defined before
+  if (NOT PROJECT_NAME STREQUAL "opentrep")
+    set (${PACKAGE_NAME}_SAMPLE_DIR "${INSTALL_SAMPLE_DIR}")
+  endif ()
   configure_package_config_file(
       ${PROJECT_NAME}-config.cmake.in
       ${PROJECT_NAME}-config.cmake
@@ -2665,17 +2670,13 @@ macro (install_dev_helper_files)
         ${PACKAGE_NAME}_BIN_DIR
         ${PACKAGE_NAME}_LIB_DIR
         ${PACKAGE_NAME}_LIBEXEC_DIR
+        ${PACKAGE_NAME}_SAMPLE_DIR
   )
   write_basic_package_version_file(
       ${PROJECT_NAME}-config-version.cmake
       VERSION ${PACKAGE_VERSION}
       COMPATIBILITY AnyNewerVersion
   )
-  # When the project is OpenTREP, OPENTREP_SAMPLE_DIR has
-  # already been defined before
-  if (NOT "${PROJECT_NAME}" STREQUAL "opentrep")
-    set (${PACKAGE_NAME}_SAMPLE_DIR "${INSTALL_SAMPLE_DIR}")
-  endif (NOT "${PROJECT_NAME}" STREQUAL "opentrep")
   if (NEED_PYTHON)
 	configure_file (${PROJECT_NAME}-config-python.cmake.in
 	  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-python.cmake" @ONLY)

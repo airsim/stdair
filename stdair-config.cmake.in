@@ -12,13 +12,13 @@
 
 # Tell the user project where to find the headers, libraries and sample files
 set (STDAIR_VERSION "@PACKAGE_VERSION@")
-set (STDAIR_BINARY_DIRS "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_BINDIR@")
-set (STDAIR_INCLUDE_DIRS "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_INCLUDEDIR@")
-set (STDAIR_LIBRARY_DIRS "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@")
-set (STDAIR_SAMPLE_DIR "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_DATADIR@/@PROJECT_NAME@/samples")
+set (STDAIR_BINARY_DIRS "@PACKAGE_STDAIR_BIN_DIR@")
+set (STDAIR_INCLUDE_DIRS "@PACKAGE_STDAIR_INCLUDE_DIRS@")
+set (STDAIR_LIBRARY_DIRS "@PACKAGE_STDAIR_LIB_DIR@")
+set (STDAIR_SAMPLE_DIR "@PACKAGE_STDAIR_SAMPLE_DIR@")
 
 # Our library dependencies (contains definitions for IMPORTED targets)
-include ("@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@/cmake/@PROJECT_NAME@/@PROJECT_NAME@-library-depends.cmake")
+include ("${CMAKE_CURRENT_LIST_DIR}/stdair-library-depends.cmake")
 
 # These are IMPORTED targets created by stdair-library-depends.cmake
 set (STDAIR_LIBRARIES stdairlib stdairuicllib)
