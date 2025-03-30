@@ -1,3 +1,6 @@
+* Sun Mar 30 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.21:
+- Made the CMake export relocatable
+
 * Tue Mar 25 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.20:
 - Made the CMake export relocatable
 
