@@ -62,7 +62,7 @@ To customise the following to your environment, you can alter the path
 to the installation directory:
 ```bash
 export INSTALL_BASEDIR="${HOME}/dev/deliveries"
-export STDAIR_VER="1.00.21"
+export STDAIR_VER="1.00.22"
 ```
 
 Then, as usual:

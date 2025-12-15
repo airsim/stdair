@@ -1,3 +1,6 @@
+* Mon Dec 15 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.22:
+- Fixed a few issues with the doc and man pages
+
 * Sun Mar 30 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.21:
 - Made the CMake export relocatable
 
