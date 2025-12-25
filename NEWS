@@ -1,3 +1,8 @@
+* 2025-12-25:
+- Version 1.00.24
+- Improved support for PostgreSQL
+- Slightly upgraded FindXWrapper.cmake scripts
+
 * 2025-12-24:
 - Version 1.00.23
 - Upgraded CMake conf for Python

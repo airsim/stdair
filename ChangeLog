@@ -1,25 +1,29 @@
-* Wed Dec 24 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.23:
+* Wed Dec 24 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.24
+- Improved support for PostgreSQL
+- Slightly upgraded FindXWrapper.cmake scripts
+
+* Wed Dec 24 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.23
 - Upgraded CMake conf for Python
 
-* Mon Dec 15 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.22:
+* Mon Dec 15 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.22
 - Fixed a few issues with the doc and man pages
 
-* Sun Mar 30 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.21:
+* Sun Mar 30 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.21
 - Made the CMake export relocatable
 
-* Tue Mar 25 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.20:
+* Tue Mar 25 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.20
 - Made the CMake export relocatable
 
-* Mon Mar 24 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.19:
+* Mon Mar 24 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.19
 - Fixed CMake export file
 
-* Mon Mar 24 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.18:
+* Mon Mar 24 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.18
 - Upgraded CMake support files
 
-* Mon Jan 27 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.17:
+* Mon Jan 27 2025 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.17
 - Upgraded CMake support files
 
-* Mon Nov 18 2024 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.16:
+* Mon Nov 18 2024 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.16
 - Upgraded CMake support files
 
 * Sat Mar 23 2024 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.15
@@ -43,101 +47,101 @@
 * Sat May 30 2020 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.9
 - Removed dependency on Python
 
-* Thu Jul 11 2019 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.00.8
+* Thu Jul 11 2019 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.8
 - CMake support files updated for Python 3.8
 
-* Tue Jan 15 2019 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.00.7
+* Tue Jan 15 2019 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.7
 - CMake nows finds out automatically the right Boost.Python library version
 - Python 3.4 is the new minimum required version
 
-* Sun Aug 06 2017 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.00.6
+* Sun Aug 06 2017 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.6
 - Fixed the FTBFS issue related to newer Boost Serialization (from 1.63):
-Issue #2: http://github.com/airsim/stdair/issues/2
+  Issue #2: http://github.com/airsim/stdair/issues/2
 
-* Sat Feb 25 2017 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.00.5
+* Sat Feb 25 2017 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.5
 - Attempt to fix the FTBFS issue related to new Boost 1.63 serialization
 
-* Sun Aug 30 2015 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 1.00.4
+* Sun Aug 30 2015 Denis Arnaud <denis.arnaud_fedora at m4x.org> 1.00.4
 - New API for Boost.Test for Boost 1.59
 
-* Sun Jun 28 2015 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 1.00.3
+* Sun Jun 28 2015 Denis Arnaud <denis.arnaud_fedora at m4x.org> 1.00.3
 - Documentation: moved the project hosting to GitHub (from SourceForge)
 
-* Sun May 31 2015 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 1.00.2
+* Sun May 31 2015 Denis Arnaud <denis.arnaud_fedora at m4x.org> 1.00.2
 - Removed the dependency on ZeroMQ (only AirInv is dependent on it, not StdAir)
 
-* Sun Dec 23 2012 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 1.00.1
+* Sun Dec 23 2012 Denis Arnaud <denis.arnaud_fedora at m4x.org> 1.00.1
 - Minor fix of the NEWS file.
 
 * Wed Nov 28 2012 Gabrielle Sabatier <g-sabatier at users dot sourceforge dot net> 1.00.0
 - Open source release.
 
-* Sun Dec 18 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.46.0
+* Sun Dec 18 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.46.0
 - Two new criteria have been added to the fare rule and to the booking
-request.
+  request.
 - The CMake build system now accepts independent unit tests (not dependent on
-the core module being built). That allows, for instance, to benchmark the
-project with third-party libraries.
+  the core module being built). That allows, for instance, to benchmark
+  the project with third-party libraries.
 
-* Sun Dec 04 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.45.0
+* Sun Dec 04 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.45.0
 - Began to improved the JSON import/export API
 - Added a dummy schedule-related BOM tree, so that the simulator works
-seamlessly when selecting the sample BOM option
+  seamlessly when selecting the sample BOM option
 - Updating LD_LIBRARY_PATH is no longer necessary thanks to the run-path
-feature
+  feature
 - The package version is now part of the CMake cache, and can be read from
-there by third party utilities
+  there by third party utilities
 - The new MetaSim wrapper project is now fully supported
 
-* Thu Nov 17 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.44.3
+* Thu Nov 17 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.44.3
 - Added a schedule error input files for error tests.
-	 
-* Sat Nov 05 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.44.1
+
+* Sat Nov 05 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.44.1
 - Improved the support for the CMake-based build process
-on older systems (e.g., RedHat/CentOS 5.x)
+  on older systems (e.g., RedHat/CentOS 5.x)
 - A third generation of the PDF reference manual is performed
 - SOCI-3.1.0 is now fully supported (and the version correctly retrieved)
 
-* Wed Nov 02 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.44.0
-- Added the dummy inventory construction needed by RMOL in the default sample
-BOM construction.
-	
-* Mon Oct 24 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.3
+* Wed Nov 02 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.44.0
+- Added the dummy inventory construction needed by RMOL in the default
+  sample BOM construction.
+
+* Mon Oct 24 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.43.3
 - Specified Bom Manager methods for a segment date and its corresponding
 marketing segment dates.
 
-* Fri Oct 21 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.2
+* Fri Oct 21 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.43.2
 - The C++ code is compatible with RedHat EL 5.x and g++-4.1.
 
-* Tue Oct 18 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.1
+* Tue Oct 18 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.43.1
 - The build framework is now compatible with CMake 2.6 (the exclusive
 dependency on CMake 2.8 has been removed).
 
-* Thu Oct 06 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.43.0
+* Thu Oct 06 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.43.0
 - Removed stored operating segment date in segment date object.
 - Removed useless object. 
 
-* Thu Sep 29 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.42.0
+* Thu Sep 29 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.42.0
 - Added flight periods and OnDs to the basic bom tree.
 - Re-structured a few things in partnership development.
 
-* Tue Sep 20 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.41.0
+* Tue Sep 20 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.41.0
 - Added a root object for file path definition.
 - Changed the travel solution display.
 
-* Tue Sep 06 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.40.0
+* Tue Sep 06 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.40.0
 - Added support for SimFQT command line binary.
 
-* Tue Aug 30 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.39.2
+* Tue Aug 30 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.39.2
 - Added support for airline codeshare: links are created between operating and
 marketing flights/segments/legs.
 
-* Mon Aug 15 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.38.0
+* Mon Aug 15 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.38.0
 - A list() method has been added to the API (STDAIR_Service), in order to
 retrieve the list of flight-dates for given parameters (optionally, airline
 code and/or flight number).
 
-* Wed Jun 15 2011 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> 0.34.0
+* Wed Jun 15 2011 Denis Arnaud <denis.arnaud_fedora at m4x.org> 0.34.0
 - CMake-based build.
 
 * Wed Jul 13 2010 Anh Quan Nguyen <quannaus at users dot sourceforge dot net> 0.01.0

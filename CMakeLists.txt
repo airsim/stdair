@@ -10,7 +10,7 @@ include (config/project_config_embeddable.cmake)
 project (stdair)
 set_project_names (stdair StdAir)
 set_project_brief ("C++ Standard Airline IT Object Library")
-set_project_versions (1 00 23)
+set_project_versions (1 00 24)
 
 ##
 # Project options
@@ -42,8 +42,10 @@ packaging_set_other_options (TBZ2 "TBZ2;TGZ")
 ##            Dependencies            ##
 ########################################
 #
-get_external_libs (git "boost 1.41" "mysql 5.0" "soci 3.0"
-	 readline "doxygen 1.4" "gcov 4.6.3" "lcov 1.9")
+get_external_libs (git "boost 1.41"
+	"postgres 9" "mysql 5.0" "soci 3.0"
+	readline "doxygen 1.4"
+	"gcov 4.6.3" "lcov 1.9")
 
 ##############################################
 ##           Build, Install, Export         ##
