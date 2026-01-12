@@ -2614,9 +2614,9 @@ macro (install_dev_helper_files)
   )
   # When the project is OpenTREP, OPENTREP_SAMPLE_DIR has
   # already been defined before
-  if (NOT "${PROJECT_NAME}" STREQUAL "opentrep")
+  if (NOT "${PROJECT_NAME}" STREQUAL "opentrep" AND NOT "${PROJECT_NAME}" STREQUAL "stdair")
     set (${PACKAGE_NAME}_SAMPLE_DIR "${INSTALL_SAMPLE_DIR}")
-  endif (NOT "${PROJECT_NAME}" STREQUAL "opentrep")
+  endif (NOT "${PROJECT_NAME}" STREQUAL "opentrep" AND NOT "${PROJECT_NAME}" STREQUAL "stdair")
   if (NEED_PYTHON)
 	configure_file (${PROJECT_NAME}-config-python.cmake.in
 	  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-python.cmake" @ONLY)
