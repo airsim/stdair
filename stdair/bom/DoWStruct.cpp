@@ -39,9 +39,8 @@ namespace stdair {
   // ////////////////////////////////////////////////////////////////////
   const std::string DoWStruct::describeShort() const {
     std::ostringstream ostr;
-    short i = 0;
     for (BooleanList_T::const_iterator itDoW = _dowList.begin();
-         itDoW != _dowList.end(); ++itDoW, ++i) {
+         itDoW != _dowList.end(); ++itDoW) {
       const char lDoW = (*itDoW == true)?'1':'0';
       ostr << lDoW;
     }
