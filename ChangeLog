@@ -1,3 +1,6 @@
+* Mon Jan 12 2026 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.26
+- Fixed the issue in CMake conf related to sample dir
+
 * Mon Jan 12 2026 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.25
 - Removed unused variable
 - Slightly improved CMake main project script

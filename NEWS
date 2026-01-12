@@ -1,4 +1,8 @@
 * 2026-01-12:
+- Version 1.00.26
+- Fixed the issue in CMake conf related to sample dir
+
+* 2026-01-12:
 - Version 1.00.25
 - Removed unused variable
 - Slightly improved CMake main project script
