@@ -1574,7 +1574,7 @@ endmacro (module_set_name)
 #  * The corresponding targets (libraries and binaries) are exported within
 #    a CMake import helper file, namely '${PROJECT_NAME}-library-depends.cmake'.
 #    That CMake import helper file is installed in the installation directory,
-#    within the <install_dir>/share/${PROJECT_NAME}/CMake sub-directory.
+#    within the <install_lib_dir>/cmake/${PROJECT_NAME} sub-directory.
 #    That CMake import helper file is used by the ${PROJECT_NAME}-config.cmake
 #    file, to be installed in the same sub-directory. The
 #    ${PROJECT_NAME}-config.cmake file is specified a little bit below.
@@ -2582,7 +2582,10 @@ endmacro (gcov_task)
 ###################################################################
 # For other projects to use this component (let us name it myproj),
 # install a few helpers for standard build/packaging systems: CMake,
-# GNU Autotools (M4), pkgconfig/pc, myproj-config
+# GNU Autotools (M4), pkgconfig/pc, myproj-config.
+# Docs:
+# https://cmake.org/cmake/help/latest/module/CMakePackageConfigHelpers.html
+# https://stackoverflow.com/a/75846400/798053
 macro (install_dev_helper_files)
   ##
   ## First, build and install CMake development helper files
@@ -2596,6 +2599,7 @@ macro (install_dev_helper_files)
   set (${PACKAGE_NAME}_LIB_DIR "${INSTALL_LIB_DIR}")
   set (${PACKAGE_NAME}_LIBEXEC_DIR "${INSTALL_LIBEXEC_DIR}")
   set (${PACKAGE_NAME}_PY_LIB_DIR "${INSTALL_PY_LIB_DIR}")
+  set (${PACKAGE_NAME}_SAMPLE_DIR "${INSTALL_SAMPLE_DIR}")
   set (${PACKAGE_NAME}_CMAKE_DIR "${LIB_DEPENDENCY_EXPORT_PATH}")
   configure_package_config_file(
       ${PROJECT_NAME}-config.cmake.in
@@ -2606,6 +2610,7 @@ macro (install_dev_helper_files)
         ${PACKAGE_NAME}_BIN_DIR
         ${PACKAGE_NAME}_LIB_DIR
         ${PACKAGE_NAME}_LIBEXEC_DIR
+        ${PACKAGE_NAME}_SAMPLE_DIR
   )
   write_basic_package_version_file(
       ${PROJECT_NAME}-config-version.cmake
