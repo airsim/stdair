@@ -20,3 +20,7 @@ Makefile.in
 /stdair/config/stdair-paths.hpp
 /test/stdair/*_utfresults.xml
 
+# Packit setup
+*.tar.gz
+*.rpm
+*.log

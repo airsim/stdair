@@ -1,0 +1,51 @@
+files_to_sync:
+  - src: .distro/
+    dest: ./
+    delete: true
+    filters:
+      - "protect .git*"
+      - "protect sources"
+      - "protect changelog"
+      - "protect gating.yaml"
+      # Temporary workaround until
+      # https://github.com/packit/packit/pull/2573
+      - "- stdair.spec"
+  - .packit.yaml
+
+specfile_path: .distro/stdair.spec
+upstream_package_name: stdair
+downstream_package_name: stdair
+upstream_tag_template: v{version}
+
+targets:
+  - fedora-all-x86_64
+  - fedora-all-aarch64
+
+_:
+  # Job templates
+  - &build-in-packit
+    job: copr_build
+  - &build-in-airsim
+    <<: *build-in-packit
+    owner: "@airsim"
+
+jobs:
+  # Upstream jobs
+  - <<: *build-in-airsim
+    trigger: release
+    project: release
+  - <<: *build-in-airsim
+    trigger: commit
+    branch: main
+    project: nightly
+  - <<: *build-in-packit
+    trigger: pull_request
+  # Downstream jobs
+  - job: propose_downstream
+    trigger: release
+    dist_git_branches:
+      - fedora-rawhide
+  - job: koji_build
+    trigger: commit
+    dist_git_branches:
+      - fedora-rawhide
